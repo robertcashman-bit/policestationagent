@@ -1,0 +1,22 @@
+{
+  "example-blog-post": {
+    "title": "Example Blog Post Title",
+    "slug": "example-blog-post",
+    "content": "<p>This is an example blog post. Replace this content with your actual blog post HTML.</p><h2>Subheading</h2><p>More content here...</p>",
+    "excerpt": "A brief description of the blog post that appears in listings.",
+    "published": true,
+    "publishedAt": "2024-01-15T10:00:00Z",
+    "metaTitle": "Example Blog Post Title | Police Station Agent",
+    "metaDescription": "A brief description for SEO purposes."
+  },
+  "another-example": {
+    "title": "Another Example Post",
+    "slug": "another-example",
+    "content": "<p>Another example post content.</p>",
+    "excerpt": "Another example excerpt.",
+    "published": false,
+    "publishedAt": null,
+    "metaTitle": "Another Example Post | Police Station Agent",
+    "metaDescription": "Another example meta description."
+  }
+}

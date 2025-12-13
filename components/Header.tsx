@@ -1,7 +1,16 @@
 'use client';
 
 import Link from 'next/link';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
+
+interface BlogPost {
+  id: number;
+  title: string;
+  slug: string;
+  excerpt: string | null;
+  published_at: string | null;
+  created_at: string;
+}
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -11,6 +20,7 @@ export default function Header() {
   const [articlesOpen, setArticlesOpen] = useState(false);
   const [informationOpen, setInformationOpen] = useState(false);
   const [blogOpen, setBlogOpen] = useState(false);
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
 
   // Timeout refs for delayed closing
   const servicesTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -19,6 +29,21 @@ export default function Header() {
   const articlesTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const informationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const blogTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Fetch blog posts automatically on mount
+  useEffect(() => {
+    fetch('/api/blog/posts')
+      .then(res => res.json())
+      .then(data => {
+        if (data.posts && Array.isArray(data.posts)) {
+          setBlogPosts(data.posts);
+        }
+      })
+      .catch(err => {
+        console.error('Error fetching blog posts:', err);
+        setBlogPosts([]);
+      });
+  }, []);
 
   // Helper function to handle delayed close
   const handleDelayedClose = (
@@ -172,12 +197,13 @@ export default function Header() {
                   }}
                   onMouseLeave={() => handleDelayedClose(setCoverageOpen, coverageTimeoutRef, 300)}
                 >
-                  <Link href="/coverage" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Areas Covered</Link>
-                  <Link href="/areas" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Areas We Cover</Link>
-                  <Link href="/police-stations" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Police Stations</Link>
-                  <Link href="/kent-police-stations" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Kent Police Stations Guide</Link>
-                  <Link href="/kent-police-station-reps" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Kent Police Station Reps</Link>
-                  <Link href="/outofarea" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Out of Area</Link>
+                  <Link href="/coverage" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 font-semibold">Coverage Overview</Link>
+                  <div className="border-t border-slate-200 my-1"></div>
+                  <Link href="/coverage/police-stations" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Police Stations</Link>
+                  <Link href="/coverage/areas" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Areas</Link>
+                  <div className="border-t border-slate-200 my-1"></div>
+                  <Link href="/police-stations" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm">All Police Stations</Link>
+                  <Link href="/areas" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm">All Areas</Link>
                 </div>
               )}
             </div>
@@ -277,14 +303,29 @@ export default function Header() {
               </button>
               {blogOpen && (
                 <div 
-                  className="absolute top-full left-0 mt-1 w-64 bg-white rounded-lg shadow-xl border border-slate-200 py-2 z-50"
+                  className="absolute top-full left-0 mt-1 w-72 bg-white rounded-lg shadow-xl border border-slate-200 py-2 z-50 max-h-96 overflow-y-auto"
                   onMouseEnter={() => {
                     cancelDelayedClose(blogTimeoutRef);
                     setBlogOpen(true);
                   }}
                   onMouseLeave={() => handleDelayedClose(setBlogOpen, blogTimeoutRef, 300)}
                 >
-                  <Link href="/blog" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">All Blog Posts</Link>
+                  <Link href="/blog" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 font-semibold">All Blog Posts</Link>
+                  {blogPosts.length > 0 && (
+                    <>
+                      <div className="border-t border-slate-200 my-1"></div>
+                      {blogPosts.slice(0, 8).map((post) => (
+                        <Link
+                          key={post.id}
+                          href={`/blog/${post.slug}`}
+                          className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm line-clamp-1"
+                          title={post.title}
+                        >
+                          {post.title}
+                        </Link>
+                      ))}
+                    </>
+                  )}
                 </div>
               )}
             </div>
@@ -333,7 +374,7 @@ export default function Header() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-2">
             <Link href="/" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium" onClick={() => setMobileMenuOpen(false)}>Home</Link>
             
-            <div className="px-4 py-2 text-slate-500 text-sm font-semibold">Services</div>
+            <div className="px-4 py-2 text-slate-700 text-sm font-semibold">Services</div>
             <Link href="/services" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>All Services</Link>
             <Link href="/what-we-do" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>What We Do</Link>
             <Link href="/for-solicitors" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>For Solicitors</Link>
@@ -343,7 +384,7 @@ export default function Header() {
             <Link href="/fees" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Legal Aid & Fees</Link>
             <Link href="/privatecrime" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Private Client</Link>
             
-            <div className="px-4 py-2 text-slate-500 text-sm font-semibold mt-2">About</div>
+            <div className="px-4 py-2 text-slate-700 text-sm font-semibold mt-2">About</div>
             <Link href="/about" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>About Us</Link>
             <Link href="/why-use-us" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Why Use Us</Link>
             <Link href="/accreditedpolicerep" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Accredited Police Rep</Link>
@@ -351,16 +392,24 @@ export default function Header() {
             <Link href="/what-is-a-criminal-solicitor" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>What is a Criminal Solicitor</Link>
             <Link href="/what-is-a-police-station-rep" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>What is a Police Station Rep</Link>
             
-            <div className="px-4 py-2 text-slate-500 text-sm font-semibold mt-2">Coverage</div>
-            <Link href="/coverage" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Areas Covered</Link>
-            <Link href="/police-stations" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Police Stations</Link>
-            <Link href="/kent-police-stations" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Kent Police Stations Guide</Link>
-            <Link href="/kent-police-station-reps" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Kent Police Station Reps</Link>
-            <Link href="/areas" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Areas We Cover</Link>
-            <Link href="/outofarea" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Out of Area</Link>
+            <div className="px-4 py-2 text-slate-700 text-sm font-semibold mt-2">Coverage</div>
+            <Link href="/coverage" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Coverage Overview</Link>
+            <Link href="/coverage/police-stations" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Police Stations</Link>
+            <Link href="/coverage/areas" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Areas</Link>
             
+            <div className="px-4 py-2 text-slate-500 text-sm font-semibold mt-2">Blog</div>
+            <Link href="/blog" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>All Blog Posts</Link>
+            {blogPosts.length > 0 && blogPosts.slice(0, 5).map((post) => (
+              <Link
+                key={post.id}
+                href={`/blog/${post.slug}`}
+                className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8 text-sm"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {post.title}
+              </Link>
+            ))}
             <div className="px-4 py-2 text-slate-500 text-sm font-semibold mt-2">Articles & Help</div>
-            <Link href="/blog" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>All Articles</Link>
             <Link href="/after-a-police-interview" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>After a Police Interview</Link>
             <Link href="/voluntary-police-interview-risks" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Voluntary Interview Risks</Link>
             <Link href="/your-rights-in-custody" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Your Rights in Custody</Link>
@@ -375,7 +424,7 @@ export default function Header() {
             <Link href="/arrestednow" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Emergency Help</Link>
             <Link href="/emergency-police-station-representation" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Emergency Representation</Link>
             
-            <div className="px-4 py-2 text-slate-500 text-sm font-semibold mt-2">Legal & Compliance</div>
+            <div className="px-4 py-2 text-slate-700 text-sm font-semibold mt-2">Legal & Compliance</div>
             <Link href="/privacy" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Privacy Policy</Link>
             <Link href="/cookies" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Cookies Policy</Link>
             <Link href="/accessibility" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Accessibility</Link>
