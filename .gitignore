@@ -38,4 +38,6 @@ next-env.d.ts
 # database
 *.db
 *.db-journal
+# Exception: Include production database for deployment
+!data/web44ai.db
 
