@@ -2,12 +2,11 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import fs from 'fs';
-import path from 'path';
 import type { Metadata } from 'next';
 import { JsonLd } from '@/components/JsonLd';
 import BlogPromotionalBlock from '@/components/BlogPromotionalBlock';
 import { SITE_URL, SITE_DOMAIN } from '@/config/site';
+import blogPostsFullData from '@/data/blog-posts-full.json';
 
 interface PageProps {
   params: {
@@ -27,22 +26,10 @@ type BlogPost = {
   created_at: string;
 };
 
-function getAllPosts(): BlogPost[] {
-  try {
-    const jsonPath = path.join(process.cwd(), 'data', 'blog-posts-full.json');
-    if (fs.existsSync(jsonPath)) {
-      const data = fs.readFileSync(jsonPath, 'utf-8');
-      return JSON.parse(data) as BlogPost[];
-    }
-  } catch (error) {
-    console.warn('Could not load posts from JSON:', error);
-  }
-  return [];
-}
+const allPosts = blogPostsFullData as BlogPost[];
 
 function getPostBySlug(slug: string): BlogPost | undefined {
-  const posts = getAllPosts();
-  return posts.find(p => p.slug === slug);
+  return allPosts.find(p => p.slug === slug);
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -85,8 +72,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 // Generate static params for all blog posts
 export async function generateStaticParams() {
-  const posts = getAllPosts();
-  return posts.map(post => ({
+  return allPosts.map(post => ({
     slug: post.slug,
   }));
 }

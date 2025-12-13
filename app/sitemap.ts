@@ -1,27 +1,12 @@
 import { MetadataRoute } from 'next';
 import { SITE_DOMAIN } from '@/config/site';
-import fs from 'fs';
-import path from 'path';
+import blogPostsData from '@/data/blog-posts-static.json';
 
 type BlogPost = {
   slug: string;
   published_at: string | null;
   updated_at?: string | null;
 };
-
-// Get blog posts from static JSON file
-function getBlogPosts(): BlogPost[] {
-  try {
-    const jsonPath = path.join(process.cwd(), 'data', 'blog-posts-static.json');
-    if (fs.existsSync(jsonPath)) {
-      const data = fs.readFileSync(jsonPath, 'utf-8');
-      return JSON.parse(data) as BlogPost[];
-    }
-  } catch (error) {
-    console.warn('Could not load blog posts for sitemap:', error);
-  }
-  return [];
-}
 
 // Lazy import to avoid build-time database initialization issues on Vercel
 function getDb() {
@@ -527,8 +512,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     console.warn('Skipping dynamic services in sitemap (build time)');
   }
 
-  // Blog posts from static JSON file
-  const blogPosts = getBlogPosts();
+  // Blog posts from static JSON import
+  const blogPosts = blogPostsData as BlogPost[];
   const blogPages: MetadataRoute.Sitemap = blogPosts.map((post) => ({
     url: `${baseUrl}/blog/${post.slug}`,
     lastModified: post.updated_at 

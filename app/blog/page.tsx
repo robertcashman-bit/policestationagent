@@ -1,10 +1,9 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
-import fs from 'fs';
-import path from 'path';
 import type { Metadata } from 'next';
 import { SITE_DOMAIN } from '@/config/site';
+import blogPostsData from '@/data/blog-posts-static.json';
 
 export const metadata: Metadata = {
   title: "Blog | Police Station Agent",
@@ -30,36 +29,8 @@ type BlogPost = {
   created_at: string;
 };
 
-function getBlogPosts(): BlogPost[] {
-  try {
-    // Use static JSON file - more reliable on Vercel than SQLite
-    const jsonPath = path.join(process.cwd(), 'data', 'blog-posts-static.json');
-    if (fs.existsSync(jsonPath)) {
-      const data = fs.readFileSync(jsonPath, 'utf-8');
-      return JSON.parse(data) as BlogPost[];
-    }
-  } catch (error) {
-    console.warn('Could not load blog posts from JSON:', error);
-  }
-  
-  // Fallback to database
-  try {
-    const db = require('@/lib/db').default;
-    return db.prepare(`
-      SELECT id, title, slug, excerpt, published_at, created_at 
-      FROM blog_posts 
-      WHERE published = 1 
-      ORDER BY published_at DESC, created_at DESC
-    `).all() as BlogPost[];
-  } catch (dbError) {
-    console.warn('Database fallback failed:', dbError);
-  }
-  
-  return [];
-}
-
 export default function Page() {
-  const posts = getBlogPosts();
+  const posts = blogPostsData as BlogPost[];
 
   const formatDate = (dateString: string | null) => {
     if (!dateString) return null;
