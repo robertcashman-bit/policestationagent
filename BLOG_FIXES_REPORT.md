@@ -82,3 +82,4 @@
 **Root Cause:** Legacy migration routes from `criminaldefencekent` subdirectory were conflicting with correct `/blog/` routes and generating wrong canonical URLs.
 
 **Resolution:** Removed legacy routes, added redirects, added error handling. All blog posts now accessible at correct `/blog/[slug]` paths with proper canonical URLs.
+

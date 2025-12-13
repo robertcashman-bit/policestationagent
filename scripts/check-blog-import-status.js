@@ -78,3 +78,4 @@ console.log(`\n💡 Note: The Wix site shows ~29 posts total (based on monthly c
 console.log(`   We currently have ${dbPosts.length} posts imported.\n`);
 
 db.close();
+

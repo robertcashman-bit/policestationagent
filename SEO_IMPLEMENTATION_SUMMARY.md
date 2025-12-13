@@ -256,3 +256,5 @@ All pages follow the structure:
 5. Monitor Core Web Vitals in Search Console
 6. Review indexing status
 
+
+
