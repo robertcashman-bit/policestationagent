@@ -1,9 +1,10 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
+import fs from 'fs';
+import path from 'path';
 import type { Metadata } from 'next';
 import { SITE_DOMAIN } from '@/config/site';
-import blogPostsData from '@/data/blog-posts-static.json';
 
 export const metadata: Metadata = {
   title: "Blog | Police Station Agent",
@@ -29,8 +30,19 @@ type BlogPost = {
   created_at: string;
 };
 
+function getBlogPosts(): BlogPost[] {
+  try {
+    const jsonPath = path.join(process.cwd(), 'public', 'blog-posts.json');
+    const data = fs.readFileSync(jsonPath, 'utf-8');
+    return JSON.parse(data) as BlogPost[];
+  } catch (error) {
+    console.error('Error loading blog posts:', error);
+    return [];
+  }
+}
+
 export default function Page() {
-  const posts = blogPostsData as BlogPost[];
+  const posts = getBlogPosts();
 
   const formatDate = (dateString: string | null) => {
     if (!dateString) return null;
