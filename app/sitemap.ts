@@ -1,5 +1,27 @@
 import { MetadataRoute } from 'next';
 import { SITE_DOMAIN } from '@/config/site';
+import fs from 'fs';
+import path from 'path';
+
+type BlogPost = {
+  slug: string;
+  published_at: string | null;
+  updated_at?: string | null;
+};
+
+// Get blog posts from static JSON file
+function getBlogPosts(): BlogPost[] {
+  try {
+    const jsonPath = path.join(process.cwd(), 'data', 'blog-posts-static.json');
+    if (fs.existsSync(jsonPath)) {
+      const data = fs.readFileSync(jsonPath, 'utf-8');
+      return JSON.parse(data) as BlogPost[];
+    }
+  } catch (error) {
+    console.warn('Could not load blog posts for sitemap:', error);
+  }
+  return [];
+}
 
 // Lazy import to avoid build-time database initialization issues on Vercel
 function getDb() {
@@ -505,36 +527,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     console.warn('Skipping dynamic services in sitemap (build time)');
   }
 
-  // Blog posts (with error handling for build time)
-  let blogPages: MetadataRoute.Sitemap = [];
-  try {
-    const db = getDb();
-    if (db) {
-      const posts = db.prepare(`
-        SELECT slug, published_at, updated_at 
-        FROM blog_posts 
-        WHERE published = 1
-      `).all() as Array<{
-        slug: string;
-        published_at: string | null;
-        updated_at: string | null;
-      }>;
-      
-      blogPages = posts.map((post) => ({
-        url: `${baseUrl}/blog/${post.slug}`,
-        lastModified: post.updated_at 
-          ? new Date(post.updated_at) 
-          : post.published_at 
-            ? new Date(post.published_at) 
-            : new Date(),
-        changeFrequency: 'weekly' as const,
-        priority: 0.7,
-      }));
-    }
-  } catch (error) {
-    // Database not available during build - skip dynamic pages
-    console.warn('Skipping dynamic blog posts in sitemap (build time)');
-  }
+  // Blog posts from static JSON file
+  const blogPosts = getBlogPosts();
+  const blogPages: MetadataRoute.Sitemap = blogPosts.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: post.updated_at 
+      ? new Date(post.updated_at) 
+      : post.published_at 
+        ? new Date(post.published_at) 
+        : new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.7,
+  }));
 
   return [...staticPages, ...stationPages, ...servicePages, ...blogPages, ...coverageStationPages, ...coverageAreaPages];
 }

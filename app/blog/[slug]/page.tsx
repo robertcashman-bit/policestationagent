@@ -2,7 +2,8 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import db from '@/lib/db';
+import fs from 'fs';
+import path from 'path';
 import type { Metadata } from 'next';
 import { JsonLd } from '@/components/JsonLd';
 import BlogPromotionalBlock from '@/components/BlogPromotionalBlock';
@@ -14,27 +15,38 @@ interface PageProps {
   };
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  let post: {
-    title: string;
-    meta_title: string | null;
-    meta_description: string | null;
-    excerpt: string | null;
-    published_at: string | null;
-  } | undefined;
+type BlogPost = {
+  id: number;
+  title: string;
+  slug: string;
+  content: string;
+  excerpt: string | null;
+  meta_title: string | null;
+  meta_description: string | null;
+  published_at: string | null;
+  created_at: string;
+};
 
+function getAllPosts(): BlogPost[] {
   try {
-    post = db.prepare('SELECT * FROM blog_posts WHERE slug = ? AND published = 1').get(params.slug) as {
-      title: string;
-      meta_title: string | null;
-      meta_description: string | null;
-      excerpt: string | null;
-      published_at: string | null;
-    } | undefined;
+    const jsonPath = path.join(process.cwd(), 'data', 'blog-posts-full.json');
+    if (fs.existsSync(jsonPath)) {
+      const data = fs.readFileSync(jsonPath, 'utf-8');
+      return JSON.parse(data) as BlogPost[];
+    }
   } catch (error) {
-    // Database not available during build
-    console.warn('Database not available for metadata generation');
+    console.warn('Could not load posts from JSON:', error);
   }
+  return [];
+}
+
+function getPostBySlug(slug: string): BlogPost | undefined {
+  const posts = getAllPosts();
+  return posts.find(p => p.slug === slug);
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const post = getPostBySlug(params.slug);
 
   if (!post) {
     return {
@@ -71,32 +83,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default function BlogPostPage({ params }: PageProps) {
-  let post: {
-    id: number;
-    title: string;
-    slug: string;
-    content: string;
-    excerpt: string | null;
-    published_at: string | null;
-    created_at: string;
-  } | undefined;
+// Generate static params for all blog posts
+export async function generateStaticParams() {
+  const posts = getAllPosts();
+  return posts.map(post => ({
+    slug: post.slug,
+  }));
+}
 
-  try {
-    post = db.prepare('SELECT * FROM blog_posts WHERE slug = ? AND published = 1').get(params.slug) as {
-      id: number;
-      title: string;
-      slug: string;
-      content: string;
-      excerpt: string | null;
-      published_at: string | null;
-      created_at: string;
-    } | undefined;
-  } catch (error) {
-    // Database not available - return 404
-    console.error('Database error fetching blog post:', error);
-    notFound();
-  }
+export default function BlogPostPage({ params }: PageProps) {
+  const post = getPostBySlug(params.slug);
 
   if (!post) {
     notFound();

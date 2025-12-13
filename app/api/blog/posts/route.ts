@@ -1,53 +1,51 @@
 import { NextResponse } from 'next/server';
-import db from '@/lib/db';
 import fs from 'fs';
 import path from 'path';
 
+type BlogPost = {
+  id: number;
+  title: string;
+  slug: string;
+  excerpt: string | null;
+  published_at: string | null;
+  created_at: string;
+};
+
 /**
  * Public API endpoint to fetch published blog posts
- * Used by Header component to display blog links in dropdown
+ * Uses static JSON file for Vercel serverless compatibility
  */
 export async function GET() {
-  const debug: string[] = [];
-  
   try {
-    // Debug info
-    const sourceDbPath = path.join(process.cwd(), 'data', 'web44ai.db');
-    const tmpDbPath = '/tmp/web44ai.db';
+    // Use static JSON file - more reliable on Vercel than SQLite
+    const jsonPath = path.join(process.cwd(), 'data', 'blog-posts-static.json');
     
-    debug.push(`cwd: ${process.cwd()}`);
-    debug.push(`VERCEL: ${process.env.VERCEL || 'not set'}`);
-    debug.push(`source exists: ${fs.existsSync(sourceDbPath)}`);
-    debug.push(`tmp exists: ${fs.existsSync(tmpDbPath)}`);
-    
-    if (fs.existsSync(sourceDbPath)) {
-      debug.push(`source size: ${fs.statSync(sourceDbPath).size}`);
-    }
-    if (fs.existsSync(tmpDbPath)) {
-      debug.push(`tmp size: ${fs.statSync(tmpDbPath).size}`);
+    if (fs.existsSync(jsonPath)) {
+      const data = fs.readFileSync(jsonPath, 'utf-8');
+      const allPosts: BlogPost[] = JSON.parse(data);
+      const posts = allPosts.slice(0, 10);
+      return NextResponse.json({ posts });
     }
     
-    const posts = db.prepare(`
-      SELECT id, title, slug, excerpt, published_at, created_at 
-      FROM blog_posts 
-      WHERE published = 1 
-      ORDER BY published_at DESC, created_at DESC
-      LIMIT 10
-    `).all() as Array<{
-      id: number;
-      title: string;
-      slug: string;
-      excerpt: string | null;
-      published_at: string | null;
-      created_at: string;
-    }>;
-
-    debug.push(`posts found: ${posts.length}`);
+    // Fallback: try SQLite database
+    try {
+      const db = (await import('@/lib/db')).default;
+      const posts = db.prepare(`
+        SELECT id, title, slug, excerpt, published_at, created_at 
+        FROM blog_posts 
+        WHERE published = 1 
+        ORDER BY published_at DESC, created_at DESC
+        LIMIT 10
+      `).all() as BlogPost[];
+      
+      return NextResponse.json({ posts });
+    } catch (dbError) {
+      console.error('Database fallback failed:', dbError);
+    }
     
-    return NextResponse.json({ posts, debug });
+    return NextResponse.json({ posts: [] });
   } catch (error) {
-    debug.push(`error: ${error instanceof Error ? error.message : String(error)}`);
     console.error('Error fetching blog posts:', error);
-    return NextResponse.json({ posts: [], debug, error: String(error) }, { status: 200 });
+    return NextResponse.json({ posts: [] }, { status: 200 });
   }
 }

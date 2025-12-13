@@ -1,9 +1,10 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
-import db from '@/lib/db';
+import fs from 'fs';
+import path from 'path';
 import type { Metadata } from 'next';
-import { SITE_URL, SITE_DOMAIN } from '@/config/site';
+import { SITE_DOMAIN } from '@/config/site';
 
 export const metadata: Metadata = {
   title: "Blog | Police Station Agent",
@@ -20,37 +21,45 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Page() {
-  // Fetch all published blog posts, ordered by date (newest first)
-  // Handle build-time database unavailability gracefully
-  let posts: Array<{
-    id: number;
-    title: string;
-    slug: string;
-    excerpt: string | null;
-    published_at: string | null;
-    created_at: string;
-  }> = [];
+type BlogPost = {
+  id: number;
+  title: string;
+  slug: string;
+  excerpt: string | null;
+  published_at: string | null;
+  created_at: string;
+};
 
+function getBlogPosts(): BlogPost[] {
   try {
-    posts = db.prepare(`
+    // Use static JSON file - more reliable on Vercel than SQLite
+    const jsonPath = path.join(process.cwd(), 'data', 'blog-posts-static.json');
+    if (fs.existsSync(jsonPath)) {
+      const data = fs.readFileSync(jsonPath, 'utf-8');
+      return JSON.parse(data) as BlogPost[];
+    }
+  } catch (error) {
+    console.warn('Could not load blog posts from JSON:', error);
+  }
+  
+  // Fallback to database
+  try {
+    const db = require('@/lib/db').default;
+    return db.prepare(`
       SELECT id, title, slug, excerpt, published_at, created_at 
       FROM blog_posts 
       WHERE published = 1 
       ORDER BY published_at DESC, created_at DESC
-    `).all() as Array<{
-      id: number;
-      title: string;
-      slug: string;
-      excerpt: string | null;
-      published_at: string | null;
-      created_at: string;
-    }>;
-  } catch (error) {
-    // Database not available during build - posts will be empty
-    // This is fine, posts will load at runtime
-    console.warn('Blog posts not available during build, will load at runtime');
+    `).all() as BlogPost[];
+  } catch (dbError) {
+    console.warn('Database fallback failed:', dbError);
   }
+  
+  return [];
+}
+
+export default function Page() {
+  const posts = getBlogPosts();
 
   const formatDate = (dateString: string | null) => {
     if (!dateString) return null;
