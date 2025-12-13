@@ -15,33 +15,62 @@ function getDatabase(): Database.Database {
   }
 
   if (!db) {
-    const dbPath = path.join(process.cwd(), 'data', 'web44ai.db');
-    const dbDir = path.dirname(dbPath);
+    const sourceDbPath = path.join(process.cwd(), 'data', 'web44ai.db');
+    
+    // On Vercel serverless, the file system is read-only except for /tmp
+    // SQLite requires write access for journaling even for read operations
+    // So we copy the database to /tmp if we're in a serverless environment
+    let dbPath = sourceDbPath;
+    
+    if (process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME) {
+      const tmpDbPath = '/tmp/web44ai.db';
+      
+      // Copy database to /tmp if it doesn't exist or is older than source
+      try {
+        const sourceExists = fs.existsSync(sourceDbPath);
+        const tmpExists = fs.existsSync(tmpDbPath);
+        
+        if (sourceExists && (!tmpExists || needsCopy(sourceDbPath, tmpDbPath))) {
+          fs.copyFileSync(sourceDbPath, tmpDbPath);
+          console.log('Copied database to /tmp for serverless compatibility');
+        }
+        
+        if (fs.existsSync(tmpDbPath)) {
+          dbPath = tmpDbPath;
+        }
+      } catch (copyError) {
+        console.warn('Could not copy database to /tmp:', copyError);
+        // Continue with source path, may fail but worth trying
+      }
+    }
 
-    // Ensure data directory exists
-    if (!fs.existsSync(dbDir)) {
+    // Ensure data directory exists (for local development)
+    const dbDir = path.dirname(dbPath);
+    if (!fs.existsSync(dbDir) && !dbPath.startsWith('/tmp')) {
       try {
         fs.mkdirSync(dbDir, { recursive: true });
       } catch (error) {
-        // Directory creation may fail in serverless - use in-memory fallback
-        console.warn('Could not create data directory, using in-memory database');
-        db = new Database(':memory:');
-        if (!dbInitialized) {
-          initDatabase();
-          dbInitialized = true;
-        }
-        return db;
+        console.warn('Could not create data directory');
       }
     }
 
     try {
-      db = new Database(dbPath);
+      db = new Database(dbPath, { readonly: false });
       // Enable foreign keys
       db.pragma('foreign_keys = ON');
+      console.log('Database opened successfully from:', dbPath);
     } catch (error) {
       console.error('Database initialization error:', error);
-      // Fallback to in-memory database if file system is not available
-      db = new Database(':memory:');
+      // Try read-only mode as last resort
+      try {
+        db = new Database(dbPath, { readonly: true });
+        console.log('Database opened in read-only mode');
+      } catch (readOnlyError) {
+        console.error('Read-only mode also failed:', readOnlyError);
+        // Fallback to in-memory database
+        db = new Database(':memory:');
+        console.warn('Using in-memory database fallback');
+      }
     }
   }
 
@@ -51,6 +80,17 @@ function getDatabase(): Database.Database {
   }
 
   return db;
+}
+
+// Check if we need to copy the database (source is newer)
+function needsCopy(sourcePath: string, destPath: string): boolean {
+  try {
+    const sourceStat = fs.statSync(sourcePath);
+    const destStat = fs.statSync(destPath);
+    return sourceStat.mtimeMs > destStat.mtimeMs;
+  } catch {
+    return true;
+  }
 }
 
 // Initialize database tables
