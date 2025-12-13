@@ -15,13 +15,26 @@ interface PageProps {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const post = db.prepare('SELECT * FROM blog_posts WHERE slug = ? AND published = 1').get(params.slug) as {
+  let post: {
     title: string;
     meta_title: string | null;
     meta_description: string | null;
     excerpt: string | null;
     published_at: string | null;
   } | undefined;
+
+  try {
+    post = db.prepare('SELECT * FROM blog_posts WHERE slug = ? AND published = 1').get(params.slug) as {
+      title: string;
+      meta_title: string | null;
+      meta_description: string | null;
+      excerpt: string | null;
+      published_at: string | null;
+    } | undefined;
+  } catch (error) {
+    // Database not available during build
+    console.warn('Database not available for metadata generation');
+  }
 
   if (!post) {
     return {
