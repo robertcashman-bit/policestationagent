@@ -195,7 +195,7 @@ a {
   padding-left: 1.5rem;
   margin: 1.5rem 0;
   font-style: italic;
-  color: var(--gray-600);
+  color: var(--gray-700);
 }
 
 /* Ensure all nested HTML elements in prose are visible */
@@ -238,6 +238,36 @@ a {
   margin-bottom: 0.75rem;
   color: var(--gray-700);
   line-height: 1.75;
+}
+
+/* Accessibility: Improve text contrast on light backgrounds */
+/* Override low-contrast text colors on white/light backgrounds */
+.bg-white .text-slate-400,
+.bg-white .text-gray-400,
+.bg-slate-50 .text-slate-400,
+.bg-slate-50 .text-gray-400 {
+  color: #64748b !important; /* slate-500 for better contrast */
+}
+
+.bg-white .text-slate-500,
+.bg-white .text-gray-500,
+.bg-slate-50 .text-slate-500,
+.bg-slate-50 .text-gray-500 {
+  color: #475569 !important; /* slate-600 for better contrast */
+}
+
+.bg-white .text-slate-600,
+.bg-white .text-gray-600,
+.bg-slate-50 .text-slate-600,
+.bg-slate-50 .text-gray-600 {
+  color: #334155 !important; /* slate-700 for better contrast */
+}
+
+/* Ensure card text has good contrast */
+.bg-card.text-card-foreground,
+.bg-card .text-card-foreground {
+  background-color: #ffffff !important;
+  color: #1e293b !important; /* slate-800 for better contrast */
 }
 
 @layer utilities {

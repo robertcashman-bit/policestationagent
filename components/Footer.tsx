@@ -65,7 +65,7 @@ export default function Footer() {
                 href="https://twitter.com/policestation" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="text-slate-500 hover:text-slate-600" 
+                className="text-slate-300 hover:text-white" 
                 title="Twitter/X" 
                 aria-label="Visit our Twitter page"
               >
@@ -78,46 +78,46 @@ export default function Footer() {
           </div>
           
           <div>
-            <h3 className="font-bold text-slate-900 mb-4 text-lg text-white">Services</h3>
+            <h3 className="font-bold mb-4 text-lg text-white">Services</h3>
             <nav aria-label="Footer services links">
               <ul className="space-y-3">
                 <li>
-                  <Link href="/services" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
+                  <Link href="/services" className="text-slate-200 hover:text-white transition-colors font-medium">
                     Police Station Advice
                   </Link>
                 </li>
                 <li>
-                  <Link href="/fees" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
+                  <Link href="/fees" className="text-slate-200 hover:text-white transition-colors font-medium">
                     Legal Aid & Fees
                   </Link>
                 </li>
                 <li>
-                  <Link href="/about" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
+                  <Link href="/about" className="text-slate-200 hover:text-white transition-colors font-medium">
                     About
                   </Link>
                 </li>
                 <li>
-                  <Link href="/coverage" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
+                  <Link href="/coverage" className="text-slate-200 hover:text-white transition-colors font-medium">
                     Areas Covered
                   </Link>
                 </li>
                 <li>
-                  <Link href="/blog" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
+                  <Link href="/blog" className="text-slate-200 hover:text-white transition-colors font-medium">
                     Blog
                   </Link>
                 </li>
                 <li>
-                  <Link href="/contact" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
+                  <Link href="/contact" className="text-slate-200 hover:text-white transition-colors font-medium">
                     Contact
                   </Link>
                 </li>
                 <li>
-                  <Link href="/join" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
+                  <Link href="/join" className="text-slate-200 hover:text-white transition-colors font-medium">
                     Join Network
                   </Link>
                 </li>
                 <li>
-                  <Link href="/police-stations" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
+                  <Link href="/police-stations" className="text-slate-200 hover:text-white transition-colors font-medium">
                     Police Stations
                   </Link>
                 </li>
@@ -126,81 +126,81 @@ export default function Footer() {
           </div>
           
           <div>
-            <h3 className="font-bold text-slate-900 mb-4 text-lg text-white">Help & Advice</h3>
+            <h3 className="font-bold mb-4 text-lg text-white">Help & Advice</h3>
             <nav aria-label="Footer help links">
               <ul className="space-y-3">
                 <li>
-                  <Link href="/faq" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
+                  <Link href="/faq" className="text-slate-200 hover:text-white transition-colors font-medium">
                     FAQ
                   </Link>
                 </li>
                 <li>
-                  <Link href="/canwehelp" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
+                  <Link href="/canwehelp" className="text-slate-200 hover:text-white transition-colors font-medium">
                     Can We Help?
                   </Link>
                 </li>
                 <li>
-                  <Link href="/freelegaladvice" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
+                  <Link href="/freelegaladvice" className="text-slate-200 hover:text-white transition-colors font-medium">
                     Is Legal Advice Free?
                   </Link>
                 </li>
                 <li>
-                  <Link href="/your-rights-in-custody" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
+                  <Link href="/your-rights-in-custody" className="text-slate-200 hover:text-white transition-colors font-medium">
                     Your Rights in Custody
                   </Link>
                 </li>
                 <li>
-                  <Link href="/police-custody-rights" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
+                  <Link href="/police-custody-rights" className="text-slate-200 hover:text-white transition-colors font-medium">
                     Police Custody Rights
                   </Link>
                 </li>
                 <li>
-                  <Link href="/police-interview-rights" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
+                  <Link href="/police-interview-rights" className="text-slate-200 hover:text-white transition-colors font-medium">
                     Police Interview Rights
                   </Link>
                 </li>
                 <li>
-                  <Link href="/preparing-for-police-interview" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
+                  <Link href="/preparing-for-police-interview" className="text-slate-200 hover:text-white transition-colors font-medium">
                     Preparing for Interview
                   </Link>
                 </li>
                 <li>
-                  <Link href="/what-to-expect-at-a-police-interview-in-kent" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
+                  <Link href="/what-to-expect-at-a-police-interview-in-kent" className="text-slate-200 hover:text-white transition-colors font-medium">
                     What to Expect
                   </Link>
                 </li>
                 <li>
-                  <Link href="/importance-of-early-legal-advice" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
+                  <Link href="/importance-of-early-legal-advice" className="text-slate-200 hover:text-white transition-colors font-medium">
                     Early Legal Advice
                   </Link>
                 </li>
                 <li>
-                  <Link href="/vulnerable-adults-in-custody" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
+                  <Link href="/vulnerable-adults-in-custody" className="text-slate-200 hover:text-white transition-colors font-medium">
                     Vulnerable Adults
                   </Link>
                 </li>
                 <li>
-                  <Link href="/refusingpoliceinterview" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
+                  <Link href="/refusingpoliceinterview" className="text-slate-200 hover:text-white transition-colors font-medium">
                     Refusing Interview
                   </Link>
                 </li>
                 <li>
-                  <Link href="/policeinterviewhelp" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
+                  <Link href="/policeinterviewhelp" className="text-slate-200 hover:text-white transition-colors font-medium">
                     Interview Help
                   </Link>
                 </li>
                 <li>
-                  <Link href="/what-happens-if-ignore-police-interview" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
+                  <Link href="/what-happens-if-ignore-police-interview" className="text-slate-200 hover:text-white transition-colors font-medium">
                     Ignoring Interview
                   </Link>
                 </li>
                 <li>
-                  <Link href="/arrestednow" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
+                  <Link href="/arrestednow" className="text-slate-200 hover:text-white transition-colors font-medium">
                     Emergency Help (Family)
                   </Link>
                 </li>
                 <li>
-                  <Link href="/servicesvoluntaryinterviews" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
+                  <Link href="/servicesvoluntaryinterviews" className="text-slate-200 hover:text-white transition-colors font-medium">
                     Voluntary Interview
                   </Link>
                 </li>
@@ -209,21 +209,21 @@ export default function Footer() {
           </div>
           
           <div>
-            <h3 className="font-bold text-slate-900 mb-4 text-lg text-white">Contact</h3>
+            <h3 className="font-bold mb-4 text-lg text-white">Contact</h3>
             <address className="not-italic">
               <ul className="space-y-3">
                 <li>
-                  <a href="tel:01732247427" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
+                  <a href="tel:01732247427" className="text-slate-200 hover:text-white transition-colors font-medium">
                     01732 247427
                   </a>
                 </li>
                 <li>
-                  <a href="mailto:robertcashman@defencelegalservices.co.uk" className="text-slate-600 hover:text-blue-600 transition-colors font-medium break-all text-white">
+                  <a href="mailto:robertcashman@defencelegalservices.co.uk" className="text-slate-200 hover:text-white transition-colors font-medium break-all">
                     robertcashman@defencelegalservices.co.uk
                   </a>
                 </li>
                 <li>
-                  <a href="sms:07535494446?body=I%20need%20police%20station%20representation" className="text-blue-600 hover:text-blue-700 flex items-center gap-2 font-medium transition-colors">
+                  <a href="sms:07535494446?body=I%20need%20police%20station%20representation" className="text-blue-300 hover:text-blue-200 flex items-center gap-2 font-medium transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-message-circle w-4 h-4">
                       <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path>
                     </svg>
@@ -233,45 +233,45 @@ export default function Footer() {
               </ul>
             </address>
             <div className="mt-6">
-              <h3 className="font-bold text-slate-900 mb-2 text-sm text-white">Legal & Compliance</h3>
+              <h3 className="font-bold mb-2 text-sm text-white">Legal & Compliance</h3>
               <ul className="space-y-2 text-sm">
                 <li>
-                  <Link href="/terms-and-conditions" className="text-slate-600 hover:text-blue-600 transition-colors text-white">
+                  <Link href="/terms-and-conditions" className="text-slate-200 hover:text-white transition-colors">
                     Website Terms of Use
                   </Link>
                 </li>
                 <li>
-                  <Link href="/privacy" className="text-slate-600 hover:text-blue-600 transition-colors text-white">
+                  <Link href="/privacy" className="text-slate-200 hover:text-white transition-colors">
                     Website Privacy Policy
                   </Link>
                 </li>
                 <li>
-                  <Link href="/cookies" className="text-slate-600 hover:text-blue-600 transition-colors text-white">
+                  <Link href="/cookies" className="text-slate-200 hover:text-white transition-colors">
                     Cookies Policy
                   </Link>
                 </li>
                 <li>
-                  <Link href="/accessibility" className="text-slate-600 hover:text-blue-600 transition-colors text-white">
+                  <Link href="/accessibility" className="text-slate-200 hover:text-white transition-colors">
                     Accessibility
                   </Link>
                 </li>
                 <li>
-                  <Link href="/gdpr" className="text-slate-600 hover:text-blue-600 transition-colors text-white">
+                  <Link href="/gdpr" className="text-slate-200 hover:text-white transition-colors">
                     GDPR
                   </Link>
                 </li>
                 <li>
-                  <Link href="/attendanceterms" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
+                  <Link href="/attendanceterms" className="text-slate-200 hover:text-white transition-colors font-medium">
                     Agency Terms & Privacy
                   </Link>
                 </li>
                 <li>
-                  <Link href="/servicerates" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
+                  <Link href="/servicerates" className="text-slate-200 hover:text-white transition-colors font-medium">
                     Agency Service Rates
                   </Link>
                 </li>
                 <li>
-                  <Link href="/complaints" className="text-slate-600 hover:text-blue-600 transition-colors text-white">
+                  <Link href="/complaints" className="text-slate-200 hover:text-white transition-colors">
                     Complaints
                   </Link>
                 </li>
@@ -280,64 +280,64 @@ export default function Footer() {
           </div>
         </div>
         
-        <div className="border-t border-slate-200 mt-12 pt-8 text-center text-sm text-slate-500">
+        <div className="border-t border-slate-700 mt-12 pt-8 text-center text-sm text-slate-300">
           <div className="mb-6 max-w-4xl mx-auto p-5 bg-slate-50 rounded-lg border border-slate-200 shadow-sm">
-            <p className="leading-relaxed text-slate-800 mb-3">
+            <p className="leading-relaxed text-slate-900 mb-3">
               <strong>Robert Cashman is a criminal defence solicitor. All legal services are provided through Tuckers Solicitors, which is authorised and regulated by the Solicitors Regulation Authority (SRA ID: 127795).</strong>
             </p>
-            <p className="leading-relaxed text-slate-600 text-sm">
-              <span className="font-semibold text-slate-700">Accredited Court & Police Station Duty Solicitor:</span> Accredited Court & Police Station Duty Solicitor: Police Station Agent specialises in duty solicitor-led police station representation across Kent.
+            <p className="leading-relaxed text-slate-800 text-sm">
+              <span className="font-semibold text-slate-900">Accredited Court & Police Station Duty Solicitor:</span> Accredited Court & Police Station Duty Solicitor: Police Station Agent specialises in duty solicitor-led police station representation across Kent.
             </p>
           </div>
           <p className="mb-4 font-medium text-white">
             Copyright {currentYear} by Defence Legal Services Limited T/A Police Station Agent. Company No. 09900871
           </p>
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-4">
-            <Link href="/privacy" className="hover:text-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-600 rounded px-1 text-white">
+            <Link href="/privacy" className="hover:text-blue-300 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-600 rounded px-1 text-white">
               Web Privacy
             </Link>
-            <span className="hidden md:inline text-slate-500" aria-hidden="true">|</span>
-            <Link href="/terms-and-conditions" className="hover:text-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-600 rounded px-1 text-white">
+            <span className="hidden md:inline text-slate-400" aria-hidden="true">|</span>
+            <Link href="/terms-and-conditions" className="hover:text-blue-300 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-600 rounded px-1 text-white">
               Web Terms
             </Link>
-            <span className="hidden md:inline text-slate-500" aria-hidden="true">|</span>
-            <Link href="/attendanceterms" className="hover:text-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-600 rounded px-1 text-white">
+            <span className="hidden md:inline text-slate-400" aria-hidden="true">|</span>
+            <Link href="/attendanceterms" className="hover:text-blue-300 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-600 rounded px-1 text-white">
               Agency Terms
             </Link>
-            <span className="hidden md:inline text-slate-500" aria-hidden="true">|</span>
-            <Link href="/servicerates" className="hover:text-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-600 rounded px-1 text-white">
+            <span className="hidden md:inline text-slate-400" aria-hidden="true">|</span>
+            <Link href="/servicerates" className="hover:text-blue-300 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-600 rounded px-1 text-white">
               Agency Rates
             </Link>
-            <span className="hidden md:inline text-slate-500" aria-hidden="true">|</span>
-            <Link href="/cookies" className="hover:text-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-600 rounded px-1 text-white">
+            <span className="hidden md:inline text-slate-400" aria-hidden="true">|</span>
+            <Link href="/cookies" className="hover:text-blue-300 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-600 rounded px-1 text-white">
               Cookies
             </Link>
-            <span className="hidden md:inline text-slate-500" aria-hidden="true">|</span>
-            <Link href="/complaints" className="hover:text-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-600 rounded px-1 text-white">
+            <span className="hidden md:inline text-slate-400" aria-hidden="true">|</span>
+            <Link href="/complaints" className="hover:text-blue-300 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-600 rounded px-1 text-white">
               Complaints
             </Link>
-            <span className="hidden md:inline text-slate-500" aria-hidden="true">|</span>
-            <Link href="/admin" className="text-slate-400 hover:text-[#CBA135] transition-colors focus:outline-none focus:ring-2 focus:ring-blue-600 rounded px-1 flex items-center gap-1 text-xs">
+            <span className="hidden md:inline text-slate-400" aria-hidden="true">|</span>
+            <Link href="/admin" className="text-slate-300 hover:text-[#CBA135] transition-colors focus:outline-none focus:ring-2 focus:ring-blue-600 rounded px-1 flex items-center gap-1 text-xs">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-shield w-3 h-3">
                 <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path>
               </svg>
               Admin
             </Link>
           </div>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-slate-300">
             Registered Office: Greenacre, London Road, West Kingsdown, Sevenoaks, Kent, TN15 6ER
           </p>
-          <div className="mt-6 pt-6 border-t border-slate-100 flex flex-wrap justify-center gap-4 text-xs text-slate-400">
+          <div className="mt-6 pt-6 border-t border-slate-700 flex flex-wrap justify-center gap-4 text-xs text-slate-300">
             <span>Partners:</span>
-            <a href="https://policestationrepukdirectory.com/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition-colors">
+            <a href="https://policestationrepukdirectory.com/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-300 transition-colors">
               Find a Police Station Rep
             </a>
             <span>•</span>
-            <a href="https://policestationrepuk.com/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition-colors">
+            <a href="https://policestationrepuk.com/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-300 transition-colors">
               Police Station Rep UK
             </a>
             <span>•</span>
-            <a href="https://policestationrepuk.com/StationsDirectory" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition-colors">
+            <a href="https://policestationrepuk.com/StationsDirectory" target="_blank" rel="noopener noreferrer" className="hover:text-blue-300 transition-colors">
               UK Custody Suites
             </a>
           </div>

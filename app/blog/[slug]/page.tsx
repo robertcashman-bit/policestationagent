@@ -5,6 +5,8 @@ import { notFound } from 'next/navigation';
 import db from '@/lib/db';
 import type { Metadata } from 'next';
 import { JsonLd } from '@/components/JsonLd';
+import BlogPromotionalBlock from '@/components/BlogPromotionalBlock';
+import { SITE_URL, SITE_DOMAIN } from '@/config/site';
 
 interface PageProps {
   params: {
@@ -18,6 +20,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     meta_title: string | null;
     meta_description: string | null;
     excerpt: string | null;
+    published_at: string | null;
   } | undefined;
 
   if (!post) {
@@ -26,19 +29,37 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://policestationagent.com';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_URL;
+  const description = post.meta_description || post.excerpt || post.title;
   
   return {
     title: post.meta_title || post.title,
-    description: post.meta_description || post.excerpt || undefined,
+    description,
     alternates: {
       canonical: `${siteUrl}/blog/${params.slug}`,
+    },
+    openGraph: {
+      title: post.meta_title || post.title,
+      description,
+      url: `${siteUrl}/blog/${params.slug}`,
+      siteName: 'Police Station Agent',
+      type: 'article',
+      publishedTime: post.published_at || undefined,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.meta_title || post.title,
+      description,
+    },
+    robots: {
+      index: true,
+      follow: true,
     },
   };
 }
 
 export default function BlogPostPage({ params }: PageProps) {
-  const post = db.prepare('SELECT * FROM blog_posts WHERE slug = ? AND published = 1').get(params.slug) as {
+  let post: {
     id: number;
     title: string;
     slug: string;
@@ -48,11 +69,27 @@ export default function BlogPostPage({ params }: PageProps) {
     created_at: string;
   } | undefined;
 
+  try {
+    post = db.prepare('SELECT * FROM blog_posts WHERE slug = ? AND published = 1').get(params.slug) as {
+      id: number;
+      title: string;
+      slug: string;
+      content: string;
+      excerpt: string | null;
+      published_at: string | null;
+      created_at: string;
+    } | undefined;
+  } catch (error) {
+    // Database not available - return 404
+    console.error('Database error fetching blog post:', error);
+    notFound();
+  }
+
   if (!post) {
     notFound();
   }
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://policestationagent.com';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_URL;
   
   const blogPostingSchema = {
     '@context': 'https://schema.org',
@@ -137,6 +174,8 @@ export default function BlogPostPage({ params }: PageProps) {
                 dangerouslySetInnerHTML={{ __html: post.content }} 
                 className="prose prose-lg max-w-none"
               />
+              {/* Promotional Block - Mandatory on all blog posts */}
+              <BlogPromotionalBlock />
             </article>
           </div>
         </section>

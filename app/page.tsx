@@ -1,7 +1,8 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import type { Metadata } from 'next';
-import { SITE_DOMAIN } from '@/config/site';
+import { SITE_DOMAIN, SITE_URL } from '@/config/site';
+import { FAQPage } from '@/components/StructuredData';
 
 export const metadata: Metadata = {
   title: "Duty Solicitor Kent 24/7 | 01732 247427 | FREE Police Station Advice",
@@ -19,8 +20,30 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_URL;
+  
+  const faqItems = [
+    {
+      question: "Is police station legal advice free in Kent?",
+      answer: "Yes. Everyone arrested or invited for a voluntary interview in Kent is entitled to free legal advice at the police station. This is a statutory right under PACE 1984 and is not means-tested. Legal Aid covers the cost of a duty solicitor attending the police station."
+    },
+    {
+      question: "How quickly can a police station agent attend in Kent?",
+      answer: "We aim to attend any Kent custody suite within 45 minutes. Our extended hours service covers all Kent police stations 24/7, including weekends and bank holidays."
+    },
+    {
+      question: "Which police stations do you cover in Kent?",
+      answer: "We cover all Kent custody suites including Medway, Maidstone, Gravesend, Canterbury, Tonbridge, Folkestone, Ashford, Sittingbourne, Margate, Dover, and Sevenoaks."
+    },
+    {
+      question: "What is the difference between a duty solicitor and a police station agent?",
+      answer: "A duty solicitor is a qualified solicitor on the Legal Aid duty rota. A police station agent is an accredited representative who attends on behalf of a solicitor's firm. Robert Cashman is both a qualified solicitor and accredited duty solicitor."
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
+      <FAQPage items={faqItems} />
       <Header />
       <main className="flex-grow relative" id="main-content" role="main" aria-live="polite">
         <div className="bg-slate-50 min-h-screen">

@@ -284,6 +284,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     {
+      url: `${baseUrl}/coverage/police-stations`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/coverage/areas`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
       url: `${baseUrl}/christmashours`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
@@ -428,6 +440,49 @@ export default function sitemap(): MetadataRoute.Sitemap {
     console.warn('Skipping dynamic police stations in sitemap (build time)');
   }
 
+  // Coverage police station pages (static)
+  const coverageStationSlugs = [
+    'medway',
+    'north-kent-gravesend',
+    'canterbury',
+    'folkestone',
+    'maidstone',
+    'tonbridge',
+    'ashford',
+    'dover',
+    'margate',
+    'sevenoaks',
+    'sittingbourne',
+    'swanley',
+    'tunbridge-wells',
+    'coldharbour',
+  ];
+  
+  const coverageStationPages: MetadataRoute.Sitemap = coverageStationSlugs.map((slug) => ({
+    url: `${baseUrl}/coverage/police-stations/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly' as const,
+    priority: 0.8,
+  }));
+
+  // Coverage area pages (static)
+  const coverageAreaSlugs = [
+    'medway',
+    'north-kent',
+    'east-kent',
+    'mid-kent',
+    'west-kent',
+    'north-west-kent',
+    'maidstone',
+  ];
+  
+  const coverageAreaPages: MetadataRoute.Sitemap = coverageAreaSlugs.map((slug) => ({
+    url: `${baseUrl}/coverage/areas/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly' as const,
+    priority: 0.8,
+  }));
+
   // Services (with error handling for build time)
   let servicePages: MetadataRoute.Sitemap = [];
   try {
@@ -481,6 +536,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     console.warn('Skipping dynamic blog posts in sitemap (build time)');
   }
 
-  return [...staticPages, ...stationPages, ...servicePages, ...blogPages];
+  return [...staticPages, ...stationPages, ...servicePages, ...blogPages, ...coverageStationPages, ...coverageAreaPages];
 }
 

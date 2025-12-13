@@ -19,3 +19,4 @@ export default function PostContent() {
   return <PostDetail slug={slug} />;
 }
 
+

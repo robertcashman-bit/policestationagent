@@ -51,6 +51,12 @@ const nextConfig = {
         destination: '/faq',
         permanent: true,
       },
+      // Redirect legacy criminaldefencekent blog routes to correct /blog routes
+      {
+        source: '/criminaldefencekent/blog/:slug*',
+        destination: '/blog/:slug*',
+        permanent: true,
+      },
     ];
   },
   // Headers for cache control and security
