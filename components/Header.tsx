@@ -253,6 +253,7 @@ export default function Header() {
                   <Link href="/police-custody-rights" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Police Custody Rights</Link>
                   <Link href="/police-interview-rights" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Police Interview Rights</Link>
                   <Link href="/preparing-for-police-interview" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Preparing for Interview</Link>
+                  {/* Navigation links updated */}
                   <Link href="/what-to-expect-at-a-police-interview-in-kent" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">What to Expect</Link>
                   <Link href="/importance-of-early-legal-advice" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Early Legal Advice</Link>
                   <Link href="/vulnerable-adults-in-custody" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Vulnerable Adults</Link>
