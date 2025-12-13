@@ -241,25 +241,13 @@ export default function Header() {
               </button>
               {informationOpen && (
                 <div 
-                  className="absolute top-full left-0 mt-1 w-72 bg-white rounded-lg shadow-xl border border-slate-200 py-2 z-50"
+                  className="absolute top-full left-0 mt-1 w-64 bg-white rounded-lg shadow-xl border border-slate-200 py-2 z-50"
                   onMouseEnter={() => {
                     cancelDelayedClose(informationTimeoutRef);
                     setInformationOpen(true);
                   }}
                   onMouseLeave={() => handleDelayedClose(setInformationOpen, informationTimeoutRef, 300)}
                 >
-                  <Link href="/faq" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 font-semibold">FAQ</Link>
-                  <Link href="/your-rights-in-custody" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Your Rights in Custody</Link>
-                  <Link href="/police-custody-rights" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Police Custody Rights</Link>
-                  <Link href="/police-interview-rights" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Police Interview Rights</Link>
-                  <Link href="/preparing-for-police-interview" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Preparing for Interview</Link>
-                  {/* Navigation links updated */}
-                  <Link href="/what-to-expect-at-a-police-interview-in-kent" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">What to Expect</Link>
-                  <Link href="/importance-of-early-legal-advice" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Early Legal Advice</Link>
-                  <Link href="/vulnerable-adults-in-custody" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Vulnerable Adults</Link>
-                  <Link href="/freelegaladvice" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Is Legal Advice Free?</Link>
-                  <Link href="/arrestednow" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Emergency Help (Family)</Link>
-                  <div className="border-t border-slate-200 my-1"></div>
                   <Link href="/privacy" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Privacy Policy</Link>
                   <Link href="/cookies" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Cookies Policy</Link>
                   <Link href="/accessibility" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Accessibility</Link>
@@ -387,10 +375,13 @@ export default function Header() {
             <Link href="/arrestednow" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Emergency Help</Link>
             <Link href="/emergency-police-station-representation" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Emergency Representation</Link>
             
-            <div className="px-4 py-2 text-slate-500 text-sm font-semibold mt-2">Information</div>
-            <Link href="/faq" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>FAQ</Link>
-            <Link href="/freelegaladvice" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Is Legal Advice Free?</Link>
-            <Link href="/canwehelp" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Can We Help?</Link>
+            <div className="px-4 py-2 text-slate-500 text-sm font-semibold mt-2">Legal & Compliance</div>
+            <Link href="/privacy" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Privacy Policy</Link>
+            <Link href="/cookies" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Cookies Policy</Link>
+            <Link href="/accessibility" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Accessibility</Link>
+            <Link href="/complaints" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Complaints</Link>
+            <Link href="/gdpr" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>GDPR</Link>
+            <Link href="/terms-and-conditions" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Terms & Conditions</Link>
             
             <Link href="/contact" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium mt-2" onClick={() => setMobileMenuOpen(false)}>Contact</Link>
             <a 

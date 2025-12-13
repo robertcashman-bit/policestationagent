@@ -6,6 +6,8 @@ const nextConfig = {
   // SEO optimization
   poweredByHeader: false,
   compress: true,
+  // Production optimizations
+  productionBrowserSourceMaps: false,
   // Redirects for old routes to new kebab-case routes
   async redirects() {
     return [
@@ -48,6 +50,29 @@ const nextConfig = {
         source: '/FAQ',
         destination: '/faq',
         permanent: true,
+      },
+    ];
+  },
+  // Headers for cache control and security
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'X-DNS-Prefetch-Control',
+            value: 'on'
+          },
+        ],
+      },
+      {
+        source: '/api/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, s-maxage=0, stale-while-revalidate=60',
+          },
+        ],
       },
     ];
   },

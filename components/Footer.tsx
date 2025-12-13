@@ -130,6 +130,56 @@ export default function Footer() {
             <nav aria-label="Footer help links">
               <ul className="space-y-3">
                 <li>
+                  <Link href="/faq" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
+                    FAQ
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/canwehelp" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
+                    Can We Help?
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/freelegaladvice" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
+                    Is Legal Advice Free?
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/your-rights-in-custody" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
+                    Your Rights in Custody
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/police-custody-rights" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
+                    Police Custody Rights
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/police-interview-rights" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
+                    Police Interview Rights
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/preparing-for-police-interview" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
+                    Preparing for Interview
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/what-to-expect-at-a-police-interview-in-kent" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
+                    What to Expect
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/importance-of-early-legal-advice" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
+                    Early Legal Advice
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/vulnerable-adults-in-custody" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
+                    Vulnerable Adults
+                  </Link>
+                </li>
+                <li>
                   <Link href="/refusingpoliceinterview" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
                     Refusing Interview
                   </Link>
@@ -147,11 +197,6 @@ export default function Footer() {
                 <li>
                   <Link href="/arrestednow" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
                     Emergency Help (Family)
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/freelegaladvice" className="text-slate-600 hover:text-blue-600 transition-colors font-medium text-white">
-                    Is it Free?
                   </Link>
                 </li>
                 <li>
@@ -188,7 +233,7 @@ export default function Footer() {
               </ul>
             </address>
             <div className="mt-6">
-              <h3 className="font-bold text-slate-900 mb-2 text-sm text-white">Legal</h3>
+              <h3 className="font-bold text-slate-900 mb-2 text-sm text-white">Legal & Compliance</h3>
               <ul className="space-y-2 text-sm">
                 <li>
                   <Link href="/terms-and-conditions" className="text-slate-600 hover:text-blue-600 transition-colors text-white">
@@ -198,6 +243,21 @@ export default function Footer() {
                 <li>
                   <Link href="/privacy" className="text-slate-600 hover:text-blue-600 transition-colors text-white">
                     Website Privacy Policy
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/cookies" className="text-slate-600 hover:text-blue-600 transition-colors text-white">
+                    Cookies Policy
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/accessibility" className="text-slate-600 hover:text-blue-600 transition-colors text-white">
+                    Accessibility
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/gdpr" className="text-slate-600 hover:text-blue-600 transition-colors text-white">
+                    GDPR
                   </Link>
                 </li>
                 <li>
