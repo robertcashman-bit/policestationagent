@@ -4,7 +4,7 @@ import BlogPromotionalBlock from '@/components/BlogPromotionalBlock';
 import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import { getPostBySlug, formatBlogDate } from '@/lib/blog';
+import { getPostBySlug, formatBlogDate, generateExcerpt } from '@/lib/blog';
 import { SITE_URL } from '@/config/site';
 import type { Metadata } from 'next';
 import { JsonLd } from '@/components/JsonLd';
@@ -27,15 +27,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_URL;
   
+  const displayTitle = post.meta_title || post.title || 'Untitled Post';
+  const displayDescription = post.meta_description || post.excerpt || generateExcerpt(post.content, 160) || undefined;
+  
   return {
-    title: post.meta_title || post.title,
-    description: post.meta_description || post.excerpt || undefined,
+    title: displayTitle,
+    description: displayDescription,
     alternates: {
       canonical: `${siteUrl}/blog/${post.slug}`,
     },
     openGraph: {
-      title: post.meta_title || post.title,
-      description: post.meta_description || post.excerpt || undefined,
+      title: displayTitle,
+      description: displayDescription,
       url: `${siteUrl}/blog/${post.slug}`,
       siteName: 'Police Station Agent',
       type: 'article',
@@ -55,11 +58,14 @@ export default function BlogPostPage({ params }: PageProps) {
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_URL;
   
+  const displayTitle = post.title || 'Untitled Post';
+  const displayExcerpt = post.excerpt || generateExcerpt(post.content, 160) || post.content.substring(0, 160);
+  
   const blogPostingSchema = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
-    headline: post.title,
-    description: post.excerpt || post.content.substring(0, 160),
+    headline: displayTitle,
+    description: displayExcerpt,
     datePublished: post.published_at || post.created_at,
     dateModified: post.updated_at || post.published_at || post.created_at,
     author: {
@@ -110,7 +116,7 @@ export default function BlogPostPage({ params }: PageProps) {
                     </svg>
                     Back to Blog
                   </Link>
-                  <h1 id="article-title" className="text-4xl md:text-5xl font-bold mb-6 text-white">{post.title}</h1>
+                  <h1 id="article-title" className="text-4xl md:text-5xl font-bold mb-6 text-white">{post.title || 'Untitled Post'}</h1>
                   {post.published_at && (
                     <div className="flex items-center gap-4 text-white/90">
                       <div className="flex items-center gap-2">
@@ -152,7 +158,7 @@ export default function BlogPostPage({ params }: PageProps) {
                   </svg>
                   Back to Blog
                 </Link>
-                <h1 id="article-title" className="text-4xl md:text-5xl font-bold mb-6 text-white">{post.title}</h1>
+                <h1 id="article-title" className="text-4xl md:text-5xl font-bold mb-6 text-white">{post.title || 'Untitled Post'}</h1>
                 {post.published_at && (
                   <div className="flex items-center gap-4 text-blue-100">
                     <div className="flex items-center gap-2">

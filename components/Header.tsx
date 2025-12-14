@@ -317,16 +317,23 @@ export default function Header() {
                   {blogPosts.length > 0 && (
                     <div className="py-1">
                       {/* Show ALL blog posts - no artificial limit */}
-                      {blogPosts.map((post) => (
-                        <Link
-                          key={post.id}
-                          href={`/blog/${post.slug}`}
-                          className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm truncate"
-                          title={post.title}
-                        >
-                          {post.title}
-                        </Link>
-                      ))}
+                      {blogPosts.map((post) => {
+                        // Ensure title is never blank - use fallback if needed
+                        const displayTitle = post.title && post.title.trim() 
+                          ? post.title.trim() 
+                          : 'Untitled Post';
+                        
+                        return (
+                          <Link
+                            key={post.id}
+                            href={`/blog/${post.slug}`}
+                            className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm truncate"
+                            title={displayTitle}
+                          >
+                            {displayTitle}
+                          </Link>
+                        );
+                      })}
                     </div>
                   )}
                 </div>
@@ -421,17 +428,24 @@ export default function Header() {
             {/* Show ALL blog posts in mobile - scrollable container */}
             {blogPosts.length > 0 && (
               <div className="max-h-60 overflow-y-auto border-l-2 border-blue-200 ml-6">
-                {blogPosts.map((post) => (
-                  <Link
-                    key={post.id}
-                    href={`/blog/${post.slug}`}
-                    className="block px-4 py-2 text-slate-700 hover:text-blue-600 hover:bg-slate-50 text-sm truncate"
-                    onClick={() => setMobileMenuOpen(false)}
-                    title={post.title}
-                  >
-                    {post.title}
-                  </Link>
-                ))}
+                {blogPosts.map((post) => {
+                  // Ensure title is never blank - use fallback if needed
+                  const displayTitle = post.title && post.title.trim() 
+                    ? post.title.trim() 
+                    : 'Untitled Post';
+                  
+                  return (
+                    <Link
+                      key={post.id}
+                      href={`/blog/${post.slug}`}
+                      className="block px-4 py-2 text-slate-700 hover:text-blue-600 hover:bg-slate-50 text-sm truncate"
+                      onClick={() => setMobileMenuOpen(false)}
+                      title={displayTitle}
+                    >
+                      {displayTitle}
+                    </Link>
+                  );
+                })}
               </div>
             )}
             <div className="px-4 py-2 text-slate-500 text-sm font-semibold mt-2">Articles & Help</div>

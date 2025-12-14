@@ -53,33 +53,67 @@ export default function BlogPage() {
                     >
                       <Link
                         href={`/blog/${post.slug}`}
-                        className="block overflow-hidden h-48 relative"
+                        className="block overflow-hidden relative aspect-[16/9] bg-gradient-to-br from-slate-100 to-slate-200"
                       >
                         {post.image ? (
                           <Image
                             src={post.image}
-                            alt={post.title}
+                            alt={post.title || 'Blog post image'}
                             fill
                             className="object-cover transform group-hover:scale-105 transition-transform duration-500"
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                           />
                         ) : (
-                          <div className="w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
-                            <span className="text-slate-400 font-medium">No Image</span>
+                          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-100 via-slate-100 to-slate-200">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="48"
+                              height="48"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              className="text-slate-400"
+                            >
+                              <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+                              <circle cx="9" cy="9" r="2"></circle>
+                              <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path>
+                            </svg>
                           </div>
                         )}
                       </Link>
                       <div className="flex flex-col flex-grow p-5">
                         <h3 className="text-xl font-bold text-slate-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
                           <Link href={`/blog/${post.slug}`}>
-                            {post.title}
+                            {post.title || 'Untitled Post'}
                           </Link>
                         </h3>
-                        {post.excerpt && (
-                          <div className="text-sm text-slate-500 mb-4 line-clamp-3 flex-grow">
-                            {post.excerpt}
-                          </div>
-                        )}
+                        <div className="text-sm text-slate-500 mb-4 line-clamp-3 flex-grow min-h-[3rem]">
+                          {post.excerpt || 'No excerpt available.'}
+                        </div>
+                        <Link
+                          href={`/blog/${post.slug}`}
+                          className="text-sm font-medium text-blue-600 hover:text-blue-700 mt-auto inline-flex items-center gap-1 group/link"
+                        >
+                          Read more
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="group-hover/link:translate-x-1 transition-transform"
+                          >
+                            <path d="M5 12h14"></path>
+                            <path d="m12 5 7 7-7 7"></path>
+                          </svg>
+                        </Link>
                         <div className="pt-4 border-t border-slate-50 flex items-center justify-between mt-auto">
                           <div className="flex items-center gap-2 text-xs text-slate-500">
                             <svg

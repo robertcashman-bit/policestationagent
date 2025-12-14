@@ -110,6 +110,53 @@ export function deriveSlugIfNeeded(existingSlug: string | null | undefined, titl
 }
 
 // ============================================================================
+// EXCERPT GENERATION (FROM HTML CONTENT)
+// ============================================================================
+
+/**
+ * Generates an excerpt from HTML content by stripping tags and taking first N characters.
+ * 
+ * @param content The HTML content
+ * @param maxLength Maximum length of excerpt (default: 160)
+ * @returns Plain text excerpt, or null if content is empty
+ */
+export function generateExcerpt(content: string | null, maxLength: number = 160): string | null {
+  if (!content || typeof content !== 'string') {
+    return null;
+  }
+
+  // Strip HTML tags
+  const textOnly = content
+    .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '') // Remove script tags
+    .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '') // Remove style tags
+    .replace(/<[^>]+>/g, '') // Remove all HTML tags
+    .replace(/&nbsp;/g, ' ') // Replace &nbsp; with space
+    .replace(/&[a-z]+;/gi, ' ') // Replace HTML entities
+    .replace(/\s+/g, ' ') // Collapse whitespace
+    .trim();
+
+  if (!textOnly || textOnly.length === 0) {
+    return null;
+  }
+
+  // Take first maxLength characters
+  if (textOnly.length <= maxLength) {
+    return textOnly;
+  }
+
+  // Truncate at word boundary
+  const truncated = textOnly.substring(0, maxLength);
+  const lastSpace = truncated.lastIndexOf(' ');
+  
+  if (lastSpace > maxLength * 0.7) {
+    // If we found a space reasonably close to the end, cut there
+    return truncated.substring(0, lastSpace) + '...';
+  }
+
+  return truncated + '...';
+}
+
+// ============================================================================
 // IMAGE EXTRACTION (FROM HTML CONTENT)
 // ============================================================================
 
@@ -302,16 +349,28 @@ export function getPublishedBlogPosts(): BlogPostSummary[] {
       created_at: string;
     }>;
 
-    // Normalize slugs and extract images for each post
-    const normalizedPosts: BlogPostSummary[] = posts.map(post => ({
-      id: post.id,
-      title: post.title,
-      slug: deriveSlugIfNeeded(post.slug, post.title),
-      excerpt: post.excerpt,
-      published_at: post.published_at,
-      created_at: post.created_at,
-      image: extractFirstImage(post.content),
-    }));
+    // Normalize slugs, extract images, and generate excerpts for each post
+    const normalizedPosts: BlogPostSummary[] = posts.map(post => {
+      // Generate excerpt if missing
+      const excerpt = post.excerpt && post.excerpt.trim() 
+        ? post.excerpt.trim() 
+        : generateExcerpt(post.content, 160);
+
+      // Ensure title is never empty
+      const title = post.title && post.title.trim() 
+        ? post.title.trim() 
+        : 'Untitled Post';
+
+      return {
+        id: post.id,
+        title,
+        slug: deriveSlugIfNeeded(post.slug, post.title || title),
+        excerpt,
+        published_at: post.published_at,
+        created_at: post.created_at,
+        image: extractFirstImage(post.content),
+      };
+    });
 
     console.log(`[blog.ts] getPublishedBlogPosts: Found ${normalizedPosts.length} published posts`);
 
