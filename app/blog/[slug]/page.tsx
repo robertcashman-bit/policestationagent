@@ -94,10 +94,10 @@ export default function BlogPostPage({ params }: PageProps) {
       <main className="flex-grow relative" id="main-content" role="main" aria-live="polite">
         {/* Featured Image Hero Section */}
         {post.image ? (
-          <section className="relative h-[60vh] min-h-[400px] max-h-[600px] overflow-hidden" aria-labelledby="article-title">
+          <section className="relative h-[40vh] min-h-[300px] max-h-[450px] overflow-hidden" aria-labelledby="article-title">
             <Image
               src={post.image}
-              alt={post.title}
+              alt={post.title || 'Blog post image'}
               fill
               priority
               className="object-cover"
