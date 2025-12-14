@@ -51,6 +51,50 @@ export function getFormattedVersion(): string {
   return `v ${version}`;
 }
 
+/**
+ * Get the last update date and time.
+ * Uses Vercel deployment timestamp if available, otherwise uses build time.
+ * 
+ * @returns Formatted date/time string (e.g., "14 Dec 2025, 15:30 GMT")
+ */
+export function getLastUpdateDateTime(): string {
+  // Vercel provides deployment timestamp (ISO format)
+  const vercelDeploymentTime = process.env.VERCEL_DEPLOYMENT_TIME;
+  if (vercelDeploymentTime) {
+    try {
+      const date = new Date(vercelDeploymentTime);
+      return formatDateTime(date);
+    } catch {
+      // Fall through to build time
+    }
+  }
+
+  // Use build time as fallback
+  const buildTime = new Date();
+  return formatDateTime(buildTime);
+}
+
+/**
+ * Format date and time for display.
+ * 
+ * @param date - Date object to format
+ * @returns Formatted string (e.g., "14 Dec 2025, 15:30 GMT")
+ */
+function formatDateTime(date: Date): string {
+  const day = date.getDate();
+  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const month = monthNames[date.getMonth()];
+  const year = date.getFullYear();
+  
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  
+  // Get timezone abbreviation (simplified - shows GMT/UTC)
+  const timezone = date.getTimezoneOffset() === 0 ? 'GMT' : 'GMT';
+  
+  return `${day} ${month} ${year}, ${hours}:${minutes} ${timezone}`;
+}
+
 
 
 

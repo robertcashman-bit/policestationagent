@@ -1,9 +1,10 @@
 import Link from 'next/link';
-import { getFormattedVersion } from '@/lib/version';
+import { getFormattedVersion, getLastUpdateDateTime } from '@/lib/version';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
   const appVersion = getFormattedVersion();
+  const lastUpdate = getLastUpdateDateTime();
   
   return (
     <footer className="bg-slate-900 text-white relative z-10">
@@ -329,11 +330,18 @@ export default function Footer() {
           <p className="text-xs text-slate-300">
             Registered Office: Greenacre, London Road, West Kingsdown, Sevenoaks, Kent, TN15 6ER
           </p>
-          {/* Production Version - Discreet Display */}
-          <div className="mt-4 text-center">
-            <span className="text-xs text-slate-500" title={`Build version: ${appVersion}`}>
-              {appVersion}
-            </span>
+          {/* Production Version and Last Update - Discreet Display */}
+          <div className="mt-4 text-center space-y-1">
+            <div>
+              <span className="text-xs text-slate-500" title={`Build version: ${appVersion}`}>
+                Version: {appVersion}
+              </span>
+            </div>
+            <div>
+              <span className="text-xs text-slate-500" title={`Last updated: ${lastUpdate}`}>
+                Last updated: {lastUpdate}
+              </span>
+            </div>
           </div>
           <div className="mt-6 pt-6 border-t border-slate-700 flex flex-wrap justify-center gap-4 text-xs text-slate-300">
             <span>Partners:</span>
