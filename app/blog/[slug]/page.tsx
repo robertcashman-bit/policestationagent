@@ -9,6 +9,10 @@ import { SITE_URL } from '@/config/site';
 import type { Metadata } from 'next';
 import { JsonLd } from '@/components/JsonLd';
 
+// Force dynamic rendering - blog posts are database-driven
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 interface PageProps {
   params: {
     slug: string;
@@ -42,7 +46,26 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       url: `${siteUrl}/blog/${post.slug}`,
       siteName: 'Police Station Agent',
       type: 'article',
-      images: post.image ? [{ url: post.image }] : undefined,
+      images: post.image ? [{ 
+        url: post.image,
+        width: 1200,
+        height: 630,
+        alt: displayTitle,
+      }] : [{
+        url: `${siteUrl}/og-image.jpg`,
+        width: 1200,
+        height: 630,
+        alt: displayTitle,
+      }],
+      publishedTime: post.published_at || undefined,
+      modifiedTime: post.updated_at || post.published_at || undefined,
+      authors: ['Robert Cashman'],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: displayTitle,
+      description: displayDescription,
+      images: post.image ? [post.image] : [`${siteUrl}/og-image.jpg`],
     },
   };
 }
@@ -61,9 +84,10 @@ export default function BlogPostPage({ params }: PageProps) {
   const displayTitle = post.title || 'Untitled Post';
   const displayExcerpt = post.excerpt || generateExcerpt(post.content, 160) || post.content.substring(0, 160);
   
+  // Enhanced structured data: BlogPosting + Article schema
   const blogPostingSchema = {
     '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
+    '@type': ['BlogPosting', 'Article'],
     headline: displayTitle,
     description: displayExcerpt,
     datePublished: post.published_at || post.created_at,
@@ -71,6 +95,7 @@ export default function BlogPostPage({ params }: PageProps) {
     author: {
       '@type': 'Person',
       name: 'Robert Cashman',
+      url: siteUrl,
     },
     publisher: {
       '@type': 'Organization',
@@ -84,7 +109,14 @@ export default function BlogPostPage({ params }: PageProps) {
       '@type': 'WebPage',
       '@id': `${siteUrl}/blog/${post.slug}`,
     },
-    image: post.image ? post.image : undefined,
+    url: `${siteUrl}/blog/${post.slug}`,
+    image: post.image ? [{
+      '@type': 'ImageObject',
+      url: post.image,
+    }] : undefined,
+    articleSection: 'Criminal Defence',
+    keywords: ['police station representation', 'criminal defence', 'legal advice', 'Kent'],
+    inLanguage: 'en-GB',
   };
 
   return (
@@ -94,13 +126,13 @@ export default function BlogPostPage({ params }: PageProps) {
       <main className="flex-grow relative" id="main-content" role="main" aria-live="polite">
         {/* Featured Image Hero Section */}
         {post.image ? (
-          <section className="relative h-[40vh] min-h-[300px] max-h-[450px] overflow-hidden" aria-labelledby="article-title">
+          <section className="relative h-[40vh] min-h-[300px] max-h-[520px] overflow-hidden" aria-labelledby="article-title">
             <Image
               src={post.image}
               alt={post.title || 'Blog post image'}
               fill
               priority
-              className="object-cover"
+              className="object-cover blog-hero-image"
               sizes="100vw"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-end">
@@ -192,7 +224,7 @@ export default function BlogPostPage({ params }: PageProps) {
             <article className="prose prose-lg max-w-none">
               <div 
                 dangerouslySetInnerHTML={{ __html: post.content }} 
-                className="prose prose-lg max-w-none"
+                className="prose prose-lg max-w-none [&_img]:max-w-full [&_img]:h-auto [&_img]:my-6 [&_img]:mx-auto [&_img]:block"
               />
             </article>
             

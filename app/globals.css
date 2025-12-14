@@ -49,10 +49,47 @@ body {
   box-sizing: border-box;
 }
 
-/* Accessibility: Focus styles */
+/* Accessibility: Enhanced focus styles for better visibility */
 *:focus-visible {
   outline: 2px solid #3b82f6;
   outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Ensure all interactive elements have visible focus */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Screen reader only utility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.sr-only:focus,
+.focus\:not-sr-only:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: inherit;
+  margin: inherit;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
 }
 
 /* Skip to main content link */
@@ -268,6 +305,40 @@ a {
 .bg-card .text-card-foreground {
   background-color: #ffffff !important;
   color: #1e293b !important; /* slate-800 for better contrast */
+}
+
+/* Blog image sizing fixes - prevent overflow */
+.prose img,
+.prose div img,
+article img {
+  max-width: 100% !important;
+  height: auto !important;
+  object-fit: contain;
+}
+
+/* Blog card images - enforce aspect ratio */
+.blog-card-image {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  object-fit: cover;
+  overflow: hidden;
+}
+
+/* Blog hero images - controlled height */
+.blog-hero-image {
+  max-height: clamp(360px, 40vh, 520px);
+  width: 100%;
+  object-fit: cover;
+}
+
+/* Inline article images - never overflow container */
+.prose img[src],
+.prose div img[src],
+article img[src] {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1.5rem auto;
 }
 
 @layer utilities {

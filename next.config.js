@@ -84,9 +84,31 @@ const nextConfig = {
         destination: '/blog/:slug*',
         permanent: true,
       },
+      // Redirect legacy /post routes to /blog
+      {
+        source: '/post',
+        destination: '/blog',
+        permanent: true,
+      },
+      {
+        source: '/post/:slug*',
+        destination: '/blog/:slug*',
+        permanent: true,
+      },
+      // Redirect legacy blog archive/tags routes
+      {
+        source: '/blog/archive/:path*',
+        destination: '/blog',
+        permanent: true,
+      },
+      {
+        source: '/blog/tags/:path*',
+        destination: '/blog',
+        permanent: true,
+      },
     ];
   },
-  // Headers for cache control and security
+  // Headers for cache control, security, and performance
   async headers() {
     return [
       {
@@ -96,6 +118,18 @@ const nextConfig = {
             key: 'X-DNS-Prefetch-Control',
             value: 'on'
           },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'X-Frame-Options',
+            value: 'SAMEORIGIN',
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin',
+          },
         ],
       },
       {
@@ -104,6 +138,24 @@ const nextConfig = {
           {
             key: 'Cache-Control',
             value: 'public, s-maxage=0, stale-while-revalidate=60',
+          },
+        ],
+      },
+      {
+        source: '/_next/static/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/_next/image(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
           },
         ],
       },

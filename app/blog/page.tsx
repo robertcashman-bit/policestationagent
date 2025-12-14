@@ -6,6 +6,10 @@ import { getPublishedBlogPosts, formatBlogDate } from '@/lib/blog';
 import { SITE_URL } from '@/config/site';
 import type { Metadata } from 'next';
 
+// Force dynamic rendering - blog posts are database-driven
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export const metadata: Metadata = {
   title: "Blog | Police Station Agent",
   description: "Expert legal insights on police station representation, criminal defence procedures, and your rights in custody. Authored by Robert Cashman.",
@@ -18,6 +22,20 @@ export const metadata: Metadata = {
     url: `${SITE_URL}/blog`,
     siteName: 'Police Station Agent',
     type: 'website',
+    images: [
+      {
+        url: `${SITE_URL}/og-image.jpg`,
+        width: 1200,
+        height: 630,
+        alt: 'Police Station Agent Blog',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Blog | Police Station Agent",
+    description: "Expert legal insights on police station representation, criminal defence procedures, and your rights in custody.",
+    images: [`${SITE_URL}/og-image.jpg`],
   },
 };
 
@@ -42,25 +60,25 @@ export default function BlogPage() {
               </p>
             </div>
 
-            {/* Blog Posts Grid */}
+            {/* Blog Posts Grid - Wix-style responsive layout */}
             {posts.length > 0 ? (
               <>
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-12">
                   {posts.map((post) => (
                     <article
                       key={post.id}
-                      className="group flex flex-col h-full bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-slate-100"
+                      className="group flex flex-col h-full bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-slate-100 w-full"
                     >
                       <Link
                         href={`/blog/${post.slug}`}
-                        className="block overflow-hidden relative aspect-[16/9] bg-gradient-to-br from-slate-100 to-slate-200"
+                        className="block overflow-hidden relative aspect-[16/9] bg-gradient-to-br from-slate-100 to-slate-200 w-full"
                       >
                         {post.image ? (
                           <Image
                             src={post.image}
                             alt={post.title || 'Blog post image'}
                             fill
-                            className="object-cover transform group-hover:scale-105 transition-transform duration-500"
+                            className="object-cover transform group-hover:scale-105 transition-transform duration-500 blog-card-image"
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                           />
                         ) : (
