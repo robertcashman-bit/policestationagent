@@ -117,8 +117,19 @@ export default async function BlogPostPage({ params }: PageProps) {
       <Header />
       <main className="flex-grow relative" id="main-content" role="main" aria-live="polite">
         {/* Hero Section */}
-        <section className="bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white py-16" aria-labelledby="article-title">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white py-16 relative overflow-hidden" aria-labelledby="article-title">
+          {/* Background Image if available */}
+          {post.image && (
+            <div className="absolute inset-0 opacity-20">
+              <img
+                src={post.image}
+                alt=""
+                className="w-full h-full object-cover"
+                aria-hidden="true"
+              />
+            </div>
+          )}
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="max-w-4xl mx-auto">
               <Link 
                 href="/blog" 

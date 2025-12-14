@@ -32,6 +32,7 @@ export interface BlogPost {
   published_at: string | null;
   created_at: string;
   updated_at: string | null;
+  image: string | null;
 }
 
 export interface BlogPostSummary {
@@ -41,6 +42,7 @@ export interface BlogPostSummary {
   excerpt: string | null;
   published_at: string | null;
   created_at: string;
+  image: string | null;
 }
 
 // ============================================================================
@@ -105,6 +107,90 @@ export function deriveSlugIfNeeded(existingSlug: string | null | undefined, titl
   }
 
   return derived;
+}
+
+// ============================================================================
+// IMAGE EXTRACTION (FROM HTML CONTENT)
+// ============================================================================
+
+/**
+ * Extracts the first image URL from HTML content.
+ * Handles various image formats including <img> tags and background images.
+ * 
+ * @param content The HTML content to search for images
+ * @returns The first image URL found, or null if none
+ */
+export function extractFirstImage(content: string | null): string | null {
+  if (!content || typeof content !== 'string') {
+    return null;
+  }
+
+  // Pattern 1: Standard <img> tags with src attribute
+  const imgMatch = content.match(/<img[^>]+src=["']([^"']+)["'][^>]*>/i);
+  if (imgMatch && imgMatch[1]) {
+    return normalizeImageUrl(imgMatch[1]);
+  }
+
+  // Pattern 2: <img> with src before other attributes
+  const imgMatch2 = content.match(/<img\s+src=["']([^"']+)["']/i);
+  if (imgMatch2 && imgMatch2[1]) {
+    return normalizeImageUrl(imgMatch2[1]);
+  }
+
+  // Pattern 3: Background image in style attribute
+  const bgMatch = content.match(/background(?:-image)?:\s*url\(["']?([^"')]+)["']?\)/i);
+  if (bgMatch && bgMatch[1]) {
+    return normalizeImageUrl(bgMatch[1]);
+  }
+
+  // Pattern 4: data-src (lazy loading)
+  const dataSrcMatch = content.match(/data-src=["']([^"']+)["']/i);
+  if (dataSrcMatch && dataSrcMatch[1]) {
+    return normalizeImageUrl(dataSrcMatch[1]);
+  }
+
+  return null;
+}
+
+/**
+ * Normalizes an image URL for use in the application.
+ * Handles relative paths, ensures proper formatting.
+ */
+function normalizeImageUrl(url: string): string | null {
+  if (!url || typeof url !== 'string') {
+    return null;
+  }
+
+  // Clean up the URL
+  let cleanUrl = url.trim();
+
+  // Skip data URIs that are too small (likely placeholders)
+  if (cleanUrl.startsWith('data:') && cleanUrl.length < 100) {
+    return null;
+  }
+
+  // Skip empty or placeholder images
+  if (cleanUrl === '' || cleanUrl === '#' || cleanUrl.includes('placeholder')) {
+    return null;
+  }
+
+  // Handle Wix image URLs - convert to usable format
+  if (cleanUrl.includes('wix.com') || cleanUrl.includes('wixstatic.com')) {
+    // Wix images are usually in format: https://static.wixstatic.com/media/...
+    return cleanUrl;
+  }
+
+  // For relative URLs, make them absolute
+  if (cleanUrl.startsWith('/') && !cleanUrl.startsWith('//')) {
+    return cleanUrl; // Keep as relative for Next.js
+  }
+
+  // For protocol-relative URLs
+  if (cleanUrl.startsWith('//')) {
+    return `https:${cleanUrl}`;
+  }
+
+  return cleanUrl;
 }
 
 // ============================================================================
@@ -192,11 +278,13 @@ export function getPublishedBlogPosts(): BlogPostSummary[] {
   try {
     const db = getDb();
     
+    // Include content for image extraction
     const posts = db.prepare(`
       SELECT 
         id,
         title,
         slug,
+        content,
         excerpt,
         published_at,
         created_at
@@ -204,12 +292,25 @@ export function getPublishedBlogPosts(): BlogPostSummary[] {
       WHERE published = 1
       ORDER BY 
         COALESCE(published_at, created_at) DESC
-    `).all() as BlogPostSummary[];
+    `).all() as Array<{
+      id: number;
+      title: string;
+      slug: string;
+      content: string;
+      excerpt: string | null;
+      published_at: string | null;
+      created_at: string;
+    }>;
 
-    // Normalize slugs for each post
-    const normalizedPosts = posts.map(post => ({
-      ...post,
-      slug: deriveSlugIfNeeded(post.slug, post.title)
+    // Normalize slugs and extract images for each post
+    const normalizedPosts: BlogPostSummary[] = posts.map(post => ({
+      id: post.id,
+      title: post.title,
+      slug: deriveSlugIfNeeded(post.slug, post.title),
+      excerpt: post.excerpt,
+      published_at: post.published_at,
+      created_at: post.created_at,
+      image: extractFirstImage(post.content),
     }));
 
     console.log(`[blog.ts] getPublishedBlogPosts: Found ${normalizedPosts.length} published posts`);
@@ -273,10 +374,11 @@ export function getPostBySlug(slug: string): BlogPost | null {
       return null;
     }
 
-    // Return with normalized slug
+    // Return with normalized slug and extracted image
     return {
       ...post,
-      slug: deriveSlugIfNeeded(post.slug, post.title)
+      slug: deriveSlugIfNeeded(post.slug, post.title),
+      image: extractFirstImage(post.content),
     };
   } catch (error) {
     console.error('[blog.ts] Error in getPostBySlug:', error);

@@ -23,22 +23,19 @@ export const revalidate = 0;
 /**
  * GET /api/blog/posts
  * 
- * Returns published blog posts for use in menus and listings.
- * Limits to 10 posts for the dropdown menu.
+ * Returns ALL published blog posts for use in menus and listings.
+ * No artificial limits - the frontend handles display/scrolling.
  */
 export async function GET() {
   try {
     // Use the SINGLE AUTHORITATIVE query function
-    const allPosts = getPublishedBlogPosts();
+    const posts = getPublishedBlogPosts();
     
-    // Limit to first 10 for menu dropdown
-    const posts = allPosts.slice(0, 10);
-    
-    console.log(`[API /api/blog/posts] Returning ${posts.length} of ${allPosts.length} total posts`);
+    console.log(`[API /api/blog/posts] Returning all ${posts.length} posts`);
     
     return NextResponse.json({ 
       posts,
-      total: allPosts.length,
+      total: posts.length,
       source: 'database' // Indicates this is from DB, not static JSON
     });
   } catch (error) {

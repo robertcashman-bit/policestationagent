@@ -25,6 +25,7 @@ interface BlogPost {
   excerpt: string | null;
   published_at: string | null;
   created_at: string;
+  image: string | null;
 }
 
 interface BlogCarouselProps {
@@ -181,21 +182,30 @@ export default function BlogCarousel({
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-100 transition-all duration-500">
             <div className="grid md:grid-cols-2 gap-0">
               {/* Image/Placeholder */}
-              <div className="h-64 md:h-80 bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="80"
-                  height="80"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="text-white/50"
-                >
-                  <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
-                </svg>
+              <div className="h-64 md:h-80 bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center overflow-hidden">
+                {currentPost.image ? (
+                  <img
+                    src={currentPost.image}
+                    alt={currentPost.title}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                ) : (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="80"
+                    height="80"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="text-white/50"
+                  >
+                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
+                  </svg>
+                )}
               </div>
 
               {/* Content */}

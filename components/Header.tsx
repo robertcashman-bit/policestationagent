@@ -10,6 +10,7 @@ interface BlogPost {
   excerpt: string | null;
   published_at: string | null;
   created_at: string;
+  image: string | null;
 }
 
 export default function Header() {
@@ -303,28 +304,30 @@ export default function Header() {
               </button>
               {blogOpen && (
                 <div 
-                  className="absolute top-full left-0 mt-1 w-72 bg-white rounded-lg shadow-xl border border-slate-200 py-2 z-50 max-h-96 overflow-y-auto"
+                  className="absolute top-full right-0 mt-1 w-80 bg-white rounded-lg shadow-xl border border-slate-200 py-2 z-50 max-h-[70vh] overflow-y-auto"
                   onMouseEnter={() => {
                     cancelDelayedClose(blogTimeoutRef);
                     setBlogOpen(true);
                   }}
                   onMouseLeave={() => handleDelayedClose(setBlogOpen, blogTimeoutRef, 300)}
                 >
-                  <Link href="/blog" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 font-semibold">All Blog Posts</Link>
+                  <Link href="/blog" className="block px-4 py-3 text-slate-700 hover:bg-blue-50 hover:text-blue-600 font-semibold border-b border-slate-200">
+                    📚 View All Blog Posts ({blogPosts.length})
+                  </Link>
                   {blogPosts.length > 0 && (
-                    <>
-                      <div className="border-t border-slate-200 my-1"></div>
-                      {blogPosts.slice(0, 8).map((post) => (
+                    <div className="py-1">
+                      {/* Show ALL blog posts - no artificial limit */}
+                      {blogPosts.map((post) => (
                         <Link
                           key={post.id}
                           href={`/blog/${post.slug}`}
-                          className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm line-clamp-1"
+                          className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm truncate"
                           title={post.title}
                         >
                           {post.title}
                         </Link>
                       ))}
-                    </>
+                    </div>
                   )}
                 </div>
               )}
@@ -351,16 +354,28 @@ export default function Header() {
           </div>
           
           <div className="lg:hidden flex items-center gap-2">
+            {/* Mobile Emergency Call Button */}
+            <a 
+              href="tel:01732247427" 
+              className="flex items-center justify-center w-11 h-11 bg-red-600 hover:bg-red-700 text-white rounded-lg shadow-md"
+              aria-label="Emergency call"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+            </a>
+            {/* Mobile Menu Toggle - Improved visibility with 44px min tap target */}
             <button
-              className="p-2 text-slate-700 hover:text-blue-600"
+              className="flex items-center justify-center w-11 h-11 bg-slate-800 hover:bg-slate-900 text-white rounded-lg shadow-md transition-colors"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label="Toggle menu"
+              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileMenuOpen}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 {mobileMenuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
                 ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 6h16M4 12h16M4 18h16" />
                 )}
               </svg>
             </button>
@@ -397,18 +412,28 @@ export default function Header() {
             <Link href="/coverage/police-stations" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Police Stations</Link>
             <Link href="/coverage/areas" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Areas</Link>
             
-            <div className="px-4 py-2 text-slate-500 text-sm font-semibold mt-2">Blog</div>
-            <Link href="/blog" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>All Blog Posts</Link>
-            {blogPosts.length > 0 && blogPosts.slice(0, 5).map((post) => (
-              <Link
-                key={post.id}
-                href={`/blog/${post.slug}`}
-                className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8 text-sm"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {post.title}
-              </Link>
-            ))}
+            <div className="px-4 py-3 text-slate-800 text-sm font-bold mt-2 bg-slate-100 rounded-lg mx-2">
+              📚 Blog ({blogPosts.length} posts)
+            </div>
+            <Link href="/blog" className="block px-4 py-3 text-blue-600 hover:text-blue-700 font-semibold pl-8" onClick={() => setMobileMenuOpen(false)}>
+              View All Blog Posts →
+            </Link>
+            {/* Show ALL blog posts in mobile - scrollable container */}
+            {blogPosts.length > 0 && (
+              <div className="max-h-60 overflow-y-auto border-l-2 border-blue-200 ml-6">
+                {blogPosts.map((post) => (
+                  <Link
+                    key={post.id}
+                    href={`/blog/${post.slug}`}
+                    className="block px-4 py-2 text-slate-700 hover:text-blue-600 hover:bg-slate-50 text-sm truncate"
+                    onClick={() => setMobileMenuOpen(false)}
+                    title={post.title}
+                  >
+                    {post.title}
+                  </Link>
+                ))}
+              </div>
+            )}
             <div className="px-4 py-2 text-slate-500 text-sm font-semibold mt-2">Articles & Help</div>
             <Link href="/after-a-police-interview" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>After a Police Interview</Link>
             <Link href="/voluntary-police-interview-risks" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Voluntary Interview Risks</Link>
