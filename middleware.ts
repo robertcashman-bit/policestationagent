@@ -1,30 +1,32 @@
 /**
  * CANONICAL DOMAIN MIDDLEWARE
  * 
- * Redirects all domains to the canonical domain: https://www.policestationagent.com
+ * ROOT CAUSE FIX: Apex domain (policestationagent.com) is pointed to Vercel via A record.
+ * Middleware was redirecting apex to www, causing conflicts. Fixed to allow apex domain.
  * 
  * Handles:
- * - Non-www variants → www.policestationagent.com
- * - Alternative domains → www.policestationagent.com
+ * - Legacy domains → policestationagent.com (canonical apex)
+ * - www subdomain → policestationagent.com (apex is canonical)
  * - Preserves full paths and query strings
  * - Uses 301 (permanent) redirects for SEO
  * 
- * Canonical domain: https://www.policestationagent.com
+ * Canonical domain: https://policestationagent.com (apex, not www)
  */
 
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-// Canonical domain (without protocol for flexibility)
-const CANONICAL_DOMAIN = 'www.policestationagent.com';
+// Canonical domain is the apex (policestationagent.com) - matches DNS A record configuration
+const CANONICAL_DOMAIN = 'policestationagent.com';
 
-// Base domains (without www) that should redirect to canonical
-const REDIRECT_BASE_DOMAINS = [
-  'policestationagent.com',
+// Domains that should redirect to canonical apex domain
+const REDIRECT_DOMAINS = [
+  'www.policestationagent.com',  // www → apex
   'policestationagent.net',
   'policestationagent.org',
   'policestationrepkent.co.uk',
   'criminaldefencekent.co.uk',
+  'www.criminaldefencekent.co.uk',
 ];
 
 export function middleware(request: NextRequest) {
@@ -33,7 +35,7 @@ export function middleware(request: NextRequest) {
   // Remove port if present (e.g., "localhost:3000" → "localhost")
   const host = hostname.split(':')[0].toLowerCase();
   
-  // Skip redirect if already on canonical domain
+  // Skip redirect if already on canonical apex domain
   if (host === CANONICAL_DOMAIN) {
     return NextResponse.next();
   }
@@ -48,12 +50,9 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
   
-  // Remove www prefix to check base domain
-  const baseDomain = host.replace(/^www\./, '');
-  
-  // Check if this domain should redirect to canonical
-  // Redirect if it's one of the redirect domains (with or without www)
-  const shouldRedirect = REDIRECT_BASE_DOMAINS.includes(baseDomain);
+  // Check if this domain should redirect to canonical apex
+  // Only redirect legacy/alternative domains, not the apex itself
+  const shouldRedirect = REDIRECT_DOMAINS.includes(host);
   
   if (shouldRedirect) {
     // Get the full path including query string
