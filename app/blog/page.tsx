@@ -1,52 +1,34 @@
-/**
- * BLOG INDEX PAGE
- * 
- * This page uses the authoritative blog query from lib/blog.ts
- * 
- * Key features:
- * - Server-side rendering (no caching)
- * - Database-driven (no static JSON)
- * - Normalized slugs (derived if missing)
- * - Dynamic on every request
- */
-
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 import Image from 'next/image';
-import type { Metadata } from 'next';
-import { SITE_DOMAIN } from '@/config/site';
 import { getPublishedBlogPosts, formatBlogDate } from '@/lib/blog';
-
-// Force dynamic rendering - no caching until correctness is proven
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+import { SITE_URL } from '@/config/site';
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: "Blog | Police Station Agent",
   description: "Expert legal insights on police station representation, criminal defence procedures, and your rights in custody. Authored by Robert Cashman.",
   alternates: {
-    canonical: `https://${SITE_DOMAIN}/blog`,
+    canonical: `${SITE_URL}/blog`,
   },
   openGraph: {
     title: "Blog | Police Station Agent",
     description: "Expert legal insights on police station representation, criminal defence procedures, and your rights in custody. Authored by Robert Cashman.",
-    url: `https://${SITE_DOMAIN}/blog`,
+    url: `${SITE_URL}/blog`,
     siteName: 'Police Station Agent',
     type: 'website',
   },
 };
 
 export default function BlogPage() {
-  // Use the SINGLE AUTHORITATIVE query function
   const posts = getPublishedBlogPosts();
-
-  // Log for debugging - will appear in server logs
-  if (posts.length === 0) {
-    console.warn('[/blog] WARNING: Zero published posts returned from database!');
-  } else {
-    console.log(`[/blog] Rendering ${posts.length} published blog posts`);
-  }
+  const postsPerPage = 12;
+  const currentPage = 1; // TODO: Add pagination support
+  const startIndex = (currentPage - 1) * postsPerPage;
+  const endIndex = startIndex + postsPerPage;
+  const displayedPosts = posts.slice(startIndex, endIndex);
+  const totalPages = Math.ceil(posts.length / postsPerPage);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
@@ -54,113 +36,154 @@ export default function BlogPage() {
       <main className="flex-grow relative" id="main-content" role="main" aria-live="polite">
         <div className="bg-slate-50 min-h-screen">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            {/* Header */}
-            <div className="mb-8">
-              <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-4">
-                Police Station Agent Blog
+            {/* Header Section */}
+            <div className="text-center mb-12">
+              <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
+                Legal Insights & <span className="text-amber-500">Advice</span>
               </h1>
-              <p className="text-xl text-slate-600">
-                Expert insights on police station representation, criminal defence, and your legal rights
-              </p>
-            </div>
-
-            {/* Essential Guide Banner */}
-            <div className="mb-8 bg-blue-50 border-l-4 border-blue-500 p-6 rounded-lg">
-              <p className="text-slate-700 leading-relaxed mb-2">
-                <strong>Essential Guide:</strong> Before reading our blog articles, make sure you understand your fundamental rights. Read our authoritative guide:{' '}
-                <Link href="/police-station-interviews-kent-rights" className="text-blue-700 hover:underline font-semibold">
-                  Police Station Interviews in Kent: Your Rights and What to Expect
-                </Link>
-                {' '}- covering PACE 1984, the interview process, and the role of a solicitor.
+              <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto">
+                Expert guidance on police station procedures, your rights in custody, and criminal defence strategies.
               </p>
             </div>
 
             {/* Blog Posts Grid */}
-            {posts.length > 0 ? (
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {posts.map((post) => (
-                  <article
-                    key={post.id}
-                    className="group flex flex-col h-full bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-slate-100"
-                  >
-                    <Link
-                      href={`/blog/${post.slug}`}
-                      className="block overflow-hidden h-48 relative bg-gradient-to-br from-blue-600 to-indigo-700"
+            {displayedPosts.length > 0 ? (
+              <>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                  {displayedPosts.map((post) => (
+                    <article
+                      key={post.id}
+                      className="group flex flex-col h-full bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-slate-100"
                     >
-                      {post.image ? (
-                        <img
-                          src={post.image}
-                          alt={post.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                          loading="lazy"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="48"
-                            height="48"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="text-white/50"
-                          >
-                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
-                          </svg>
-                        </div>
-                      )}
-                    </Link>
-                    <div className="flex flex-col flex-grow p-5">
-                      <h3 className="text-xl font-bold text-slate-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
-                        <Link href={`/blog/${post.slug}`}>
-                          {post.title}
-                        </Link>
-                      </h3>
-                      {post.excerpt && (
-                        <div className="text-sm text-slate-500 mb-4 line-clamp-3 flex-grow">
-                          {post.excerpt.replace(/<[^>]+>/g, '')}
-                        </div>
-                      )}
-                      <div className="pt-4 border-t border-slate-50 flex items-center justify-between mt-auto">
-                        <div className="flex items-center gap-2 text-xs text-slate-500">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="lucide lucide-user w-3 h-3"
-                          >
-                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-                            <circle cx="12" cy="7" r="4" />
-                          </svg>
-                          <span>Robert Cashman</span>
-                        </div>
-                        {post.published_at && (
-                          <span className="text-xs text-slate-400">
-                            {formatBlogDate(post.published_at)}
-                          </span>
+                      <Link
+                        href={`/blog/${post.slug}`}
+                        className="block overflow-hidden h-48 relative"
+                      >
+                        {post.image ? (
+                          <Image
+                            src={post.image}
+                            alt={post.title}
+                            fill
+                            className="object-cover transform group-hover:scale-105 transition-transform duration-500"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          />
+                        ) : (
+                          <div className="w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
+                            <span className="text-slate-400 font-medium">No Image</span>
+                          </div>
                         )}
+                      </Link>
+                      <div className="flex flex-col flex-grow p-5">
+                        <h3 className="text-xl font-bold text-slate-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
+                          <Link href={`/blog/${post.slug}`}>
+                            {post.title}
+                          </Link>
+                        </h3>
+                        {post.excerpt && (
+                          <div className="text-sm text-slate-500 mb-4 line-clamp-3 flex-grow">
+                            {post.excerpt}
+                          </div>
+                        )}
+                        <div className="pt-4 border-t border-slate-50 flex items-center justify-between mt-auto">
+                          <div className="flex items-center gap-2 text-xs text-slate-500">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              className="w-3 h-3"
+                            >
+                              <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                              <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            <span>Robert Cashman</span>
+                          </div>
+                          {post.published_at && (
+                            <span className="text-xs text-slate-400">
+                              {formatBlogDate(post.published_at) || 'Published'}
+                            </span>
+                          )}
+                        </div>
                       </div>
+                    </article>
+                  ))}
+                </div>
+
+                {/* Pagination */}
+                {totalPages > 1 && (
+                  <div className="mt-16 flex justify-center gap-2">
+                    <button
+                      className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2"
+                      disabled={currentPage === 1}
+                    >
+                      Previous
+                    </button>
+                    <div className="flex items-center px-4 text-sm font-medium text-slate-600">
+                      Page {currentPage} of {totalPages}
                     </div>
-                  </article>
-                ))}
-              </div>
+                    <button
+                      className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2"
+                      disabled={currentPage === totalPages}
+                    >
+                      Next
+                    </button>
+                  </div>
+                )}
+              </>
             ) : (
-              <div className="text-center py-12">
-                <p className="text-slate-600">No blog posts available yet.</p>
-                <p className="text-sm text-slate-400 mt-2">
-                  If you believe this is an error, please check the database connection.
-                </p>
+              <div className="text-center py-16">
+                <p className="text-slate-600 text-lg">No blog posts available yet.</p>
+                <p className="text-slate-500 text-sm mt-2">Check back soon for updates.</p>
               </div>
             )}
+
+            {/* Search Section */}
+            <div className="bg-slate-900 text-white py-16 md:py-24 relative overflow-hidden mt-12 rounded-xl">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(59,130,246,0.2),transparent_70%)]"></div>
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+                <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-tight">
+                  Legal Insights & <span className="text-amber-400">Advice</span>
+                </h2>
+                <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed">
+                  Expert guidance on police station procedures, your rights in custody, and criminal defence strategies.
+                </p>
+                <form className="max-w-xl mx-auto flex gap-2">
+                  <div className="relative flex-grow">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="lucide lucide-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5"
+                    >
+                      <circle cx="11" cy="11" r="8"></circle>
+                      <path d="m21 21-4.3-4.3"></path>
+                    </svg>
+                    <input
+                      type="search"
+                      className="flex h-9 w-full rounded-md border px-3 py-1 text-base shadow-sm file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pl-10 bg-white/10 border-slate-700 text-white placeholder:text-slate-400 focus:bg-slate-800 transition-colors"
+                      placeholder="Search articles..."
+                    />
+                  </div>
+                  <button
+                    className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 shadow h-9 px-4 py-2 bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold"
+                    type="submit"
+                  >
+                    Search
+                  </button>
+                </form>
+              </div>
+            </div>
           </div>
         </div>
       </main>
