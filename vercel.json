@@ -5,11 +5,11 @@
   "git": {
     "deploymentEnabled": {
       "master": true,
+      "main": true,
       "feature/*": false,
       "vercel/*": false
     }
   },
-  "ignoreCommand": "if [ \"$VERCEL_GIT_COMMIT_REF\" != \"master\" ]; then exit 0; fi",
   "headers": [
     {
       "source": "/(.*)",
