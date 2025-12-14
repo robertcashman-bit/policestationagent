@@ -31,6 +31,13 @@ const REDIRECT_DOMAINS = [
 
 export function middleware(request: NextRequest) {
   const hostname = request.headers.get('host') || '';
+  const pathname = request.nextUrl.pathname;
+  
+  // CRITICAL: Allow Vercel SSL verification paths through without any redirects
+  // Vercel needs access to /.well-known/acme-challenge/* for certificate issuance
+  if (pathname.startsWith('/.well-known/')) {
+    return NextResponse.next();
+  }
   
   // Remove port if present (e.g., "localhost:3000" → "localhost")
   const host = hostname.split(':')[0].toLowerCase();
@@ -74,6 +81,7 @@ export function middleware(request: NextRequest) {
 }
 
 // Match all paths except static files and API routes that don't need redirects
+// CRITICAL: .well-known paths are included to allow SSL verification
 export const config = {
   matcher: [
     /*
@@ -83,6 +91,8 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      * - public files (images, etc.)
+     * 
+     * NOTE: .well-known paths ARE matched (for SSL verification) but allowed through
      */
     '/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|css|js)$).*)',
   ],
