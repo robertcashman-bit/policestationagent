@@ -6,9 +6,6 @@
       "master": true
     }
   },
-  "production": {
-    "env": "production"
-  },
   "headers": [
     {
       "source": "/(.*)",
