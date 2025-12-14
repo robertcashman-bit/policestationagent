@@ -58,7 +58,9 @@ export function middleware(request: NextRequest) {
     // Get the full path including query string
     const url = request.nextUrl.clone();
     url.host = CANONICAL_DOMAIN;
-    url.protocol = 'https';
+    // Preserve original protocol (http/https) to allow Vercel SSL verification
+    // Vercel needs HTTP access during certificate issuance
+    // Protocol will be upgraded to HTTPS by Vercel after certificate is issued
     
     // Preserve path and query string
     const redirectUrl = url.toString();
