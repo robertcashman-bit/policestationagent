@@ -37,7 +37,21 @@ export default function Header() {
       .then(res => res.json())
       .then(data => {
         if (data.posts && Array.isArray(data.posts)) {
-          setBlogPosts(data.posts);
+          // Filter out posts with generic/invalid titles that shouldn't appear in menu
+          const filteredPosts = data.posts.filter((post: BlogPost) => {
+            const title = post.title?.trim().toLowerCase() || '';
+            // Exclude posts with generic titles
+            const excludedTitles = [
+              'police station agent',
+              'police station agent blog',
+              'blog',
+              'welcome',
+              'untitled',
+              'untitled post'
+            ];
+            return title && !excludedTitles.includes(title) && title.length > 3;
+          });
+          setBlogPosts(filteredPosts);
         }
       })
       .catch(err => {
