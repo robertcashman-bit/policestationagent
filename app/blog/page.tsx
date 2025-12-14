@@ -1,10 +1,25 @@
+/**
+ * BLOG INDEX PAGE
+ * 
+ * This page uses the authoritative blog query from lib/blog.ts
+ * 
+ * Key features:
+ * - Server-side rendering (no caching)
+ * - Database-driven (no static JSON)
+ * - Normalized slugs (derived if missing)
+ * - Dynamic on every request
+ */
+
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
-import fs from 'fs';
-import path from 'path';
 import type { Metadata } from 'next';
 import { SITE_DOMAIN } from '@/config/site';
+import { getPublishedBlogPosts, formatBlogDate } from '@/lib/blog';
+
+// Force dynamic rendering - no caching until correctness is proven
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export const metadata: Metadata = {
   title: "Blog | Police Station Agent",
@@ -21,41 +36,16 @@ export const metadata: Metadata = {
   },
 };
 
-type BlogPost = {
-  id: number;
-  title: string;
-  slug: string;
-  excerpt: string | null;
-  published_at: string | null;
-  created_at: string;
-};
+export default function BlogPage() {
+  // Use the SINGLE AUTHORITATIVE query function
+  const posts = getPublishedBlogPosts();
 
-function getBlogPosts(): BlogPost[] {
-  try {
-    const jsonPath = path.join(process.cwd(), 'public', 'blog-posts.json');
-    const data = fs.readFileSync(jsonPath, 'utf-8');
-    return JSON.parse(data) as BlogPost[];
-  } catch (error) {
-    console.error('Error loading blog posts:', error);
-    return [];
+  // Log for debugging - will appear in server logs
+  if (posts.length === 0) {
+    console.warn('[/blog] WARNING: Zero published posts returned from database!');
+  } else {
+    console.log(`[/blog] Rendering ${posts.length} published blog posts`);
   }
-}
-
-export default function Page() {
-  const posts = getBlogPosts();
-
-  const formatDate = (dateString: string | null) => {
-    if (!dateString) return null;
-    try {
-      return new Date(dateString).toLocaleDateString('en-GB', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      });
-    } catch {
-      return null;
-    }
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
@@ -145,7 +135,7 @@ export default function Page() {
                         </div>
                         {post.published_at && (
                           <span className="text-xs text-slate-400">
-                            {formatDate(post.published_at)}
+                            {formatBlogDate(post.published_at)}
                           </span>
                         )}
                       </div>
@@ -156,6 +146,9 @@ export default function Page() {
             ) : (
               <div className="text-center py-12">
                 <p className="text-slate-600">No blog posts available yet.</p>
+                <p className="text-sm text-slate-400 mt-2">
+                  If you believe this is an error, please check the database connection.
+                </p>
               </div>
             )}
           </div>

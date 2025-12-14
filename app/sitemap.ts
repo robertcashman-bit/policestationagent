@@ -1,21 +1,23 @@
 import { MetadataRoute } from 'next';
 import { SITE_DOMAIN } from '@/config/site';
-import fs from 'fs';
-import path from 'path';
+import { getPublishedBlogPosts, type BlogPostSummary } from '@/lib/blog';
 
-type BlogPost = {
-  slug: string;
-  published_at: string | null;
-  updated_at?: string | null;
-};
-
-function getBlogPosts(): BlogPost[] {
+/**
+ * Get blog posts for sitemap.
+ * Uses the authoritative blog query from lib/blog.ts
+ * Falls back to empty array during build time if database is unavailable.
+ */
+function getBlogPostsForSitemap(): BlogPostSummary[] {
+  // Skip during build time to avoid database issues
+  if (process.env.NEXT_PHASE === 'phase-production-build') {
+    console.warn('[sitemap] Skipping blog posts during build time');
+    return [];
+  }
+  
   try {
-    const jsonPath = path.join(process.cwd(), 'public', 'blog-posts.json');
-    const data = fs.readFileSync(jsonPath, 'utf-8');
-    return JSON.parse(data) as BlogPost[];
+    return getPublishedBlogPosts();
   } catch (error) {
-    console.error('Error loading blog posts for sitemap:', error);
+    console.error('[sitemap] Error loading blog posts:', error);
     return [];
   }
 }
@@ -524,15 +526,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     console.warn('Skipping dynamic services in sitemap (build time)');
   }
 
-  // Blog posts from public JSON file
-  const blogPosts = getBlogPosts();
+  // Blog posts from database (authoritative source)
+  const blogPosts = getBlogPostsForSitemap();
   const blogPages: MetadataRoute.Sitemap = blogPosts.map((post) => ({
     url: `${baseUrl}/blog/${post.slug}`,
-    lastModified: post.updated_at 
-      ? new Date(post.updated_at) 
-      : post.published_at 
-        ? new Date(post.published_at) 
-        : new Date(),
+    lastModified: post.published_at 
+      ? new Date(post.published_at) 
+      : new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.7,
   }));

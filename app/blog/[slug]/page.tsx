@@ -1,54 +1,46 @@
+/**
+ * BLOG POST PAGE
+ * 
+ * This page uses the authoritative blog query from lib/blog.ts
+ * 
+ * Key features:
+ * - Server-side rendering (no caching)
+ * - Database-driven (no static JSON)
+ * - Case-insensitive slug matching
+ * - Normalized slugs (derived if missing)
+ * - Dynamic on every request
+ */
+
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import fs from 'fs';
-import path from 'path';
 import type { Metadata } from 'next';
 import { JsonLd } from '@/components/JsonLd';
 import BlogPromotionalBlock from '@/components/BlogPromotionalBlock';
 import { SITE_URL, SITE_DOMAIN } from '@/config/site';
+import { getPostBySlug, formatBlogDate } from '@/lib/blog';
+
+// Force dynamic rendering - no caching until correctness is proven
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
+// Disable static params generation - fully dynamic
+export const dynamicParams = true;
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
-}
-
-type BlogPost = {
-  id: number;
-  title: string;
-  slug: string;
-  content: string;
-  excerpt: string | null;
-  meta_title: string | null;
-  meta_description: string | null;
-  published_at: string | null;
-  created_at: string;
-};
-
-function getAllPosts(): BlogPost[] {
-  try {
-    const jsonPath = path.join(process.cwd(), 'public', 'blog-posts-full.json');
-    const data = fs.readFileSync(jsonPath, 'utf-8');
-    return JSON.parse(data) as BlogPost[];
-  } catch (error) {
-    console.error('Error loading blog posts:', error);
-    return [];
-  }
-}
-
-function getPostBySlug(slug: string): BlogPost | undefined {
-  const allPosts = getAllPosts();
-  return allPosts.find(p => p.slug === slug);
+  }>;
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const post = getPostBySlug(params.slug);
+  const resolvedParams = await params;
+  const post = getPostBySlug(resolvedParams.slug);
 
   if (!post) {
     return {
-      title: 'Post Not Found',
+      title: 'Post Not Found | Police Station Agent',
     };
   }
 
@@ -56,15 +48,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const description = post.meta_description || post.excerpt || post.title;
   
   return {
-    title: post.meta_title || post.title,
+    title: post.meta_title || `${post.title} | Police Station Agent`,
     description,
     alternates: {
-      canonical: `${siteUrl}/blog/${params.slug}`,
+      canonical: `${siteUrl}/blog/${post.slug}`,
     },
     openGraph: {
       title: post.meta_title || post.title,
       description,
-      url: `${siteUrl}/blog/${params.slug}`,
+      url: `${siteUrl}/blog/${post.slug}`,
       siteName: 'Police Station Agent',
       type: 'article',
       publishedTime: post.published_at || undefined,
@@ -81,20 +73,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-// Generate static params for all blog posts
-export async function generateStaticParams() {
-  const posts = getAllPosts();
-  return posts.map(post => ({
-    slug: post.slug,
-  }));
-}
-
-export default function BlogPostPage({ params }: PageProps) {
-  const post = getPostBySlug(params.slug);
+export default async function BlogPostPage({ params }: PageProps) {
+  const resolvedParams = await params;
+  const post = getPostBySlug(resolvedParams.slug);
 
   if (!post) {
+    console.log(`[/blog/${resolvedParams.slug}] Post not found, returning 404`);
     notFound();
   }
+
+  console.log(`[/blog/${resolvedParams.slug}] Rendering post ID ${post.id}: "${post.title}"`);
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_URL;
   
@@ -104,10 +92,10 @@ export default function BlogPostPage({ params }: PageProps) {
     headline: post.title,
     description: post.excerpt || post.content.substring(0, 160),
     datePublished: post.published_at || post.created_at,
-    dateModified: post.published_at || post.created_at,
+    dateModified: post.updated_at || post.published_at || post.created_at,
     author: {
-      '@type': 'Organization',
-      name: 'Police Station Agent',
+      '@type': 'Person',
+      name: 'Robert Cashman',
     },
     publisher: {
       '@type': 'Organization',
@@ -160,11 +148,7 @@ export default function BlogPostPage({ params }: PageProps) {
                       <line x1="3" x2="21" y1="10" y2="10"></line>
                     </svg>
                     <span className="text-sm">
-                      {new Date(post.published_at).toLocaleDateString('en-GB', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                      })}
+                      {formatBlogDate(post.published_at)}
                     </span>
                   </div>
                 </div>
@@ -191,4 +175,3 @@ export default function BlogPostPage({ params }: PageProps) {
     </div>
   );
 }
-
