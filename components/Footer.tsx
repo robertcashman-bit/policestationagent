@@ -1,10 +1,12 @@
 import Link from 'next/link';
+import { getFormattedVersion } from '@/lib/version';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const appVersion = getFormattedVersion();
   
   return (
-    <footer className="bg-slate-900 text-white">
+    <footer className="bg-slate-900 text-white relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mb-12 text-sm">
           <div className="md:col-span-2 lg:col-span-1">
@@ -327,6 +329,12 @@ export default function Footer() {
           <p className="text-xs text-slate-300">
             Registered Office: Greenacre, London Road, West Kingsdown, Sevenoaks, Kent, TN15 6ER
           </p>
+          {/* Production Version - Discreet Display */}
+          <div className="mt-4 text-center">
+            <span className="text-xs text-slate-500" title={`Build version: ${appVersion}`}>
+              {appVersion}
+            </span>
+          </div>
           <div className="mt-6 pt-6 border-t border-slate-700 flex flex-wrap justify-center gap-4 text-xs text-slate-300">
             <span>Partners:</span>
             <a href="https://policestationrepukdirectory.com/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-300 transition-colors">
