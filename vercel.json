@@ -1,11 +1,15 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "nextjs",
   "buildCommand": "npm run build",
   "git": {
     "deploymentEnabled": {
-      "master": true
+      "master": true,
+      "feature/*": false,
+      "vercel/*": false
     }
   },
+  "ignoreCommand": "if [ \"$VERCEL_GIT_COMMIT_REF\" != \"master\" ]; then exit 0; fi",
   "headers": [
     {
       "source": "/(.*)",
