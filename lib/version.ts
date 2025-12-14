@@ -50,3 +50,5 @@ export function getFormattedVersion(): string {
   }
   return `v ${version}`;
 }
+
+
