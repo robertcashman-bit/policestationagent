@@ -57,31 +57,26 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
   
-  // TEMPORARILY DISABLED: Redirect logic causing loop with Wix DNS
-  // TODO: Re-enable after DNS is properly configured and redirect loop is resolved
-  // The redirect loop is likely caused by Wix DNS redirects conflicting with middleware redirects
+  // TEMPORARILY DISABLED: Redirect logic to fix redirect loop with Wix DNS
+  // The redirect loop (ERR_TOO_MANY_REDIRECTS) is caused by Wix DNS redirects
+  // conflicting with middleware redirects. Disabling middleware redirects until
+  // DNS is properly configured at Wix to point directly to Vercel without redirects.
+  // 
+  // TODO: Re-enable redirects after:
+  // 1. Wix DNS is configured to point directly to Vercel (no Wix redirects)
+  // 2. SSL certificate is issued
+  // 3. Test that redirects work without loops
   
-  // Check if this domain should redirect to canonical apex
-  // Only redirect legacy/alternative domains, not the apex itself
-  const shouldRedirect = REDIRECT_DOMAINS.includes(host);
+  // For now, allow all requests through to prevent redirect loops
+  // Only redirect legacy domains that are NOT managed by Wix
+  const shouldRedirect = REDIRECT_DOMAINS.includes(host) && 
+    !host.includes('policestationagent.com'); // Don't redirect policestationagent.com variants during DNS setup
   
   if (shouldRedirect) {
-    // CRITICAL: Check if we're already being redirected to prevent loops
-    const referer = request.headers.get('referer');
-    const isRedirectLoop = referer && referer.includes(CANONICAL_DOMAIN);
-    
-    if (isRedirectLoop) {
-      // If we detect a potential loop, just allow the request through
-      console.warn(`Redirect loop detected for ${host}, allowing request through`);
-      return NextResponse.next();
-    }
-    
     // Get the full path including query string
     const url = request.nextUrl.clone();
     url.host = CANONICAL_DOMAIN;
     // Preserve original protocol (http/https) to allow Vercel SSL verification
-    // Vercel needs HTTP access during certificate issuance
-    // Protocol will be upgraded to HTTPS by Vercel after certificate is issued
     
     // Preserve path and query string
     const redirectUrl = url.toString();
