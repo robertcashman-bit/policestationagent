@@ -22,13 +22,9 @@ export const metadata: Metadata = {
 };
 
 export default function BlogPage() {
+  // Get ALL published blog posts - no pagination limit
+  // All posts should be visible on the blog index page
   const posts = getPublishedBlogPosts();
-  const postsPerPage = 12;
-  const currentPage = 1; // TODO: Add pagination support
-  const startIndex = (currentPage - 1) * postsPerPage;
-  const endIndex = startIndex + postsPerPage;
-  const displayedPosts = posts.slice(startIndex, endIndex);
-  const totalPages = Math.ceil(posts.length / postsPerPage);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
@@ -47,10 +43,10 @@ export default function BlogPage() {
             </div>
 
             {/* Blog Posts Grid */}
-            {displayedPosts.length > 0 ? (
+            {posts.length > 0 ? (
               <>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-                  {displayedPosts.map((post) => (
+                  {posts.map((post) => (
                     <article
                       key={post.id}
                       className="group flex flex-col h-full bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-slate-100"
@@ -113,27 +109,6 @@ export default function BlogPage() {
                     </article>
                   ))}
                 </div>
-
-                {/* Pagination */}
-                {totalPages > 1 && (
-                  <div className="mt-16 flex justify-center gap-2">
-                    <button
-                      className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2"
-                      disabled={currentPage === 1}
-                    >
-                      Previous
-                    </button>
-                    <div className="flex items-center px-4 text-sm font-medium text-slate-600">
-                      Page {currentPage} of {totalPages}
-                    </div>
-                    <button
-                      className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2"
-                      disabled={currentPage === totalPages}
-                    >
-                      Next
-                    </button>
-                  </div>
-                )}
               </>
             ) : (
               <div className="text-center py-16">

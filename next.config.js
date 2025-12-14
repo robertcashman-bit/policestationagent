@@ -8,6 +8,33 @@ const nextConfig = {
   compress: true,
   // Production optimizations
   productionBrowserSourceMaps: false,
+  // Image optimization configuration
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'static.wixstatic.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'wixstatic.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'base44.app',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.wixstatic.com',
+        pathname: '/**',
+      },
+    ],
+    // Allow all external images (for blog posts from various sources)
+    unoptimized: false,
+  },
   // Redirects for old routes to new kebab-case routes
   async redirects() {
     return [
