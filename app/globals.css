@@ -398,49 +398,54 @@ a {
 
 /* ------------------------------------------
    DARK BACKGROUNDS - Make light text LIGHTER
+   Using simple class selectors for reliability
    ------------------------------------------ */
 
-/* On dark backgrounds, text-slate-300 should be WHITE for readability */
-[class*="bg-slate-900"] .text-slate-300,
-[class*="bg-slate-800"] .text-slate-300,
-[class*="bg-blue-900"] .text-slate-300,
-[class*="bg-blue-800"] .text-slate-300,
-[class*="bg-gray-900"] .text-slate-300,
-[class*="bg-gray-800"] .text-slate-300,
-header[class*="bg-slate-900"] .text-slate-300,
-header[class*="bg-slate-900"] p.text-slate-300,
+/* CRITICAL: Force white text on dark backgrounds */
+/* These must override Tailwind's .text-slate-300 utility */
 .bg-slate-900 .text-slate-300,
 .bg-slate-900 p.text-slate-300,
-.bg-slate-900 > .text-slate-300,
+.bg-slate-900 .text-lg.text-slate-300,
+.bg-slate-800 .text-slate-300,
 .bg-blue-900 .text-slate-300,
-.bg-gray-900 .text-slate-300 {
+.bg-blue-800 .text-slate-300,
+.bg-gray-900 .text-slate-300,
+.bg-gray-800 .text-slate-300,
+header.bg-slate-900 .text-slate-300,
+header.bg-slate-900 p,
+header.bg-slate-900 p.text-slate-300,
+header.bg-slate-900 p.text-lg {
   color: #ffffff !important; /* White for max readability on dark */
 }
 
+/* Fallback: Any paragraph inside dark header should be white */
+.bg-slate-900 header p,
+header.bg-slate-900 p,
+.bg-slate-800 header p,
+header.bg-slate-800 p {
+  color: #ffffff !important;
+}
+
 /* text-slate-400 on dark backgrounds - boost to white/light */
-[class*="bg-slate-900"] .text-slate-400,
-[class*="bg-slate-800"] .text-slate-400,
-[class*="bg-blue-900"] .text-slate-400,
-[class*="bg-blue-800"] .text-slate-400,
 .bg-slate-900 .text-slate-400,
-.bg-slate-800 .text-slate-400 {
+.bg-slate-800 .text-slate-400,
+.bg-blue-900 .text-slate-400,
+.bg-blue-800 .text-slate-400 {
   color: #e2e8f0 !important; /* slate-200 for readability on dark */
 }
 
 /* Improve visibility of light blue text on dark backgrounds */
-[class*="bg-blue-800"] .text-blue-100,
-[class*="bg-blue-900"] .text-blue-100,
-[class*="bg-slate-800"] .text-blue-100,
-[class*="bg-slate-900"] .text-blue-100,
-.bg-slate-900 .text-blue-100,
-.bg-blue-900 .text-blue-100 {
+.bg-blue-800 .text-blue-100,
+.bg-blue-900 .text-blue-100,
+.bg-slate-800 .text-blue-100,
+.bg-slate-900 .text-blue-100 {
   color: #ffffff !important; /* white for maximum readability */
 }
 
-[class*="bg-blue-800"] .text-blue-200,
-[class*="bg-blue-900"] .text-blue-200,
-[class*="bg-slate-800"] .text-blue-200,
-[class*="bg-slate-900"] .text-blue-200 {
+.bg-blue-800 .text-blue-200,
+.bg-blue-900 .text-blue-200,
+.bg-slate-800 .text-blue-200,
+.bg-slate-900 .text-blue-200 {
   color: #e2e8f0 !important; /* slate-200 for readability */
 }
 
