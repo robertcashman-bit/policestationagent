@@ -8,6 +8,7 @@
  * - Only shows once (until consent expires)
  * - Minimal, accessible design
  * - No third-party dependencies
+ * - Fixed hydration mismatch by using mounted state
  */
 
 import { useState, useEffect } from 'react';
@@ -23,10 +24,16 @@ const CONSENT_EXPIRY_DAYS = 365;
 const STORAGE_KEY = 'cookieConsent';
 
 export default function CookieBanner() {
+  // Use mounted state to prevent hydration mismatch
+  // Server and client both render null initially, then client checks localStorage
+  const [mounted, setMounted] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [preferences, setPreferences] = useState<CookiePreferences | null>(null);
 
   useEffect(() => {
+    // Mark as mounted after hydration
+    setMounted(true);
+    
     // Check if consent already exists and is valid
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
@@ -60,16 +67,19 @@ export default function CookieBanner() {
     setIsVisible(false);
 
     // If analytics consent given, initialize analytics (if needed)
-    if (analytics && typeof window !== 'undefined' && window.gtag) {
-      // Analytics would be initialized here if Google Analytics is set up
-      // For now, we just store the preference
+    // Note: Google Analytics initialization would go here if implemented
+    if (analytics && typeof window !== 'undefined') {
+      // Analytics initialization code would be added here when needed
+      // Example: if (typeof (window as any).gtag === 'function') { (window as any).gtag(...) }
     }
   };
 
   const acceptAll = () => saveConsent(true);
   const rejectAnalytics = () => saveConsent(false);
 
-  if (!isVisible) {
+  // Prevent hydration mismatch: don't render until after mount
+  // This ensures server and client both render null initially
+  if (!mounted || !isVisible) {
     return null;
   }
 
@@ -113,4 +123,3 @@ export default function CookieBanner() {
     </div>
   );
 }
-
