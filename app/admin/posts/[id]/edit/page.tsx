@@ -20,35 +20,35 @@ export default function EditPostPage() {
   });
 
   useEffect(() => {
-    fetchPost();
-  }, [postId]);
-
-  const fetchPost = async () => {
-    try {
-      const response = await fetch(`/api/admin/posts/${postId}`);
-      if (response.ok) {
-        const data = await response.json();
-        const post = data.post;
-        setFormData({
-          title: post.title || '',
-          slug: post.slug || '',
-          content: post.content || '',
-          excerpt: post.excerpt || '',
-          published: post.published === 1,
-          meta_title: post.meta_title || '',
-          meta_description: post.meta_description || '',
-        });
-      } else {
-        alert('Failed to load post');
+    const fetchPost = async () => {
+      try {
+        const response = await fetch(`/api/admin/posts/${postId}`);
+        if (response.ok) {
+          const data = await response.json();
+          const post = data.post;
+          setFormData({
+            title: post.title || '',
+            slug: post.slug || '',
+            content: post.content || '',
+            excerpt: post.excerpt || '',
+            published: post.published === 1,
+            meta_title: post.meta_title || '',
+            meta_description: post.meta_description || '',
+          });
+        } else {
+          alert('Failed to load post');
+          router.push('/admin');
+        }
+      } catch (error) {
+        alert('An error occurred');
         router.push('/admin');
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      alert('An error occurred');
-      router.push('/admin');
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
+
+    fetchPost();
+  }, [postId, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

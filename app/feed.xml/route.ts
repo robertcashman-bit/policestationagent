@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server';
 import { getPublishedBlogPosts } from '@/lib/blog';
 import { SITE_URL } from '@/config/site';
 
+// Force dynamic rendering - database not available during build
+export const dynamic = 'force-dynamic';
+
 /**
  * Main RSS Feed - All Published Blog Posts
  * RSS 2.0 compliant feed

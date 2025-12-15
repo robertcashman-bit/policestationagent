@@ -3,6 +3,9 @@ import { getPublishedBlogPosts } from '@/lib/blog';
 import { SITE_URL } from '@/config/site';
 import { blogPosts, categoryOrder } from '@/data/blogIndex';
 
+// Force dynamic rendering - database not available during build
+export const dynamic = 'force-dynamic';
+
 /**
  * Category RSS Feeds
  * RSS 2.0 compliant feeds for each blog category
