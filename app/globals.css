@@ -368,7 +368,7 @@ a {
 .bg-white .text-gray-600,
 .bg-slate-50 .text-slate-600,
 .bg-slate-50 .text-gray-600 {
-  color: #334155 !important; /* slate-700 for better contrast */
+  color: #1e293b !important; /* slate-800 for better contrast */
 }
 
 /* Ensure card text has good contrast */
@@ -376,6 +376,38 @@ a {
 .bg-card .text-card-foreground {
   background-color: #ffffff !important;
   color: #1e293b !important; /* slate-800 for better contrast */
+}
+
+/* Additional contrast improvements for white backgrounds */
+.bg-white p.text-slate-600,
+.bg-white .text-slate-600,
+.bg-white p.text-gray-600,
+.bg-white .text-gray-600,
+.bg-slate-50 p.text-slate-600,
+.bg-slate-50 .text-slate-600,
+.bg-slate-50 p.text-gray-600,
+.bg-slate-50 .text-gray-600 {
+  color: #1e293b !important; /* slate-800 for maximum readability */
+}
+
+/* Enhanced coverage for cards and containers with white/light backgrounds */
+.rounded-xl.bg-white .text-slate-600,
+.rounded-xl.bg-white .text-gray-600,
+.bg-gradient-to-br .text-slate-600,
+.bg-gradient-to-br .text-gray-600,
+[class*="bg-white"] .text-slate-600,
+[class*="bg-white"] .text-gray-600,
+[class*="bg-slate-50"] .text-slate-600,
+[class*="bg-slate-50"] .text-gray-600 {
+  color: #1e293b !important; /* slate-800 for maximum readability on light backgrounds */
+}
+
+/* Ensure text in white cards is readable */
+.bg-white.text-slate-600,
+.bg-white.text-gray-600,
+.bg-slate-50.text-slate-600,
+.bg-slate-50.text-gray-600 {
+  color: #1e293b !important;
 }
 
 /* Blog image sizing fixes - prevent overflow */
