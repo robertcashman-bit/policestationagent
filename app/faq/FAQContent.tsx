@@ -45,7 +45,7 @@ export default function FAQContent() {
         },
         {
           question: 'Which police stations do you cover?',
-          answer: 'We cover all police stations and custody suites across Kent, including: Medway, Maidstone, Gravesend, Canterbury, Tonbridge, Folkestone, Ashford, Sittingbourne, Margate, Dover, Sevenoaks, and all other Kent custody facilities. We aim to attend any Kent police station within 45 minutes.'
+          answer: 'We cover all police stations and custody suites across Kent, including: Medway, Maidstone, Gravesend, Canterbury, Tonbridge, Folkestone, Ashford, Sittingbourne, Margate, Dover, Sevenoaks, and all other Kent custody facilities. Travel times vary by location - typically 15-30 minutes for nearby stations, up to 60-75 minutes for stations in East Kent.'
         }
       ]
     },
