@@ -53,16 +53,87 @@ export default function Chatbot() {
     }
   }, [isOpen, isMinimized]);
 
-  // Common queries and responses
-  const commonQueries: Record<string, string> = {
-    'free': 'Yes! Legal advice at the police station is completely FREE under Legal Aid. This is a statutory right under PACE 1984 and is not means-tested. Everyone arrested or invited for a voluntary interview is entitled to free legal representation.',
-    'cost': 'Legal advice at the police station is FREE under Legal Aid. There is no charge and it is not means-tested. This applies to both custody interviews and voluntary interviews.',
-    'available': 'We are available 24 hours a day, 7 days a week, including weekends and bank holidays. Simply call 01732 247427 and we will arrange for a representative to attend the police station.',
-    'kent': 'We cover all police stations and custody suites across Kent, including: Medway, Maidstone, Gravesend, Canterbury, Tonbridge, Folkestone, Ashford, Sittingbourne, Margate, Dover, Sevenoaks, and all other Kent custody facilities.',
-    'time': 'We aim to attend any Kent police station within 45 minutes. Our representatives are on call 24/7 to provide rapid response.',
-    'voluntary': 'Yes, we provide free representation for voluntary police interviews across Kent. If you have been asked to attend a voluntary interview, it is crucial to have legal representation. Never attend without a solicitor.',
-    'arrested': 'If you have been arrested, you will be taken to a custody suite. It is vital you ask for a solicitor immediately. Call us on 01732 247427 and we will arrange urgent attendance to protect your rights.',
-    'help': 'I can help you with information about our services. For urgent police station representation, please call 01732 247427 immediately. For general enquiries, you can also email robertcashman@defencelegalservices.co.uk',
+  // Enhanced knowledge base with PACE 1984 rights and factual information
+  const getResponse = (message: string): string => {
+    const lowerMessage = message.toLowerCase();
+    
+    // PACE 1984 Rights
+    if (lowerMessage.includes('right') || lowerMessage.includes('entitle') || lowerMessage.includes('pace')) {
+      return 'Under PACE 1984, you have an absolute right to free legal advice at the police station. This is not means-tested. You can request a solicitor at any time, even if you\'ve already started an interview. Having a solicitor does not imply guilt - it protects your rights. Call 01732 247427 for immediate representation.';
+    }
+    
+    // Free legal advice
+    if (lowerMessage.includes('free') || lowerMessage.includes('cost') || lowerMessage.includes('charge') || lowerMessage.includes('price')) {
+      return 'Legal advice at the police station is completely FREE under Legal Aid. This is a statutory right under PACE 1984 and is not means-tested. Everyone arrested or invited for a voluntary interview is entitled to free legal representation. No payment required.';
+    }
+    
+    // Need a solicitor
+    if (lowerMessage.includes('need solicitor') || lowerMessage.includes('do i need') || lowerMessage.includes('should i get')) {
+      return 'Yes, you should always have a solicitor present during police interviews. Even if you\'re innocent, a solicitor protects your rights, ensures proper procedures are followed, and helps prevent self-incrimination. Legal advice is free and does not imply guilt. Call 01732 247427 now.';
+    }
+    
+    // Rights at police station
+    if (lowerMessage.includes('rights') && (lowerMessage.includes('police station') || lowerMessage.includes('custody'))) {
+      return 'Your rights at the police station include: 1) Free legal advice (PACE 1984), 2) Right to remain silent, 3) Right to have someone informed of your arrest, 4) Right to medical attention if needed, 5) Right to see the PACE Codes of Practice. Always request a solicitor immediately. Call 01732 247427.';
+    }
+    
+    // Voluntary interview
+    if (lowerMessage.includes('voluntary') || lowerMessage.includes('caution + 3') || lowerMessage.includes('caution plus')) {
+      return 'A voluntary interview (caution + 3) is a formal police interview where you\'re not under arrest. However, everything you say is recorded and can be used in court. You still have the right to FREE legal advice. Never attend without a solicitor. Call 01732 247427 for representation.';
+    }
+    
+    // Interview under caution
+    if (lowerMessage.includes('interview under caution') || lowerMessage.includes('caution interview')) {
+      return 'An interview under caution is a formal police questioning. You\'ll hear: "You do not have to say anything, but it may harm your defence if you do not mention when questioned something which you later rely on in court." Always have a solicitor present. Legal advice is free. Call 01732 247427.';
+    }
+    
+    // Duty solicitor
+    if (lowerMessage.includes('duty solicitor') || lowerMessage.includes('duty scheme')) {
+      return 'The duty solicitor scheme provides free legal advice at police stations. You can request a duty solicitor or your own solicitor. Both are free under Legal Aid. We are accredited duty solicitors covering all Kent police stations. Call 01732 247427 and ask for Robert Cashman.';
+    }
+    
+    // Representation doesn't imply guilt
+    if (lowerMessage.includes('guilty') || lowerMessage.includes('innocent') || lowerMessage.includes('look bad')) {
+      return 'Having a solicitor does NOT imply guilt. It\'s your legal right and protects you. Even innocent people should have legal representation to ensure their rights are protected and procedures are followed correctly. Legal advice is free and confidential. Call 01732 247427.';
+    }
+    
+    // How to get representation
+    if (lowerMessage.includes('how do i get') || lowerMessage.includes('how to get') || lowerMessage.includes('get representation') || lowerMessage.includes('get help now')) {
+      return 'To get representation right now: 1) If you\'re at a police station, tell the custody sergeant you want a solicitor and ask for Robert Cashman, 2) Call us on 01732 247427 immediately, 3) We aim to attend within 45 minutes. Legal advice is free. Available 24/7.';
+    }
+    
+    // What happens at interview
+    if (lowerMessage.includes('what happens') && (lowerMessage.includes('interview') || lowerMessage.includes('police station'))) {
+      return 'During a police interview: 1) You\'ll be cautioned, 2) Questions will be asked and everything is recorded, 3) Your solicitor can intervene, request breaks, and advise you, 4) You can answer questions, make a prepared statement, or exercise your right to silence. Always have a solicitor present. Call 01732 247427.';
+    }
+    
+    // Availability
+    if (lowerMessage.includes('available') || lowerMessage.includes('hours') || lowerMessage.includes('when')) {
+      return 'We are available 24 hours a day, 7 days a week, including weekends and bank holidays. Simply call 01732 247427 and we will arrange for a representative to attend the police station. We aim to attend within 45 minutes.';
+    }
+    
+    // Kent coverage
+    if (lowerMessage.includes('kent') || lowerMessage.includes('station') || lowerMessage.includes('where')) {
+      return 'We cover all police stations and custody suites across Kent, including: Medway, Maidstone, Gravesend, Canterbury, Tonbridge, Folkestone, Ashford, Sittingbourne, Margate, Dover, Sevenoaks, and all other Kent custody facilities. Call 01732 247427.';
+    }
+    
+    // Response time
+    if (lowerMessage.includes('time') || lowerMessage.includes('how long') || lowerMessage.includes('quick')) {
+      return 'We aim to attend any Kent police station within 45 minutes. Our representatives are on call 24/7 to provide rapid response. For urgent matters, call 01732 247427 immediately.';
+    }
+    
+    // Arrested
+    if (lowerMessage.includes('arrested') || lowerMessage.includes('in custody') || lowerMessage.includes('detained')) {
+      return 'If you\'ve been arrested, you\'ll be taken to a custody suite. It\'s vital you ask for a solicitor immediately. Tell the custody sergeant you want legal advice and ask for Robert Cashman. Call 01732 247427 and we will arrange urgent attendance to protect your rights. Legal advice is free.';
+    }
+    
+    // Contact form prompt
+    if (lowerMessage.includes('form') || lowerMessage.includes('submit') || lowerMessage.includes('request')) {
+      return 'To request police station representation, please complete our contact form at /contact or call 01732 247427 immediately. The form collects essential details so we can attend quickly. Legal advice is free and available 24/7.';
+    }
+    
+    // Default helpful response
+    return 'I can help with questions about police station representation, your rights under PACE 1984, free legal advice, and voluntary interviews. For urgent help, call 01732 247427 immediately. For detailed requests, please complete our contact form at /contact. Legal advice is free and available 24/7.';
   };
 
   const handleQuickOption = async (option: string) => {
@@ -75,14 +146,24 @@ export default function Chatbot() {
 
     if (option === 'police-station') {
       userMessage = 'I Need Police Station Representation - I\'m in custody, arrested, or have an upcoming police interview';
-      botResponse = 'Thank you for contacting us. We understand this is urgent. Our team will contact you shortly. In the meantime, please call 01732 247427 for immediate assistance. We are available 24/7 to provide expert legal representation at any Kent police station.';
+      botResponse = 'Thank you for contacting us. We understand this is urgent. Please complete our contact form at /contact to provide essential details, or call 01732 247427 immediately for immediate assistance. We are available 24/7 to provide expert legal representation at any Kent police station. Legal advice is free under Legal Aid.';
       emailSubject = 'New Enquiry: Police Station Representation Request';
-      emailBody = `A visitor has requested police station representation.\n\nDetails:\n- Service: Police Station Representation\n- Status: In custody, arrested, or has upcoming police interview\n- Urgency: High\n\nPlease contact them as soon as possible.\n\nContact: 01732 247427\n\nThis is an automated notification from the website chatbot.`;
+      emailBody = `A visitor has requested police station representation.\n\nDetails:\n- Service: Police Station Representation\n- Status: In custody, arrested, or has upcoming police interview\n- Urgency: High\n\nPlease contact them as soon as possible.\n\nContact: 01732 247427\n\nThis is an automated notification from the website chatbot.\n\nUser should complete contact form at /contact for full details.`;
+      
+      // Suggest contact form
+      setTimeout(() => {
+        setMessages(prev => [...prev, {
+          id: (Date.now() + 3).toString(),
+          type: 'bot',
+          content: 'To request representation, please visit /contact to complete our contact form. This helps us gather essential details like which police station, date/time, and your contact information. Or call 01732 247427 now for immediate help.',
+          timestamp: new Date(),
+        }]);
+      }, 1500);
     } else if (option === 'law-firm') {
       userMessage = 'I\'m a Criminal Law Firm - I need police station agent cover for my clients';
-      botResponse = 'Thank you for your interest in our agent cover services. We provide reliable police station representation for law firms across the country. Our team will contact you shortly to discuss your requirements and provide competitive rates.';
+      botResponse = 'Thank you for your interest in our agent cover services. We provide reliable police station representation for law firms across the country. Please complete our contact form at /contact or call 01732 247427 to discuss your requirements and competitive rates.';
       emailSubject = 'New Enquiry: Law Firm Agent Cover Request';
-      emailBody = `A criminal law firm has requested agent cover services.\n\nDetails:\n- Service: Agent Cover for Law Firms\n- Type: Criminal Law Firm\n- Need: Police station agent cover for clients\n\nPlease contact them to discuss requirements and rates.\n\nContact: 01732 247427\n\nThis is an automated notification from the website chatbot.`;
+      emailBody = `A criminal law firm has requested agent cover services.\n\nDetails:\n- Service: Agent Cover for Law Firms\n- Type: Criminal Law Firm\n- Need: Police station agent cover for clients\n\nPlease contact them to discuss requirements and rates.\n\nContact: 01732 247427\n\nThis is an automated notification from the website chatbot.\n\nUser should complete contact form at /contact for full details.`;
     }
 
     // Add user message
@@ -156,30 +237,39 @@ export default function Chatbot() {
     };
     setMessages(prev => [...prev, userMsg]);
 
-    // Check for common queries
+    // Get intelligent response
+    const response = getResponse(message);
+    
+    // Check if user needs representation (prompt for contact form)
     const lowerMessage = message.toLowerCase();
-    let response = '';
-
-    for (const [key, value] of Object.entries(commonQueries)) {
-      if (lowerMessage.includes(key)) {
-        response = value;
-        break;
-      }
-    }
-
-    // Default response if no match
-    if (!response) {
-      response = 'Thank you for your question. For specific assistance, please call us on 01732 247427 or email robertcashman@defencelegalservices.co.uk. We are available 24/7 for urgent police station representation.';
-    }
+    const needsRepresentation = lowerMessage.includes('need') || 
+                                lowerMessage.includes('help') || 
+                                lowerMessage.includes('arrested') || 
+                                lowerMessage.includes('interview') ||
+                                lowerMessage.includes('voluntary') ||
+                                lowerMessage.includes('custody');
 
     // Add bot response
     setTimeout(() => {
-      setMessages(prev => [...prev, {
+      const botMsg: ChatMessage = {
         id: (Date.now() + 1).toString(),
         type: 'bot',
         content: response,
         timestamp: new Date(),
-      }]);
+      };
+      setMessages(prev => [...prev, botMsg]);
+      
+      // If user needs representation, suggest contact form
+      if (needsRepresentation && !lowerMessage.includes('form')) {
+        setTimeout(() => {
+          setMessages(prev => [...prev, {
+            id: (Date.now() + 2).toString(),
+            type: 'bot',
+            content: 'Would you like to complete our contact form to request representation? This helps us gather essential details quickly. You can access it at /contact or I can guide you through it.',
+            timestamp: new Date(),
+          }]);
+        }, 1000);
+      }
     }, 500);
   };
 
