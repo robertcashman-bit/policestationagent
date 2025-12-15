@@ -33,6 +33,19 @@ body {
   --accent: #CBA135;
   --accent-dark: #a8822a;
   --accent-light: #d4b04a;
+  --primary-foreground: #ffffff;
+  --accent-foreground: #0f172a;
+  --secondary: #f1f5f9; /* slate-100 */
+  --secondary-foreground: #0f172a; /* slate-900 */
+  --muted: #f8fafc; /* slate-50 */
+  --muted-foreground: #475569; /* slate-600 */
+  --card: #ffffff;
+  --card-foreground: #0f172a; /* slate-900 */
+  --border: #e2e8f0; /* slate-200 */
+  --input: #e2e8f0; /* slate-200 */
+  --ring: #3b82f6; /* blue-500 */
+  --destructive: #dc2626; /* red-600 */
+  --destructive-foreground: #ffffff;
   --gray-50: #f9fafb;
   --gray-100: #f3f4f6;
   --gray-200: #e5e7eb;
