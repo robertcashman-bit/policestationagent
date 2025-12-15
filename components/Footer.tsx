@@ -14,7 +14,7 @@ export default function Footer() {
             <h3 className="font-bold mb-4 text-lg text-white">Police Station Agent</h3>
             <div className="mt-4 p-3 bg-amber-500/10 rounded-lg border border-amber-500/20">
               <p className="text-xs text-amber-200 font-semibold mb-1">Serving All Kent Towns:</p>
-              <p className="text-xs text-slate-300">
+              <p className="text-xs text-white/90">
                 Medway, Maidstone, Canterbury, Gravesend, Tonbridge, Folkestone, Ashford, Dartford, Sittingbourne, Sevenoaks, Tunbridge Wells, Margate, Dover, Swanley, Bluewater
               </p>
             </div>
@@ -253,12 +253,12 @@ export default function Footer() {
           {/* Production Version and Last Update - Discreet Display */}
           <div className="mt-4 text-center space-y-1">
             <div>
-              <span className="text-xs text-slate-500" title={`Build version: ${appVersion}`}>
+              <span className="text-xs text-slate-400" title={`Build version: ${appVersion}`}>
                 Version: {appVersion}
               </span>
             </div>
             <div>
-              <span className="text-xs text-slate-500" title={`Last updated: ${lastUpdate}`}>
+              <span className="text-xs text-slate-400" title={`Last updated: ${lastUpdate}`}>
                 Last updated: {lastUpdate}
               </span>
             </div>

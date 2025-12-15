@@ -392,25 +392,68 @@ a {
   line-height: 1.75;
 }
 
-/* Accessibility: Improve text contrast on light backgrounds */
-/* Override low-contrast text colors on white/light backgrounds */
+/* ============================================
+   ACCESSIBILITY: TEXT CONTRAST FIXES
+   ============================================ */
 
-/* text-slate-300 is too light on any light background - boost to slate-600 */
-.text-slate-300,
+/* ------------------------------------------
+   DARK BACKGROUNDS - Make light text LIGHTER
+   ------------------------------------------ */
+
+/* On dark backgrounds, text-slate-300 should be WHITE for readability */
+[class*="bg-slate-900"] .text-slate-300,
+[class*="bg-slate-800"] .text-slate-300,
+[class*="bg-blue-900"] .text-slate-300,
+[class*="bg-blue-800"] .text-slate-300,
+[class*="bg-gray-900"] .text-slate-300,
+[class*="bg-gray-800"] .text-slate-300,
+header[class*="bg-slate-900"] .text-slate-300,
+header[class*="bg-slate-900"] p.text-slate-300,
+.bg-slate-900 .text-slate-300,
+.bg-slate-900 p.text-slate-300,
+.bg-slate-900 > .text-slate-300,
+.bg-blue-900 .text-slate-300,
+.bg-gray-900 .text-slate-300 {
+  color: #ffffff !important; /* White for max readability on dark */
+}
+
+/* text-slate-400 on dark backgrounds - boost to white/light */
+[class*="bg-slate-900"] .text-slate-400,
+[class*="bg-slate-800"] .text-slate-400,
+[class*="bg-blue-900"] .text-slate-400,
+[class*="bg-blue-800"] .text-slate-400,
+.bg-slate-900 .text-slate-400,
+.bg-slate-800 .text-slate-400 {
+  color: #e2e8f0 !important; /* slate-200 for readability on dark */
+}
+
+/* Improve visibility of light blue text on dark backgrounds */
+[class*="bg-blue-800"] .text-blue-100,
+[class*="bg-blue-900"] .text-blue-100,
+[class*="bg-slate-800"] .text-blue-100,
+[class*="bg-slate-900"] .text-blue-100,
+.bg-slate-900 .text-blue-100,
+.bg-blue-900 .text-blue-100 {
+  color: #ffffff !important; /* white for maximum readability */
+}
+
+[class*="bg-blue-800"] .text-blue-200,
+[class*="bg-blue-900"] .text-blue-200,
+[class*="bg-slate-800"] .text-blue-200,
+[class*="bg-slate-900"] .text-blue-200 {
+  color: #e2e8f0 !important; /* slate-200 for readability */
+}
+
+/* ------------------------------------------
+   LIGHT BACKGROUNDS - Make light text DARKER
+   ------------------------------------------ */
+
+/* text-slate-300/400 on light backgrounds - boost contrast */
 .bg-white .text-slate-300,
 .bg-slate-50 .text-slate-300,
 .bg-gray-50 .text-slate-300,
-[class*="bg-gradient-to-"][class*="from-slate-50"] .text-slate-300,
-[class*="bg-gradient-to-"][class*="from-blue-50"] .text-slate-300,
-[class*="bg-gradient-to-"][class*="to-white"] .text-slate-300 {
-  color: #475569 !important; /* slate-600 for readable contrast */
-}
-
-/* text-gray-300 also too light */
-.text-gray-300,
 .bg-white .text-gray-300,
-.bg-slate-50 .text-gray-300,
-.bg-gray-50 .text-gray-300 {
+.bg-slate-50 .text-gray-300 {
   color: #475569 !important; /* slate-600 for readable contrast */
 }
 
@@ -434,78 +477,38 @@ a {
 .bg-white .text-gray-600,
 .bg-slate-50 .text-slate-600,
 .bg-slate-50 .text-gray-600 {
-  color: #1e293b !important; /* slate-800 for better contrast */
+  color: #334155 !important; /* slate-700 for better contrast */
 }
 
 /* Ensure card text has good contrast */
 .bg-card.text-card-foreground,
 .bg-card .text-card-foreground {
-  background-color: #ffffff !important;
   color: #1e293b !important; /* slate-800 for better contrast */
 }
 
-/* Additional contrast improvements for white backgrounds */
-.bg-white p.text-slate-600,
-.bg-white .text-slate-600,
-.bg-white p.text-gray-600,
-.bg-white .text-gray-600,
-.bg-slate-50 p.text-slate-600,
-.bg-slate-50 .text-slate-600,
-.bg-slate-50 p.text-gray-600,
-.bg-slate-50 .text-gray-600 {
-  color: #1e293b !important; /* slate-800 for maximum readability */
-}
-
-/* Enhanced coverage for cards and containers with white/light backgrounds */
+/* White cards and containers */
 .rounded-xl.bg-white .text-slate-600,
 .rounded-xl.bg-white .text-gray-600,
-/* Only treat LIGHT gradients as light backgrounds (avoid dark hero gradients) */
-[class*="bg-gradient-to-"][class*="to-white"] .text-slate-600,
-[class*="bg-gradient-to-"][class*="to-white"] .text-gray-600,
-[class*="bg-gradient-to-"][class*="from-slate-50"] .text-slate-600,
-[class*="bg-gradient-to-"][class*="from-slate-50"] .text-gray-600,
-[class*="bg-gradient-to-"][class*="from-blue-50"] .text-slate-600,
-[class*="bg-gradient-to-"][class*="from-blue-50"] .text-gray-600,
-[class*="bg-white"] .text-slate-600,
-[class*="bg-white"] .text-gray-600,
-[class*="bg-slate-50"] .text-slate-600,
-[class*="bg-slate-50"] .text-gray-600 {
-  color: #1e293b !important; /* slate-800 for maximum readability on light backgrounds */
+article.bg-white .text-slate-600,
+article.bg-white .text-gray-600 {
+  color: #334155 !important; /* slate-700 */
 }
 
-/* Improve visibility of light blue text on dark backgrounds */
-[class*="bg-blue-800"] .text-blue-100,
-[class*="bg-blue-900"] .text-blue-100,
-[class*="bg-slate-800"] .text-blue-100,
-[class*="bg-slate-900"] .text-blue-100,
-[class*="bg-gradient-to-r"][class*="from-blue-800"] .text-blue-100,
-[class*="bg-gradient-to-r"][class*="from-blue-900"] .text-blue-100,
-[class*="bg-gradient-to-br"][class*="from-blue-800"] .text-blue-100,
-[class*="bg-gradient-to-br"][class*="from-blue-900"] .text-blue-100 {
-  color: #ffffff !important; /* white for maximum readability on dark blue backgrounds */
+/* Global fix: Any text-slate-400 or text-gray-400 in white containers */
+div.bg-white [class*="text-slate-400"],
+div.bg-white [class*="text-gray-400"],
+section.bg-white [class*="text-slate-400"],
+section.bg-white [class*="text-gray-400"],
+article.bg-white [class*="text-slate-400"],
+article.bg-white [class*="text-gray-400"] {
+  color: #64748b !important; /* slate-500 */
 }
 
-[class*="bg-blue-800"] .text-blue-200,
-[class*="bg-blue-900"] .text-blue-200,
-[class*="bg-slate-800"] .text-blue-200,
-[class*="bg-slate-900"] .text-blue-200,
-[class*="bg-gradient-to-r"][class*="from-blue-800"] .text-blue-200,
-[class*="bg-gradient-to-r"][class*="from-blue-900"] .text-blue-200,
-[class*="bg-gradient-to-br"][class*="from-blue-800"] .text-blue-200,
-[class*="bg-gradient-to-br"][class*="from-blue-900"] .text-blue-200 {
-  color: #e2e8f0 !important; /* slate-200 for better readability on dark backgrounds */
-}
-
-/* Ensure text in white cards is readable */
-.bg-white.text-slate-600,
-.bg-white.text-gray-600,
-.bg-slate-50.text-slate-600,
-.bg-slate-50.text-gray-600 {
-  color: #1e293b !important;
-}
+/* ------------------------------------------
+   PROSE/ARTICLE CONTENT FIXES
+   ------------------------------------------ */
 
 /* Fix text visibility in dangerouslySetInnerHTML rendered content */
-/* These elements have inline classes from static HTML */
 .prose [class*="text-slate-400"],
 .prose [class*="text-gray-400"],
 .prose .text-slate-400,
@@ -514,8 +517,6 @@ a {
 }
 
 /* Small text (text-xs, text-sm) with light colors needs even more contrast */
-.prose [class*="text-xs"][class*="text-slate-400"],
-.prose [class*="text-sm"][class*="text-slate-400"],
 .text-xs.text-slate-400,
 .text-sm.text-slate-400,
 .text-xs.text-gray-400,
@@ -526,19 +527,62 @@ a {
 /* Ensure footnotes/references are readable */
 .prose .text-xs.text-slate-400,
 .prose .text-xs.text-gray-400,
-.prose div .text-xs.text-slate-400,
-.prose section .text-xs.text-slate-400 {
+.prose div .text-xs.text-slate-400 {
   color: #64748b !important; /* slate-500 for footnotes */
 }
 
-/* Global fix: Any text-slate-400 or text-gray-400 in white containers */
-div[class*="bg-white"] [class*="text-slate-400"],
-div[class*="bg-white"] [class*="text-gray-400"],
-section[class*="bg-white"] [class*="text-slate-400"],
-section[class*="bg-white"] [class*="text-gray-400"],
-article[class*="bg-white"] [class*="text-slate-400"],
-article[class*="bg-white"] [class*="text-gray-400"] {
-  color: #64748b !important;
+/* ------------------------------------------
+   INLINE HTML HERO SECTIONS (dangerouslySetInnerHTML)
+   ------------------------------------------ */
+
+/* Hero headers with dark backgrounds in prose content */
+.prose header.bg-slate-900 .text-slate-300,
+.prose header.bg-slate-900 p.text-slate-300,
+.prose header.bg-slate-900 p,
+.prose header[class*="bg-slate-900"] p,
+.prose header[class*="bg-slate-900"] .text-slate-300,
+.prose article header.bg-slate-900 p,
+.prose div header.bg-slate-900 p,
+header.bg-slate-900 .text-slate-300,
+header.bg-slate-900 p.text-slate-300,
+header.bg-slate-900 p.text-lg,
+article header.bg-slate-900 p {
+  color: #ffffff !important; /* White for hero subtitles on dark bg */
+}
+
+/* Section backgrounds in prose - ensure text is readable */
+.prose section.bg-blue-50 .text-blue-800,
+.prose section[class*="bg-blue-50"] .text-blue-800 {
+  color: #1e40af !important; /* blue-800 for good contrast */
+}
+
+/* Amber/warning boxes - ensure text contrast */
+.prose div.bg-amber-50 .text-amber-800,
+.prose div[class*="bg-amber-50"] .text-amber-800,
+.prose .bg-amber-50 .text-amber-800,
+div.bg-amber-50 .text-amber-800 {
+  color: #92400e !important; /* amber-800 */
+}
+
+.prose div.bg-amber-50 .text-amber-900,
+.prose div[class*="bg-amber-50"] .text-amber-900,
+div.bg-amber-50 .text-amber-900 {
+  color: #78350f !important; /* amber-900 */
+}
+
+/* Generic dark header sections */
+header.bg-slate-900,
+header[class*="bg-slate-900"],
+.prose header.bg-slate-900,
+.prose header[class*="bg-slate-900"] {
+  color: #ffffff !important;
+}
+
+header.bg-slate-900 h1,
+header.bg-slate-900 h2,
+header[class*="bg-slate-900"] h1,
+header[class*="bg-slate-900"] h2 {
+  color: #ffffff !important;
 }
 
 /* Blog image sizing fixes - prevent overflow */
