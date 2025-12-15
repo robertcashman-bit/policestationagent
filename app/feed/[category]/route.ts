@@ -102,7 +102,7 @@ export async function GET(
     <lastBuildDate>${buildDate}</lastBuildDate>
     <pubDate>${buildDate}</pubDate>
     <ttl>60</ttl>
-    <atom:link href="${SITE_URL}/feed/${categorySlug}.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="${SITE_URL}/feed/${categorySlug}" rel="self" type="application/rss+xml" />
     <image>
       <url>${SITE_URL}/favicon.ico</url>
       <title>Police Station Agent - ${categoryName}</title>
