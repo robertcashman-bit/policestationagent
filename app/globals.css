@@ -826,6 +826,66 @@ html body main p.text-slate-600 {
   color: #1e293b !important; /* slate-800 */
 }
 
+/* ============================================
+   ULTIMATE FIX: Force ALL text-slate-600 to be dark everywhere
+   This is the nuclear option - overrides everything
+   ============================================ */
+
+/* Force text-slate-600 to be dark EVERYWHERE by default */
+[class*="text-slate-600"] {
+  color: #1e293b !important; /* slate-800 - maximum readability */
+}
+
+/* Force text-slate-500 to be dark EVERYWHERE by default */
+[class*="text-slate-500"] {
+  color: #334155 !important; /* slate-700 - maximum readability */
+}
+
+/* Force text-slate-400 to be visible */
+[class*="text-slate-400"] {
+  color: #475569 !important; /* slate-600 - maximum readability */
+}
+
+/* Force text-slate-300 to be visible */
+[class*="text-slate-300"] {
+  color: #64748b !important; /* slate-500 - maximum readability */
+}
+
+/* Force text-gray equivalents */
+[class*="text-gray-600"] {
+  color: #1e293b !important;
+}
+
+[class*="text-gray-500"] {
+  color: #334155 !important;
+}
+
+[class*="text-gray-400"] {
+  color: #475569 !important;
+}
+
+/* EXCEPTION: On dark backgrounds, keep text light */
+.bg-slate-900 [class*="text-slate-300"],
+.bg-slate-900 [class*="text-slate-400"],
+.bg-slate-800 [class*="text-slate-300"],
+.bg-slate-800 [class*="text-slate-400"],
+.bg-blue-900 [class*="text-slate-300"],
+.bg-blue-900 [class*="text-slate-400"],
+.bg-gray-900 [class*="text-slate-300"],
+.bg-gray-900 [class*="text-slate-400"],
+[class*="bg-red-900"] [class*="text-slate-300"],
+[class*="bg-green-900"] [class*="text-slate-300"],
+[class*="bg-blue-900"] [class*="text-slate-300"] {
+  color: #ffffff !important;
+}
+
+.bg-slate-900 [class*="text-slate-500"],
+.bg-slate-900 [class*="text-slate-600"],
+.bg-slate-800 [class*="text-slate-500"],
+.bg-slate-800 [class*="text-slate-600"] {
+  color: #e2e8f0 !important; /* slate-200 for dark backgrounds */
+}
+
 /* COMPREHENSIVE: Force ALL light text to be darker for accessibility */
 html body .text-slate-400,
 html body p.text-slate-400,
