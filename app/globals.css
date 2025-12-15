@@ -451,6 +451,29 @@ a {
   color: #1e293b !important; /* slate-800 for maximum readability on light backgrounds */
 }
 
+/* Improve visibility of light blue text on dark backgrounds */
+[class*="bg-blue-800"] .text-blue-100,
+[class*="bg-blue-900"] .text-blue-100,
+[class*="bg-slate-800"] .text-blue-100,
+[class*="bg-slate-900"] .text-blue-100,
+[class*="bg-gradient-to-r"][class*="from-blue-800"] .text-blue-100,
+[class*="bg-gradient-to-r"][class*="from-blue-900"] .text-blue-100,
+[class*="bg-gradient-to-br"][class*="from-blue-800"] .text-blue-100,
+[class*="bg-gradient-to-br"][class*="from-blue-900"] .text-blue-100 {
+  color: #ffffff !important; /* white for maximum readability on dark blue backgrounds */
+}
+
+[class*="bg-blue-800"] .text-blue-200,
+[class*="bg-blue-900"] .text-blue-200,
+[class*="bg-slate-800"] .text-blue-200,
+[class*="bg-slate-900"] .text-blue-200,
+[class*="bg-gradient-to-r"][class*="from-blue-800"] .text-blue-200,
+[class*="bg-gradient-to-r"][class*="from-blue-900"] .text-blue-200,
+[class*="bg-gradient-to-br"][class*="from-blue-800"] .text-blue-200,
+[class*="bg-gradient-to-br"][class*="from-blue-900"] .text-blue-200 {
+  color: #e2e8f0 !important; /* slate-200 for better readability on dark backgrounds */
+}
+
 /* Ensure text in white cards is readable */
 .bg-white.text-slate-600,
 .bg-white.text-gray-600,
