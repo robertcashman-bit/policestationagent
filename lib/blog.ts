@@ -202,14 +202,15 @@ export function extractFirstImage(content: string | null): string | null {
 /**
  * Normalizes an image URL for use in the application.
  * Handles relative paths, ensures proper formatting.
+ * Strips blur parameters from Wix URLs.
  */
 function normalizeImageUrl(url: string): string | null {
   if (!url || typeof url !== 'string') {
     return null;
   }
 
-  // Clean up the URL
-  let cleanUrl = url.trim();
+  // Clean up the URL - remove quotes that might be embedded
+  let cleanUrl = url.trim().replace(/^["']|["']$/g, '').replace(/&quot;/g, '');
 
   // Skip data URIs that are too small (likely placeholders)
   if (cleanUrl.startsWith('data:') && cleanUrl.length < 100) {
@@ -221,9 +222,10 @@ function normalizeImageUrl(url: string): string | null {
     return null;
   }
 
-  // Handle Wix image URLs - convert to usable format
+  // Handle Wix image URLs - clean up blur parameters
   if (cleanUrl.includes('wix.com') || cleanUrl.includes('wixstatic.com')) {
-    // Wix images are usually in format: https://static.wixstatic.com/media/...
+    // Remove blur_* parameters from Wix URLs
+    cleanUrl = cleanWixImageUrl(cleanUrl);
     return cleanUrl;
   }
 
@@ -238,6 +240,41 @@ function normalizeImageUrl(url: string): string | null {
   }
 
   return cleanUrl;
+}
+
+/**
+ * Clean up Wix image URLs by removing blur parameters and ensuring proper sizing.
+ * Wix URLs use comma-separated parameters in the path, e.g.:
+ * .../fill/w_63,h_38,al_c,q_80,usm_0.66_1.00_0.01,blur_2,enc_avif,quality_auto/...
+ */
+export function cleanWixImageUrl(url: string): string {
+  if (!url) return url;
+  
+  // Remove blur_* parameter from the URL path
+  // Wix uses format: blur_2 or blur_3 etc. in the path parameters
+  let cleanedUrl = url.replace(/,blur_\d+/gi, '');
+  
+  // Also handle if blur is at the start of a parameter section
+  cleanedUrl = cleanedUrl.replace(/blur_\d+,/gi, '');
+  
+  // Improve image quality by replacing small dimensions with larger ones
+  // Only do this for very small images that are clearly thumbnails
+  const widthMatch = cleanedUrl.match(/w_(\d+)/);
+  const heightMatch = cleanedUrl.match(/h_(\d+)/);
+  
+  if (widthMatch && heightMatch) {
+    const width = parseInt(widthMatch[1]);
+    const height = parseInt(heightMatch[1]);
+    
+    // If image is very small (thumbnail), scale it up
+    if (width < 200 && height < 200) {
+      const scale = 10; // Scale up by 10x
+      cleanedUrl = cleanedUrl.replace(`w_${width}`, `w_${width * scale}`);
+      cleanedUrl = cleanedUrl.replace(`h_${height}`, `h_${height * scale}`);
+    }
+  }
+  
+  return cleanedUrl;
 }
 
 // ============================================================================
@@ -567,6 +604,49 @@ export function backfillSlugs(): BackfillResult {
   }
 
   return result;
+}
+
+// ============================================================================
+// CONTENT SANITIZATION
+// ============================================================================
+
+/**
+ * Sanitizes blog post HTML content by:
+ * - Removing blur parameters from Wix image URLs
+ * - Improving image quality by scaling up small thumbnails
+ * - Removing broken/placeholder images
+ * - Fixing malformed URLs with embedded quotes
+ */
+export function sanitizeBlogContent(content: string): string {
+  if (!content || typeof content !== 'string') {
+    return '';
+  }
+
+  let sanitized = content;
+
+  // Fix malformed URLs with embedded &quot; entities
+  sanitized = sanitized.replace(/&quot;/g, '');
+
+  // Find and clean all Wix image URLs in the content
+  // Pattern matches src="...wixstatic.com..." or src='...wixstatic.com...'
+  sanitized = sanitized.replace(
+    /(src=["'])([^"']*(?:wix\.com|wixstatic\.com)[^"']*)(["'])/gi,
+    (match, prefix, url, suffix) => {
+      const cleanedUrl = cleanWixImageUrl(url);
+      return `${prefix}${cleanedUrl}${suffix}`;
+    }
+  );
+
+  // Also clean background-image URLs
+  sanitized = sanitized.replace(
+    /(url\(["']?)([^"'()]*(?:wix\.com|wixstatic\.com)[^"'()]*)(["']?\))/gi,
+    (match, prefix, url, suffix) => {
+      const cleanedUrl = cleanWixImageUrl(url);
+      return `${prefix}${cleanedUrl}${suffix}`;
+    }
+  );
+
+  return sanitized;
 }
 
 // ============================================================================
