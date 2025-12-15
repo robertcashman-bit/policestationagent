@@ -220,7 +220,7 @@ const organizationSchema = {
     "@type": "Person",
     "name": "Robert Cashman",
     "jobTitle": "Accredited Duty Solicitor",
-    "description": "Qualified solicitor with 35+ years experience, 6000+ cases, Practice Director, Higher Court Advocate"
+    "description": "Qualified solicitor with 35+ years experience, 21,000+ cases, Practice Director, Higher Court Advocate"
   },
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
@@ -251,6 +251,8 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <head>
+        <link rel="alternate" type="application/rss+xml" title="Police Station Agent - All Posts" href={`${siteUrl}/feed.xml`} />
+        <link rel="alternate" type="application/rss+xml" title="Police Station Agent - Recent Posts" href={`${siteUrl}/feed/recent`} />
         {/* Critical inline styles for LCP - reduces render delay */}
         <style dangerouslySetInnerHTML={{ __html: `
           .lcp-hero{font-size:1.25rem;line-height:1.75rem;color:rgb(191 219 254);margin-bottom:2rem;font-weight:500;max-width:56rem;margin-left:auto;margin-right:auto}

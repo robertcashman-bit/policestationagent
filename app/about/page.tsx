@@ -25,7 +25,7 @@ const personSchema = {
   "@type": "Person",
   "name": "Robert Cashman",
   "jobTitle": "Accredited Duty Solicitor",
-  "description": "Qualified solicitor and police station representative with 35+ years experience, 6000+ cases. Practice Director and Higher Court Advocate specializing in police station representation across Kent.",
+  "description": "Qualified solicitor and police station representative with 35+ years experience, 21,000+ cases. Practice Director and Higher Court Advocate specializing in police station representation across Kent.",
   "worksFor": {
     "@type": "LegalService",
     "name": "Police Station Agent"

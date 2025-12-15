@@ -73,7 +73,7 @@ export default function PoliceStationRepresentationPage() {
     },
     {
       question: "What's the difference between a police station rep and a call centre service?",
-      answer: "We provide direct access to qualified solicitor Robert Cashman (35+ years experience, 6000+ cases). Unlike call-centre competitors, you get a qualified solicitor, not just an agent. We focus exclusively on Kent, not national coverage."
+      answer: "We provide direct access to qualified solicitor Robert Cashman (35+ years experience, 21,000+ cases). Unlike call-centre competitors, you get a qualified solicitor, not just an agent. We focus exclusively on Kent, not national coverage."
     }
   ];
 

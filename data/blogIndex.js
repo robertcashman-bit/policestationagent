@@ -9,7 +9,7 @@
  * 3. The post will be automatically categorized and added here
  * 
  * Generated: 2025-12-15T12:29:55.293Z
- * Total Posts: 51
+ * Total Posts: 50
  */
 
 export const blogPosts = [
@@ -37,11 +37,6 @@ export const blogPosts = [
     "title": "Expert Legal Representation for Police Stations in Kent",
     "slug": "/blog/expert-legal-representation-for-police-stations-in-kent",
     "category": "Criminal Defence Guidance"
-  },
-  {
-    "title": "Freedom is a Precious Thing",
-    "slug": "/blog/freedom-is-a-precious-thing",
-    "category": "Your Legal Rights"
   },
   {
     "title": "Getting Your Property Returned By The Police In The UK",

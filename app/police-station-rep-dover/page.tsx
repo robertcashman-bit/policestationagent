@@ -92,7 +92,7 @@ export default function Page() {
                       If you or someone you know has been arrested or invited for a police interview in Dover, you need expert representation. As Kent's leading police station rep service, we provide FREE legal advice 24/7 for voluntary interviews'.
                     </p>
                     <p className="text-slate-700 leading-relaxed mb-4">
-                      Our accredited duty solicitor Robert Cashman has 35+ years of experience and has handled 6000+ cases. Unlike call-centre services, you get direct access to a qualified solicitor who understands Dover's police procedures.
+                      Our accredited duty solicitor Robert Cashman has 35+ years of experience and has handled 21,000+ cases. Unlike call-centre services, you get direct access to a qualified solicitor who understands Dover's police procedures.
                     </p>
                     <div className="mt-6 space-y-3">
                       <div className="flex items-start gap-3">
@@ -143,7 +143,7 @@ export default function Page() {
                   <div className="p-6">
                     <h2 className="text-2xl font-bold text-slate-900 mb-4">Why Choose Our Police Station Rep Service in Dover?</h2>
                     <p className="text-slate-700 leading-relaxed mb-4">
-                      Unlike call-centre competitors, we provide direct access to qualified solicitor Robert Cashman. With 35+ years of experience and 6000+ cases, he brings Practice Director-level expertise to every case.
+                      Unlike call-centre competitors, we provide direct access to qualified solicitor Robert Cashman. With 35+ years of experience and 21,000+ cases, he brings Practice Director-level expertise to every case.
                     </p>
                     <ul className="space-y-2 text-slate-700">
                       <li className="flex items-start gap-2">
