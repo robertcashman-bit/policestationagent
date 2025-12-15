@@ -4,6 +4,7 @@ import { inter } from './fonts';
 import { SITE_URL, SITE_DOMAIN } from '@/config/site';
 import Script from 'next/script';
 import Chatbot from '@/components/Chatbot';
+import CookieBanner from '@/components/CookieBanner';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_URL;
 
@@ -131,6 +132,8 @@ export default function RootLayout({
           Skip to main content
         </a>
         {children}
+        {/* Cookie Consent Banner - Minimal, compliant */}
+        <CookieBanner />
         {/* Chatbot Assistant - Fixed position, non-blocking */}
         <Chatbot />
       </body>
