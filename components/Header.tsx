@@ -171,7 +171,7 @@ export default function Header() {
               </button>
               {coverageOpen && (
                 <div 
-                  className="absolute top-full left-0 mt-1 w-64 bg-white rounded-lg shadow-xl border border-slate-200 py-2 z-50"
+                  className="absolute top-full left-0 mt-1 w-80 bg-white rounded-lg shadow-xl border border-slate-200 py-2 z-50 max-h-[75vh] overflow-y-auto"
                   onMouseEnter={() => {
                     cancelDelayedClose(coverageTimeoutRef);
                     setCoverageOpen(true);
@@ -180,11 +180,41 @@ export default function Header() {
                 >
                   <Link href="/coverage" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 font-semibold">Coverage Overview</Link>
                   <div className="border-t border-slate-200 my-1"></div>
-                  <Link href="/coverage/police-stations" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Police Stations</Link>
-                  <Link href="/coverage/areas" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Areas</Link>
-                  <div className="border-t border-slate-200 my-1"></div>
-                  <Link href="/police-stations" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm">All Police Stations</Link>
-                  <Link href="/areas" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm">All Areas</Link>
+                  <Link href="/police-stations" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">All Police Stations</Link>
+                  <Link href="/areas" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">All Areas</Link>
+                  <div className="border-t border-slate-200 my-2"></div>
+                  <div className="px-4 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wide">Kent Police Stations</div>
+                  <Link href="/maidstone-police-station" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm">Maidstone Police Station</Link>
+                  <Link href="/canterbury-police-station" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm">Canterbury Police Station</Link>
+                  <Link href="/ashford-police-station" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm">Ashford Police Station</Link>
+                  <Link href="/folkestone-police-station" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm">Folkestone Police Station</Link>
+                  <Link href="/dover-police-station" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm">Dover Police Station</Link>
+                  <Link href="/medway-police-station" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm">Medway Police Station</Link>
+                  <Link href="/margate-police-station" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm">Margate Police Station</Link>
+                  <Link href="/gravesend-police-station" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm">Gravesend Police Station</Link>
+                  <Link href="/tonbridge-police-station" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm">Tonbridge Police Station</Link>
+                  <Link href="/tunbridge-wells-police-station" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm">Tunbridge Wells Police Station</Link>
+                  <Link href="/sevenoaks-police-station" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm">Sevenoaks Police Station</Link>
+                  <Link href="/sittingbourne-police-station" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm">Sittingbourne Police Station</Link>
+                  <Link href="/swanley-police-station" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm">Swanley Police Station</Link>
+                  <Link href="/bluewater-police-station" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm">Bluewater Police Station</Link>
+                  <div className="border-t border-slate-200 my-2"></div>
+                  <div className="px-4 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wide">Solicitors By Location</div>
+                  <Link href="/maidstone-solicitor" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm">Maidstone Solicitor</Link>
+                  <Link href="/canterbury-solicitor" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm">Canterbury Solicitor</Link>
+                  <Link href="/ashford-solicitor" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm">Ashford Solicitor</Link>
+                  <Link href="/folkestone-solicitor" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm">Folkestone Solicitor</Link>
+                  <Link href="/dover-solicitor" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm">Dover Solicitor</Link>
+                  <Link href="/medway-solicitor" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm">Medway Solicitor</Link>
+                  <Link href="/margate-solicitor" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm">Margate Solicitor</Link>
+                  <Link href="/gravesend-solicitor" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm">Gravesend Solicitor</Link>
+                  <Link href="/tonbridge-solicitor" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm">Tonbridge Solicitor</Link>
+                  <Link href="/tunbridge-wells-solicitor" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm">Tunbridge Wells Solicitor</Link>
+                  <Link href="/sevenoaks-solicitor" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm">Sevenoaks Solicitor</Link>
+                  <Link href="/sittingbourne-solicitor" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm">Sittingbourne Solicitor</Link>
+                  <Link href="/swanley-solicitor" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm">Swanley Solicitor</Link>
+                  <Link href="/dartford-solicitor" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm">Dartford Solicitor</Link>
+                  <Link href="/bromley-solicitor" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm">Bromley Solicitor</Link>
                 </div>
               )}
             </div>
@@ -255,6 +285,10 @@ export default function Header() {
                   }}
                   onMouseLeave={() => handleDelayedClose(setInformationOpen, informationTimeoutRef, 300)}
                 >
+                  <div className="px-4 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wide">Opening Hours</div>
+                  <Link href="/hours" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 font-medium">Opening Hours</Link>
+                  <Link href="/christmashours" className="block px-4 py-2 text-red-600 hover:bg-red-50 hover:text-red-700 font-medium">🎄 Christmas Hours</Link>
+                  <div className="border-t border-slate-200 my-2"></div>
                   <div className="px-4 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wide">Help & Advice</div>
                   <Link href="/faq" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">FAQ</Link>
                   <Link href="/canwehelp" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Can We Help?</Link>
@@ -418,8 +452,31 @@ export default function Header() {
             
             <div className="px-4 py-2 text-slate-700 text-sm font-semibold mt-2">Coverage</div>
             <Link href="/coverage" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Coverage Overview</Link>
-            <Link href="/coverage/police-stations" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Police Stations</Link>
-            <Link href="/coverage/areas" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Areas</Link>
+            <Link href="/police-stations" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>All Police Stations</Link>
+            <Link href="/areas" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>All Areas</Link>
+            
+            <div className="px-4 py-2 text-slate-500 text-xs font-semibold mt-2 uppercase tracking-wide">Police Stations</div>
+            <Link href="/maidstone-police-station" className="block px-4 py-2 text-slate-600 hover:text-blue-600 font-medium pl-8 text-sm" onClick={() => setMobileMenuOpen(false)}>Maidstone</Link>
+            <Link href="/canterbury-police-station" className="block px-4 py-2 text-slate-600 hover:text-blue-600 font-medium pl-8 text-sm" onClick={() => setMobileMenuOpen(false)}>Canterbury</Link>
+            <Link href="/ashford-police-station" className="block px-4 py-2 text-slate-600 hover:text-blue-600 font-medium pl-8 text-sm" onClick={() => setMobileMenuOpen(false)}>Ashford</Link>
+            <Link href="/folkestone-police-station" className="block px-4 py-2 text-slate-600 hover:text-blue-600 font-medium pl-8 text-sm" onClick={() => setMobileMenuOpen(false)}>Folkestone</Link>
+            <Link href="/dover-police-station" className="block px-4 py-2 text-slate-600 hover:text-blue-600 font-medium pl-8 text-sm" onClick={() => setMobileMenuOpen(false)}>Dover</Link>
+            <Link href="/medway-police-station" className="block px-4 py-2 text-slate-600 hover:text-blue-600 font-medium pl-8 text-sm" onClick={() => setMobileMenuOpen(false)}>Medway</Link>
+            <Link href="/gravesend-police-station" className="block px-4 py-2 text-slate-600 hover:text-blue-600 font-medium pl-8 text-sm" onClick={() => setMobileMenuOpen(false)}>Gravesend</Link>
+            <Link href="/tonbridge-police-station" className="block px-4 py-2 text-slate-600 hover:text-blue-600 font-medium pl-8 text-sm" onClick={() => setMobileMenuOpen(false)}>Tonbridge</Link>
+            <Link href="/sevenoaks-police-station" className="block px-4 py-2 text-slate-600 hover:text-blue-600 font-medium pl-8 text-sm" onClick={() => setMobileMenuOpen(false)}>Sevenoaks</Link>
+            
+            <div className="px-4 py-2 text-slate-500 text-xs font-semibold mt-2 uppercase tracking-wide">Solicitors By Location</div>
+            <Link href="/maidstone-solicitor" className="block px-4 py-2 text-slate-600 hover:text-blue-600 font-medium pl-8 text-sm" onClick={() => setMobileMenuOpen(false)}>Maidstone</Link>
+            <Link href="/canterbury-solicitor" className="block px-4 py-2 text-slate-600 hover:text-blue-600 font-medium pl-8 text-sm" onClick={() => setMobileMenuOpen(false)}>Canterbury</Link>
+            <Link href="/ashford-solicitor" className="block px-4 py-2 text-slate-600 hover:text-blue-600 font-medium pl-8 text-sm" onClick={() => setMobileMenuOpen(false)}>Ashford</Link>
+            <Link href="/folkestone-solicitor" className="block px-4 py-2 text-slate-600 hover:text-blue-600 font-medium pl-8 text-sm" onClick={() => setMobileMenuOpen(false)}>Folkestone</Link>
+            <Link href="/dover-solicitor" className="block px-4 py-2 text-slate-600 hover:text-blue-600 font-medium pl-8 text-sm" onClick={() => setMobileMenuOpen(false)}>Dover</Link>
+            <Link href="/medway-solicitor" className="block px-4 py-2 text-slate-600 hover:text-blue-600 font-medium pl-8 text-sm" onClick={() => setMobileMenuOpen(false)}>Medway</Link>
+            <Link href="/gravesend-solicitor" className="block px-4 py-2 text-slate-600 hover:text-blue-600 font-medium pl-8 text-sm" onClick={() => setMobileMenuOpen(false)}>Gravesend</Link>
+            <Link href="/tonbridge-solicitor" className="block px-4 py-2 text-slate-600 hover:text-blue-600 font-medium pl-8 text-sm" onClick={() => setMobileMenuOpen(false)}>Tonbridge</Link>
+            <Link href="/sevenoaks-solicitor" className="block px-4 py-2 text-slate-600 hover:text-blue-600 font-medium pl-8 text-sm" onClick={() => setMobileMenuOpen(false)}>Sevenoaks</Link>
+            <Link href="/dartford-solicitor" className="block px-4 py-2 text-slate-600 hover:text-blue-600 font-medium pl-8 text-sm" onClick={() => setMobileMenuOpen(false)}>Dartford</Link>
             
             <div className="px-4 py-3 text-slate-800 text-sm font-bold mt-2 bg-slate-100 rounded-lg mx-2">
               📚 Blog ({totalBlogCount} posts)
@@ -453,6 +510,9 @@ export default function Header() {
                 );
               })}
             </div>
+            <div className="px-4 py-2 text-slate-700 text-sm font-semibold mt-2">Opening Hours</div>
+            <Link href="/hours" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Opening Hours</Link>
+            <Link href="/christmashours" className="block px-4 py-2 text-red-600 hover:text-red-700 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>🎄 Christmas Hours</Link>
             <div className="px-4 py-2 text-slate-700 text-sm font-semibold mt-2">Information</div>
             <Link href="/faq" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>FAQ</Link>
             <Link href="/canwehelp" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Can We Help?</Link>

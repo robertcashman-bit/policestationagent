@@ -8,6 +8,12 @@ const nextConfig = {
   compress: true,
   // Production optimizations
   productionBrowserSourceMaps: false,
+  // Performance: Optimize package imports for smaller bundles
+  modularizeImports: {
+    'lucide-react': {
+      transform: 'lucide-react/dist/esm/icons/{{kebabCase member}}',
+    },
+  },
   // Image optimization configuration
   images: {
     remotePatterns: [

@@ -1,0 +1,707 @@
+{
+  "summary": {
+    "totalRoutes": 162,
+    "linkedRoutes": 129,
+    "potentialOrphans": 106,
+    "candidates": 15,
+    "rejected": 91,
+    "existingDuplicates": 24
+  },
+  "candidates": [
+    {
+      "route": "/arrested-what-to-do",
+      "slug": "/arrested-what-to-do",
+      "title": "Arrested in Kent? What to Do",
+      "category": "Your Legal Rights",
+      "description": "Just been arrested in Kent? Know your PACE 1984 rights. Request a FREE solicitor immediately. Don"
+    },
+    {
+      "route": "/arrival-times-delays",
+      "slug": "/arrival-times-delays",
+      "title": "Arrival Times & Delays",
+      "category": "Your Legal Rights",
+      "description": "Expected arrival times for police station representation in Kent. Understanding delays and your rights when waiting for a solicitor."
+    },
+    {
+      "route": "/article-interview-under-caution",
+      "slug": "/article-interview-under-caution",
+      "title": "What Happens During Interview Under Caution?",
+      "category": "Police Interview & Procedure",
+      "description": "Expert guide to police interviews under caution in Kent. What to expect, your rights, how to prepare. FREE legal advice available. Call 01732 247427."
+    },
+    {
+      "route": "/article-loved-one-arrested-kent",
+      "slug": "/article-loved-one-arrested-kent",
+      "title": "What To Do If a Loved One Is Arrested in Kent",
+      "category": "Your Legal Rights",
+      "description": "Practical advice when a family member or friend is arrested in Kent. How to help, arranging legal representation, your rights. Call 01732 247427 for immediate help."
+    },
+    {
+      "route": "/article-police-caution-before-interview",
+      "slug": "/article-police-caution-before-interview",
+      "title": "The Police Caution Before Interview",
+      "category": "Police Interview & Procedure",
+      "description": "Understanding the police caution and what it means for your rights during a police interview. Expert legal guidance from Police Station Agent."
+    },
+    {
+      "route": "/article-rights-kent-police-station-2025",
+      "slug": "/article-rights-kent-police-station-2025",
+      "title": "Your Rights in a Kent Police Station (2025 Guide)",
+      "category": "Your Legal Rights",
+      "description": "Complete 2025 guide to your legal rights at Kent police stations. PACE rights, free legal advice, detention limits explained by accredited duty solicitor. Call 01732 247427."
+    },
+    {
+      "route": "/booking-in-procedure-in-kent",
+      "slug": "/booking-in-procedure-in-kent",
+      "title": "Booking In Procedure in Kent",
+      "category": "Police Bail & Custody",
+      "description": "Understanding the booking in procedure at Kent police stations. Learn what happens when you arrive, your rights, and what to expect during the custody process."
+    },
+    {
+      "route": "/kent-police-station-reps",
+      "slug": "/kent-police-station-reps",
+      "title": "Police Station Representatives in Kent",
+      "category": "Police Bail & Custody",
+      "description": "Expert police station representatives covering all Kent custody suites. FREE legal advice at Maidstone, Medway, Tonbridge, Gravesend, Sevenoaks & Swanley. Available 24/7. Call 01732 247427."
+    },
+    {
+      "route": "/kent-police-stations",
+      "slug": "/kent-police-stations",
+      "title": "Kent Police Stations Guide 2025",
+      "category": "Police Bail & Custody",
+      "description": "Complete guide to all Kent police custody suites. Addresses, opening hours, areas covered. Know your rights when detained. FREE legal advice available 24/7. Call 01732 247427."
+    },
+    {
+      "route": "/out-of-area",
+      "slug": "/out-of-area",
+      "title": "Detained Outside Kent? What To Do",
+      "category": "Police Station Advice",
+      "description": "Guidance for members of the public and solicitor firms when a detainee is held at a police station outside of Kent. Coverage available for stations within 60 mins of Maidstone."
+    },
+    {
+      "route": "/police-station-interviews-kent-rights",
+      "slug": "/police-station-interviews-kent-rights",
+      "title": "Police Station Interviews in Kent: Your Rights and What to Expect",
+      "category": "Police Interview & Procedure",
+      "description": "Complete guide to police station interviews in Kent. Understand your rights under PACE 1984, what happens during interview, and why legal advice is essential. FREE legal aid available 24/7."
+    },
+    {
+      "route": "/psastations",
+      "slug": "/psastations",
+      "title": "Kent Police Station Coverage",
+      "category": "Police Bail & Custody",
+      "description": "We provide expert duty solicitor representation at all major police stations and custody suites across Kent & Medway. Available 24/7."
+    },
+    {
+      "route": "/services/bail-applications",
+      "slug": "/services/bail-applications",
+      "title": "Bail Applications Kent",
+      "category": "Police Bail & Custody",
+      "description": "Expert bail application representation in Kent. Professional legal advice for police bail, court bail, and bail variations. Available 24/7. Call 01732 247427."
+    },
+    {
+      "route": "/services/pre-charge-advice",
+      "slug": "/services/pre-charge-advice",
+      "title": "Pre-Charge Advice Kent",
+      "category": "Police Station Advice",
+      "description": "Expert pre-charge legal advice in Kent. Professional consultation before police charging decisions. Available 24/7. Call 01732 247427."
+    },
+    {
+      "route": "/what-to-do-if-a-loved-one-is-arrested",
+      "slug": "/what-to-do-if-a-loved-one-is-arrested",
+      "title": "What to Do If a Loved One is Arrested",
+      "category": "Your Legal Rights",
+      "description": "Practical guide for families when a loved one is arrested in Kent. Learn what to do, your rights, and how to get immediate legal representation."
+    }
+  ],
+  "rejected": [
+    {
+      "route": "/afterapoliceinterview",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Police Station Agent"
+    },
+    {
+      "route": "/ashford-police-station",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Ashford Police Station Solicitor"
+    },
+    {
+      "route": "/ashford-psa-station",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Ashford Police Station Solicitor"
+    },
+    {
+      "route": "/ashford-solicitor",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Ashford Police Station Solicitor"
+    },
+    {
+      "route": "/attendanceterms",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Agency Terms of Attendance"
+    },
+    {
+      "route": "/bluewater-police-station",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Bluewater Police Station Solicitor"
+    },
+    {
+      "route": "/bluewater-psa-station",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Bluewater Police Station Solicitor"
+    },
+    {
+      "route": "/bluewater-solicitor",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Bluewater Police Station Solicitor"
+    },
+    {
+      "route": "/bromley-solicitor",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Bromley Police Station Solicitor"
+    },
+    {
+      "route": "/can-we-help",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Can We Help You?"
+    },
+    {
+      "route": "/canterbury-police-station",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Canterbury Police Station Solicitor"
+    },
+    {
+      "route": "/canterbury-psa-station",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Canterbury Police Station Solicitor"
+    },
+    {
+      "route": "/canterbury-solicitor",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Canterbury Police Station Solicitor"
+    },
+    {
+      "route": "/case-status",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Check Case Status"
+    },
+    {
+      "route": "/chatham-solicitor",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Chatham Police Station Solicitor"
+    },
+    {
+      "route": "/christmashours",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Christmas & Bank Holiday Opening Hours"
+    },
+    {
+      "route": "/coldharbour-police-station",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Coldharbour Police Station Solicitor"
+    },
+    {
+      "route": "/court-representation",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Police Station Agent"
+    },
+    {
+      "route": "/dartford-solicitor",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Dartford Police Station Solicitor"
+    },
+    {
+      "route": "/deal-solicitor",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Deal Police Station Solicitor"
+    },
+    {
+      "route": "/dover-police-station",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Dover Police Station Solicitor"
+    },
+    {
+      "route": "/dover-psa-station",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Dover Police Station Solicitor"
+    },
+    {
+      "route": "/dover-solicitor",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Dover Police Station Solicitor"
+    },
+    {
+      "route": "/extendedhours",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Extended Hours Police Station Representation"
+    },
+    {
+      "route": "/f-a-q",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "FAQ - Frequently Asked Questions"
+    },
+    {
+      "route": "/faversham-solicitor",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Faversham Police Station Solicitor"
+    },
+    {
+      "route": "/folkestone-police-station",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Folkestone Police Station Solicitor"
+    },
+    {
+      "route": "/folkestone-psa-station",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Folkestone Police Station Solicitor"
+    },
+    {
+      "route": "/folkestone-solicitor",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Folkestone Police Station Solicitor"
+    },
+    {
+      "route": "/forsolicitors",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Police Station Agent Cover Services for Solicitors"
+    },
+    {
+      "route": "/g-d-p-r",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "GDPR Compliance"
+    },
+    {
+      "route": "/gillingham-solicitor",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Gillingham Police Station Solicitor"
+    },
+    {
+      "route": "/gravesend-police-station",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Gravesend Police Station Solicitor"
+    },
+    {
+      "route": "/gravesend-solicitor",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Gravesend Police Station Solicitor"
+    },
+    {
+      "route": "/guided-assistant",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Police Station Agent"
+    },
+    {
+      "route": "/herne-bay-solicitor",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Herne Bay Police Station Solicitor"
+    },
+    {
+      "route": "/home",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Duty Solicitor Kent 24/7"
+    },
+    {
+      "route": "/hours",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Police Station Agent"
+    },
+    {
+      "route": "/join",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "UK Criminal Defence Network – Join"
+    },
+    {
+      "route": "/maidstone-police-station",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Maidstone Police Station Solicitor"
+    },
+    {
+      "route": "/maidstone-psa-station",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Maidstone Police Station Solicitor"
+    },
+    {
+      "route": "/maidstone-solicitor",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Maidstone Police Station Solicitor"
+    },
+    {
+      "route": "/margate-police-station",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Margate Police Station Solicitor"
+    },
+    {
+      "route": "/margate-psa-station",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Margate Police Station Solicitor"
+    },
+    {
+      "route": "/margate-solicitor",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Margate Police Station Solicitor"
+    },
+    {
+      "route": "/medway-police-station",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Medway Police Station Solicitor"
+    },
+    {
+      "route": "/medway-psa-station",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Medway Police Station Solicitor"
+    },
+    {
+      "route": "/medway-solicitor",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Medway Police Station Solicitor"
+    },
+    {
+      "route": "/nofurtheractionafterpoliceinterview",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Police Station Agent"
+    },
+    {
+      "route": "/north-kent-gravesend-police-station",
+      "reason": "Utility/legal boilerplate or location page",
+      "title": "Gravesend Police Station Solicitor"
+    }
+  ],
+  "existingDuplicates": [
+    {
+      "type": "duplicate-title",
+      "entry": {
+        "title": "Complete Guide to Legal Representation at Kent Police Stations",
+        "slug": "/blog/complete-guide-to-legal-representation-at-kent-police-stations",
+        "category": "Criminal Defence Guidance"
+      },
+      "duplicateOf": {
+        "title": "Complete Guide to Legal Representation at Kent Police Stations",
+        "slug": "/blog/kent-police-stations-legal-representation-24-7",
+        "category": "Criminal Defence Guidance"
+      },
+      "similarity": 1
+    },
+    {
+      "type": "duplicate-title",
+      "entry": {
+        "title": "Get Paid As A Police Station Representative",
+        "slug": "/blog/get-paid-as-a-police-station-representative",
+        "category": "Duty Solicitor & Representation"
+      },
+      "duplicateOf": {
+        "title": "Get Paid As A Police Station Representative",
+        "slug": "/blog/getting-paid-as-a-police-station-rep",
+        "category": "Duty Solicitor & Representation"
+      },
+      "similarity": 1
+    },
+    {
+      "type": "duplicate-title",
+      "entry": {
+        "title": "Getting Your Property Returned By The Police In The UK",
+        "slug": "/blog/getting-your-property-returned-by-the-police-in-the-uk",
+        "category": "Updates & Commentary"
+      },
+      "duplicateOf": {
+        "title": "Getting Your Property Returned By The Police In The UK",
+        "slug": "/blog/property-returned-from-police-uk",
+        "category": "Updates & Commentary"
+      },
+      "similarity": 1
+    },
+    {
+      "type": "duplicate-title",
+      "entry": {
+        "title": "Have to attend a Police Station?  Part 2",
+        "slug": "/blog/have-to-attend-a-police-station-part-2",
+        "category": "Police Station Advice"
+      },
+      "duplicateOf": {
+        "title": "Have to attend a Police Station?  Part 2",
+        "slug": "/blog/have-to-attend-a-police-station-part-2-1",
+        "category": "Police Station Advice"
+      },
+      "similarity": 1
+    },
+    {
+      "type": "duplicate-title",
+      "entry": {
+        "title": "Help? The Police Have Contacted Me!",
+        "slug": "/blog/help-the-police-have-contacted-me",
+        "category": "Police Station Advice"
+      },
+      "duplicateOf": {
+        "title": "Help? The Police Have Contacted Me!",
+        "slug": "/blog/help-the-police-have-contacted-me-1",
+        "category": "Police Station Advice"
+      },
+      "similarity": 1
+    },
+    {
+      "type": "duplicate-title",
+      "entry": {
+        "title": "Inside a Voluntary Police Interview: What to Expect, Part 2",
+        "slug": "/blog/inside-a-voluntary-police-interview-what-to-expect-part-2",
+        "category": "Police Interview & Procedure"
+      },
+      "duplicateOf": {
+        "title": "Inside a Voluntary Police Interview: What to Expect, Part 2",
+        "slug": "/blog/whats-happens-at-a-police-station-voluntary-interview-part-2",
+        "category": "Police Interview & Procedure"
+      },
+      "similarity": 1
+    },
+    {
+      "type": "duplicate-title",
+      "entry": {
+        "title": "No Further Action After Police Interview",
+        "slug": "/blog/no-further-action-after-police-interview",
+        "category": "Police Interview & Procedure"
+      },
+      "duplicateOf": {
+        "title": "No Further Action After Police Interview",
+        "slug": "/blog/nofurtheractionafterpoliceinterview",
+        "category": "Police Interview & Procedure"
+      },
+      "similarity": 1
+    },
+    {
+      "type": "duplicate-title",
+      "entry": {
+        "title": "Police Station Disclosure By Police Station Agent",
+        "slug": "/blog/police-station-disclosure-by-police-station-agent",
+        "category": "Duty Solicitor & Representation"
+      },
+      "duplicateOf": {
+        "title": "Police Station Disclosure By Police Station Agent",
+        "slug": "/blog/police-station-rep-disclosure-1",
+        "category": "Duty Solicitor & Representation"
+      },
+      "similarity": 1
+    },
+    {
+      "type": "duplicate-title",
+      "entry": {
+        "title": "Police Station Rep? Our Top 10 Tips",
+        "slug": "/blog/police-station-rep-our-top-10-tips",
+        "category": "Duty Solicitor & Representation"
+      },
+      "duplicateOf": {
+        "title": "Police Station Rep? Our Top 10 Tips",
+        "slug": "/blog/police-station-representative",
+        "category": "Duty Solicitor & Representation"
+      },
+      "similarity": 1
+    },
+    {
+      "type": "duplicate-title",
+      "entry": {
+        "title": "Police Station Representation.",
+        "slug": "/blog/police-station-representation",
+        "category": "Criminal Defence Guidance"
+      },
+      "duplicateOf": {
+        "title": "Police Station Representation.",
+        "slug": "/blog/police-station-representation-do-i-need-it-i-don-t-do-i",
+        "category": "Criminal Defence Guidance"
+      },
+      "similarity": 1
+    },
+    {
+      "type": "duplicate-title",
+      "entry": {
+        "title": "Register As A Police Station Representative",
+        "slug": "/blog/register-as-a-police-station-representative",
+        "category": "Duty Solicitor & Representation"
+      },
+      "duplicateOf": {
+        "title": "Register As A Police Station Representative",
+        "slug": "/blog/police-station-rep-registration",
+        "category": "Duty Solicitor & Representation"
+      },
+      "similarity": 1
+    },
+    {
+      "type": "duplicate-title",
+      "entry": {
+        "title": "The Police Caution Means? -Police Station Agent",
+        "slug": "/blog/the-police-caution-means-police-station-agent",
+        "category": "Duty Solicitor & Representation"
+      },
+      "duplicateOf": {
+        "title": "The Police Caution Means? -Police Station Agent",
+        "slug": "/blog/police-caution",
+        "category": "Duty Solicitor & Representation"
+      },
+      "similarity": 1
+    },
+    {
+      "type": "duplicate-title",
+      "entry": {
+        "title": "Understanding Police Bail: Imposition, Conditions, Breaches, and Legal Implications Explained",
+        "slug": "/blog/understanding-police-bail-imposition-conditions-breaches-and-legal-implications-explained",
+        "category": "Police Bail & Custody"
+      },
+      "duplicateOf": {
+        "title": "Understanding Police Bail: Imposition, Conditions, Breaches, and Legal Implications Explained",
+        "slug": "/blog/demystifying-police-bail-understanding-imposition-conditions-breaches-and-legal-implications",
+        "category": "Police Bail & Custody"
+      },
+      "similarity": 1
+    },
+    {
+      "type": "duplicate-title",
+      "entry": {
+        "title": "Understanding Police Cautions and Warnings: What You Need to Know",
+        "slug": "/blog/understanding-police-cautions-and-warnings-what-you-need-to-know",
+        "category": "Updates & Commentary"
+      },
+      "duplicateOf": {
+        "title": "Understanding Police Cautions and Warnings: What You Need to Know",
+        "slug": "/blog/police-caution-difference",
+        "category": "Updates & Commentary"
+      },
+      "similarity": 1
+    },
+    {
+      "type": "duplicate-title",
+      "entry": {
+        "title": "Understanding Police Warrants and Interviews in Kent",
+        "slug": "/blog/understanding-police-warrants-and-interviews-in-kent",
+        "category": "Police Interview & Procedure"
+      },
+      "duplicateOf": {
+        "title": "Understanding Police Warrants and Interviews in Kent",
+        "slug": "/blog/arrested-or-have-a-policewarrant-in-kent-here-s-what-you-need-to-know0",
+        "category": "Police Interview & Procedure"
+      },
+      "similarity": 1
+    },
+    {
+      "type": "duplicate-title",
+      "entry": {
+        "title": "Understanding the Role of a Duty Solicitor: Everything You Need to Know",
+        "slug": "/blog/understanding-the-role-of-a-duty-solicitor-everything-you-need-to-know",
+        "category": "Criminal Defence Guidance"
+      },
+      "duplicateOf": {
+        "title": "Understanding the Role of a Duty Solicitor: Everything You Need to Know",
+        "slug": "/blog/whats-a-duty-solicitor",
+        "category": "Criminal Defence Guidance"
+      },
+      "similarity": 1
+    },
+    {
+      "type": "duplicate-title",
+      "entry": {
+        "title": "Voluntary Interview At Swanley Police Station",
+        "slug": "/blog/voluntary-interview-at-swanley-police-station",
+        "category": "Police Interview & Procedure"
+      },
+      "duplicateOf": {
+        "title": "Voluntary Interview At Swanley Police Station",
+        "slug": "/blog/police-station-reps-and-agents-for-swanley-police-station",
+        "category": "Police Interview & Procedure"
+      },
+      "similarity": 1
+    },
+    {
+      "type": "duplicate-title",
+      "entry": {
+        "title": "What Happens If You Don't Attend a Voluntary Police Interview in England?",
+        "slug": "/blog/what-happens-if-you-don-t-attend-a-voluntary-police-interview-in-england",
+        "category": "Police Interview & Procedure"
+      },
+      "duplicateOf": {
+        "title": "What Happens If You Don't Attend a Voluntary Police Interview in England?",
+        "slug": "/blog/what-happens-if-you-don-t-attend-a-voluntary-police-interview-inengland",
+        "category": "Police Interview & Procedure"
+      },
+      "similarity": 1
+    },
+    {
+      "type": "duplicate-title",
+      "entry": {
+        "title": "What is Common Assault in English Law?",
+        "slug": "/blog/what-is-common-assault-in-english-law",
+        "category": "Criminal Defence Guidance"
+      },
+      "duplicateOf": {
+        "title": "What is Common Assault in English Law?",
+        "slug": "/blog/copy-of-what-is-common-assault-in-english-law",
+        "category": "Criminal Defence Guidance"
+      },
+      "similarity": 1
+    },
+    {
+      "type": "duplicate-title",
+      "entry": {
+        "title": "What is a Duty Solicitor?",
+        "slug": "/blog/what-is-a-duty-solicitor",
+        "category": "Criminal Defence Guidance"
+      },
+      "duplicateOf": {
+        "title": "What is a Duty Solicitor?",
+        "slug": "/blog/what-is-a-duty-solicitor-4",
+        "category": "Criminal Defence Guidance"
+      },
+      "similarity": 1
+    },
+    {
+      "type": "duplicate-title",
+      "entry": {
+        "title": "What is a Police Station Rep?",
+        "slug": "/blog/what-is-a-police-station-rep",
+        "category": "Criminal Defence Guidance"
+      },
+      "duplicateOf": {
+        "title": "What is a Police Station Rep?",
+        "slug": "/blog/what-is-a-police-station-rep-1",
+        "category": "Criminal Defence Guidance"
+      },
+      "similarity": 1
+    },
+    {
+      "type": "duplicate-title",
+      "entry": {
+        "title": "What to Expect During a Police Station Interview in Kent: Your Rights and Legal Representation",
+        "slug": "/blog/what-to-expect-during-a-police-station-interview-in-kent-your-rights-and-legal-representation",
+        "category": "Police Interview & Procedure"
+      },
+      "duplicateOf": {
+        "title": "What to Expect During a Police Station Interview in Kent: Your Rights and Legal Representation",
+        "slug": "/blog/police-station-interview-rights-kent-legal-representation",
+        "category": "Police Interview & Procedure"
+      },
+      "similarity": 1
+    },
+    {
+      "type": "duplicate-title",
+      "entry": {
+        "title": "What's A Voluntary Police Interview?",
+        "slug": "/blog/what-s-a-voluntary-police-interview",
+        "category": "Police Interview & Procedure"
+      },
+      "duplicateOf": {
+        "title": "What's A Voluntary Police Interview?",
+        "slug": "/blog/whats-a-voluntary-police-interview",
+        "category": "Police Interview & Procedure"
+      },
+      "similarity": 1
+    },
+    {
+      "type": "duplicate-title",
+      "entry": {
+        "title": "Why you need a criminal solicitor in the police station",
+        "slug": "/blog/why-you-need-a-criminal-solicitor-in-the-police-station",
+        "category": "Criminal Defence Guidance"
+      },
+      "duplicateOf": {
+        "title": "Why you need a criminal solicitor in the police station",
+        "slug": "/blog/being-interviewed-by-the-police-why-you-need-a-criminal-solicitor-in-the-police-station",
+        "category": "Criminal Defence Guidance"
+      },
+      "similarity": 1
+    }
+  ]
+}

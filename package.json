@@ -2,6 +2,14 @@
   "name": "web44ai",
   "version": "1.0.0",
   "private": true,
+  "browserslist": [
+    "Chrome >= 90",
+    "Firefox >= 90",
+    "Safari >= 14",
+    "Edge >= 90",
+    "iOS >= 14",
+    "ChromeAndroid >= 90"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",

@@ -104,6 +104,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <head>
+        {/* Critical inline styles for LCP - reduces render delay */}
+        <style dangerouslySetInnerHTML={{ __html: `
+          .lcp-hero{font-size:1.25rem;line-height:1.75rem;color:rgb(191 219 254);margin-bottom:2rem;font-weight:500;max-width:56rem;margin-left:auto;margin-right:auto}
+          @media(min-width:768px){.lcp-hero{font-size:1.5rem;line-height:2rem}}
+        `}} />
         {/* DNS prefetch for external resources - early connection establishment */}
         <link rel="dns-prefetch" href="https://static.wixstatic.com" />
         <link rel="dns-prefetch" href="https://wixstatic.com" />
@@ -113,11 +118,11 @@ export default function RootLayout({
         <link rel="preconnect" href="https://static.wixstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/* Organization structured data - inline for immediate execution */}
+        {/* Organization structured data - defer to afterInteractive for better LCP */}
         <Script
           id="organization-schema"
           type="application/ld+json"
-          strategy="beforeInteractive"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(organizationSchema),
           }}
