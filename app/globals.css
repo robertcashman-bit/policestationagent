@@ -889,12 +889,34 @@ html body main p.text-slate-600 {
   color: #1e293b !important; /* Force dark text on light backgrounds */
 }
 
-/* Also fix text-slate-800 being made light incorrectly */
+/* Also fix text-slate-800 and text-slate-900 being made light incorrectly */
 [class*="bg-white"] [class*="text-slate-800"],
 [class*="bg-white"] [class*="text-slate-900"],
 .bg-white [class*="text-slate-800"],
 .bg-white [class*="text-slate-900"] {
   color: #0f172a !important; /* slate-950 - maximum dark */
+}
+
+/* NUCLEAR OPTION: text-slate-900 should ALWAYS be dark regardless of ancestors */
+[class*="text-slate-900"],
+.text-slate-900,
+h1[class*="text-slate-900"],
+h2[class*="text-slate-900"],
+h3[class*="text-slate-900"],
+p[class*="text-slate-900"] {
+  color: #0f172a !important; /* Force always dark */
+}
+
+/* text-slate-800 should also always be dark */
+[class*="text-slate-800"],
+.text-slate-800 {
+  color: #1e293b !important; /* Force always dark */
+}
+
+/* text-card-foreground in white cards must be dark */
+.text-card-foreground,
+[class*="text-card-foreground"] {
+  color: #0f172a !important;
 }
 
 /* COMPREHENSIVE: Force ALL light text to be darker for accessibility */
