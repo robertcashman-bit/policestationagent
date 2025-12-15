@@ -4,13 +4,13 @@ import type { Metadata } from 'next';
 import { SITE_DOMAIN } from '@/config/site';
 
 export const metadata: Metadata = {
-  title: "About Police Station Agent | Robert Cashman | Criminal Defence Kent",
+  title: "About Police Station Agent | Robert Cashman | Police Station Agent",
   description: "Expert police station representation in Kent. Accredited duty solicitor with 35 years experience. FREE legal aid available 24/7 at all Kent police stations.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/about`,
   },
   openGraph: {
-    title: "About Police Station Agent | Robert Cashman | Criminal Defence Kent",
+    title: "About Police Station Agent | Robert Cashman | Police Station Agent",
     description: "Expert police station representation in Kent. Accredited duty solicitor with 35 years experience. FREE legal aid available 24/7.",
     url: `https://${SITE_DOMAIN}/about`,
     siteName: 'Police Station Agent',

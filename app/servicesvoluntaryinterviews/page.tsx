@@ -3,13 +3,13 @@ import Footer from '@/components/Footer';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Voluntary Police Interview Solicitor | Criminal Defence Kent",
+  title: "Voluntary Police Interview Solicitor | Police Station Agent",
   description: "Invited for a voluntary interview? It is not an informal chat. You need a solicitor. We provide free, expert representation for voluntary interviews in Kent.",
   alternates: {
     canonical: "https://policestationagent.com/servicesvoluntaryinterviews",
   },
   openGraph: {
-    title: "Voluntary Police Interview Solicitor | Criminal Defence Kent",
+    title: "Voluntary Police Interview Solicitor | Police Station Agent",
     description: "Invited for a voluntary interview? It is not an informal chat. You need a solicitor. We provide free, expert representation for voluntary interviews in Kent.",
     url: "https://policestationagent.com/servicesvoluntaryinterviews",
     siteName: 'Police Station Agent',

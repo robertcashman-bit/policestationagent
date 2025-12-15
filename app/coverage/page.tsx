@@ -5,13 +5,13 @@ import { BreadcrumbList } from '@/components/StructuredData';
 import { SITE_URL, SITE_DOMAIN } from '@/config/site';
 
 export const metadata: Metadata = {
-  title: "Kent Police Station Coverage | Duty Solicitor – Criminal Defence Kent",
+  title: "Kent Police Station Coverage | Duty Solicitor – Police Station Agent",
   description: "We cover all Kent custody suites and major voluntary interview stations with duty solicitor-led representation.",
   alternates: {
     canonical: `${SITE_URL}/coverage`,
   },
   openGraph: {
-    title: "Kent Police Station Coverage | Duty Solicitor – Criminal Defence Kent",
+    title: "Kent Police Station Coverage | Duty Solicitor – Police Station Agent",
     description: "We cover all Kent custody suites and major voluntary interview stations with duty solicitor-led representation.",
     url: `${SITE_URL}/coverage`,
     siteName: 'Police Station Agent',

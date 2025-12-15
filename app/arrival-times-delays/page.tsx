@@ -3,13 +3,13 @@ import Footer from '@/components/Footer';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Arrival Times & Delays | Police Station Representation | Criminal Defence Kent',
+  title: 'Arrival Times & Delays | Police Station Representation | Police Station Agent',
   description: 'Expected arrival times for police station representation in Kent. Understanding delays and your rights when waiting for a solicitor.',
   alternates: {
     canonical: 'https://policestationagent.com/arrival-times-delays',
   },
   openGraph: {
-    title: 'Arrival Times & Delays | Police Station Representation | Criminal Defence Kent',
+    title: 'Arrival Times & Delays | Police Station Representation | Police Station Agent',
     description: 'Expected arrival times for police station representation in Kent. Understanding delays and your rights when waiting for a solicitor.',
     url: 'https://policestationagent.com/arrival-times-delays',
     siteName: 'Police Station Agent',

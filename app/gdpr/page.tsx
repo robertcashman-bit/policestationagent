@@ -3,13 +3,13 @@ import Footer from '@/components/Footer';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "GDPR Compliance | Criminal Defence Kent",
+  title: "GDPR Compliance | Police Station Agent",
   description: "How we comply with UK GDPR and protect your data rights. ICO Registration Number: ZA198500",
   alternates: {
     canonical: "https://policestationagent.com/gdpr",
   },
   openGraph: {
-    title: "GDPR Compliance | Criminal Defence Kent",
+    title: "GDPR Compliance | Police Station Agent",
     description: "How we comply with UK GDPR and protect your data rights. ICO Registration Number: ZA198500",
     url: "https://policestationagent.com/gdpr",
     siteName: 'Police Station Agent',

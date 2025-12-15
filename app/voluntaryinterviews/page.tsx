@@ -3,13 +3,13 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-  title: "Criminal Defence Kent",
+  title: "Police Station Agent",
   description: "",
   alternates: {
     canonical: "https://policestationagent.com/voluntaryinterviews",
   },
   openGraph: {
-    title: "Criminal Defence Kent",
+    title: "Police Station Agent",
     description: "",
     url: "https://policestationagent.com/voluntaryinterviews",
     siteName: 'Police Station Agent',

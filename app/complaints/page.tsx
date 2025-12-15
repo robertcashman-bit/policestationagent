@@ -3,13 +3,13 @@ import Footer from '@/components/Footer';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Complaints Policy | Criminal Defence Kent",
+  title: "Complaints Policy | Police Station Agent",
   description: "Our complaints policy and procedure. We are committed to resolving any concerns fairly and promptly.",
   alternates: {
     canonical: "https://policestationagent.com/complaints",
   },
   openGraph: {
-    title: "Complaints Policy | Criminal Defence Kent",
+    title: "Complaints Policy | Police Station Agent",
     description: "Our complaints policy and procedure. We are committed to resolving any concerns fairly and promptly.",
     url: "https://policestationagent.com/complaints",
     siteName: 'Police Station Agent',

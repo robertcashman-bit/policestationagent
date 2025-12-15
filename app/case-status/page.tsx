@@ -3,13 +3,13 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-  title: "Check Case Status | Police Station Agent | Criminal Defence Kent",
+  title: "Check Case Status | Police Station Agent | Police Station Agent",
   description: "Check your case status online or contact us directly for updates on your police station representation.",
   alternates: {
     canonical: "https://policestationagent.com/case-status",
   },
   openGraph: {
-    title: "Check Case Status | Police Station Agent | Criminal Defence Kent",
+    title: "Check Case Status | Police Station Agent | Police Station Agent",
     description: "Check your case status online or contact us directly for updates on your police station representation.",
     url: "https://policestationagent.com/case-status",
     siteName: 'Police Station Agent',

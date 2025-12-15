@@ -3,14 +3,14 @@ import Footer from '@/components/Footer';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Accessibility Statement | Criminal Defence Kent",
-  description: "Our commitment to making Criminal Defence Kent accessible to everyone, including those with disabilities.",
+  title: "Accessibility Statement | Police Station Agent",
+  description: "Our commitment to making Police Station Agent accessible to everyone, including those with disabilities.",
   alternates: {
     canonical: "https://policestationagent.com/accessibility",
   },
   openGraph: {
-    title: "Accessibility Statement | Criminal Defence Kent",
-    description: "Our commitment to making Criminal Defence Kent accessible to everyone, including those with disabilities.",
+    title: "Accessibility Statement | Police Station Agent",
+    description: "Our commitment to making Police Station Agent accessible to everyone, including those with disabilities.",
     url: "https://policestationagent.com/accessibility",
     siteName: 'Police Station Agent',
     type: 'website',

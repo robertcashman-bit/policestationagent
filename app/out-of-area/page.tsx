@@ -3,13 +3,13 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-  title: "Detained Outside Kent? What To Do | Police Station Agent | Criminal Defence Kent",
+  title: "Detained Outside Kent? What To Do | Police Station Agent | Police Station Agent",
   description: "Guidance for members of the public and solicitor firms when a detainee is held at a police station outside of Kent. Coverage available for stations within 60 mins of Maidstone.",
   alternates: {
     canonical: "https://policestationagent.com/out-of-area",
   },
   openGraph: {
-    title: "Detained Outside Kent? What To Do | Police Station Agent | Criminal Defence Kent",
+    title: "Detained Outside Kent? What To Do | Police Station Agent | Police Station Agent",
     description: "Guidance for members of the public and solicitor firms when a detainee is held at a police station outside of Kent. Coverage available for stations within 60 mins of Maidstone.",
     url: "https://policestationagent.com/out-of-area",
     siteName: 'Police Station Agent',

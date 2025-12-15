@@ -3,13 +3,13 @@ import Footer from '@/components/Footer';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "What Is A Police Station Rep? | Criminal Defence Kent",
+  title: "What Is A Police Station Rep? | Police Station Agent",
   description: "Learn about police station representatives and their crucial role in protecting your rights during police interviews in Kent.",
   alternates: {
     canonical: "https://policestationagent.com/what-is-a-police-station-rep",
   },
   openGraph: {
-    title: "What Is A Police Station Rep? | Criminal Defence Kent",
+    title: "What Is A Police Station Rep? | Police Station Agent",
     description: "Learn about police station representatives and their crucial role in protecting your rights during police interviews in Kent.",
     url: "https://policestationagent.com/what-is-a-police-station-rep",
     siteName: 'Police Station Agent',

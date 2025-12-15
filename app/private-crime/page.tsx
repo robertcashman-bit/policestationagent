@@ -3,13 +3,13 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-  title: "Police Station Agent | Criminal Defence Kent",
+  title: "Police Station Agent | Police Station Agent",
   description: "v4.4.0 — 12/12/2025Enhanced ServicePrivate Client Criminal DefenceDirector-level representation with personal attention, proactive defence strategy, and continu",
   alternates: {
     canonical: "https://policestationagent.com/private-crime",
   },
   openGraph: {
-    title: "Police Station Agent | Criminal Defence Kent",
+    title: "Police Station Agent | Police Station Agent",
     description: "v4.4.0 — 12/12/2025Enhanced ServicePrivate Client Criminal DefenceDirector-level representation with personal attention, proactive defence strategy, and continu",
     url: "https://policestationagent.com/private-crime",
     siteName: 'Police Station Agent',

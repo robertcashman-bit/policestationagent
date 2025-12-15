@@ -5,7 +5,7 @@ import { JsonLd } from '@/components/JsonLd';
 import { SITE_DOMAIN } from '@/config/site';
 
 export const metadata: Metadata = {
-  title: "Police Station Interviews in Kent: Your Rights and What to Expect | Criminal Defence Kent",
+  title: "Police Station Interviews in Kent: Your Rights and What to Expect | Police Station Agent",
   description: "Complete guide to police station interviews in Kent. Understand your rights under PACE 1984, what happens during interview, and why legal advice is essential. FREE legal aid available 24/7.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/police-station-interviews-kent-rights`,

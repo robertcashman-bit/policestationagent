@@ -3,13 +3,13 @@ import Footer from '@/components/Footer';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Criminal Defence Kent",
+  title: "Police Station Agent",
   description: "",
   alternates: {
     canonical: "https://policestationagent.com/privatecrime",
   },
   openGraph: {
-    title: "Criminal Defence Kent",
+    title: "Police Station Agent",
     description: "",
     url: "https://policestationagent.com/privatecrime",
     siteName: 'Police Station Agent',

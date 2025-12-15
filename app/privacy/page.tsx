@@ -3,13 +3,13 @@ import Footer from '@/components/Footer';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Website Privacy Policy | Criminal Defence Kent",
+  title: "Website Privacy Policy | Police Station Agent",
   description: "Comprehensive Privacy Policy. How Defence Legal Services Ltd collects, uses, and protects your data in compliance with UK GDPR.",
   alternates: {
     canonical: "https://policestationagent.com/privacy",
   },
   openGraph: {
-    title: "Website Privacy Policy | Criminal Defence Kent",
+    title: "Website Privacy Policy | Police Station Agent",
     description: "Comprehensive Privacy Policy. How Defence Legal Services Ltd collects, uses, and protects your data in compliance with UK GDPR.",
     url: "https://policestationagent.com/privacy",
     siteName: 'Police Station Agent',

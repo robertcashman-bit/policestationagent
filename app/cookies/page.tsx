@@ -3,14 +3,14 @@ import Footer from '@/components/Footer';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Cookies Policy | Criminal Defence Kent",
-  description: "Learn how Criminal Defence Kent uses cookies to improve your experience and protect your privacy.",
+  title: "Cookies Policy | Police Station Agent",
+  description: "Learn how Police Station Agent uses cookies to improve your experience and protect your privacy.",
   alternates: {
     canonical: "https://policestationagent.com/cookies",
   },
   openGraph: {
-    title: "Cookies Policy | Criminal Defence Kent",
-    description: "Learn how Criminal Defence Kent uses cookies to improve your experience and protect your privacy.",
+    title: "Cookies Policy | Police Station Agent",
+    description: "Learn how Police Station Agent uses cookies to improve your experience and protect your privacy.",
     url: "https://policestationagent.com/cookies",
     siteName: 'Police Station Agent',
     type: 'website',

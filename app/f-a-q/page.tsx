@@ -3,13 +3,13 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-  title: "FAQ - Frequently Asked Questions | Police Station Agent | Criminal Defence Kent",
+  title: "FAQ - Frequently Asked Questions | Police Station Agent | Police Station Agent",
   description: "Comprehensive answers about police station representation in Kent. What we do and don't do, legal aid information, and how to get urgent help. Available 24/7.",
   alternates: {
     canonical: "https://policestationagent.com/f-a-q",
   },
   openGraph: {
-    title: "FAQ - Frequently Asked Questions | Police Station Agent | Criminal Defence Kent",
+    title: "FAQ - Frequently Asked Questions | Police Station Agent | Police Station Agent",
     description: "Comprehensive answers about police station representation in Kent. What we do and don't do, legal aid information, and how to get urgent help. Available 24/7.",
     url: "https://policestationagent.com/f-a-q",
     siteName: 'Police Station Agent',

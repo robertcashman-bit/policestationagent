@@ -3,13 +3,13 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-  title: "Can We Help You? | Interactive Guide | Police Station Agent | Criminal Defence Kent",
+  title: "Can We Help You? | Interactive Guide | Police Station Agent | Police Station Agent",
   description: "Use our simple interactive guide to see if Police Station Agent is the right service for your legal representation needs in Kent and beyond.",
   alternates: {
     canonical: "https://policestationagent.com/can-we-help",
   },
   openGraph: {
-    title: "Can We Help You? | Interactive Guide | Police Station Agent | Criminal Defence Kent",
+    title: "Can We Help You? | Interactive Guide | Police Station Agent | Police Station Agent",
     description: "Use our simple interactive guide to see if Police Station Agent is the right service for your legal representation needs in Kent and beyond.",
     url: "https://policestationagent.com/can-we-help",
     siteName: 'Police Station Agent',

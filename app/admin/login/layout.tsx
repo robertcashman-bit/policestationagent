@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Admin Login | Criminal Defence Kent",
+  title: "Admin Login | Police Station Agent",
   description: "Admin login page",
   robots: {
     index: false,
