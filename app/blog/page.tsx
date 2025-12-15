@@ -78,6 +78,7 @@ export default function BlogPage() {
                             src={post.image}
                             alt={post.title || 'Blog post image'}
                             fill
+                            loading="lazy"
                             className="object-cover transform group-hover:scale-105 transition-transform duration-500 blog-card-image"
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                           />

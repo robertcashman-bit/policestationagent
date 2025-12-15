@@ -372,3 +372,14 @@ article img[src] {
   }
 }
 
+/* Chatbot positioning - ensure it doesn't affect layout */
+@media (max-width: 768px) {
+  /* On mobile, adjust chatbot position to avoid overlap */
+  [data-chatbot-container] {
+    bottom: 1rem !important;
+    right: 1rem !important;
+    width: calc(100vw - 2rem) !important;
+    max-width: 100% !important;
+  }
+}
+

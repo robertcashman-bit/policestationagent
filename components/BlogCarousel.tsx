@@ -54,28 +54,36 @@ export default function BlogCarousel({
   const touchStartX = useRef<number | null>(null);
   const touchEndX = useRef<number | null>(null);
 
-  // Fetch blog posts from the authoritative API
+  // Fetch blog posts from the authoritative API - lazy load after initial render
   useEffect(() => {
-    async function fetchPosts() {
-      try {
-        const res = await fetch('/api/blog/posts');
-        const data = await res.json();
-        
-        if (data.posts && Array.isArray(data.posts)) {
-          setPosts(data.posts.slice(0, maxPosts));
-        } else {
+    // Delay fetch slightly to avoid blocking initial page render
+    const timeoutId = setTimeout(() => {
+      async function fetchPosts() {
+        try {
+          const res = await fetch('/api/blog/posts', {
+            // Add cache headers for better performance
+            next: { revalidate: 300 }, // Revalidate every 5 minutes
+          });
+          const data = await res.json();
+          
+          if (data.posts && Array.isArray(data.posts)) {
+            setPosts(data.posts.slice(0, maxPosts));
+          } else {
+            setPosts([]);
+          }
+        } catch (err) {
+          console.error('[BlogCarousel] Error fetching posts:', err);
+          setError('Unable to load blog posts');
           setPosts([]);
+        } finally {
+          setIsLoading(false);
         }
-      } catch (err) {
-        console.error('[BlogCarousel] Error fetching posts:', err);
-        setError('Unable to load blog posts');
-        setPosts([]);
-      } finally {
-        setIsLoading(false);
       }
-    }
 
-    fetchPosts();
+      fetchPosts();
+    }, 100); // Small delay to prioritize critical content
+
+    return () => clearTimeout(timeoutId);
   }, [maxPosts]);
 
   // Auto-rotate carousel
@@ -247,6 +255,7 @@ export default function BlogCarousel({
                     className="object-cover"
                     sizes="(max-width: 768px) 100vw, 50vw"
                     priority={currentIndex === 0}
+                    loading={currentIndex === 0 ? undefined : 'lazy'}
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">

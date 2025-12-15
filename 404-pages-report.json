@@ -1,0 +1,97 @@
+{
+  "total": 23,
+  "pages": [
+    {
+      "route": "/ashford-solicitor",
+      "file": "app\\ashford-solicitor\\page.tsx"
+    },
+    {
+      "route": "/bluewater-solicitor",
+      "file": "app\\bluewater-solicitor\\page.tsx"
+    },
+    {
+      "route": "/bromley-solicitor",
+      "file": "app\\bromley-solicitor\\page.tsx"
+    },
+    {
+      "route": "/chatham-solicitor",
+      "file": "app\\chatham-solicitor\\page.tsx"
+    },
+    {
+      "route": "/dartford-solicitor",
+      "file": "app\\dartford-solicitor\\page.tsx"
+    },
+    {
+      "route": "/deal-solicitor",
+      "file": "app\\deal-solicitor\\page.tsx"
+    },
+    {
+      "route": "/dover-solicitor",
+      "file": "app\\dover-solicitor\\page.tsx"
+    },
+    {
+      "route": "/faversham-solicitor",
+      "file": "app\\faversham-solicitor\\page.tsx"
+    },
+    {
+      "route": "/folkestone-solicitor",
+      "file": "app\\folkestone-solicitor\\page.tsx"
+    },
+    {
+      "route": "/gillingham-solicitor",
+      "file": "app\\gillingham-solicitor\\page.tsx"
+    },
+    {
+      "route": "/gravesend-police-station",
+      "file": "app\\gravesend-police-station\\page.tsx"
+    },
+    {
+      "route": "/herne-bay-solicitor",
+      "file": "app\\herne-bay-solicitor\\page.tsx"
+    },
+    {
+      "route": "/margate-solicitor",
+      "file": "app\\margate-solicitor\\page.tsx"
+    },
+    {
+      "route": "/ramsgate-solicitor",
+      "file": "app\\ramsgate-solicitor\\page.tsx"
+    },
+    {
+      "route": "/rochester-solicitor",
+      "file": "app\\rochester-solicitor\\page.tsx"
+    },
+    {
+      "route": "/sandwich-solicitor",
+      "file": "app\\sandwich-solicitor\\page.tsx"
+    },
+    {
+      "route": "/sevenoaks-solicitor",
+      "file": "app\\sevenoaks-solicitor\\page.tsx"
+    },
+    {
+      "route": "/sittingbourne-solicitor",
+      "file": "app\\sittingbourne-solicitor\\page.tsx"
+    },
+    {
+      "route": "/swanley-solicitor",
+      "file": "app\\swanley-solicitor\\page.tsx"
+    },
+    {
+      "route": "/terms-and-conditions",
+      "file": "app\\terms-and-conditions\\page.tsx"
+    },
+    {
+      "route": "/tonbridge-solicitor",
+      "file": "app\\tonbridge-solicitor\\page.tsx"
+    },
+    {
+      "route": "/tunbridge-wells-solicitor",
+      "file": "app\\tunbridge-wells-solicitor\\page.tsx"
+    },
+    {
+      "route": "/whitstable-solicitor",
+      "file": "app\\whitstable-solicitor\\page.tsx"
+    }
+  ]
+}

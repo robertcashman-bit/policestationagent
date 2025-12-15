@@ -31,33 +31,41 @@ export default function Header() {
   const informationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const blogTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Fetch blog posts automatically on mount
+  // Fetch blog posts automatically on mount - lazy load to avoid blocking initial render
   useEffect(() => {
-    fetch('/api/blog/posts')
-      .then(res => res.json())
-      .then(data => {
-        if (data.posts && Array.isArray(data.posts)) {
-          // Filter out posts with generic/invalid titles that shouldn't appear in menu
-          const filteredPosts = data.posts.filter((post: BlogPost) => {
-            const title = post.title?.trim().toLowerCase() || '';
-            // Exclude posts with generic titles
-            const excludedTitles = [
-              'police station agent',
-              'police station agent blog',
-              'blog',
-              'welcome',
-              'untitled',
-              'untitled post'
-            ];
-            return title && !excludedTitles.includes(title) && title.length > 3;
-          });
-          setBlogPosts(filteredPosts);
-        }
+    // Delay fetch to prioritize critical content rendering
+    const timeoutId = setTimeout(() => {
+      fetch('/api/blog/posts', {
+        // Add cache headers for better performance
+        next: { revalidate: 300 }, // Revalidate every 5 minutes
       })
-      .catch(err => {
-        console.error('Error fetching blog posts:', err);
-        setBlogPosts([]);
-      });
+        .then(res => res.json())
+        .then(data => {
+          if (data.posts && Array.isArray(data.posts)) {
+            // Filter out posts with generic/invalid titles that shouldn't appear in menu
+            const filteredPosts = data.posts.filter((post: BlogPost) => {
+              const title = post.title?.trim().toLowerCase() || '';
+              // Exclude posts with generic titles
+              const excludedTitles = [
+                'police station agent',
+                'police station agent blog',
+                'blog',
+                'welcome',
+                'untitled',
+                'untitled post'
+              ];
+              return title && !excludedTitles.includes(title) && title.length > 3;
+            });
+            setBlogPosts(filteredPosts);
+          }
+        })
+        .catch(err => {
+          console.error('Error fetching blog posts:', err);
+          setBlogPosts([]);
+        });
+    }, 200); // Small delay to prioritize critical content
+
+    return () => clearTimeout(timeoutId);
   }, []);
 
   // Helper function to handle delayed close
