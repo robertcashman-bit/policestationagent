@@ -625,6 +625,33 @@ article img[src] {
 }
 
 @layer utilities {
+  /* CRITICAL: Override Tailwind text colors for accessibility */
+  /* These must be in @layer utilities to override Tailwind's generated classes */
+  
+  /* Dark backgrounds need light/white text */
+  .bg-slate-900 .text-slate-300,
+  .bg-slate-800 .text-slate-300,
+  .bg-gray-900 .text-slate-300,
+  .bg-blue-900 .text-slate-300 {
+    color: #ffffff !important;
+  }
+  
+  .bg-slate-900 .text-slate-400,
+  .bg-slate-800 .text-slate-400 {
+    color: #e2e8f0 !important;
+  }
+  
+  /* Light backgrounds need darker text */  
+  .bg-white .text-slate-300,
+  .bg-slate-50 .text-slate-300 {
+    color: #475569 !important;
+  }
+  
+  .bg-white .text-slate-400,
+  .bg-slate-50 .text-slate-400 {
+    color: #64748b !important;
+  }
+
   .text-balance {
     text-wrap: balance;
   }
