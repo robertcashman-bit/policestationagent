@@ -105,6 +105,16 @@ textarea:focus-visible,
   white-space: normal;
 }
 
+/* Hide build/version badges rendered in top-right corner on some pages */
+div[aria-hidden="true"][class*="fixed"][class*="right-3"][class*="top-4"][class*="text-[10px]"][class*="pointer-events-none"] {
+  display: none !important;
+}
+
+/* Hide other top-right inline version markers (absolute positioned) */
+div[class*="select-none"][class*="right-4"][class*="top-4"][class*="text-slate-400"] {
+  display: none !important;
+}
+
 /* Skip to main content link */
 .skip-to-main {
   position: absolute;
