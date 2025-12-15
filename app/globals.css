@@ -826,3 +826,68 @@ html body main p.text-slate-600 {
   color: #1e293b !important; /* slate-800 */
 }
 
+/* COMPREHENSIVE: Force ALL light text to be darker for accessibility */
+html body .text-slate-400,
+html body p.text-slate-400,
+html body span.text-slate-400,
+html body div.text-slate-400 {
+  color: #475569 !important; /* slate-600 - much more readable */
+}
+
+html body .text-slate-500,
+html body p.text-slate-500,
+html body span.text-slate-500,
+html body div.text-slate-500 {
+  color: #334155 !important; /* slate-700 - much more readable */
+}
+
+html body .text-gray-400,
+html body p.text-gray-400 {
+  color: #475569 !important; /* slate-600 */
+}
+
+html body .text-gray-500,
+html body p.text-gray-500 {
+  color: #334155 !important; /* slate-700 */
+}
+
+/* EXCEPTION: On dark backgrounds, light text should stay light */
+html body .bg-slate-900 .text-slate-400,
+html body .bg-slate-800 .text-slate-400,
+html body .bg-blue-900 .text-slate-400,
+html body .bg-red-900 .text-slate-400,
+html body .bg-green-900 .text-slate-400 {
+  color: #e2e8f0 !important; /* slate-200 - light for dark backgrounds */
+}
+
+html body .bg-slate-900 .text-slate-500,
+html body .bg-slate-800 .text-slate-500 {
+  color: #cbd5e1 !important; /* slate-300 - light for dark backgrounds */
+}
+
+/* Red, Green, Blue colored light text on dark backgrounds */
+html body .text-red-100,
+html body .text-green-100,
+html body .text-blue-100 {
+  color: #ffffff !important; /* Force white on dark */
+}
+
+html body .text-red-200,
+html body .text-green-200,
+html body .text-blue-200 {
+  color: #f1f5f9 !important; /* slate-100 for better visibility */
+}
+
+/* text-xs with light colors - extra contrast boost */
+html body .text-xs.text-slate-400,
+html body .text-xs.text-slate-500,
+html body .text-xs.text-gray-400,
+html body .text-xs.text-gray-500 {
+  color: #334155 !important; /* slate-700 */
+}
+
+html body .text-sm.text-slate-400,
+html body .text-sm.text-slate-500 {
+  color: #475569 !important; /* slate-600 */
+}
+
