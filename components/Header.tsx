@@ -1,17 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { useState, useRef, useEffect } from 'react';
-
-interface BlogPost {
-  id: number;
-  title: string;
-  slug: string;
-  excerpt: string | null;
-  published_at: string | null;
-  created_at: string;
-  image: string | null;
-}
+import { useState, useRef, useMemo } from 'react';
+import { groupBlogsByCategory, getCategoriesWithPosts, getTotalBlogCount } from '@/lib/groupBlogs';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -21,7 +12,6 @@ export default function Header() {
   const [articlesOpen, setArticlesOpen] = useState(false);
   const [informationOpen, setInformationOpen] = useState(false);
   const [blogOpen, setBlogOpen] = useState(false);
-  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
 
   // Timeout refs for delayed closing
   const servicesTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -31,42 +21,10 @@ export default function Header() {
   const informationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const blogTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Fetch blog posts automatically on mount - lazy load to avoid blocking initial render
-  useEffect(() => {
-    // Delay fetch to prioritize critical content rendering
-    const timeoutId = setTimeout(() => {
-      fetch('/api/blog/posts', {
-        // Add cache headers for better performance
-        next: { revalidate: 300 }, // Revalidate every 5 minutes
-      })
-        .then(res => res.json())
-        .then(data => {
-          if (data.posts && Array.isArray(data.posts)) {
-            // Filter out posts with generic/invalid titles that shouldn't appear in menu
-            const filteredPosts = data.posts.filter((post: BlogPost) => {
-              const title = post.title?.trim().toLowerCase() || '';
-              // Exclude posts with generic titles
-              const excludedTitles = [
-                'police station agent',
-                'police station agent blog',
-                'blog',
-                'welcome',
-                'untitled',
-                'untitled post'
-              ];
-              return title && !excludedTitles.includes(title) && title.length > 3;
-            });
-            setBlogPosts(filteredPosts);
-          }
-        })
-        .catch(err => {
-          console.error('Error fetching blog posts:', err);
-          setBlogPosts([]);
-        });
-    }, 200); // Small delay to prioritize critical content
-
-    return () => clearTimeout(timeoutId);
-  }, []);
+  // Group blog posts by category (memoized for performance)
+  const groupedBlogs = useMemo(() => groupBlogsByCategory(), []);
+  const categories = useMemo(() => getCategoriesWithPosts(), []);
+  const totalBlogCount = useMemo(() => getTotalBlogCount(), []);
 
   // Helper function to handle delayed close
   const handleDelayedClose = (
@@ -344,38 +302,42 @@ export default function Header() {
               </button>
               {blogOpen && (
                 <div 
-                  className="absolute top-full right-0 mt-1 w-80 bg-white rounded-lg shadow-xl border border-slate-200 py-2 z-50 max-h-[70vh] overflow-y-auto"
+                  className="absolute top-full right-0 mt-1 w-96 bg-white rounded-lg shadow-xl border border-slate-200 py-2 z-50 max-h-[75vh] overflow-y-auto"
                   onMouseEnter={() => {
                     cancelDelayedClose(blogTimeoutRef);
                     setBlogOpen(true);
                   }}
                   onMouseLeave={() => handleDelayedClose(setBlogOpen, blogTimeoutRef, 300)}
                 >
-                  <Link href="/blog" className="block px-4 py-3 text-slate-700 hover:bg-blue-50 hover:text-blue-600 font-semibold border-b border-slate-200">
-                    📚 View All Blog Posts ({blogPosts.length})
+                  <Link href="/blog" className="block px-4 py-3 text-slate-700 hover:bg-blue-50 hover:text-blue-600 font-semibold border-b border-slate-200 sticky top-0 bg-white z-10">
+                    📚 View All Blog Articles ({totalBlogCount})
                   </Link>
-                  {blogPosts.length > 0 && (
-                    <div className="py-1">
-                      {/* Show ALL blog posts - no artificial limit */}
-                      {blogPosts.map((post) => {
-                        // Ensure title is never blank - use fallback if needed
-                        const displayTitle = post.title && post.title.trim() 
-                          ? post.title.trim() 
-                          : 'Untitled Post';
-                        
-                        return (
-                          <Link
-                            key={post.id}
-                            href={`/blog/${post.slug}`}
-                            className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm truncate"
-                            title={displayTitle}
-                          >
-                            {displayTitle}
-                          </Link>
-                        );
-                      })}
-                    </div>
-                  )}
+                  <div className="py-2">
+                    {categories.map((category) => {
+                      const posts = groupedBlogs[category] || [];
+                      if (posts.length === 0) return null;
+                      
+                      return (
+                        <div key={category} className="mb-3 last:mb-0">
+                          <div className="px-4 py-2 text-xs font-bold text-slate-500 uppercase tracking-wide bg-slate-50 border-b border-slate-200 sticky top-[49px] z-10">
+                            {category}
+                          </div>
+                          <div className="py-1">
+                            {posts.map((post, index) => (
+                              <Link
+                                key={`${category}-${index}`}
+                                href={post.slug}
+                                className="block px-4 py-1.5 text-slate-700 hover:bg-blue-50 hover:text-blue-600 text-xs leading-relaxed"
+                                title={post.title}
+                              >
+                                {post.title}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
               )}
             </div>
@@ -460,34 +422,37 @@ export default function Header() {
             <Link href="/coverage/areas" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Areas</Link>
             
             <div className="px-4 py-3 text-slate-800 text-sm font-bold mt-2 bg-slate-100 rounded-lg mx-2">
-              📚 Blog ({blogPosts.length} posts)
+              📚 Blog ({totalBlogCount} posts)
             </div>
             <Link href="/blog" className="block px-4 py-3 text-blue-600 hover:text-blue-700 font-semibold pl-8" onClick={() => setMobileMenuOpen(false)}>
-              View All Blog Posts →
+              View All Blog Articles →
             </Link>
-            {/* Show ALL blog posts in mobile - scrollable container */}
-            {blogPosts.length > 0 && (
-              <div className="max-h-60 overflow-y-auto border-l-2 border-blue-200 ml-6">
-                {blogPosts.map((post) => {
-                  // Ensure title is never blank - use fallback if needed
-                  const displayTitle = post.title && post.title.trim() 
-                    ? post.title.trim() 
-                    : 'Untitled Post';
-                  
-                  return (
-                    <Link
-                      key={post.id}
-                      href={`/blog/${post.slug}`}
-                      className="block px-4 py-2 text-slate-700 hover:text-blue-600 hover:bg-slate-50 text-sm truncate"
-                      onClick={() => setMobileMenuOpen(false)}
-                      title={displayTitle}
-                    >
-                      {displayTitle}
-                    </Link>
-                  );
-                })}
-              </div>
-            )}
+            {/* Show grouped blog posts in mobile - scrollable container */}
+            <div className="max-h-[60vh] overflow-y-auto border-l-2 border-blue-200 ml-6">
+              {categories.map((category) => {
+                const posts = groupedBlogs[category] || [];
+                if (posts.length === 0) return null;
+                
+                return (
+                  <div key={category} className="mb-3">
+                    <div className="px-4 py-2 text-xs font-bold text-slate-500 uppercase tracking-wide bg-slate-50">
+                      {category}
+                    </div>
+                    {posts.map((post, index) => (
+                      <Link
+                        key={`${category}-${index}`}
+                        href={post.slug}
+                        className="block px-4 py-2 text-slate-700 hover:text-blue-600 hover:bg-slate-50 text-sm"
+                        onClick={() => setMobileMenuOpen(false)}
+                        title={post.title}
+                      >
+                        {post.title}
+                      </Link>
+                    ))}
+                  </div>
+                );
+              })}
+            </div>
             <div className="px-4 py-2 text-slate-700 text-sm font-semibold mt-2">Information</div>
             <Link href="/faq" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>FAQ</Link>
             <Link href="/canwehelp" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Can We Help?</Link>
