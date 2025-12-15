@@ -3,8 +3,8 @@ import Footer from '@/components/Footer';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Services for Solicitors | Police Station Agent Kent",
-  description: "Professional agency services for criminal solicitor firms in Kent and surrounding areas. Expert police station representation you can trust.",
+  title: "Police Station Rep Agent Services | For Solicitors | Kent",
+  description: "Professional police station rep agent services for criminal solicitor firms in Kent. Expert police station representation with detailed notes. Competitive rates.",
   alternates: {
     canonical: "https://policestationagent.com/for-solicitors",
   },

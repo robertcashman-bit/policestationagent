@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import db from '@/lib/db';
 import type { Metadata } from 'next';
+import Script from 'next/script';
+import { SITE_URL } from '@/config/site';
 
 interface PageProps {
   params: {
@@ -26,10 +28,17 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://policestationagent.com';
   
   return {
-    title: `${station.name} Police Station - Police Station Agent`,
-    description: `Professional police station representation at ${station.name}. Available 24/7 for urgent legal assistance.${station.address ? ' Located at ' + station.address : ''}`,
+    title: `Police Station Rep at ${station.name} | FREE 24/7 | Kent`,
+    description: `Expert police station rep at ${station.name}, Kent. FREE legal advice 24/7. Accredited duty solicitor Robert Cashman.${station.address ? ' Located at ' + station.address : ''} Call 01732 247427.`,
     alternates: {
       canonical: `${siteUrl}/police-stations/${params.slug}`,
+    },
+    openGraph: {
+      title: `Police Station Rep at ${station.name} | FREE 24/7 | Kent`,
+      description: `Expert police station rep at ${station.name}, Kent. FREE legal advice 24/7. Accredited duty solicitor.`,
+      url: `${siteUrl}/police-stations/${params.slug}`,
+      siteName: 'Police Station Agent',
+      type: 'website',
     },
   };
 }
@@ -47,8 +56,57 @@ export default function PoliceStationPage({ params }: PageProps) {
     notFound();
   }
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_URL;
+  
+  // Extract town name from station name (e.g., "Medway Police Station" -> "Medway")
+  const townName = station.name.replace(/\s*Police\s*Station.*/i, '').trim();
+  
+  // Create LocalBusiness schema
+  const localBusinessSchema = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": `${siteUrl}/police-stations/${params.slug}#business`,
+    "name": `Police Station Representative - ${station.name}`,
+    "description": `Expert police station rep service at ${station.name}, Kent. FREE 24/7 representation for police interviews and custody matters.`,
+    ...(station.address && {
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": townName,
+        "addressRegion": "Kent",
+        "addressCountry": "GB",
+        "streetAddress": station.address.split(',')[0] || station.address
+      }
+    }),
+    "areaServed": [
+      {
+        "@type": "City",
+        "name": townName,
+        "containedIn": {
+          "@type": "State",
+          "name": "Kent"
+        }
+      },
+      {
+        "@type": "State",
+        "name": "Kent"
+      }
+    ],
+    "serviceType": "Police Station Representation",
+    "telephone": "+441732247427",
+    "priceRange": "Free under Legal Aid",
+    "openingHours": "Mo-Su 00:00-23:59"
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
+      <Script
+        id="local-business-schema"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(localBusinessSchema),
+        }}
+      />
       <Header />
       <main className="flex-grow relative" id="main-content" role="main" aria-live="polite">
         {/* Hero Section */}
@@ -63,7 +121,7 @@ export default function PoliceStationPage({ params }: PageProps) {
                   <path d="m12 19-7-7 7-7"></path>
                   <path d="M19 12H5"></path>
                 </svg>
-                Back to Police Stations
+                Back to Kent Police Stations - Police Station Rep Coverage
               </Link>
               <h1 className="text-4xl md:text-5xl font-bold mb-4">{station.name} Police Station</h1>
               {station.address && (
@@ -140,7 +198,7 @@ export default function PoliceStationPage({ params }: PageProps) {
                   href="/contact"
                   className="bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-800 transition inline-flex items-center gap-2"
                 >
-                  Contact Us
+                  Contact Police Station Rep for {townName}
                 </Link>
               </div>
             </div>

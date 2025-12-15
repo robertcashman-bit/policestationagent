@@ -1,7 +1,8 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import type { Metadata } from 'next';
-import { SITE_DOMAIN } from '@/config/site';
+import { SITE_DOMAIN, SITE_URL } from '@/config/site';
+import Script from 'next/script';
 
 export const metadata: Metadata = {
   title: "About Police Station Agent | Robert Cashman | Police Station Agent",
@@ -18,9 +19,40 @@ export const metadata: Metadata = {
   },
 };
 
+// Person schema for Robert Cashman
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Robert Cashman",
+  "jobTitle": "Accredited Duty Solicitor",
+  "description": "Qualified solicitor and police station representative with 35+ years experience, 6000+ cases. Practice Director and Higher Court Advocate specializing in police station representation across Kent.",
+  "worksFor": {
+    "@type": "LegalService",
+    "name": "Police Station Agent"
+  },
+  "knowsAbout": [
+    "Police Station Representation",
+    "Criminal Defence",
+    "Legal Aid",
+    "Kent Police Stations"
+  ],
+  "areaServed": {
+    "@type": "State",
+    "name": "Kent"
+  }
+};
+
 export default function Page() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
+      <Script
+        id="person-schema"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(personSchema),
+        }}
+      />
       <Header />
       <main className="flex-grow relative" id="main-content" role="main" aria-live="polite">
         <div className="bg-slate-50 min-h-screen">

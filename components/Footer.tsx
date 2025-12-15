@@ -13,8 +13,14 @@ export default function Footer() {
           <div className="md:col-span-2 lg:col-span-1">
             <h3 className="font-bold text-slate-900 mb-4 text-lg text-white">Police Station Agent</h3>
             <p className="text-slate-600 mb-6 leading-relaxed text-white">
-              Expert duty solicitor providing police station representation across Kent. We specialise in protecting your rights during police interviews.
+              Kent's leading police station rep service. Accredited duty solicitor providing FREE 24/7 representation at all Kent custody suites. Not a call centre - direct access to qualified solicitor.
             </p>
+            <div className="mt-4 p-3 bg-amber-500/10 rounded-lg border border-amber-500/20">
+              <p className="text-xs text-amber-200 font-semibold mb-1">Serving All Kent Towns:</p>
+              <p className="text-xs text-slate-300">
+                Medway, Maidstone, Canterbury, Gravesend, Tonbridge, Folkestone, Ashford, Dartford, Sittingbourne, Sevenoaks, Tunbridge Wells, Margate, Dover, Swanley, Bluewater
+              </p>
+            </div>
             <div className="flex gap-4" role="list" aria-label="Social media links">
               <a 
                 href="sms:07535494446?body=I%20need%20police%20station%20representation" 
@@ -86,7 +92,7 @@ export default function Footer() {
               <ul className="space-y-3">
                 <li>
                   <Link href="/services" className="text-slate-200 hover:text-white transition-colors font-medium">
-                    Police Station Advice
+                    Police Station Rep Services Kent
                   </Link>
                 </li>
                 <li>
@@ -96,12 +102,12 @@ export default function Footer() {
                 </li>
                 <li>
                   <Link href="/about" className="text-slate-200 hover:text-white transition-colors font-medium">
-                    About
+                    About Kent's Leading Police Station Rep
                   </Link>
                 </li>
                 <li>
                   <Link href="/coverage" className="text-slate-200 hover:text-white transition-colors font-medium">
-                    Areas Covered
+                    Kent Towns - Police Station Rep Service Areas
                   </Link>
                 </li>
                 <li>
@@ -111,7 +117,7 @@ export default function Footer() {
                 </li>
                 <li>
                   <Link href="/contact" className="text-slate-200 hover:text-white transition-colors font-medium">
-                    Contact
+                    Contact Kent Police Station Representative
                   </Link>
                 </li>
                 <li>
@@ -121,7 +127,7 @@ export default function Footer() {
                 </li>
                 <li>
                   <Link href="/police-stations" className="text-slate-200 hover:text-white transition-colors font-medium">
-                    Police Stations
+                    Kent Police Stations - Police Station Rep Coverage
                   </Link>
                 </li>
               </ul>

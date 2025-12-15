@@ -4,8 +4,8 @@ import ContactForm from '@/components/ContactForm';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Contact Police Station Agent | 24/7 Legal Advice Kent | Call 01732 247427",
-  description: "Contact Police Station Agent for FREE police station representation. Available 24/7 across Kent. Call 01732 247427, text 07535 494446 or email for immediate legal advice.",
+  title: "Contact Kent Police Station Rep | FREE 24/7 | Call 01732 247427",
+  description: "Contact Kent's leading police station rep service. FREE legal advice 24/7 across all Kent custody suites. Accredited duty solicitor Robert Cashman. Call 01732 247427, text 07535 494446.",
   alternates: {
     canonical: "https://policestationagent.com/contact",
   },

@@ -246,6 +246,77 @@ a {
   line-height: 1.75;
 }
 
+/* Ensure text is visible on dark backgrounds within prose */
+.prose div[class*="bg-slate-900"],
+.prose div[class*="bg-blue-900"],
+.prose div[class*="bg-gradient-to-br"],
+.prose div[class*="bg-gradient-to-r"],
+.prose section[class*="bg-slate-900"],
+.prose section[class*="bg-blue-900"],
+.prose section[class*="bg-gradient-to-br"],
+.prose section[class*="bg-gradient-to-r"] {
+  color: white !important;
+}
+
+.prose div[class*="bg-slate-900"] p,
+.prose div[class*="bg-blue-900"] p,
+.prose div[class*="bg-gradient-to-br"] p,
+.prose div[class*="bg-gradient-to-r"] p,
+.prose section[class*="bg-slate-900"] p,
+.prose section[class*="bg-blue-900"] p,
+.prose section[class*="bg-gradient-to-br"] p,
+.prose section[class*="bg-gradient-to-r"] p {
+  color: #e2e8f0 !important; /* slate-200 for good contrast on dark backgrounds */
+}
+
+.prose div[class*="bg-slate-900"] h1,
+.prose div[class*="bg-slate-900"] h2,
+.prose div[class*="bg-slate-900"] h3,
+.prose div[class*="bg-blue-900"] h1,
+.prose div[class*="bg-blue-900"] h2,
+.prose div[class*="bg-blue-900"] h3,
+.prose div[class*="bg-gradient-to-br"] h1,
+.prose div[class*="bg-gradient-to-br"] h2,
+.prose div[class*="bg-gradient-to-br"] h3,
+.prose div[class*="bg-gradient-to-r"] h1,
+.prose div[class*="bg-gradient-to-r"] h2,
+.prose div[class*="bg-gradient-to-r"] h3,
+.prose section[class*="bg-slate-900"] h1,
+.prose section[class*="bg-slate-900"] h2,
+.prose section[class*="bg-slate-900"] h3,
+.prose section[class*="bg-blue-900"] h1,
+.prose section[class*="bg-blue-900"] h2,
+.prose section[class*="bg-blue-900"] h3,
+.prose section[class*="bg-gradient-to-br"] h1,
+.prose section[class*="bg-gradient-to-br"] h2,
+.prose section[class*="bg-gradient-to-br"] h3,
+.prose section[class*="bg-gradient-to-r"] h1,
+.prose section[class*="bg-gradient-to-r"] h2,
+.prose section[class*="bg-gradient-to-r"] h3 {
+  color: white !important;
+}
+
+/* Ensure Tailwind text color classes override prose defaults */
+.prose [class*="text-white"] {
+  color: #ffffff !important;
+}
+
+.prose [class*="text-blue-100"] {
+  color: #dbeafe !important;
+}
+
+.prose [class*="text-blue-200"] {
+  color: #bfdbfe !important;
+}
+
+.prose [class*="text-amber-300"] {
+  color: #fcd34d !important;
+}
+
+.prose [class*="text-amber-400"] {
+  color: #fbbf24 !important;
+}
+
 .prose div h2 {
   margin-top: 2rem;
   margin-bottom: 1rem;

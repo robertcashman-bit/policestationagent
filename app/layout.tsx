@@ -61,7 +61,7 @@ export const metadata: Metadata = {
   },
 };
 
-// Organization structured data
+// Enhanced LocalBusiness structured data for Kent local SEO
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "LegalService",
@@ -69,31 +69,153 @@ const organizationSchema = {
   "name": "Police Station Agent",
   "alternateName": "Defence Legal Services",
   "url": siteUrl,
-  "logo": `${siteUrl}/logo.png`, // Add logo if available
-  "description": "Professional police station representation and legal services across Kent and the UK",
+  "logo": `${siteUrl}/logo.png`,
+  "description": "Kent's leading police station representative service. Accredited duty solicitor providing FREE 24/7 police station representation across all Kent custody suites.",
   "telephone": "+441732247427",
   "email": "robertcashman@defencelegalservices.co.uk",
   "address": {
     "@type": "PostalAddress",
     "addressCountry": "GB",
-    "addressRegion": "Kent"
+    "addressRegion": "Kent",
+    "addressLocality": "Kent"
   },
-  "areaServed": {
-    "@type": "GeoCircle",
-    "geoMidpoint": {
-      "@type": "GeoCoordinates",
-      "latitude": 51.2787,
-      "longitude": 0.5217
+  "areaServed": [
+    {
+      "@type": "City",
+      "name": "Medway",
+      "containedIn": {
+        "@type": "State",
+        "name": "Kent"
+      }
     },
-    "geoRadius": {
-      "@type": "Distance",
+    {
+      "@type": "City",
+      "name": "Maidstone",
+      "containedIn": {
+        "@type": "State",
+        "name": "Kent"
+      }
+    },
+    {
+      "@type": "City",
+      "name": "Canterbury",
+      "containedIn": {
+        "@type": "State",
+        "name": "Kent"
+      }
+    },
+    {
+      "@type": "City",
+      "name": "Gravesend",
+      "containedIn": {
+        "@type": "State",
+        "name": "Kent"
+      }
+    },
+    {
+      "@type": "City",
+      "name": "Tonbridge",
+      "containedIn": {
+        "@type": "State",
+        "name": "Kent"
+      }
+    },
+    {
+      "@type": "City",
+      "name": "Folkestone",
+      "containedIn": {
+        "@type": "State",
+        "name": "Kent"
+      }
+    },
+    {
+      "@type": "City",
+      "name": "Ashford",
+      "containedIn": {
+        "@type": "State",
+        "name": "Kent"
+      }
+    },
+    {
+      "@type": "City",
+      "name": "Dartford",
+      "containedIn": {
+        "@type": "State",
+        "name": "Kent"
+      }
+    },
+    {
+      "@type": "City",
+      "name": "Sittingbourne",
+      "containedIn": {
+        "@type": "State",
+        "name": "Kent"
+      }
+    },
+    {
+      "@type": "City",
+      "name": "Sevenoaks",
+      "containedIn": {
+        "@type": "State",
+        "name": "Kent"
+      }
+    },
+    {
+      "@type": "City",
+      "name": "Tunbridge Wells",
+      "containedIn": {
+        "@type": "State",
+        "name": "Kent"
+      }
+    },
+    {
+      "@type": "City",
+      "name": "Margate",
+      "containedIn": {
+        "@type": "State",
+        "name": "Kent"
+      }
+    },
+    {
+      "@type": "City",
+      "name": "Dover",
+      "containedIn": {
+        "@type": "State",
+        "name": "Kent"
+      }
+    },
+    {
+      "@type": "State",
       "name": "Kent"
     }
-  },
+  ],
+  "serviceType": "Police Station Representation",
   "priceRange": "Free under Legal Aid",
-  "sameAs": [
-    // Add social media profiles if available
-  ]
+  "provider": {
+    "@type": "Person",
+    "name": "Robert Cashman",
+    "jobTitle": "Accredited Duty Solicitor",
+    "description": "Qualified solicitor with 35+ years experience, 6000+ cases, Practice Director, Higher Court Advocate"
+  },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Police Station Representation Services",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Police Station Representation",
+          "description": "FREE police station representation under Legal Aid at all Kent custody suites",
+          "areaServed": {
+            "@type": "State",
+            "name": "Kent"
+          }
+        }
+      }
+    ]
+  },
+  "sameAs": []
 };
 
 export default function RootLayout({
