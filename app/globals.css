@@ -437,8 +437,13 @@ a {
 /* Enhanced coverage for cards and containers with white/light backgrounds */
 .rounded-xl.bg-white .text-slate-600,
 .rounded-xl.bg-white .text-gray-600,
-.bg-gradient-to-br .text-slate-600,
-.bg-gradient-to-br .text-gray-600,
+/* Only treat LIGHT gradients as light backgrounds (avoid dark hero gradients) */
+[class*="bg-gradient-to-"][class*="to-white"] .text-slate-600,
+[class*="bg-gradient-to-"][class*="to-white"] .text-gray-600,
+[class*="bg-gradient-to-"][class*="from-slate-50"] .text-slate-600,
+[class*="bg-gradient-to-"][class*="from-slate-50"] .text-gray-600,
+[class*="bg-gradient-to-"][class*="from-blue-50"] .text-slate-600,
+[class*="bg-gradient-to-"][class*="from-blue-50"] .text-gray-600,
 [class*="bg-white"] .text-slate-600,
 [class*="bg-white"] .text-gray-600,
 [class*="bg-slate-50"] .text-slate-600,
