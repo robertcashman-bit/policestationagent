@@ -546,19 +546,60 @@ div.bg-slate-900 p {
 }
 
 /* ============================================
-   CARD TEXT - Ensure readability
+   GLOBAL TEXT CONTRAST FIX
+   Force readable colors on ALL backgrounds
    ============================================ */
-.bg-card p.text-slate-600,
+
+/* CARDS: All .text-slate-600 in cards should be darker */
 .bg-card .text-slate-600,
-[class*="bg-card"] p.text-slate-600,
-[class*="bg-card"] .text-slate-600,
-.rounded-xl.shadow p.text-slate-600 {
-  color: #334155 !important; /* slate-700 for good contrast */
+.bg-card p.text-slate-600,
+.rounded-xl .text-slate-600,
+.rounded-xl p.text-slate-600,
+.shadow .text-slate-600,
+.shadow p.text-slate-600,
+div.p-6 .text-slate-600,
+div.p-6 p.text-slate-600 {
+  color: #1e293b !important; /* slate-800 for max contrast */
+}
+
+/* All text-slate-600 globally should be darker for accessibility */
+p.text-slate-600,
+.text-slate-600 {
+  color: #334155 !important; /* slate-700 */
+}
+
+/* All text-slate-700 should be even darker */
+p.text-slate-700,
+.text-slate-700 {
+  color: #1e293b !important; /* slate-800 */
 }
 
 /* text-card-foreground should be dark */
 .text-card-foreground {
   color: #0f172a !important; /* slate-900 */
+}
+
+/* PROSE content - ensure all paragraph text is readable */
+.prose p,
+.prose div p,
+.prose .text-slate-600,
+.prose .text-slate-700,
+.prose .text-gray-600,
+.prose .text-gray-700 {
+  color: #1e293b !important; /* slate-800 */
+}
+
+/* Blue/dark sections - ensure light text is truly light */
+.text-blue-100 {
+  color: #ffffff !important; /* Force white */
+}
+
+.text-blue-200 {
+  color: #e2e8f0 !important; /* slate-200 */
+}
+
+.text-red-100 {
+  color: #fef2f2 !important; /* red-50 for better visibility */
 }
 
 /* ------------------------------------------
