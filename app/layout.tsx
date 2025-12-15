@@ -6,7 +6,32 @@ import Script from 'next/script';
 import Chatbot from '@/components/Chatbot';
 import CookieBanner from '@/components/CookieBanner';
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_URL;
+function getSafeSiteUrl(): string {
+  const raw =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    // Support a few common env var names used in deployments
+    process.env.SITE_URL ||
+    process.env.NEXT_PUBLIC_VERCEL_URL ||
+    SITE_URL;
+
+  const noWhitespace = String(raw).trim().replace(/\s+/g, "");
+  if (!noWhitespace) return SITE_URL;
+
+  const withProtocol =
+    noWhitespace.startsWith("http://") || noWhitespace.startsWith("https://")
+      ? noWhitespace
+      : `https://${noWhitespace}`;
+
+  try {
+    // Normalize and remove trailing slash for consistency across metadata/schema.
+    return new URL(withProtocol).toString().replace(/\/$/, "");
+  } catch {
+    // Fallback to canonical config to avoid a hard crash in RootLayout/metadataBase.
+    return SITE_URL || `https://${SITE_DOMAIN}`;
+  }
+}
+
+const siteUrl = getSafeSiteUrl();
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
