@@ -536,6 +536,31 @@ article.bg-white [class*="text-gray-400"] {
   color: #64748b !important; /* slate-500 for footnotes */
 }
 
+/* ============================================
+   COOKIE BANNER - Force white text
+   ============================================ */
+.bg-slate-900 p,
+.bg-slate-900 .text-white,
+div.bg-slate-900 p {
+  color: #ffffff !important;
+}
+
+/* ============================================
+   CARD TEXT - Ensure readability
+   ============================================ */
+.bg-card p.text-slate-600,
+.bg-card .text-slate-600,
+[class*="bg-card"] p.text-slate-600,
+[class*="bg-card"] .text-slate-600,
+.rounded-xl.shadow p.text-slate-600 {
+  color: #334155 !important; /* slate-700 for good contrast */
+}
+
+/* text-card-foreground should be dark */
+.text-card-foreground {
+  color: #0f172a !important; /* slate-900 */
+}
+
 /* ------------------------------------------
    INLINE HTML HERO SECTIONS (dangerouslySetInnerHTML)
    ------------------------------------------ */

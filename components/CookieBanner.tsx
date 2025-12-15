@@ -32,10 +32,10 @@ export default function CookieBanner() {
   if (!showBanner) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-slate-900 text-white p-2 md:p-3 shadow-2xl z-50 border-t-2 md:border-t-4 border-blue-600">
+    <div className="fixed bottom-0 left-0 right-0 bg-slate-900 p-2 md:p-3 shadow-2xl z-50 border-t-2 md:border-t-4 border-blue-600">
       <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 md:gap-3">
         <div className="flex-1">
-          <p className="text-[10px] md:text-xs leading-tight">
+          <p className="text-[10px] md:text-xs leading-tight text-white" style={{ color: '#ffffff' }}>
             We use cookies to improve your experience. By continuing, you accept our use of cookies.
           </p>
         </div>
