@@ -759,3 +759,70 @@ article img[src] {
   }
 }
 
+/* ============================================
+   FINAL TEXT CONTRAST OVERRIDES
+   Maximum specificity - MUST come at end of file
+   ============================================ */
+
+/* GLOBAL: Force all .text-slate-600 to be darker */
+html body .text-slate-600,
+html body p.text-slate-600,
+html body div.text-slate-600,
+html body span.text-slate-600 {
+  color: #1e293b !important; /* slate-800 */
+}
+
+/* GLOBAL: Force all .text-slate-700 to be even darker */
+html body .text-slate-700,
+html body p.text-slate-700 {
+  color: #0f172a !important; /* slate-900 */
+}
+
+/* GLOBAL: Force all .text-gray-600 to be darker */
+html body .text-gray-600,
+html body p.text-gray-600 {
+  color: #1e293b !important; /* slate-800 */
+}
+
+/* GLOBAL: Force all .text-gray-500 to be darker */
+html body .text-gray-500,
+html body p.text-gray-500 {
+  color: #334155 !important; /* slate-700 */
+}
+
+/* DARK BACKGROUNDS: Force white text */
+html body .bg-slate-900 p,
+html body .bg-slate-900 .text-white,
+html body .bg-slate-900 .text-slate-300,
+html body div.bg-slate-900 p,
+html body header.bg-slate-900 p {
+  color: #ffffff !important;
+}
+
+html body .bg-blue-900 .text-blue-100,
+html body .bg-blue-800 .text-blue-100,
+html body .bg-slate-900 .text-blue-100 {
+  color: #ffffff !important;
+}
+
+html body .bg-blue-900 .text-blue-200,
+html body .bg-blue-800 .text-blue-200 {
+  color: #e2e8f0 !important; /* slate-200 */
+}
+
+/* COOKIE BANNER: Force maximum visibility */
+html body .fixed.bottom-0 p,
+html body .fixed.bottom-0 .text-white,
+html body div.fixed.bottom-0.bg-slate-900 p {
+  color: #ffffff !important;
+}
+
+/* PROSE: Force all paragraph content to be readable */
+html body .prose p,
+html body .prose .text-slate-600,
+html body .prose .text-slate-700,
+html body main .text-slate-600,
+html body main p.text-slate-600 {
+  color: #1e293b !important; /* slate-800 */
+}
+
