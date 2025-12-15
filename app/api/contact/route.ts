@@ -166,6 +166,9 @@ export async function POST(request: NextRequest) {
     const smtpUser = process.env.SMTP_USER;
     const smtpPass = process.env.SMTP_PASS;
     
+    let emailSent = false;
+    const errors: string[] = [];
+    
     // Try Resend first (easiest for Vercel)
     if (resendApiKey) {
       try {
@@ -187,15 +190,26 @@ export async function POST(request: NextRequest) {
         if (resendResponse.ok) {
           const data = await resendResponse.json();
           console.log('[Contact Form] Email sent via Resend:', data.id);
-          // Don't log sensitive data
-          return NextResponse.json({ 
-            success: true, 
-            message: 'Request submitted successfully' 
-          });
+          emailSent = true;
+        } else {
+          // Log the error response
+          const errorText = await resendResponse.text();
+          const errorStatus = resendResponse.status;
+          console.error(`[Contact Form] Resend failed with status ${errorStatus}:`, errorText);
+          errors.push(`Resend: ${errorStatus} ${errorText.substring(0, 100)}`);
         }
       } catch (error) {
-        console.error('[Contact Form] Resend error:', error);
+        console.error('[Contact Form] Resend exception:', error);
+        errors.push(`Resend exception: ${error instanceof Error ? error.message : 'Unknown error'}`);
       }
+    }
+    
+    // If Resend succeeded, return success
+    if (emailSent) {
+      return NextResponse.json({ 
+        success: true, 
+        message: 'Request submitted successfully' 
+      });
     }
     
     // Try SendGrid
@@ -223,43 +237,58 @@ export async function POST(request: NextRequest) {
         
         if (sendgridResponse.ok) {
           console.log('[Contact Form] Email sent via SendGrid');
-          return NextResponse.json({ 
-            success: true, 
-            message: 'Request submitted successfully' 
-          });
+          emailSent = true;
+        } else {
+          // Log the error response
+          const errorText = await sendgridResponse.text();
+          const errorStatus = sendgridResponse.status;
+          console.error(`[Contact Form] SendGrid failed with status ${errorStatus}:`, errorText);
+          errors.push(`SendGrid: ${errorStatus} ${errorText.substring(0, 100)}`);
         }
       } catch (error) {
-        console.error('[Contact Form] SendGrid error:', error);
+        console.error('[Contact Form] SendGrid exception:', error);
+        errors.push(`SendGrid exception: ${error instanceof Error ? error.message : 'Unknown error'}`);
       }
+    }
+    
+    // If SendGrid succeeded, return success
+    if (emailSent) {
+      return NextResponse.json({ 
+        success: true, 
+        message: 'Request submitted successfully' 
+      });
     }
     
     // Try SMTP (if configured)
     if (smtpHost && smtpUser && smtpPass) {
       // For production, implement nodemailer here
       console.log('[Contact Form] SMTP configured but not fully implemented');
-      // Log email details (without sensitive data in production logs)
       console.log('[Contact Form] Email would be sent to:', recipientEmail);
-      return NextResponse.json({ 
-        success: true, 
-        message: 'Request logged (SMTP not fully configured)' 
-      });
+      // SMTP not implemented, so we can't actually send
+      errors.push('SMTP: Not fully implemented');
     }
     
-    // Fallback: Log for development (no sensitive data in logs)
-    console.log('\n=== CONTACT FORM SUBMISSION ===');
-    console.log('Request Type:', sanitizedData.requestType);
-    console.log('Police Station:', sanitizedData.policeStation);
-    console.log('Date/Time:', `${sanitizedData.interviewDate} at ${sanitizedData.interviewTime}`);
-    console.log('Attendance Type:', sanitizedData.attendanceType);
-    console.log('Email would be sent to:', recipientEmail);
-    console.log('================================\n');
+    // If we reach here, all email services failed
+    // Log the failure with all error details
+    console.error('\n=== CONTACT FORM EMAIL FAILURE ===');
+    console.error('All email services failed to send');
+    console.error('Request Type:', sanitizedData.requestType);
+    console.error('Police Station:', sanitizedData.policeStation);
+    console.error('Date/Time:', `${sanitizedData.interviewDate} at ${sanitizedData.interviewTime}`);
+    console.error('Attendance Type:', sanitizedData.attendanceType);
+    console.error('Recipient Email:', recipientEmail);
+    console.error('Errors:', errors);
+    console.error('===================================\n');
     
-    // Return success even if email service isn't configured (for development)
-    return NextResponse.json({ 
-      success: true, 
-      message: 'Request logged (configure email service for production)',
-      method: 'logged'
-    });
+    // Return error - do NOT return success if email was not sent
+    // This is critical for urgent legal representation requests
+    return NextResponse.json(
+      { 
+        error: 'Failed to send email. Please call 01732 247427 immediately for urgent assistance.',
+        message: 'Your request was received but we could not send the confirmation email. Please call us directly.'
+      },
+      { status: 500 }
+    );
     
   } catch (error) {
     // Don't expose error details to client
