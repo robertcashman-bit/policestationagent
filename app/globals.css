@@ -272,23 +272,32 @@ a {
 /* Ensure text is visible on dark backgrounds within prose */
 .prose div[class*="bg-slate-900"],
 .prose div[class*="bg-blue-900"],
-.prose div[class*="bg-gradient-to-br"],
-.prose div[class*="bg-gradient-to-r"],
 .prose section[class*="bg-slate-900"],
 .prose section[class*="bg-blue-900"],
-.prose section[class*="bg-gradient-to-br"],
-.prose section[class*="bg-gradient-to-r"] {
+/* Dark gradients (avoid matching light gradients like from-blue-50 to-white) */
+.prose div[class*="bg-gradient-to-"][class*="from-slate-9"],
+.prose div[class*="bg-gradient-to-"][class*="from-blue-9"],
+.prose div[class*="bg-gradient-to-"][class*="from-indigo-9"],
+.prose div[class*="bg-gradient-to-"][class*="from-purple-9"],
+.prose section[class*="bg-gradient-to-"][class*="from-slate-9"],
+.prose section[class*="bg-gradient-to-"][class*="from-blue-9"],
+.prose section[class*="bg-gradient-to-"][class*="from-indigo-9"],
+.prose section[class*="bg-gradient-to-"][class*="from-purple-9"] {
   color: white !important;
 }
 
 .prose div[class*="bg-slate-900"] p,
 .prose div[class*="bg-blue-900"] p,
-.prose div[class*="bg-gradient-to-br"] p,
-.prose div[class*="bg-gradient-to-r"] p,
 .prose section[class*="bg-slate-900"] p,
 .prose section[class*="bg-blue-900"] p,
-.prose section[class*="bg-gradient-to-br"] p,
-.prose section[class*="bg-gradient-to-r"] p {
+.prose div[class*="bg-gradient-to-"][class*="from-slate-9"] p,
+.prose div[class*="bg-gradient-to-"][class*="from-blue-9"] p,
+.prose div[class*="bg-gradient-to-"][class*="from-indigo-9"] p,
+.prose div[class*="bg-gradient-to-"][class*="from-purple-9"] p,
+.prose section[class*="bg-gradient-to-"][class*="from-slate-9"] p,
+.prose section[class*="bg-gradient-to-"][class*="from-blue-9"] p,
+.prose section[class*="bg-gradient-to-"][class*="from-indigo-9"] p,
+.prose section[class*="bg-gradient-to-"][class*="from-purple-9"] p {
   color: #e2e8f0 !important; /* slate-200 for good contrast on dark backgrounds */
 }
 
@@ -298,24 +307,36 @@ a {
 .prose div[class*="bg-blue-900"] h1,
 .prose div[class*="bg-blue-900"] h2,
 .prose div[class*="bg-blue-900"] h3,
-.prose div[class*="bg-gradient-to-br"] h1,
-.prose div[class*="bg-gradient-to-br"] h2,
-.prose div[class*="bg-gradient-to-br"] h3,
-.prose div[class*="bg-gradient-to-r"] h1,
-.prose div[class*="bg-gradient-to-r"] h2,
-.prose div[class*="bg-gradient-to-r"] h3,
 .prose section[class*="bg-slate-900"] h1,
 .prose section[class*="bg-slate-900"] h2,
 .prose section[class*="bg-slate-900"] h3,
 .prose section[class*="bg-blue-900"] h1,
 .prose section[class*="bg-blue-900"] h2,
 .prose section[class*="bg-blue-900"] h3,
-.prose section[class*="bg-gradient-to-br"] h1,
-.prose section[class*="bg-gradient-to-br"] h2,
-.prose section[class*="bg-gradient-to-br"] h3,
-.prose section[class*="bg-gradient-to-r"] h1,
-.prose section[class*="bg-gradient-to-r"] h2,
-.prose section[class*="bg-gradient-to-r"] h3 {
+.prose div[class*="bg-gradient-to-"][class*="from-slate-9"] h1,
+.prose div[class*="bg-gradient-to-"][class*="from-slate-9"] h2,
+.prose div[class*="bg-gradient-to-"][class*="from-slate-9"] h3,
+.prose div[class*="bg-gradient-to-"][class*="from-blue-9"] h1,
+.prose div[class*="bg-gradient-to-"][class*="from-blue-9"] h2,
+.prose div[class*="bg-gradient-to-"][class*="from-blue-9"] h3,
+.prose div[class*="bg-gradient-to-"][class*="from-indigo-9"] h1,
+.prose div[class*="bg-gradient-to-"][class*="from-indigo-9"] h2,
+.prose div[class*="bg-gradient-to-"][class*="from-indigo-9"] h3,
+.prose div[class*="bg-gradient-to-"][class*="from-purple-9"] h1,
+.prose div[class*="bg-gradient-to-"][class*="from-purple-9"] h2,
+.prose div[class*="bg-gradient-to-"][class*="from-purple-9"] h3,
+.prose section[class*="bg-gradient-to-"][class*="from-slate-9"] h1,
+.prose section[class*="bg-gradient-to-"][class*="from-slate-9"] h2,
+.prose section[class*="bg-gradient-to-"][class*="from-slate-9"] h3,
+.prose section[class*="bg-gradient-to-"][class*="from-blue-9"] h1,
+.prose section[class*="bg-gradient-to-"][class*="from-blue-9"] h2,
+.prose section[class*="bg-gradient-to-"][class*="from-blue-9"] h3,
+.prose section[class*="bg-gradient-to-"][class*="from-indigo-9"] h1,
+.prose section[class*="bg-gradient-to-"][class*="from-indigo-9"] h2,
+.prose section[class*="bg-gradient-to-"][class*="from-indigo-9"] h3,
+.prose section[class*="bg-gradient-to-"][class*="from-purple-9"] h1,
+.prose section[class*="bg-gradient-to-"][class*="from-purple-9"] h2,
+.prose section[class*="bg-gradient-to-"][class*="from-purple-9"] h3 {
   color: white !important;
 }
 
