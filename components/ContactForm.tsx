@@ -70,6 +70,7 @@ export default function ContactForm() {
     if (!formData.policeStation.trim()) newErrors.policeStation = 'Police station is required';
     if (!formData.interviewDate.trim()) newErrors.interviewDate = 'Interview date is required';
     if (!formData.interviewTime.trim()) newErrors.interviewTime = 'Interview time is required';
+    if (!formData.attendanceType) newErrors.attendanceType = 'Please select whether this is an arrest or voluntary attendance';
     if (!formData.offenceSummary.trim()) newErrors.offenceSummary = 'Brief summary is required';
     if (formData.contactWindow === 'specify' && !formData.contactWindowTime.trim()) {
       newErrors.contactWindowTime = 'Please specify a contact time';
@@ -352,6 +353,7 @@ export default function ContactForm() {
                 <span>Voluntary Attendance</span>
               </label>
             </div>
+            {errors.attendanceType && <p className="text-red-600 text-sm mt-1">{errors.attendanceType}</p>}
           </div>
           
           <div>
