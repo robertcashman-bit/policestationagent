@@ -123,9 +123,23 @@ function initDatabase() {
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         meta_title TEXT,
         meta_description TEXT,
+        image TEXT,
+        schema_json TEXT,
         FOREIGN KEY (author_id) REFERENCES users(id)
       )
     `);
+    
+    // Add new columns if they don't exist (for existing databases)
+    try {
+      db.exec(`ALTER TABLE blog_posts ADD COLUMN image TEXT`);
+    } catch (e) {
+      // Column already exists, ignore
+    }
+    try {
+      db.exec(`ALTER TABLE blog_posts ADD COLUMN schema_json TEXT`);
+    } catch (e) {
+      // Column already exists, ignore
+    }
 
     // Police stations table
     db.exec(`

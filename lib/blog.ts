@@ -33,6 +33,7 @@ export interface BlogPost {
   created_at: string;
   updated_at: string | null;
   image: string | null;
+  schema_json: string | null;
 }
 
 export interface BlogPostSummary {
@@ -453,7 +454,9 @@ export function getPostBySlug(slug: string): BlogPost | null {
         meta_description,
         published_at,
         created_at,
-        updated_at
+        updated_at,
+        image,
+        schema_json
       FROM blog_posts 
       WHERE published = 1
     `).all() as BlogPost[];

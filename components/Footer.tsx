@@ -97,7 +97,7 @@ export default function Footer() {
                 </li>
                 <li>
                   <Link href="/about" className="text-slate-200 hover:text-white transition-colors font-medium">
-                    About Kent's Leading Police Station Rep
+                    About Qualified Duty Solicitor Kent
                   </Link>
                 </li>
                 <li>

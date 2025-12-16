@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const { title, slug, content, excerpt, published, meta_title, meta_description } = await request.json();
+    const { title, slug, content, excerpt, published, meta_title, meta_description, image, schema } = await request.json();
 
     if (!title || !slug || !content) {
       return NextResponse.json(
@@ -37,11 +37,12 @@ export async function POST(request: NextRequest) {
 
     const stmt = db.prepare(`
       INSERT INTO blog_posts 
-      (title, slug, content, excerpt, published, published_at, author_id, meta_title, meta_description, updated_at)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+      (title, slug, content, excerpt, published, published_at, author_id, meta_title, meta_description, image, schema_json, updated_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
     `);
 
     const publishedAt = published ? new Date().toISOString() : null;
+    const schemaJson = schema ? JSON.stringify(schema) : null;
     
     const result = stmt.run(
       title,
@@ -52,12 +53,18 @@ export async function POST(request: NextRequest) {
       publishedAt,
       auth.userId,
       meta_title || null,
-      meta_description || null
+      meta_description || null,
+      image || null,
+      schemaJson
     );
+
+    const postId = Number(result.lastInsertRowid);
 
     return NextResponse.json({
       success: true,
-      id: Number(result.lastInsertRowid),
+      id: postId,
+      slug,
+      url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://policestationagent.com'}/blog/${slug}`,
     });
   } catch (error: any) {
     if (error.code === 'SQLITE_CONSTRAINT_UNIQUE') {

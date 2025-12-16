@@ -1,6 +1,6 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import BlogPromotionalBlock from '@/components/BlogPromotionalBlock';
+import BlogAdvertBlock from '@/components/BlogAdvertBlock';
 import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
@@ -84,40 +84,53 @@ export default function BlogPostPage({ params }: PageProps) {
   const displayTitle = post.title || 'Untitled Post';
   const displayExcerpt = post.excerpt || generateExcerpt(post.content, 160) || post.content.substring(0, 160);
   
-  // Enhanced structured data: BlogPosting + Article schema
-  const blogPostingSchema = {
-    '@context': 'https://schema.org',
-    '@type': ['BlogPosting', 'Article'],
-    headline: displayTitle,
-    description: displayExcerpt,
-    datePublished: post.published_at || post.created_at,
-    dateModified: post.updated_at || post.published_at || post.created_at,
-    author: {
-      '@type': 'Person',
-      name: 'Robert Cashman',
-      url: siteUrl,
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: 'Police Station Agent',
-      logo: {
-        '@type': 'ImageObject',
-        url: `${siteUrl}/logo.png`,
+  // Use stored schema if available, otherwise generate default schema
+  let blogPostingSchema: any;
+  if (post.schema_json) {
+    try {
+      blogPostingSchema = JSON.parse(post.schema_json);
+    } catch (e) {
+      // Fallback to default if parsing fails
+      blogPostingSchema = null;
+    }
+  }
+  
+  // Default schema if not stored or parsing failed
+  if (!blogPostingSchema) {
+    blogPostingSchema = {
+      '@context': 'https://schema.org',
+      '@type': ['BlogPosting', 'Article'],
+      headline: displayTitle,
+      description: displayExcerpt,
+      datePublished: post.published_at || post.created_at,
+      dateModified: post.updated_at || post.published_at || post.created_at,
+      author: {
+        '@type': 'Person',
+        name: 'Robert Cashman',
+        url: siteUrl,
       },
-    },
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': `${siteUrl}/blog/${post.slug}`,
-    },
-    url: `${siteUrl}/blog/${post.slug}`,
-    image: post.image ? [{
-      '@type': 'ImageObject',
-      url: post.image,
-    }] : undefined,
-    articleSection: 'Criminal Defence',
-    keywords: ['police station representation', 'criminal defence', 'legal advice', 'Kent'],
-    inLanguage: 'en-GB',
-  };
+      publisher: {
+        '@type': 'Organization',
+        name: 'PoliceStationAgent.com',
+        logo: {
+          '@type': 'ImageObject',
+          url: `${siteUrl}/logo.png`,
+        },
+      },
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id': `${siteUrl}/blog/${post.slug}`,
+      },
+      url: `${siteUrl}/blog/${post.slug}`,
+      image: post.image ? [{
+        '@type': 'ImageObject',
+        url: post.image,
+      }] : undefined,
+      articleSection: 'Criminal Defence',
+      keywords: ['police station representation', 'criminal defence', 'legal advice', 'Kent'],
+      inLanguage: 'en-GB',
+    };
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
@@ -179,8 +192,8 @@ export default function BlogPostPage({ params }: PageProps) {
               />
             </article>
             
-            {/* Promotional Block */}
-            <BlogPromotionalBlock />
+            {/* Mandatory Advert Block - Cannot be removed */}
+            <BlogAdvertBlock />
           </div>
         </section>
       </main>
