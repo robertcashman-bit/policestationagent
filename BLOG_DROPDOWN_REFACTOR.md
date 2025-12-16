@@ -72,3 +72,5 @@ To add a new blog post:
 3. The post will automatically appear in the dropdown
 
 No manual navigation editing required!
+
+

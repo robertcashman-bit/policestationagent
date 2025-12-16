@@ -1,10 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { auth, AUTHORIZED_EMAIL } from '@/auth';
 import db from '@/lib/db';
 
-// Authorized email check
-const AUTHORIZED_EMAIL = process.env.AUTHORIZED_GOOGLE_EMAIL || 'robertcashman@defencelegalservices.co.uk';
+interface BlogPost {
+  id: number;
+  title: string;
+  slug: string;
+  content: string;
+  excerpt: string | null;
+  meta_title: string | null;
+  meta_description: string | null;
+}
 
 /**
  * Email/SMS Sending API
@@ -14,8 +20,8 @@ const AUTHORIZED_EMAIL = process.env.AUTHORIZED_GOOGLE_EMAIL || 'robertcashman@d
  */
 export async function POST(request: NextRequest) {
   try {
-    // Verify Google OAuth session
-    const session = await getServerSession(authOptions);
+    // Verify Google OAuth session using next-auth v5
+    const session = await auth();
     
     if (!session || !session.user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -47,7 +53,7 @@ export async function POST(request: NextRequest) {
       SELECT id, title, slug, content, excerpt, meta_title, meta_description
       FROM blog_posts
       WHERE id = ?
-    `).get(postId);
+    `).get(postId) as BlogPost | undefined;
     
     if (!post) {
       return NextResponse.json({ error: 'Post not found' }, { status: 404 });
@@ -115,4 +121,3 @@ Expert Police Station Representation in Kent
     );
   }
 }
-

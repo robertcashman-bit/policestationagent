@@ -1,6 +1,5 @@
 import { redirect } from 'next/navigation';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { auth, AUTHORIZED_EMAIL } from '@/auth';
 import BlogGeneratorClient from '@/components/BlogGeneratorClient';
 
 export const metadata = {
@@ -12,8 +11,8 @@ export const metadata = {
 };
 
 export default async function BlogGeneratorPage() {
-  // Check Google OAuth session
-  const session = await getServerSession(authOptions);
+  // Check Google OAuth session using next-auth v5 auth()
+  const session = await auth();
 
   if (!session || !session.user) {
     // Redirect to Google OAuth sign-in
@@ -21,8 +20,7 @@ export default async function BlogGeneratorPage() {
   }
 
   // Verify authorized email
-  const authorizedEmail = process.env.AUTHORIZED_GOOGLE_EMAIL || 'robertcashman@defencelegalservices.co.uk';
-  if (session.user.email?.toLowerCase() !== authorizedEmail.toLowerCase()) {
+  if (session.user.email?.toLowerCase() !== AUTHORIZED_EMAIL.toLowerCase()) {
     // Unauthorized user - redirect to homepage
     redirect('/?error=unauthorized');
   }
@@ -33,4 +31,3 @@ export default async function BlogGeneratorPage() {
     </div>
   );
 }
-

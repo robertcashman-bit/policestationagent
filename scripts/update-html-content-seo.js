@@ -63,3 +63,5 @@ filesToUpdate.forEach(file => {
 });
 
 console.log('All HTML content updated!');
+
+
