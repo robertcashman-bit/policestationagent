@@ -1,222 +1,339 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-
-// Authorized email check
-const AUTHORIZED_EMAIL = process.env.AUTHORIZED_GOOGLE_EMAIL || 'robertcashman@defencelegalservices.co.uk';
+import { auth, AUTHORIZED_EMAIL } from '@/auth';
+import { writeFile, mkdir } from 'fs/promises';
+import path from 'path';
 
 /**
- * Generate SEO-friendly slug from title
+ * Generate URL-friendly slug from text
  */
-function generateSlug(title: string): string {
-  return title
+function generateSlug(text: string): string {
+  return text
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '')
-    .substring(0, 100);
+    .substring(0, 60);
 }
 
 /**
- * Generate meta title (max 60 characters)
+ * Generate SEO-optimized meta title (≤60 characters)
  */
-function generateMetaTitle(title: string, location: string): string {
-  const base = `${title} | ${location} Police Station Duty Solicitor`;
-  return base.length > 60 ? base.substring(0, 57) + '...' : base;
+function generateMetaTitle(topic: string, location: string): string {
+  const base = `${topic} - Police Station Solicitor`;
+  if (location && base.length + location.length + 3 <= 60) {
+    return `${topic} - ${location} Duty Solicitor`;
+  }
+  return base.substring(0, 60);
 }
 
 /**
- * Generate meta description (max 155 characters)
+ * Generate SEO-optimized meta description (≤155 characters)
  */
 function generateMetaDescription(topic: string, primaryKeyword: string, location: string): string {
-  const desc = `Expert ${primaryKeyword} advice in ${location}. FREE legal advice under Legal Aid. Accredited Duty Solicitor with 35+ years experience.`;
-  return desc.length > 155 ? desc.substring(0, 152) + '...' : desc;
+  const loc = location || 'Kent';
+  return `Expert guidance on ${topic.toLowerCase()} from a qualified Duty Solicitor. ${primaryKeyword} advice for ${loc}. PACE-compliant police station representation.`.substring(0, 155);
 }
 
 /**
- * Generate blog content using AI (placeholder - integrate with your AI service)
- * This is a template that generates compliant content from a solicitor's perspective
+ * Generate blog content structure
+ * TODO: Integrate with AI service (OpenAI, Anthropic, etc.)
  */
 async function generateBlogContent(formData: any): Promise<string> {
-  // TODO: Integrate with your preferred AI service (OpenAI, Anthropic, etc.)
-  // For now, this generates a template structure that follows all requirements
-  
-  const wordCounts = {
+  const {
+    topic,
+    primaryKeyword,
+    secondaryKeywords,
+    location = 'Kent',
+    category,
+    seoLength = 'optimal',
+    includeFAQ,
+    includeInternalLinks,
+  } = formData;
+
+  // Word count targets
+  const wordTargets: Record<string, number> = {
     short: 800,
     optimal: 1100,
     long: 1500,
   };
-  
-  const targetWords = wordCounts[formData.seoLength as keyof typeof wordCounts] || 1100;
-  
-  // This is a template - replace with actual AI API call
+  const targetWords = wordTargets[seoLength] || 1100;
+
+  // Build structured HTML content
   const content = `
-    <h1>${formData.topic} - ${formData.location} Police Station Duty Solicitor</h1>
-    
-    <p><strong>As a qualified Police Station Duty Solicitor with Higher Rights of Audience (Criminal),</strong> I regularly advise clients across ${formData.location} on ${formData.primaryKeyword}. This guide explains your rights and what to expect.</p>
-    
-    <h2>Understanding ${formData.primaryKeyword} in ${formData.location}</h2>
-    
-    <p>Under the Police and Criminal Evidence Act 1984 (PACE), you have specific rights when dealing with police matters in ${formData.location}. As an Accredited Duty Solicitor, I ensure these rights are protected throughout the process.</p>
-    
-    <h3>Your Legal Rights</h3>
-    
-    <ul>
-      <li>Right to free legal advice under Section 58 of PACE 1984</li>
-      <li>Right to consult privately with a solicitor</li>
-      <li>Right to have a solicitor present during interview</li>
-      <li>Right to remain silent</li>
-    </ul>
-    
-    <h2>What Happens During ${formData.category}</h2>
-    
-    <p>When you're involved in a ${formData.category.toLowerCase()} situation in ${formData.location}, the process typically follows these steps:</p>
-    
-    <ol>
-      <li>Initial contact or arrest</li>
-      <li>Booking in at custody suite</li>
-      <li>Consultation with duty solicitor</li>
-      <li>Interview (if applicable)</li>
-      <li>Decision on next steps</li>
-    </ol>
-    
-    <h2>Why Choose an Accredited Duty Solicitor</h2>
-    
-    <p>Unlike unregulated police station agents, an Accredited Duty Solicitor is:</p>
-    
-    <ul>
-      <li>Qualified and regulated by the Solicitors Regulation Authority</li>
-      <li>Accredited by the Law Society for police station work</li>
-      <li>Experienced in criminal defence and PACE procedures</li>
-      <li>Available through the Defence Solicitor Call Centre (DSCC)</li>
-    </ul>
-    
-    <p><strong>Important:</strong> I am a qualified solicitor, not just an agent. This means I can provide comprehensive legal advice and representation throughout your case.</p>
-    
-    <h2>${formData.location} Custody Suites</h2>
-    
-    <p>I provide representation at all ${formData.location} custody suites, including Medway, Maidstone, Canterbury, and Gravesend. My extended hours service ensures availability from 9am to late, covering evenings, weekends, and bank holidays.</p>
-    
-    <p><em>Note: I avoid making "24/7" claims. My service operates extended hours to ensure prompt attendance when needed.</em></p>
-    
-    ${formData.includeInternalLinks ? `
-    <h2>Related Information</h2>
-    <p>For more information, see our guides on:</p>
-    <ul>
-      <li><a href="/what-is-a-police-station-rep">What is a Police Station Representative?</a></li>
-      <li><a href="/voluntary-interviews">Voluntary Police Interviews</a></li>
-      <li><a href="/your-rights-in-custody">Your Rights in Custody</a></li>
-    </ul>
-    ` : ''}
-    
-    <h2>Conclusion</h2>
-    
-    <p>If you need advice about ${formData.primaryKeyword} in ${formData.location}, remember that free legal advice is available under Legal Aid. As an Accredited Duty Solicitor with over 35 years of experience, I can provide expert representation at any ${formData.location} custody suite.</p>
-    
-    <p><strong>This information is provided for general guidance only and does not constitute specific legal advice.</strong> Always consult with a qualified solicitor for advice tailored to your situation.</p>
-  `;
-  
+<h1>${topic}${location ? ` - ${location}` : ''}</h1>
+
+<p class="lead">
+  If you've been asked to attend a police station for an interview or have been arrested in ${location || 'Kent'}, 
+  understanding your rights is essential. As a qualified Police Station Duty Solicitor with Higher Rights of Audience (Criminal), 
+  I provide expert representation to protect your interests throughout the process.
+</p>
+
+<h2>Understanding ${topic}</h2>
+
+<p>
+  ${primaryKeyword} is a crucial aspect of the criminal justice process. Under the Police and Criminal Evidence Act 1984 (PACE), 
+  you have fundamental rights when detained at a police station. These include the right to free legal advice from a qualified 
+  solicitor—not an unregulated representative.
+</p>
+
+<p>
+  Many people don't realise the difference between a qualified Duty Solicitor and an agency representative. As an Accredited 
+  Police Station Representative and Duty Solicitor, I am fully qualified to provide advice and representation at police stations 
+  across ${location || 'Kent'}, including Medway, Maidstone, Canterbury, and Gravesend custody suites.
+</p>
+
+<h2>Your Rights Under PACE 1984</h2>
+
+<ul>
+  <li><strong>Right to free legal advice</strong> – Available from a qualified solicitor, not just a representative</li>
+  <li><strong>Right to have someone informed</strong> – You can request that a friend or relative is notified of your arrest</li>
+  <li><strong>Right to consult the Codes of Practice</strong> – These govern how police must treat you</li>
+  <li><strong>Right to silence</strong> – Though the caution explains the potential consequences of remaining silent</li>
+</ul>
+
+<h2>Why Choose a Qualified Duty Solicitor?</h2>
+
+<p>
+  ${secondaryKeywords ? `When seeking ${secondaryKeywords.split(',')[0]?.trim() || 'legal advice'}, ` : ''}it's important to 
+  understand that not all police station representatives are equal. I am:
+</p>
+
+<ul>
+  <li>A qualified solicitor with Higher Rights of Audience (Criminal)</li>
+  <li>An Accredited Police Station Representative under the Law Society scheme</li>
+  <li>Experienced in representing clients at all ${location || 'Kent'} custody suites</li>
+  <li>Available from 9am to late, including evenings, weekends, and bank holidays</li>
+</ul>
+
+${includeInternalLinks ? `
+<h2>Related Services</h2>
+
+<p>
+  Learn more about <a href="/services/police-station-representation">police station representation</a> and how I can help 
+  if you're facing <a href="/services/arrest-advice">arrest or detention</a>. If you need guidance on 
+  <a href="/services/bail-advice">bail conditions</a> or <a href="/services/interview-preparation">interview preparation</a>, 
+  I provide comprehensive support throughout the process.
+</p>
+` : ''}
+
+<h2>Getting Help in ${location || 'Kent'}</h2>
+
+<p>
+  If you or a family member needs representation at a police station in ${location || 'Kent'}, don't delay in seeking 
+  qualified legal advice. The earlier you have a solicitor involved, the better protected your rights will be.
+</p>
+
+<p>
+  <strong>Contact me directly</strong> for police station representation. I cover all custody suites in ${location || 'Kent'} 
+  and surrounding areas, and I'm available from 9am to late, seven days a week.
+</p>
+`;
+
   return content.trim();
 }
 
 /**
- * Generate FAQ section
+ * Generate FAQ section based on topic
  */
-function generateFAQs(topic: string, primaryKeyword: string, location: string): Array<{question: string, answer: string}> {
+function generateFAQs(topic: string, primaryKeyword: string, location: string): Array<{question: string; answer: string}> {
   return [
     {
-      question: `What is ${primaryKeyword}?`,
-      answer: `${primaryKeyword} refers to your legal rights and options when dealing with police matters in ${location}. As an Accredited Duty Solicitor, I can explain these rights in detail during a private consultation.`,
+      question: `Do I need a solicitor for ${topic.toLowerCase()}?`,
+      answer: `Yes, having a qualified Duty Solicitor present is strongly recommended. Free legal advice is your right under PACE 1984, and a solicitor can protect your interests during police questioning.`,
     },
     {
-      question: `Is legal advice free for ${primaryKeyword} matters?`,
-      answer: `Yes. Under Section 58 of PACE 1984, everyone is entitled to free legal advice at the police station. This applies regardless of your financial circumstances and is not means-tested.`,
+      question: `How quickly can a solicitor attend a police station in ${location || 'Kent'}?`,
+      answer: `I aim to attend all ${location || 'Kent'} custody suites promptly. I'm available from 9am to late, including weekends and bank holidays, covering Medway, Maidstone, Canterbury, Gravesend and all Kent police stations.`,
     },
     {
-      question: `How quickly can a duty solicitor attend in ${location}?`,
-      answer: `I aim to attend any ${location} custody suite within 30 minutes of being contacted. My extended hours service covers evenings, weekends, and bank holidays to ensure prompt attendance.`,
+      question: `What's the difference between a Duty Solicitor and an agency representative?`,
+      answer: `A Duty Solicitor is a fully qualified solicitor accredited under the Law Society scheme. Agency representatives may not have the same qualifications. I am a qualified solicitor with Higher Rights of Audience (Criminal).`,
     },
     {
-      question: `What's the difference between a duty solicitor and a police station agent?`,
-      answer: `A duty solicitor is a qualified solicitor accredited by the Law Society. A police station agent is a non-solicitor representative. I am a qualified solicitor with Higher Court Advocate status, providing expert representation across ${location}.`,
+      question: `Is police station legal advice really free?`,
+      answer: `Yes, legal advice at the police station is free regardless of your financial circumstances. This is your right under PACE 1984 and applies to everyone detained or attending voluntarily.`,
     },
   ];
 }
 
 /**
- * Generate automatic advert block (mandatory for all posts)
+ * Generate the mandatory advert block HTML
  */
 function generateAdvertBlock(): string {
   return `
-    <div class="bg-blue-50 border-l-4 border-blue-600 p-6 my-8 rounded-r-lg">
-      <h3 class="text-xl font-bold text-slate-900 mb-4">PoliceStationAgent.com - Expert Police Station Representation</h3>
-      
-      <p class="text-slate-700 mb-4">
-        <strong>I am a qualified Police Station Duty Solicitor, not an agency or unregulated representative.</strong> 
-        With Higher Rights of Audience (Criminal) and over 35 years of experience, I provide expert representation 
-        across all Kent custody suites.
-      </p>
-      
-      <p class="text-slate-700 mb-4">
-        As an Accredited Duty Solicitor, I ensure your rights are protected under PACE 1984. My service covers 
-        Medway, Maidstone, Canterbury, Gravesend, and all Kent police stations.
-      </p>
-      
-      <div class="flex flex-col sm:flex-row gap-4 mt-6">
-        <a href="mailto:robertcashman@defencelegalservices.co.uk" 
-           class="inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 font-semibold">
-          Email for Police Station Representation
-        </a>
-        <a href="sms:07535494446?body=I need a duty solicitor" 
-           class="inline-flex items-center justify-center px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 font-semibold">
-          Send SMS to Request a Duty Solicitor
-        </a>
-      </div>
-      
-      <p class="text-sm text-slate-600 mt-4">
-        <strong>Call 01732 247427</strong> - Available from 9am to late, including evenings, weekends, and bank holidays.
-      </p>
-    </div>
-  `;
+<div class="bg-blue-50 border-l-4 border-blue-600 p-6 my-8 rounded-r-lg">
+  <h3 class="text-xl font-bold text-slate-900 mb-4">
+    PoliceStationAgent.com - Expert Police Station Representation
+  </h3>
+  
+  <p class="text-slate-700 mb-4">
+    <strong>I am a qualified Police Station Duty Solicitor, not an agency or unregulated representative.</strong>
+    With Higher Rights of Audience (Criminal) and over 35 years of experience, I provide expert representation 
+    across all Kent custody suites.
+  </p>
+  
+  <p class="text-slate-700 mb-4">
+    As an Accredited Duty Solicitor, I ensure your rights are protected under PACE 1984. My service covers 
+    Medway, Maidstone, Canterbury, Gravesend, and all Kent police stations.
+  </p>
+  
+  <div class="flex flex-col sm:flex-row gap-4 mt-6">
+    <a href="mailto:robertcashman@defencelegalservices.co.uk" 
+       class="inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 font-semibold transition-colors">
+      Email for Police Station Representation
+    </a>
+    <a href="sms:07535494446?body=I need a duty solicitor" 
+       class="inline-flex items-center justify-center px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 font-semibold transition-colors">
+      Send SMS to Request a Duty Solicitor
+    </a>
+  </div>
+  
+  <p class="text-sm text-slate-600 mt-4">
+    <strong>Call 01732 247427</strong> - Available from 9am to late, including evenings, weekends, and bank holidays.
+  </p>
+</div>
+`;
 }
 
+/**
+ * Handle uploaded images - saves to public/blog-images directory
+ */
+async function handleUploadedImages(files: File[], slug: string): Promise<string[]> {
+  const savedUrls: string[] = [];
+  const uploadDir = path.join(process.cwd(), 'public', 'blog-images');
+  
+  // Ensure directory exists
+  await mkdir(uploadDir, { recursive: true });
+  
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    const ext = file.name.split('.').pop() || 'jpg';
+    const seoFilename = `${slug}-${i + 1}.${ext}`;
+    const filePath = path.join(uploadDir, seoFilename);
+    
+    const arrayBuffer = await file.arrayBuffer();
+    await writeFile(filePath, Buffer.from(arrayBuffer));
+    
+    savedUrls.push(`/blog-images/${seoFilename}`);
+  }
+  
+  return savedUrls;
+}
+
+/**
+ * POST handler for blog generation
+ * Supports both JSON and FormData (multipart) requests
+ */
 export async function POST(request: NextRequest) {
   try {
-    // Verify Google OAuth session
-    const session = await getServerSession(authOptions);
+    // Verify Google OAuth session using next-auth v5
+    const session = await auth();
     
     if (!session || !session.user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
     
-    // Verify authorized email
     if (session.user.email?.toLowerCase() !== AUTHORIZED_EMAIL.toLowerCase()) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
+
+    let formData: any;
+    let uploadedImageUrls: string[] = [];
     
-    const formData = await request.json();
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:POST',message:'Request received',data:{contentType:request.headers.get('content-type')},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B2'})}).catch(()=>{});
+    // #endregion
+
+    // Check if request is multipart/form-data (for file uploads) or JSON
+    // BUG 2 VERIFICATION: FormData detection and file handling
+    const contentType = request.headers.get('content-type') || '';
     
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:contentType',message:'Checking content type',data:{contentType,isMultipart:contentType.includes('multipart/form-data')},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B2'})}).catch(()=>{});
+    // #endregion
+    
+    if (contentType.includes('multipart/form-data')) {
+      // BUG 2 FIX: Handle FormData with file uploads properly
+      const multipartData = await request.formData();
+      
+      // #region agent log
+      fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:multipart',message:'FormData parsed',data:{hasFiles:multipartData.has('uploadedImages')},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B2'})}).catch(()=>{});
+      // #endregion
+      
+      // Extract JSON data from the 'data' field
+      const jsonData = multipartData.get('data');
+      if (typeof jsonData === 'string') {
+        formData = JSON.parse(jsonData);
+      } else {
+        return NextResponse.json({ error: 'Invalid form data' }, { status: 400 });
+      }
+      
+      // Handle file uploads
+      const files = multipartData.getAll('uploadedImages') as File[];
+      
+      // #region agent log
+      fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:files:check',message:'Files extracted from FormData',data:{fileCount:files.length,fileNames:files.map(f=>f.name),areFiles:files.every(f=>f instanceof File)},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B2'})}).catch(()=>{});
+      // #endregion
+      
+      if (files.length > 0) {
+        const slug = generateSlug(formData.topic || formData.primaryKeyword);
+        uploadedImageUrls = await handleUploadedImages(files, slug);
+        
+        // #region agent log
+        fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:files:uploaded',message:'Files saved successfully',data:{count:files.length,urls:uploadedImageUrls,urlCount:uploadedImageUrls.length},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B2'})}).catch(()=>{});
+        // #endregion
+      } else {
+        // #region agent log
+        fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:files:none',message:'No files in FormData',data:{fileCount:0},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B2'})}).catch(()=>{});
+        // #endregion
+      }
+    } else {
+      // Standard JSON request (no file uploads)
+      // #region agent log
+      fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:json:before',message:'Parsing JSON request',data:{contentType},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B2'})}).catch(()=>{});
+      // #endregion
+      
+      formData = await request.json();
+      
+      // #region agent log
+      fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:json:after',message:'JSON parsed',data:{topic:formData.topic,hasUploadedImages:!!formData.uploadedImages,uploadedImagesType:typeof formData.uploadedImages},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B2'})}).catch(()=>{});
+      // #endregion
+    }
+
     // Generate blog content
     const content = await generateBlogContent(formData);
-    
-    // Generate SEO metadata
     const slug = generateSlug(formData.topic || formData.primaryKeyword);
     const metaTitle = generateMetaTitle(formData.topic, formData.location);
-    const metaDescription = generateMetaDescription(
-      formData.topic,
-      formData.primaryKeyword,
-      formData.location
-    );
+    const metaDescription = generateMetaDescription(formData.topic, formData.primaryKeyword, formData.location);
     
-    // Generate FAQs if enabled
+    // Generate FAQs if requested
     const faqs = formData.includeFAQ 
       ? generateFAQs(formData.topic, formData.primaryKeyword, formData.location)
       : [];
-    
-    // Add advert block to content (mandatory)
+
+    // Append mandatory advert block
     const contentWithAdvert = content + generateAdvertBlock();
-    
-    // Generate schema markup
-    const schema = {
+
+    // Merge uploaded image URLs with any external URLs provided
+    const allImageUrls = [
+      ...uploadedImageUrls,
+      ...(formData.imageUrls || []).filter((url: string) => url && url.trim()),
+    ];
+
+    // Determine featured image
+    let featuredImage: string | null = null;
+    if (allImageUrls.length > 0) {
+      const featuredIndex = formData.featuredImageIndex ?? 0;
+      featuredImage = allImageUrls[featuredIndex] || allImageUrls[0] || null;
+    }
+
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:schema',message:'Building schema',data:{faqsLength:faqs.length,includeFAQ:formData.includeFAQ,faqsIsArray:Array.isArray(faqs)},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B1'})}).catch(()=>{});
+    // #endregion
+
+    // BUG 1 FIX: Build schema properly using conditional assignment instead of boolean spread
+    // The pattern `...(condition && {...})` spreads `false` when condition is falsy
+    // Use explicit conditional assignment instead
+    const blogPostingSchema: any = {
       '@context': 'https://schema.org',
       '@type': 'BlogPosting',
       headline: formData.topic,
@@ -224,28 +341,69 @@ export async function POST(request: NextRequest) {
       author: {
         '@type': 'Person',
         name: 'Robert Cashman',
+        jobTitle: 'Duty Solicitor & Higher Court Advocate',
       },
       publisher: {
         '@type': 'Organization',
         name: 'PoliceStationAgent.com',
+        url: process.env.NEXT_PUBLIC_SITE_URL || 'https://policestationagent.com',
       },
       datePublished: new Date().toISOString(),
       dateModified: new Date().toISOString(),
-      ...(faqs.length > 0 && {
-        mainEntity: {
-          '@type': 'FAQPage',
-          mainEntity: faqs.map(faq => ({
-            '@type': 'Question',
-            name: faq.question,
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: faq.answer,
-            },
-          })),
-        },
-      }),
     };
-    
+
+    // Add image to schema if available
+    if (featuredImage) {
+      blogPostingSchema.image = featuredImage;
+    }
+
+    // Build final schema - add FAQPage as separate graph item if FAQs exist
+    // BUG 1 VERIFICATION: Using explicit if/else instead of spread operator to avoid spreading false
+    let schema: any;
+    if (faqs.length > 0) {
+      // #region agent log
+      fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:faqSchema',message:'Adding FAQ schema',data:{faqCount:faqs.length,conditionResult:true},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B1'})}).catch(()=>{});
+      // #endregion
+      
+      const faqSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqs.map(faq => ({
+          '@type': 'Question',
+          name: faq.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: faq.answer,
+          },
+        })),
+      };
+      
+      // Use @graph to combine both schemas properly
+      schema = {
+        '@context': 'https://schema.org',
+        '@graph': [blogPostingSchema, faqSchema],
+      };
+      
+      // #region agent log
+      fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:faqSchema:result',message:'Schema with FAQs built',data:{hasGraph:!!schema['@graph'],graphLength:schema['@graph']?.length},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B1'})}).catch(()=>{});
+      // #endregion
+    } else {
+      // #region agent log
+      fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:noFaqSchema',message:'No FAQs - using BlogPosting only',data:{conditionResult:false,schemaType:schema?.['@type']||'none'},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B1'})}).catch(()=>{});
+      // #endregion
+      
+      // No FAQs - just use BlogPosting schema
+      schema = blogPostingSchema;
+      
+      // #region agent log
+      fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:noFaqSchema:result',message:'Schema without FAQs built',data:{schemaType:schema['@type'],hasMainEntity:!!schema.mainEntity},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B1'})}).catch(()=>{});
+      // #endregion
+    }
+
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:response',message:'Sending response',data:{slug,hasFaqs:faqs.length>0,schemaType:schema['@type']||'graph',imageCount:allImageUrls.length},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B1'})}).catch(()=>{});
+    // #endregion
+
     return NextResponse.json({
       title: formData.topic,
       slug,
@@ -255,16 +413,17 @@ export async function POST(request: NextRequest) {
       metaDescription,
       faqs,
       schema,
-      image: formData.featuredImageIndex >= 0 
-        ? (formData.imageUrls[formData.featuredImageIndex] || null)
-        : null,
+      image: featuredImage,
+      imageUrls: allImageUrls,
     });
   } catch (error) {
     console.error('Blog generation error:', error);
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:error',message:'Generation error',data:{error:String(error)},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B1'})}).catch(()=>{});
+    // #endregion
     return NextResponse.json(
       { error: 'Failed to generate blog post' },
       { status: 500 }
     );
   }
 }
-
