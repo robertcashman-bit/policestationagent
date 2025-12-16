@@ -30,12 +30,10 @@ export default function Footer() {
                 </svg>
               </a>
               <a 
-                href="https://wa.me/447490126251?text=I%20need%20police%20station%20representation" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-green-600 hover:text-green-700 transition-colors" 
-                title="WhatsApp" 
-                aria-label="Contact us on WhatsApp"
+                href="sms:07535494446?body=I%20need%20police%20station%20representation" 
+                className="text-blue-600 hover:text-blue-700 transition-colors" 
+                title="Text us" 
+                aria-label="Send us a text message"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-message-circle w-6 h-6" aria-hidden="true">
                   <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path>

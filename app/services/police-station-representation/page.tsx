@@ -6,16 +6,16 @@ import Script from 'next/script';
 import { FAQPage } from '@/components/StructuredData';
 
 export const metadata: Metadata = {
-  title: "Police Station Rep Services Kent | FREE 24/7 | Accredited Duty Solicitor",
-  description: "Expert police station rep service across Kent. FREE legal advice 24/7 at all Kent custody suites. Accredited duty solicitor Robert Cashman. Not a call centre - direct solicitor access. Call 01732 247427.",
+  title: "Police Station Duty Solicitor Kent | Police Station Representation Solicitor | FREE Legal Advice",
+  description: "Police Station Duty Solicitor Kent - Expert police station representation by qualified solicitor. FREE legal advice under Legal Aid at all Kent custody suites. Accredited Duty Solicitor & Higher Court Advocate Robert Cashman. Medway, Maidstone, Canterbury, Gravesend. Call 01732 247427.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/services/police-station-representation`,
   },
   openGraph: {
-    title: "Police Station Representation Kent | FREE Legal Advice 24/7",
-    description: "Expert police station representation across Kent. FREE legal advice at all custody suites. Available 24/7.",
+    title: "Police Station Duty Solicitor Kent | Duty Solicitor Representation Kent | FREE Advice",
+    description: "Police Station Duty Solicitor Kent - Expert representation by qualified solicitor Robert Cashman. Accredited Duty Solicitor & Higher Court Advocate. FREE legal advice under Legal Aid at Medway, Canterbury, Maidstone, Gravesend custody suites.",
     url: `https://${SITE_DOMAIN}/services/police-station-representation`,
-    siteName: 'Police Station Agent',
+    siteName: 'Criminal Defence Kent',
     type: 'website',
   },
 };
@@ -25,10 +25,10 @@ const serviceSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
   "name": "Police Station Representation",
-  "description": "FREE police station representative service across all Kent custody suites. Accredited duty solicitor available 24/7 for police interviews, voluntary interviews, and custody matters.",
+  "description": "Police Station Duty Solicitor Kent - FREE police station representation by qualified solicitor across all Kent custody suites. Accredited Duty Solicitor available for police interviews, voluntary interviews, and custody matters.",
   "provider": {
     "@type": "LegalService",
-    "name": "Police Station Agent",
+    "name": "Criminal Defence Kent",
     "url": SITE_URL
   },
   "areaServed": {
@@ -56,24 +56,24 @@ const serviceSchema = {
 export default function PoliceStationRepresentationPage() {
   const faqItems = [
     {
-      question: "What is a police station rep in Kent?",
-      answer: "A police station rep (police station representative) is an accredited legal professional who provides FREE legal advice and representation at Kent police stations. Robert Cashman is a qualified solicitor and accredited duty solicitor, not just an agent."
+      question: "What is a police station duty solicitor?",
+      answer: "A police station duty solicitor is a qualified solicitor accredited by the Law Society to provide FREE legal advice and representation at Kent police stations under Legal Aid. Robert Cashman is a qualified solicitor, Accredited Duty Solicitor, and Higher Court Advocate with 35+ years experience representing clients at all Kent custody suites."
     },
     {
       question: "Is police station rep service free in Kent?",
       answer: "Yes. Everyone arrested or invited for a voluntary interview in Kent is entitled to FREE legal advice at the police station under Legal Aid. This is a statutory right under PACE 1984 and is not means-tested."
     },
     {
-      question: "How quickly can a police station rep attend in Kent?",
-      answer: "We aim to attend any Kent custody suite within 45 minutes. Our extended hours service covers all Kent police stations 24/7, including weekends and bank holidays."
+      question: "How quickly can a duty solicitor attend in Kent?",
+      answer: "We aim to attend any Kent custody suite within 30-45 minutes. Our extended hours service covers all Kent police stations including evenings, weekends and bank holidays, ensuring rapid response across all Kent custody suites."
     },
     {
-      question: "Which Kent towns do you cover as a police station rep?",
-      answer: "We cover all Kent towns including Medway, Maidstone, Canterbury, Gravesend, Tonbridge, Folkestone, Ashford, Dartford, Sittingbourne, Sevenoaks, Tunbridge Wells, Margate, Dover, Swanley, and Bluewater."
+      question: "Which Kent custody suites do you cover as a duty solicitor?",
+      answer: "We cover all Kent custody suites including Medway (Gillingham), Maidstone, North Kent (Gravesend), Canterbury, Tonbridge, Folkestone, Ashford, Dartford, Sittingbourne, Sevenoaks, Tunbridge Wells, Margate, Dover, Swanley, and Bluewater. We also cover voluntary interview locations across Kent."
     },
     {
-      question: "What's the difference between a police station rep and a call centre service?",
-      answer: "We provide direct access to qualified solicitor Robert Cashman (35+ years experience, 21,000+ cases). Unlike call-centre competitors, you get a qualified solicitor, not just an agent. We focus exclusively on Kent, not national coverage."
+      question: "What's the difference between a police station agent and a duty solicitor?",
+      answer: "A duty solicitor is a qualified solicitor accredited by the Law Society to provide legal advice at police stations. A police station agent (or accredited representative) is a non-solicitor who has passed the Police Station Qualification to attend on behalf of a solicitor's firm. Robert Cashman is a qualified solicitor and Accredited Duty Solicitor with Higher Court Advocate status, not just an agent."
     }
   ];
 
@@ -92,9 +92,9 @@ export default function PoliceStationRepresentationPage() {
       <main className="flex-grow relative" id="main-content" role="main" aria-live="polite">
         <div className="bg-slate-50 min-h-screen">
           <div className="prose prose-lg max-w-6xl mx-auto px-4 py-16">
-            <h1 className="text-4xl font-bold mb-6">Police Station Representation</h1>
+            <h1 className="text-4xl font-bold mb-6">Police Station Duty Solicitor Kent</h1>
             <p className="lead text-xl text-slate-700 mb-8">
-              Information about police station representation will be available here.
+              Expert police station representation by qualified solicitor. FREE legal advice under Legal Aid at all Kent custody suites. Accredited Duty Solicitor & Higher Court Advocate Robert Cashman - 35+ years experience, 21,000+ cases.
             </p>
           </div>
         </div>

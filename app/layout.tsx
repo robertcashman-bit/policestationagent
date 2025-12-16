@@ -86,161 +86,238 @@ export const metadata: Metadata = {
   },
 };
 
-// Enhanced LocalBusiness structured data for Kent local SEO
+// Comprehensive Legal Service Schema for Local SEO Dominance in Kent
+// Combines LegalService, Attorney, and LocalBusiness types using @graph
 const organizationSchema = {
   "@context": "https://schema.org",
-  "@type": "LegalService",
-  "@id": `${siteUrl}#organization`,
-  "name": "Police Station Agent",
-  "alternateName": "Defence Legal Services",
-  "url": siteUrl,
-  "logo": `${siteUrl}/logo.png`,
-  "description": "Kent's leading police station representative service. Accredited duty solicitor providing FREE 24/7 police station representation across all Kent custody suites.",
-  "telephone": "+441732247427",
-  "email": "robertcashman@defencelegalservices.co.uk",
-  "address": {
-    "@type": "PostalAddress",
-    "addressCountry": "GB",
-    "addressRegion": "Kent",
-    "addressLocality": "Kent"
-  },
-  "areaServed": [
+  "@graph": [
     {
-      "@type": "City",
-      "name": "Medway",
-      "containedIn": {
-        "@type": "State",
-        "name": "Kent"
-      }
-    },
-    {
-      "@type": "City",
-      "name": "Maidstone",
-      "containedIn": {
-        "@type": "State",
-        "name": "Kent"
-      }
-    },
-    {
-      "@type": "City",
-      "name": "Canterbury",
-      "containedIn": {
-        "@type": "State",
-        "name": "Kent"
-      }
-    },
-    {
-      "@type": "City",
-      "name": "Gravesend",
-      "containedIn": {
-        "@type": "State",
-        "name": "Kent"
-      }
-    },
-    {
-      "@type": "City",
-      "name": "Tonbridge",
-      "containedIn": {
-        "@type": "State",
-        "name": "Kent"
-      }
-    },
-    {
-      "@type": "City",
-      "name": "Folkestone",
-      "containedIn": {
-        "@type": "State",
-        "name": "Kent"
-      }
-    },
-    {
-      "@type": "City",
-      "name": "Ashford",
-      "containedIn": {
-        "@type": "State",
-        "name": "Kent"
-      }
-    },
-    {
-      "@type": "City",
-      "name": "Dartford",
-      "containedIn": {
-        "@type": "State",
-        "name": "Kent"
-      }
-    },
-    {
-      "@type": "City",
-      "name": "Sittingbourne",
-      "containedIn": {
-        "@type": "State",
-        "name": "Kent"
-      }
-    },
-    {
-      "@type": "City",
-      "name": "Sevenoaks",
-      "containedIn": {
-        "@type": "State",
-        "name": "Kent"
-      }
-    },
-    {
-      "@type": "City",
-      "name": "Tunbridge Wells",
-      "containedIn": {
-        "@type": "State",
-        "name": "Kent"
-      }
-    },
-    {
-      "@type": "City",
-      "name": "Margate",
-      "containedIn": {
-        "@type": "State",
-        "name": "Kent"
-      }
-    },
-    {
-      "@type": "City",
-      "name": "Dover",
-      "containedIn": {
-        "@type": "State",
-        "name": "Kent"
-      }
-    },
-    {
-      "@type": "State",
-      "name": "Kent"
-    }
-  ],
-  "serviceType": "Police Station Representation",
-  "priceRange": "Free under Legal Aid",
-  "provider": {
-    "@type": "Person",
-    "name": "Robert Cashman",
-    "jobTitle": "Accredited Duty Solicitor",
-    "description": "Qualified solicitor with 35+ years experience, 21,000+ cases, Practice Director, Higher Court Advocate"
-  },
-  "hasOfferCatalog": {
-    "@type": "OfferCatalog",
-    "name": "Police Station Representation Services",
-    "itemListElement": [
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Police Station Representation",
-          "description": "FREE police station representation under Legal Aid at all Kent custody suites",
-          "areaServed": {
+      "@type": "LegalService",
+      "@id": `${siteUrl}#legalservice`,
+      "name": "Robert Cashman – Police Station Duty Solicitor (Kent)",
+      "alternateName": "Police Station Agent",
+      "url": siteUrl,
+      "logo": `${siteUrl}/logo.png`,
+      "description": "Qualified Police Station Duty Solicitor and Higher Court Advocate serving Kent since 2001. Accredited duty solicitor providing expert police station representation, pre-charge advice, and bail representation at all Kent custody suites. FREE legal advice under Legal Aid.",
+      "telephone": "+441732247427",
+      "email": "robertcashman@defencelegalservices.co.uk",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "GB",
+        "addressRegion": "Kent",
+        "addressLocality": "Kent"
+      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Maidstone",
+          "containedIn": {
             "@type": "State",
             "name": "Kent"
           }
+        },
+        {
+          "@type": "City",
+          "name": "Medway",
+          "containedIn": {
+            "@type": "State",
+            "name": "Kent"
+          }
+        },
+        {
+          "@type": "City",
+          "name": "Canterbury",
+          "containedIn": {
+            "@type": "State",
+            "name": "Kent"
+          }
+        },
+        {
+          "@type": "City",
+          "name": "Ashford",
+          "containedIn": {
+            "@type": "State",
+            "name": "Kent"
+          }
+        },
+        {
+          "@type": "City",
+          "name": "Dartford",
+          "containedIn": {
+            "@type": "State",
+            "name": "Kent"
+          }
+        },
+        {
+          "@type": "City",
+          "name": "Sevenoaks",
+          "containedIn": {
+            "@type": "State",
+            "name": "Kent"
+          }
+        },
+        {
+          "@type": "City",
+          "name": "Gravesend",
+          "containedIn": {
+            "@type": "State",
+            "name": "Kent"
+          }
+        },
+        {
+          "@type": "State",
+          "name": "Kent"
         }
+      ],
+      "serviceType": "Police Station Duty Solicitor Services",
+      "priceRange": "Free under Legal Aid",
+      "founder": {
+        "@id": `${siteUrl}#attorney`
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Police Station Duty Solicitor Services",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Police Station Duty Solicitor",
+              "description": "Expert duty solicitor representation at all Kent police stations. FREE under Legal Aid.",
+              "areaServed": {
+                "@type": "State",
+                "name": "Kent"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Police Station Representation",
+              "description": "Professional legal representation during police interviews, voluntary attendances, and custody matters across Kent.",
+              "areaServed": {
+                "@type": "State",
+                "name": "Kent"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Advice Before Police Interview",
+              "description": "Pre-interview legal advice and preparation. Understand your rights before speaking with police.",
+              "areaServed": {
+                "@type": "State",
+                "name": "Kent"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Bail Advice & Pre-Charge Representation",
+              "description": "Expert bail applications and pre-charge legal representation at Kent custody suites.",
+              "areaServed": {
+                "@type": "State",
+                "name": "Kent"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Higher Court Advocate (Criminal)",
+              "description": "Higher Rights of Audience (Criminal) enables representation in Crown Court and higher courts.",
+              "areaServed": {
+                "@type": "State",
+                "name": "Kent"
+              }
+            }
+          }
+        ]
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
+          ],
+          "opens": "09:00",
+          "closes": "23:00"
+        }
+      ],
+      "sameAs": []
+    },
+    {
+      "@type": "LocalBusiness",
+      "@id": `${siteUrl}#localbusiness`,
+      "name": "Robert Cashman – Police Station Duty Solicitor (Kent)",
+      "image": `${siteUrl}/logo.png`,
+      "telephone": "+441732247427",
+      "email": "robertcashman@defencelegalservices.co.uk",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "GB",
+        "addressRegion": "Kent"
+      },
+      "areaServed": {
+        "@type": "State",
+        "name": "Kent"
+      },
+      "priceRange": "Free under Legal Aid"
+    },
+    {
+      "@type": "Attorney",
+      "@id": `${siteUrl}#attorney`,
+      "name": "Robert Cashman",
+      "jobTitle": "Police Station Duty Solicitor & Higher Court Advocate",
+      "worksFor": {
+        "@id": `${siteUrl}#legalservice`
+      },
+      "description": "Qualified solicitor and accredited duty solicitor with Higher Rights of Audience (Criminal). Providing expert police station representation across Kent since 2001. 35+ years experience, 21,000+ cases.",
+      "knowsAbout": [
+        "Criminal Defence",
+        "Police Station Representation",
+        "Duty Solicitor Services",
+        "Bail Applications",
+        "Pre-Charge Advice",
+        "Higher Court Advocacy",
+        "Legal Aid"
+      ],
+      "hasCredential": [
+        {
+          "@type": "EducationalOccupationalCredential",
+          "credentialCategory": "Professional Qualification",
+          "name": "Qualified Solicitor",
+          "datePublished": "2001"
+        },
+        {
+          "@type": "EducationalOccupationalCredential",
+          "credentialCategory": "Professional Accreditation",
+          "name": "Accredited Police Station Duty Solicitor"
+        },
+        {
+          "@type": "EducationalOccupationalCredential",
+          "credentialCategory": "Professional Accreditation",
+          "name": "Higher Rights of Audience (Criminal)"
+        }
+      ],
+      "alumniOf": {
+        "@type": "EducationalOrganization",
+        "name": "Law Society Accredited"
       }
-    ]
-  },
-  "sameAs": []
+    }
+  ]
 };
 
 export default function RootLayout({

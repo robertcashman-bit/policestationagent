@@ -92,7 +92,7 @@ export default function Page() {
                       If you or someone you know has been arrested or invited for a police interview in Maidstone, you need expert representation. As Kent's leading police station rep service, we provide FREE legal advice 24/7 for voluntary interviews'.
                     </p>
                     <p className="text-slate-700 leading-relaxed mb-4">
-                      Our accredited duty solicitor Robert Cashman has 35+ years of experience and has handled 21,000+ cases. Unlike call-centre services, you get direct access to a qualified solicitor who understands Maidstone's police procedures.
+                      Our accredited duty solicitor Robert Cashman has 35+ years of experience and has handled 21,000+ cases. We provide expert representation through qualified solicitors who understand Maidstone's police procedures.
                     </p>
                     <div className="mt-6 space-y-3">
                       <div className="flex items-start gap-3">
@@ -121,7 +121,7 @@ export default function Page() {
                           <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                           <polyline points="22 4 12 14.01 9 11.01"></polyline>
                         </svg>
-                        <p className="text-slate-700">Qualified solicitor (not a call centre) - direct access to Robert Cashman</p>
+                        <p className="text-slate-700">Qualified solicitor representation (not a call centre)</p>
                       </div>
                     </div>
                   </div>
@@ -143,7 +143,7 @@ export default function Page() {
                   <div className="p-6">
                     <h2 className="text-2xl font-bold text-slate-900 mb-4">Why Choose Our Police Station Rep Service in Maidstone?</h2>
                     <p className="text-slate-700 leading-relaxed mb-4">
-                      Unlike call-centre competitors, we provide direct access to qualified solicitor Robert Cashman. With 35+ years of experience and 21,000+ cases, he brings Practice Director-level expertise to every case.
+                      Unlike call-centre competitors, we provide qualified solicitor representation through Robert Cashman. With 35+ years of experience and 21,000+ cases, he brings Practice Director-level expertise to every case.
                     </p>
                     <ul className="space-y-2 text-slate-700">
                       <li className="flex items-start gap-2">

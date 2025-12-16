@@ -16,8 +16,8 @@ export default function FAQContent() {
       iconColor: 'text-green-600',
       items: [
         {
-          question: 'What services do Police Station Agent provide?',
-          answer: 'We provide expert legal representation at police stations across Kent. Our services include: 24/7 free legal advice under Legal Aid, representation during police interviews (both in custody and voluntary), advice on your rights, strategic guidance on whether to answer questions or exercise your right to silence, and support for family members who need to instruct a solicitor on behalf of someone who has been arrested.'
+          question: 'What services do you provide as a Police Station Duty Solicitor?',
+          answer: 'We provide expert police station representation by qualified solicitor at all Kent custody suites. Our services include: FREE legal advice under Legal Aid, representation during police interviews (both in custody and voluntary), advice on your legal rights under PACE 1984, strategic guidance on whether to answer questions or exercise your right to silence, and support for family members who need to instruct a solicitor on behalf of someone who has been arrested.'
         },
         {
           question: 'Who do you represent?',
@@ -36,8 +36,20 @@ export default function FAQContent() {
           answer: 'Our representatives are fully accredited police station representatives, qualified under the Police Station Accreditation Scheme. Robert Cashman is a qualified solicitor with over 35 years of experience, a Higher Court Advocate, and an accredited duty solicitor. All our representatives are properly trained and accredited to provide police station representation.'
         },
         {
-          question: 'Are you available 24/7?',
-          answer: 'Yes, we are available 24 hours a day, 7 days a week, including weekends and bank holidays. Our extended hours service ensures that you can get expert legal representation whenever you need it, day or night. Simply call 01732 247427 and we will arrange for a representative to attend the police station.'
+          question: 'What is a police station duty solicitor?',
+          answer: 'A police station duty solicitor is a qualified solicitor accredited by the Law Society to provide FREE legal advice at police stations under Legal Aid. Robert Cashman is both a qualified solicitor and an Accredited Duty Solicitor with Higher Court Advocate status, providing expert representation at all Kent custody suites including Medway, Maidstone, Canterbury, and Gravesend.'
+        },
+        {
+          question: 'How does a duty solicitor protect your rights in Kent custody suites?',
+          answer: 'A duty solicitor protects your rights by: ensuring you understand your legal rights under PACE 1984, reviewing police evidence and disclosure before interview, advising on whether to answer questions or remain silent, attending the interview with you and intervening if questioning is improper, making representations about bail conditions or release, and ensuring all police procedures are followed correctly. This protection is your absolute right under Section 58 of PACE 1984.'
+        },
+        {
+          question: 'What is the difference between a police station agent and a duty solicitor?',
+          answer: 'A duty solicitor is a qualified solicitor accredited by the Law Society to provide legal advice at police stations. A police station agent (or accredited representative) is a non-solicitor who has passed the Police Station Qualification to attend on behalf of a solicitor\'s firm. Robert Cashman is a qualified solicitor and Accredited Duty Solicitor with Higher Court Advocate status, not just an agent.'
+        },
+        {
+          question: 'Are you available for extended hours?',
+          answer: 'Yes, we provide extended hours service covering evenings, weekends and bank holidays. Our aim is to attend any Kent custody suite within 30-45 minutes when contacted. Simply call 01732 247427 and we will arrange for a qualified duty solicitor to attend the police station.'
         },
         {
           question: 'Do you cover Legal Aid and private work?',

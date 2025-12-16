@@ -60,7 +60,7 @@ export async function GET(
     const buildDate = new Date().toUTCString();
     
     const rssItems = recentPosts.map(post => {
-      const postUrl = `${SITE_URL}${post.slug.startsWith('/') ? post.slug : `/${post.slug}`}`;
+      const postUrl = `${SITE_URL}/blog/${post.slug}`;
       const pubDate = post.published_at 
         ? new Date(post.published_at).toUTCString() 
         : new Date(post.created_at).toUTCString();

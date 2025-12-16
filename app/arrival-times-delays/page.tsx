@@ -3,16 +3,16 @@ import Footer from '@/components/Footer';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Arrival Times & Delays | Police Station Representation | Police Station Agent',
-  description: 'Expected arrival times for police station representation in Kent. Understanding delays and your rights when waiting for a solicitor.',
+  title: 'Duty Solicitor Arrival Times Kent | Police Station Representation Solicitor | Expected Times',
+  description: 'Expected arrival times for duty solicitor representation at Kent police stations. Understanding delays and your rights under PACE 1984 when waiting for a solicitor. Accredited Duty Solicitor Kent.',
   alternates: {
-    canonical: 'https://policestationagent.com/arrival-times-delays',
+    canonical: 'https://criminaldefencekent.co.uk/arrival-times-delays',
   },
   openGraph: {
-    title: 'Arrival Times & Delays | Police Station Representation | Police Station Agent',
-    description: 'Expected arrival times for police station representation in Kent. Understanding delays and your rights when waiting for a solicitor.',
-    url: 'https://policestationagent.com/arrival-times-delays',
-    siteName: 'Police Station Agent',
+    title: 'Duty Solicitor Arrival Times Kent | Police Station Representation Solicitor',
+    description: 'Expected arrival times for duty solicitor representation at Kent police stations. Understanding delays and your rights under PACE 1984 when waiting for a solicitor.',
+    url: 'https://criminaldefencekent.co.uk/arrival-times-delays',
+    siteName: 'Criminal Defence Kent',
     type: 'website',
   },
 };
@@ -102,12 +102,12 @@ export default function Page() {
             </section>
 
             <section className="mb-8 bg-blue-50 p-6 rounded-lg border border-blue-200">
-              <h2 className="text-2xl font-semibold mb-4">24/7 Availability</h2>
+              <h2 className="text-2xl font-semibold mb-4">Extended Hours Service</h2>
               <p className="mb-4">
-                We provide 24/7 police station representation across Kent. When you request our services, we will attend as quickly as possible. In most cases, we can provide telephone advice immediately while travelling to the station.
+                We provide extended hours police station representation across Kent including evenings, weekends and bank holidays. When you request our services, we will attend as quickly as possible. In most cases, we can provide telephone advice immediately while travelling to the station.
               </p>
               <p className="mb-4">
-                <strong>Call us on <a href="tel:01732247427" className="text-blue-600 hover:text-blue-800 font-semibold">01732 247427</a></strong> for immediate advice and representation.
+                <strong>Call us on <a href="tel:01732247427" className="text-blue-600 hover:text-blue-800 font-semibold">01732 247427</a></strong> for immediate advice and representation by an Accredited Duty Solicitor.
               </p>
             </section>
 
