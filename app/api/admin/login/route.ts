@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { SignJWT } from 'jose';
 import { cookies } from 'next/headers';
-
-// Admin password from environment variable
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '';
+import { verifyUser } from '@/lib/auth';
 
 // JWT secret for signing tokens
 const secret = new TextEncoder().encode(
@@ -12,22 +10,27 @@ const secret = new TextEncoder().encode(
 
 export async function POST(request: NextRequest) {
   try {
-    const { password } = await request.json();
+    const { username, password } = await request.json();
 
-    // Check if admin password is configured
-    if (!ADMIN_PASSWORD) {
-      return NextResponse.json(
-        { error: 'Admin password not configured' },
-        { status: 500 }
-      );
+    // If username not provided, try common admin usernames
+    let user = null;
+    if (username) {
+      user = await verifyUser(username, password);
+    } else {
+      // Try common admin usernames if no username provided
+      const commonUsernames = ['admin', 'Cashman100', 'cashman100'];
+      for (const uname of commonUsernames) {
+        user = await verifyUser(uname, password);
+        if (user) break;
+      }
     }
 
-    // Verify password (constant-time comparison would be ideal, but this is simple)
-    if (password !== ADMIN_PASSWORD) {
+    // Verify user credentials
+    if (!user) {
       // Add small delay to prevent timing attacks
       await new Promise(resolve => setTimeout(resolve, 500));
       return NextResponse.json(
-        { error: 'Invalid password' },
+        { error: 'Invalid username or password' },
         { status: 401 }
       );
     }
@@ -35,6 +38,8 @@ export async function POST(request: NextRequest) {
     // Create JWT token
     const token = await new SignJWT({
       role: 'admin',
+      userId: user.id,
+      username: user.username,
       email: 'robertcashman@defencelegalservices.co.uk',
     })
       .setProtectedHeader({ alg: 'HS256' })

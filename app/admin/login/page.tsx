@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 export default function AdminLoginPage() {
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -18,7 +19,7 @@ export default function AdminLoginPage() {
       const res = await fetch('/api/admin/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password }),
+        body: JSON.stringify({ username, password }),
       });
 
       const data = await res.json();
@@ -45,6 +46,22 @@ export default function AdminLoginPage() {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
+            <label htmlFor="username" className="block text-sm font-medium text-slate-700 mb-2">
+              Username
+            </label>
+            <input
+              type="text"
+              id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-slate-800"
+              placeholder="Enter username"
+              required
+              autoFocus
+            />
+          </div>
+
+          <div>
             <label htmlFor="password" className="block text-sm font-medium text-slate-700 mb-2">
               Password
             </label>
@@ -54,9 +71,8 @@ export default function AdminLoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-slate-800"
-              placeholder="Enter admin password"
+              placeholder="Enter password"
               required
-              autoFocus
             />
           </div>
 
