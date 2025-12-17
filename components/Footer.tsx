@@ -9,8 +9,9 @@ export default function Footer() {
   return (
     <footer className="bg-slate-900 text-white relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mb-12 text-sm">
-          <div className="md:col-span-2 lg:col-span-1">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12 text-sm">
+          {/* Brand & Contact Column */}
+          <div className="lg:col-span-1">
             <h3 className="font-bold mb-4 text-lg text-white">Police Station Agent</h3>
             <div className="mt-4 p-3 bg-amber-500/10 rounded-lg border border-amber-500/20">
               <p className="text-xs text-amber-200 font-semibold mb-1">Serving All Kent Towns:</p>
@@ -18,27 +19,30 @@ export default function Footer() {
                 Medway, Maidstone, Canterbury, Gravesend, Tonbridge, Folkestone, Ashford, Dartford, Sittingbourne, Sevenoaks, Tunbridge Wells, Margate, Dover, Swanley, Bluewater
               </p>
             </div>
-            <div className="flex gap-4" role="list" aria-label="Social media links">
-              <a 
-                href="sms:07535494446?body=I%20need%20police%20station%20representation" 
-                className="text-blue-600 hover:text-blue-700 transition-colors" 
-                title="Text us" 
-                aria-label="Send us a text message"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-message-circle w-6 h-6" aria-hidden="true">
-                  <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path>
-                </svg>
-              </a>
-              <a 
-                href="sms:07535494446?body=I%20need%20police%20station%20representation" 
-                className="text-blue-600 hover:text-blue-700 transition-colors" 
-                title="Text us" 
-                aria-label="Send us a text message"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-message-circle w-6 h-6" aria-hidden="true">
-                  <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path>
-                </svg>
-              </a>
+            <div className="mt-4">
+              <h4 className="font-semibold mb-3 text-white text-sm">Contact</h4>
+              <address className="not-italic space-y-2">
+                <div>
+                  <a href="tel:01732247427" className="text-slate-200 hover:text-white transition-colors font-medium text-sm">
+                    01732 247427
+                  </a>
+                </div>
+                <div>
+                  <a href="mailto:robertcashman@defencelegalservices.co.uk" className="text-slate-200 hover:text-white transition-colors font-medium break-all text-xs">
+                    robertcashman@defencelegalservices.co.uk
+                  </a>
+                </div>
+                <div>
+                  <a href="sms:07535494446?body=I%20need%20police%20station%20representation" className="text-blue-300 hover:text-blue-200 flex items-center gap-2 font-medium transition-colors text-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-message-circle w-4 h-4">
+                      <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path>
+                    </svg>
+                    Text: 07535 494446
+                  </a>
+                </div>
+              </address>
+            </div>
+            <div className="flex gap-4 mt-6" role="list" aria-label="Social media links">
               <a 
                 href="https://www.facebook.com/policestationagent" 
                 target="_blank" 
@@ -81,123 +85,255 @@ export default function Footer() {
             </div>
           </div>
           
+          {/* Services Column */}
           <div>
             <h3 className="font-bold mb-4 text-lg text-white">Services</h3>
             <nav aria-label="Footer services links">
-              <ul className="space-y-3">
+              <ul className="space-y-2.5">
                 <li>
-                  <Link href="/services" className="text-slate-200 hover:text-white transition-colors font-medium">
+                  <Link href="/services" className="text-slate-200 hover:text-white transition-colors font-medium text-sm">
                     Police Station Rep Services Kent
                   </Link>
                 </li>
                 <li>
-                  <Link href="/fees" className="text-slate-200 hover:text-white transition-colors font-medium">
+                  <Link href="/services/police-station-representation" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Police Station Representation
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/services/bail-applications" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Bail Applications
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/services/pre-charge-advice" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Pre-Charge Advice
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/voluntary-interviews" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Voluntary Interviews
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/courtrepresentation" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Court Representation
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/for-solicitors" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Agent Cover for Law Firms
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/privatecrime" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Private Client Service
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/fees" className="text-slate-200 hover:text-white transition-colors text-sm">
                     Legal Aid & Fees
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/about" className="text-slate-200 hover:text-white transition-colors font-medium">
-                    About Qualified Duty Solicitor Kent
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/coverage" className="text-slate-200 hover:text-white transition-colors font-medium">
-                    Kent Towns - Police Station Rep Service Areas
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/blog" className="text-slate-200 hover:text-white transition-colors font-medium">
-                    Blog
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/contact" className="text-slate-200 hover:text-white transition-colors font-medium">
-                    Contact Kent Police Station Representative
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/join" className="text-slate-200 hover:text-white transition-colors font-medium">
-                    Join Network
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/police-stations" className="text-slate-200 hover:text-white transition-colors font-medium">
-                    Kent Police Stations - Police Station Rep Coverage
                   </Link>
                 </li>
               </ul>
             </nav>
           </div>
           
+          {/* Help & Advice Column */}
           <div>
-            <h3 className="font-bold mb-4 text-lg text-white">Contact</h3>
-            <address className="not-italic">
-              <ul className="space-y-3">
+            <h3 className="font-bold mb-4 text-lg text-white">Help & Advice</h3>
+            <nav aria-label="Footer help and advice links">
+              <ul className="space-y-2.5">
                 <li>
-                  <a href="tel:01732247427" className="text-slate-200 hover:text-white transition-colors font-medium">
-                    01732 247427
-                  </a>
-                </li>
-                <li>
-                  <a href="mailto:robertcashman@defencelegalservices.co.uk" className="text-slate-200 hover:text-white transition-colors font-medium break-all">
-                    robertcashman@defencelegalservices.co.uk
-                  </a>
-                </li>
-                <li>
-                  <a href="sms:07535494446?body=I%20need%20police%20station%20representation" className="text-blue-300 hover:text-blue-200 flex items-center gap-2 font-medium transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-message-circle w-4 h-4">
-                      <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path>
-                    </svg>
-                    Text: 07535 494446
-                  </a>
-                </li>
-              </ul>
-            </address>
-            <div className="mt-6">
-              <h3 className="font-bold mb-2 text-sm text-white">Legal & Compliance</h3>
-              <ul className="space-y-2 text-sm">
-                <li>
-                  <Link href="/terms-and-conditions" className="text-slate-200 hover:text-white transition-colors">
-                    Website Terms of Use
+                  <Link href="/faq" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Frequently Asked Questions
                   </Link>
                 </li>
                 <li>
-                  <Link href="/privacy" className="text-slate-200 hover:text-white transition-colors">
-                    Website Privacy Policy
+                  <Link href="/what-is-a-police-station-rep" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    What is a Police Station Rep?
                   </Link>
                 </li>
                 <li>
-                  <Link href="/cookies" className="text-slate-200 hover:text-white transition-colors">
-                    Cookies Policy
+                  <Link href="/what-is-a-criminal-solicitor" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    What is a Criminal Solicitor?
                   </Link>
                 </li>
                 <li>
-                  <Link href="/accessibility" className="text-slate-200 hover:text-white transition-colors">
-                    Accessibility
+                  <Link href="/police-station-interviews-kent-rights" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Police Station Interview Rights
                   </Link>
                 </li>
                 <li>
-                  <Link href="/gdpr" className="text-slate-200 hover:text-white transition-colors">
-                    GDPR
+                  <Link href="/your-rights-in-custody" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Your Rights in Custody
                   </Link>
                 </li>
                 <li>
-                  <Link href="/attendanceterms" className="text-slate-200 hover:text-white transition-colors font-medium">
-                    Agency Terms & Privacy
+                  <Link href="/after-a-police-interview" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    After a Police Interview
                   </Link>
                 </li>
                 <li>
-                  <Link href="/servicerates" className="text-slate-200 hover:text-white transition-colors font-medium">
-                    Agency Service Rates
+                  <Link href="/voluntary-police-interview-risks" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Voluntary Interview Risks
                   </Link>
                 </li>
                 <li>
-                  <Link href="/complaints" className="text-slate-200 hover:text-white transition-colors">
-                    Complaints
+                  <Link href="/arrestednow" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Emergency Help - Family Member Arrested
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/freelegaladvice" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Is Police Station Advice Free?
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/blog" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Legal Advice Blog
                   </Link>
                 </li>
               </ul>
-            </div>
+            </nav>
+          </div>
+          
+          {/* Locations Column */}
+          <div>
+            <h3 className="font-bold mb-4 text-lg text-white">Kent Locations</h3>
+            <nav aria-label="Footer location links">
+              <ul className="space-y-2.5">
+                <li>
+                  <Link href="/police-stations" className="text-slate-200 hover:text-white transition-colors font-medium text-sm">
+                    All Kent Police Stations
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/coverage" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Service Coverage Areas
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/medway-police-station" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Medway Police Station
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/maidstone-police-station" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Maidstone Police Station
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/canterbury-police-station" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Canterbury Police Station
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/north-kent-gravesend-police-station" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Gravesend Police Station
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/tonbridge-police-station" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Tonbridge Police Station
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/folkestone-police-station" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Folkestone Police Station
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/margate-police-station" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Margate Police Station
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/sevenoaks-police-station" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Sevenoaks Police Station
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+          </div>
+          
+          {/* Legal & Resources Column */}
+          <div>
+            <h3 className="font-bold mb-4 text-lg text-white">Legal & Resources</h3>
+            <nav aria-label="Footer legal and resource links">
+              <ul className="space-y-2.5">
+                <li>
+                  <Link href="/about" className="text-slate-200 hover:text-white transition-colors font-medium text-sm">
+                    About Qualified Duty Solicitor
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/why-use-us" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Why Use Us
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/what-we-do" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    What We Do
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/testimonials" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Client Testimonials
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/contact" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Contact Us
+                  </Link>
+                </li>
+                <li className="pt-2 mt-2 border-t border-slate-700">
+                  <h4 className="font-semibold mb-2 text-white text-xs">Legal & Compliance</h4>
+                  <ul className="space-y-1.5">
+                    <li>
+                      <Link href="/terms-and-conditions" className="text-slate-300 hover:text-white transition-colors text-xs">
+                        Terms of Use
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/privacy" className="text-slate-300 hover:text-white transition-colors text-xs">
+                        Privacy Policy
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/cookies" className="text-slate-300 hover:text-white transition-colors text-xs">
+                        Cookies Policy
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/gdpr" className="text-slate-300 hover:text-white transition-colors text-xs">
+                        GDPR
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/accessibility" className="text-slate-300 hover:text-white transition-colors text-xs">
+                        Accessibility
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/attendanceterms" className="text-slate-300 hover:text-white transition-colors text-xs">
+                        Agency Terms
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/servicerates" className="text-slate-300 hover:text-white transition-colors text-xs">
+                        Service Rates
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/complaints" className="text-slate-300 hover:text-white transition-colors text-xs">
+                        Complaints
+                      </Link>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </nav>
           </div>
         </div>
         
