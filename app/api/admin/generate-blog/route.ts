@@ -639,7 +639,6 @@ export async function POST(request: NextRequest) {
       image: featuredImage,
       imageUrls: allImageUrls,
       generatedWithAI: usingAI,
-      aiStatus,
     });
   } catch (error) {
     console.error('Blog generation error:', error);

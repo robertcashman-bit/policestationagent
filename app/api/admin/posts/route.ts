@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import db from '@/lib/db';
-import { verifyAuth } from '@/lib/middleware';
+import { getAdminSession } from '@/lib/admin-auth';
 
 export async function GET(request: NextRequest) {
-  const auth = await verifyAuth(request);
+  const session = await getAdminSession();
   
-  if (!auth) {
+  if (!session) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
@@ -19,9 +19,9 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const auth = await verifyAuth(request);
+  const session = await getAdminSession();
   
-  if (!auth) {
+  if (!session) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
@@ -51,7 +51,7 @@ export async function POST(request: NextRequest) {
       excerpt || null,
       published ? 1 : 0,
       publishedAt,
-      auth.userId,
+      1, // Default author_id since session doesn't have userId
       meta_title || null,
       meta_description || null,
       image || null,
