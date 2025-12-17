@@ -16,7 +16,7 @@ interface BlogPreview {
   imageUrls: string[];
   generatedWithAI?: boolean;
   aiImageGenerated?: boolean;
-  debugLogs?: string[];
+  aiStatus?: string;
 }
 
 interface FormData {
@@ -568,27 +568,15 @@ export default function BlogGeneratorClient() {
                   )}
                 </div>
 
-                {/* Debug Logs - shows what happened with AI generation */}
-                {preview.debugLogs && preview.debugLogs.length > 0 && (
-                  <details className="border rounded-md bg-slate-50" open>
-                    <summary className="p-3 cursor-pointer font-medium text-sm text-slate-700 hover:bg-slate-100">
-                      🔍 Debug Logs ({preview.debugLogs.length} entries) - Click to collapse
-                    </summary>
-                    <div className="p-3 border-t bg-white max-h-48 overflow-y-auto">
-                      <ul className="text-xs font-mono space-y-1">
-                        {preview.debugLogs.map((log, index) => (
-                          <li key={index} className={`${
-                            log.includes('succeeded') || log.includes('success') ? 'text-green-700' :
-                            log.includes('error') || log.includes('Error') || log.includes('failed') ? 'text-red-700' :
-                            log.includes('No API key') || log.includes('fallback') ? 'text-yellow-700' :
-                            'text-slate-600'
-                          }`}>
-                            {log}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </details>
+                {/* AI Status - shows what happened with AI generation */}
+                {preview.aiStatus && (
+                  <div className={`p-3 rounded-md text-sm ${
+                    preview.generatedWithAI 
+                      ? 'bg-green-50 text-green-800 border border-green-200' 
+                      : 'bg-yellow-50 text-yellow-800 border border-yellow-200'
+                  }`}>
+                    <strong>🔍 Status:</strong> {preview.aiStatus}
+                  </div>
                 )}
 
                 {/* Meta Info */}
