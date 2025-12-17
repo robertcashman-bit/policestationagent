@@ -663,6 +663,42 @@ article img {
   max-width: 100% !important;
   height: auto !important;
   object-fit: contain;
+  position: relative !important;
+  z-index: 0 !important;
+  display: block !important;
+  margin: 1.5rem auto !important;
+}
+
+/* CRITICAL: Prevent images from overlaying text */
+.prose img,
+.prose div img,
+article img,
+.prose figure img,
+.prose p img {
+  position: relative !important;
+  z-index: 0 !important;
+  float: none !important;
+  clear: both !important;
+  margin-top: 1.5rem !important;
+  margin-bottom: 1.5rem !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Ensure text content is above images */
+.prose p,
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6,
+.prose ul,
+.prose ol,
+.prose li,
+.prose blockquote {
+  position: relative !important;
+  z-index: 1 !important;
 }
 
 /* Blog card images - enforce aspect ratio */
@@ -671,6 +707,8 @@ article img {
   width: 100%;
   object-fit: cover;
   overflow: hidden;
+  position: relative !important;
+  z-index: 0 !important;
 }
 
 /* Blog hero images - controlled height */
@@ -678,16 +716,22 @@ article img {
   max-height: clamp(360px, 40vh, 520px);
   width: 100%;
   object-fit: cover;
+  position: relative !important;
+  z-index: 0 !important;
 }
 
 /* Inline article images - never overflow container */
 .prose img[src],
 .prose div img[src],
-article img[src] {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin: 1.5rem auto;
+article img[src],
+.prose figure img[src] {
+  max-width: 100% !important;
+  height: auto !important;
+  display: block !important;
+  margin: 1.5rem auto !important;
+  position: relative !important;
+  z-index: 0 !important;
+  float: none !important;
 }
 
 @layer utilities {
@@ -872,6 +916,74 @@ html body main p.text-slate-600 {
 .bg-slate-800 > [class*="text-slate-300"],
 .bg-blue-900 > [class*="text-slate-300"] {
   color: #ffffff !important;
+}
+
+/* ============================================
+   BLOG IMAGE OVERLAY FIX - CRITICAL
+   Prevent images from overlaying text content
+   ============================================ */
+
+/* Force all images in blog content to be in normal flow */
+.prose img,
+.prose div img,
+.prose article img,
+.prose section img,
+.prose figure img,
+.prose p img,
+article.prose img,
+main article img {
+  position: relative !important;
+  z-index: 0 !important;
+  float: none !important;
+  clear: both !important;
+  display: block !important;
+  max-width: 100% !important;
+  height: auto !important;
+  margin: 1.5rem auto !important;
+  vertical-align: baseline !important;
+}
+
+/* Ensure all text elements are above images */
+.prose p,
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6,
+.prose ul,
+.prose ol,
+.prose li,
+.prose blockquote,
+.prose div,
+.prose section,
+.prose article {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* Prevent any absolute positioning on images */
+.prose img[style*="position: absolute"],
+.prose img[style*="position:fixed"],
+.prose div img[style*="position: absolute"],
+.prose div img[style*="position:fixed"] {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+}
+
+/* Ensure images don't break out of containers */
+.prose,
+.prose div,
+article.prose {
+  overflow: visible;
+  position: relative;
+}
+
+.prose img {
+  contain: layout style paint;
 }
 
 /* CRITICAL: White/light cards INSIDE dark containers must have dark text */

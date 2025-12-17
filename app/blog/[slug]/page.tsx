@@ -188,7 +188,7 @@ export default function BlogPostPage({ params }: PageProps) {
             <article className="prose prose-lg max-w-none">
               <div 
                 dangerouslySetInnerHTML={{ __html: sanitizeBlogContent(post.content) }} 
-                className="prose prose-lg max-w-none [&_img]:max-w-full [&_img]:h-auto [&_img]:my-6 [&_img]:mx-auto [&_img]:block"
+                className="prose prose-lg max-w-none [&_img]:max-w-full [&_img]:h-auto [&_img]:my-6 [&_img]:mx-auto [&_img]:block [&_img]:relative [&_img]:z-0 [&_img]:rounded-lg [&_img]:shadow-md"
               />
             </article>
             
