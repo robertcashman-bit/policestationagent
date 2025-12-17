@@ -48,10 +48,12 @@ export async function GET() {
       // Get image if available - RSS 2.0 requires url, type, and length attributes
       const imageUrl = post.image;
       // Use default length of 50000 bytes for images (RSS 2.0 requirement)
-      // For external images, we can't easily fetch the actual size without slowing down feed generation
       const imageLength = 50000;
+      // Use both enclosure (RSS 2.0) and media:content (Media RSS) for maximum compatibility
       const imageTag = imageUrl 
-        ? `\n      <enclosure url="${escapeXml(imageUrl)}" type="image/jpeg" length="${imageLength}" />`
+        ? `\n      <enclosure url="${escapeXml(imageUrl)}" type="image/jpeg" length="${imageLength}" />
+      <media:content url="${escapeXml(imageUrl)}" type="image/jpeg" medium="image" />
+      <media:thumbnail url="${escapeXml(imageUrl)}" />`
         : '';
 
       return `    <item>
@@ -59,12 +61,17 @@ export async function GET() {
       <link>${postUrl}</link>
       <guid isPermaLink="true">${postUrl}</guid>
       <description>${desc}</description>
-      <pubDate>${pubDate}</pubDate>${imageTag}
+      <pubDate>${pubDate}</pubDate>
+      <dc:creator>Robert Cashman</dc:creator>${imageTag}
     </item>`;
     }).join('\n');
 
     const rss = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" 
+  xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+  xmlns:atom="http://www.w3.org/2005/Atom"
+  xmlns:media="http://search.yahoo.com/mrss/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
     <title>Police Station Agent - Recent Posts</title>
     <link>${SITE_URL}/blog</link>
@@ -78,7 +85,11 @@ export async function GET() {
       <url>${SITE_URL}/blog-images/blog-listing-0.jpg</url>
       <title>Police Station Agent - Recent Posts</title>
       <link>${SITE_URL}</link>
+      <width>144</width>
+      <height>144</height>
     </image>
+    <dc:creator>Robert Cashman</dc:creator>
+    <dc:rights>Copyright ${new Date().getFullYear()} Police Station Agent</dc:rights>
 ${rssItems}
   </channel>
 </rss>`;
