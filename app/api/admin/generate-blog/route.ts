@@ -238,26 +238,13 @@ export async function POST(request: NextRequest) {
 
     let formData: any;
     let uploadedImageUrls: string[] = [];
-    
-    // #region agent log
-    fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:POST',message:'Request received',data:{contentType:request.headers.get('content-type')},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B2'})}).catch(()=>{});
-    // #endregion
 
     // Check if request is multipart/form-data (for file uploads) or JSON
-    // BUG 2 VERIFICATION: FormData detection and file handling
     const contentType = request.headers.get('content-type') || '';
     
-    // #region agent log
-    fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:contentType',message:'Checking content type',data:{contentType,isMultipart:contentType.includes('multipart/form-data')},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B2'})}).catch(()=>{});
-    // #endregion
-    
     if (contentType.includes('multipart/form-data')) {
-      // BUG 2 FIX: Handle FormData with file uploads properly
+      // Handle FormData with file uploads properly
       const multipartData = await request.formData();
-      
-      // #region agent log
-      fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:multipart',message:'FormData parsed',data:{hasFiles:multipartData.has('uploadedImages')},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B2'})}).catch(()=>{});
-      // #endregion
       
       // Extract JSON data from the 'data' field
       const jsonData = multipartData.get('data');
@@ -270,33 +257,13 @@ export async function POST(request: NextRequest) {
       // Handle file uploads
       const files = multipartData.getAll('uploadedImages') as File[];
       
-      // #region agent log
-      fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:files:check',message:'Files extracted from FormData',data:{fileCount:files.length,fileNames:files.map(f=>f.name),areFiles:files.every(f=>f instanceof File)},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B2'})}).catch(()=>{});
-      // #endregion
-      
       if (files.length > 0) {
         const slug = generateSlug(formData.topic || formData.primaryKeyword);
         uploadedImageUrls = await handleUploadedImages(files, slug);
-        
-        // #region agent log
-        fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:files:uploaded',message:'Files saved successfully',data:{count:files.length,urls:uploadedImageUrls,urlCount:uploadedImageUrls.length},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B2'})}).catch(()=>{});
-        // #endregion
-      } else {
-        // #region agent log
-        fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:files:none',message:'No files in FormData',data:{fileCount:0},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B2'})}).catch(()=>{});
-        // #endregion
       }
     } else {
       // Standard JSON request (no file uploads)
-      // #region agent log
-      fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:json:before',message:'Parsing JSON request',data:{contentType},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B2'})}).catch(()=>{});
-      // #endregion
-      
       formData = await request.json();
-      
-      // #region agent log
-      fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:json:after',message:'JSON parsed',data:{topic:formData.topic,hasUploadedImages:!!formData.uploadedImages,uploadedImagesType:typeof formData.uploadedImages},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B2'})}).catch(()=>{});
-      // #endregion
     }
 
     // Generate blog content
@@ -326,11 +293,7 @@ export async function POST(request: NextRequest) {
       featuredImage = allImageUrls[featuredIndex] || allImageUrls[0] || null;
     }
 
-    // #region agent log
-    fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:schema',message:'Building schema',data:{faqsLength:faqs.length,includeFAQ:formData.includeFAQ,faqsIsArray:Array.isArray(faqs)},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B1'})}).catch(()=>{});
-    // #endregion
-
-    // BUG 1 FIX: Build schema properly using conditional assignment instead of boolean spread
+    // Build schema properly using conditional assignment instead of boolean spread
     // The pattern `...(condition && {...})` spreads `false` when condition is falsy
     // Use explicit conditional assignment instead
     const blogPostingSchema: any = {
@@ -358,13 +321,9 @@ export async function POST(request: NextRequest) {
     }
 
     // Build final schema - add FAQPage as separate graph item if FAQs exist
-    // BUG 1 VERIFICATION: Using explicit if/else instead of spread operator to avoid spreading false
+    // Using explicit if/else instead of spread operator to avoid spreading false
     let schema: any;
     if (faqs.length > 0) {
-      // #region agent log
-      fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:faqSchema',message:'Adding FAQ schema',data:{faqCount:faqs.length,conditionResult:true},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B1'})}).catch(()=>{});
-      // #endregion
-      
       const faqSchema = {
         '@context': 'https://schema.org',
         '@type': 'FAQPage',
@@ -383,26 +342,10 @@ export async function POST(request: NextRequest) {
         '@context': 'https://schema.org',
         '@graph': [blogPostingSchema, faqSchema],
       };
-      
-      // #region agent log
-      fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:faqSchema:result',message:'Schema with FAQs built',data:{hasGraph:!!schema['@graph'],graphLength:schema['@graph']?.length},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B1'})}).catch(()=>{});
-      // #endregion
     } else {
-      // #region agent log
-      fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:noFaqSchema',message:'No FAQs - using BlogPosting only',data:{conditionResult:false,schemaType:schema?.['@type']||'none'},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B1'})}).catch(()=>{});
-      // #endregion
-      
       // No FAQs - just use BlogPosting schema
       schema = blogPostingSchema;
-      
-      // #region agent log
-      fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:noFaqSchema:result',message:'Schema without FAQs built',data:{schemaType:schema['@type'],hasMainEntity:!!schema.mainEntity},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B1'})}).catch(()=>{});
-      // #endregion
     }
-
-    // #region agent log
-    fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:response',message:'Sending response',data:{slug,hasFaqs:faqs.length>0,schemaType:schema['@type']||'graph',imageCount:allImageUrls.length},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B1'})}).catch(()=>{});
-    // #endregion
 
     return NextResponse.json({
       title: formData.topic,
@@ -418,9 +361,6 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error('Blog generation error:', error);
-    // #region agent log
-    fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:error',message:'Generation error',data:{error:String(error)},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B1'})}).catch(()=>{});
-    // #endregion
     return NextResponse.json(
       { error: 'Failed to generate blog post' },
       { status: 500 }

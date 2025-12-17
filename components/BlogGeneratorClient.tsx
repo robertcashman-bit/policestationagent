@@ -103,10 +103,6 @@ export default function BlogGeneratorClient() {
   const handleFileUpload = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files) {
-      // #region agent log
-      fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'BlogGeneratorClient.tsx:handleFileUpload',message:'Files selected',data:{count:files.length,names:Array.from(files).map(f=>f.name)},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B2'})}).catch(()=>{});
-      // #endregion
-      
       setFormData(prev => ({
         ...prev,
         uploadedImages: [...prev.uploadedImages, ...Array.from(files)],
@@ -132,13 +128,9 @@ export default function BlogGeneratorClient() {
     setError(null);
 
     try {
-      // #region agent log
-      fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'BlogGeneratorClient.tsx:handleGenerate',message:'Starting generation',data:{imageSource:formData.imageSource,uploadedCount:formData.uploadedImages.length,urlCount:formData.imageUrls.filter(u=>u.trim()).length},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B2'})}).catch(()=>{});
-      // #endregion
-
       let response: Response;
       
-      // BUG 2 FIX: Use FormData for requests with file uploads
+      // Use FormData for requests with file uploads
       // File objects cannot be JSON-serialized, so we use multipart/form-data
       if (formData.imageSource === 'upload' && formData.uploadedImages.length > 0) {
         // #region agent log
