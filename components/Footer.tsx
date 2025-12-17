@@ -101,16 +101,6 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/services/bail-applications" className="text-slate-200 hover:text-white transition-colors text-sm">
-                    Bail Applications
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/services/pre-charge-advice" className="text-slate-200 hover:text-white transition-colors text-sm">
-                    Pre-Charge Advice
-                  </Link>
-                </li>
-                <li>
                   <Link href="/voluntary-interviews" className="text-slate-200 hover:text-white transition-colors text-sm">
                     Voluntary Interviews
                   </Link>
