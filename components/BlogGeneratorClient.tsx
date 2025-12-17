@@ -16,8 +16,7 @@ interface BlogPreview {
   imageUrls: string[];
   generatedWithAI?: boolean;
   aiImageGenerated?: boolean;
-  generationLog?: string[];
-  aiError?: string | null;
+  debugInfo?: string;
 }
 
 interface FormData {
@@ -569,32 +568,15 @@ export default function BlogGeneratorClient() {
                   )}
                 </div>
 
-                {/* Generation Log - shows diagnostic info */}
-                {preview.generationLog && preview.generationLog.length > 0 && (
-                  <details className="border rounded-md bg-slate-50">
-                    <summary className="p-3 cursor-pointer font-medium text-sm text-slate-700 hover:bg-slate-100">
-                      Generation Log (click to expand)
-                    </summary>
-                    <div className="p-3 border-t bg-white">
-                      <ul className="text-xs font-mono space-y-1">
-                        {preview.generationLog.map((log, index) => (
-                          <li key={index} className={`${
-                            log.startsWith('✓') ? 'text-green-700' :
-                            log.startsWith('✗') ? 'text-red-700' :
-                            log.startsWith('→') ? 'text-blue-700' :
-                            'text-slate-600'
-                          }`}>
-                            {log}
-                          </li>
-                        ))}
-                      </ul>
-                      {preview.aiError && (
-                        <div className="mt-3 p-2 bg-red-50 border border-red-200 rounded text-xs text-red-800">
-                          <strong>Error:</strong> {preview.aiError}
-                        </div>
-                      )}
-                    </div>
-                  </details>
+                {/* Debug Info - shows what happened with AI generation */}
+                {preview.debugInfo && (
+                  <div className={`p-3 rounded-md text-sm ${
+                    preview.generatedWithAI 
+                      ? 'bg-green-50 text-green-800 border border-green-200' 
+                      : 'bg-yellow-50 text-yellow-800 border border-yellow-200'
+                  }`}>
+                    <strong>Status:</strong> {preview.debugInfo}
+                  </div>
                 )}
 
                 {/* Meta Info */}
