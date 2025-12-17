@@ -15,6 +15,7 @@ interface BlogPreview {
   image: string | null;
   imageUrls: string[];
   generatedWithAI?: boolean;
+  aiImageGenerated?: boolean;
 }
 
 interface FormData {
@@ -417,8 +418,14 @@ export default function BlogGeneratorClient() {
                     >
                       <option value="url">External URL</option>
                       <option value="upload">Upload from Device</option>
-                      <option value="ai">AI Generated (Coming Soon)</option>
+                      <option value="ai">AI Generated (DALL-E 3)</option>
                     </select>
+                    {formData.imageSource === 'ai' && (
+                      <p className="mt-2 text-sm text-blue-600 bg-blue-50 p-3 rounded-md">
+                        <strong>🎨 AI Image Generation:</strong> A professional, legal-themed image will be automatically 
+                        generated based on your blog topic using DALL-E 3. The image will be saved to your blog-images folder.
+                      </p>
+                    )}
                   </div>
 
                   {formData.imageSource === 'url' && (
@@ -527,26 +534,36 @@ export default function BlogGeneratorClient() {
 
             {preview ? (
               <div className="space-y-4">
-                {/* AI Status Badge */}
-                <div className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-                  preview.generatedWithAI 
-                    ? 'bg-green-100 text-green-800' 
-                    : 'bg-yellow-100 text-yellow-800'
-                }`}>
-                  {preview.generatedWithAI ? (
-                    <>
+                {/* AI Status Badges */}
+                <div className="flex flex-wrap gap-2">
+                  <div className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
+                    preview.generatedWithAI 
+                      ? 'bg-green-100 text-green-800' 
+                      : 'bg-yellow-100 text-yellow-800'
+                  }`}>
+                    {preview.generatedWithAI ? (
+                      <>
+                        <svg className="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                        Content: AI (GPT-4)
+                      </>
+                    ) : (
+                      <>
+                        <svg className="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                        </svg>
+                        Content: Template
+                      </>
+                    )}
+                  </div>
+                  {preview.aiImageGenerated && (
+                    <div className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800">
                       <svg className="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
                       </svg>
-                      Generated with AI (GPT-4)
-                    </>
-                  ) : (
-                    <>
-                      <svg className="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                      </svg>
-                      Template Content (Add OPENAI_API_KEY for AI)
-                    </>
+                      Image: AI (DALL-E 3)
+                    </div>
                   )}
                 </div>
 
