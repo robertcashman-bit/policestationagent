@@ -45,10 +45,13 @@ export async function GET() {
       const title = escapeXml(post.title);
       const desc = escapeXml(post.excerpt || '');
       
-      // Get image if available
+      // Get image if available - RSS 2.0 requires url, type, and length attributes
       const imageUrl = post.image;
+      // Use default length of 50000 bytes for images (RSS 2.0 requirement)
+      // For external images, we can't easily fetch the actual size without slowing down feed generation
+      const imageLength = 50000;
       const imageTag = imageUrl 
-        ? `\n      <enclosure url="${escapeXml(imageUrl)}" type="image/jpeg" />`
+        ? `\n      <enclosure url="${escapeXml(imageUrl)}" type="image/jpeg" length="${imageLength}" />`
         : '';
 
       return `    <item>
@@ -72,8 +75,8 @@ export async function GET() {
     <ttl>60</ttl>
     <atom:link href="${SITE_URL}/feed.xml" rel="self" type="application/rss+xml" />
     <image>
-      <url>${SITE_URL}/favicon.ico</url>
-      <title>Police Station Agent</title>
+      <url>${SITE_URL}/blog-images/blog-listing-0.jpg</url>
+      <title>Police Station Agent - Criminal Defence Blog</title>
       <link>${SITE_URL}</link>
     </image>
 ${rssItems}
