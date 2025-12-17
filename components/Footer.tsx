@@ -338,12 +338,12 @@ export default function Footer() {
         </div>
         
         <div className="border-t border-slate-700 mt-12 pt-8 text-center text-sm text-slate-300">
-          <div className="mb-6 max-w-4xl mx-auto p-5 bg-slate-50 rounded-lg border border-slate-200 shadow-sm">
-            <p className="leading-relaxed text-slate-900 mb-3">
-              <strong>Robert Cashman is a criminal defence solicitor. All legal services are provided through Tuckers Solicitors, which is authorised and regulated by the Solicitors Regulation Authority (SRA ID: 127795).</strong>
+          <div className="mb-6 max-w-4xl mx-auto p-5 bg-white rounded-lg border border-slate-300 shadow-sm">
+            <p className="leading-relaxed text-slate-950 mb-3 font-semibold">
+              Robert Cashman is a criminal defence solicitor. All legal services are provided through Tuckers Solicitors, which is authorised and regulated by the Solicitors Regulation Authority (SRA ID: 127795).
             </p>
-            <p className="leading-relaxed text-slate-800 text-sm">
-              <span className="font-semibold text-slate-900">Accredited Court & Police Station Duty Solicitor:</span> Accredited Court & Police Station Duty Solicitor: Police Station Agent specialises in duty solicitor-led police station representation across Kent.
+            <p className="leading-relaxed text-slate-900 text-sm">
+              <span className="font-semibold text-slate-950">Accredited Court & Police Station Duty Solicitor:</span> Police Station Agent specialises in duty solicitor-led police station representation across Kent.
             </p>
           </div>
           <p className="mb-4 font-medium text-white">
