@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { auth, AUTHORIZED_EMAIL } from '@/auth';
+import { getAdminSession } from '@/lib/admin-auth';
 import { writeFile, mkdir } from 'fs/promises';
 import path from 'path';
 
@@ -225,15 +225,11 @@ async function handleUploadedImages(files: File[], slug: string): Promise<string
  */
 export async function POST(request: NextRequest) {
   try {
-    // Verify Google OAuth session using next-auth v5
-    const session = await auth();
-    
-    if (!session || !session.user) {
+    // Verify admin session using simple password auth
+    const session = await getAdminSession();
+
+    if (!session) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-    
-    if (session.user.email?.toLowerCase() !== AUTHORIZED_EMAIL.toLowerCase()) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 
     let formData: any;

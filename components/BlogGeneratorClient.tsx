@@ -133,10 +133,6 @@ export default function BlogGeneratorClient() {
       // Use FormData for requests with file uploads
       // File objects cannot be JSON-serialized, so we use multipart/form-data
       if (formData.imageSource === 'upload' && formData.uploadedImages.length > 0) {
-        // #region agent log
-        fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'BlogGeneratorClient.tsx:handleGenerate:formdata',message:'Using FormData for upload',data:{fileCount:formData.uploadedImages.length},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B2'})}).catch(()=>{});
-        // #endregion
-        
         // Create FormData for multipart upload
         const multipartFormData = new FormData();
         
@@ -168,10 +164,6 @@ export default function BlogGeneratorClient() {
           body: multipartFormData,
         });
       } else {
-        // #region agent log
-        fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'BlogGeneratorClient.tsx:handleGenerate:json',message:'Using JSON for request',data:{imageSource:formData.imageSource},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B2'})}).catch(()=>{});
-        // #endregion
-        
         // Standard JSON request (no file uploads)
         response = await fetch('/api/admin/generate-blog', {
           method: 'POST',
@@ -201,17 +193,8 @@ export default function BlogGeneratorClient() {
       }
 
       const data = await response.json();
-      
-      // #region agent log
-      fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'BlogGeneratorClient.tsx:handleGenerate:success',message:'Generation successful',data:{slug:data.slug,hasImage:!!data.image,imageCount:data.imageUrls?.length||0},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B2'})}).catch(()=>{});
-      // #endregion
-      
       setPreview(data);
     } catch (err) {
-      // #region agent log
-      fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'BlogGeneratorClient.tsx:handleGenerate:error',message:'Generation failed',data:{error:String(err)},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B2'})}).catch(()=>{});
-      // #endregion
-      
       setError(err instanceof Error ? err.message : 'Failed to generate blog post');
     } finally {
       setLoading(false);

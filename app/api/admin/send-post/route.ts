@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { auth, AUTHORIZED_EMAIL } from '@/auth';
+import { getAdminSession } from '@/lib/admin-auth';
 import db from '@/lib/db';
 
 interface BlogPost {
@@ -20,16 +20,11 @@ interface BlogPost {
  */
 export async function POST(request: NextRequest) {
   try {
-    // Verify Google OAuth session using next-auth v5
-    const session = await auth();
+    // Verify admin session using simple password auth
+    const session = await getAdminSession();
     
-    if (!session || !session.user) {
+    if (!session) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-    
-    // Verify authorized email
-    if (session.user.email?.toLowerCase() !== AUTHORIZED_EMAIL.toLowerCase()) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
     
     const { postId, method, recipient } = await request.json();

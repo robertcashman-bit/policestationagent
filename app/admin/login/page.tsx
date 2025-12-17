@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 export default function AdminLoginPage() {
-  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -16,76 +15,70 @@ export default function AdminLoginPage() {
     setLoading(true);
 
     try {
-      const response = await fetch('/api/auth/login', {
+      const res = await fetch('/api/admin/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ password }),
       });
 
-      const data = await response.json();
+      const data = await res.json();
 
-      if (response.ok) {
-        router.push('/admin');
-        router.refresh();
+      if (res.ok) {
+        router.push('/admin/blog-generator');
       } else {
         setError(data.error || 'Login failed');
       }
     } catch (err) {
-      setError('An error occurred. Please try again.');
+      setError('Connection error. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow-md">
-        <div>
-          <h2 className="text-3xl font-bold text-center">Admin Login</h2>
-          <p className="mt-2 text-center text-gray-600">Police Station Agent Admin</p>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 flex items-center justify-center p-4">
+      <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md">
+        <div className="text-center mb-8">
+          <h1 className="text-2xl font-bold text-slate-800 mb-2">Admin Access</h1>
+          <p className="text-slate-500 text-sm">Police Station Agent</p>
         </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
-              {error}
-            </div>
-          )}
+
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="username" className="block text-sm font-medium text-gray-700">
-              Username
-            </label>
-            <input
-              id="username"
-              type="text"
-              required
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#0A2342] focus:border-[#0A2342]"
-            />
-          </div>
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="password" className="block text-sm font-medium text-slate-700 mb-2">
               Password
             </label>
             <input
-              id="password"
               type="password"
-              required
+              id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#0A2342] focus:border-[#0A2342]"
+              className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-slate-800"
+              placeholder="Enter admin password"
+              required
+              autoFocus
             />
           </div>
+
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+              {error}
+            </div>
+          )}
+
           <button
             type="submit"
             disabled={loading}
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#0A2342] hover:bg-[#08192e] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0A2342] disabled:opacity-50"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? 'Logging in...' : 'Sign in'}
+            {loading ? 'Signing in...' : 'Sign In'}
           </button>
         </form>
+
+        <p className="text-center text-xs text-slate-400 mt-6">
+          Authorized access only
+        </p>
       </div>
     </div>
   );
 }
-

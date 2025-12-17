@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
-import { auth, AUTHORIZED_EMAIL } from '@/auth';
+import { getAdminSession } from '@/lib/admin-auth';
 import BlogGeneratorClient from '@/components/BlogGeneratorClient';
 
 export const metadata = {
@@ -11,18 +11,12 @@ export const metadata = {
 };
 
 export default async function BlogGeneratorPage() {
-  // Check Google OAuth session using next-auth v5 auth()
-  const session = await auth();
+  // Check simple password-based session
+  const session = await getAdminSession();
 
-  if (!session || !session.user) {
-    // Redirect to Google OAuth sign-in
-    redirect('/api/auth/signin?callbackUrl=/admin/blog-generator');
-  }
-
-  // Verify authorized email
-  if (session.user.email?.toLowerCase() !== AUTHORIZED_EMAIL.toLowerCase()) {
-    // Unauthorized user - redirect to homepage
-    redirect('/?error=unauthorized');
+  if (!session) {
+    // Redirect to simple login page
+    redirect('/admin/login');
   }
 
   return (
