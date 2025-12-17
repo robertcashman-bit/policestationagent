@@ -338,12 +338,12 @@ export default function Footer() {
         </div>
         
         <div className="border-t border-slate-700 mt-12 pt-8 text-center text-sm">
-          <div className="mb-6 max-w-4xl mx-auto p-5 bg-white rounded-lg border border-slate-300 shadow-sm" style={{ color: '#000000', backgroundColor: '#ffffff' }}>
-            <p className="leading-relaxed mb-3 font-semibold" style={{ color: '#000000' }}>
+          <div className="footer-disclaimer-box mb-6 max-w-4xl mx-auto p-5 bg-white rounded-lg border border-slate-300 shadow-sm">
+            <p className="leading-relaxed mb-3 font-semibold">
               Robert Cashman is a criminal defence solicitor. All legal services are provided through Tuckers Solicitors, which is authorised and regulated by the Solicitors Regulation Authority (SRA ID: 127795).
             </p>
-            <p className="leading-relaxed text-sm" style={{ color: '#000000' }}>
-              <span className="font-semibold" style={{ color: '#000000' }}>Accredited Court & Police Station Duty Solicitor:</span> Police Station Agent specialises in duty solicitor-led police station representation across Kent.
+            <p className="leading-relaxed text-sm">
+              <span className="font-semibold">Accredited Court & Police Station Duty Solicitor:</span> Police Station Agent specialises in duty solicitor-led police station representation across Kent.
             </p>
           </div>
           <p className="mb-4 font-medium text-slate-300">
