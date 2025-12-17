@@ -984,3 +984,11 @@ html body .text-sm.text-slate-500 {
   color: #475569 !important; /* slate-600 */
 }
 
+/* FOOTER DISCLAIMER BOX: Force black text on white background */
+.footer-disclaimer-box,
+.footer-disclaimer-box p,
+.footer-disclaimer-box span,
+.footer-disclaimer-box * {
+  color: #000000 !important; /* Pure black for maximum contrast */
+}
+
