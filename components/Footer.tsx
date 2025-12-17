@@ -337,19 +337,28 @@ export default function Footer() {
           </div>
         </div>
         
-        <div className="border-t border-slate-700 mt-12 pt-8 text-center text-sm text-slate-300">
-          <div className="mb-6 max-w-4xl mx-auto p-5 bg-white rounded-lg border border-slate-300 shadow-sm">
-            <p className="leading-relaxed text-slate-950 mb-3 font-semibold">
+        <div className="border-t border-slate-700 mt-12 pt-8 text-center text-sm">
+          <div className="mb-6 max-w-4xl mx-auto p-5 bg-white rounded-lg border border-slate-300 shadow-sm" style={{ color: '#000000' }}>
+            {/* #region agent log */}
+            {typeof window !== 'undefined' && fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Footer.tsx:341',message:'Footer disclaimer box rendered',data:{bgColor:'bg-white',inlineStyle:'color:#000000',hasText:true},timestamp:Date.now(),sessionId:'debug-session',runId:'post-fix',hypothesisId:'A'})}).catch(()=>{})}
+            {/* #endregion */}
+            <p className="leading-relaxed mb-3 font-semibold" style={{ color: '#000000 !important' }}>
               Robert Cashman is a criminal defence solicitor. All legal services are provided through Tuckers Solicitors, which is authorised and regulated by the Solicitors Regulation Authority (SRA ID: 127795).
             </p>
-            <p className="leading-relaxed text-slate-900 text-sm">
-              <span className="font-semibold text-slate-950">Accredited Court & Police Station Duty Solicitor:</span> Police Station Agent specialises in duty solicitor-led police station representation across Kent.
+            {/* #region agent log */}
+            {typeof window !== 'undefined' && fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Footer.tsx:345',message:'First paragraph rendered',data:{inlineStyle:'color:#000000 !important',textLength:143},timestamp:Date.now(),sessionId:'debug-session',runId:'post-fix',hypothesisId:'B'})}).catch(()=>{})}
+            {/* #endregion */}
+            <p className="leading-relaxed text-sm" style={{ color: '#000000 !important' }}>
+              <span className="font-semibold" style={{ color: '#000000 !important' }}>Accredited Court & Police Station Duty Solicitor:</span> Police Station Agent specialises in duty solicitor-led police station representation across Kent.
             </p>
+            {/* #region agent log */}
+            {typeof window !== 'undefined' && fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Footer.tsx:347',message:'Second paragraph rendered',data:{inlineStyle:'color:#000000 !important',textLength:120},timestamp:Date.now(),sessionId:'debug-session',runId:'post-fix',hypothesisId:'C'})}).catch(()=>{})}
+            {/* #endregion */}
           </div>
-          <p className="mb-4 font-medium text-white">
+          <p className="mb-4 font-medium text-slate-300">
             Copyright {currentYear} by Defence Legal Services Limited T/A Police Station Agent. Company No. 09900871
           </p>
-          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-4">
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-4 text-slate-300">
             <Link href="/privacy" className="hover:text-blue-300 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-600 rounded px-1 text-white">
               Web Privacy
             </Link>
