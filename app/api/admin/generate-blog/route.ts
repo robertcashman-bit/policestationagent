@@ -627,6 +627,10 @@ export async function POST(request: NextRequest) {
       formData.location
     );
 
+    // #region agent log
+    debugLog(`[Final] Returning response: usingAI=${usingAI}`);
+    // #endregion
+
     return NextResponse.json({
       title,
       slug,
@@ -639,12 +643,17 @@ export async function POST(request: NextRequest) {
       image: featuredImage,
       imageUrls: allImageUrls,
       generatedWithAI: usingAI,
-      debugInfo,
+      // #region agent log
+      debugLogs: [...debugLogs],
+      // #endregion
     });
   } catch (error) {
     console.error('Blog generation error:', error);
+    // #region agent log
+    debugLog(`[Error] Caught error: ${error instanceof Error ? error.message : String(error)}`);
+    // #endregion
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Failed to generate blog post' },
+      { error: error instanceof Error ? error.message : 'Failed to generate blog post', debugLogs: [...debugLogs] },
       { status: 500 }
     );
   }
