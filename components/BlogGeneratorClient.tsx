@@ -14,6 +14,7 @@ interface BlogPreview {
   schema: any;
   image: string | null;
   imageUrls: string[];
+  generatedWithAI?: boolean;
 }
 
 interface FormData {
@@ -526,6 +527,29 @@ export default function BlogGeneratorClient() {
 
             {preview ? (
               <div className="space-y-4">
+                {/* AI Status Badge */}
+                <div className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
+                  preview.generatedWithAI 
+                    ? 'bg-green-100 text-green-800' 
+                    : 'bg-yellow-100 text-yellow-800'
+                }`}>
+                  {preview.generatedWithAI ? (
+                    <>
+                      <svg className="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      Generated with AI (GPT-4)
+                    </>
+                  ) : (
+                    <>
+                      <svg className="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                      </svg>
+                      Template Content (Add OPENAI_API_KEY for AI)
+                    </>
+                  )}
+                </div>
+
                 {/* Meta Info */}
                 <div className="p-3 bg-gray-50 rounded-md text-sm">
                   <p>
@@ -533,9 +557,15 @@ export default function BlogGeneratorClient() {
                   </p>
                   <p>
                     <strong>Meta Title:</strong> {preview.metaTitle}
+                    <span className={`ml-2 text-xs ${preview.metaTitle.length <= 60 ? 'text-green-600' : 'text-red-600'}`}>
+                      ({preview.metaTitle.length}/60 chars)
+                    </span>
                   </p>
                   <p>
                     <strong>Meta Description:</strong> {preview.metaDescription}
+                    <span className={`ml-2 text-xs ${preview.metaDescription.length <= 155 ? 'text-green-600' : 'text-red-600'}`}>
+                      ({preview.metaDescription.length}/155 chars)
+                    </span>
                   </p>
                   {preview.image && (
                     <p>
@@ -569,12 +599,24 @@ export default function BlogGeneratorClient() {
                   <div className="border rounded-md p-4">
                     <h3 className="font-semibold mb-2">FAQs ({preview.faqs.length})</h3>
                     {preview.faqs.map((faq, index) => (
-                      <div key={index} className="mb-2">
-                        <p className="font-medium text-sm">{faq.question}</p>
-                        <p className="text-sm text-gray-600">{faq.answer}</p>
+                      <div key={index} className="mb-3 pb-3 border-b last:border-b-0">
+                        <p className="font-medium text-sm text-blue-800">{faq.question}</p>
+                        <p className="text-sm text-gray-600 mt-1">{faq.answer}</p>
                       </div>
                     ))}
                   </div>
+                )}
+
+                {/* Schema Preview */}
+                {preview.schema && (
+                  <details className="border rounded-md">
+                    <summary className="p-4 cursor-pointer font-semibold text-sm bg-gray-50 hover:bg-gray-100">
+                      SEO Schema (JSON-LD) - Click to view
+                    </summary>
+                    <pre className="p-4 text-xs overflow-x-auto bg-slate-900 text-green-400 max-h-64">
+                      {JSON.stringify(preview.schema, null, 2)}
+                    </pre>
+                  </details>
                 )}
 
                 {/* Actions */}
