@@ -315,8 +315,8 @@ ${includeInternalLinks ? `
 `;
 
   const metaTitle = `${topic} | ${location} Duty Solicitor`.substring(0, 60);
-  const metaDescription = `Expert guidance on ${topic.toLowerCase()} from qualified Duty Solicitor in ${location}. Free legal advice under PACE 1984. Call 01732 247427.`.substring(0, 155);
-  const excerpt = `Understanding ${topic.toLowerCase()} is essential when facing police investigation. Get expert legal guidance from a qualified Duty Solicitor in ${location}.`;
+  const metaDescription = `Expert ${primaryKeyword} guidance from qualified Duty Solicitor in ${location}. ${topic} advice under PACE 1984. Call 01732 247427.`.substring(0, 155);
+  const excerpt = `Need help with ${primaryKeyword}? Understanding ${topic.toLowerCase()} is essential when facing police investigation. Get expert legal guidance from a qualified Duty Solicitor in ${location}.`;
 
   const faqs: Array<{ question: string; answer: string }> = includeFAQ ? [
     {
