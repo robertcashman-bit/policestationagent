@@ -583,16 +583,22 @@ export async function POST(request: NextRequest) {
     // Generate content - use AI if available, fallback otherwise
     let generatedContent;
     let usingAI = false;
+    let aiStatus = '';
 
     if (OPENAI_API_KEY) {
+      aiStatus = `OPENAI_API_KEY detected (${OPENAI_API_KEY.substring(0, 8)}...). `;
       try {
         generatedContent = await generateAIContent(formData);
         usingAI = true;
+        aiStatus += 'AI generation succeeded.';
       } catch (aiError) {
+        const message = aiError instanceof Error ? aiError.message : String(aiError);
+        aiStatus += `AI generation failed: ${message}. Using template content.`;
         console.error('AI generation failed, using fallback:', aiError);
         generatedContent = generateFallbackContent(formData);
       }
     } else {
+      aiStatus = 'OPENAI_API_KEY not found; using template content.';
       console.log('No OPENAI_API_KEY configured, using fallback content generation');
       generatedContent = generateFallbackContent(formData);
     }
@@ -639,6 +645,7 @@ export async function POST(request: NextRequest) {
       image: featuredImage,
       imageUrls: allImageUrls,
       generatedWithAI: usingAI,
+      aiStatus,
     });
   } catch (error) {
     console.error('Blog generation error:', error);
