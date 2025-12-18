@@ -49,6 +49,64 @@ async function callOpenAI(messages: Array<{ role: string; content: string }>, ma
 }
 
 /**
+ * Generate an image using DALL-E 3
+ */
+async function generateDALLEImage(topic: string, keyword: string): Promise<string | null> {
+  if (!OPENAI_API_KEY) {
+    console.log('DALL-E: No API key, skipping image generation');
+    return null;
+  }
+
+  try {
+    // #region agent log - DALL-E generation start
+    fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:DALLE_START',message:'Starting DALL-E image generation',data:{topic,keyword,hypothesisId:'H2'},timestamp:Date.now(),sessionId:'debug-session'})}).catch(()=>{});
+    // #endregion
+
+    const prompt = `Professional, photorealistic image for a legal blog article about "${topic}". 
+The image should convey trust, professionalism, and legal expertise. 
+Style: Modern, clean, corporate photography. 
+Include elements related to: UK legal system, police stations, solicitors, or courtrooms.
+No text or words in the image. High quality, suitable for a professional law firm website.`;
+
+    const response = await fetch('https://api.openai.com/v1/images/generations', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${OPENAI_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: 'dall-e-3',
+        prompt,
+        n: 1,
+        size: '1792x1024',
+        quality: 'standard',
+      }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      console.error('DALL-E API error:', error);
+      // #region agent log - DALL-E error
+      fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:DALLE_ERROR',message:'DALL-E API error',data:{error:error.error?.message,hypothesisId:'H2'},timestamp:Date.now(),sessionId:'debug-session'})}).catch(()=>{});
+      // #endregion
+      return null;
+    }
+
+    const data = await response.json();
+    const imageUrl = data.data?.[0]?.url;
+
+    // #region agent log - DALL-E success
+    fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:DALLE_SUCCESS',message:'DALL-E image generated',data:{hasUrl:!!imageUrl,hypothesisId:'H2'},timestamp:Date.now(),sessionId:'debug-session'})}).catch(()=>{});
+    // #endregion
+
+    return imageUrl || null;
+  } catch (error) {
+    console.error('DALL-E generation error:', error);
+    return null;
+  }
+}
+
+/**
  * Generate SEO-optimized blog content using AI
  */
 async function generateAIContent(formData: any): Promise<{
@@ -142,10 +200,17 @@ Do NOT include <h1> (title will be added separately).
 Do NOT include any preamble or explanation, just the HTML content.`;
 
   // Generate main content
-  const content = await callOpenAI([
+  let content = await callOpenAI([
     { role: 'system', content: 'You are a professional legal content writer for UK criminal defence. Write in British English. Be authoritative, helpful, and SEO-optimized.' },
     { role: 'user', content: contentPrompt },
   ], 3000);
+  
+  // Clean markdown code fences from AI response
+  content = content
+    .replace(/^```html\s*/i, '')
+    .replace(/^```\s*/gm, '')
+    .replace(/```$/gm, '')
+    .trim();
 
   // Generate SEO meta elements
   const metaPrompt = `For this blog post about "${topic}" targeting "${primaryKeyword}" in ${location}:
@@ -603,8 +668,17 @@ export async function POST(request: NextRequest) {
     // Append mandatory advert block
     const contentWithAdvert = content + generateAdvertBlock();
 
-    // Handle images
+    // Handle images - including AI-generated images
+    let aiGeneratedImageUrl: string | null = null;
+    if (formData.imageSource === 'ai') {
+      // #region agent log - AI image request
+      fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:AI_IMAGE_REQUEST',message:'AI image generation requested',data:{topic:formData.topic,keyword:formData.primaryKeyword,hypothesisId:'H2'},timestamp:Date.now(),sessionId:'debug-session'})}).catch(()=>{});
+      // #endregion
+      aiGeneratedImageUrl = await generateDALLEImage(formData.topic, formData.primaryKeyword);
+    }
+
     const allImageUrls = [
+      ...(aiGeneratedImageUrl ? [aiGeneratedImageUrl] : []),
       ...uploadedImageUrls,
       ...(formData.imageUrls || []).filter((url: string) => url && url.trim()),
     ];
@@ -613,6 +687,24 @@ export async function POST(request: NextRequest) {
     if (allImageUrls.length > 0) {
       const featuredIndex = formData.featuredImageIndex ?? 0;
       featuredImage = allImageUrls[featuredIndex] || allImageUrls[0] || null;
+    }
+
+    // #region agent log - Image debug instrumentation
+    fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:IMAGE_HANDLING',message:'Image parameters received',data:{includeInContentImages:formData.includeInContentImages,imageSource:formData.imageSource,imageUrlsReceived:formData.imageUrls,uploadedImageUrlsCount:uploadedImageUrls.length,allImageUrlsCount:allImageUrls.length,featuredImage:featuredImage,hypothesisId:'H1-H5'},timestamp:Date.now(),sessionId:'debug-session'})}).catch(()=>{});
+    // #endregion
+
+    // Insert images into content if requested
+    let finalContent = contentWithAdvert;
+    if (formData.includeInContentImages && featuredImage) {
+      // #region agent log - Image insertion debug
+      fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:IMAGE_INSERTION',message:'Inserting image into content',data:{featuredImage:featuredImage,includeInContentImages:true,hypothesisId:'H1'},timestamp:Date.now(),sessionId:'debug-session'})}).catch(()=>{});
+      // #endregion
+      
+      const imageHtml = `<figure class="blog-featured-image">
+  <img src="${featuredImage}" alt="${title}" class="w-full rounded-lg shadow-md" />
+  <figcaption class="text-sm text-gray-500 mt-2 text-center">${title}</figcaption>
+</figure>\n\n`;
+      finalContent = imageHtml + contentWithAdvert;
     }
 
     // Generate comprehensive schema
@@ -627,10 +719,14 @@ export async function POST(request: NextRequest) {
       formData.location
     );
 
+    // #region agent log - Final response debug
+    fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:RESPONSE',message:'Sending response',data:{hasImage:!!featuredImage,contentIncludesImage:finalContent.includes('<img'),hypothesisId:'H1'},timestamp:Date.now(),sessionId:'debug-session'})}).catch(()=>{});
+    // #endregion
+
     return NextResponse.json({
       title,
       slug,
-      content: contentWithAdvert,
+      content: finalContent,
       excerpt,
       metaTitle,
       metaDescription,
@@ -639,6 +735,7 @@ export async function POST(request: NextRequest) {
       image: featuredImage,
       imageUrls: allImageUrls,
       generatedWithAI: usingAI,
+      aiImageGenerated: !!aiGeneratedImageUrl,
     });
   } catch (error) {
     console.error('Blog generation error:', error);

@@ -29,6 +29,7 @@ export interface BlogPost {
   excerpt: string | null;
   meta_title: string | null;
   meta_description: string | null;
+  published: number;
   published_at: string | null;
   created_at: string;
   updated_at: string | null;
@@ -349,6 +350,26 @@ function needsCopy(sourcePath: string, destPath: string): boolean {
 // ============================================================================
 
 /**
+ * Read posts from JSON file (persists with deployments)
+ */
+function getPostsFromJsonFile(): BlogPost[] {
+  try {
+    const jsonPath = path.join(process.cwd(), 'data', 'blog-posts-full.json');
+    if (!fs.existsSync(jsonPath)) {
+      console.log('[blog.ts] JSON file not found:', jsonPath);
+      return [];
+    }
+    const data = fs.readFileSync(jsonPath, 'utf-8');
+    const posts = JSON.parse(data) as BlogPost[];
+    console.log(`[blog.ts] Loaded ${posts.length} posts from JSON file`);
+    return posts.filter(p => p.published === 1);
+  } catch (error) {
+    console.error('[blog.ts] Error reading JSON file:', error);
+    return [];
+  }
+}
+
+/**
  * SINGLE AUTHORITATIVE FUNCTION for fetching published blog posts.
  * 
  * This function MUST be used by:
@@ -361,23 +382,10 @@ function needsCopy(sourcePath: string, destPath: string): boolean {
  */
 export function getPublishedBlogPosts(): BlogPostSummary[] {
   try {
-    const db = getDb();
+    // Try JSON file first (persists across serverless invocations)
+    const jsonPosts = getPostsFromJsonFile();
     
-    // Include content for image extraction
-    const posts = db.prepare(`
-      SELECT 
-        id,
-        title,
-        slug,
-        content,
-        excerpt,
-        published_at,
-        created_at
-      FROM blog_posts 
-      WHERE published = 1
-      ORDER BY 
-        COALESCE(published_at, created_at) DESC
-    `).all() as Array<{
+    let allPosts: Array<{
       id: number;
       title: string;
       slug: string;
@@ -385,10 +393,46 @@ export function getPublishedBlogPosts(): BlogPostSummary[] {
       excerpt: string | null;
       published_at: string | null;
       created_at: string;
-    }>;
+    }> = [];
+
+    // Use JSON posts if available
+    if (jsonPosts.length > 0) {
+      allPosts = jsonPosts.map(p => ({
+        id: p.id,
+        title: p.title,
+        slug: p.slug,
+        content: p.content,
+        excerpt: p.excerpt,
+        published_at: p.published_at,
+        created_at: p.created_at,
+      }));
+      console.log(`[blog.ts] Using ${allPosts.length} posts from JSON file`);
+    } else {
+      // Fallback to SQLite
+      try {
+        const db = getDb();
+        allPosts = db.prepare(`
+          SELECT 
+            id,
+            title,
+            slug,
+            content,
+            excerpt,
+            published_at,
+            created_at
+          FROM blog_posts 
+          WHERE published = 1
+          ORDER BY 
+            COALESCE(published_at, created_at) DESC
+        `).all() as typeof allPosts;
+        console.log(`[blog.ts] Using ${allPosts.length} posts from SQLite`);
+      } catch (dbError) {
+        console.error('[blog.ts] SQLite error:', dbError);
+      }
+    }
 
     // Normalize slugs, extract images, and generate excerpts for each post
-    const normalizedPosts: BlogPostSummary[] = posts.map(post => {
+    const normalizedPosts: BlogPostSummary[] = allPosts.map(post => {
       // Generate excerpt if missing
       const excerpt = post.excerpt && post.excerpt.trim() 
         ? post.excerpt.trim() 
@@ -437,48 +481,73 @@ export function getPostBySlug(slug: string): BlogPost | null {
   }
 
   try {
-    const db = getDb();
-    
     // Normalize the incoming slug for matching
     const normalizedInputSlug = normalizeSlug(slug);
     
-    // Get all published posts
-    const posts = db.prepare(`
-      SELECT 
-        id,
-        title,
-        slug,
-        content,
-        excerpt,
-        meta_title,
-        meta_description,
-        published_at,
-        created_at,
-        updated_at,
-        image,
-        schema_json
-      FROM blog_posts 
-      WHERE published = 1
-    `).all() as BlogPost[];
+    // Try JSON file first (persists across serverless invocations)
+    const jsonPosts = getPostsFromJsonFile();
+    
+    if (jsonPosts.length > 0) {
+      const post = jsonPosts.find(p => {
+        const postNormalizedSlug = deriveSlugIfNeeded(p.slug, p.title);
+        return postNormalizedSlug === normalizedInputSlug || 
+               normalizeSlug(p.slug) === normalizedInputSlug;
+      });
 
-    // Find matching post by normalized slug (case-insensitive)
-    const post = posts.find(p => {
-      const postNormalizedSlug = deriveSlugIfNeeded(p.slug, p.title);
-      return postNormalizedSlug === normalizedInputSlug || 
-             normalizeSlug(p.slug) === normalizedInputSlug;
-    });
+      if (post) {
+        console.log(`[blog.ts] Found post in JSON file: ${post.slug}`);
+        return {
+          ...post,
+          slug: deriveSlugIfNeeded(post.slug, post.title),
+          image: post.image || extractFirstImage(post.content),
+        };
+      }
+    }
+    
+    // Fallback to SQLite
+    try {
+      const db = getDb();
+      
+      // Get all published posts
+      const posts = db.prepare(`
+        SELECT 
+          id,
+          title,
+          slug,
+          content,
+          excerpt,
+          meta_title,
+          meta_description,
+          published_at,
+          created_at,
+          updated_at,
+          image,
+          schema_json
+        FROM blog_posts 
+        WHERE published = 1
+      `).all() as BlogPost[];
 
-    if (!post) {
-      console.log(`[blog.ts] getPostBySlug: No post found for slug "${slug}" (normalized: "${normalizedInputSlug}")`);
-      return null;
+      // Find matching post by normalized slug (case-insensitive)
+      const post = posts.find(p => {
+        const postNormalizedSlug = deriveSlugIfNeeded(p.slug, p.title);
+        return postNormalizedSlug === normalizedInputSlug || 
+               normalizeSlug(p.slug) === normalizedInputSlug;
+      });
+
+      if (post) {
+        console.log(`[blog.ts] Found post in SQLite: ${post.slug}`);
+        return {
+          ...post,
+          slug: deriveSlugIfNeeded(post.slug, post.title),
+          image: extractFirstImage(post.content),
+        };
+      }
+    } catch (dbError) {
+      console.error('[blog.ts] SQLite error:', dbError);
     }
 
-    // Return with normalized slug and extracted image
-    return {
-      ...post,
-      slug: deriveSlugIfNeeded(post.slug, post.title),
-      image: extractFirstImage(post.content),
-    };
+    console.log(`[blog.ts] getPostBySlug: No post found for slug "${slug}" (normalized: "${normalizedInputSlug}")`);
+    return null;
   } catch (error) {
     console.error('[blog.ts] Error in getPostBySlug:', error);
     return null;
