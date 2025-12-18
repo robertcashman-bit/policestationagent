@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+﻿import { NextRequest, NextResponse } from 'next/server';
 import { getAdminSession } from '@/lib/admin-auth';
 import { writeFile, mkdir } from 'fs/promises';
 import path from 'path';
@@ -170,7 +170,7 @@ EXCERPT: [your excerpt here]`;
   const metaMatch = metaResponse.match(/META:\s*(.+?)(?:\n|$)/i);
   const excerptMatch = metaResponse.match(/EXCERPT:\s*(.+?)(?:\n|$)/i);
 
-  const metaTitle = titleMatch?.[1]?.trim().substring(0, 60) || `${topic} | ${location} Duty Solicitor`;
+  const metaTitle = titleMatch?.[1]?.trim().substring(0, 60) || `${topic} | ${location} Duty Solicitor`.substring(0, 60);
   const metaDescription = metaMatch?.[1]?.trim().substring(0, 155) || `Expert guidance on ${topic.toLowerCase()} from qualified Duty Solicitor in ${location}. PACE-compliant police station representation.`;
   const excerpt = excerptMatch?.[1]?.trim() || metaDescription;
 
@@ -272,10 +272,10 @@ function generateFallbackContent(formData: any): {
 </p>
 
 <ul>
-  <li><strong>Free legal advice</strong> – Available from a qualified solicitor at any police station</li>
-  <li><strong>Private consultation</strong> – Speak to your solicitor privately before any interview</li>
-  <li><strong>Representation during interview</strong> – Have your solicitor present throughout questioning</li>
-  <li><strong>Know the allegations</strong> – Be informed of what you're suspected of</li>
+  <li><strong>Free legal advice</strong> â€“ Available from a qualified solicitor at any police station</li>
+  <li><strong>Private consultation</strong> â€“ Speak to your solicitor privately before any interview</li>
+  <li><strong>Representation during interview</strong> â€“ Have your solicitor present throughout questioning</li>
+  <li><strong>Know the allegations</strong> â€“ Be informed of what you're suspected of</li>
 </ul>
 
 <h2>Why Expert Representation Matters</h2>
@@ -315,7 +315,7 @@ ${includeInternalLinks ? `
 `;
 
   const metaTitle = `${topic} | ${location} Duty Solicitor`.substring(0, 60);
-  const metaDescription = `Expert guidance on ${topic.toLowerCase()} from qualified Duty Solicitor in ${location}. Free legal advice under PACE 1984. Call 01732 247427.`.substring(0, 155);
+  const metaDescription = `Expert ${primaryKeyword} guidance in ${location}. Free PACE 1984 legal advice. Call 01732 247427.`.substring(0, 155);
   const excerpt = `Understanding ${topic.toLowerCase()} is essential when facing police investigation. Get expert legal guidance from a qualified Duty Solicitor in ${location}.`;
 
   const faqs: Array<{ question: string; answer: string }> = includeFAQ ? [
@@ -639,11 +639,6 @@ export async function POST(request: NextRequest) {
       image: featuredImage,
       imageUrls: allImageUrls,
       generatedWithAI: usingAI,
-      _debug: {
-        version: '2024-12-18-v2',
-        openaiKeyConfigured: !!OPENAI_API_KEY,
-        openaiKeyLength: OPENAI_API_KEY?.length || 0,
-      },
     });
   } catch (error) {
     console.error('Blog generation error:', error);

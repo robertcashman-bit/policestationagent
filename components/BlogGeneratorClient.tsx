@@ -17,6 +17,11 @@ interface BlogPreview {
   generatedWithAI?: boolean;
   aiImageGenerated?: boolean;
   aiStatus?: string;
+  _debug?: {
+    version: string;
+    openaiKeyConfigured: boolean;
+    openaiKeyLength: number;
+  };
 }
 
 interface FormData {
@@ -587,6 +592,14 @@ export default function BlogGeneratorClient() {
                       : 'bg-yellow-50 text-yellow-800 border border-yellow-200'
                   }`}>
                     <strong>🔍 Status:</strong> {preview.aiStatus}
+                  </div>
+                )}
+
+                {/* Debug Info */}
+                {preview._debug && (
+                  <div className="p-3 rounded-md text-xs bg-gray-100 border border-gray-300 font-mono">
+                    <strong>🔧 Debug:</strong> v{preview._debug.version} | 
+                    Key: {preview._debug.openaiKeyConfigured ? `✓ (${preview._debug.openaiKeyLength} chars)` : '✗ NOT SET'}
                   </div>
                 )}
 

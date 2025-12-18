@@ -156,6 +156,17 @@ export default function BlogPostPage({ params }: PageProps) {
                 Back to Blog
               </Link>
               <h1 id="article-title" className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-white leading-tight">{post.title || 'Untitled Post'}</h1>
+              {/* Featured Image in Hero */}
+              {post.image && (
+                <div className="mt-6 mb-4">
+                  <img
+                    src={post.image}
+                    alt={post.title || 'Featured image'}
+                    className="w-full max-w-3xl mx-auto h-auto rounded-lg shadow-2xl"
+                    loading="eager"
+                  />
+                </div>
+              )}
               {post.published_at && (
                 <div className="flex flex-wrap items-center gap-4 text-blue-200">
                   <div className="flex items-center gap-2">

@@ -1,0 +1,2 @@
+{"location":"generate-blog/route.ts:587","message":"OPENAI_API_KEY check","data":{"moduleConstDefined":true,"moduleConstType":"string","moduleConstLength":164,"freshEnvDefined":true,"freshEnvType":"string","freshEnvLength":164,"constEqualsEnv":true,"keyPrefix":"sk-proj"},"timestamp":1766070408284,"sessionId":"debug-session","hypothesisId":"H1,H3,H5"}
+{"location":"generate-blog/route.ts:594","message":"Taking AI branch","data":{},"timestamp":1766070408294,"sessionId":"debug-session","hypothesisId":"H5"}
