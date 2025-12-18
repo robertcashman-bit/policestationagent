@@ -5,26 +5,6 @@ import path from 'path';
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://policestationagent.com';
-const DEPLOY_META = {
-  commit: process.env.VERCEL_GIT_COMMIT_SHA || 'unknown',
-  branch: process.env.VERCEL_GIT_COMMIT_REF || 'unknown',
-  buildTime: process.env.VERCEL_GIT_COMMIT_AUTHOR_DATE || 'unknown',
-};
-
-function snapshotEnv() {
-  const fresh = process.env.OPENAI_API_KEY;
-  return {
-    moduleDefined: !!OPENAI_API_KEY,
-    moduleLength: OPENAI_API_KEY?.length || 0,
-    modulePrefix: OPENAI_API_KEY?.substring(0, 5) || 'NONE',
-    freshDefined: !!fresh,
-    freshLength: fresh?.length || 0,
-    freshPrefix: fresh?.substring(0, 5) || 'NONE',
-    nodeEnv: process.env.NODE_ENV,
-    vercelEnv: process.env.VERCEL_ENV,
-    deploy: DEPLOY_META,
-  };
-}
 
 /**
  * Generate URL-friendly slug from text
@@ -604,16 +584,11 @@ export async function POST(request: NextRequest) {
     let generatedContent;
     let usingAI = false;
 
-    let branchTaken: 'ai' | 'fallback-no-key' | 'ai-error' = 'fallback-no-key';
-    const envSnapshot = snapshotEnv();
-
     if (OPENAI_API_KEY) {
-      branchTaken = 'ai';
       try {
         generatedContent = await generateAIContent(formData);
         usingAI = true;
       } catch (aiError) {
-        branchTaken = 'ai-error';
         console.error('AI generation failed, using fallback:', aiError);
         generatedContent = generateFallbackContent(formData);
       }
@@ -664,15 +639,6 @@ export async function POST(request: NextRequest) {
       image: featuredImage,
       imageUrls: allImageUrls,
       generatedWithAI: usingAI,
-      _debug: {
-        version: '2024-12-18-v2',
-        openaiKeyConfigured: !!OPENAI_API_KEY,
-        openaiKeyLength: OPENAI_API_KEY?.length || 0,
-        branchTaken,
-        envSnapshot,
-        timestamp: new Date().toISOString(),
-        deploy: DEPLOY_META,
-      },
     });
   } catch (error) {
     console.error('Blog generation error:', error);

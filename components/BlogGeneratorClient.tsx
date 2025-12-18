@@ -17,25 +17,6 @@ interface BlogPreview {
   generatedWithAI?: boolean;
   aiImageGenerated?: boolean;
   aiStatus?: string;
-  _debug?: {
-    version: string;
-    openaiKeyConfigured: boolean;
-    openaiKeyLength: number;
-    branchTaken?: string;
-    envSnapshot?: {
-      moduleDefined: boolean;
-      moduleLength: number;
-      modulePrefix: string;
-      freshDefined: boolean;
-      freshLength: number;
-      freshPrefix: string;
-      nodeEnv?: string;
-      vercelEnv?: string;
-      deploy?: any;
-    };
-    timestamp?: string;
-    deploy?: any;
-  };
 }
 
 interface FormData {
@@ -606,28 +587,6 @@ export default function BlogGeneratorClient() {
                       : 'bg-yellow-50 text-yellow-800 border border-yellow-200'
                   }`}>
                     <strong>🔍 Status:</strong> {preview.aiStatus}
-                  </div>
-                )}
-
-                {/* Debug Info */}
-                {preview._debug && (
-                  <div className="p-3 rounded-md text-xs bg-gray-100 border border-gray-300 font-mono space-y-1">
-                    <div>
-                      <strong>🔧 Debug:</strong> v{preview._debug.version} | Key: {preview._debug.openaiKeyConfigured ? `✓ (${preview._debug.openaiKeyLength} chars)` : '✗ NOT SET'} | Branch: {preview._debug.branchTaken || 'unknown'}
-                    </div>
-                    {preview._debug.envSnapshot && (
-                      <div>
-                        Env: module {preview._debug.envSnapshot.moduleDefined ? 'set' : 'missing'} ({preview._debug.envSnapshot.moduleLength} chars), fresh {preview._debug.envSnapshot.freshDefined ? 'set' : 'missing'} ({preview._debug.envSnapshot.freshLength} chars) | nodeEnv {preview._debug.envSnapshot.nodeEnv || 'unknown'} | vercelEnv {preview._debug.envSnapshot.vercelEnv || 'unknown'}
-                      </div>
-                    )}
-                    {preview._debug.deploy && (
-                      <div>
-                        Deploy: commit {preview._debug.deploy.commit?.slice(0,7) || 'unknown'} | branch {preview._debug.deploy.branch || 'unknown'}
-                      </div>
-                    )}
-                    {preview._debug.timestamp && (
-                      <div>Timestamp: {preview._debug.timestamp}</div>
-                    )}
                   </div>
                 )}
 
