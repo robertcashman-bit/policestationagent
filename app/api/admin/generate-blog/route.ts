@@ -58,10 +58,6 @@ async function generateDALLEImage(topic: string, keyword: string): Promise<strin
   }
 
   try {
-    // #region agent log - DALL-E generation start
-    fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:DALLE_START',message:'Starting DALL-E image generation',data:{topic,keyword,hypothesisId:'H2'},timestamp:Date.now(),sessionId:'debug-session'})}).catch(()=>{});
-    // #endregion
-
     const prompt = `Professional, photorealistic image for a legal blog article about "${topic}". 
 The image should convey trust, professionalism, and legal expertise. 
 Style: Modern, clean, corporate photography. 
@@ -86,18 +82,11 @@ No text or words in the image. High quality, suitable for a professional law fir
     if (!response.ok) {
       const error = await response.json();
       console.error('DALL-E API error:', error);
-      // #region agent log - DALL-E error
-      fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:DALLE_ERROR',message:'DALL-E API error',data:{error:error.error?.message,hypothesisId:'H2'},timestamp:Date.now(),sessionId:'debug-session'})}).catch(()=>{});
-      // #endregion
       return null;
     }
 
     const data = await response.json();
     const imageUrl = data.data?.[0]?.url;
-
-    // #region agent log - DALL-E success
-    fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:DALLE_SUCCESS',message:'DALL-E image generated',data:{hasUrl:!!imageUrl,hypothesisId:'H2'},timestamp:Date.now(),sessionId:'debug-session'})}).catch(()=>{});
-    // #endregion
 
     return imageUrl || null;
   } catch (error) {
@@ -671,9 +660,6 @@ export async function POST(request: NextRequest) {
     // Handle images - including AI-generated images
     let aiGeneratedImageUrl: string | null = null;
     if (formData.imageSource === 'ai') {
-      // #region agent log - AI image request
-      fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:AI_IMAGE_REQUEST',message:'AI image generation requested',data:{topic:formData.topic,keyword:formData.primaryKeyword,hypothesisId:'H2'},timestamp:Date.now(),sessionId:'debug-session'})}).catch(()=>{});
-      // #endregion
       aiGeneratedImageUrl = await generateDALLEImage(formData.topic, formData.primaryKeyword);
     }
 
@@ -689,17 +675,9 @@ export async function POST(request: NextRequest) {
       featuredImage = allImageUrls[featuredIndex] || allImageUrls[0] || null;
     }
 
-    // #region agent log - Image debug instrumentation
-    fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:IMAGE_HANDLING',message:'Image parameters received',data:{includeInContentImages:formData.includeInContentImages,imageSource:formData.imageSource,imageUrlsReceived:formData.imageUrls,uploadedImageUrlsCount:uploadedImageUrls.length,allImageUrlsCount:allImageUrls.length,featuredImage:featuredImage,hypothesisId:'H1-H5'},timestamp:Date.now(),sessionId:'debug-session'})}).catch(()=>{});
-    // #endregion
-
     // Insert images into content if requested
     let finalContent = contentWithAdvert;
     if (formData.includeInContentImages && featuredImage) {
-      // #region agent log - Image insertion debug
-      fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:IMAGE_INSERTION',message:'Inserting image into content',data:{featuredImage:featuredImage,includeInContentImages:true,hypothesisId:'H1'},timestamp:Date.now(),sessionId:'debug-session'})}).catch(()=>{});
-      // #endregion
-      
       const imageHtml = `<figure class="blog-featured-image">
   <img src="${featuredImage}" alt="${title}" class="w-full rounded-lg shadow-md" />
   <figcaption class="text-sm text-gray-500 mt-2 text-center">${title}</figcaption>
@@ -718,10 +696,6 @@ export async function POST(request: NextRequest) {
       formData.primaryKeyword,
       formData.location
     );
-
-    // #region agent log - Final response debug
-    fetch('http://127.0.0.1:7242/ingest/a71355f9-ce75-4d93-916c-e7a3364b3e84',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'generate-blog/route.ts:RESPONSE',message:'Sending response',data:{hasImage:!!featuredImage,contentIncludesImage:finalContent.includes('<img'),hypothesisId:'H1'},timestamp:Date.now(),sessionId:'debug-session'})}).catch(()=>{});
-    // #endregion
 
     return NextResponse.json({
       title,
