@@ -225,6 +225,30 @@ export async function POST(request: NextRequest) {
       console.log('[posts/route] JSON save result:', jsonSaveResult);
     }
 
+    // If GitHub commit failed, provide the post data for manual addition
+    let manualJsonData = null;
+    if (published && !jsonSaveResult.success) {
+      const postData: BlogPostData = {
+        id: postId,
+        title,
+        slug,
+        content,
+        excerpt: excerpt || null,
+        author_id: 1,
+        published: 1,
+        published_at: publishedAt,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        meta_title: meta_title || null,
+        meta_description: meta_description || null,
+        faq_content: null,
+        location: 'Kent',
+        image: image || null,
+        schema_json: schemaJson,
+      };
+      manualJsonData = postData;
+    }
+
     return NextResponse.json({
       success: true,
       id: postId,
@@ -232,9 +256,10 @@ export async function POST(request: NextRequest) {
       url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://policestationagent.com'}/blog/${slug}`,
       jsonPersisted: jsonSaveResult.success,
       jsonError: jsonSaveResult.error,
+      manualJsonData: manualJsonData, // Post data if GitHub commit failed
       note: jsonSaveResult.success 
         ? 'Post saved and will be live after Vercel redeploys (1-2 minutes)' 
-        : 'Post saved to database but may not persist. Set GITHUB_TOKEN for permanent storage.',
+        : `Post saved to database. GitHub commit failed: ${jsonSaveResult.error || 'Unknown error'}. Post will not persist until added to JSON file.`,
     });
   } catch (error: any) {
     if (error.code === 'SQLITE_CONSTRAINT_UNIQUE') {
