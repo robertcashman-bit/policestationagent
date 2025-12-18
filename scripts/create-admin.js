@@ -1,4 +1,15 @@
-// Script to create admin user with provided credentials
+/**
+ * Create or update admin user
+ * 
+ * USAGE:
+ *   node scripts/create-admin.js <username> <password>
+ * 
+ * EXAMPLES:
+ *   node scripts/create-admin.js admin MySecurePassword123!
+ *   node scripts/create-admin.js Cashman100 MySecurePassword123!
+ * 
+ * For interactive mode with prompts, use: node scripts/init-admin.js
+ */
 const bcrypt = require('bcryptjs');
 const Database = require('better-sqlite3');
 const path = require('path');
@@ -24,8 +35,20 @@ db.exec(`
 `);
 
 async function createAdmin() {
-  const username = 'Cashman100';
-  const password = 'Bristol120566!';
+  const username = process.argv[2];
+  const password = process.argv[3];
+  
+  if (!username || !password) {
+    console.error('Error: Username and password are required.');
+    console.log('Usage: node scripts/create-admin.js <username> <password>');
+    console.log('Example: node scripts/create-admin.js admin MySecurePassword123!');
+    process.exit(1);
+  }
+
+  if (password.length < 8) {
+    console.error('Error: Password must be at least 8 characters.');
+    process.exit(1);
+  }
   
   try {
     const passwordHash = await bcrypt.hash(password, 10);

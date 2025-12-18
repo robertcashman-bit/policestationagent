@@ -400,6 +400,17 @@ export default function BlogGeneratorClient() {
                   />
                   <span className="ml-2 text-sm text-gray-700">Include Internal Links</span>
                 </label>
+
+                <label className="flex items-center">
+                  <input
+                    type="checkbox"
+                    name="includeInContentImages"
+                    checked={formData.includeInContentImages}
+                    onChange={handleInputChange}
+                    className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  />
+                  <span className="ml-2 text-sm text-gray-700">Insert Images into Content</span>
+                </label>
               </div>
 
               {/* Image Options */}
