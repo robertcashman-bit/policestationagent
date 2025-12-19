@@ -30,11 +30,34 @@ interface BlogPostData {
 /**
  * Save post to JSON file via GitHub API (for Vercel) or locally (for dev)
  */
-async function savePostToJsonFile(post: BlogPostData): Promise<{ success: boolean; error?: string }> {
+async function savePostToJsonFile(post: BlogPostData): Promise<{ success: boolean; error?: string; method?: string }> {
+  const debugInfo: string[] = [];
+  
   try {
     // Try local filesystem first (works in development)
     const localJsonPath = path.join(process.cwd(), 'data', 'blog-posts-full.json');
+    debugInfo.push(`Local path: ${localJsonPath}`);
+    debugInfo.push(`File exists: ${fs.existsSync(localJsonPath)}`);
+    debugInfo.push(`GITHUB_TOKEN set: ${!!GITHUB_TOKEN}`);
+    debugInfo.push(`GITHUB_REPO: ${GITHUB_REPO}`);
+    debugInfo.push(`Is Vercel: ${!!process.env.VERCEL}`);
     
+    // On Vercel, skip local write attempt and go straight to GitHub
+    if (process.env.VERCEL) {
+      debugInfo.push('Vercel detected - skipping local write, using GitHub API');
+      if (GITHUB_TOKEN) {
+        const result = await savePostViaGitHub(post);
+        return { ...result, method: 'github', error: result.error ? `${result.error} | Debug: ${debugInfo.join(', ')}` : undefined };
+      } else {
+        return { 
+          success: false, 
+          error: `GITHUB_TOKEN not configured on Vercel | Debug: ${debugInfo.join(', ')}`,
+          method: 'none'
+        };
+      }
+    }
+    
+    // Local development - try filesystem
     if (fs.existsSync(localJsonPath)) {
       try {
         const existingData = fs.readFileSync(localJsonPath, 'utf-8');
@@ -52,28 +75,32 @@ async function savePostToJsonFile(post: BlogPostData): Promise<{ success: boolea
         try {
           fs.writeFileSync(localJsonPath, JSON.stringify(posts, null, 2), 'utf-8');
           console.log('[posts/route] Saved post to local JSON file');
-          return { success: true };
-        } catch (writeError) {
-          // Local write failed (likely Vercel read-only filesystem)
+          return { success: true, method: 'local' };
+        } catch (writeError: any) {
+          debugInfo.push(`Local write error: ${writeError.message}`);
           console.log('[posts/route] Local write failed, trying GitHub API');
         }
-      } catch (parseError) {
+      } catch (parseError: any) {
+        debugInfo.push(`Parse error: ${parseError.message}`);
         console.error('[posts/route] Failed to parse JSON file:', parseError);
       }
     }
 
-    // Try GitHub API (for Vercel production)
+    // Try GitHub API as fallback
     if (GITHUB_TOKEN) {
-      return await savePostViaGitHub(post);
+      debugInfo.push('Trying GitHub API fallback');
+      const result = await savePostViaGitHub(post);
+      return { ...result, method: 'github', error: result.error ? `${result.error} | Debug: ${debugInfo.join(', ')}` : undefined };
     }
 
     return { 
       success: false, 
-      error: 'Cannot persist post: No write access to JSON file and no GITHUB_TOKEN configured' 
+      error: `Cannot persist: No local write access and no GITHUB_TOKEN | Debug: ${debugInfo.join(', ')}`,
+      method: 'none'
     };
-  } catch (error) {
+  } catch (error: any) {
     console.error('[posts/route] Error saving to JSON:', error);
-    return { success: false, error: String(error) };
+    return { success: false, error: `${error.message} | Debug: ${debugInfo.join(', ')}`, method: 'error' };
   }
 }
 
@@ -84,8 +111,14 @@ async function savePostViaGitHub(post: BlogPostData): Promise<{ success: boolean
   try {
     const [owner, repo] = GITHUB_REPO.split('/');
     
+    if (!owner || !repo) {
+      return { success: false, error: `Invalid GITHUB_REPO format: "${GITHUB_REPO}" - expected "owner/repo"` };
+    }
+    
     // 1. Get current file content and SHA
     const getFileUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${JSON_FILE_PATH}`;
+    console.log('[posts/route] GitHub GET:', getFileUrl);
+    
     const getResponse = await fetch(getFileUrl, {
       headers: {
         'Authorization': `Bearer ${GITHUB_TOKEN}`,
@@ -96,7 +129,10 @@ async function savePostViaGitHub(post: BlogPostData): Promise<{ success: boolean
     if (!getResponse.ok) {
       const error = await getResponse.json();
       console.error('[posts/route] GitHub GET error:', error);
-      return { success: false, error: `GitHub API error: ${error.message}` };
+      return { 
+        success: false, 
+        error: `GitHub GET failed (${getResponse.status}): ${error.message}. URL: ${getFileUrl}. Check: 1) Token has repo access, 2) File exists at ${JSON_FILE_PATH}` 
+      };
     }
 
     const fileData = await getResponse.json();
@@ -131,7 +167,10 @@ async function savePostViaGitHub(post: BlogPostData): Promise<{ success: boolean
     if (!updateResponse.ok) {
       const error = await updateResponse.json();
       console.error('[posts/route] GitHub PUT error:', error);
-      return { success: false, error: `GitHub commit failed: ${error.message}` };
+      return { 
+        success: false, 
+        error: `GitHub PUT failed (${updateResponse.status}): ${error.message}. Check: Token needs "Contents: Read and write" permission.` 
+      };
     }
 
     console.log('[posts/route] Successfully committed post to GitHub');
@@ -167,6 +206,13 @@ export async function POST(request: NextRequest) {
 
   try {
     const { title, slug, content, excerpt, published, meta_title, meta_description, image, schema } = await request.json();
+    
+    // Get the origin from the request to return correct URL
+    const origin = request.headers.get('origin') || request.headers.get('host') || '';
+    const isLocalhost = origin.includes('localhost') || origin.includes('127.0.0.1');
+    const baseUrl = isLocalhost 
+      ? `http://${origin.includes('://') ? origin.split('://')[1] : origin}`
+      : (process.env.NEXT_PUBLIC_SITE_URL || 'https://policestationagent.com');
 
     if (!title || !slug || !content) {
       return NextResponse.json(
@@ -201,7 +247,7 @@ export async function POST(request: NextRequest) {
     const postId = Number(result.lastInsertRowid);
 
     // Also save to JSON file for persistence on Vercel
-    let jsonSaveResult: { success: boolean; error?: string } = { success: false, error: 'Not attempted' };
+    let jsonSaveResult: { success: boolean; error?: string; method?: string } = { success: false, error: 'Not attempted', method: 'none' };
     if (published) {
       const postData: BlogPostData = {
         id: postId,
@@ -253,10 +299,16 @@ export async function POST(request: NextRequest) {
       success: true,
       id: postId,
       slug,
-      url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://policestationagent.com'}/blog/${slug}`,
+      url: `${baseUrl}/blog/${slug}`,
       jsonPersisted: jsonSaveResult.success,
+      jsonMethod: jsonSaveResult.method,
       jsonError: jsonSaveResult.error,
       manualJsonData: manualJsonData, // Post data if GitHub commit failed
+      debug: {
+        isVercel: !!process.env.VERCEL,
+        hasGithubToken: !!GITHUB_TOKEN,
+        githubRepo: GITHUB_REPO,
+      },
       note: jsonSaveResult.success 
         ? 'Post saved and will be live after Vercel redeploys (1-2 minutes)' 
         : `Post saved to database. GitHub commit failed: ${jsonSaveResult.error || 'Unknown error'}. Post will not persist until added to JSON file.`,

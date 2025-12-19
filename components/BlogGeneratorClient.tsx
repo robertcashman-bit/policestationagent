@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, ChangeEvent } from 'react';
-import { signOut } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 interface BlogPreview {
   title: string;
@@ -44,6 +44,7 @@ const CATEGORIES = [
 ];
 
 export default function BlogGeneratorClient() {
+  const router = useRouter();
   const [formData, setFormData] = useState<FormData>({
     topic: '',
     primaryKeyword: '',
@@ -64,6 +65,17 @@ export default function BlogGeneratorClient() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [publishedUrl, setPublishedUrl] = useState<string | null>(null);
+  const [publishWarning, setPublishWarning] = useState<string | null>(null);
+
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/admin/logout', { method: 'POST' });
+      router.push('/');
+    } catch (error) {
+      console.error('Logout error:', error);
+      router.push('/');
+    }
+  };
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -209,6 +221,7 @@ export default function BlogGeneratorClient() {
 
     setLoading(true);
     setError(null);
+    setPublishWarning(null);
 
     try {
       const response = await fetch('/api/admin/posts', {
@@ -236,6 +249,19 @@ export default function BlogGeneratorClient() {
 
       const data = await response.json();
       setPublishedUrl(data.url);
+      
+      // Check if JSON persistence failed (important for Vercel!)
+      if (!data.jsonPersisted) {
+        const debugInfo = data.debug 
+          ? `\n\nDebug: Vercel=${data.debug.isVercel}, Token=${data.debug.hasGithubToken}, Repo=${data.debug.githubRepo}, Method=${data.jsonMethod}`
+          : '';
+        setPublishWarning(
+          `⚠️ WARNING: Post saved to temporary database but NOT persisted to JSON file. ` +
+          `Error: ${data.jsonError || 'Unknown'}. ` +
+          `The post will be LOST on next deployment. ` +
+          `To fix: Set GITHUB_TOKEN and GITHUB_REPO in Vercel environment variables, or manually add to blog-posts-full.json.${debugInfo}`
+        );
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to publish post');
     } finally {
@@ -255,7 +281,7 @@ export default function BlogGeneratorClient() {
             </p>
           </div>
           <button
-            onClick={() => signOut({ callbackUrl: '/' })}
+            onClick={handleLogout}
             className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
           >
             Sign Out
@@ -269,13 +295,20 @@ export default function BlogGeneratorClient() {
         )}
 
         {publishedUrl && (
-          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-md">
-            <p className="text-green-700">
-              Published successfully!{' '}
-              <a href={publishedUrl} target="_blank" rel="noopener noreferrer" className="underline">
+          <div className={`mb-6 p-4 rounded-md ${publishWarning ? 'bg-yellow-50 border border-yellow-200' : 'bg-green-50 border border-green-200'}`}>
+            <p className={publishWarning ? 'text-yellow-700' : 'text-green-700'}>
+              {publishWarning ? 'Post created (with issues)' : 'Published successfully!'}{' '}
+              <a href={publishedUrl} target="_blank" rel="noopener noreferrer" className="underline font-medium">
                 View post
               </a>
             </p>
+            {publishWarning && (
+              <div className="mt-3 p-3 bg-red-50 border border-red-200 rounded text-sm text-red-800">
+                <strong>🚨 PERSISTENCE FAILED:</strong>
+                <p className="mt-1">{publishWarning}</p>
+                <p className="mt-2 font-medium">The post may work temporarily but will be LOST on next deployment!</p>
+              </div>
+            )}
           </div>
         )}
 
