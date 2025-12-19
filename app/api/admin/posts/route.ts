@@ -303,12 +303,144 @@ async function savePostViaGitHub(post: BlogPostData): Promise<{ success: boolean
       return { success: true };
     }
 
-    // If Contents API fails due to size, we could fall back to Git Data API
-    // But for now, fail loudly with error details
     const errorData = await putResponse.json();
-    // #region agent log - PUT error details
-    logDebug(`PUT ERROR: ${JSON.stringify(errorData)}`);
-    // #endregion
+    logDebug(`PUT ERROR (Contents API): ${JSON.stringify(errorData)}`);
+
+    // If Contents API fails (often due to file size > 1MB), fall back to Git Data API
+    if (putResponse.status === 404 || putResponse.status === 422) {
+      logDebug('Contents API failed, falling back to Git Data API for large file');
+      
+      try {
+        // Step 1: Create a blob with the new content
+        const blobUrl = `https://api.github.com/repos/${owner}/${repo}/git/blobs`;
+        logDebug(`Creating blob at: ${blobUrl}`);
+        
+        const blobResponse = await fetch(blobUrl, {
+          method: 'POST',
+          headers,
+          body: JSON.stringify({
+            content: updatedContent,
+            encoding: 'utf-8',
+          }),
+        });
+
+        if (!blobResponse.ok) {
+          const blobError = await blobResponse.json();
+          logDebug(`Blob creation failed: ${JSON.stringify(blobError)}`);
+          return { success: false, error: `Failed to create blob: ${blobError.message} | Debug: ${debugLog.join(' | ')}` };
+        }
+
+        const blobData = await blobResponse.json();
+        const newBlobSha = blobData.sha;
+        logDebug(`Created blob with SHA: ${newBlobSha}`);
+
+        // Step 2: Get the current commit SHA for master branch
+        const refUrl = `https://api.github.com/repos/${owner}/${repo}/git/refs/heads/${branch}`;
+        logDebug(`Getting ref: ${refUrl}`);
+        
+        const refResponse = await fetch(refUrl, { headers });
+        if (!refResponse.ok) {
+          const refError = await refResponse.json();
+          logDebug(`Get ref failed: ${JSON.stringify(refError)}`);
+          return { success: false, error: `Failed to get branch ref: ${refError.message} | Debug: ${debugLog.join(' | ')}` };
+        }
+
+        const refData = await refResponse.json();
+        const currentCommitSha = refData.object.sha;
+        logDebug(`Current commit SHA: ${currentCommitSha}`);
+
+        // Step 3: Get the current commit to find the tree SHA
+        const commitUrl = `https://api.github.com/repos/${owner}/${repo}/git/commits/${currentCommitSha}`;
+        const commitResponse = await fetch(commitUrl, { headers });
+        if (!commitResponse.ok) {
+          const commitError = await commitResponse.json();
+          logDebug(`Get commit failed: ${JSON.stringify(commitError)}`);
+          return { success: false, error: `Failed to get commit: ${commitError.message} | Debug: ${debugLog.join(' | ')}` };
+        }
+
+        const commitData = await commitResponse.json();
+        const baseTreeSha = commitData.tree.sha;
+        logDebug(`Base tree SHA: ${baseTreeSha}`);
+
+        // Step 4: Create a new tree with the updated file
+        const treeUrl = `https://api.github.com/repos/${owner}/${repo}/git/trees`;
+        logDebug(`Creating tree at: ${treeUrl}`);
+        
+        const treeResponse = await fetch(treeUrl, {
+          method: 'POST',
+          headers,
+          body: JSON.stringify({
+            base_tree: baseTreeSha,
+            tree: [{
+              path: filePath,
+              mode: '100644',
+              type: 'blob',
+              sha: newBlobSha,
+            }],
+          }),
+        });
+
+        if (!treeResponse.ok) {
+          const treeError = await treeResponse.json();
+          logDebug(`Tree creation failed: ${JSON.stringify(treeError)}`);
+          return { success: false, error: `Failed to create tree: ${treeError.message} | Debug: ${debugLog.join(' | ')}` };
+        }
+
+        const treeData = await treeResponse.json();
+        const newTreeSha = treeData.sha;
+        logDebug(`Created tree with SHA: ${newTreeSha}`);
+
+        // Step 5: Create a new commit
+        const newCommitUrl = `https://api.github.com/repos/${owner}/${repo}/git/commits`;
+        logDebug(`Creating commit at: ${newCommitUrl}`);
+        
+        const newCommitResponse = await fetch(newCommitUrl, {
+          method: 'POST',
+          headers,
+          body: JSON.stringify({
+            message: `Add blog post: ${post.title}`,
+            tree: newTreeSha,
+            parents: [currentCommitSha],
+          }),
+        });
+
+        if (!newCommitResponse.ok) {
+          const newCommitError = await newCommitResponse.json();
+          logDebug(`Commit creation failed: ${JSON.stringify(newCommitError)}`);
+          return { success: false, error: `Failed to create commit: ${newCommitError.message} | Debug: ${debugLog.join(' | ')}` };
+        }
+
+        const newCommitData = await newCommitResponse.json();
+        const newCommitSha = newCommitData.sha;
+        logDebug(`Created commit with SHA: ${newCommitSha}`);
+
+        // Step 6: Update the branch reference to point to the new commit
+        logDebug(`Updating ref: ${refUrl}`);
+        
+        const updateRefResponse = await fetch(refUrl, {
+          method: 'PATCH',
+          headers,
+          body: JSON.stringify({
+            sha: newCommitSha,
+            force: false,
+          }),
+        });
+
+        if (!updateRefResponse.ok) {
+          const updateRefError = await updateRefResponse.json();
+          logDebug(`Update ref failed: ${JSON.stringify(updateRefError)}`);
+          return { success: false, error: `Failed to update branch: ${updateRefError.message} | Debug: ${debugLog.join(' | ')}` };
+        }
+
+        logDebug('✅ Successfully committed to GitHub via Git Data API');
+        return { success: true };
+
+      } catch (gitDataError: any) {
+        logDebug(`Git Data API error: ${gitDataError.message}`);
+        return { success: false, error: `Git Data API failed: ${gitDataError.message} | Debug: ${debugLog.join(' | ')}` };
+      }
+    }
+
     const errorMsg = `GitHub PUT failed (${putResponse.status}): ${errorData.message}. File size: ${contentSizeMB.toFixed(2)}MB`;
     return { success: false, error: `${errorMsg} | Debug: ${debugLog.join(' | ')}` };
 
