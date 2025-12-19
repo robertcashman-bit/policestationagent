@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
     environment: {
       GITHUB_TOKEN_SET: !!GITHUB_TOKEN,
       GITHUB_TOKEN_LENGTH: GITHUB_TOKEN?.length || 0,
-      GITHUB_TOKEN_PREFIX: GITHUB_TOKEN?.substring(0, 10) + '...' || 'NOT SET',
+      GITHUB_TOKEN_PREFIX: GITHUB_TOKEN ? GITHUB_TOKEN.substring(0, 10) + '...' : 'NOT SET',
       GITHUB_REPO: GITHUB_REPO,
       JSON_FILE_PATH: JSON_FILE_PATH,
       VERCEL: process.env.VERCEL || 'false',
