@@ -9,6 +9,10 @@ const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const GITHUB_REPO = process.env.GITHUB_REPO || 'robertdavidcashman-droid/one';
 const JSON_FILE_PATH = 'data/blog-posts-full.json';
 
+// Redis configuration (Vercel KV or Upstash)
+const REDIS_URL = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL || '';
+const REDIS_TOKEN = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN || '';
+
 interface BlogPostData {
   id: number;
   title: string;
@@ -29,7 +33,63 @@ interface BlogPostData {
 }
 
 /**
+ * Save post to Redis (Vercel KV / Upstash) - preferred method for serverless
+ */
+async function savePostToRedis(post: BlogPostData): Promise<{ success: boolean; error?: string }> {
+  if (!REDIS_URL || !REDIS_TOKEN) {
+    return { success: false, error: 'Redis not configured' };
+  }
+
+  try {
+    const slug = post.slug;
+    const KEY_POST = `blog:post:${slug}`;
+    const KEY_INDEX = 'blog:index';
+    const KEY_META = `blog:meta:${slug}`;
+
+    const meta = {
+      slug,
+      title: post.title,
+      category: 'Police Station Advice',
+      location: post.location || 'Kent',
+      primaryKeyword: post.meta_title || '',
+      createdAt: post.created_at,
+      updatedAt: post.updated_at,
+    };
+
+    const score = Date.now();
+
+    // Pipeline commands
+    const commands = [
+      ['SET', KEY_POST, JSON.stringify(post)],
+      ['HSET', KEY_META, ...Object.entries(meta).flat()],
+      ['ZADD', KEY_INDEX, score, slug],
+    ];
+
+    const url = `${REDIS_URL.replace(/\/$/, '')}/pipeline`;
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${REDIS_TOKEN}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(commands),
+    });
+
+    if (!res.ok) {
+      const text = await res.text();
+      return { success: false, error: `Redis error ${res.status}: ${text}` };
+    }
+
+    console.log('[posts/route] ✅ Successfully saved to Redis');
+    return { success: true };
+  } catch (error: any) {
+    return { success: false, error: `Redis error: ${error.message}` };
+  }
+}
+
+/**
  * Save post to JSON file via GitHub API (for Vercel) or locally (for dev)
+ * Now tries Redis FIRST, then falls back to GitHub/local
  */
 async function savePostToJsonFile(post: BlogPostData): Promise<{ success: boolean; error?: string; method?: string }> {
   const debugInfo: string[] = [];
@@ -42,17 +102,29 @@ async function savePostToJsonFile(post: BlogPostData): Promise<{ success: boolea
     debugInfo.push(`GITHUB_TOKEN set: ${!!GITHUB_TOKEN}`);
     debugInfo.push(`GITHUB_REPO: ${GITHUB_REPO}`);
     debugInfo.push(`Is Vercel: ${!!process.env.VERCEL}`);
+    debugInfo.push(`REDIS configured: ${!!(REDIS_URL && REDIS_TOKEN)}`);
     
-    // On Vercel, skip local write attempt and go straight to GitHub
+    // On Vercel, try Redis FIRST (most reliable), then fall back to GitHub
     if (process.env.VERCEL) {
-      debugInfo.push('Vercel detected - skipping local write, using GitHub API');
+      // Try Redis first - this is the most reliable method
+      if (REDIS_URL && REDIS_TOKEN) {
+        debugInfo.push('Trying Redis persistence (preferred)');
+        const redisResult = await savePostToRedis(post);
+        if (redisResult.success) {
+          return { success: true, method: 'redis' };
+        }
+        debugInfo.push(`Redis failed: ${redisResult.error}`);
+      }
+
+      // Fall back to GitHub if Redis not configured or failed
+      debugInfo.push('Falling back to GitHub API');
       if (GITHUB_TOKEN) {
         const result = await savePostViaGitHub(post);
         return { ...result, method: 'github', error: result.error ? `${result.error} | Debug: ${debugInfo.join(', ')}` : undefined };
       } else {
         return { 
           success: false, 
-          error: `GITHUB_TOKEN not configured on Vercel | Debug: ${debugInfo.join(', ')}`,
+          error: `Neither Redis nor GitHub configured on Vercel | Debug: ${debugInfo.join(', ')}`,
           method: 'none'
         };
       }
