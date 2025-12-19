@@ -115,7 +115,7 @@ async function savePostViaGitHub(post: BlogPostData): Promise<{ success: boolean
       return { success: false, error: `Invalid GITHUB_REPO format: "${GITHUB_REPO}" - expected "owner/repo"` };
     }
     
-    // 1. Get current file content and SHA
+    // 1. Get current file metadata and SHA
     const getFileUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${JSON_FILE_PATH}`;
     console.log('[posts/route] GitHub GET:', getFileUrl);
     
@@ -136,7 +136,33 @@ async function savePostViaGitHub(post: BlogPostData): Promise<{ success: boolean
     }
 
     const fileData = await getResponse.json();
-    const currentContent = Buffer.from(fileData.content, 'base64').toString('utf-8');
+    
+    // For large files (>1MB), GitHub doesn't include content inline
+    // We need to fetch from download_url or use the raw endpoint
+    let currentContent: string;
+    
+    if (fileData.content) {
+      // Small file - content is inline as base64
+      currentContent = Buffer.from(fileData.content, 'base64').toString('utf-8');
+    } else if (fileData.download_url) {
+      // Large file - need to fetch from download_url
+      console.log('[posts/route] Large file detected, fetching from download_url');
+      const rawResponse = await fetch(fileData.download_url);
+      if (!rawResponse.ok) {
+        return { success: false, error: `Failed to fetch large file: ${rawResponse.status}` };
+      }
+      currentContent = await rawResponse.text();
+    } else {
+      // Fallback: fetch raw content directly
+      console.log('[posts/route] No content or download_url, fetching raw');
+      const rawUrl = `https://raw.githubusercontent.com/${owner}/${repo}/master/${JSON_FILE_PATH}`;
+      const rawResponse = await fetch(rawUrl);
+      if (!rawResponse.ok) {
+        return { success: false, error: `Failed to fetch raw file: ${rawResponse.status}` };
+      }
+      currentContent = await rawResponse.text();
+    }
+    
     const posts: BlogPostData[] = JSON.parse(currentContent);
 
     // 2. Add or update post
