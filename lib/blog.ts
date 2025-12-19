@@ -382,10 +382,7 @@ function getPostsFromJsonFile(): BlogPost[] {
  */
 export function getPublishedBlogPosts(): BlogPostSummary[] {
   try {
-    // Try JSON file first (persists across serverless invocations)
-    const jsonPosts = getPostsFromJsonFile();
-    
-    let allPosts: Array<{
+    let dbPosts: Array<{
       id: number;
       title: string;
       slug: string;
@@ -395,41 +392,75 @@ export function getPublishedBlogPosts(): BlogPostSummary[] {
       created_at: string;
     }> = [];
 
-    // Use JSON posts if available
-    if (jsonPosts.length > 0) {
-      allPosts = jsonPosts.map(p => ({
-        id: p.id,
-        title: p.title,
-        slug: p.slug,
-        content: p.content,
-        excerpt: p.excerpt,
-        published_at: p.published_at,
-        created_at: p.created_at,
-      }));
-      console.log(`[blog.ts] Using ${allPosts.length} posts from JSON file`);
-    } else {
-      // Fallback to SQLite
-      try {
-        const db = getDb();
-        allPosts = db.prepare(`
-          SELECT 
-            id,
-            title,
-            slug,
-            content,
-            excerpt,
-            published_at,
-            created_at
-          FROM blog_posts 
-          WHERE published = 1
-          ORDER BY 
-            COALESCE(published_at, created_at) DESC
-        `).all() as typeof allPosts;
-        console.log(`[blog.ts] Using ${allPosts.length} posts from SQLite`);
-      } catch (dbError) {
-        console.error('[blog.ts] SQLite error:', dbError);
+    let jsonPosts: BlogPost[] = [];
+
+    // CRITICAL FIX: Read from BOTH database and JSON, then merge.
+    // This ensures posts in JSON but not DB are still visible.
+    
+    // Try database first (source of truth for published posts)
+    try {
+      const db = getDb();
+      dbPosts = db.prepare(`
+        SELECT 
+          id,
+          title,
+          slug,
+          content,
+          excerpt,
+          published_at,
+          created_at
+        FROM blog_posts 
+        WHERE published = 1
+        ORDER BY 
+          COALESCE(published_at, created_at) DESC
+      `).all() as typeof dbPosts;
+      console.log(`[blog.ts] Found ${dbPosts.length} posts in SQLite`);
+    } catch (dbError) {
+      console.error('[blog.ts] SQLite error:', dbError);
+    }
+
+    // Always try JSON file as well (for posts that may not be in DB)
+    try {
+      jsonPosts = getPostsFromJsonFile();
+      console.log(`[blog.ts] Found ${jsonPosts.length} posts in JSON file`);
+    } catch (jsonError) {
+      console.error('[blog.ts] JSON file error:', jsonError);
+    }
+
+    // Merge posts: Database takes precedence, but include JSON posts not in DB
+    const postMap = new Map<string, typeof dbPosts[0]>();
+    
+    // Add database posts first (these take precedence)
+    for (const post of dbPosts) {
+      const normalizedSlug = deriveSlugIfNeeded(post.slug, post.title);
+      postMap.set(normalizedSlug, post);
+    }
+    
+    // Add JSON posts that aren't in database (by normalized slug)
+    for (const jsonPost of jsonPosts) {
+      const normalizedSlug = deriveSlugIfNeeded(jsonPost.slug, jsonPost.title);
+      if (!postMap.has(normalizedSlug)) {
+        // Convert JSON post to same format as DB post
+        postMap.set(normalizedSlug, {
+          id: jsonPost.id,
+          title: jsonPost.title,
+          slug: jsonPost.slug,
+          content: jsonPost.content,
+          excerpt: jsonPost.excerpt,
+          published_at: jsonPost.published_at,
+          created_at: jsonPost.created_at,
+        });
       }
     }
+
+    // Convert map to array and sort by date
+    const allPosts = Array.from(postMap.values()).sort((a, b) => {
+      const dateA = a.published_at || a.created_at;
+      const dateB = b.published_at || b.created_at;
+      return new Date(dateB).getTime() - new Date(dateA).getTime();
+    });
+
+    console.log(`[blog.ts] Merged ${allPosts.length} total posts (${dbPosts.length} from DB, ${jsonPosts.length} from JSON)`);
 
     // Normalize slugs, extract images, and generate excerpts for each post
     const normalizedPosts: BlogPostSummary[] = allPosts.map(post => {
@@ -484,7 +515,54 @@ export function getPostBySlug(slug: string): BlogPost | null {
     // Normalize the incoming slug for matching
     const normalizedInputSlug = normalizeSlug(slug);
     
-    // Try JSON file first (persists across serverless invocations)
+    // CRITICAL FIX: Check BOTH JSON and database, not just one or the other.
+    // JSON file may be stale (especially if GitHub commit failed), so we must
+    // always check the database as the source of truth for published posts.
+    
+    // First, try database (source of truth for published posts)
+    try {
+      const db = getDb();
+      
+      // Get all published posts from database
+      const posts = db.prepare(`
+        SELECT 
+          id,
+          title,
+          slug,
+          content,
+          excerpt,
+          meta_title,
+          meta_description,
+          published_at,
+          created_at,
+          updated_at,
+          image,
+          schema_json,
+          published
+        FROM blog_posts 
+        WHERE published = 1
+      `).all() as BlogPost[];
+
+      // Find matching post by normalized slug (case-insensitive)
+      const post = posts.find(p => {
+        const postNormalizedSlug = deriveSlugIfNeeded(p.slug, p.title);
+        return postNormalizedSlug === normalizedInputSlug || 
+               normalizeSlug(p.slug) === normalizedInputSlug;
+      });
+
+      if (post) {
+        console.log(`[blog.ts] Found post in SQLite: ${post.slug}`);
+        return {
+          ...post,
+          slug: deriveSlugIfNeeded(post.slug, post.title),
+          image: post.image || extractFirstImage(post.content),
+        };
+      }
+    } catch (dbError) {
+      console.error('[blog.ts] SQLite error:', dbError);
+    }
+    
+    // Fallback to JSON file (for cases where database is unavailable)
     const jsonPosts = getPostsFromJsonFile();
     
     if (jsonPosts.length > 0) {
@@ -502,48 +580,6 @@ export function getPostBySlug(slug: string): BlogPost | null {
           image: post.image || extractFirstImage(post.content),
         };
       }
-    }
-    
-    // Fallback to SQLite
-    try {
-      const db = getDb();
-      
-      // Get all published posts
-      const posts = db.prepare(`
-        SELECT 
-          id,
-          title,
-          slug,
-          content,
-          excerpt,
-          meta_title,
-          meta_description,
-          published_at,
-          created_at,
-          updated_at,
-          image,
-          schema_json
-        FROM blog_posts 
-        WHERE published = 1
-      `).all() as BlogPost[];
-
-      // Find matching post by normalized slug (case-insensitive)
-      const post = posts.find(p => {
-        const postNormalizedSlug = deriveSlugIfNeeded(p.slug, p.title);
-        return postNormalizedSlug === normalizedInputSlug || 
-               normalizeSlug(p.slug) === normalizedInputSlug;
-      });
-
-      if (post) {
-        console.log(`[blog.ts] Found post in SQLite: ${post.slug}`);
-        return {
-          ...post,
-          slug: deriveSlugIfNeeded(post.slug, post.title),
-          image: extractFirstImage(post.content),
-        };
-      }
-    } catch (dbError) {
-      console.error('[blog.ts] SQLite error:', dbError);
     }
 
     console.log(`[blog.ts] getPostBySlug: No post found for slug "${slug}" (normalized: "${normalizedInputSlug}")`);

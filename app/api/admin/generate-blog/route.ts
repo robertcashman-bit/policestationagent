@@ -2,20 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getAdminSession } from '@/lib/admin-auth';
 import { writeFile, mkdir } from 'fs/promises';
 import path from 'path';
+import { normalizeSlug } from '@/lib/blog';
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://policestationagent.com';
-
-/**
- * Generate URL-friendly slug from text
- */
-function generateSlug(text: string): string {
-  return text
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-    .substring(0, 60);
-}
 
 /**
  * Call OpenAI API for content generation
@@ -627,7 +617,7 @@ export async function POST(request: NextRequest) {
       
       const files = multipartData.getAll('uploadedImages') as File[];
       if (files.length > 0) {
-        const slug = generateSlug(formData.topic || formData.primaryKeyword);
+        const slug = normalizeSlug(formData.topic || formData.primaryKeyword);
         uploadedImageUrls = await handleUploadedImages(files, slug);
       }
     } else {
@@ -652,7 +642,7 @@ export async function POST(request: NextRequest) {
     }
 
     const { title, content, excerpt, metaTitle, metaDescription, faqs } = generatedContent;
-    const slug = generateSlug(formData.topic || formData.primaryKeyword);
+    const slug = normalizeSlug(formData.topic || formData.primaryKeyword);
 
     // Append mandatory advert block
     const contentWithAdvert = content + generateAdvertBlock();

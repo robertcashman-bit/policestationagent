@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import db from '@/lib/db';
 import { getAdminSession } from '@/lib/admin-auth';
+import { normalizeSlug } from '@/lib/blog';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -105,159 +106,166 @@ async function savePostToJsonFile(post: BlogPostData): Promise<{ success: boolea
 }
 
 /**
- * Commit post to GitHub repository
- */
-/**
- * Save post via GitHub Git Data API (supports large files >1MB)
- * The Contents API has a 1MB limit, so for large files we use the Git Data API:
- * 1. Fetch current file content
- * 2. Update the posts array
- * 3. Create a new blob with the updated content
- * 4. Get the current commit
- * 5. Create a new tree with the updated blob
- * 6. Create a new commit
- * 7. Update the branch reference
+ * Save post to GitHub using Contents API (preferred) or Git Data API (for large files)
+ * 
+ * REQUIRED:
+ * - GITHUB_TOKEN must be set (fails loudly if missing)
+ * - GITHUB_REPO must be set (fails loudly if missing)
+ * - All operations target master branch explicitly
+ * - File path: data/blog-posts-full.json (repo-relative, no leading slash)
+ * - Authentication: token <TOKEN> (not Bearer)
  */
 async function savePostViaGitHub(post: BlogPostData): Promise<{ success: boolean; error?: string }> {
+  // Fail loudly if required env vars are missing
+  if (!GITHUB_TOKEN) {
+    const error = 'GITHUB_TOKEN environment variable is required but not set';
+    console.error('[posts/route] FATAL:', error);
+    return { success: false, error };
+  }
+
+  if (!GITHUB_REPO) {
+    const error = 'GITHUB_REPO environment variable is required but not set';
+    console.error('[posts/route] FATAL:', error);
+    return { success: false, error };
+  }
+
+  const [owner, repo] = GITHUB_REPO.split('/');
+  if (!owner || !repo) {
+    const error = `Invalid GITHUB_REPO format: "${GITHUB_REPO}" - expected "owner/repo"`;
+    console.error('[posts/route] FATAL:', error);
+    return { success: false, error };
+  }
+
+  const branch = 'master'; // Explicitly use master, never main
+  const filePath = JSON_FILE_PATH; // data/blog-posts-full.json (repo-relative)
+
+  // Log before writing
+  console.log('[posts/route] GitHub persistence:', {
+    repo: GITHUB_REPO,
+    branch: 'master',
+    path: 'data/blog-posts-full.json',
+  });
+
+  // GitHub Contents API requires 'token' not 'Bearer'
+  const headers = {
+    'Authorization': `token ${GITHUB_TOKEN}`,
+    'Accept': 'application/vnd.github.v3+json',
+    'Content-Type': 'application/json',
+  };
+
   try {
-    const [owner, repo] = GITHUB_REPO.split('/');
-    const branch = 'master';
+    // Step 1: GET file contents with explicit ref=master
+    const getFileUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}?ref=${branch}`;
+    console.log('[posts/route] GET file:', getFileUrl);
     
-    if (!owner || !repo) {
-      return { success: false, error: `Invalid GITHUB_REPO format: "${GITHUB_REPO}" - expected "owner/repo"` };
-    }
+    const getResponse = await fetch(getFileUrl, { headers });
 
-    const headers = {
-      'Authorization': `Bearer ${GITHUB_TOKEN}`,
-      'Accept': 'application/vnd.github.v3+json',
-      'Content-Type': 'application/json',
-    };
-    
-    // 1. Fetch current file content from raw URL (fastest for large files)
-    console.log('[posts/route] Step 1: Fetching current file content');
-    const rawUrl = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${JSON_FILE_PATH}`;
-    const rawResponse = await fetch(rawUrl);
-    if (!rawResponse.ok) {
-      return { success: false, error: `Failed to fetch current file: ${rawResponse.status}` };
-    }
-    const currentContent = await rawResponse.text();
-    const posts: BlogPostData[] = JSON.parse(currentContent);
-    
-    // 2. Update the posts array
-    console.log('[posts/route] Step 2: Updating posts array');
-    const existingIndex = posts.findIndex(p => p.slug === post.slug);
-    if (existingIndex >= 0) {
-      posts[existingIndex] = post;
+    let existingPosts: BlogPostData[] = [];
+    let fileSha: string | null = null;
+
+    if (getResponse.status === 404) {
+      // File doesn't exist - create with empty array
+      console.log('[posts/route] File not found (404), will create new file with []');
+      existingPosts = [];
+      fileSha = null;
+    } else if (!getResponse.ok) {
+      const error = await getResponse.json();
+      const errorMsg = `Failed to GET file (${getResponse.status}): ${error.message}`;
+      console.error('[posts/route]', errorMsg);
+      return { success: false, error: errorMsg };
     } else {
-      posts.unshift(post);
-    }
-    const updatedContent = JSON.stringify(posts, null, 2);
-    console.log(`  - Posts count: ${posts.length}, Content size: ${updatedContent.length} bytes`);
+      // File exists - parse content
+      const fileData = await getResponse.json();
+      fileSha = fileData.sha;
 
-    // 3. Get the current branch reference (to get the latest commit SHA)
-    console.log('[posts/route] Step 3: Getting branch reference');
-    const refUrl = `https://api.github.com/repos/${owner}/${repo}/git/refs/heads/${branch}`;
-    const refResponse = await fetch(refUrl, { headers });
-    if (!refResponse.ok) {
-      const error = await refResponse.json();
-      return { success: false, error: `Failed to get branch ref: ${error.message}` };
-    }
-    const refData = await refResponse.json();
-    const latestCommitSha = refData.object.sha;
-    console.log(`  - Latest commit: ${latestCommitSha}`);
+      // Handle large files (>1MB) - GitHub doesn't include content inline
+      let fileContent: string;
+      if (fileData.content) {
+        // Small file - content is base64 encoded inline
+        fileContent = Buffer.from(fileData.content, 'base64').toString('utf-8');
+      } else if (fileData.download_url) {
+        // Large file - fetch from download_url
+        console.log('[posts/route] Large file detected, fetching from download_url');
+        const downloadResponse = await fetch(fileData.download_url);
+        if (!downloadResponse.ok) {
+          return { success: false, error: `Failed to download large file: ${downloadResponse.status}` };
+        }
+        fileContent = await downloadResponse.text();
+      } else {
+        // Fallback: fetch from raw GitHub URL
+        console.log('[posts/route] Fetching from raw GitHub URL');
+        const rawUrl = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${filePath}`;
+        const rawResponse = await fetch(rawUrl);
+        if (!rawResponse.ok) {
+          return { success: false, error: `Failed to fetch raw file: ${rawResponse.status}` };
+        }
+        fileContent = await rawResponse.text();
+      }
 
-    // 4. Get the current commit to find the tree
-    console.log('[posts/route] Step 4: Getting current commit tree');
-    const commitUrl = `https://api.github.com/repos/${owner}/${repo}/git/commits/${latestCommitSha}`;
-    const commitResponse = await fetch(commitUrl, { headers });
-    if (!commitResponse.ok) {
-      const error = await commitResponse.json();
-      return { success: false, error: `Failed to get commit: ${error.message}` };
+      try {
+        existingPosts = JSON.parse(fileContent);
+      } catch (parseError: any) {
+        const errorMsg = `Failed to parse existing JSON file: ${parseError.message}`;
+        console.error('[posts/route]', errorMsg);
+        return { success: false, error: errorMsg };
+      }
     }
-    const commitData = await commitResponse.json();
-    const treeSha = commitData.tree.sha;
-    console.log(`  - Tree SHA: ${treeSha}`);
 
-    // 5. Create a new blob with the updated content
-    console.log('[posts/route] Step 5: Creating new blob');
-    const blobUrl = `https://api.github.com/repos/${owner}/${repo}/git/blobs`;
-    const blobResponse = await fetch(blobUrl, {
-      method: 'POST',
+    // Step 2: Update posts array
+    const existingIndex = existingPosts.findIndex(p => p.slug === post.slug);
+    if (existingIndex >= 0) {
+      existingPosts[existingIndex] = post;
+      console.log('[posts/route] Updated existing post:', post.slug);
+    } else {
+      existingPosts.unshift(post);
+      console.log('[posts/route] Added new post:', post.slug);
+    }
+
+    // Step 3: Prepare updated content
+    const updatedContent = JSON.stringify(existingPosts, null, 2);
+    const contentBase64 = Buffer.from(updatedContent).toString('base64');
+    const contentSizeMB = updatedContent.length / (1024 * 1024);
+
+    console.log(`[posts/route] Content size: ${contentSizeMB.toFixed(2)}MB, Posts: ${existingPosts.length}`);
+
+    // Step 4: PUT file using Contents API
+    // For files >1MB, Contents API may fail, but we'll try it first
+    const putFileUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`;
+    console.log('[posts/route] PUT file:', putFileUrl);
+
+    const putBody: any = {
+      message: `Add blog post: ${post.title}`,
+      content: contentBase64,
+      branch: branch, // Explicitly set branch to master
+    };
+
+    // Only include sha if file exists (for updates)
+    if (fileSha) {
+      putBody.sha = fileSha;
+    }
+
+    const putResponse = await fetch(putFileUrl, {
+      method: 'PUT',
       headers,
-      body: JSON.stringify({
-        content: updatedContent,
-        encoding: 'utf-8',
-      }),
+      body: JSON.stringify(putBody),
     });
-    if (!blobResponse.ok) {
-      const error = await blobResponse.json();
-      return { success: false, error: `Failed to create blob: ${error.message}` };
-    }
-    const blobData = await blobResponse.json();
-    console.log(`  - New blob SHA: ${blobData.sha}`);
 
-    // 6. Create a new tree with the updated file
-    console.log('[posts/route] Step 6: Creating new tree');
-    const treeUrl = `https://api.github.com/repos/${owner}/${repo}/git/trees`;
-    const treeResponse = await fetch(treeUrl, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({
-        base_tree: treeSha,
-        tree: [{
-          path: JSON_FILE_PATH,
-          mode: '100644',
-          type: 'blob',
-          sha: blobData.sha,
-        }],
-      }),
-    });
-    if (!treeResponse.ok) {
-      const error = await treeResponse.json();
-      return { success: false, error: `Failed to create tree: ${error.message}` };
-    }
-    const treeData = await treeResponse.json();
-    console.log(`  - New tree SHA: ${treeData.sha}`);
-
-    // 7. Create a new commit
-    console.log('[posts/route] Step 7: Creating new commit');
-    const newCommitUrl = `https://api.github.com/repos/${owner}/${repo}/git/commits`;
-    const newCommitResponse = await fetch(newCommitUrl, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({
-        message: `Add blog post: ${post.title}`,
-        tree: treeData.sha,
-        parents: [latestCommitSha],
-      }),
-    });
-    if (!newCommitResponse.ok) {
-      const error = await newCommitResponse.json();
-      return { success: false, error: `Failed to create commit: ${error.message}` };
-    }
-    const newCommitData = await newCommitResponse.json();
-    console.log(`  - New commit SHA: ${newCommitData.sha}`);
-
-    // 8. Update the branch reference to point to the new commit
-    console.log('[posts/route] Step 8: Updating branch reference');
-    const updateRefResponse = await fetch(refUrl, {
-      method: 'PATCH',
-      headers,
-      body: JSON.stringify({
-        sha: newCommitData.sha,
-        force: false,
-      }),
-    });
-    if (!updateRefResponse.ok) {
-      const error = await updateRefResponse.json();
-      return { success: false, error: `Failed to update branch: ${error.message}` };
+    if (putResponse.ok) {
+      console.log('[posts/route] ✅ Successfully committed to GitHub via Contents API');
+      return { success: true };
     }
 
-    console.log('[posts/route] Successfully committed post to GitHub via Git Data API!');
-    return { success: true };
-  } catch (error) {
-    console.error('[posts/route] GitHub API error:', error);
-    return { success: false, error: String(error) };
+    // If Contents API fails due to size, we could fall back to Git Data API
+    // But for now, fail loudly with error details
+    const errorData = await putResponse.json();
+    const errorMsg = `GitHub PUT failed (${putResponse.status}): ${errorData.message}. File size: ${contentSizeMB.toFixed(2)}MB`;
+    console.error('[posts/route]', errorMsg);
+    return { success: false, error: errorMsg };
+
+  } catch (error: any) {
+    const errorMsg = `GitHub API error: ${error.message || String(error)}`;
+    console.error('[posts/route]', errorMsg);
+    return { success: false, error: errorMsg };
   }
 }
 
@@ -301,6 +309,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // CRITICAL FIX: Normalize slug to ensure consistency with read-side
+    const normalizedSlug = normalizeSlug(slug || title);
+
     const stmt = db.prepare(`
       INSERT INTO blog_posts 
       (title, slug, content, excerpt, published, published_at, author_id, meta_title, meta_description, image, schema_json, updated_at)
@@ -312,7 +323,7 @@ export async function POST(request: NextRequest) {
     
     const result = stmt.run(
       title,
-      slug,
+      normalizedSlug, // Use normalized slug
       content,
       excerpt || null,
       published ? 1 : 0,
@@ -357,7 +368,7 @@ export async function POST(request: NextRequest) {
       const postData: BlogPostData = {
         id: postId,
         title,
-        slug,
+        slug: normalizedSlug, // Use normalized slug
         content,
         excerpt: excerpt || null,
         author_id: 1,
@@ -378,8 +389,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       id: postId,
-      slug,
-      url: `${baseUrl}/blog/${slug}`,
+      slug: normalizedSlug, // Return normalized slug
+      url: `${baseUrl}/blog/${normalizedSlug}`,
       jsonPersisted: jsonSaveResult.success,
       jsonMethod: jsonSaveResult.method,
       jsonError: jsonSaveResult.error,

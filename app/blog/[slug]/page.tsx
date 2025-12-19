@@ -12,6 +12,8 @@ import { JsonLd } from '@/components/JsonLd';
 // Force dynamic rendering - blog posts are database-driven
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
+export const dynamicParams = true;
+export const fetchCache = 'force-no-store';
 
 interface PageProps {
   params: {
@@ -158,12 +160,13 @@ export default function BlogPostPage({ params }: PageProps) {
               <h1 id="article-title" className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-white leading-tight">{post.title || 'Untitled Post'}</h1>
               {/* Featured Image in Hero */}
               {post.image && (
-                <div className="mt-6 mb-4">
-                  <img
+                <div className="mt-6 mb-4 relative w-full max-w-3xl mx-auto aspect-video rounded-lg shadow-2xl overflow-hidden">
+                  <Image
                     src={post.image}
                     alt={post.title || 'Featured image'}
-                    className="w-full max-w-3xl mx-auto h-auto rounded-lg shadow-2xl"
-                    loading="eager"
+                    fill
+                    className="object-cover"
+                    priority
                   />
                 </div>
               )}
