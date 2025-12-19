@@ -180,6 +180,7 @@ async function savePostViaGitHub(post: BlogPostData): Promise<{ success: boolean
     }
 
     // 3. Commit updated file
+    // Keep pretty-print for readability in repo
     const updatedJson = JSON.stringify(posts, null, 2);
     const newContent = Buffer.from(updatedJson).toString('base64');
     
@@ -189,12 +190,24 @@ async function savePostViaGitHub(post: BlogPostData): Promise<{ success: boolean
     console.log('  - New content size:', updatedJson.length, 'bytes');
     console.log('  - Base64 size:', newContent.length, 'bytes');
     
+    // Check if content is too large (Vercel has ~4.5MB body limit)
+    const MAX_BODY_SIZE = 4 * 1024 * 1024; // 4MB
+    if (newContent.length > MAX_BODY_SIZE) {
+      return { 
+        success: false, 
+        error: `File too large: ${Math.round(newContent.length / 1024 / 1024 * 10) / 10}MB. Consider archiving old posts.` 
+      };
+    }
+    
     const putBody = {
       message: `Add blog post: ${post.title}`,
       content: newContent,
       sha: fileData.sha,
       branch: 'master',
     };
+    
+    const putBodyStr = JSON.stringify(putBody);
+    console.log('  - PUT body size:', putBodyStr.length, 'bytes');
     
     const updateResponse = await fetch(getFileUrl, {
       method: 'PUT',
@@ -203,7 +216,7 @@ async function savePostViaGitHub(post: BlogPostData): Promise<{ success: boolean
         'Accept': 'application/vnd.github.v3+json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(putBody),
+      body: putBodyStr,
     });
 
     if (!updateResponse.ok) {
