@@ -137,6 +137,12 @@ async function savePostViaGitHub(post: BlogPostData): Promise<{ success: boolean
 
     const fileData = await getResponse.json();
     
+    console.log('[posts/route] GitHub file metadata:');
+    console.log('  - sha:', fileData.sha);
+    console.log('  - size:', fileData.size);
+    console.log('  - has content:', !!fileData.content);
+    console.log('  - has download_url:', !!fileData.download_url);
+    
     // For large files (>1MB), GitHub doesn't include content inline
     // We need to fetch from download_url or use the raw endpoint
     let currentContent: string;
@@ -174,7 +180,22 @@ async function savePostViaGitHub(post: BlogPostData): Promise<{ success: boolean
     }
 
     // 3. Commit updated file
-    const newContent = Buffer.from(JSON.stringify(posts, null, 2)).toString('base64');
+    const updatedJson = JSON.stringify(posts, null, 2);
+    const newContent = Buffer.from(updatedJson).toString('base64');
+    
+    console.log('[posts/route] Preparing PUT request:');
+    console.log('  - URL:', getFileUrl);
+    console.log('  - SHA:', fileData.sha);
+    console.log('  - New content size:', updatedJson.length, 'bytes');
+    console.log('  - Base64 size:', newContent.length, 'bytes');
+    
+    const putBody = {
+      message: `Add blog post: ${post.title}`,
+      content: newContent,
+      sha: fileData.sha,
+      branch: 'master',
+    };
+    
     const updateResponse = await fetch(getFileUrl, {
       method: 'PUT',
       headers: {
@@ -182,20 +203,23 @@ async function savePostViaGitHub(post: BlogPostData): Promise<{ success: boolean
         'Accept': 'application/vnd.github.v3+json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        message: `Add blog post: ${post.title}`,
-        content: newContent,
-        sha: fileData.sha,
-        branch: 'master',
-      }),
+      body: JSON.stringify(putBody),
     });
 
     if (!updateResponse.ok) {
-      const error = await updateResponse.json();
-      console.error('[posts/route] GitHub PUT error:', error);
+      let errorMessage = '';
+      let errorDetails = '';
+      try {
+        const error = await updateResponse.json();
+        errorMessage = error.message || 'Unknown error';
+        errorDetails = JSON.stringify(error);
+      } catch {
+        errorMessage = await updateResponse.text();
+      }
+      console.error('[posts/route] GitHub PUT error:', updateResponse.status, errorMessage);
       return { 
         success: false, 
-        error: `GitHub PUT failed (${updateResponse.status}): ${error.message}. Check: Token needs "Contents: Read and write" permission.` 
+        error: `GitHub PUT failed (${updateResponse.status}): ${errorMessage}. SHA: ${fileData.sha}. Details: ${errorDetails}` 
       };
     }
 
