@@ -116,6 +116,14 @@ async function savePostToJsonFile(post: BlogPostData): Promise<{ success: boolea
  * - Authentication: token <TOKEN> (not Bearer)
  */
 async function savePostViaGitHub(post: BlogPostData): Promise<{ success: boolean; error?: string }> {
+  // #region agent log - Debug instrumentation
+  const debugLog: string[] = [];
+  const logDebug = (msg: string) => {
+    debugLog.push(`[${new Date().toISOString()}] ${msg}`);
+    console.log('[posts/route]', msg);
+  };
+  // #endregion
+
   // Fail loudly if required env vars are missing
   if (!GITHUB_TOKEN) {
     const error = 'GITHUB_TOKEN environment variable is required but not set';
@@ -139,75 +147,107 @@ async function savePostViaGitHub(post: BlogPostData): Promise<{ success: boolean
   const branch = 'master'; // Explicitly use master, never main
   const filePath = JSON_FILE_PATH; // data/blog-posts-full.json (repo-relative)
 
-  // Log before writing
-  console.log('[posts/route] GitHub persistence:', {
-    repo: GITHUB_REPO,
-    branch: 'master',
-    path: 'data/blog-posts-full.json',
-  });
+  // #region agent log - Log config
+  logDebug(`GitHub Config: owner=${owner}, repo=${repo}, branch=${branch}, filePath=${filePath}`);
+  logDebug(`Token prefix: ${GITHUB_TOKEN.substring(0, 10)}...`);
+  // #endregion
 
-  // GitHub Contents API requires 'token' not 'Bearer'
+  // GitHub Contents API - use Bearer (more modern) instead of token
   const headers = {
-    'Authorization': `token ${GITHUB_TOKEN}`,
+    'Authorization': `Bearer ${GITHUB_TOKEN}`,
     'Accept': 'application/vnd.github.v3+json',
     'Content-Type': 'application/json',
+    'X-GitHub-Api-Version': '2022-11-28',
   };
+
+  // #region agent log - Pre-flight check: verify repo permissions
+  try {
+    const repoCheckUrl = `https://api.github.com/repos/${owner}/${repo}`;
+    const repoResponse = await fetch(repoCheckUrl, { headers });
+    if (repoResponse.ok) {
+      const repoData = await repoResponse.json();
+      logDebug(`Repo check: ${repoData.full_name}, default_branch=${repoData.default_branch}, permissions=${JSON.stringify(repoData.permissions)}`);
+      if (!repoData.permissions?.push) {
+        return { success: false, error: `Token does not have push permission to ${GITHUB_REPO}. Permissions: ${JSON.stringify(repoData.permissions)} | Debug: ${debugLog.join(' | ')}` };
+      }
+    } else {
+      const errData = await repoResponse.json();
+      logDebug(`Repo check failed: ${repoResponse.status} - ${errData.message}`);
+    }
+  } catch (e: any) {
+    logDebug(`Repo check error: ${e.message}`);
+  }
+  // #endregion
 
   try {
     // Step 1: GET file contents with explicit ref=master
     const getFileUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}?ref=${branch}`;
-    console.log('[posts/route] GET file:', getFileUrl);
+    // #region agent log - GET request
+    logDebug(`GET URL: ${getFileUrl}`);
+    // #endregion
     
     const getResponse = await fetch(getFileUrl, { headers });
+    // #region agent log - GET response
+    logDebug(`GET Response: status=${getResponse.status}, ok=${getResponse.ok}`);
+    // #endregion
 
     let existingPosts: BlogPostData[] = [];
     let fileSha: string | null = null;
 
     if (getResponse.status === 404) {
       // File doesn't exist - create with empty array
-      console.log('[posts/route] File not found (404), will create new file with []');
+      logDebug('File not found (404), will create new file with []');
       existingPosts = [];
       fileSha = null;
     } else if (!getResponse.ok) {
       const error = await getResponse.json();
       const errorMsg = `Failed to GET file (${getResponse.status}): ${error.message}`;
-      console.error('[posts/route]', errorMsg);
-      return { success: false, error: errorMsg };
+      logDebug(`GET ERROR: ${errorMsg}`);
+      return { success: false, error: `${errorMsg} | Debug: ${debugLog.join(' | ')}` };
     } else {
       // File exists - parse content
       const fileData = await getResponse.json();
       fileSha = fileData.sha;
+      // #region agent log - File metadata
+      logDebug(`File SHA: ${fileSha}`);
+      logDebug(`File size from API: ${fileData.size} bytes`);
+      logDebug(`Has content: ${!!fileData.content}, Has download_url: ${!!fileData.download_url}`);
+      // #endregion
 
       // Handle large files (>1MB) - GitHub doesn't include content inline
       let fileContent: string;
       if (fileData.content) {
         // Small file - content is base64 encoded inline
         fileContent = Buffer.from(fileData.content, 'base64').toString('utf-8');
+        logDebug('Content decoded from inline base64');
       } else if (fileData.download_url) {
         // Large file - fetch from download_url
-        console.log('[posts/route] Large file detected, fetching from download_url');
+        logDebug(`Large file detected, fetching from download_url: ${fileData.download_url}`);
         const downloadResponse = await fetch(fileData.download_url);
         if (!downloadResponse.ok) {
-          return { success: false, error: `Failed to download large file: ${downloadResponse.status}` };
+          return { success: false, error: `Failed to download large file: ${downloadResponse.status} | Debug: ${debugLog.join(' | ')}` };
         }
         fileContent = await downloadResponse.text();
+        logDebug(`Downloaded ${fileContent.length} bytes from download_url`);
       } else {
         // Fallback: fetch from raw GitHub URL
-        console.log('[posts/route] Fetching from raw GitHub URL');
         const rawUrl = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${filePath}`;
+        logDebug(`Fetching from raw GitHub URL: ${rawUrl}`);
         const rawResponse = await fetch(rawUrl);
         if (!rawResponse.ok) {
-          return { success: false, error: `Failed to fetch raw file: ${rawResponse.status}` };
+          return { success: false, error: `Failed to fetch raw file: ${rawResponse.status} | Debug: ${debugLog.join(' | ')}` };
         }
         fileContent = await rawResponse.text();
+        logDebug(`Fetched ${fileContent.length} bytes from raw URL`);
       }
 
       try {
         existingPosts = JSON.parse(fileContent);
+        logDebug(`Parsed ${existingPosts.length} existing posts`);
       } catch (parseError: any) {
         const errorMsg = `Failed to parse existing JSON file: ${parseError.message}`;
-        console.error('[posts/route]', errorMsg);
-        return { success: false, error: errorMsg };
+        logDebug(`PARSE ERROR: ${errorMsg}`);
+        return { success: false, error: `${errorMsg} | Debug: ${debugLog.join(' | ')}` };
       }
     }
 
@@ -231,7 +271,11 @@ async function savePostViaGitHub(post: BlogPostData): Promise<{ success: boolean
     // Step 4: PUT file using Contents API
     // For files >1MB, Contents API may fail, but we'll try it first
     const putFileUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`;
-    console.log('[posts/route] PUT file:', putFileUrl);
+    // #region agent log - PUT request details
+    logDebug(`PUT URL: ${putFileUrl}`);
+    logDebug(`PUT body: message="${`Add blog post: ${post.title}`}", branch=${branch}, sha=${fileSha || 'null (new file)'}`);
+    logDebug(`PUT content size: ${contentSizeMB.toFixed(2)}MB, base64 length: ${contentBase64.length}`);
+    // #endregion
 
     const putBody: any = {
       message: `Add blog post: ${post.title}`,
@@ -250,17 +294,23 @@ async function savePostViaGitHub(post: BlogPostData): Promise<{ success: boolean
       body: JSON.stringify(putBody),
     });
 
+    // #region agent log - PUT response
+    logDebug(`PUT Response: status=${putResponse.status}, ok=${putResponse.ok}`);
+    // #endregion
+
     if (putResponse.ok) {
-      console.log('[posts/route] ✅ Successfully committed to GitHub via Contents API');
+      logDebug('✅ Successfully committed to GitHub via Contents API');
       return { success: true };
     }
 
     // If Contents API fails due to size, we could fall back to Git Data API
     // But for now, fail loudly with error details
     const errorData = await putResponse.json();
+    // #region agent log - PUT error details
+    logDebug(`PUT ERROR: ${JSON.stringify(errorData)}`);
+    // #endregion
     const errorMsg = `GitHub PUT failed (${putResponse.status}): ${errorData.message}. File size: ${contentSizeMB.toFixed(2)}MB`;
-    console.error('[posts/route]', errorMsg);
-    return { success: false, error: errorMsg };
+    return { success: false, error: `${errorMsg} | Debug: ${debugLog.join(' | ')}` };
 
   } catch (error: any) {
     const errorMsg = `GitHub API error: ${error.message || String(error)}`;
