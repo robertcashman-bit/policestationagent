@@ -160,13 +160,35 @@ async function savePostViaGitHub(post: BlogPostData): Promise<{ success: boolean
     'X-GitHub-Api-Version': '2022-11-28',
   };
 
-  // #region agent log - Pre-flight check: verify repo permissions
+  // #region agent log - Pre-flight check: verify repo permissions AND token scopes
   try {
     const repoCheckUrl = `https://api.github.com/repos/${owner}/${repo}`;
     const repoResponse = await fetch(repoCheckUrl, { headers });
+    
+    // Check OAuth scopes from response headers - this tells us what the token can actually do
+    const oauthScopes = repoResponse.headers.get('x-oauth-scopes');
+    const acceptedScopes = repoResponse.headers.get('x-accepted-oauth-scopes');
+    logDebug(`Token OAuth scopes: ${oauthScopes || 'NONE'}`);
+    logDebug(`Required scopes for this endpoint: ${acceptedScopes || 'NONE'}`);
+    
+    // Check if token has 'repo' scope (required for writing to private repos)
+    if (oauthScopes) {
+      const scopes = oauthScopes.split(',').map(s => s.trim());
+      const hasRepoScope = scopes.includes('repo') || scopes.includes('public_repo');
+      logDebug(`Has repo/public_repo scope: ${hasRepoScope}`);
+      if (!hasRepoScope) {
+        return { 
+          success: false, 
+          error: `Token lacks 'repo' scope. Current scopes: [${oauthScopes}]. Please regenerate the GITHUB_TOKEN with 'repo' scope enabled. | Debug: ${debugLog.join(' | ')}` 
+        };
+      }
+    } else {
+      logDebug('WARNING: Could not determine token scopes from headers');
+    }
+    
     if (repoResponse.ok) {
       const repoData = await repoResponse.json();
-      logDebug(`Repo check: ${repoData.full_name}, default_branch=${repoData.default_branch}, permissions=${JSON.stringify(repoData.permissions)}`);
+      logDebug(`Repo check: ${repoData.full_name}, default_branch=${repoData.default_branch}, permissions=${JSON.stringify(repoData.permissions)}, private=${repoData.private}`);
       if (!repoData.permissions?.push) {
         return { success: false, error: `Token does not have push permission to ${GITHUB_REPO}. Permissions: ${JSON.stringify(repoData.permissions)} | Debug: ${debugLog.join(' | ')}` };
       }
