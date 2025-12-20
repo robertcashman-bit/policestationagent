@@ -110,6 +110,14 @@ async function savePostToJsonFile(post: BlogPostData): Promise<{ success: boolea
     debugInfo.push(`UPSTASH_REDIS_REST_TOKEN set: ${!!process.env.UPSTASH_REDIS_REST_TOKEN}`);
     debugInfo.push(`REDIS_URL length: ${REDIS_URL.length}`);
     debugInfo.push(`REDIS_TOKEN length: ${REDIS_TOKEN.length}`);
+    // Check raw env var value (first 10 chars only for security)
+    const rawToken = process.env.UPSTASH_REDIS_REST_TOKEN || '';
+    debugInfo.push(`TOKEN raw type: ${typeof process.env.UPSTASH_REDIS_REST_TOKEN}`);
+    debugInfo.push(`TOKEN raw preview: ${rawToken.substring(0, 10)}...`);
+    debugInfo.push(`TOKEN raw length: ${rawToken.length}`);
+    // List all UPSTASH-related env vars (names only)
+    const upstashVars = Object.keys(process.env).filter(k => k.includes('UPSTASH') || k.includes('KV_REST'));
+    debugInfo.push(`UPSTASH/KV vars found: ${upstashVars.join(', ') || 'NONE'}`);
     // #endregion
     
     // On Vercel, try Redis FIRST (most reliable), then fall back to GitHub
