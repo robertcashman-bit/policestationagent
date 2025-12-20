@@ -9,9 +9,9 @@ export default function Footer() {
   return (
     <footer className="bg-slate-900 text-white relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-x-10 gap-y-12 mb-14 text-sm">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-12 mb-14 text-sm">
           {/* Brand & Contact Column */}
-          <div className="lg:col-span-1">
+          <div>
             <h3 className="font-bold mb-4 text-lg text-white">Police Station Agent</h3>
             <div className="mt-4 p-3 bg-amber-500/10 rounded-lg border border-amber-500/20">
               <p className="text-xs text-amber-200 font-semibold mb-1">Serving All Kent Towns:</p>
@@ -129,130 +129,6 @@ export default function Footer() {
             </nav>
           </div>
           
-          {/* Help & Advice Column */}
-          <div>
-            <h3 className="font-bold mb-4 text-lg text-white">Help & Advice</h3>
-            <nav aria-label="Footer help and advice links">
-              <ul className="space-y-3">
-                <li>
-                  <Link href="/faq" className="text-slate-200 hover:text-white transition-colors text-sm">
-                    Frequently Asked Questions
-                  </Link>
-                </li>
-                <li className="pt-3 mt-3 border-t border-slate-700">
-                  <h4 className="font-semibold mb-3 text-white text-sm">Legal Guides (Know your rights)</h4>
-                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2">
-                    <li>
-                      <Link href="/pace-code-c" className="text-slate-200 hover:text-white transition-colors text-xs leading-relaxed">
-                        PACE Code C (Custody & Interview Rules)
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/no-comment-interview" className="text-slate-200 hover:text-white transition-colors text-xs leading-relaxed">
-                        No Comment Interview
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/custody-time-limits" className="text-slate-200 hover:text-white transition-colors text-xs leading-relaxed">
-                        Custody Time Limits
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/police-bail-explained" className="text-slate-200 hover:text-white transition-colors text-xs leading-relaxed">
-                        Police Bail Explained
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/voluntary-police-interview-risks" className="text-slate-200 hover:text-white transition-colors text-xs leading-relaxed">
-                        Voluntary Interview Risks
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/released-under-investigation" className="text-slate-200 hover:text-white transition-colors text-xs leading-relaxed">
-                        Released Under Investigation (RUI)
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/prepared-statements" className="text-slate-200 hover:text-white transition-colors text-xs leading-relaxed">
-                        Prepared Statements
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/adverse-inference" className="text-slate-200 hover:text-white transition-colors text-xs leading-relaxed">
-                        Adverse Inferences
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/appropriate-adult" className="text-slate-200 hover:text-white transition-colors text-xs leading-relaxed">
-                        Appropriate Adult
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/youth-custody-rights" className="text-slate-200 hover:text-white transition-colors text-xs leading-relaxed">
-                        Youth Custody Rights
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/can-police-take-my-phone" className="text-slate-200 hover:text-white transition-colors text-xs leading-relaxed">
-                        Can Police Take My Phone?
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/dna-fingerprints-police-station" className="text-slate-200 hover:text-white transition-colors text-xs leading-relaxed">
-                        DNA & Fingerprints
-                      </Link>
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  <Link href="/what-is-a-police-station-rep" className="text-slate-200 hover:text-white transition-colors text-sm">
-                    What is a Police Station Rep?
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/what-is-a-criminal-solicitor" className="text-slate-200 hover:text-white transition-colors text-sm">
-                    What is a Criminal Solicitor?
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/police-station-interviews-kent-rights" className="text-slate-200 hover:text-white transition-colors text-sm">
-                    Police Station Interview Rights
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/your-rights-in-custody" className="text-slate-200 hover:text-white transition-colors text-sm">
-                    Your Rights in Custody
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/after-a-police-interview" className="text-slate-200 hover:text-white transition-colors text-sm">
-                    After a Police Interview
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/voluntary-police-interview-risks" className="text-slate-200 hover:text-white transition-colors text-sm">
-                    Voluntary Interview Risks
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/arrestednow" className="text-slate-200 hover:text-white transition-colors text-sm">
-                    Emergency Help - Family Member Arrested
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/freelegaladvice" className="text-slate-200 hover:text-white transition-colors text-sm">
-                    Is Police Station Advice Free?
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/blog" className="text-slate-200 hover:text-white transition-colors text-sm">
-                    Legal Advice Blog
-                  </Link>
-                </li>
-              </ul>
-            </nav>
-          </div>
-          
           {/* Locations Column */}
           <div>
             <h3 className="font-bold mb-4 text-lg text-white">Kent Locations</h3>
@@ -322,6 +198,26 @@ export default function Footer() {
             <h3 className="font-bold mb-4 text-lg text-white">Legal & Resources</h3>
             <nav aria-label="Footer legal and resource links">
               <ul className="space-y-3">
+                <li>
+                  <Link href="/faq" className="text-slate-200 hover:text-white transition-colors font-medium text-sm">
+                    Frequently Asked Questions
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/police-station-interviews-kent-rights" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Police Station Interview Rights
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/your-rights-in-custody" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Your Rights in Custody
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/after-a-police-interview" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    After a Police Interview
+                  </Link>
+                </li>
                 <li>
                   <Link href="/about" className="text-slate-200 hover:text-white transition-colors font-medium text-sm">
                     About Qualified Duty Solicitor
@@ -396,6 +292,98 @@ export default function Footer() {
             </nav>
           </div>
         </div>
+
+        {/* Legal Guides full-width block (prevents tall skinny side column) */}
+        <section aria-label="Legal guides" className="mt-6">
+          <div className="rounded-xl border border-slate-700 bg-slate-800/25 p-6">
+            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-5">
+              <div>
+                <h3 className="font-bold text-lg text-white">Legal Guides</h3>
+                <p className="text-xs text-slate-300 mt-1">Know your rights — plain-English guides with sources.</p>
+              </div>
+              <div className="text-xs text-slate-300">
+                <Link href="/blog" className="hover:text-white transition-colors underline underline-offset-4">
+                  Browse all guides & posts
+                </Link>
+              </div>
+            </div>
+
+            <nav aria-label="Footer legal guides links">
+              <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-3">
+                <li>
+                  <Link href="/pace-code-c" className="text-slate-200 hover:text-white transition-colors text-sm leading-relaxed">
+                    PACE Code C (Custody & Interview Rules)
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/police-bail-explained" className="text-slate-200 hover:text-white transition-colors text-sm leading-relaxed">
+                    Police Bail Explained
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/custody-time-limits" className="text-slate-200 hover:text-white transition-colors text-sm leading-relaxed">
+                    Custody Time Limits
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/no-comment-interview" className="text-slate-200 hover:text-white transition-colors text-sm leading-relaxed">
+                    No Comment Interview
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/prepared-statements" className="text-slate-200 hover:text-white transition-colors text-sm leading-relaxed">
+                    Prepared Statements
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/adverse-inference" className="text-slate-200 hover:text-white transition-colors text-sm leading-relaxed">
+                    Adverse Inferences
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/voluntary-police-interview-risks" className="text-slate-200 hover:text-white transition-colors text-sm leading-relaxed">
+                    Voluntary Interview Risks
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/released-under-investigation" className="text-slate-200 hover:text-white transition-colors text-sm leading-relaxed">
+                    Released Under Investigation (RUI)
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/appropriate-adult" className="text-slate-200 hover:text-white transition-colors text-sm leading-relaxed">
+                    Appropriate Adult
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/youth-custody-rights" className="text-slate-200 hover:text-white transition-colors text-sm leading-relaxed">
+                    Youth Custody Rights
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/can-police-take-my-phone" className="text-slate-200 hover:text-white transition-colors text-sm leading-relaxed">
+                    Can Police Take My Phone?
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/dna-fingerprints-police-station" className="text-slate-200 hover:text-white transition-colors text-sm leading-relaxed">
+                    DNA & Fingerprints
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/what-is-a-police-station-rep" className="text-slate-200 hover:text-white transition-colors text-sm leading-relaxed">
+                    What is a Police Station Rep?
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/what-is-a-criminal-solicitor" className="text-slate-200 hover:text-white transition-colors text-sm leading-relaxed">
+                    What is a Criminal Solicitor?
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </section>
         
         <div className="border-t border-slate-700 mt-14 pt-10 text-center text-sm">
           <div className="footer-disclaimer-box max-w-4xl mx-auto p-6 bg-white rounded-xl border border-slate-300 shadow-sm">
