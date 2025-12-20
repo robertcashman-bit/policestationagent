@@ -254,6 +254,11 @@ export default function Footer() {
             <nav aria-label="Footer location links">
               <ul className="space-y-2.5">
                 <li>
+                  <Link href="/locations" className="text-slate-200 hover:text-white transition-colors font-medium text-sm">
+                    Locations Hub (All Towns & Pages)
+                  </Link>
+                </li>
+                <li>
                   <Link href="/police-stations" className="text-slate-200 hover:text-white transition-colors font-medium text-sm">
                     All Kent Police Stations
                   </Link>

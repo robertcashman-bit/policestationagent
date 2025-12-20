@@ -182,6 +182,7 @@ export default function Header() {
                   <div className="border-t border-slate-200 my-1"></div>
                   <Link href="/police-stations" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">All Police Stations</Link>
                   <Link href="/areas" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">All Areas</Link>
+                  <Link href="/locations" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Locations Hub</Link>
                   <div className="border-t border-slate-200 my-2"></div>
                   <div className="px-4 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wide">Kent Police Stations</div>
                   <Link href="/maidstone-police-station" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-sm">Maidstone Police Station</Link>
@@ -454,6 +455,7 @@ export default function Header() {
             <Link href="/coverage" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Coverage Overview</Link>
             <Link href="/police-stations" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>All Police Stations</Link>
             <Link href="/areas" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>All Areas</Link>
+            <Link href="/locations" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Locations Hub</Link>
             
             <div className="px-4 py-2 text-slate-500 text-xs font-semibold mt-2 uppercase tracking-wide">Police Stations</div>
             <Link href="/maidstone-police-station" className="block px-4 py-2 text-slate-600 hover:text-blue-600 font-medium pl-8 text-sm" onClick={() => setMobileMenuOpen(false)}>Maidstone</Link>

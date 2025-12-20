@@ -259,7 +259,11 @@ const organizationSchema = {
           "closes": "23:00"
         }
       ],
-      "sameAs": []
+      "sameAs": [
+        "https://www.facebook.com/policestationagent",
+        "https://www.linkedin.com/company/police-station-agent",
+        "https://twitter.com/policestation"
+      ]
     },
     {
       "@type": "LocalBusiness",
