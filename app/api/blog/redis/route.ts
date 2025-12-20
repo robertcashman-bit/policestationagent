@@ -162,11 +162,11 @@ async function getPost(slug: string): Promise<{ post: BlogPost | null; meta: Blo
 
   const post = postRaw ? JSON.parse(postRaw) : null;
   const meta = Array.isArray(metaArr) && metaArr.length > 0
-    ? Object.fromEntries(
+    ? (Object.fromEntries(
         metaArr
           .map((v: string, i: number, a: string[]) => (i % 2 === 0 ? [v, a[i + 1]] : null))
           .filter((entry): entry is [string, string] => entry !== null)
-      ) as BlogMeta
+      ) as unknown as BlogMeta)
     : null;
 
   return { post, meta };
