@@ -139,6 +139,71 @@ export default function Footer() {
                     Frequently Asked Questions
                   </Link>
                 </li>
+                <li className="pt-2 mt-2 border-t border-slate-700">
+                  <h4 className="font-semibold mb-2 text-white text-sm">Legal Guides (Know your rights)</h4>
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5">
+                    <li>
+                      <Link href="/pace-code-c" className="text-slate-200 hover:text-white transition-colors text-xs">
+                        PACE Code C (Custody & Interview Rules)
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/no-comment-interview" className="text-slate-200 hover:text-white transition-colors text-xs">
+                        No Comment Interview
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/custody-time-limits" className="text-slate-200 hover:text-white transition-colors text-xs">
+                        Custody Time Limits
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/police-bail-explained" className="text-slate-200 hover:text-white transition-colors text-xs">
+                        Police Bail Explained
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/voluntary-police-interview-risks" className="text-slate-200 hover:text-white transition-colors text-xs">
+                        Voluntary Interview Risks
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/released-under-investigation" className="text-slate-200 hover:text-white transition-colors text-xs">
+                        Released Under Investigation (RUI)
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/prepared-statements" className="text-slate-200 hover:text-white transition-colors text-xs">
+                        Prepared Statements
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/adverse-inference" className="text-slate-200 hover:text-white transition-colors text-xs">
+                        Adverse Inferences
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/appropriate-adult" className="text-slate-200 hover:text-white transition-colors text-xs">
+                        Appropriate Adult
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/youth-custody-rights" className="text-slate-200 hover:text-white transition-colors text-xs">
+                        Youth Custody Rights
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/can-police-take-my-phone" className="text-slate-200 hover:text-white transition-colors text-xs">
+                        Can Police Take My Phone?
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/dna-fingerprints-police-station" className="text-slate-200 hover:text-white transition-colors text-xs">
+                        DNA & Fingerprints
+                      </Link>
+                    </li>
+                  </ul>
+                </li>
                 <li>
                   <Link href="/what-is-a-police-station-rep" className="text-slate-200 hover:text-white transition-colors text-sm">
                     What is a Police Station Rep?
@@ -183,66 +248,6 @@ export default function Footer() {
                   <Link href="/blog" className="text-slate-200 hover:text-white transition-colors text-sm">
                     Legal Advice Blog
                   </Link>
-                </li>
-                <li className="pt-2 mt-2 border-t border-slate-700">
-                  <h4 className="font-semibold mb-2 text-white text-xs">Legal Guides</h4>
-                  <ul className="space-y-1.5">
-                    <li>
-                      <Link href="/pace-code-c" className="text-slate-300 hover:text-white transition-colors text-xs">
-                        PACE Code C (Custody & Interview Rules)
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/custody-time-limits" className="text-slate-300 hover:text-white transition-colors text-xs">
-                        Custody Time Limits
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/no-comment-interview" className="text-slate-300 hover:text-white transition-colors text-xs">
-                        No Comment Interview
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/prepared-statements" className="text-slate-300 hover:text-white transition-colors text-xs">
-                        Prepared Statements
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/adverse-inference" className="text-slate-300 hover:text-white transition-colors text-xs">
-                        Adverse Inferences
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/released-under-investigation" className="text-slate-300 hover:text-white transition-colors text-xs">
-                        Released Under Investigation (RUI)
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/police-bail-explained" className="text-slate-300 hover:text-white transition-colors text-xs">
-                        Police Bail Explained
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/appropriate-adult" className="text-slate-300 hover:text-white transition-colors text-xs">
-                        Appropriate Adult
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/youth-custody-rights" className="text-slate-300 hover:text-white transition-colors text-xs">
-                        Youth Custody Rights
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/can-police-take-my-phone" className="text-slate-300 hover:text-white transition-colors text-xs">
-                        Can Police Take My Phone?
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/dna-fingerprints-police-station" className="text-slate-300 hover:text-white transition-colors text-xs">
-                        DNA & Fingerprints
-                      </Link>
-                    </li>
-                  </ul>
                 </li>
               </ul>
             </nav>
