@@ -297,6 +297,27 @@ export default function Header() {
                   <Link href="/your-rights-in-custody" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Your Rights in Custody</Link>
                   <Link href="/police-custody-rights" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Police Custody Rights</Link>
                   <Link href="/police-interview-rights" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Police Interview Rights</Link>
+                  <Link href="/custody-time-limits" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Custody Time Limits</Link>
+                  <Link href="/pace-code-c" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">PACE Code C Rights</Link>
+                  <div className="border-t border-slate-200 my-2"></div>
+                  <div className="px-4 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wide">Interview Strategy</div>
+                  <Link href="/no-comment-interview" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">No Comment Interviews</Link>
+                  <Link href="/prepared-statements" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Prepared Statements</Link>
+                  <Link href="/adverse-inference" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Adverse Inferences</Link>
+                  <div className="border-t border-slate-200 my-2"></div>
+                  <div className="px-4 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wide">After Arrest</div>
+                  <Link href="/released-under-investigation" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Released Under Investigation</Link>
+                  <Link href="/police-bail-explained" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Police Bail Explained</Link>
+                  <div className="border-t border-slate-200 my-2"></div>
+                  <div className="px-4 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wide">Vulnerable Persons</div>
+                  <Link href="/youth-custody-rights" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Youth Custody Rights</Link>
+                  <Link href="/appropriate-adult" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Appropriate Adults</Link>
+                  <div className="border-t border-slate-200 my-2"></div>
+                  <div className="px-4 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wide">Police Powers</div>
+                  <Link href="/can-police-take-my-phone" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Can Police Take My Phone?</Link>
+                  <Link href="/dna-fingerprints-police-station" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">DNA & Fingerprints</Link>
+                  <div className="border-t border-slate-200 my-2"></div>
+                  <div className="px-4 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wide">More Help</div>
                   <Link href="/preparing-for-police-interview" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Preparing for Interview</Link>
                   <Link href="/what-to-expect-at-a-police-interview-in-kent" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">What to Expect</Link>
                   <Link href="/importance-of-early-legal-advice" className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600">Early Legal Advice</Link>
@@ -522,6 +543,17 @@ export default function Header() {
             <Link href="/your-rights-in-custody" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Your Rights in Custody</Link>
             <Link href="/police-custody-rights" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Police Custody Rights</Link>
             <Link href="/police-interview-rights" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Police Interview Rights</Link>
+            <Link href="/custody-time-limits" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Custody Time Limits</Link>
+            <Link href="/pace-code-c" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>PACE Code C Rights</Link>
+            <Link href="/no-comment-interview" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>No Comment Interviews</Link>
+            <Link href="/prepared-statements" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Prepared Statements</Link>
+            <Link href="/adverse-inference" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Adverse Inferences</Link>
+            <Link href="/released-under-investigation" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Released Under Investigation</Link>
+            <Link href="/police-bail-explained" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Police Bail Explained</Link>
+            <Link href="/youth-custody-rights" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Youth Custody Rights</Link>
+            <Link href="/appropriate-adult" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Appropriate Adults</Link>
+            <Link href="/can-police-take-my-phone" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Can Police Take My Phone?</Link>
+            <Link href="/dna-fingerprints-police-station" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>DNA & Fingerprints</Link>
             <Link href="/preparing-for-police-interview" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Preparing for Interview</Link>
             <Link href="/what-to-expect-at-a-police-interview-in-kent" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>What to Expect</Link>
             <Link href="/importance-of-early-legal-advice" className="block px-4 py-2 text-slate-700 hover:text-blue-600 font-medium pl-8" onClick={() => setMobileMenuOpen(false)}>Early Legal Advice</Link>
