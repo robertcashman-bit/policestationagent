@@ -3,21 +3,19 @@
 import { useState, ChangeEvent } from 'react';
 import { useRouter } from 'next/navigation';
 
-interface BlogPreview {
-  title: string;
-  slug: string;
-  content: string;
-  excerpt: string;
-  metaTitle: string;
-  metaDescription: string;
-  faqs: Array<{ question: string; answer: string }>;
-  schema: any;
-  image: string | null;
-  imageUrls: string[];
-  generatedWithAI?: boolean;
-  aiImageGenerated?: boolean;
-  aiStatus?: string;
-}
+/**
+ * Blog Generator Client
+ * 
+ * DESIGN PRINCIPLES:
+ * - Simple, reliable, boring
+ * - Static images only (from /public/blog-images/)
+ * - No DALL-E, no external URLs
+ * - Clear success or failure (no warnings)
+ */
+
+// =============================================================================
+// TYPES
+// =============================================================================
 
 interface FormData {
   topic: string;
@@ -28,53 +26,79 @@ interface FormData {
   seoLength: 'short' | 'optimal' | 'long';
   includeFAQ: boolean;
   includeInternalLinks: boolean;
-  imageSource: 'ai' | 'upload' | 'url';
-  imageUrls: string[];
-  uploadedImages: File[];
-  featuredImageIndex: number;
-  includeInContentImages: boolean;
+  imageFilename: string;
 }
 
+interface GeneratedContent {
+  title: string;
+  slug: string;
+  content: string;
+  metaTitle: string;
+  metaDescription: string;
+  faqs: Array<{ question: string; answer: string }>;
+}
+
+// =============================================================================
+// CONSTANTS
+// =============================================================================
+
 const CATEGORIES = [
-  { value: 'police-station-advice', label: 'Police Station Advice' },
-  { value: 'duty-solicitor', label: 'Duty Solicitor Explanation' },
-  { value: 'arrest-custody', label: 'Arrest & Custody Guidance' },
-  { value: 'bail-advice', label: 'Bail / Pre-charge Advice' },
-  { value: 'rights', label: 'Rights at the Police Station' },
+  { value: 'Police Station Advice', label: 'Police Station Advice' },
+  { value: 'Duty Solicitor', label: 'Duty Solicitor Explanation' },
+  { value: 'Arrest & Custody', label: 'Arrest & Custody Guidance' },
+  { value: 'Bail Advice', label: 'Bail / Pre-charge Advice' },
+  { value: 'PACE Rights', label: 'Rights at the Police Station' },
 ];
+
+const AVAILABLE_IMAGES = [
+  { value: '', label: 'Use default image (blog-listing-0.jpg)' },
+  { value: 'blog-listing-0.jpg', label: 'Blog Image 1' },
+  { value: 'blog-listing-1.png', label: 'Blog Image 2' },
+  { value: 'blog-listing-2.png', label: 'Blog Image 3' },
+  { value: 'blog-listing-3.png', label: 'Blog Image 4' },
+  { value: 'blog-listing-4.png', label: 'Blog Image 5' },
+  { value: 'blog-listing-5.png', label: 'Blog Image 6' },
+  { value: 'blog-listing-6.png', label: 'Blog Image 7' },
+  { value: 'blog-listing-7.png', label: 'Blog Image 8' },
+];
+
+// =============================================================================
+// COMPONENT
+// =============================================================================
 
 export default function BlogGeneratorClient() {
   const router = useRouter();
+
+  // Form state
   const [formData, setFormData] = useState<FormData>({
     topic: '',
     primaryKeyword: '',
     secondaryKeywords: '',
     location: 'Kent',
-    category: 'police-station-advice',
+    category: 'Police Station Advice',
     seoLength: 'optimal',
     includeFAQ: true,
     includeInternalLinks: true,
-    imageSource: 'url',
-    imageUrls: [''],
-    uploadedImages: [],
-    featuredImageIndex: 0,
-    includeInContentImages: false,
+    imageFilename: '',
   });
 
-  const [preview, setPreview] = useState<BlogPreview | null>(null);
+  // UI state
+  const [preview, setPreview] = useState<GeneratedContent | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [publishedUrl, setPublishedUrl] = useState<string | null>(null);
-  const [publishWarning, setPublishWarning] = useState<string | null>(null);
+  const [success, setSuccess] = useState<{ url: string; filePath: string } | null>(null);
+
+  // =============================================================================
+  // HANDLERS
+  // =============================================================================
 
   const handleLogout = async () => {
     try {
       await fetch('/api/admin/logout', { method: 'POST' });
-      router.push('/');
-    } catch (error) {
-      console.error('Logout error:', error);
-      router.push('/');
+    } catch {
+      // Ignore logout errors
     }
+    router.push('/');
   };
 
   const handleInputChange = (
@@ -89,50 +113,6 @@ export default function BlogGeneratorClient() {
     }));
   };
 
-  const handleImageUrlChange = (index: number, value: string) => {
-    setFormData(prev => {
-      const newUrls = [...prev.imageUrls];
-      newUrls[index] = value;
-      return { ...prev, imageUrls: newUrls };
-    });
-  };
-
-  const addImageUrl = () => {
-    setFormData(prev => ({
-      ...prev,
-      imageUrls: [...prev.imageUrls, ''],
-    }));
-  };
-
-  const removeImageUrl = (index: number) => {
-    setFormData(prev => {
-      const newUrls = prev.imageUrls.filter((_, i) => i !== index);
-      return {
-        ...prev,
-        imageUrls: newUrls.length > 0 ? newUrls : [''],
-        featuredImageIndex: Math.min(prev.featuredImageIndex, newUrls.length - 1),
-      };
-    });
-  };
-
-  const handleFileUpload = (e: ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (files) {
-      setFormData(prev => ({
-        ...prev,
-        uploadedImages: [...prev.uploadedImages, ...Array.from(files)],
-      }));
-    }
-  };
-
-  const removeUploadedImage = (index: number) => {
-    setFormData(prev => ({
-      ...prev,
-      uploadedImages: prev.uploadedImages.filter((_, i) => i !== index),
-      featuredImageIndex: Math.min(prev.featuredImageIndex, prev.uploadedImages.length - 2),
-    }));
-  };
-
   const handleGenerate = async () => {
     if (!formData.topic || !formData.primaryKeyword) {
       setError('Topic and primary keyword are required');
@@ -141,18 +121,13 @@ export default function BlogGeneratorClient() {
 
     setLoading(true);
     setError(null);
+    setSuccess(null);
 
     try {
-      let response: Response;
-      
-      // Use FormData for requests with file uploads
-      // File objects cannot be JSON-serialized, so we use multipart/form-data
-      if (formData.imageSource === 'upload' && formData.uploadedImages.length > 0) {
-        // Create FormData for multipart upload
-        const multipartFormData = new FormData();
-        
-        // Add all form fields as JSON in a 'data' field (excluding File objects)
-        const jsonData = {
+      const response = await fetch('/api/admin/generate-blog', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
           topic: formData.topic,
           primaryKeyword: formData.primaryKeyword,
           secondaryKeywords: formData.secondaryKeywords,
@@ -161,46 +136,8 @@ export default function BlogGeneratorClient() {
           seoLength: formData.seoLength,
           includeFAQ: formData.includeFAQ,
           includeInternalLinks: formData.includeInternalLinks,
-          imageSource: formData.imageSource,
-          imageUrls: formData.imageUrls.filter(url => url.trim()),
-          featuredImageIndex: formData.featuredImageIndex,
-          includeInContentImages: formData.includeInContentImages,
-        };
-        multipartFormData.append('data', JSON.stringify(jsonData));
-        
-        // Add each file separately
-        formData.uploadedImages.forEach((file) => {
-          multipartFormData.append('uploadedImages', file);
-        });
-
-        response = await fetch('/api/admin/generate-blog', {
-          method: 'POST',
-          // Don't set Content-Type header - browser will set it with boundary for multipart
-          body: multipartFormData,
-        });
-      } else {
-        // Standard JSON request (no file uploads)
-        response = await fetch('/api/admin/generate-blog', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            topic: formData.topic,
-            primaryKeyword: formData.primaryKeyword,
-            secondaryKeywords: formData.secondaryKeywords,
-            location: formData.location,
-            category: formData.category,
-            seoLength: formData.seoLength,
-            includeFAQ: formData.includeFAQ,
-            includeInternalLinks: formData.includeInternalLinks,
-            imageSource: formData.imageSource,
-            imageUrls: formData.imageUrls.filter(url => url.trim()),
-            featuredImageIndex: formData.featuredImageIndex,
-            includeInContentImages: formData.includeInContentImages,
-          }),
-        });
-      }
+        }),
+      });
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -221,53 +158,66 @@ export default function BlogGeneratorClient() {
 
     setLoading(true);
     setError(null);
-    setPublishWarning(null);
 
     try {
       const response = await fetch('/api/admin/posts', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           title: preview.title,
-          slug: preview.slug,
-          content: preview.content,
-          excerpt: preview.excerpt,
-          published: true,
-          meta_title: preview.metaTitle,
-          meta_description: preview.metaDescription,
-          image: preview.image,
-          schema: preview.schema,
+          category: formData.category,
+          primaryKeyword: formData.primaryKeyword,
+          secondaryKeywords: formData.secondaryKeywords
+            .split(',')
+            .map(k => k.trim())
+            .filter(Boolean),
+          location: formData.location,
+          metaTitle: preview.metaTitle,
+          metaDescription: preview.metaDescription,
+          contentHtml: preview.content,
+          faq: preview.faqs.map(f => ({ q: f.question, a: f.answer })),
+          imageFilename: formData.imageFilename || undefined,
         }),
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to publish post');
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.error || 'Failed to publish post');
       }
 
-      const data = await response.json();
-      setPublishedUrl(data.url);
-      
-      // Check if JSON persistence failed (important for Vercel!)
-      if (!data.jsonPersisted) {
-        const debugInfo = data.debug 
-          ? `\n\nDebug: Vercel=${data.debug.isVercel}, Token=${data.debug.hasGithubToken}, Repo=${data.debug.githubRepo}, Method=${data.jsonMethod}`
-          : '';
-        setPublishWarning(
-          `⚠️ WARNING: Post saved to temporary database but NOT persisted to JSON file. ` +
-          `Error: ${data.jsonError || 'Unknown'}. ` +
-          `The post will be LOST on next deployment. ` +
-          `To fix: Set GITHUB_TOKEN and GITHUB_REPO in Vercel environment variables, or manually add to blog-posts-full.json.${debugInfo}`
-        );
-      }
+      setSuccess({
+        url: data.post.url,
+        filePath: data.filePath,
+      });
+      setPreview(null);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to publish post');
     } finally {
       setLoading(false);
     }
   };
+
+  const handleReset = () => {
+    setFormData({
+      topic: '',
+      primaryKeyword: '',
+      secondaryKeywords: '',
+      location: 'Kent',
+      category: 'Police Station Advice',
+      seoLength: 'optimal',
+      includeFAQ: true,
+      includeInternalLinks: true,
+      imageFilename: '',
+    });
+    setPreview(null);
+    setError(null);
+    setSuccess(null);
+  };
+
+  // =============================================================================
+  // RENDER
+  // =============================================================================
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
@@ -288,27 +238,45 @@ export default function BlogGeneratorClient() {
           </button>
         </div>
 
+        {/* Error Message */}
         {error && (
           <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-md">
-            <p className="text-red-700">{error}</p>
+            <div className="flex">
+              <span className="text-red-600 mr-2">✕</span>
+              <div>
+                <p className="font-medium text-red-800">Error</p>
+                <p className="text-red-700">{error}</p>
+              </div>
+            </div>
           </div>
         )}
 
-        {publishedUrl && (
-          <div className={`mb-6 p-4 rounded-md ${publishWarning ? 'bg-yellow-50 border border-yellow-200' : 'bg-green-50 border border-green-200'}`}>
-            <p className={publishWarning ? 'text-yellow-700' : 'text-green-700'}>
-              {publishWarning ? 'Post created (with issues)' : 'Published successfully!'}{' '}
-              <a href={publishedUrl} target="_blank" rel="noopener noreferrer" className="underline font-medium">
-                View post
-              </a>
-            </p>
-            {publishWarning && (
-              <div className="mt-3 p-3 bg-red-50 border border-red-200 rounded text-sm text-red-800">
-                <strong>🚨 PERSISTENCE FAILED:</strong>
-                <p className="mt-1">{publishWarning}</p>
-                <p className="mt-2 font-medium">The post may work temporarily but will be LOST on next deployment!</p>
+        {/* Success Message */}
+        {success && (
+          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-md">
+            <div className="flex">
+              <span className="text-green-600 mr-2">✓</span>
+              <div>
+                <p className="font-medium text-green-800">Published Successfully!</p>
+                <p className="text-green-700">
+                  Post saved to: <code className="bg-green-100 px-1 rounded">{success.filePath}</code>
+                </p>
+                <a
+                  href={success.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-green-800 underline font-medium"
+                >
+                  View post →
+                </a>
+                <button
+                  onClick={handleReset}
+                  className="ml-4 text-green-700 underline"
+                >
+                  Create another post
+                </button>
               </div>
-            )}
+            </div>
           </div>
         )}
 
@@ -317,8 +285,8 @@ export default function BlogGeneratorClient() {
           <div className="bg-white rounded-lg shadow p-6">
             <h2 className="text-xl font-semibold mb-6">Blog Settings</h2>
 
-            {/* Core Inputs */}
             <div className="space-y-4">
+              {/* Topic */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Blog Topic / Headline <span className="text-red-500">*</span>
@@ -333,6 +301,7 @@ export default function BlogGeneratorClient() {
                 />
               </div>
 
+              {/* Primary Keyword */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Primary SEO Keyword <span className="text-red-500">*</span>
@@ -347,6 +316,7 @@ export default function BlogGeneratorClient() {
                 />
               </div>
 
+              {/* Secondary Keywords */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Secondary Keywords (comma-separated)
@@ -361,6 +331,7 @@ export default function BlogGeneratorClient() {
                 />
               </div>
 
+              {/* Location */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Target Location
@@ -375,6 +346,7 @@ export default function BlogGeneratorClient() {
                 />
               </div>
 
+              {/* Category */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Category
@@ -393,7 +365,7 @@ export default function BlogGeneratorClient() {
                 </select>
               </div>
 
-              {/* SEO Length */}
+              {/* Content Length */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Content Length
@@ -410,8 +382,30 @@ export default function BlogGeneratorClient() {
                 </select>
               </div>
 
+              {/* Featured Image */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Featured Image
+                </label>
+                <select
+                  name="imageFilename"
+                  value={formData.imageFilename}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                >
+                  {AVAILABLE_IMAGES.map(img => (
+                    <option key={img.value} value={img.value}>
+                      {img.label}
+                    </option>
+                  ))}
+                </select>
+                <p className="mt-1 text-xs text-gray-500">
+                  Images must be pre-uploaded to /public/blog-images/
+                </p>
+              </div>
+
               {/* Toggles */}
-              <div className="flex items-center gap-6">
+              <div className="flex flex-wrap gap-4 pt-2">
                 <label className="flex items-center">
                   <input
                     type="checkbox"
@@ -433,133 +427,6 @@ export default function BlogGeneratorClient() {
                   />
                   <span className="ml-2 text-sm text-gray-700">Include Internal Links</span>
                 </label>
-
-                <label className="flex items-center">
-                  <input
-                    type="checkbox"
-                    name="includeInContentImages"
-                    checked={formData.includeInContentImages}
-                    onChange={handleInputChange}
-                    className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                  />
-                  <span className="ml-2 text-sm text-gray-700">Insert Images into Content</span>
-                </label>
-              </div>
-
-              {/* Image Options */}
-              <div className="border-t pt-4 mt-4">
-                <h3 className="text-lg font-medium mb-3">Image Options</h3>
-
-                <div className="space-y-3">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Image Source
-                    </label>
-                    <select
-                      name="imageSource"
-                      value={formData.imageSource}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                    >
-                      <option value="url">External URL</option>
-                      <option value="upload">Upload from Device</option>
-                      <option value="ai">AI Generated (DALL-E 3)</option>
-                    </select>
-                    {formData.imageSource === 'ai' && (
-                      <p className="mt-2 text-sm text-blue-600 bg-blue-50 p-3 rounded-md">
-                        <strong>🎨 AI Image Generation:</strong> A professional, legal-themed image will be automatically 
-                        generated based on your blog topic using DALL-E 3. The image will be saved to your blog-images folder.
-                      </p>
-                    )}
-                  </div>
-
-                  {formData.imageSource === 'url' && (
-                    <div className="space-y-2">
-                      {formData.imageUrls.map((url, index) => (
-                        <div key={index} className="flex gap-2">
-                          <input
-                            type="text"
-                            value={url}
-                            onChange={e => handleImageUrlChange(index, e.target.value)}
-                            placeholder="https://example.com/image.jpg"
-                            className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                          />
-                          <button
-                            type="button"
-                            onClick={() => removeImageUrl(index)}
-                            className="px-3 py-2 text-red-600 hover:bg-red-50 rounded-md"
-                          >
-                            ✕
-                          </button>
-                          <label className="flex items-center">
-                            <input
-                              type="radio"
-                              name="featuredImageIndex"
-                              checked={formData.featuredImageIndex === index}
-                              onChange={() =>
-                                setFormData(prev => ({ ...prev, featuredImageIndex: index }))
-                              }
-                              className="text-blue-600"
-                            />
-                            <span className="ml-1 text-xs text-gray-500">Featured</span>
-                          </label>
-                        </div>
-                      ))}
-                      <button
-                        type="button"
-                        onClick={addImageUrl}
-                        className="text-sm text-blue-600 hover:text-blue-700"
-                      >
-                        + Add another image URL
-                      </button>
-                    </div>
-                  )}
-
-                  {formData.imageSource === 'upload' && (
-                    <div>
-                      <input
-                        type="file"
-                        accept="image/*"
-                        multiple
-                        onChange={handleFileUpload}
-                        className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-                      />
-                      {formData.uploadedImages.length > 0 && (
-                        <div className="mt-2 space-y-2">
-                          {formData.uploadedImages.map((file, index) => (
-                            <div
-                              key={index}
-                              className="flex items-center justify-between p-2 bg-gray-50 rounded"
-                            >
-                              <span className="text-sm text-gray-700">{file.name}</span>
-                              <div className="flex items-center gap-2">
-                                <label className="flex items-center">
-                                  <input
-                                    type="radio"
-                                    name="featuredUploadIndex"
-                                    checked={formData.featuredImageIndex === index}
-                                    onChange={() =>
-                                      setFormData(prev => ({ ...prev, featuredImageIndex: index }))
-                                    }
-                                    className="text-blue-600"
-                                  />
-                                  <span className="ml-1 text-xs text-gray-500">Featured</span>
-                                </label>
-                                <button
-                                  type="button"
-                                  onClick={() => removeUploadedImage(index)}
-                                  className="text-red-600 hover:text-red-700"
-                                >
-                                  ✕
-                                </button>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </div>
               </div>
 
               {/* Generate Button */}
@@ -579,88 +446,27 @@ export default function BlogGeneratorClient() {
 
             {preview ? (
               <div className="space-y-4">
-                {/* AI Status Badges */}
-                <div className="flex flex-wrap gap-2">
-                  <div className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-                    preview.generatedWithAI 
-                      ? 'bg-green-100 text-green-800' 
-                      : 'bg-yellow-100 text-yellow-800'
-                  }`}>
-                    {preview.generatedWithAI ? (
-                      <>
-                        <svg className="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                        </svg>
-                        Content: AI (GPT-4)
-                      </>
-                    ) : (
-                      <>
-                        <svg className="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                        </svg>
-                        Content: Template
-                      </>
-                    )}
-                  </div>
-                  {preview.aiImageGenerated && (
-                    <div className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800">
-                      <svg className="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
-                      </svg>
-                      Image: AI (DALL-E 3)
-                    </div>
-                  )}
-                </div>
-
-                {/* AI Status - shows what happened with AI generation */}
-                {preview.aiStatus && (
-                  <div className={`p-3 rounded-md text-sm ${
-                    preview.generatedWithAI 
-                      ? 'bg-green-50 text-green-800 border border-green-200' 
-                      : 'bg-yellow-50 text-yellow-800 border border-yellow-200'
-                  }`}>
-                    <strong>🔍 Status:</strong> {preview.aiStatus}
-                  </div>
-                )}
-
                 {/* Meta Info */}
-                <div className="p-3 bg-gray-50 rounded-md text-sm">
+                <div className="p-3 bg-gray-50 rounded-md text-sm space-y-1">
                   <p>
                     <strong>URL:</strong> /blog/{preview.slug}
                   </p>
                   <p>
                     <strong>Meta Title:</strong> {preview.metaTitle}
                     <span className={`ml-2 text-xs ${preview.metaTitle.length <= 60 ? 'text-green-600' : 'text-red-600'}`}>
-                      ({preview.metaTitle.length}/60 chars)
+                      ({preview.metaTitle.length}/60)
                     </span>
                   </p>
                   <p>
                     <strong>Meta Description:</strong> {preview.metaDescription}
                     <span className={`ml-2 text-xs ${preview.metaDescription.length <= 155 ? 'text-green-600' : 'text-red-600'}`}>
-                      ({preview.metaDescription.length}/155 chars)
+                      ({preview.metaDescription.length}/155)
                     </span>
                   </p>
-                  {preview.image && (
-                    <p>
-                      <strong>Featured Image:</strong> {preview.image}
-                    </p>
-                  )}
+                  <p>
+                    <strong>Image:</strong> {formData.imageFilename || 'default.jpg'}
+                  </p>
                 </div>
-
-                {/* Featured Image Preview */}
-                {preview.image && (
-                  <div className="border rounded-md overflow-hidden">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={preview.image}
-                      alt={preview.title}
-                      className="w-full h-48 object-cover"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).style.display = 'none';
-                      }}
-                    />
-                  </div>
-                )}
 
                 {/* Content Preview */}
                 <div
@@ -681,62 +487,27 @@ export default function BlogGeneratorClient() {
                   </div>
                 )}
 
-                {/* Schema Preview */}
-                {preview.schema && (
-                  <details className="border rounded-md">
-                    <summary className="p-4 cursor-pointer font-semibold text-sm bg-gray-50 hover:bg-gray-100">
-                      SEO Schema (JSON-LD) - Click to view
-                    </summary>
-                    <pre className="p-4 text-xs overflow-x-auto bg-slate-900 text-green-400 max-h-64">
-                      {JSON.stringify(preview.schema, null, 2)}
-                    </pre>
-                  </details>
-                )}
-
                 {/* Actions */}
-                <div className="space-y-3 pt-4 border-t">
-                  <div className="flex gap-4">
-                    <button
-                      onClick={handlePublish}
-                      disabled={loading}
-                      className="flex-1 bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 disabled:bg-gray-400"
-                    >
-                      {loading ? 'Publishing...' : 'Publish'}
-                    </button>
-                    <button
-                      onClick={() => {
-                        navigator.clipboard.writeText(
-                          `${window.location.origin}/blog/${preview.slug}`
-                        );
-                        alert('Link copied to clipboard!');
-                      }}
-                      className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50"
-                    >
-                      Copy Link
-                    </button>
-                  </div>
-
-                  {/* Email/SMS Sending Buttons */}
-                  <div className="flex gap-2 pt-2 border-t">
-                    <a
-                      href={`mailto:?subject=${encodeURIComponent(preview.metaTitle || preview.title)}&body=${encodeURIComponent(`Read this article: ${window.location.origin}/blog/${preview.slug}`)}`}
-                      className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 text-center text-sm"
-                    >
-                      Send by Email
-                    </a>
-                    <a
-                      href={`sms:?body=${encodeURIComponent(`Read: ${window.location.origin}/blog/${preview.slug}`)}`}
-                      className="flex-1 bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 text-center text-sm"
-                    >
-                      Send by SMS
-                    </a>
-                  </div>
+                <div className="flex gap-4 pt-4 border-t">
+                  <button
+                    onClick={handlePublish}
+                    disabled={loading}
+                    className="flex-1 bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 disabled:bg-gray-400 font-medium"
+                  >
+                    {loading ? 'Publishing...' : 'Publish to GitHub'}
+                  </button>
+                  <button
+                    onClick={() => setPreview(null)}
+                    className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50"
+                  >
+                    Cancel
+                  </button>
                 </div>
               </div>
             ) : (
-              <p className="text-gray-500 text-center py-12">
-                Generate a blog post to see preview here
-              </p>
+              <div className="text-center py-12 text-gray-500">
+                <p>Generate a blog post to see preview here</p>
+              </div>
             )}
           </div>
         </div>
