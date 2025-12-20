@@ -1,28 +1,55 @@
 /**
  * Blog Post Creation API
  * 
- * DESIGN PRINCIPLES:
- * - Single responsibility: create blog posts
- * - Hard fail on errors (no retries, no fallbacks)
- * - Uses GitHub Contents API only
- * - Each post is an independent file
+ * Saves posts to BOTH:
+ * 1. SQLite database (immediate visibility in blog dropdown)
+ * 2. GitHub (persistence across deployments) - optional
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { saveBlogPost, createBlogPost, BlogPost } from '@/lib/blog-persistence';
+import { saveBlogPost, createBlogPost } from '@/lib/blog-persistence';
+import db from '@/lib/db';
 
 // =============================================================================
-// ENVIRONMENT VALIDATION
+// DATABASE SAVE
 // =============================================================================
 
-function validateEnvironment(): { valid: boolean; error?: string } {
-  if (!process.env.GITHUB_TOKEN) {
-    return { valid: false, error: 'GITHUB_TOKEN environment variable is not set' };
+interface DbPost {
+  title: string;
+  slug: string;
+  content: string;
+  excerpt: string;
+  metaTitle: string;
+  metaDescription: string;
+  image: string;
+  schemaJson?: string;
+}
+
+function saveToDatabase(post: DbPost): { success: boolean; id?: number; error?: string } {
+  try {
+    const stmt = db.prepare(`
+      INSERT INTO blog_posts (
+        title, slug, content, excerpt, meta_title, meta_description, 
+        image, schema_json, published, published_at, created_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1, datetime('now'), datetime('now'))
+    `);
+
+    const result = stmt.run(
+      post.title,
+      post.slug,
+      post.content,
+      post.excerpt,
+      post.metaTitle,
+      post.metaDescription,
+      post.image,
+      post.schemaJson || null
+    );
+
+    return { success: true, id: Number(result.lastInsertRowid) };
+  } catch (error) {
+    console.error('[posts/route] Database error:', error);
+    return { success: false, error: error instanceof Error ? error.message : 'Database error' };
   }
-  if (!process.env.GITHUB_REPO) {
-    return { valid: false, error: 'GITHUB_REPO environment variable is not set' };
-  }
-  return { valid: true };
 }
 
 // =============================================================================
@@ -50,44 +77,52 @@ function validateRequest(data: unknown): { valid: boolean; error?: string; reque
   const req = data as Record<string, unknown>;
 
   if (!req.title || typeof req.title !== 'string') {
-    return { valid: false, error: 'title is required and must be a string' };
+    return { valid: false, error: 'title is required' };
   }
-
-  if (!req.category || typeof req.category !== 'string') {
-    return { valid: false, error: 'category is required and must be a string' };
-  }
-
-  if (!req.primaryKeyword || typeof req.primaryKeyword !== 'string') {
-    return { valid: false, error: 'primaryKeyword is required and must be a string' };
-  }
-
-  if (!req.metaTitle || typeof req.metaTitle !== 'string') {
-    return { valid: false, error: 'metaTitle is required and must be a string' };
-  }
-
-  if (!req.metaDescription || typeof req.metaDescription !== 'string') {
-    return { valid: false, error: 'metaDescription is required and must be a string' };
-  }
-
   if (!req.contentHtml || typeof req.contentHtml !== 'string') {
-    return { valid: false, error: 'contentHtml is required and must be a string' };
+    return { valid: false, error: 'contentHtml is required' };
+  }
+  if (!req.metaTitle || typeof req.metaTitle !== 'string') {
+    return { valid: false, error: 'metaTitle is required' };
+  }
+  if (!req.metaDescription || typeof req.metaDescription !== 'string') {
+    return { valid: false, error: 'metaDescription is required' };
   }
 
   return {
     valid: true,
     request: {
       title: req.title as string,
-      category: req.category as string,
-      primaryKeyword: req.primaryKeyword as string,
+      category: (req.category as string) || 'Police Station Advice',
+      primaryKeyword: (req.primaryKeyword as string) || '',
       secondaryKeywords: Array.isArray(req.secondaryKeywords) ? req.secondaryKeywords : [],
-      location: typeof req.location === 'string' ? req.location : 'Kent',
+      location: (req.location as string) || 'Kent',
       metaTitle: req.metaTitle as string,
       metaDescription: req.metaDescription as string,
       contentHtml: req.contentHtml as string,
       faq: Array.isArray(req.faq) ? req.faq : [],
-      imageFilename: typeof req.imageFilename === 'string' ? req.imageFilename : undefined,
+      imageFilename: (req.imageFilename as string) || 'blog-listing-0.jpg',
     },
   };
+}
+
+// =============================================================================
+// GENERATE EXCERPT FROM HTML
+// =============================================================================
+
+function generateExcerpt(html: string, maxLength: number = 160): string {
+  const text = html
+    .replace(/<[^>]+>/g, '')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&[a-z]+;/gi, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  if (text.length <= maxLength) return text;
+  
+  const truncated = text.substring(0, maxLength);
+  const lastSpace = truncated.lastIndexOf(' ');
+  return (lastSpace > maxLength * 0.7 ? truncated.substring(0, lastSpace) : truncated) + '...';
 }
 
 // =============================================================================
@@ -95,87 +130,97 @@ function validateRequest(data: unknown): { valid: boolean; error?: string; reque
 // =============================================================================
 
 export async function POST(request: NextRequest) {
-  // 1. Validate environment
-  const envCheck = validateEnvironment();
-  if (!envCheck.valid) {
-    return NextResponse.json(
-      { success: false, error: envCheck.error },
-      { status: 500 }
-    );
-  }
-
-  // 2. Parse request body
+  // 1. Parse and validate request
   let body: unknown;
   try {
     body = await request.json();
   } catch {
-    return NextResponse.json(
-      { success: false, error: 'Invalid JSON in request body' },
-      { status: 400 }
-    );
+    return NextResponse.json({ success: false, error: 'Invalid JSON' }, { status: 400 });
   }
 
-  // 3. Validate request
   const reqCheck = validateRequest(body);
   if (!reqCheck.valid || !reqCheck.request) {
-    return NextResponse.json(
-      { success: false, error: reqCheck.error },
-      { status: 400 }
-    );
+    return NextResponse.json({ success: false, error: reqCheck.error }, { status: 400 });
   }
 
-  // 4. Create post object
+  const req = reqCheck.request;
+
+  // 2. Create post object for GitHub
   const post = createBlogPost({
-    title: reqCheck.request.title,
-    category: reqCheck.request.category,
-    primaryKeyword: reqCheck.request.primaryKeyword,
-    secondaryKeywords: reqCheck.request.secondaryKeywords || [],
-    location: reqCheck.request.location || 'Kent',
-    metaTitle: reqCheck.request.metaTitle,
-    metaDescription: reqCheck.request.metaDescription,
-    contentHtml: reqCheck.request.contentHtml,
-    faq: reqCheck.request.faq || [],
-    imageFilename: reqCheck.request.imageFilename,
+    title: req.title,
+    category: req.category,
+    primaryKeyword: req.primaryKeyword,
+    secondaryKeywords: req.secondaryKeywords || [],
+    location: req.location || 'Kent',
+    metaTitle: req.metaTitle,
+    metaDescription: req.metaDescription,
+    contentHtml: req.contentHtml,
+    faq: req.faq || [],
+    imageFilename: req.imageFilename,
   });
 
-  // 5. Save to GitHub
-  const result = await saveBlogPost(post);
+  // 3. Save to SQLite database FIRST (for immediate visibility)
+  const dbResult = saveToDatabase({
+    title: post.title,
+    slug: post.slug,
+    content: post.contentHtml,
+    excerpt: generateExcerpt(post.contentHtml),
+    metaTitle: post.metaTitle,
+    metaDescription: post.metaDescription,
+    image: post.featuredImage,
+  });
 
-  if (!result.success) {
+  if (!dbResult.success) {
     return NextResponse.json(
-      { 
-        success: false, 
-        error: result.error,
-        filePath: result.filePath,
-      },
+      { success: false, error: `Database error: ${dbResult.error}` },
       { status: 500 }
     );
   }
 
-  // 6. Return success
+  // 4. Try to save to GitHub (optional - for cross-deployment persistence)
+  let githubResult = { success: false, error: 'GitHub not configured', filePath: '' };
+  
+  if (process.env.GITHUB_TOKEN && process.env.GITHUB_REPO) {
+    githubResult = await saveBlogPost(post);
+    if (!githubResult.success) {
+      console.warn('[posts/route] GitHub save failed:', githubResult.error);
+      // Don't fail - database save succeeded
+    }
+  } else {
+    console.log('[posts/route] GitHub not configured, skipping GitHub save');
+  }
+
+  // 5. Return success
   return NextResponse.json({
     success: true,
     post: {
-      id: post.id,
+      id: dbResult.id,
       slug: post.slug,
       title: post.title,
       date: post.date,
       url: `/blog/${post.slug}`,
+      image: post.featuredImage,
     },
-    filePath: result.filePath,
-    sha: result.sha,
+    database: { saved: true, id: dbResult.id },
+    github: { 
+      saved: githubResult.success, 
+      filePath: githubResult.filePath,
+      error: githubResult.success ? undefined : githubResult.error,
+    },
   });
 }
 
 // =============================================================================
-// GET HANDLER (for listing posts - optional)
+// GET HANDLER
 // =============================================================================
 
 export async function GET() {
-  // This endpoint just confirms the API is working
-  // Actual post listing should use the blog-reader module at build time
   return NextResponse.json({
     status: 'ok',
-    message: 'Blog posts API is running. Use POST to create a new post.',
+    message: 'Blog posts API. Use POST to create a new post.',
+    github: {
+      configured: !!(process.env.GITHUB_TOKEN && process.env.GITHUB_REPO),
+      repo: process.env.GITHUB_REPO || 'not set',
+    },
   });
 }

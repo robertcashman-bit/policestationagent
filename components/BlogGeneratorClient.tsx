@@ -51,15 +51,14 @@ const CATEGORIES = [
 ];
 
 const AVAILABLE_IMAGES = [
-  { value: '', label: 'Use default image (blog-listing-0.jpg)' },
-  { value: 'blog-listing-0.jpg', label: 'Blog Image 1' },
-  { value: 'blog-listing-1.png', label: 'Blog Image 2' },
-  { value: 'blog-listing-2.png', label: 'Blog Image 3' },
-  { value: 'blog-listing-3.png', label: 'Blog Image 4' },
-  { value: 'blog-listing-4.png', label: 'Blog Image 5' },
-  { value: 'blog-listing-5.png', label: 'Blog Image 6' },
-  { value: 'blog-listing-6.png', label: 'Blog Image 7' },
-  { value: 'blog-listing-7.png', label: 'Blog Image 8' },
+  { value: 'blog-listing-0.jpg', label: 'Legal Office', preview: '/blog-images/blog-listing-0.jpg' },
+  { value: 'blog-listing-1.png', label: 'Police Station', preview: '/blog-images/blog-listing-1.png' },
+  { value: 'blog-listing-2.png', label: 'Courtroom', preview: '/blog-images/blog-listing-2.png' },
+  { value: 'blog-listing-3.png', label: 'Legal Documents', preview: '/blog-images/blog-listing-3.png' },
+  { value: 'blog-listing-4.png', label: 'Consultation', preview: '/blog-images/blog-listing-4.png' },
+  { value: 'blog-listing-5.png', label: 'Justice', preview: '/blog-images/blog-listing-5.png' },
+  { value: 'blog-listing-6.png', label: 'Law Books', preview: '/blog-images/blog-listing-6.png' },
+  { value: 'blog-listing-7.png', label: 'Client Meeting', preview: '/blog-images/blog-listing-7.png' },
 ];
 
 // =============================================================================
@@ -79,14 +78,18 @@ export default function BlogGeneratorClient() {
     seoLength: 'optimal',
     includeFAQ: true,
     includeInternalLinks: true,
-    imageFilename: '',
+    imageFilename: 'blog-listing-0.jpg', // Default to first image
   });
 
   // UI state
   const [preview, setPreview] = useState<GeneratedContent | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<{ url: string; filePath: string } | null>(null);
+  const [success, setSuccess] = useState<{
+    url: string;
+    database: { saved: boolean; id?: number };
+    github: { saved: boolean; filePath?: string; error?: string };
+  } | null>(null);
 
   // =============================================================================
   // HANDLERS
@@ -176,7 +179,7 @@ export default function BlogGeneratorClient() {
           metaDescription: preview.metaDescription,
           contentHtml: preview.content,
           faq: preview.faqs.map(f => ({ q: f.question, a: f.answer })),
-          imageFilename: formData.imageFilename || undefined,
+          imageFilename: formData.imageFilename,
         }),
       });
 
@@ -188,7 +191,8 @@ export default function BlogGeneratorClient() {
 
       setSuccess({
         url: data.post.url,
-        filePath: data.filePath,
+        database: data.database,
+        github: data.github,
       });
       setPreview(null);
     } catch (err) {
@@ -254,28 +258,49 @@ export default function BlogGeneratorClient() {
         {/* Success Message */}
         {success && (
           <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-md">
-            <div className="flex">
-              <span className="text-green-600 mr-2">✓</span>
-              <div>
-                <p className="font-medium text-green-800">Published Successfully!</p>
-                <p className="text-green-700">
-                  Post saved to: <code className="bg-green-100 px-1 rounded">{success.filePath}</code>
-                </p>
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center">
+                <span className="text-green-600 mr-2 text-xl">✓</span>
+                <p className="font-bold text-green-800 text-lg">Published Successfully!</p>
+              </div>
+              
+              {/* Status badges */}
+              <div className="flex flex-wrap gap-2 mt-1">
+                <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-800">
+                  ✓ Database (ID: {success.database.id})
+                </span>
+                {success.github.saved ? (
+                  <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-blue-100 text-blue-800">
+                    ✓ GitHub
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-yellow-100 text-yellow-800">
+                    ⚠ GitHub: {success.github.error}
+                  </span>
+                )}
+              </div>
+
+              {/* Actions */}
+              <div className="flex items-center gap-4 mt-2">
                 <a
                   href={success.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-green-800 underline font-medium"
+                  className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 font-medium text-sm"
                 >
-                  View post →
+                  View Post →
                 </a>
                 <button
                   onClick={handleReset}
-                  className="ml-4 text-green-700 underline"
+                  className="text-green-700 underline text-sm"
                 >
                   Create another post
                 </button>
               </div>
+              
+              <p className="text-xs text-green-600 mt-1">
+                Post is now visible in the blog dropdown menu.
+              </p>
             </div>
           </div>
         )}
@@ -382,25 +407,54 @@ export default function BlogGeneratorClient() {
                 </select>
               </div>
 
-              {/* Featured Image */}
+              {/* Featured Image with Preview */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Featured Image
                 </label>
-                <select
-                  name="imageFilename"
-                  value={formData.imageFilename}
-                  onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                >
+                
+                {/* Image Preview */}
+                <div className="mb-3 border rounded-lg overflow-hidden bg-gray-100">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={`/blog-images/${formData.imageFilename || 'blog-listing-0.jpg'}`}
+                    alt="Selected featured image"
+                    className="w-full h-40 object-cover"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = '/blog-images/blog-listing-0.jpg';
+                    }}
+                  />
+                </div>
+
+                {/* Image Selection Grid */}
+                <div className="grid grid-cols-4 gap-2">
                   {AVAILABLE_IMAGES.map(img => (
-                    <option key={img.value} value={img.value}>
-                      {img.label}
-                    </option>
+                    <button
+                      key={img.value}
+                      type="button"
+                      onClick={() => setFormData(prev => ({ ...prev, imageFilename: img.value }))}
+                      className={`relative aspect-video rounded overflow-hidden border-2 transition-all ${
+                        formData.imageFilename === img.value
+                          ? 'border-blue-500 ring-2 ring-blue-200'
+                          : 'border-gray-200 hover:border-gray-400'
+                      }`}
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={img.preview}
+                        alt={img.label}
+                        className="w-full h-full object-cover"
+                      />
+                      {formData.imageFilename === img.value && (
+                        <div className="absolute inset-0 bg-blue-500 bg-opacity-20 flex items-center justify-center">
+                          <span className="bg-blue-500 text-white text-xs px-2 py-1 rounded">✓</span>
+                        </div>
+                      )}
+                    </button>
                   ))}
-                </select>
-                <p className="mt-1 text-xs text-gray-500">
-                  Images must be pre-uploaded to /public/blog-images/
+                </div>
+                <p className="mt-2 text-xs text-gray-500">
+                  Click an image to select it as the featured image
                 </p>
               </div>
 
