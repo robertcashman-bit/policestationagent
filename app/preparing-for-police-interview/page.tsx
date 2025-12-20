@@ -1,23 +1,53 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import type { Metadata } from 'next';
+import { LegalReferences, Ref, type LegalSource } from '@/components/LegalReferences';
+import { SITE_DOMAIN } from '@/config/site';
 
 export const metadata: Metadata = {
   title: 'Preparing for Police Interview | Expert Guide | Police Station Agent',
   description: 'How to prepare for a police interview. Expert advice on your rights, what to expect, and why legal representation is essential. Free extended hours advice available.',
   alternates: {
-    canonical: 'https://policestationagent.com/preparing-for-police-interview',
+    canonical: `https://${SITE_DOMAIN}/preparing-for-police-interview`,
   },
   openGraph: {
     title: 'Preparing for Police Interview | Expert Guide | Police Station Agent',
     description: 'How to prepare for a police interview. Expert advice on your rights, what to expect, and why legal representation is essential.',
-    url: 'https://policestationagent.com/preparing-for-police-interview',
+    url: `https://${SITE_DOMAIN}/preparing-for-police-interview`,
     siteName: 'Police Station Agent',
     type: 'website',
   },
 };
 
 export default function Page() {
+  const sources: LegalSource[] = [
+    {
+      id: 'pace-s58',
+      label: 'Police and Criminal Evidence Act 1984 (PACE) s.58 (right to consult a solicitor)',
+      href: 'https://www.legislation.gov.uk/ukpga/1984/60/section/58',
+    },
+    {
+      id: 'pace-code-c-2023',
+      label: 'Home Office: PACE Code C (December 2023) – detention, treatment and questioning (PDF)',
+      href: 'https://assets.publishing.service.gov.uk/media/6580543083ba38000de1b792/PACE+Code+C+2023.pdf',
+    },
+    {
+      id: 'cjpoa-s34',
+      label: 'Criminal Justice and Public Order Act 1994 s.34 (inferences from failure to mention facts)',
+      href: 'https://www.legislation.gov.uk/ukpga/1994/33/section/34',
+    },
+    {
+      id: 'pace-code-e-2016',
+      label: 'Home Office: PACE Code E (2016) – audio recording of interviews (PDF)',
+      href: 'https://assets.publishing.service.gov.uk/media/5a8092dbe5274a2e87dba95d/52344_00_Pace_Code_E_Accessible_v0.3.pdf',
+    },
+    {
+      id: 'pace-code-f-2013',
+      label: 'Home Office: PACE Code F (2013) – visual recording of interviews (PDF)',
+      href: 'https://assets.publishing.service.gov.uk/media/5a7d4e9740f0b60a7f1a9b6d/2013_PACE_Code_F.pdf',
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
       <Header />
@@ -35,16 +65,16 @@ export default function Page() {
               
               <h3 className="text-2xl font-semibold mb-3 mt-6">1. Exercise Your Right to Legal Advice</h3>
               <p className="mb-4">
-                You have the right to free legal advice under the Legal Aid scheme.<sup>1</sup> Always request a solicitor before answering any questions. This is your fundamental right and cannot be denied.
+                You have a statutory right to consult a solicitor in police custody (PACE s.58).<Ref n={1} /> PACE Code C also requires detainees to be told that free independent legal advice is available.<Ref n={2} /> Always request legal advice before deciding how to respond in interview.
               </p>
 
               <h3 className="text-2xl font-semibold mb-3 mt-6">2. Understand the Caution</h3>
               <p className="mb-4">
-                The police must give you the caution: "You do not have to say anything, but it may harm your defence if you do not mention when questioned something which you later rely on in court."<sup>2</sup> This means:
+                PACE Code C sets out the standard caution wording, including: “You do not have to say anything. But it may harm your defence if you do not mention when questioned something which you later rely on in Court. Anything you do say may be given in evidence.”<Ref n={2} /> This means:
               </p>
               <ul className="list-disc pl-6 mb-4 space-y-2">
                 <li>You have the right to remain silent</li>
-                <li>However, if you later rely on a fact in court that you didn't mention when questioned, this may be used against you</li>
+                <li>Section 34 CJPOA 1994 is the key “adverse inference” provision about failing to mention facts later relied on in a defence, where it was reasonable to expect you to mention them at the time<Ref n={3} /></li>
                 <li>You should wait for legal advice before deciding how to respond</li>
               </ul>
 
@@ -63,7 +93,7 @@ export default function Page() {
               
               <h3 className="text-2xl font-semibold mb-3 mt-6">What to Expect</h3>
               <ul className="list-disc pl-6 mb-4 space-y-2">
-                <li>The interview will be audio or video recorded<sup>3</sup></li>
+                <li>Interviews are recorded under the PACE recording codes (Codes E and F)<Ref n={4} /> <Ref n={5} /></li>
                 <li>Your solicitor will be present throughout</li>
                 <li>You can take breaks when needed</li>
                 <li>You can consult privately with your solicitor at any time</li>
@@ -117,12 +147,7 @@ export default function Page() {
             </section>
 
             <section className="mt-12 pt-8 border-t border-slate-300">
-              <h2 className="text-2xl font-semibold mb-4">References</h2>
-              <ol className="list-decimal pl-6 space-y-2 text-sm text-slate-600">
-                <li>Legal Aid, Sentencing and Punishment of Offenders Act 2012, Section 13</li>
-                <li>Police and Criminal Evidence Act 1984, Code C, paragraph 10.5</li>
-                <li>Police and Criminal Evidence Act 1984, Code E (Audio Recording) and Code F (Visual Recording)</li>
-              </ol>
+              <LegalReferences sources={sources} heading="Sources" />
             </section>
           </div>
         </div>

@@ -1,23 +1,104 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import type { Metadata } from 'next';
+import Link from 'next/link';
+import { LegalReferences, Ref, type LegalSource } from '@/components/LegalReferences';
+import { SITE_DOMAIN } from '@/config/site';
 
 export const metadata: Metadata = {
   title: "What Happens If I Ignore A Police Interview Invitation? | Legal Consequences",
   description: "Ignoring a voluntary police interview invitation can lead to arrest, warrant, or prosecution. Expert advice on what to do when police ask you to attend. FREE legal help available.",
   keywords: undefined,
   alternates: {
-    canonical: "https://policestationagent.com/what-happens-if-ignore-police-interview",
+    canonical: `https://${SITE_DOMAIN}/what-happens-if-ignore-police-interview`,
   },
   openGraph: {
     title: "What Happens If I Ignore A Police Interview Invitation? | Legal Consequences",
     description: "Ignoring a voluntary police interview invitation can lead to arrest, warrant, or prosecution. Expert advice on what to do when police ask you to attend. FREE legal help available.",
     type: 'website',
-    url: "https://policestationagent.com/what-happens-if-ignore-police-interview",
+    url: `https://${SITE_DOMAIN}/what-happens-if-ignore-police-interview`,
   },
 };
 
 export default function Page() {
+  const sources: LegalSource[] = [
+    {
+      id: 'pace-code-c-2023',
+      label: 'Home Office: PACE Code C (December 2023) – detention, treatment and questioning (PDF)',
+      href: 'https://assets.publishing.service.gov.uk/media/6580543083ba38000de1b792/PACE+Code+C+2023.pdf',
+    },
+  ];
+
+  const useLegacy = process.env.NEXT_PUBLIC_USE_LEGACY_LEGAL_PAGES === '1';
+  if (!useLegacy) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
+        <Header />
+        <main className="flex-grow">
+          <section className="bg-gradient-to-br from-red-900 via-red-800 to-red-900 text-white py-16">
+            <div className="max-w-4xl mx-auto px-4">
+              <nav className="text-sm mb-6 text-red-200">
+                <Link href="/" className="hover:text-white">
+                  Home
+                </Link>
+                <span className="mx-2">›</span>
+                <span>Voluntary interview invitations</span>
+              </nav>
+              <h1 className="text-4xl md:text-5xl font-black mb-6">
+                What if you ignore a voluntary police interview invitation?
+              </h1>
+              <p className="text-xl text-red-100">
+                What Code C says about voluntary attendance, and why you should get advice quickly.
+              </p>
+            </div>
+          </section>
+
+          <article className="max-w-4xl mx-auto px-4 py-12">
+            <div className="bg-red-50 border-l-4 border-red-600 p-6 mb-8 rounded-r-lg">
+              <p className="text-lg font-medium text-slate-800">
+                <strong>Key point:</strong> Under PACE Code C, a person attending voluntarily may leave unless
+                arrested, and Code C explains what must happen if the police decide arrest becomes necessary.<Ref n={1} /> If you receive an interview invitation, get legal advice before responding.
+              </p>
+            </div>
+
+            <div className="prose prose-lg max-w-none">
+              <h2>Voluntary attendance: what it means</h2>
+              <p>
+                PACE Code C says that someone attending voluntarily to assist an investigation may leave at will
+                unless arrested, and that if arrest becomes necessary the person must be informed they are under
+                arrest and dealt with as a detainee under the Code.<Ref n={1} />
+              </p>
+
+              <h2>So what happens if you ignore the invitation?</h2>
+              <p>
+                There is no single outcome. Police may try to rearrange, continue the investigation, or decide that
+                arrest is necessary (which would move the matter into custody procedures). Code C specifically
+                recognises that arrest can become necessary during voluntary attendance and sets out the steps that
+                follow.<Ref n={1} />
+              </p>
+
+              <h2>What you should do</h2>
+              <ul>
+                <li>Get legal advice early and ask for disclosure before interview where appropriate.</li>
+                <li>
+                  If you do attend, attend with a solicitor (your rights and safeguards are not diminished just because
+                  the interview is voluntary).<Ref n={1} />
+                </li>
+                <li>
+                  If you are unsure, read the related guides: <Link href="/no-comment-interview">no comment interviews</Link> and{' '}
+                  <Link href="/prepared-statements">prepared statements</Link>.
+                </li>
+              </ul>
+            </div>
+
+            <LegalReferences sources={sources} />
+          </article>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
       <Header />

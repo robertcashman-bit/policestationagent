@@ -3,6 +3,8 @@ import Footer from '@/components/Footer';
 import type { Metadata } from 'next';
 import { JsonLd } from '@/components/JsonLd';
 import { SITE_DOMAIN } from '@/config/site';
+import Link from 'next/link';
+import { LegalReferences, Ref, type LegalSource } from '@/components/LegalReferences';
 
 export const metadata: Metadata = {
   title: "Police Station Interviews in Kent: Your Rights and What to Expect | Police Station Agent",
@@ -60,6 +62,108 @@ const faqSchema = {
 
 export default function Page() {
   const currentDate = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+
+  const sources: LegalSource[] = [
+    {
+      id: 'pace-s58',
+      label: 'Police and Criminal Evidence Act 1984 (PACE) s.58 (right to consult a solicitor)',
+      href: 'https://www.legislation.gov.uk/ukpga/1984/60/section/58',
+    },
+    {
+      id: 'pace-code-c-2023',
+      label: 'Home Office: PACE Code C (December 2023) – detention, treatment and questioning (PDF)',
+      href: 'https://assets.publishing.service.gov.uk/media/6580543083ba38000de1b792/PACE+Code+C+2023.pdf',
+    },
+    {
+      id: 'cjpoa-s34',
+      label: 'Criminal Justice and Public Order Act 1994 s.34 (inferences from failure to mention facts)',
+      href: 'https://www.legislation.gov.uk/ukpga/1994/33/section/34',
+    },
+    {
+      id: 'pace-code-e-2016',
+      label: 'Home Office: PACE Code E (2016) – audio recording of interviews (PDF)',
+      href: 'https://assets.publishing.service.gov.uk/media/5a8092dbe5274a2e87dba95d/52344_00_Pace_Code_E_Accessible_v0.3.pdf',
+    },
+    {
+      id: 'pace-code-f-2013',
+      label: 'Home Office: PACE Code F (2013) – visual recording of interviews (PDF)',
+      href: 'https://assets.publishing.service.gov.uk/media/5a7d4e9740f0b60a7f1a9b6d/2013_PACE_Code_F.pdf',
+    },
+  ];
+
+  const useLegacy = process.env.NEXT_PUBLIC_USE_LEGACY_LEGAL_PAGES === '1';
+  if (!useLegacy) {
+    return (
+      <>
+        <JsonLd data={faqSchema} />
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
+          <Header />
+          <main className="flex-grow">
+            <section className="bg-gradient-to-br from-slate-800 via-blue-900 to-slate-900 text-white py-16">
+              <div className="max-w-4xl mx-auto px-4">
+                <nav className="text-sm mb-6 text-blue-200">
+                  <Link href="/" className="hover:text-white">
+                    Home
+                  </Link>
+                  <span className="mx-2">›</span>
+                  <span>Police station interviews</span>
+                </nav>
+                <h1 className="text-4xl md:text-5xl font-bold mb-6">Police station interviews: rights and basics</h1>
+                <p className="text-xl text-blue-100">A sourced overview (England &amp; Wales).</p>
+              </div>
+            </section>
+
+            <article className="max-w-4xl mx-auto px-4 py-12">
+              <div className="bg-blue-50 border-l-4 border-blue-600 p-6 mb-8 rounded-r-lg">
+                <p className="text-lg font-medium text-slate-800">
+                  <strong>Quick Answer:</strong> You have a right to consult a solicitor (PACE s.58)<Ref n={1} /> and PACE
+                  Code C sets out safeguards for interviews (including voluntary attendance rules and solicitor presence in
+                  interview).<Ref n={2} /> Silence can have consequences in some cases under section 34 CJPOA 1994.<Ref n={3} />
+                </p>
+              </div>
+
+              <div className="prose prose-lg max-w-none">
+                <h2>Arrest interview vs voluntary interview</h2>
+                <p>
+                  PACE Code C addresses voluntary attendance. It provides that someone attending voluntarily may leave unless
+                  arrested, and it explains what must happen if the police decide arrest becomes necessary.<Ref n={2} />
+                </p>
+
+                <h2>Right to a solicitor</h2>
+                <p>
+                  PACE section 58 provides a right to consult a solicitor.<Ref n={1} /> Code C also deals with solicitor attendance
+                  in interview (including that a detainee who has been permitted to consult a solicitor is entitled, on request, to
+                  have the solicitor present when interviewed unless an exception applies).<Ref n={2} />
+                </p>
+
+                <h2>Recording</h2>
+                <p>
+                  Audio/visual recording of interviews is covered by PACE Codes E and F.<Ref n={4} /> <Ref n={5} />
+                </p>
+
+                <h2>“No comment” and adverse inference</h2>
+                <p>
+                  Section 34 CJPOA 1994 deals with a failure to mention facts when questioned under caution (or when charged/informed)
+                  that are later relied on in a defence, where it was reasonable to expect you to mention them at the time.<Ref n={3} /> See:{' '}
+                  <Link href="/no-comment-interview" className="text-blue-700 hover:underline">
+                    no comment interviews
+                  </Link>{' '}
+                  and{' '}
+                  <Link href="/prepared-statements" className="text-blue-700 hover:underline">
+                    prepared statements
+                  </Link>
+                  .
+                </p>
+              </div>
+
+              <LegalReferences sources={sources} />
+            </article>
+          </main>
+          <Footer />
+        </div>
+      </>
+    );
+  }
   
   return (
     <>

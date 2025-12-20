@@ -2,6 +2,9 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { JsonLd } from '@/components/JsonLd';
 import type { Metadata } from 'next';
+import Link from 'next/link';
+import { LegalReferences, Ref, type LegalSource } from '@/components/LegalReferences';
+import { SITE_DOMAIN } from '@/config/site';
 
 const faqSchema = {
   '@context': 'https://schema.org',
@@ -46,18 +49,121 @@ export const metadata: Metadata = {
   title: "Police Interview Rights Kent | Your Rights During Questioning | PACE Code C",
   description: "Know your rights during a police interview in Kent. FREE solicitor advice at Maidstone, Medway, Canterbury, Folkestone. PACE Code C explained. Call 01732 247427.",
   alternates: {
-    canonical: "https://policestationagent.com/police-interview-rights",
+    canonical: `https://${SITE_DOMAIN}/police-interview-rights`,
   },
   openGraph: {
     title: "Police Interview Rights Kent | Your Rights During Questioning | PACE Code C",
     description: "Know your rights during a police interview in Kent. FREE solicitor advice at Maidstone, Medway, Canterbury, Folkestone. PACE Code C explained. Call 01732 247427.",
     type: 'website',
-    url: "https://policestationagent.com/police-interview-rights",
+    url: `https://${SITE_DOMAIN}/police-interview-rights`,
     siteName: 'Police Station Agent',
   },
 };
 
 export default function Page() {
+  const sources: LegalSource[] = [
+    {
+      id: 'pace-code-c-2023',
+      label: 'Home Office: PACE Code C (December 2023) – detention, treatment and questioning (PDF)',
+      href: 'https://assets.publishing.service.gov.uk/media/6580543083ba38000de1b792/PACE+Code+C+2023.pdf',
+    },
+    {
+      id: 'cjpoa-s34',
+      label: 'Criminal Justice and Public Order Act 1994 s.34 (inferences from failure to mention facts)',
+      href: 'https://www.legislation.gov.uk/ukpga/1994/33/section/34',
+    },
+    {
+      id: 'pace-code-e-2016',
+      label: 'Home Office: PACE Code E (2016) – audio recording of interviews (PDF)',
+      href: 'https://assets.publishing.service.gov.uk/media/5a8092dbe5274a2e87dba95d/52344_00_Pace_Code_E_Accessible_v0.3.pdf',
+    },
+    {
+      id: 'pace-code-f-2013',
+      label: 'Home Office: PACE Code F (2013) – visual recording of interviews (PDF)',
+      href: 'https://assets.publishing.service.gov.uk/media/5a7d4e9740f0b60a7f1a9b6d/2013_PACE_Code_F.pdf',
+    },
+  ];
+
+  const useLegacy = process.env.NEXT_PUBLIC_USE_LEGACY_LEGAL_PAGES === '1';
+  if (!useLegacy) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
+        <JsonLd data={faqSchema} />
+        <Header />
+
+        <main className="flex-grow">
+          <section className="bg-gradient-to-br from-slate-800 via-blue-900 to-slate-900 text-white py-16">
+            <div className="max-w-4xl mx-auto px-4">
+              <nav className="text-sm mb-6 text-blue-200">
+                <Link href="/" className="hover:text-white">
+                  Home
+                </Link>
+                <span className="mx-2">›</span>
+                <span>Interview rights</span>
+              </nav>
+              <h1 className="text-4xl md:text-5xl font-bold mb-6">Police interview rights (PACE Code C)</h1>
+              <p className="text-xl text-blue-100">Key rules and safeguards, with sources.</p>
+            </div>
+          </section>
+
+          <article className="max-w-4xl mx-auto px-4 py-12">
+            <div className="bg-blue-50 border-l-4 border-blue-600 p-6 mb-8 rounded-r-lg">
+              <p className="text-lg font-medium text-slate-800">
+                <strong>Quick Answer:</strong> PACE Code C governs interviews of suspects. It includes rules on
+                solicitor attendance in interview (Code C para 6.8),<Ref n={1} /> the caution wording,<Ref n={1} /> and breaks during
+                interviewing (Code C para 12.8).<Ref n={1} /> Silence can have consequences under section 34 CJPOA 1994 in certain
+                circumstances.<Ref n={2} />
+              </p>
+            </div>
+
+            <div className="prose prose-lg max-w-none">
+              <h2>Solicitor in the interview room</h2>
+              <p>
+                PACE Code C provides that a detainee who has been permitted to consult a solicitor is entitled, on request, to have
+                the solicitor present when interviewed unless an exception applies (Code C para 6.8).<Ref n={1} />
+              </p>
+
+              <h2>The caution</h2>
+              <p>
+                PACE Code C sets out the standard caution wording (terms of the caution).<Ref n={1} /> That wording includes the warning
+                about not mentioning something later relied on in court.
+              </p>
+
+              <h2>Breaks</h2>
+              <p>
+                Code C provides for breaks from interviewing (including short refreshment breaks at approximately two-hour intervals,
+                subject to limited grounds to delay).<Ref n={1} />
+              </p>
+
+              <h2>Recording</h2>
+              <p>
+                Audio/visual recording of interviews is covered by PACE Codes E and F.<Ref n={3} /> <Ref n={4} />
+              </p>
+
+              <h2>No comment and adverse inference</h2>
+              <p>
+                Section 34 CJPOA 1994 is the core “adverse inference” provision about failing to mention facts when questioned under caution
+                that are later relied on in a defence, where it was reasonable to expect you to mention them at the time.<Ref n={2} /> See:{' '}
+                <Link href="/no-comment-interview" className="text-blue-700 hover:underline">
+                  no comment interviews
+                </Link>{' '}
+                and{' '}
+                <Link href="/prepared-statements" className="text-blue-700 hover:underline">
+                  prepared statements
+                </Link>
+                .
+              </p>
+            </div>
+
+            <LegalReferences sources={sources} />
+          </article>
+        </main>
+
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
       <JsonLd data={faqSchema} />

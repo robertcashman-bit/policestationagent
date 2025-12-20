@@ -2,6 +2,9 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { JsonLd } from '@/components/JsonLd';
 import type { Metadata } from 'next';
+import Link from 'next/link';
+import { LegalReferences, Ref, type LegalSource } from '@/components/LegalReferences';
+import { SITE_DOMAIN } from '@/config/site';
 
 const faqSchema = {
   '@context': 'https://schema.org',
@@ -12,15 +15,7 @@ const faqSchema = {
       name: 'How long can Kent Police hold me without charge?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Under Section 41 of PACE 1984, the standard limit is 24 hours. A Superintendent can authorise extension to 36 hours under Section 42 for indictable offences. For serious arrestable offences, magistrates can grant warrants extending detention to a maximum of 96 hours under Sections 43-44.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'Can I refuse to give my DNA in Kent?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: "Under Section 63 of PACE 1984, if you're arrested for a 'recordable offence' (most criminal offences), police can take DNA and fingerprints without your consent. For non-recordable offences, your written consent is required.",
+        text: 'PACE sets a general 24-hour limit without charge (calculated from “relevant time”). In indictable cases a superintendent can authorise detention up to 36 hours, and a magistrates’ court can issue/extend warrants subject to the 96-hour maximum after relevant time.',
       },
     },
     {
@@ -28,7 +23,7 @@ const faqSchema = {
       name: 'Do I have to answer police questions in Kent?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: "You have the common law right to remain silent. However, under Sections 34-37 of the Criminal Justice and Public Order Act 1994, a court may draw 'adverse inferences' from silence in certain circumstances. A solicitor will advise you on the implications for your specific case.",
+        text: "You can choose not to answer questions. Section 34 of the Criminal Justice and Public Order Act 1994 allows a court or jury to draw inferences in certain circumstances where a suspect fails to mention facts later relied on in a defence.",
       },
     },
     {
@@ -36,7 +31,7 @@ const faqSchema = {
       name: 'Can I have a solicitor present during interview?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Yes. Under PACE Code C, paragraph 6.8, you have an absolute right to have a solicitor present during any interview. This right cannot be denied except in very limited circumstances under Annex B.',
+        text: 'PACE Code C provides that a detainee who has been permitted to consult a solicitor is entitled, on request, to have the solicitor present when interviewed unless an exception applies.',
       },
     },
   ],
@@ -46,18 +41,149 @@ export const metadata: Metadata = {
   title: "Police Custody Rights Kent | Your PACE 1984 Rights Explained | FREE Legal Advice",
   description: "Know your rights in Kent police custody under PACE 1984. FREE legal advice at Maidstone, Medway, Canterbury, Folkestone. Section 58 right to a solicitor. Call 01732 247427.",
   alternates: {
-    canonical: "https://policestationagent.com/police-custody-rights",
+    canonical: `https://${SITE_DOMAIN}/police-custody-rights`,
   },
   openGraph: {
     title: "Police Custody Rights Kent | Your PACE 1984 Rights Explained | FREE Legal Advice",
     description: "Know your rights in Kent police custody under PACE 1984. FREE legal advice at Maidstone, Medway, Canterbury, Folkestone. Section 58 right to a solicitor. Call 01732 247427.",
     type: 'website',
-    url: "https://policestationagent.com/police-custody-rights",
+    url: `https://${SITE_DOMAIN}/police-custody-rights`,
     siteName: 'Police Station Agent',
   },
 };
 
 export default function Page() {
+  const sources: LegalSource[] = [
+    {
+      id: 'pace-s56',
+      label: 'Police and Criminal Evidence Act 1984 (PACE) s.56 (right to have someone informed of arrest)',
+      href: 'https://www.legislation.gov.uk/ukpga/1984/60/section/56',
+    },
+    {
+      id: 'pace-s58',
+      label: 'PACE s.58 (right to consult a solicitor)',
+      href: 'https://www.legislation.gov.uk/ukpga/1984/60/section/58',
+    },
+    {
+      id: 'pace-s40',
+      label: 'PACE s.40 (reviews of detention; 6-hour / 9-hour timetable)',
+      href: 'https://www.legislation.gov.uk/ukpga/1984/60/section/40',
+    },
+    {
+      id: 'pace-s41',
+      label: 'PACE s.41 (24-hour limit; “relevant time” definition)',
+      href: 'https://www.legislation.gov.uk/ukpga/1984/60/section/41',
+    },
+    {
+      id: 'pace-s42',
+      label: 'PACE s.42 (superintendent authorisation up to 36 hours in indictable cases)',
+      href: 'https://www.legislation.gov.uk/ukpga/1984/60/section/42',
+    },
+    {
+      id: 'pace-s43',
+      label: 'PACE s.43 (warrants of further detention by magistrates’ court)',
+      href: 'https://www.legislation.gov.uk/ukpga/1984/60/section/43',
+    },
+    {
+      id: 'pace-s44',
+      label: 'PACE s.44 (extensions of warrants; maximum 96 hours after relevant time)',
+      href: 'https://www.legislation.gov.uk/ukpga/1984/60/section/44',
+    },
+    {
+      id: 'pace-code-c-2023',
+      label: 'Home Office: PACE Code C (December 2023) – detention, treatment and questioning (PDF)',
+      href: 'https://assets.publishing.service.gov.uk/media/6580543083ba38000de1b792/PACE+Code+C+2023.pdf',
+    },
+    {
+      id: 'cjpoa-s34',
+      label: 'Criminal Justice and Public Order Act 1994 s.34 (inferences from failure to mention facts)',
+      href: 'https://www.legislation.gov.uk/ukpga/1994/33/section/34',
+    },
+  ];
+
+  const useLegacy = process.env.NEXT_PUBLIC_USE_LEGACY_LEGAL_PAGES === '1';
+  if (!useLegacy) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
+        <JsonLd data={faqSchema} />
+        <Header />
+
+        <main className="flex-grow">
+          <section className="bg-gradient-to-br from-slate-800 via-blue-900 to-slate-900 text-white py-16">
+            <div className="max-w-4xl mx-auto px-4">
+              <nav className="text-sm mb-6 text-blue-200">
+                <Link href="/" className="hover:text-white">
+                  Home
+                </Link>
+                <span className="mx-2">›</span>
+                <span>Police custody rights</span>
+              </nav>
+              <h1 className="text-4xl md:text-5xl font-bold mb-6">Your rights in police custody (PACE)</h1>
+              <p className="text-xl text-blue-100">
+                Key statutory rights and time limits in England &amp; Wales, with sources.
+              </p>
+            </div>
+          </section>
+
+          <article className="max-w-4xl mx-auto px-4 py-12">
+            <div className="bg-blue-50 border-l-4 border-blue-600 p-6 mb-8 rounded-r-lg">
+              <p className="text-lg font-medium text-slate-800">
+                <strong>Quick Answer:</strong> In police custody you have a statutory right to consult a solicitor (PACE
+                s.58)<Ref n={2} /> and to have someone informed of your arrest (PACE s.56).<Ref n={1} /> Detention is
+                time-limited under PACE (including the 24-hour rule and rules on extensions/warrants).<Ref n={4} />{' '}
+                <Ref n={5} /> <Ref n={6} /> <Ref n={7} />
+              </p>
+            </div>
+
+            <div className="prose prose-lg max-w-none">
+              <h2>Right to a solicitor</h2>
+              <p>
+                PACE gives detainees a right to consult a solicitor.<Ref n={2} /> PACE Code C also requires the custody
+                officer to tell detainees about key continuing rights, including the right to consult privately with a
+                solicitor (and that free independent legal advice is available).<Ref n={8} />
+              </p>
+
+              <h2>Right to have someone informed</h2>
+              <p>
+                PACE section 56 provides a right to have one person informed of your arrest and whereabouts, subject
+                to statutory exceptions.<Ref n={1} />
+              </p>
+
+              <h2>How long can police keep you without charge?</h2>
+              <p>
+                PACE sets a general 24-hour limit without charge (calculated from “relevant time”), with provisions
+                allowing authorisation up to 36 hours in indictable cases and court warrants/extensions subject to the
+                96-hour cap after relevant time.<Ref n={4} /> <Ref n={5} /> <Ref n={6} /> <Ref n={7} /> See also{' '}
+                <Link href="/custody-time-limits" className="text-blue-700 hover:underline">
+                  custody time limits
+                </Link>
+                .
+              </p>
+
+              <h2>Detention reviews</h2>
+              <p>
+                PACE provides that detention reviews must follow a timetable (first review not later than 6 hours after
+                detention was first authorised; then not later than 9 hours; then at intervals of not more than 9 hours).<Ref n={3} />
+              </p>
+
+              <h2>Silence and adverse inference</h2>
+              <p>
+                Section 34 of the Criminal Justice and Public Order Act 1994 is the core “adverse inference” provision
+                about failing to mention facts when questioned under caution that are later relied on in a defence.<Ref n={9} /> If you
+                are deciding between answering questions, “no comment”, or a prepared statement, get advice based on
+                your disclosure and situation.
+              </p>
+            </div>
+
+            <LegalReferences sources={sources} />
+          </article>
+        </main>
+
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
       <JsonLd data={faqSchema} />

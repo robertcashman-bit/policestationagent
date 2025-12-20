@@ -3,16 +3,40 @@ import Footer from '@/components/Footer';
 import Link from 'next/link';
 import { Metadata } from 'next';
 import { JsonLd } from '@/components/JsonLd';
+import { LegalReferences, Ref, type LegalSource } from '@/components/LegalReferences';
+import { SITE_DOMAIN } from '@/config/site';
 
 export const metadata: Metadata = {
   title: 'PACE Code C: Your Rights in Police Detention Explained',
   description: 'PACE Code C sets out your rights in police custody including legal advice, rest periods, meals and interviews. Understand what police must do and your protections.',
   alternates: {
-    canonical: 'https://policestationagent.com/pace-code-c',
+    canonical: `https://${SITE_DOMAIN}/pace-code-c`,
   },
 };
 
 export default function PaceCodeCPage() {
+  const sources: LegalSource[] = [
+    {
+      id: 'pace-code-c-2023',
+      label: 'Home Office: PACE Code C (December 2023) – detention, treatment and questioning (PDF)',
+      href: 'https://assets.publishing.service.gov.uk/media/6580543083ba38000de1b792/PACE+Code+C+2023.pdf',
+    },
+    {
+      id: 'pace-s78',
+      label: 'Police and Criminal Evidence Act 1984 (PACE) s.78 (exclusion of unfair evidence)',
+      href: 'https://www.legislation.gov.uk/ukpga/1984/60/section/78',
+    },
+    {
+      id: 'pace-code-e-2016',
+      label: 'Home Office: PACE Code E (2016) – audio recording of interviews (PDF)',
+      href: 'https://assets.publishing.service.gov.uk/media/5a8092dbe5274a2e87dba95d/52344_00_Pace_Code_E_Accessible_v0.3.pdf',
+    },
+    {
+      id: 'pace-code-f-2013',
+      label: 'Home Office: PACE Code F (2013) – visual recording of interviews (PDF)',
+      href: 'https://assets.publishing.service.gov.uk/media/5a7d4e9740f0b60a7f1a9b6d/2013_PACE_Code_F.pdf',
+    },
+  ];
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -38,7 +62,7 @@ export default function PaceCodeCPage() {
         name: 'Can police break PACE Code C rules?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'If police breach PACE Code C, evidence obtained may be excluded at trial. The breach should be noted on the custody record. Serious breaches can lead to complaints and disciplinary action. Your solicitor should challenge any breaches.',
+          text: 'PACE Code C is a statutory Code of Practice. If the way evidence was obtained is unfair, a court has a power to exclude it under section 78 of PACE 1984. If you think rules were not followed, raise it with your solicitor.',
         },
       },
       {
@@ -46,7 +70,7 @@ export default function PaceCodeCPage() {
         name: 'How often must I be given rest in custody?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'PACE Code C requires at least 8 hours rest in any 24-hour period, normally at night. Interviews should not continue beyond midnight. You should receive three meals a day and refreshments as reasonably required.',
+          text: 'PACE Code C provides that (except in limited circumstances) a detainee must be allowed a continuous period of at least 8 hours for rest in any 24-hour period, and it also sets standards for meals and drinks in custody.',
         },
       },
       {
@@ -54,7 +78,7 @@ export default function PaceCodeCPage() {
         name: 'Can I see a copy of PACE Code C?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Yes, you have a right to consult the Codes of Practice. The custody officer should make a copy available to you on request. Your solicitor will also be familiar with the Codes and can explain your rights.',
+          text: 'PACE Code C includes rules about access to the Codes. If you want to consult the Codes in custody, ask the custody officer and tell your solicitor.',
         },
       },
     ],
@@ -90,8 +114,7 @@ export default function PaceCodeCPage() {
               <strong>Quick Answer:</strong> PACE Code C is a Code of Practice that sets out the rules police 
               must follow when you're in custody. It covers your rights to <strong>legal advice</strong>, 
               <strong>rest periods</strong>, <strong>meals</strong>, <strong>medical care</strong>, and 
-              <strong>fair treatment</strong> during interviews. If police breach these rules, evidence may 
-              be excluded from court.
+              <strong>fair treatment</strong> during interviews.<Ref n={1} /> If evidence is obtained unfairly, a court has a power to exclude it under PACE section 78.<Ref n={2} />
             </p>
           </div>
 
@@ -100,18 +123,13 @@ export default function PaceCodeCPage() {
             <p>
               PACE Code C is one of several Codes of Practice issued under the Police and Criminal Evidence 
               Act 1984 (PACE). It specifically deals with <strong>the detention, treatment and questioning 
-              of persons by police officers</strong>.
+              of persons by police officers</strong>.<Ref n={1} />
             </p>
             <p>
               Every custody suite in England and Wales must operate in accordance with Code C. It sets 
               minimum standards for how you should be treated while in police detention and provides 
               important protections against abuse of power.
             </p>
-            <p>
-              As a duty solicitor attending police stations across Kent, I use PACE Code C daily to protect 
-              my clients' rights. Understanding these rules helps you know what to expect and what to challenge.
-            </p>
-
             <h2>Your Core Rights Under Code C</h2>
             
             <h3>1. Right to Free Legal Advice</h3>
@@ -126,7 +144,7 @@ export default function PaceCodeCPage() {
             </ul>
             <p>
               The custody officer must inform you of this right and record your decision. Delaying access 
-              to a solicitor is only permitted in exceptional circumstances.
+              to a solicitor is only permitted in limited, exceptional circumstances set out in the Codes.<Ref n={1} />
             </p>
 
             <h3>2. Right to Have Someone Informed</h3>
@@ -147,15 +165,14 @@ export default function PaceCodeCPage() {
 
             <h3>Rest Periods</h3>
             <ul>
-              <li>At least 8 hours rest in any 24-hour period, normally at night</li>
+              <li>Except in limited circumstances, a continuous period of at least 8 hours for rest in any 24-hour period (Code C, para 12.2).<Ref n={1} /></li>
               <li>Rest should be uninterrupted unless required for the investigation</li>
-              <li>Interviews should not normally continue beyond midnight</li>
             </ul>
 
             <h3>Meals and Refreshments</h3>
             <ul>
-              <li>Three meals a day at recognised mealtimes</li>
-              <li>Refreshments (drinks) as reasonably required</li>
+              <li>At least two light meals and one main meal should be offered in any 24-hour period (Code C, para 8.6).<Ref n={1} /></li>
+              <li>Drinks should be provided at meal times and upon reasonable request between meals (Code C, para 8.6).<Ref n={1} /></li>
               <li>Dietary and religious requirements should be met</li>
             </ul>
 
@@ -178,8 +195,8 @@ export default function PaceCodeCPage() {
             <p>Code C contains detailed rules about how interviews must be conducted:</p>
             <ul>
               <li><strong>Caution:</strong> You must be cautioned before questioning</li>
-              <li><strong>Recording:</strong> Interviews must normally be recorded</li>
-              <li><strong>Breaks:</strong> Short refreshment breaks every 2 hours, meal breaks at mealtimes</li>
+              <li><strong>Recording:</strong> audio/video recording is covered by PACE Codes E and F.<Ref n={3} /> <Ref n={4} /></li>
+              <li><strong>Breaks:</strong> short refreshment breaks shall be provided at approximately two-hour intervals (Code C, para 12.8).<Ref n={1} /></li>
               <li><strong>Oppression:</strong> Interviewing officers must not use oppressive techniques</li>
               <li><strong>Vulnerable persons:</strong> Additional protections apply (appropriate adult)</li>
             </ul>
@@ -198,15 +215,9 @@ export default function PaceCodeCPage() {
               PACE Code C breaches can have significant consequences:
             </p>
             <ul>
-              <li><strong>Evidence exclusion:</strong> Courts can exclude evidence obtained in breach of Code C under Section 78 PACE</li>
-              <li><strong>Complaints:</strong> You can complain to the IOPC (Independent Office for Police Conduct)</li>
-              <li><strong>Custody record:</strong> Breaches should be noted on the custody record</li>
-              <li><strong>Trial challenges:</strong> Defence can challenge evidence based on breaches</li>
+              <li><strong>Evidence exclusion:</strong> if the way evidence was obtained is unfair, the court has a power to exclude it under PACE section 78.<Ref n={2} /></li>
+              <li><strong>Custody record:</strong> if you believe rules were not followed, tell your solicitor so it can be raised and recorded appropriately.</li>
             </ul>
-            <p>
-              In my experience, I have successfully had evidence excluded where police failed to provide 
-              proper rest breaks or conducted interviews without proper safeguards.
-            </p>
 
             <h2>Practical Tips</h2>
             <ol>
@@ -231,7 +242,7 @@ export default function PaceCodeCPage() {
               </li>
               <li className="flex items-start">
                 <span className="text-amber-600 mr-2">✓</span>
-                <span>Minimum 8 hours rest in 24 hours, three meals a day</span>
+                <span>Code C includes an 8-hour continuous rest rule, and sets standards for meals and drinks in custody.</span>
               </li>
               <li className="flex items-start">
                 <span className="text-amber-600 mr-2">✓</span>
@@ -257,15 +268,15 @@ export default function PaceCodeCPage() {
               </div>
               <div className="bg-white p-6 rounded-lg shadow-sm border">
                 <h3 className="font-bold text-lg text-blue-900 mb-2">Can police break PACE Code C rules?</h3>
-                <p className="text-slate-700">If police breach Code C, evidence obtained may be excluded at trial. Breaches should be noted on the custody record. Serious breaches can lead to complaints and disciplinary action.</p>
+                <p className="text-slate-700">PACE Code C is a statutory Code of Practice. If the way evidence was obtained is unfair, the court has a power to exclude it under section 78 of PACE 1984. If you think rules were not followed, raise it with your solicitor.</p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow-sm border">
                 <h3 className="font-bold text-lg text-blue-900 mb-2">How often must I be given rest in custody?</h3>
-                <p className="text-slate-700">PACE Code C requires at least 8 hours rest in any 24-hour period, normally at night. Interviews should not continue beyond midnight. You should receive three meals a day.</p>
+                <p className="text-slate-700">PACE Code C provides that (except in limited circumstances) a detainee must be allowed a continuous period of at least 8 hours for rest in any 24-hour period, and it also sets standards for meals and drinks in custody.</p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow-sm border">
                 <h3 className="font-bold text-lg text-blue-900 mb-2">Can I see a copy of PACE Code C?</h3>
-                <p className="text-slate-700">Yes, you have a right to consult the Codes of Practice. The custody officer should make a copy available on request. Your solicitor will also be familiar with the Codes.</p>
+                <p className="text-slate-700">PACE Code C includes rules about access to the Codes. If you want to consult the Codes in custody, ask the custody officer and tell your solicitor.</p>
               </div>
             </div>
           </div>
@@ -274,7 +285,7 @@ export default function PaceCodeCPage() {
             <h3 className="text-2xl font-bold mb-4">Know Your Rights in Custody</h3>
             <p className="text-slate-300 mb-6">
               If you're in police custody, make sure your rights under PACE Code C are respected. 
-              I can provide immediate assistance at any Kent police station.
+              Get legal advice as soon as possible.
             </p>
             <div className="flex flex-wrap gap-4">
               <a href="tel:01732247427" className="inline-flex items-center px-6 py-3 bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold rounded-lg">
@@ -285,6 +296,8 @@ export default function PaceCodeCPage() {
               </Link>
             </div>
           </div>
+
+          <LegalReferences sources={sources} />
 
           <div className="border-t pt-8 mt-8">
             <h3 className="text-lg font-bold text-slate-900 mb-4">Related Topics</h3>
