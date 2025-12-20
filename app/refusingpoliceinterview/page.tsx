@@ -1,33 +1,94 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import type { Metadata } from 'next';
+import Link from 'next/link';
+import { LegalReferences, Ref, type LegalSource } from '@/components/LegalReferences';
+import { SITE_DOMAIN } from '@/config/site';
 
 export const metadata: Metadata = {
-  title: "Refusing a Police Interview – Pros & Cons | Expert Advice",
-  description: "Should you refuse a police interview? Understanding the risks of 'No Comment' vs answering questions. Why you must have a solicitor present.",
-  keywords: undefined,
+  title: 'Refusing a Police Interview: What It Means (England & Wales)',
+  description:
+    'You cannot be forced to answer questions, but there can be legal risks to silence in some circumstances (CJPOA s.34). Get legal advice first. Sources included.',
   alternates: {
-    canonical: "https://policestationagent.com/refusingpoliceinterview",
+    canonical: `https://${SITE_DOMAIN}/refusingpoliceinterview`,
   },
   openGraph: {
-    title: "Refusing a Police Interview – Pros & Cons | Expert Advice",
-    description: "Should you refuse a police interview? Understanding the risks of 'No Comment' vs answering questions. Why you must have a solicitor present.",
+    title: 'Refusing a Police Interview: What It Means (England & Wales)',
+    description:
+      'You cannot be forced to answer questions, but there can be legal risks to silence in some circumstances (CJPOA s.34). Get legal advice first. Sources included.',
     type: 'website',
-    url: "https://policestationagent.com/refusingpoliceinterview",
+    url: `https://${SITE_DOMAIN}/refusingpoliceinterview`,
   },
 };
 
 export default function Page() {
+  const sources: LegalSource[] = [
+    {
+      id: 'cjpoa-s34',
+      label: 'Criminal Justice and Public Order Act 1994 s.34 (adverse inferences from silence in certain circumstances)',
+      href: 'https://www.legislation.gov.uk/ukpga/1994/33/section/34',
+    },
+    {
+      id: 'pace-s58',
+      label: 'Police and Criminal Evidence Act 1984 (PACE) s.58 (right to legal advice)',
+      href: 'https://www.legislation.gov.uk/ukpga/1984/60/section/58',
+    },
+    {
+      id: 'pace-code-c-2023',
+      label: 'Home Office: PACE Code C (December 2023) – detention, treatment and questioning (PDF)',
+      href: 'https://assets.publishing.service.gov.uk/media/6580543083ba38000de1b792/PACE+Code+C+2023.pdf',
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
       <Header />
       <main className="flex-grow relative" id="main-content" role="main" aria-live="polite">
-        <div className="bg-slate-50 min-h-screen">
-          <div 
-            className="prose prose-lg max-w-6xl mx-auto px-4 py-16"
-            dangerouslySetInnerHTML={{ __html: `<div class="fixed right-3 top-4 z-40 text-[10px] text-slate-400 select-none pointer-events-none bg-white/80 backdrop-blur-sm px-2 py-1 rounded border border-slate-200/50" aria-hidden="true">v4.4.0 — 11/12/2025</div><div class="bg-slate-50 min-h-screen py-12 px-4"><article class="max-w-3xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden"><header class="bg-slate-900 text-white p-8 md:p-12 text-center"><h1 class="text-3xl md:text-4xl font-bold mb-4">Refusing a Police Interview: Pros &amp; Cons</h1><p class="text-slate-300 text-lg">Can you just say "No"? Understanding your rights and the risks.</p></header><div class="p-8 space-y-8"><section><h2 class="text-2xl font-bold text-slate-900 mb-4">Can I Refuse to Be Interviewed?</h2><p class="text-slate-700 leading-relaxed mb-4">Technically, you cannot be forced to speak. However, refusing to come out of your cell or refusing to sit in the interview room can lead to "adverse inferences" being drawn against you later in court.</p><div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded"><p class="font-bold text-amber-900 flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-triangle-alert w-5 h-5"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg> Crucial Distinction</p><p class="text-amber-800 mt-1">There is a difference between <strong>refusing to attend</strong> an interview and <strong>answering "No Comment"</strong> during an interview.</p></div></section><section class="grid md:grid-cols-2 gap-6"><div class="rounded-xl border bg-white text-slate-900 shadow border-t-4 border-green-500"><div class="flex flex-col space-y-1.5 p-6"><div class="font-semibold leading-none tracking-tight flex items-center gap-2 text-green-700"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check-big w-5 h-5"><path d="M21.801 10A10 10 0 1 1 17 3.335"></path><path d="m9 11 3 3L22 4"></path></svg> Answering Questions</div></div><div class="p-6 pt-0 text-sm text-slate-600 space-y-2"><p><strong>Pros:</strong> Can establish a defence early; may avoid charge if explanation is accepted; shows cooperation.</p><p><strong>Cons:</strong> You might admit to an offence inadvertently; you might reveal evidence police didn't have.</p></div></div><div class="rounded-xl border bg-white text-slate-900 shadow border-t-4 border-red-500"><div class="flex flex-col space-y-1.5 p-6"><div class="font-semibold leading-none tracking-tight flex items-center gap-2 text-red-700"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-x w-5 h-5"><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg> "No Comment"</div></div><div class="p-6 pt-0 text-sm text-slate-600 space-y-2"><p><strong>Pros:</strong> Protects you if police have no evidence; avoids self-incrimination; buys time to see disclosure.</p><p><strong>Cons:</strong> Risk of "Adverse Inferences" under Section 34 CJPOA 1994. The court may infer you made up a defence later because you didn't mention it when questioned.</p></div></div><div class="rounded-xl border bg-white text-slate-900 shadow border-t-4 border-blue-500 md:col-span-2"><div class="flex flex-col space-y-1.5 p-6"><div class="font-semibold leading-none tracking-tight flex items-center gap-2 text-blue-700"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield w-5 h-5"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path></svg> The Middle Ground: A Prepared Statement</div></div><div class="p-6 pt-0 text-sm text-slate-600 space-y-2"><p>A <strong>Prepared Statement</strong> is often the best strategy. Your solicitor writes down your defence/account and reads it to the police at the start of the interview. You then answer "No Comment" to all questions.</p><p class="mt-2"><strong>Why it works:</strong> It puts your defence on record (avoiding adverse inferences) but protects you from being tripped up by tricky police questioning.</p></div></div></section><section class="bg-blue-50 p-6 rounded-xl"><h2 class="text-xl font-bold text-blue-900 mb-4 flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield w-6 h-6"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path></svg> The Only Safe Option</h2><p class="text-blue-800 mb-6">You should <strong>NEVER</strong> decide whether to answer questions or go "No Comment" without seeing the police disclosure first. Only a solicitor gets to see this evidence before the interview<sup>[3]</sup>.</p><a href="tel:01732247427" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 shadow h-9 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white w-full md:w-auto">Get Free Advice Before Deciding</a></section><section class="mt-8 pt-8 border-t border-slate-200"><h3 class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-3">Legal References &amp; Authorities</h3><div class="text-xs text-slate-400 space-y-2"><p>[1] Police and Criminal Evidence Act 1984 (PACE) Code C, Paragraph 11.1A (Interview procedures)</p><p>[2] Criminal Justice and Public Order Act 1994, Section 34 (Effect of accused's failure to mention facts when questioned)</p><p>[3] Attorney General's Guidelines on Disclosure (2022); R v Farrell [2004] - Right to disclosure adequate for fair interview</p><p>[4] PACE Code C, Paragraph 6.6 - Right to legal advice</p></div></section></div></article></div>` }}
-          />
-        </div>
+        <article className="max-w-4xl mx-auto px-4 py-12">
+          <h1 className="text-4xl font-bold text-slate-900 mb-4">Refusing a police interview: what it means</h1>
+          <p className="text-lg text-slate-700 mb-8">
+            You cannot be forced to answer questions. But silence can have legal consequences in some situations, so get legal advice first.
+          </p>
+
+          <div className="bg-amber-50 border-l-4 border-amber-500 p-6 mb-10 rounded-r-lg">
+            <p className="text-slate-900">
+              <strong>Quick Answer:</strong> CJPOA 1994 s.34 is the key statute about adverse inferences where someone later relies on facts they did not mention when questioned under caution (or when charged/informed).<Ref n={1} /> You also have a right to legal advice (PACE s.58).<Ref n={2} />
+            </p>
+          </div>
+
+          <div className="prose prose-lg max-w-none">
+            <h2>Refusing vs “no comment”</h2>
+            <p>
+              Different choices carry different risks. The exact impact depends on your case and what the police put to you.
+            </p>
+            <ul>
+              <li>
+                <strong>No comment interview</strong>: can still engage CJPOA s.34 depending on later reliance on facts.<Ref n={1} />
+              </li>
+              <li>
+                <strong>Prepared statement</strong>: can sometimes put an account on record while limiting answers (see our prepared statement guide).
+              </li>
+            </ul>
+
+            <h2>Next steps</h2>
+            <ul>
+              <li>
+                <Link href="/no-comment-interview">No comment interview (guide)</Link>
+              </li>
+              <li>
+                <Link href="/prepared-statements">Prepared statements (guide)</Link>
+              </li>
+              <li>
+                <Link href="/adverse-inference">Adverse inference (CJPOA s.34 explained)</Link>
+              </li>
+              <li>
+                <Link href="/police-interview-rights">Police interview rights (PACE Code C)</Link>
+              </li>
+            </ul>
+
+            <LegalReferences sources={sources} />
+          </div>
+        </article>
       </main>
       <Footer />
     </div>

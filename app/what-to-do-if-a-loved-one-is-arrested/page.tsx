@@ -2,6 +2,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import type { Metadata } from 'next';
 import { SITE_DOMAIN } from '@/config/site';
+import { LegalReferences, Ref, type LegalSource } from '@/components/LegalReferences';
 
 export const metadata: Metadata = {
   title: 'What to Do If a Loved One is Arrested | Family Guide | Police Station Agent',
@@ -12,13 +13,36 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'What to Do If a Loved One is Arrested | Family Guide | Police Station Agent',
     description: 'Practical guide for families when a loved one is arrested in Kent. Learn what to do and how to get immediate legal representation.',
-    url: 'https://policestationagent.com/what-to-do-if-a-loved-one-is-arrested',
+    url: `https://${SITE_DOMAIN}/what-to-do-if-a-loved-one-is-arrested`,
     siteName: 'Police Station Agent',
     type: 'website',
   },
 };
 
 export default function Page() {
+  const sources: LegalSource[] = [
+    {
+      id: 'pace-s56',
+      label: 'Police and Criminal Evidence Act 1984 (PACE) s.56 (right to have someone informed)',
+      href: 'https://www.legislation.gov.uk/ukpga/1984/60/section/56',
+    },
+    {
+      id: 'pace-s58',
+      label: 'PACE s.58 (right to legal advice)',
+      href: 'https://www.legislation.gov.uk/ukpga/1984/60/section/58',
+    },
+    {
+      id: 'govuk-arrested',
+      label: 'GOV.UK: Arrested? Your rights',
+      href: 'https://www.gov.uk/arrested-your-rights',
+    },
+    {
+      id: 'code-c-2023',
+      label: 'Home Office: PACE Code C (December 2023) – detention, treatment and questioning (PDF)',
+      href: 'https://assets.publishing.service.gov.uk/media/6580543083ba38000de1b792/PACE+Code+C+2023.pdf',
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
       <Header />
@@ -41,7 +65,7 @@ export default function Page() {
 
               <h3 className="text-2xl font-semibold mb-3 mt-6">2. Find Out Which Police Station</h3>
               <p className="mb-4">
-                Ask the police which station your loved one has been taken to. They should inform you of this, and your loved one has the right to have someone informed of their arrest.<sup>1</sup>
+                Ask the police which station your loved one has been taken to. Your loved one has a right to have someone informed of their arrest (PACE s.56).<Ref n={1} />
               </p>
 
               <h3 className="text-2xl font-semibold mb-3 mt-6">3. Instruct a Solicitor Immediately</h3>
@@ -49,7 +73,7 @@ export default function Page() {
                 You can instruct a solicitor on behalf of your loved one. This is crucial because:
               </p>
               <ul className="list-disc pl-6 mb-4 space-y-2">
-                <li>Legal advice at the police station is free under Legal Aid<sup>2</sup></li>
+                <li>Legal advice at the police station is free in many situations (see GOV.UK overview)<Ref n={3} /></li>
                 <li>The solicitor can attend the police station to represent them</li>
                 <li>Early legal advice can significantly improve the outcome</li>
                 <li>The solicitor can ensure their rights are protected</li>
@@ -72,7 +96,7 @@ export default function Page() {
             <section className="mb-8">
               <h2 className="text-3xl font-semibold mb-4">Your Loved One's Rights</h2>
               <p className="mb-4">
-                While in custody, your loved one has important rights:<sup>3</sup>
+                While in custody, your loved one has important rights including legal advice (PACE s.58) and having someone informed (PACE s.56).<Ref n={2} /> <Ref n={1} />
               </p>
               <ul className="list-disc pl-6 mb-4 space-y-2">
                 <li>Right to free legal advice</li>
@@ -110,7 +134,7 @@ export default function Page() {
             <section className="mb-8">
               <h2 className="text-3xl font-semibold mb-4">If Your Loved One is Vulnerable</h2>
               <p className="mb-4">
-                If your loved one is vulnerable (has mental health issues, learning disabilities, etc.), inform the solicitor immediately. They may be entitled to an appropriate adult in addition to legal representation.<sup>4</sup>
+                If your loved one is vulnerable (e.g. mental health issues, learning disabilities), inform the solicitor immediately. PACE Code C contains safeguards for vulnerable detainees, including appropriate adult safeguards.<Ref n={4} />
               </p>
             </section>
 
@@ -131,15 +155,7 @@ export default function Page() {
               </p>
             </section>
 
-            <section className="mt-12 pt-8 border-t border-slate-300">
-              <h2 className="text-2xl font-semibold mb-4">References</h2>
-              <ol className="list-decimal pl-6 space-y-2 text-sm text-slate-600">
-                <li>Police and Criminal Evidence Act 1984, Code C, paragraph 5.1</li>
-                <li>Legal Aid, Sentencing and Punishment of Offenders Act 2012, Section 13</li>
-                <li>Police and Criminal Evidence Act 1984, Code C, paragraph 3.1</li>
-                <li>Police and Criminal Evidence Act 1984, Code C, paragraph 3.15</li>
-              </ol>
-            </section>
+            <LegalReferences sources={sources} heading="Sources" />
           </div>
         </div>
       </main>

@@ -3,16 +3,28 @@ import Footer from '@/components/Footer';
 import Link from 'next/link';
 import { Metadata } from 'next';
 import { JsonLd } from '@/components/JsonLd';
+import { LegalReferences, Ref, type LegalSource } from '@/components/LegalReferences';
+import { SITE_DOMAIN } from '@/config/site';
 
 export const metadata: Metadata = {
   title: 'Youth Custody Rights: Under 18 at a Police Station UK',
-  description: 'If you\'re under 18 and arrested, you have extra protections including an appropriate adult, special interview rules, and different custody procedures. Know your rights.',
+  description:
+    'Under-18s at the police station (England & Wales): key protections in PACE Code C including appropriate adult rules and custody safeguards. Sources included.',
   alternates: {
-    canonical: 'https://policestationagent.com/youth-custody-rights',
+    canonical: `https://${SITE_DOMAIN}/youth-custody-rights`,
   },
 };
 
 export default function YouthCustodyRightsPage() {
+  const sources: LegalSource[] = [
+    {
+      id: 'code-c-2023',
+      label:
+        'Home Office: PACE Code C (December 2023) – detention, treatment and questioning (see e.g. paras 3.13–3.14, 8.8, 11.15)',
+      href: 'https://www.gov.uk/government/publications/pace-code-c-2023',
+    },
+  ];
+
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -22,7 +34,7 @@ export default function YouthCustodyRightsPage() {
         name: 'What rights do under 18s have at a police station?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Under 18s have enhanced rights including: an appropriate adult must be present during interview and other procedures, parents/guardians should be informed, special custody conditions apply, and there are stricter time limits. Legal advice is also free.',
+          text: 'PACE Code C contains specific safeguards for juveniles, including appropriate adult rules for interviews and requirements to inform a person responsible for the juvenile’s welfare.',
         },
       },
       {
@@ -38,7 +50,7 @@ export default function YouthCustodyRightsPage() {
         name: 'Can police interview a child without a parent?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'No, police cannot interview a child (under 18) without an appropriate adult present. This is usually a parent or guardian. If parents are unavailable, a social worker or other suitable adult must attend before interview begins.',
+          text: 'PACE Code C says juveniles must not be interviewed in the absence of the appropriate adult, subject to limited exceptions set out in the Code.',
         },
       },
       {
@@ -46,7 +58,7 @@ export default function YouthCustodyRightsPage() {
         name: 'Can a 16 year old be held in police cells?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Young people should not be held in cells unless absolutely necessary. If detained, they must never be placed in a cell with an adult. Police should seek alternative secure accommodation where possible for under 18s.',
+          text: 'PACE Code C provides that a juvenile shall not be placed in a police cell unless no other secure accommodation is available and the custody officer considers certain conditions are met, and a juvenile may not be placed in a cell with a detained adult.',
         },
       },
       {
@@ -54,7 +66,7 @@ export default function YouthCustodyRightsPage() {
         name: 'How long can police hold a minor?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'The same custody time limits apply to minors as adults (24 hours, extendable), but police should aim to deal with young people as quickly as possible. Overnight detention of under 18s should be avoided where possible.',
+          text: 'Custody time limits come from PACE, but this page focuses on juvenile-specific safeguards in PACE Code C. See the custody time limits guide for time limit details.',
         },
       },
     ],
@@ -88,9 +100,8 @@ export default function YouthCustodyRightsPage() {
           <div className="bg-blue-50 border-l-4 border-blue-600 p-6 mb-8 rounded-r-lg">
             <p className="text-lg font-medium text-slate-800">
               <strong>Quick Answer:</strong> If you're under 18 and arrested, you have extra protections. 
-              An <strong>appropriate adult</strong> (usually a parent) must be present during interview. 
-              You have the right to <strong>free legal advice</strong>. Police should contact your 
-              parents/guardians immediately and aim to deal with you as quickly as possible.
+              Under PACE Code C, a juvenile must not be interviewed in the absence of the appropriate adult (subject to limited exceptions in the Code).<Ref n={1} />{' '}
+              Code C also requires the custody officer (if practicable) to identify and inform a person responsible for the juvenile’s welfare, as soon as practicable, that the juvenile has been arrested and where they are detained.<Ref n={1} />
             </p>
           </div>
 
@@ -100,14 +111,6 @@ export default function YouthCustodyRightsPage() {
               The law recognises that young people need additional safeguards in the criminal justice system. 
               PACE Code C contains specific provisions for those under 18 to ensure they are treated 
               appropriately and their rights are protected.
-            </p>
-            <p>
-              As a duty solicitor, I have represented many young people at Kent police stations. 
-              Understanding these special protections is essential for parents and young people alike.
-            </p>
-            <p>
-              In my experience, the presence of the right appropriate adult and early legal advice makes a real
-              difference—both to how the interview is conducted and to the decisions made afterwards.
             </p>
 
             <h2>The Appropriate Adult</h2>
@@ -136,58 +139,31 @@ export default function YouthCustodyRightsPage() {
 
             <h2>Custody Conditions for Young People</h2>
             <p>
-              Young people should be treated differently in custody:
+              PACE Code C includes juvenile-specific custody safeguards. For example, Code C provides that a juvenile shall not be placed in a police cell unless no other secure accommodation is available and the custody officer considers certain conditions are met, and a juvenile may not be placed in a cell with a detained adult.<Ref n={1} />
             </p>
             <ul>
-              <li><strong>Cells:</strong> Should not be used unless no alternative; never shared with adults</li>
-              <li><strong>Overnight detention:</strong> Should be avoided where possible</li>
-              <li><strong>Local authority accommodation:</strong> Police may seek this instead of cells</li>
-              <li><strong>Speed:</strong> Cases should be dealt with as quickly as possible</li>
+              <li><strong>Appropriate adult safeguards</strong> apply to interviews and key procedures.<Ref n={1} /></li>
+              <li><strong>Parent/guardian welfare notification</strong> is a specific requirement in Code C.<Ref n={1} /></li>
+              <li><strong>Cell placement limits</strong> for juveniles are set out in Code C.<Ref n={1} /></li>
             </ul>
 
             <h2>What Happens When a Young Person Is Arrested</h2>
             <ol>
               <li><strong>Arrival at custody:</strong> Custody officer assesses the young person's needs</li>
-              <li><strong>Contact parents:</strong> Police must inform parents/guardians as soon as practicable</li>
-              <li><strong>Appropriate adult arranged:</strong> Interview cannot proceed without them</li>
+              <li><strong>Inform welfare contact:</strong> Code C requires (if practicable) identifying and informing a person responsible for the juvenile’s welfare as soon as practicable that the juvenile has been arrested and where they are detained.<Ref n={1} /></li>
+              <li><strong>Appropriate adult arranged:</strong> Interview should not proceed without them, subject to limited exceptions set out in Code C.<Ref n={1} /></li>
               <li><strong>Legal advice offered:</strong> Free and confidential</li>
               <li><strong>Interview:</strong> With solicitor and appropriate adult present</li>
-              <li><strong>Decision:</strong> Charge, caution, NFA, or release under investigation</li>
+              <li><strong>Decision:</strong> The police decide what happens next (e.g. no further action, bail, charge) depending on the case.</li>
             </ol>
-
-            <h2>Youth Cautions and Reprimands</h2>
-            <p>
-              For minor first offences, young people may receive:
-            </p>
-            <ul>
-              <li><strong>Youth Caution:</strong> Formal warning recorded by police</li>
-              <li><strong>Youth Conditional Caution:</strong> Caution with conditions attached</li>
-              <li><strong>Community Resolution:</strong> Informal outcome for minor matters</li>
-            </ul>
-            <p>
-              These alternatives to prosecution are often appropriate for young people but still 
-              have consequences and should only be accepted with legal advice.
-            </p>
 
             <h2>Interview Rules for Young People</h2>
             <p>
-              Special interview rules apply:
+              PACE Code C contains specific safeguards for juveniles, including that a juvenile must not be interviewed in the absence of the appropriate adult except in limited circumstances set out in the Code.<Ref n={1} />
             </p>
             <ul>
               <li>Appropriate adult must be present throughout</li>
-              <li>Breaks should be more frequent</li>
-              <li>Language should be appropriate to the young person's age</li>
-              <li>Interview should not be oppressive or intimidating</li>
-              <li>The young person's welfare must be considered</li>
-            </ul>
-
-            <h2>After the Police Station</h2>
-            <p>If charged, a young person will typically:</p>
-            <ul>
-              <li>Be released on bail or to local authority care</li>
-              <li>Appear before a <strong>Youth Court</strong> (not adult Magistrates' Court)</li>
-              <li>Have their case heard by specially trained magistrates</li>
-              <li>Receive youth-specific sentences if convicted</li>
+              <li>Police should follow Code C requirements throughout the interview process.<Ref n={1} /></li>
             </ul>
 
             <h2>Advice for Parents</h2>
@@ -198,6 +174,8 @@ export default function YouthCustodyRightsPage() {
               <li><strong>Don't discuss the case</strong> – Wait for legal advice first</li>
               <li><strong>Take notes</strong> – Record times and what happens</li>
             </ol>
+
+            <LegalReferences sources={sources} />
           </div>
 
           <div className="bg-amber-50 border border-amber-200 rounded-lg p-6 my-8">

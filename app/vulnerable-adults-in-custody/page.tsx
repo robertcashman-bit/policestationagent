@@ -1,23 +1,34 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import type { Metadata } from 'next';
+import { LegalReferences, Ref, type LegalSource } from '@/components/LegalReferences';
+import { SITE_DOMAIN } from '@/config/site';
 
 export const metadata: Metadata = {
   title: 'Vulnerable Adults in Custody | Special Protections | Police Station Agent',
   description: 'Special protections for vulnerable adults in police custody. Learn about appropriate adults, mental health assessments, and your rights under PACE Code C.',
   alternates: {
-    canonical: 'https://policestationagent.com/vulnerable-adults-in-custody',
+    canonical: `https://${SITE_DOMAIN}/vulnerable-adults-in-custody`,
   },
   openGraph: {
     title: 'Vulnerable Adults in Custody | Special Protections | Police Station Agent',
     description: 'Special protections for vulnerable adults in police custody. Learn about appropriate adults, mental health assessments, and your rights under PACE Code C.',
-    url: 'https://policestationagent.com/vulnerable-adults-in-custody',
+    url: `https://${SITE_DOMAIN}/vulnerable-adults-in-custody`,
     siteName: 'Police Station Agent',
     type: 'website',
   },
 };
 
 export default function Page() {
+  const sources: LegalSource[] = [
+    {
+      id: 'code-c-2023',
+      label:
+        'Home Office: PACE Code C (December 2023) – detention, treatment and questioning (see e.g. paras 1.5, 1.7A, 11.15–11.18)',
+      href: 'https://www.gov.uk/government/publications/pace-code-c-2023',
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
       <Header />
@@ -33,7 +44,7 @@ export default function Page() {
             <section className="mb-8">
               <h2 className="text-3xl font-semibold mb-4">Who is Considered a Vulnerable Adult?</h2>
               <p className="mb-4">
-                Under PACE Code C, a vulnerable adult is someone who, because of their mental state or capacity, may not understand the significance of what is said to them or their replies.<sup>1</sup> This includes:
+                PACE Code C defines “vulnerable” for the purposes of detention and interview safeguards. Broadly, this can include people who may not understand the significance of what is said to them or their replies because of mental state or capacity.<Ref n={1} /> Examples may include:
               </p>
               <ul className="list-disc pl-6 mb-4 space-y-2">
                 <li>Adults with mental health conditions</li>
@@ -47,44 +58,40 @@ export default function Page() {
             <section className="mb-8">
               <h2 className="text-3xl font-semibold mb-4">The Role of an Appropriate Adult</h2>
               <p className="mb-4">
-                When a vulnerable adult is detained, the police must arrange for an appropriate adult to be present.<sup>2</sup> The appropriate adult should:
+                PACE Code C describes the role of the appropriate adult as safeguarding the rights, entitlements and welfare of vulnerable persons, including supporting/assisting them through procedures and helping communication.<Ref n={1} /> The appropriate adult role includes:
               </p>
               <ul className="list-disc pl-6 mb-4 space-y-2">
-                <li>Be present during all interviews</li>
-                <li>Ensure the vulnerable adult understands their rights</li>
-                <li>Facilitate communication between the vulnerable adult and police</li>
-                <li>Observe whether the interview is being conducted properly</li>
-                <li>Advise the vulnerable adult</li>
+                <li>Supporting, advising and assisting the person when they are given/asked to provide information or participate in procedures</li>
+                <li>Helping the person understand their rights and ensuring those rights are respected</li>
+                <li>Assisting communication with police (while respecting the person’s right to say nothing)</li>
+                <li>Observing whether police are acting properly and fairly</li>
               </ul>
               <p className="mb-4">
-                An appropriate adult cannot be a police officer, police staff, or someone involved in the investigation.<sup>3</sup> They should be someone who has the vulnerable adult's welfare at heart.
+                If you are unsure who can act as the appropriate adult in your situation, take legal advice and ask police what they are proposing under Code C.<Ref n={1} />
               </p>
             </section>
 
             <section className="mb-8">
               <h2 className="text-3xl font-semibold mb-4">Mental Health Assessments</h2>
               <p className="mb-4">
-                If there are concerns about a detainee's mental health, the custody officer must call a healthcare professional.<sup>4</sup> This is particularly important for vulnerable adults who may:
+                If there are concerns about a detainee’s health or capacity to be interviewed safely, ask for a healthcare professional and make sure the custody record reflects the concerns. Code C contains safeguards for vulnerable detainees and interview decisions.<Ref n={1} />
               </p>
               <ul className="list-disc pl-6 mb-4 space-y-2">
                 <li>Be at risk of self-harm</li>
                 <li>Require medication</li>
                 <li>Need a mental health assessment</li>
-                <li>Require transfer to a place of safety under the Mental Health Act 1983</li>
               </ul>
             </section>
 
             <section className="mb-8">
               <h2 className="text-3xl font-semibold mb-4">Interview Safeguards</h2>
               <p className="mb-4">
-                Vulnerable adults have additional protections during police interviews:<sup>5</sup>
+                PACE Code C provides that a detained vulnerable person must not be interviewed (or asked to provide/sign certain written statements) in the absence of the appropriate adult, subject to limited exceptions (including “urgent interviews” with senior authorisation).<Ref n={1} />
               </p>
               <ul className="list-disc pl-6 mb-4 space-y-2">
-                <li>An appropriate adult must be present</li>
-                <li>Interviews should be conducted in a way that is appropriate to the vulnerable adult's needs</li>
-                <li>Regular breaks should be taken</li>
-                <li>Questions should be clear and simple</li>
-                <li>The vulnerable adult should be given time to understand and respond</li>
+                <li>An appropriate adult is a key safeguard for vulnerable suspects</li>
+                <li>Ask for breaks if the person is struggling to understand or respond</li>
+                <li>Ask for questions to be repeated or simplified if needed</li>
               </ul>
             </section>
 
@@ -113,14 +120,7 @@ export default function Page() {
             </section>
 
             <section className="mt-12 pt-8 border-t border-slate-300">
-              <h2 className="text-2xl font-semibold mb-4">References</h2>
-              <ol className="list-decimal pl-6 space-y-2 text-sm text-slate-600">
-                <li>Police and Criminal Evidence Act 1984, Code C, paragraph 1.13(d)</li>
-                <li>Police and Criminal Evidence Act 1984, Code C, paragraph 3.15</li>
-                <li>Police and Criminal Evidence Act 1984, Code C, paragraph 1.7</li>
-                <li>Police and Criminal Evidence Act 1984, Code C, paragraph 9.5</li>
-                <li>Police and Criminal Evidence Act 1984, Code C, paragraph 11.15</li>
-              </ol>
+              <LegalReferences sources={sources} heading="Sources" />
             </section>
           </div>
         </div>

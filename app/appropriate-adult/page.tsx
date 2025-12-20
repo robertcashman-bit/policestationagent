@@ -3,16 +3,28 @@ import Footer from '@/components/Footer';
 import Link from 'next/link';
 import { Metadata } from 'next';
 import { JsonLd } from '@/components/JsonLd';
+import { LegalReferences, Ref, type LegalSource } from '@/components/LegalReferences';
+import { SITE_DOMAIN } from '@/config/site';
 
 export const metadata: Metadata = {
   title: 'Appropriate Adult: Who They Are & When You Need One UK',
-  description: 'An appropriate adult supports vulnerable people at police stations. Learn who can be one, when they\'re needed, and what they do during custody and interviews.',
+  description:
+    'Appropriate adults at the police station (England & Wales): who they are, what they do, and when interviews can/can’t happen without them. Sources included.',
   alternates: {
-    canonical: 'https://policestationagent.com/appropriate-adult',
+    canonical: `https://${SITE_DOMAIN}/appropriate-adult`,
   },
 };
 
 export default function AppropriateAdultPage() {
+  const sources: LegalSource[] = [
+    {
+      id: 'code-c-2023',
+      label:
+        'Home Office: PACE Code C (December 2023) – detention, treatment and questioning (see e.g. paras 1.7A, 11.15–11.18)',
+      href: 'https://www.gov.uk/government/publications/pace-code-c-2023',
+    },
+  ];
+
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -22,7 +34,7 @@ export default function AppropriateAdultPage() {
         name: 'What is an appropriate adult?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'An appropriate adult is a person who attends the police station to support a vulnerable detainee (under 18 or mentally vulnerable adult). They ensure the person understands proceedings, their rights are protected, and procedures are followed fairly.',
+          text: 'An appropriate adult supports and safeguards the rights and welfare of a juvenile or vulnerable person at the police station (PACE Code C).',
         },
       },
       {
@@ -38,7 +50,7 @@ export default function AppropriateAdultPage() {
         name: 'When is an appropriate adult required?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'An appropriate adult is required for all under 18s and adults who appear to have mental health conditions, learning disabilities, or are otherwise vulnerable. They must be present for interviews, searches, charging, and other key procedures.',
+          text: 'PACE Code C contains safeguards requiring an appropriate adult for juveniles and for adults treated as vulnerable for the purposes of the Code, including rules about interviews.',
         },
       },
       {
@@ -54,7 +66,7 @@ export default function AppropriateAdultPage() {
         name: 'Can a parent refuse to be an appropriate adult?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Yes, a parent can decline to act as appropriate adult if they feel unable to fulfil the role. In such cases, police will arrange an alternative, usually a social worker or trained volunteer from the appropriate adult service.',
+          text: 'If a parent/guardian cannot attend or is not suitable, police should arrange a different appropriate adult (for example, a social worker or another responsible adult) in line with PACE Code C.',
         },
       },
     ],
@@ -89,9 +101,8 @@ export default function AppropriateAdultPage() {
             <p className="text-lg font-medium text-slate-800">
               <strong>Quick Answer:</strong> An appropriate adult is a person who attends the police station 
               to support a <strong>young person (under 18)</strong> or <strong>vulnerable adult</strong>. 
-              They ensure the person understands their rights, observe that procedures are fair, and provide 
-              reassurance. Police <strong>cannot interview</strong> a vulnerable person without an appropriate 
-              adult present.
+              PACE Code C describes the appropriate adult’s role as safeguarding the rights, entitlements and welfare of juveniles and vulnerable persons.<Ref n={1} />{' '}
+              As a general rule, a detained juvenile or vulnerable person must not be interviewed in the absence of the appropriate adult, subject to limited exceptions set out in Code C.<Ref n={1} />
             </p>
           </div>
 
@@ -101,11 +112,6 @@ export default function AppropriateAdultPage() {
               Under PACE Code C, certain detainees are entitled to have an "appropriate adult" present 
               during their time in police custody. This safeguard exists to protect vulnerable people who 
               may not fully understand the procedures or their rights.
-            </p>
-            <p>
-              In my experience at Kent police stations, delays and misunderstandings are far more likely when a vulnerable
-              detainee does not have the right support in place early. An appropriate adult helps ensure the process is
-              fair and that the detainee can participate properly.
             </p>
             <p>
               The appropriate adult is there to support the detainee – not to replace a solicitor or to 
@@ -227,6 +233,8 @@ export default function AppropriateAdultPage() {
               <li><strong>Stay calm:</strong> Your composure helps the detainee</li>
               <li><strong>Ask for breaks:</strong> If the detainee is struggling</li>
             </ol>
+
+            <LegalReferences sources={sources} />
           </div>
 
           <div className="bg-amber-50 border border-amber-200 rounded-lg p-6 my-8">
@@ -260,7 +268,7 @@ export default function AppropriateAdultPage() {
             <div className="space-y-6">
               <div className="bg-white p-6 rounded-lg shadow-sm border">
                 <h3 className="font-bold text-lg text-blue-900 mb-2">What is an appropriate adult?</h3>
-                <p className="text-slate-700">An appropriate adult is a person who attends the police station to support a vulnerable detainee. They ensure the person understands proceedings and their rights are protected.</p>
+                <p className="text-slate-700">An appropriate adult supports and safeguards the rights and welfare of a juvenile or vulnerable person at the police station (PACE Code C).</p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow-sm border">
                 <h3 className="font-bold text-lg text-blue-900 mb-2">Who can be an appropriate adult?</h3>
@@ -268,7 +276,7 @@ export default function AppropriateAdultPage() {
               </div>
               <div className="bg-white p-6 rounded-lg shadow-sm border">
                 <h3 className="font-bold text-lg text-blue-900 mb-2">When is an appropriate adult required?</h3>
-                <p className="text-slate-700">For all under 18s and adults who appear to have mental health conditions, learning disabilities, or are otherwise vulnerable. Required for interviews, searches, charging, and other key procedures.</p>
+                <p className="text-slate-700">PACE Code C contains safeguards requiring an appropriate adult for juveniles and for adults treated as vulnerable for the purposes of the Code, including rules about interviews.</p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow-sm border">
                 <h3 className="font-bold text-lg text-blue-900 mb-2">What does an appropriate adult do?</h3>
@@ -276,7 +284,7 @@ export default function AppropriateAdultPage() {
               </div>
               <div className="bg-white p-6 rounded-lg shadow-sm border">
                 <h3 className="font-bold text-lg text-blue-900 mb-2">Can a parent refuse to be an appropriate adult?</h3>
-                <p className="text-slate-700">Yes, a parent can decline if they feel unable to fulfil the role. Police will then arrange an alternative, usually a social worker or trained volunteer.</p>
+                <p className="text-slate-700">If a parent/guardian cannot attend or is not suitable, police should arrange a different appropriate adult (for example, a social worker or another responsible adult) in line with PACE Code C.</p>
               </div>
             </div>
           </div>

@@ -3,16 +3,42 @@ import Footer from '@/components/Footer';
 import Link from 'next/link';
 import { Metadata } from 'next';
 import { JsonLd } from '@/components/JsonLd';
+import { LegalReferences, Ref, type LegalSource } from '@/components/LegalReferences';
+import { SITE_DOMAIN } from '@/config/site';
 
 export const metadata: Metadata = {
   title: 'DNA & Fingerprints at Police Station: Your Rights UK',
-  description: 'Police can take DNA and fingerprints when you\'re arrested. Learn when they can take samples, how long they\'re kept, and your rights to have them deleted.',
+  description:
+    'Fingerprints and samples at the police station: what PACE says about fingerprints, intimate samples, and non-intimate samples (England & Wales). Sources included.',
   alternates: {
-    canonical: 'https://policestationagent.com/dna-fingerprints-police-station',
+    canonical: `https://${SITE_DOMAIN}/dna-fingerprints-police-station`,
   },
 };
 
 export default function DNAFingerprintsPolicePage() {
+  const sources: LegalSource[] = [
+    {
+      id: 'pace-s61',
+      label: 'Police and Criminal Evidence Act 1984 (PACE) s.61 (fingerprinting)',
+      href: 'https://www.legislation.gov.uk/ukpga/1984/60/section/61',
+    },
+    {
+      id: 'pace-s63',
+      label: 'PACE s.63 (non-intimate samples)',
+      href: 'https://www.legislation.gov.uk/ukpga/1984/60/section/63',
+    },
+    {
+      id: 'pace-s62',
+      label: 'PACE s.62 (intimate samples)',
+      href: 'https://www.legislation.gov.uk/ukpga/1984/60/section/62',
+    },
+    {
+      id: 'pace-s65',
+      label: 'PACE s.65 (definitions incl. “appropriate consent”, “intimate sample”, “non-intimate sample”)',
+      href: 'https://www.legislation.gov.uk/ukpga/1984/60/section/65',
+    },
+  ];
+
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -22,7 +48,7 @@ export default function DNAFingerprintsPolicePage() {
         name: 'Can police take my DNA when I\'m arrested?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Yes, police can take a DNA sample when you\'re arrested for a recordable offence. This is usually a mouth swab. You cannot refuse, and reasonable force can be used if necessary.',
+          text: 'PACE section 63 sets out rules on non-intimate samples (which can include a mouth swab in many cases) and when they may be taken with or without “appropriate consent”.',
         },
       },
       {
@@ -30,7 +56,7 @@ export default function DNAFingerprintsPolicePage() {
         name: 'Can I refuse to give fingerprints at the police station?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'No, you cannot lawfully refuse to provide fingerprints when arrested for a recordable offence. Police have the power to take them without consent and can use reasonable force if necessary.',
+          text: 'PACE section 61 sets out when fingerprints may be taken without “appropriate consent” in specified circumstances.',
         },
       },
       {
@@ -38,7 +64,7 @@ export default function DNAFingerprintsPolicePage() {
         name: 'How long are DNA and fingerprints kept on record?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'If convicted, DNA and fingerprints are kept indefinitely. If not convicted, retention depends on the offence: serious offences may be retained for 3 years, while minor offences should be deleted. You may be able to apply for early deletion.',
+          text: 'Retention/deletion depends on the legal basis and your circumstances. Take advice on your specific situation.',
         },
       },
       {
@@ -46,7 +72,7 @@ export default function DNAFingerprintsPolicePage() {
         name: 'Can I get my DNA deleted from the police database?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'If you were not convicted, you may apply to have your DNA and fingerprints deleted. For minor offences with no charge or acquittal, deletion should be automatic. For serious offences, you may need to apply through the Chief Constable.',
+          text: 'Whether deletion is possible depends on the legal basis for retention and your circumstances. Take advice on your case.',
         },
       },
       {
@@ -54,7 +80,7 @@ export default function DNAFingerprintsPolicePage() {
         name: 'What is an intimate sample?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'An intimate sample is a sample of blood, semen, urine, pubic hair, or a swab from a body orifice other than the mouth. These require written consent and must be taken by a medical professional. You can refuse an intimate sample.',
+          text: 'PACE defines “intimate sample” and section 62 sets out key safeguards (including authorisation and consent requirements).',
         },
       },
     ],
@@ -87,38 +113,34 @@ export default function DNAFingerprintsPolicePage() {
         <article className="max-w-4xl mx-auto px-4 py-12">
           <div className="bg-blue-50 border-l-4 border-blue-600 p-6 mb-8 rounded-r-lg">
             <p className="text-lg font-medium text-slate-800">
-              <strong>Quick Answer:</strong> When arrested for a recordable offence, police can take your 
-              <strong> DNA</strong> (mouth swab) and <strong>fingerprints</strong> without your consent. 
-              If convicted, these are kept indefinitely. If not convicted, retention rules vary – you may 
-              be able to apply for deletion.
+              <strong>Quick Answer:</strong> PACE sets out rules for taking fingerprints (s.61) and samples (including non‑intimate samples under s.63 and intimate samples under s.62).<Ref n={1} /> <Ref n={2} /> <Ref n={3} />{' '}
+              Key terms (including “appropriate consent”, “intimate sample” and “non‑intimate sample”) are defined in section 65.<Ref n={4} />
             </p>
           </div>
 
           <div className="prose prose-lg max-w-none">
             <h2>What Samples Can Police Take?</h2>
             <p>
-              There are different categories of samples police can take, with different rules for each:
-            </p>
-            <p>
-              In my experience representing clients at Kent custody suites, confusion about “what you must give” versus
-              “what you can refuse” is common. Knowing the difference between non‑intimate and intimate samples helps you
-              make informed decisions and avoid unnecessary complications.
+              There are different categories of samples in law, with different rules for each (fingerprints, non‑intimate samples, and intimate samples).<Ref n={1} /> <Ref n={2} /> <Ref n={3} /> <Ref n={4} />
             </p>
 
-            <h3>Non-Intimate Samples (No Consent Required)</h3>
+            <h3>Fingerprints</h3>
+            <p>
+              PACE section 61 governs fingerprinting and includes cases where fingerprints may be taken without “appropriate consent” (with consent rules also addressed in the section).<Ref n={1} />
+            </p>
+
+            <h3>Non-Intimate Samples</h3>
             <ul>
-              <li><strong>Fingerprints</strong> – electronic scan or ink impression</li>
               <li><strong>DNA mouth swab</strong> – rubbed inside cheek</li>
               <li><strong>Hair samples (excluding pubic hair)</strong> – including roots</li>
               <li><strong>Swabs from external body surfaces</strong> – not body orifices</li>
               <li><strong>Footprints</strong> – less common but possible</li>
             </ul>
             <p>
-              These can be taken without your consent when you're arrested for a recordable offence. 
-              Reasonable force may be used if necessary.
+              PACE section 63 governs non‑intimate samples and includes circumstances where they may be taken without “appropriate consent”.<Ref n={2} /> Terms (including “non‑intimate sample” and “appropriate consent”) are addressed in section 65.<Ref n={4} />
             </p>
 
-            <h3>Intimate Samples (Consent Required)</h3>
+            <h3>Intimate Samples</h3>
             <ul>
               <li><strong>Blood</strong></li>
               <li><strong>Semen</strong></li>
@@ -128,86 +150,13 @@ export default function DNAFingerprintsPolicePage() {
               <li><strong>Dental impressions</strong></li>
             </ul>
             <p>
-              Intimate samples require your written consent and must be taken by a medical professional. 
-              You can refuse – but the court may draw adverse inferences from your refusal.
+              PACE section 62 provides that an intimate sample may be taken from a person in police detention only if authorisation and “appropriate consent” requirements are met (subject to the section).<Ref n={3} /> Definitions are in section 65.<Ref n={4} />
             </p>
-
-            <h2>When Can Police Take Samples?</h2>
-            <p>
-              Police can take non-intimate samples when:
-            </p>
-            <ul>
-              <li>You are arrested for a recordable offence</li>
-              <li>You are charged with a recordable offence</li>
-              <li>You are informed you will be reported for a recordable offence</li>
-              <li>You are convicted of a recordable offence</li>
-            </ul>
-            <p>
-              A "recordable offence" includes most criminal offences that can result in imprisonment, 
-              plus some other specified offences.
-            </p>
-
-            <h2>How Long Are Samples Kept?</h2>
-            
-            <h3>If Convicted</h3>
-            <p>
-              DNA and fingerprints are kept <strong>indefinitely</strong> on the National DNA Database 
-              and fingerprint database.
-            </p>
-
-            <h3>If Not Convicted</h3>
-            <p>
-              Retention depends on the nature of the offence and your age:
-            </p>
-            <table className="w-full border-collapse my-6">
-              <thead>
-                <tr className="bg-slate-100">
-                  <th className="border p-3 text-left">Situation</th>
-                  <th className="border p-3 text-left">Retention Period</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className="border p-3">Charged but not convicted (qualifying offence)</td>
-                  <td className="border p-3">3 years (can be extended)</td>
-                </tr>
-                <tr>
-                  <td className="border p-3">Arrested but not charged (qualifying offence)</td>
-                  <td className="border p-3">3 years (if approved by Commissioner)</td>
-                </tr>
-                <tr>
-                  <td className="border p-3">Minor offence, not convicted</td>
-                  <td className="border p-3">Must be deleted</td>
-                </tr>
-                <tr>
-                  <td className="border p-3">Under 18, first minor offence</td>
-                  <td className="border p-3">Must be deleted</td>
-                </tr>
-              </tbody>
-            </table>
-            <p>
-              "Qualifying offences" include serious violent, sexual, and terrorism offences.
-            </p>
-
-            <h2>Getting Your DNA Deleted</h2>
-            <p>
-              If you were not convicted, you may be able to have your DNA and fingerprints deleted:
-            </p>
-            <ol>
-              <li><strong>Automatic deletion:</strong> For minor offences with no charge or acquittal, 
-              samples should be automatically deleted</li>
-              <li><strong>Application for early deletion:</strong> Apply to the Chief Constable of the 
-              force that took the sample</li>
-              <li><strong>Review:</strong> If refused, you can apply for review to the Biometrics Commissioner</li>
-            </ol>
 
             <h2>Your Rights When Samples Are Taken</h2>
             <ul>
-              <li>You should be told why the sample is being taken</li>
-              <li>The process should be recorded on your custody record</li>
-              <li>For intimate samples, you must give written consent</li>
-              <li>An appropriate adult should be present for under 18s</li>
-              <li>The sample should be taken by a trained officer (or medical professional for intimate samples)</li>
+              <li><strong>Different rules apply</strong> depending on whether it is fingerprints, an intimate sample, or a non‑intimate sample.<Ref n={1} /> <Ref n={2} /> <Ref n={3} /> <Ref n={4} /></li>
+              <li><strong>Intimate samples</strong> have additional statutory safeguards (including consent/authorisation requirements).<Ref n={3} /></li>
             </ul>
           </div>
 
@@ -242,26 +191,28 @@ export default function DNAFingerprintsPolicePage() {
             <div className="space-y-6">
               <div className="bg-white p-6 rounded-lg shadow-sm border">
                 <h3 className="font-bold text-lg text-blue-900 mb-2">Can police take my DNA when I'm arrested?</h3>
-                <p className="text-slate-700">Yes, police can take a DNA sample when you're arrested for a recordable offence. This is usually a mouth swab. You cannot refuse, and reasonable force can be used.</p>
+                <p className="text-slate-700">PACE section 63 sets out rules on non‑intimate samples and when they may be taken with or without “appropriate consent”.<Ref n={2} /> <Ref n={4} /></p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow-sm border">
                 <h3 className="font-bold text-lg text-blue-900 mb-2">Can I refuse to give fingerprints at the police station?</h3>
-                <p className="text-slate-700">No, you cannot lawfully refuse when arrested for a recordable offence. Police can take them without consent and can use reasonable force if necessary.</p>
+                <p className="text-slate-700">PACE section 61 sets out when fingerprints may be taken without “appropriate consent”.<Ref n={1} /></p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow-sm border">
                 <h3 className="font-bold text-lg text-blue-900 mb-2">How long are DNA and fingerprints kept on record?</h3>
-                <p className="text-slate-700">If convicted, they are kept indefinitely. If not convicted, retention depends on the offence. You may be able to apply for early deletion.</p>
+                <p className="text-slate-700">Retention/deletion depends on the legal basis and your circumstances. Take advice on your specific situation.</p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow-sm border">
                 <h3 className="font-bold text-lg text-blue-900 mb-2">Can I get my DNA deleted from the police database?</h3>
-                <p className="text-slate-700">If you were not convicted, you may apply to have your DNA and fingerprints deleted. For minor offences, deletion should be automatic. For serious offences, you may need to apply.</p>
+                <p className="text-slate-700">Whether deletion is possible depends on the legal basis for retention and your circumstances. Take advice on your case.</p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow-sm border">
                 <h3 className="font-bold text-lg text-blue-900 mb-2">What is an intimate sample?</h3>
-                <p className="text-slate-700">An intimate sample is blood, semen, urine, pubic hair, or a swab from a body orifice. These require written consent and must be taken by a medical professional.</p>
+                <p className="text-slate-700">PACE defines “intimate sample” and section 62 sets out key safeguards (including consent/authorisation requirements).<Ref n={3} /> <Ref n={4} /></p>
               </div>
             </div>
           </div>
+
+          <LegalReferences sources={sources} />
 
           <div className="bg-slate-900 text-white rounded-xl p-8 my-12">
             <h3 className="text-2xl font-bold mb-4">Questions About DNA & Fingerprints?</h3>
