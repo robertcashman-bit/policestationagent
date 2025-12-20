@@ -8,20 +8,20 @@ export default function Footer() {
   
   return (
     <footer className="bg-slate-900 text-white relative z-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12 text-sm">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-x-10 gap-y-12 mb-14 text-sm">
           {/* Brand & Contact Column */}
           <div className="lg:col-span-1">
             <h3 className="font-bold mb-4 text-lg text-white">Police Station Agent</h3>
             <div className="mt-4 p-3 bg-amber-500/10 rounded-lg border border-amber-500/20">
               <p className="text-xs text-amber-200 font-semibold mb-1">Serving All Kent Towns:</p>
-              <p className="text-xs text-white/90">
+              <p className="text-xs text-white/90 leading-relaxed">
                 Medway, Maidstone, Canterbury, Gravesend, Tonbridge, Folkestone, Ashford, Dartford, Sittingbourne, Sevenoaks, Tunbridge Wells, Margate, Dover, Swanley, Bluewater
               </p>
             </div>
             <div className="mt-4">
               <h4 className="font-semibold mb-3 text-white text-sm">Contact</h4>
-              <address className="not-italic space-y-2">
+              <address className="not-italic space-y-2.5">
                 <div>
                   <a href="tel:01732247427" className="text-slate-200 hover:text-white transition-colors font-medium text-sm">
                     01732 247427
@@ -89,7 +89,7 @@ export default function Footer() {
           <div>
             <h3 className="font-bold mb-4 text-lg text-white">Services</h3>
             <nav aria-label="Footer services links">
-              <ul className="space-y-2.5">
+              <ul className="space-y-3">
                 <li>
                   <Link href="/services" className="text-slate-200 hover:text-white transition-colors font-medium text-sm">
                     Police Station Rep Services Kent
@@ -133,72 +133,72 @@ export default function Footer() {
           <div>
             <h3 className="font-bold mb-4 text-lg text-white">Help & Advice</h3>
             <nav aria-label="Footer help and advice links">
-              <ul className="space-y-2.5">
+              <ul className="space-y-3">
                 <li>
                   <Link href="/faq" className="text-slate-200 hover:text-white transition-colors text-sm">
                     Frequently Asked Questions
                   </Link>
                 </li>
-                <li className="pt-2 mt-2 border-t border-slate-700">
-                  <h4 className="font-semibold mb-2 text-white text-sm">Legal Guides (Know your rights)</h4>
-                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5">
+                <li className="pt-3 mt-3 border-t border-slate-700">
+                  <h4 className="font-semibold mb-3 text-white text-sm">Legal Guides (Know your rights)</h4>
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2">
                     <li>
-                      <Link href="/pace-code-c" className="text-slate-200 hover:text-white transition-colors text-xs">
+                      <Link href="/pace-code-c" className="text-slate-200 hover:text-white transition-colors text-xs leading-relaxed">
                         PACE Code C (Custody & Interview Rules)
                       </Link>
                     </li>
                     <li>
-                      <Link href="/no-comment-interview" className="text-slate-200 hover:text-white transition-colors text-xs">
+                      <Link href="/no-comment-interview" className="text-slate-200 hover:text-white transition-colors text-xs leading-relaxed">
                         No Comment Interview
                       </Link>
                     </li>
                     <li>
-                      <Link href="/custody-time-limits" className="text-slate-200 hover:text-white transition-colors text-xs">
+                      <Link href="/custody-time-limits" className="text-slate-200 hover:text-white transition-colors text-xs leading-relaxed">
                         Custody Time Limits
                       </Link>
                     </li>
                     <li>
-                      <Link href="/police-bail-explained" className="text-slate-200 hover:text-white transition-colors text-xs">
+                      <Link href="/police-bail-explained" className="text-slate-200 hover:text-white transition-colors text-xs leading-relaxed">
                         Police Bail Explained
                       </Link>
                     </li>
                     <li>
-                      <Link href="/voluntary-police-interview-risks" className="text-slate-200 hover:text-white transition-colors text-xs">
+                      <Link href="/voluntary-police-interview-risks" className="text-slate-200 hover:text-white transition-colors text-xs leading-relaxed">
                         Voluntary Interview Risks
                       </Link>
                     </li>
                     <li>
-                      <Link href="/released-under-investigation" className="text-slate-200 hover:text-white transition-colors text-xs">
+                      <Link href="/released-under-investigation" className="text-slate-200 hover:text-white transition-colors text-xs leading-relaxed">
                         Released Under Investigation (RUI)
                       </Link>
                     </li>
                     <li>
-                      <Link href="/prepared-statements" className="text-slate-200 hover:text-white transition-colors text-xs">
+                      <Link href="/prepared-statements" className="text-slate-200 hover:text-white transition-colors text-xs leading-relaxed">
                         Prepared Statements
                       </Link>
                     </li>
                     <li>
-                      <Link href="/adverse-inference" className="text-slate-200 hover:text-white transition-colors text-xs">
+                      <Link href="/adverse-inference" className="text-slate-200 hover:text-white transition-colors text-xs leading-relaxed">
                         Adverse Inferences
                       </Link>
                     </li>
                     <li>
-                      <Link href="/appropriate-adult" className="text-slate-200 hover:text-white transition-colors text-xs">
+                      <Link href="/appropriate-adult" className="text-slate-200 hover:text-white transition-colors text-xs leading-relaxed">
                         Appropriate Adult
                       </Link>
                     </li>
                     <li>
-                      <Link href="/youth-custody-rights" className="text-slate-200 hover:text-white transition-colors text-xs">
+                      <Link href="/youth-custody-rights" className="text-slate-200 hover:text-white transition-colors text-xs leading-relaxed">
                         Youth Custody Rights
                       </Link>
                     </li>
                     <li>
-                      <Link href="/can-police-take-my-phone" className="text-slate-200 hover:text-white transition-colors text-xs">
+                      <Link href="/can-police-take-my-phone" className="text-slate-200 hover:text-white transition-colors text-xs leading-relaxed">
                         Can Police Take My Phone?
                       </Link>
                     </li>
                     <li>
-                      <Link href="/dna-fingerprints-police-station" className="text-slate-200 hover:text-white transition-colors text-xs">
+                      <Link href="/dna-fingerprints-police-station" className="text-slate-200 hover:text-white transition-colors text-xs leading-relaxed">
                         DNA & Fingerprints
                       </Link>
                     </li>
@@ -257,7 +257,7 @@ export default function Footer() {
           <div>
             <h3 className="font-bold mb-4 text-lg text-white">Kent Locations</h3>
             <nav aria-label="Footer location links">
-              <ul className="space-y-2.5">
+              <ul className="space-y-3">
                 <li>
                   <Link href="/locations" className="text-slate-200 hover:text-white transition-colors font-medium text-sm">
                     Locations Hub (All Towns & Pages)
@@ -321,7 +321,7 @@ export default function Footer() {
           <div>
             <h3 className="font-bold mb-4 text-lg text-white">Legal & Resources</h3>
             <nav aria-label="Footer legal and resource links">
-              <ul className="space-y-2.5">
+              <ul className="space-y-3">
                 <li>
                   <Link href="/about" className="text-slate-200 hover:text-white transition-colors font-medium text-sm">
                     About Qualified Duty Solicitor
@@ -347,9 +347,9 @@ export default function Footer() {
                     Contact Us
                   </Link>
                 </li>
-                <li className="pt-2 mt-2 border-t border-slate-700">
+                <li className="pt-3 mt-3 border-t border-slate-700">
                   <h4 className="font-semibold mb-2 text-white text-xs">Legal & Compliance</h4>
-                  <ul className="space-y-1.5">
+                  <ul className="space-y-2">
                     <li>
                       <Link href="/terms-and-conditions" className="text-slate-300 hover:text-white transition-colors text-xs">
                         Terms of Use
@@ -397,8 +397,8 @@ export default function Footer() {
           </div>
         </div>
         
-        <div className="border-t border-slate-700 mt-12 pt-8 text-center text-sm">
-          <div className="footer-disclaimer-box mb-6 max-w-4xl mx-auto p-5 bg-white rounded-lg border border-slate-300 shadow-sm">
+        <div className="border-t border-slate-700 mt-14 pt-10 text-center text-sm">
+          <div className="footer-disclaimer-box max-w-4xl mx-auto p-6 bg-white rounded-xl border border-slate-300 shadow-sm">
             <p className="leading-relaxed mb-3 font-semibold">
               Robert Cashman is a criminal defence solicitor. All legal services are provided through Tuckers Solicitors, which is authorised and regulated by the Solicitors Regulation Authority (SRA ID: 127795).
             </p>
@@ -406,12 +406,12 @@ export default function Footer() {
               <span className="font-semibold">Accredited Court & Police Station Duty Solicitor:</span> Police Station Agent specialises in duty solicitor-led police station representation across Kent.
             </p>
           </div>
-          <div className="mb-6 max-w-4xl mx-auto p-5 bg-slate-800/30 rounded-lg border border-slate-700 text-left">
+          <div className="mt-8 max-w-4xl mx-auto p-6 bg-slate-800/30 rounded-xl border border-slate-700 text-left">
             <p className="text-xs text-slate-200 leading-relaxed">
               <span className="font-bold text-white">Legal information disclaimer:</span> The information on this website is general information about criminal procedure and police station processes in England &amp; Wales. It is not legal advice for your specific case, does not create a solicitor-client relationship, and may not reflect the most recent changes in law or practice. If you need advice, speak to a qualified solicitor as soon as possible.
             </p>
           </div>
-          <p className="mb-4 font-medium text-slate-300">
+          <p className="mt-8 mb-4 font-medium text-slate-300">
             Copyright {currentYear} by Defence Legal Services Limited T/A Police Station Agent. Company No. 09900871
           </p>
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-4 text-slate-300">
@@ -450,7 +450,7 @@ export default function Footer() {
             Registered Office: Greenacre, London Road, West Kingsdown, Sevenoaks, Kent, TN15 6ER
           </p>
           {/* Production Version and Last Update - Discreet Display */}
-          <div className="mt-4 text-center space-y-1">
+          <div className="mt-6 text-center space-y-1.5">
             <div>
               <span className="text-xs text-slate-400" title={`Build version: ${appVersion}`}>
                 Version: {appVersion}
