@@ -102,7 +102,15 @@ async function savePostToJsonFile(post: BlogPostData): Promise<{ success: boolea
     debugInfo.push(`GITHUB_TOKEN set: ${!!GITHUB_TOKEN}`);
     debugInfo.push(`GITHUB_REPO: ${GITHUB_REPO}`);
     debugInfo.push(`Is Vercel: ${!!process.env.VERCEL}`);
+    // #region agent log - Debug Redis env vars
     debugInfo.push(`REDIS configured: ${!!(REDIS_URL && REDIS_TOKEN)}`);
+    debugInfo.push(`KV_REST_API_URL set: ${!!process.env.KV_REST_API_URL}`);
+    debugInfo.push(`UPSTASH_REDIS_REST_URL set: ${!!process.env.UPSTASH_REDIS_REST_URL}`);
+    debugInfo.push(`KV_REST_API_TOKEN set: ${!!process.env.KV_REST_API_TOKEN}`);
+    debugInfo.push(`UPSTASH_REDIS_REST_TOKEN set: ${!!process.env.UPSTASH_REDIS_REST_TOKEN}`);
+    debugInfo.push(`REDIS_URL length: ${REDIS_URL.length}`);
+    debugInfo.push(`REDIS_TOKEN length: ${REDIS_TOKEN.length}`);
+    // #endregion
     
     // On Vercel, try Redis FIRST (most reliable), then fall back to GitHub
     if (process.env.VERCEL) {
