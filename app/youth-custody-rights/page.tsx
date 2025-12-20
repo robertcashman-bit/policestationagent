@@ -105,6 +105,10 @@ export default function YouthCustodyRightsPage() {
               As a duty solicitor, I have represented many young people at Kent police stations. 
               Understanding these special protections is essential for parents and young people alike.
             </p>
+            <p>
+              In my experience, the presence of the right appropriate adult and early legal advice makes a real
+              difference—both to how the interview is conducted and to the decisions made afterwards.
+            </p>
 
             <h2>The Appropriate Adult</h2>
             <p>

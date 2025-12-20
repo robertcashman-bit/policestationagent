@@ -3,7 +3,8 @@
  * Extracts image URLs and downloads them to public/images/
  */
 
-const fs = require('fs').promises;
+const fsSync = require('fs');
+const fs = fsSync.promises;
 const path = require('path');
 const https = require('https');
 const http = require('http');
@@ -25,7 +26,7 @@ async function downloadImage(url, outputPath) {
         return reject(new Error(`Failed to download: ${response.statusCode}`));
       }
       
-      const fileStream = fs.createWriteStream(outputPath);
+      const fileStream = fsSync.createWriteStream(outputPath);
       response.pipe(fileStream);
       
       fileStream.on('finish', () => {

@@ -99,6 +99,11 @@ export default function DNAFingerprintsPolicePage() {
             <p>
               There are different categories of samples police can take, with different rules for each:
             </p>
+            <p>
+              In my experience representing clients at Kent custody suites, confusion about “what you must give” versus
+              “what you can refuse” is common. Knowing the difference between non‑intimate and intimate samples helps you
+              make informed decisions and avoid unnecessary complications.
+            </p>
 
             <h3>Non-Intimate Samples (No Consent Required)</h3>
             <ul>

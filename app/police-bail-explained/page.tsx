@@ -126,7 +126,7 @@ export default function PoliceBailExplainedPage() {
               <li><strong>Further extensions:</strong> Require magistrates' court approval</li>
             </ul>
             <p>
-              In practice, I have seen bail periods extended multiple times for complex investigations. 
+              In my experience representing clients at Kent police stations, I have seen bail periods extended multiple times for complex investigations. 
               However, the police must justify each extension, and you have the right to make representations.
             </p>
 

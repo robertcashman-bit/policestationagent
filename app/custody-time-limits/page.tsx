@@ -264,7 +264,7 @@ export default function CustodyTimeLimitsPage() {
             <h3 className="text-2xl font-bold mb-4">Need Help with Police Custody?</h3>
             <p className="text-slate-300 mb-6">
               If you or someone you know is being held in police custody, you have the right to free legal advice. 
-              I provide 24/7 police station representation across all Kent custody suites.
+              I provide extended hours police station representation across all Kent custody suites.
             </p>
             <div className="flex flex-wrap gap-4">
               <a href="tel:01732247427" className="inline-flex items-center px-6 py-3 bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold rounded-lg">

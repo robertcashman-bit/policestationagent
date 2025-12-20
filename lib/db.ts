@@ -168,12 +168,38 @@ function initDatabase() {
       )
     `);
 
+    // Contact form submissions
+    db.exec(`
+      CREATE TABLE IF NOT EXISTS contact_messages (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        contact_number TEXT,
+        email TEXT,
+        request_type TEXT,
+        client_name TEXT,
+        client_dob TEXT,
+        police_station TEXT,
+        interview_date TEXT,
+        interview_time TEXT,
+        attendance_type TEXT,
+        offence_summary TEXT,
+        contact_window TEXT,
+        contact_window_time TEXT,
+        support_needs TEXT,
+        consent BOOLEAN DEFAULT 0,
+        user_agent TEXT,
+        ip_address TEXT,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
     // Create indexes
     db.exec(`
       CREATE INDEX IF NOT EXISTS idx_blog_slug ON blog_posts(slug);
       CREATE INDEX IF NOT EXISTS idx_blog_published ON blog_posts(published, published_at);
       CREATE INDEX IF NOT EXISTS idx_police_station_slug ON police_stations(slug);
       CREATE INDEX IF NOT EXISTS idx_service_slug ON services(slug);
+      CREATE INDEX IF NOT EXISTS idx_contact_created_at ON contact_messages(created_at);
     `);
   } catch (error) {
     console.error('Database initialization error:', error);

@@ -5,6 +5,7 @@ import { SITE_URL, SITE_DOMAIN } from '@/config/site';
 import Script from 'next/script';
 import Chatbot from '@/components/Chatbot';
 import CookieBanner from '@/components/CookieBanner';
+import InternalLinkInterceptor from '@/components/InternalLinkInterceptor';
 
 function getSafeSiteUrl(): string {
   const raw =
@@ -39,7 +40,8 @@ export const metadata: Metadata = {
     default: "Police Station Agent - Expert Legal Representation",
     template: "%s | Police Station Agent",
   },
-  description: "Professional police station representation and legal services across Kent and the UK. Available 24/7 for urgent legal assistance. Free legal advice under Legal Aid.",
+  description:
+    "Professional police station representation and legal services across Kent and the UK. Extended hours availability for urgent legal assistance. Free legal advice under Legal Aid.",
   keywords: ["police station agent", "legal representation", "solicitor", "criminal defense", "duty solicitor", "Kent", "police station representation", "legal aid"],
   authors: [{ name: "Robert Cashman", url: siteUrl }],
   creator: "Robert Cashman",
@@ -53,7 +55,8 @@ export const metadata: Metadata = {
     url: siteUrl,
     siteName: "Police Station Agent",
     title: "Police Station Agent - Expert Legal Representation",
-    description: "Professional police station representation and legal services across Kent and the UK. Available 24/7 for urgent legal assistance.",
+    description:
+      "Professional police station representation and legal services across Kent and the UK. Extended hours availability for urgent legal assistance.",
     images: [
       {
         url: `${siteUrl}/og-image.jpg`, // Default OG image - can be customized per page
@@ -362,7 +365,7 @@ export default function RootLayout({
         >
           Skip to main content
         </a>
-        {children}
+        <InternalLinkInterceptor>{children}</InternalLinkInterceptor>
         {/* Cookie Consent Banner - Minimal, compliant */}
         <CookieBanner />
         {/* Chatbot Assistant - Fixed position, non-blocking */}

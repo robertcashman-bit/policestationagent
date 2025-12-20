@@ -23,7 +23,8 @@
     "setup:cloudflare:auto": "node scripts/setup-cloudflare-auto.js",
     "setup:cloudflare:simple": "node scripts/setup-cloudflare-simple.js",
     "setup:domain": "node scripts/auto-setup-domain.js",
-    "verify:dns": "node scripts/verify-dns-setup.js"
+    "verify:dns": "node scripts/verify-dns-setup.js",
+    "seo:validate": "node scripts/validate-seo-authority-pages.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
