@@ -3,16 +3,26 @@ import Footer from '@/components/Footer';
 import Link from 'next/link';
 import { Metadata } from 'next';
 import { JsonLd } from '@/components/JsonLd';
+import { LegalReferences, Ref, type LegalSource } from '@/components/LegalReferences';
+import { SITE_DOMAIN } from '@/config/site';
 
 export const metadata: Metadata = {
   title: 'No Comment Interview: When to Stay Silent in Police Interview UK',
   description: 'Should you go "no comment" in a police interview? Learn when staying silent protects you, when it could harm your defence, and how adverse inferences work.',
   alternates: {
-    canonical: 'https://policestationagent.com/no-comment-interview',
+    canonical: `https://${SITE_DOMAIN}/no-comment-interview`,
   },
 };
 
 export default function NoCommentInterviewPage() {
+  const sources: LegalSource[] = [
+    {
+      id: 'cjpoa-s34',
+      label: 'Criminal Justice and Public Order Act 1994 s.34 (inferences from failure to mention facts)',
+      href: 'https://www.legislation.gov.uk/ukpga/1994/33/section/34',
+    },
+  ];
+
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -22,7 +32,7 @@ export default function NoCommentInterviewPage() {
         name: 'What does "no comment" mean in a police interview?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: '"No comment" is a response used during police interviews to exercise your right to silence. It means you are choosing not to answer a question. You cannot be punished for saying "no comment," but the court may draw adverse inferences in certain circumstances.',
+          text: '"No comment" means you are choosing not to answer a question in interview. In some circumstances, if you later rely on a fact in your defence that you did not mention when questioned under caution, a court or jury may be able to draw inferences under section 34 CJPOA 1994.',
         },
       },
       {
@@ -30,7 +40,7 @@ export default function NoCommentInterviewPage() {
         name: 'Can I be punished for saying "no comment" in interview?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'No, you cannot be convicted simply for staying silent. However, if you later rely on a defence in court that you could have mentioned during interview, the court may draw an "adverse inference" – meaning they may view your silence as suspicious.',
+          text: 'Section 34 CJPOA 1994 allows a court or jury to draw inferences that appear proper where a suspect fails to mention facts later relied on in a defence, if it was reasonable to have mentioned them at the time.',
         },
       },
       {
@@ -46,7 +56,7 @@ export default function NoCommentInterviewPage() {
         name: 'What is an adverse inference?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'An adverse inference is when a court treats your silence during police interview as potentially supporting the prosecution case. If you fail to mention something you later rely on in court, the jury may conclude you made it up afterwards.',
+          text: 'An adverse inference is an inference a court or jury may draw from a failure to mention facts when questioned under caution, where section 34 CJPOA 1994 applies.',
         },
       },
       {
@@ -54,7 +64,7 @@ export default function NoCommentInterviewPage() {
         name: 'Is a prepared statement better than "no comment"?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'A prepared statement can be an effective middle ground. It allows you to put your account on record (protecting against adverse inferences) while avoiding the risks of a full police interview. Your solicitor can help you prepare this.',
+          text: 'A prepared statement can be a middle ground: it can put key facts on record while you still answer “no comment” to questions. Whether it reduces the risk of adverse inferences depends on the facts and what was reasonable in the circumstances.',
         },
       },
     ],
@@ -91,39 +101,28 @@ export default function NoCommentInterviewPage() {
           <div className="bg-blue-50 border-l-4 border-blue-600 p-6 mb-8 rounded-r-lg">
             <p className="text-lg font-medium text-slate-800">
               <strong>Quick Answer:</strong> You have the right to answer "no comment" to any question in a 
-              police interview. You cannot be convicted for staying silent. However, if you later rely on a 
-              defence you didn't mention during interview, the court may draw <strong>adverse inferences</strong> 
-              – treating your silence as suspicious. Always get legal advice before deciding.
+              police interview. However, if you later rely on a fact in your defence that you did not mention when questioned under caution, section 34 CJPOA 1994 may allow the court or jury to draw inferences that appear proper (depending on what was reasonable in the circumstances).<Ref n={1} />{' '}
+              Always get legal advice before deciding.
             </p>
           </div>
 
           <div className="prose prose-lg max-w-none">
             <h2>What Does "No Comment" Mean?</h2>
             <p>
-              "No comment" is a phrase used during police interviews to exercise your right to silence under 
-              the Police and Criminal Evidence Act 1984 (PACE). When you say "no comment," you are declining 
-              to answer a question without providing any information to the police.
+              "No comment" is a phrase used to decline to answer a question in interview.
             </p>
             <p>
-              In my experience representing clients at Kent police stations, the decision to go "no comment" 
-              is one of the most important tactical choices you'll make. It requires careful consideration 
-              of the disclosure you've received, the strength of the evidence, and your instructions.
+              The decision to go "no comment" is a major tactical choice. It depends on what the police have disclosed, what you are being asked about, and the risks of saying something inaccurate or incomplete.
             </p>
 
             <h2>Your Right to Silence</h2>
             <p>
-              The right to silence is a fundamental principle of English law. The police caution makes this clear:
+              One key legal risk of silence is adverse inference: section 34 CJPOA 1994 deals with failures to mention facts when questioned under caution (or when charged/informed) that are later relied on in a defence.<Ref n={1} />
             </p>
-            <blockquote className="bg-slate-100 p-4 border-l-4 border-slate-400 my-6">
-              "You do not have to say anything. But it may harm your defence if you do not mention when 
-              questioned something which you later rely on in court. Anything you do say may be given in evidence."
-            </blockquote>
-            <p>
-              This caution contains two important parts:
-            </p>
+            <p>This has two practical consequences:</p>
             <ol>
-              <li><strong>"You do not have to say anything"</strong> – You have an absolute right not to answer questions</li>
-              <li><strong>"It may harm your defence..."</strong> – But there may be consequences if you stay silent about something you later rely on</li>
+              <li><strong>You can stay silent</strong> – but</li>
+              <li><strong>Silence can be relevant later</strong> if you rely on facts you did not mention when you could reasonably have been expected to mention them.<Ref n={1} /></li>
             </ol>
 
             <h2>When "No Comment" Is Advisable</h2>
@@ -151,17 +150,13 @@ export default function NoCommentInterviewPage() {
             <h2>Understanding Adverse Inferences</h2>
             <p>
               Under the Criminal Justice and Public Order Act 1994, the court can draw <strong>adverse inferences</strong> 
-              from your silence in certain circumstances. This means:
+              from a failure to mention facts in certain circumstances. This means:
             </p>
             <ul>
               <li>If you fail to mention a fact during interview that you later rely on at trial...</li>
               <li>...the court or jury may treat your silence as evidence that you made up the defence later</li>
-              <li>This isn't proof of guilt, but it can damage your credibility</li>
+              <li>This is fact-specific and depends on what was reasonable to expect at the time (s.34).<Ref n={1} /></li>
             </ul>
-            <p>
-              However, adverse inferences <strong>cannot</strong> be the sole or main basis for conviction. 
-              The prosecution still needs other evidence.
-            </p>
 
             <h2>The Prepared Statement Alternative</h2>
             <p>
@@ -173,7 +168,7 @@ export default function NoCommentInterviewPage() {
               Benefits of a prepared statement:
             </p>
             <ul>
-              <li>Puts your account on record (protecting against adverse inferences)</li>
+              <li>Puts key facts on record (which can matter for s.34 if you later rely on those facts)<Ref n={1} /></li>
               <li>Avoids the risks of live questioning</li>
               <li>Gives you control over what information you provide</li>
               <li>Can be carefully considered and legally reviewed before use</li>
@@ -281,6 +276,8 @@ export default function NoCommentInterviewPage() {
               </Link>
             </div>
           </div>
+
+          <LegalReferences sources={sources} />
         </article>
       </main>
 

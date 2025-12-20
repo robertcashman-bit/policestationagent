@@ -3,16 +3,47 @@ import Footer from '@/components/Footer';
 import Link from 'next/link';
 import { Metadata } from 'next';
 import { JsonLd } from '@/components/JsonLd';
+import { LegalReferences, Ref, type LegalSource } from '@/components/LegalReferences';
+import { SITE_DOMAIN } from '@/config/site';
 
 export const metadata: Metadata = {
   title: 'How Long Can Police Hold You? UK Custody Time Limits Explained',
-  description: 'Police can hold you for 24 hours without charge, extendable to 36 or 96 hours for serious offences. Learn your PACE rights and what happens at each stage.',
+  description:
+    'Under PACE 1984, police detention without charge is generally limited to 24 hours, extendable to 36 hours by a superintendent and (in some cases) up to 96 hours with a magistrates’ court warrant. Learn how “relevant time” is calculated and how reviews work.',
   alternates: {
-    canonical: 'https://policestationagent.com/custody-time-limits',
+    canonical: `https://${SITE_DOMAIN}/custody-time-limits`,
   },
 };
 
 export default function CustodyTimeLimitsPage() {
+  const sources: LegalSource[] = [
+    {
+      id: 'pace-s40',
+      label: 'Police and Criminal Evidence Act 1984 (PACE) s.40 (reviews of detention; 6-hour / 9-hour review timetable)',
+      href: 'https://www.legislation.gov.uk/ukpga/1984/60/section/40',
+    },
+    {
+      id: 'pace-s41',
+      label: 'PACE s.41 (24-hour limit; “relevant time” definition)',
+      href: 'https://www.legislation.gov.uk/ukpga/1984/60/section/41',
+    },
+    {
+      id: 'pace-s42',
+      label: 'PACE s.42 (superintendent authorisation up to 36 hours in indictable cases)',
+      href: 'https://www.legislation.gov.uk/ukpga/1984/60/section/42',
+    },
+    {
+      id: 'pace-s43',
+      label: 'PACE s.43 (warrants of further detention by magistrates’ court)',
+      href: 'https://www.legislation.gov.uk/ukpga/1984/60/section/43',
+    },
+    {
+      id: 'pace-s44',
+      label: 'PACE s.44 (extensions of warrants; maximum 96 hours after relevant time)',
+      href: 'https://www.legislation.gov.uk/ukpga/1984/60/section/44',
+    },
+  ];
+
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -22,7 +53,7 @@ export default function CustodyTimeLimitsPage() {
         name: 'How long can police hold me without charge in the UK?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Police can hold you for up to 24 hours without charge. For serious offences, a senior officer can extend this to 36 hours. For very serious crimes like murder or terrorism, a magistrate can authorise detention up to 96 hours.',
+          text: 'Under PACE, police detention without charge is generally limited to 24 hours (calculated from “relevant time”). In indictable cases, a superintendent can authorise detention up to 36 hours. With a magistrates’ court warrant, detention can be extended up to a maximum of 96 hours after relevant time.',
         },
       },
       {
@@ -38,7 +69,7 @@ export default function CustodyTimeLimitsPage() {
         name: 'Can police extend my detention beyond 24 hours?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Yes, but only for serious arrestable offences. A superintendent can authorise up to 36 hours. Beyond that, police must apply to a magistrates\' court for a warrant of further detention, which can extend custody to 96 hours maximum.',
+          text: 'Yes. Under PACE, a superintendent can authorise detention up to 36 hours in indictable cases if the statutory conditions are met. Beyond that, police must apply to a magistrates’ court for a warrant of further detention; extensions are subject to statutory limits, including the 96-hour maximum after relevant time.',
         },
       },
       {
@@ -46,7 +77,7 @@ export default function CustodyTimeLimitsPage() {
         name: 'How often must detention be reviewed?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Under PACE, your detention must be reviewed by an inspector after 6 hours, then every 9 hours thereafter. The review officer must be satisfied that your continued detention is necessary.',
+          text: 'PACE provides that the first review must be not later than six hours after detention was first authorised, the second not later than nine hours after the first, and subsequent reviews at intervals of not more than nine hours.',
         },
       },
       {
@@ -93,7 +124,7 @@ export default function CustodyTimeLimitsPage() {
               <strong>Quick Answer:</strong> Police can hold you for up to <strong>24 hours</strong> without charge. 
               For serious offences, this can be extended to <strong>36 hours</strong> by a senior officer, 
               or up to <strong>96 hours</strong> with a magistrate's authorisation. These limits are set by the 
-              Police and Criminal Evidence Act 1984 (PACE).
+              Police and Criminal Evidence Act 1984 (PACE).<Ref n={2} /> <Ref n={3} /> <Ref n={5} />
             </p>
           </div>
 
@@ -105,13 +136,13 @@ export default function CustodyTimeLimitsPage() {
               either charge you or release you.
             </p>
             <p>
-              In my experience representing clients across Kent custody suites, I've seen these time limits applied 
-              rigorously. Understanding them is crucial for anyone in police detention.
+              Note: some situations can involve different detention rules under other legislation. This page focuses on the PACE detention framework.<Ref n={2} />
             </p>
 
             <h2>The 24-Hour Rule</h2>
             <p>
-              For most offences, police have <strong>24 hours from when you arrive at the custody suite</strong> to:
+              Under PACE, a person generally must not be kept in police detention for more than 24 hours without being charged (subject to PACE sections 42 and 43).<Ref n={2} />{' '}
+              The 24-hour period is calculated from “relevant time” as defined in PACE section 41(2).<Ref n={2} />
             </p>
             <ul>
               <li>Gather evidence and investigate</li>
@@ -119,30 +150,23 @@ export default function CustodyTimeLimitsPage() {
               <li>Make a decision on whether to charge, release, or apply for an extension</li>
             </ul>
             <p>
-              The "relevant time" usually starts when you arrive at the police station, not when you were arrested 
-              on the street. This is an important distinction that can affect your detention period.
+              In many cases “relevant time” is linked to arrival at a police station, but PACE section 41(2) sets out multiple scenarios and (in some cases) uses the earlier of arrival time and “24 hours after arrest”.<Ref n={2} />
             </p>
 
             <h2>Extensions to 36 Hours</h2>
             <p>
-              If the offence is "serious" (previously called "serious arrestable offences"), a superintendent 
-              or officer of higher rank can authorise detention for up to 36 hours. This requires:
+              A superintendent (or above) responsible for the station can authorise detention up to 36 hours after relevant time if the statutory conditions in PACE section 42 are met (including necessity and that the offence is indictable).<Ref n={3} /> This requires:
             </p>
             <ul>
               <li>The investigation to be proceeding diligently and expeditiously</li>
               <li>Your detention to be necessary to secure or preserve evidence, or obtain evidence by questioning</li>
-              <li>The offence to be an indictable offence (one that can be tried in the Crown Court)</li>
+              <li>The offence to be an indictable offence (PACE s.42).<Ref n={3} /></li>
             </ul>
-            <p>
-              In practice, custody sergeants and inspectors take these extensions seriously. I have successfully 
-              challenged extensions where the police have not demonstrated genuine necessity.
-            </p>
 
             <h2>The 96-Hour Maximum</h2>
             <p>
-              For the most serious offences—such as murder, terrorism, or serious drug trafficking—police can 
-              apply to a magistrates' court for a <strong>warrant of further detention</strong>. This can extend 
-              your custody up to a maximum of 96 hours (4 days).
+              Police can apply to a magistrates’ court for a <strong>warrant of further detention</strong> under PACE section 43 (subject to statutory requirements).<Ref n={4} />{' '}
+              Under PACE section 44, detention under warrants (and extensions) is capped so that it cannot end later than 96 hours after relevant time.<Ref n={5} />
             </p>
             <p>
               These hearings are formal court proceedings. You have the right to:
@@ -159,13 +183,13 @@ export default function CustodyTimeLimitsPage() {
               governs custody time limits:
             </p>
             <ul>
-              <li><strong>Section 41:</strong> Sets the basic 24-hour limit</li>
-              <li><strong>Section 42:</strong> Allows superintendent to authorise up to 36 hours</li>
-              <li><strong>Section 43:</strong> Provides for warrant of further detention (up to 96 hours)</li>
-              <li><strong>Section 44:</strong> Allows for extension of warrant</li>
+              <li><strong>Section 41:</strong> basic 24-hour limit and “relevant time” definition<Ref n={2} /></li>
+              <li><strong>Section 42:</strong> superintendent authorisation up to 36 hours (in indictable cases, if conditions met)<Ref n={3} /></li>
+              <li><strong>Section 43:</strong> warrants of further detention by magistrates’ court<Ref n={4} /></li>
+              <li><strong>Section 44:</strong> extensions of warrants and the 96-hour cap after relevant time<Ref n={5} /></li>
             </ul>
             <p>
-              PACE Code C provides detailed guidance on how these provisions must be applied in practice.
+              Detention reviews are addressed in PACE section 40 (including the first 6-hour review and subsequent 9-hour reviews).<Ref n={1} />
             </p>
 
             <h2>Detention Reviews</h2>
@@ -173,25 +197,14 @@ export default function CustodyTimeLimitsPage() {
               Your detention must be regularly reviewed by a custody officer to ensure it remains necessary:
             </p>
             <ul>
-              <li><strong>First review:</strong> 6 hours after detention was first authorised</li>
-              <li><strong>Subsequent reviews:</strong> Every 9 hours thereafter</li>
+              <li><strong>First review:</strong> not later than 6 hours after detention was first authorised (PACE s.40(3))<Ref n={1} /></li>
+              <li><strong>Second review:</strong> not later than 9 hours after the first (PACE s.40(3))<Ref n={1} /></li>
+              <li><strong>Subsequent reviews:</strong> intervals of not more than 9 hours (PACE s.40(3))<Ref n={1} /></li>
             </ul>
             <p>
               The review officer must be satisfied that your continued detention is necessary for one of the 
               statutory purposes—typically to secure, preserve or obtain evidence.
             </p>
-
-            <h2>In Practice: What Actually Happens</h2>
-            <p>
-              In my experience at Kent police stations, most detentions are resolved well within 24 hours. 
-              Extensions beyond this are relatively uncommon and are usually reserved for:
-            </p>
-            <ul>
-              <li>Complex investigations involving multiple suspects</li>
-              <li>Cases requiring forensic examination results</li>
-              <li>Serious offences where extensive interviewing is necessary</li>
-              <li>Cases where the suspect has been uncooperative or interviews have been delayed</li>
-            </ul>
 
             <h2>What to Do If You're Facing Extended Detention</h2>
             <p>
@@ -200,8 +213,8 @@ export default function CustodyTimeLimitsPage() {
             <ol>
               <li><strong>Request a solicitor immediately</strong> – Legal advice is free and confidential</li>
               <li><strong>Understand the reasons</strong> – You should be told why an extension is being sought</li>
-              <li><strong>Your solicitor can make representations</strong> – We can argue against extensions that are not justified</li>
-              <li><strong>Keep track of time</strong> – Know when your 24 hours expires</li>
+              <li><strong>Your solicitor can make representations</strong> – particularly if the statutory conditions are not met</li>
+              <li><strong>Keep track of time</strong> – the key time limits are tied to “relevant time” under PACE s.41</li>
             </ol>
           </div>
 
@@ -238,7 +251,7 @@ export default function CustodyTimeLimitsPage() {
             <div className="space-y-6">
               <div className="bg-white p-6 rounded-lg shadow-sm border">
                 <h3 className="font-bold text-lg text-blue-900 mb-2">How long can police hold me without charge in the UK?</h3>
-                <p className="text-slate-700">Police can hold you for up to 24 hours without charge. For serious offences, a senior officer can extend this to 36 hours. For very serious crimes like murder or terrorism, a magistrate can authorise detention up to 96 hours.</p>
+                <p className="text-slate-700">Under PACE, police detention without charge is generally limited to 24 hours (from “relevant time”). A superintendent can authorise detention up to 36 hours in indictable cases if conditions are met, and a magistrates’ court can issue/extend warrants subject to the 96-hour cap after relevant time.</p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow-sm border">
                 <h3 className="font-bold text-lg text-blue-900 mb-2">What happens after 24 hours in police custody?</h3>
@@ -246,11 +259,11 @@ export default function CustodyTimeLimitsPage() {
               </div>
               <div className="bg-white p-6 rounded-lg shadow-sm border">
                 <h3 className="font-bold text-lg text-blue-900 mb-2">Can police extend my detention beyond 24 hours?</h3>
-                <p className="text-slate-700">Yes, but only for serious arrestable offences. A superintendent can authorise up to 36 hours. Beyond that, police must apply to a magistrates' court for a warrant of further detention, which can extend custody to 96 hours maximum.</p>
+                <p className="text-slate-700">Yes. Under PACE, a superintendent can authorise detention up to 36 hours in indictable cases if conditions are met. Beyond that, police must apply to a magistrates’ court for a warrant of further detention; extensions are subject to statutory limits, including the 96-hour maximum after relevant time.</p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow-sm border">
                 <h3 className="font-bold text-lg text-blue-900 mb-2">How often must detention be reviewed?</h3>
-                <p className="text-slate-700">Under PACE, your detention must be reviewed by an inspector after 6 hours, then every 9 hours thereafter. The review officer must be satisfied that your continued detention is necessary.</p>
+                <p className="text-slate-700">PACE provides that the first review must be not later than six hours after detention was first authorised, the second not later than nine hours after the first, and subsequent reviews at intervals of not more than nine hours.</p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow-sm border">
                 <h3 className="font-bold text-lg text-blue-900 mb-2">What are my rights if police want to extend my detention?</h3>
@@ -297,6 +310,8 @@ export default function CustodyTimeLimitsPage() {
               </Link>
             </div>
           </div>
+
+          <LegalReferences sources={sources} />
         </article>
       </main>
 

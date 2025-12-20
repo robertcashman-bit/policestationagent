@@ -3,16 +3,57 @@ import Footer from '@/components/Footer';
 import Link from 'next/link';
 import { Metadata } from 'next';
 import { JsonLd } from '@/components/JsonLd';
+import { LegalReferences, Ref, type LegalSource } from '@/components/LegalReferences';
+import { SITE_DOMAIN } from '@/config/site';
 
 export const metadata: Metadata = {
   title: 'Police Bail Explained: Conditions, Time Limits & Your Rights UK',
-  description: 'Police bail means release with conditions while investigation continues. Learn about bail conditions, 28-day limits, breaches, and the difference from RUI.',
+  description:
+    'Police bail is release with conditions while an investigation continues. Learn what bail is, what happens if you breach conditions, and how pre-charge bail time limits work (England & Wales).',
   alternates: {
-    canonical: 'https://policestationagent.com/police-bail-explained',
+    canonical: `https://${SITE_DOMAIN}/police-bail-explained`,
   },
 };
 
 export default function PoliceBailExplainedPage() {
+  const sources: LegalSource[] = [
+    {
+      id: 'pace-47zb',
+      label: 'Police and Criminal Evidence Act 1984 (PACE) s.47ZB (applicable bail period: initial limit)',
+      href: 'https://www.legislation.gov.uk/ukpga/1984/60/section/47ZB',
+    },
+    {
+      id: 'pace-47zd',
+      label: 'PACE s.47ZD (extension of initial limit in standard cases; relevant officer)',
+      href: 'https://www.legislation.gov.uk/ukpga/1984/60/section/47ZD',
+    },
+    {
+      id: 'pace-47zf',
+      label: 'PACE s.47ZF (first extension by magistrates’ court)',
+      href: 'https://www.legislation.gov.uk/ukpga/1984/60/section/47ZF',
+    },
+    {
+      id: 'pace-47zg',
+      label: 'PACE s.47ZG (subsequent extensions by magistrates’ court)',
+      href: 'https://www.legislation.gov.uk/ukpga/1984/60/section/47ZG',
+    },
+    {
+      id: 'pace-47zj',
+      label: 'PACE s.47ZJ (late court applications; bail period treated as extended until determined)',
+      href: 'https://www.legislation.gov.uk/ukpga/1984/60/section/47ZJ',
+    },
+    {
+      id: 'pace-46a',
+      label: 'PACE s.46A (arrest for failure to answer bail / suspected breach of bail conditions)',
+      href: 'https://www.legislation.gov.uk/ukpga/1984/60/section/46A',
+    },
+    {
+      id: 'cps-bail',
+      label: 'Crown Prosecution Service (CPS) prosecution guidance: Bail',
+      href: 'https://www.cps.gov.uk/prosecution-guidance/bail',
+    },
+  ];
+
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -30,7 +71,7 @@ export default function PoliceBailExplainedPage() {
         name: 'How long does police bail last?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Initial police bail lasts up to 28 days. It can be extended to 3 months by a superintendent, or longer with magistrates\' court approval. After the Policing and Crime Act 2017 reforms, bail is used more sparingly.',
+          text: 'Pre-charge police bail time limits depend on the type of case. Under PACE, the initial “applicable bail period” is generally 3 months from the bail start date, with different rules for certain designated/regulatory cases. Bail can be extended under PACE, including (in some circumstances) by a court.',
         },
       },
       {
@@ -38,7 +79,7 @@ export default function PoliceBailExplainedPage() {
         name: 'What happens if I breach police bail conditions?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Breaching police bail conditions is not a criminal offence itself, but you can be arrested and brought back to the police station. The breach may result in being held in custody rather than re-released on bail.',
+          text: 'Police can arrest you if they reasonably suspect you have broken pre-charge bail conditions, and you may be taken back to a police station. What happens next depends on your case and the investigation.',
         },
       },
       {
@@ -46,7 +87,7 @@ export default function PoliceBailExplainedPage() {
         name: 'What is the difference between bail and RUI?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Bail has conditions and a return date. Released Under Investigation (RUI) has no conditions and no return date. Bail is now reserved for cases where conditions are necessary and proportionate.',
+          text: 'Police bail usually involves conditions and a return date. RUI is release without bail (typically without bail conditions).',
         },
       },
       {
@@ -54,7 +95,7 @@ export default function PoliceBailExplainedPage() {
         name: 'Can I challenge police bail conditions?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Yes, you can ask the police to vary or remove conditions. If refused, you can apply to a magistrates\' court to have conditions varied. Your solicitor can make representations on your behalf.',
+          text: 'You can ask the police to vary bail conditions, and you can get a solicitor to make representations for you. The route to challenge conditions depends on whether it is police bail or court bail.',
         },
       },
     ],
@@ -89,8 +130,8 @@ export default function PoliceBailExplainedPage() {
             <p className="text-lg font-medium text-slate-800">
               <strong>Quick Answer:</strong> Police bail means you are released from custody with 
               <strong> conditions</strong> (such as not contacting witnesses) and a <strong>return date</strong> 
-              to come back to the station. Initial bail lasts up to <strong>28 days</strong> and can be extended. 
-              Breaching conditions can result in arrest.
+              to come back to the station. Pre-charge bail has statutory time-limit rules under PACE and can be extended in certain circumstances.<Ref n={1} />{' '}
+              If police reasonably suspect you have broken bail conditions, they can arrest you and take you back to a police station.<Ref n={6} />
             </p>
           </div>
 
@@ -100,11 +141,6 @@ export default function PoliceBailExplainedPage() {
               Police bail (also called "pre-charge bail") is when you are released from police custody while 
               the investigation into the alleged offence continues. Unlike unconditional release, bail comes 
               with conditions you must follow and a date to return to the police station.
-            </p>
-            <p>
-              Following reforms in the Policing and Crime Act 2017, police bail is now used more sparingly. 
-              Before these reforms, almost everyone was released on bail. Now, bail is only granted when 
-              conditions are "necessary and proportionate."
             </p>
 
             <h2>Common Bail Conditions</h2>
@@ -119,26 +155,35 @@ export default function PoliceBailExplainedPage() {
             </ul>
 
             <h2>Bail Time Limits</h2>
-            <p>The Policing and Crime Act 2017 introduced strict time limits on police bail:</p>
+            <p>
+              In England &amp; Wales, the statutory “applicable bail period” (the key time-limit concept for pre-charge bail) is set out in PACE.<Ref n={1} />
+            </p>
             <ul>
-              <li><strong>Initial period:</strong> Up to 28 days</li>
-              <li><strong>First extension:</strong> Up to 3 months total (by superintendent)</li>
-              <li><strong>Further extensions:</strong> Require magistrates' court approval</li>
+              <li>
+                <strong>Initial limit (standard cases):</strong> 3 months beginning with the person’s bail start date (PACE s.47ZB).<Ref n={1} />
+              </li>
+              <li>
+                <strong>Initial limit (certain designated/regulatory cases):</strong> 6 months beginning with the bail start date (PACE s.47ZB).<Ref n={1} />
+              </li>
+              <li>
+                <strong>Extension in standard cases (up to 6 months total):</strong> A relevant officer (inspector or above) may authorise an extension where the statutory conditions are met (PACE s.47ZD).<Ref n={2} />
+              </li>
+              <li>
+                <strong>Court extensions:</strong> A magistrates’ court can authorise extensions in the situations set out in PACE (e.g., ss.47ZF–47ZG).<Ref n={3} />{' '}
+                <Ref n={4} />
+              </li>
             </ul>
             <p>
-              In my experience representing clients at Kent police stations, I have seen bail periods extended multiple times for complex investigations. 
-              However, the police must justify each extension, and you have the right to make representations.
+              If an application to the magistrates’ court is made in time but cannot be determined before the period ends, the bail period is treated as extended until the application is determined (PACE s.47ZJ).<Ref n={5} />
             </p>
 
             <h2>What Happens If You Breach Bail?</h2>
             <p>
-              Breaching police bail conditions is <strong>not itself a criminal offence</strong>. However:
+              If the police reasonably suspect you have broken pre-charge bail conditions, a constable may arrest you without warrant (PACE s.46A(1A)).<Ref n={6} />
             </p>
             <ul>
-              <li>You can be arrested and brought back to the police station</li>
-              <li>The custody sergeant may decide not to release you again</li>
-              <li>You may be held in custody until charged or brought before a court</li>
-              <li>The breach may be used as evidence against you</li>
+              <li>You may be taken back to a police station as soon as practicable after arrest (PACE s.46A(2)).<Ref n={6} /></li>
+              <li>What happens next depends on your case and the investigation (get legal advice specific to you).</li>
             </ul>
 
             <h2>Bail vs Released Under Investigation (RUI)</h2>
@@ -163,12 +208,12 @@ export default function PoliceBailExplainedPage() {
                 </tr>
                 <tr>
                   <td className="border p-3">Time limit</td>
-                  <td className="border p-3">28 days initially</td>
-                  <td className="border p-3">No limit</td>
+                  <td className="border p-3">Statutory bail time-limit rules apply (PACE “applicable bail period”).<Ref n={1} /></td>
+                  <td className="border p-3">No fixed “applicable bail period” (RUI is release without bail).</td>
                 </tr>
                 <tr>
                   <td className="border p-3">Breach consequences</td>
-                  <td className="border p-3">Arrest possible</td>
+                  <td className="border p-3">Arrest possible if police suspect breach of bail conditions (PACE s.46A).<Ref n={6} /></td>
                   <td className="border p-3">N/A</td>
                 </tr>
               </tbody>
@@ -278,6 +323,8 @@ export default function PoliceBailExplainedPage() {
               </Link>
             </div>
           </div>
+
+          <LegalReferences sources={sources} />
         </article>
       </main>
 

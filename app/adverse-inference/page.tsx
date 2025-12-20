@@ -3,16 +3,26 @@ import Footer from '@/components/Footer';
 import Link from 'next/link';
 import { Metadata } from 'next';
 import { JsonLd } from '@/components/JsonLd';
+import { LegalReferences, Ref, type LegalSource } from '@/components/LegalReferences';
+import { SITE_DOMAIN } from '@/config/site';
 
 export const metadata: Metadata = {
   title: 'Adverse Inference: What Happens If You Stay Silent in Police Interview',
   description: 'Adverse inference means courts can treat your silence as suspicious. Learn when it applies, how to avoid it, and what Section 34 CJPOA 1994 means for your case.',
   alternates: {
-    canonical: 'https://policestationagent.com/adverse-inference',
+    canonical: `https://${SITE_DOMAIN}/adverse-inference`,
   },
 };
 
 export default function AdverseInferencePage() {
+  const sources: LegalSource[] = [
+    {
+      id: 'cjpoa-s34',
+      label: 'Criminal Justice and Public Order Act 1994 s.34 (inferences from failure to mention facts)',
+      href: 'https://www.legislation.gov.uk/ukpga/1994/33/section/34',
+    },
+  ];
+
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -30,7 +40,7 @@ export default function AdverseInferencePage() {
         name: 'Can I be convicted based on adverse inference alone?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'No, you cannot be convicted solely on the basis of adverse inference. It is supporting evidence only. The prosecution must still prove the case beyond reasonable doubt with other evidence.',
+          text: 'An adverse inference is not “proof” by itself. Section 34 allows a court or jury to draw inferences that appear proper in the circumstances, but your case still depends on the totality of the evidence.',
         },
       },
       {
@@ -93,8 +103,7 @@ export default function AdverseInferencePage() {
               <strong>Quick Answer:</strong> An adverse inference is when a court or jury is permitted to treat 
               your silence during police interview as evidence that supports the prosecution case. Under 
               <strong> Section 34 of the Criminal Justice and Public Order Act 1994</strong>, if you fail to 
-              mention something you later rely on at trial, the court may infer that you made it up afterwards. 
-              However, you <strong>cannot be convicted on adverse inference alone</strong>.
+              mention a fact you later rely on in your defence, the court or jury may draw inferences that appear proper (depending on the circumstances).<Ref n={1} />
             </p>
           </div>
 
@@ -106,8 +115,7 @@ export default function AdverseInferencePage() {
               on it at trial, the court may think: "If that was true, why didn't you say so at the time?"
             </p>
             <p>
-              This is why the police caution includes the warning: <em>"It may harm your defence if you 
-              do not mention when questioned something which you later rely on in court."</em>
+              Whether an inference can be drawn depends on whether the fact was one you could reasonably have been expected to mention at the time (that “reasonableness” test is in section 34 itself).<Ref n={1} />
             </p>
 
             <h2>The Legal Framework: Section 34 CJPOA 1994</h2>
@@ -122,7 +130,7 @@ export default function AdverseInferencePage() {
               <li>It was a fact that, in the circumstances at the time, you could reasonably have been expected to mention</li>
             </ol>
             <p>
-              All four conditions must be met before an adverse inference direction can be given to the jury.
+              Section 34 also includes an important safeguard: where the accused was at an authorised place of detention, section 34(1)–(2) do not apply if they were not allowed an opportunity to consult a solicitor before being questioned/charged/informed (s.34(2A)).<Ref n={1} />
             </p>
 
             <h2>What Can't Adverse Inference Do?</h2>
@@ -130,15 +138,14 @@ export default function AdverseInferencePage() {
               It's important to understand the limitations:
             </p>
             <ul>
-              <li><strong>You cannot be convicted solely on adverse inference</strong> – It's supporting evidence, not proof of guilt</li>
-              <li><strong>The prosecution must still prove its case</strong> – Beyond reasonable doubt, with other evidence</li>
-              <li><strong>The jury must be directed properly</strong> – The judge must explain the limited use of adverse inference</li>
+              <li><strong>It’s discretionary:</strong> the court/jury may draw “such inferences … as appear proper” in the circumstances (s.34(2)).<Ref n={1} /></li>
+              <li><strong>It’s conditional:</strong> section 34 only applies where its conditions are met (including the “reasonably have been expected to mention” test).<Ref n={1} /></li>
               <li><strong>There may be good reasons for silence</strong> – Which the court should consider</li>
             </ul>
 
             <h2>When Adverse Inferences Are Most Dangerous</h2>
             <p>
-              In my experience, adverse inferences are most damaging when:
+              Adverse inference arguments are most commonly made where:
             </p>
             <ul>
               <li>You raise a new defence at trial that you never mentioned before (e.g., alibi, self-defence)</li>
@@ -161,8 +168,7 @@ export default function AdverseInferencePage() {
             <h3>2. Use a Prepared Statement</h3>
             <p>
               A <Link href="/prepared-statements" className="text-blue-600 hover:underline">prepared statement</Link> allows 
-              you to put key facts on record while avoiding live questioning. If the statement covers what you 
-              later rely on, you should be protected.
+              you to put key facts on record while avoiding live questioning. If you later rely on facts that were never mentioned, section 34 is the mechanism by which inferences may be considered (depending on what was reasonable at the time).<Ref n={1} />
             </p>
 
             <h3>3. Act on Legal Advice</h3>
@@ -191,8 +197,7 @@ export default function AdverseInferencePage() {
 
             <h2>In Practice: What Actually Happens</h2>
             <p>
-              In my experience representing clients in Kent, adverse inference is a serious consideration 
-              but not always a decisive factor. Juries understand that:
+              In practice, the impact of adverse inference can vary depending on the rest of the evidence. For example, a court or jury may consider that:
             </p>
             <ul>
               <li>Police interviews can be stressful and confusing</li>
@@ -295,6 +300,8 @@ export default function AdverseInferencePage() {
               </Link>
             </div>
           </div>
+
+          <LegalReferences sources={sources} />
         </article>
       </main>
 

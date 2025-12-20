@@ -3,16 +3,26 @@ import Footer from '@/components/Footer';
 import Link from 'next/link';
 import { Metadata } from 'next';
 import { JsonLd } from '@/components/JsonLd';
+import { LegalReferences, Ref, type LegalSource } from '@/components/LegalReferences';
+import { SITE_DOMAIN } from '@/config/site';
 
 export const metadata: Metadata = {
   title: 'Prepared Statements in Police Interviews: A Complete Guide',
   description: 'A prepared statement lets you put your account on record while avoiding police questioning. Learn when to use one and how they protect against adverse inferences.',
   alternates: {
-    canonical: 'https://policestationagent.com/prepared-statements',
+    canonical: `https://${SITE_DOMAIN}/prepared-statements`,
   },
 };
 
 export default function PreparedStatementsPage() {
+  const sources: LegalSource[] = [
+    {
+      id: 'cjpoa-s34',
+      label: 'Criminal Justice and Public Order Act 1994 s.34 (inferences from failure to mention facts)',
+      href: 'https://www.legislation.gov.uk/ukpga/1994/33/section/34',
+    },
+  ];
+
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -30,7 +40,7 @@ export default function PreparedStatementsPage() {
         name: 'Does a prepared statement protect against adverse inferences?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Yes, if the prepared statement covers the key facts you later rely on at trial, it should protect against adverse inferences. The statement shows you mentioned your defence at the earliest opportunity, even if you didn\'t answer police questions.',
+          text: 'A prepared statement may reduce the risk of adverse inferences if it clearly mentions the facts you later rely on. However, whether an adverse inference can be drawn depends on the circumstances and the court.',
         },
       },
       {
@@ -92,7 +102,7 @@ export default function PreparedStatementsPage() {
             <p className="text-lg font-medium text-slate-800">
               <strong>Quick Answer:</strong> A prepared statement is a written account, drafted with your solicitor, 
               that you read out at the start of a police interview. You then answer "no comment" to questions. 
-              This approach lets you <strong>put your defence on record</strong> (protecting against adverse inferences) 
+              This approach lets you <strong>put key facts on record</strong> (which may matter later when a court considers adverse inferences)<Ref n={1} />{' '}
               while <strong>avoiding the risks of live questioning</strong>.
             </p>
           </div>
@@ -116,8 +126,9 @@ export default function PreparedStatementsPage() {
               and staying silent:
             </p>
             <ul>
-              <li><strong>Protects against adverse inferences:</strong> By putting your account on record, you 
-              reduce the risk of a court concluding you made up your defence later</li>
+              <li>
+                <strong>May reduce adverse-inference risk:</strong> If you mention the facts you later rely on, it can help explain your position if your defence is later challenged on silence.<Ref n={1} />
+              </li>
               <li><strong>Avoids live questioning:</strong> You don't have to respond to potentially leading, 
               confusing, or aggressive questions</li>
               <li><strong>Controls the narrative:</strong> You decide exactly what information to provide, 
@@ -172,13 +183,12 @@ export default function PreparedStatementsPage() {
 
             <h2>Does a Prepared Statement Stop Adverse Inferences?</h2>
             <p>
-              A well-drafted prepared statement should protect against adverse inferences under 
-              Section 34 of the Criminal Justice and Public Order Act 1994, provided:
+              A prepared statement can be relevant to adverse inferences, because section 34 CJPOA 1994 is concerned with a failure to mention facts later relied on in a defence.<Ref n={1} />{' '}
+              However, whether an inference can be drawn is fact-specific and depends on what was (and was not) mentioned, and what was reasonable “in the circumstances” at the time.<Ref n={1} />
             </p>
             <ul>
-              <li>The statement covers the key facts you later rely on at trial</li>
-              <li>It was prepared and read before or during the interview</li>
-              <li>It genuinely reflects your account at the time</li>
+              <li>A prepared statement cannot “guarantee” no inference will be drawn.</li>
+              <li>If you later rely on a fact that was not mentioned when you could reasonably have been expected to mention it, the court may consider drawing inferences under s.34.<Ref n={1} /></li>
             </ul>
             <p>
               However, if you raise something at trial that wasn't in your prepared statement, 
@@ -286,6 +296,8 @@ export default function PreparedStatementsPage() {
               </Link>
             </div>
           </div>
+
+          <LegalReferences sources={sources} />
         </article>
       </main>
 

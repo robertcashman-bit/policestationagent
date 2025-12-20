@@ -406,6 +406,11 @@ export default function Footer() {
               <span className="font-semibold">Accredited Court & Police Station Duty Solicitor:</span> Police Station Agent specialises in duty solicitor-led police station representation across Kent.
             </p>
           </div>
+          <div className="mb-6 max-w-4xl mx-auto p-5 bg-slate-800/30 rounded-lg border border-slate-700 text-left">
+            <p className="text-xs text-slate-200 leading-relaxed">
+              <span className="font-bold text-white">Legal information disclaimer:</span> The information on this website is general information about criminal procedure and police station processes in England &amp; Wales. It is not legal advice for your specific case, does not create a solicitor-client relationship, and may not reflect the most recent changes in law or practice. If you need advice, speak to a qualified solicitor as soon as possible.
+            </p>
+          </div>
           <p className="mb-4 font-medium text-slate-300">
             Copyright {currentYear} by Defence Legal Services Limited T/A Police Station Agent. Company No. 09900871
           </p>
