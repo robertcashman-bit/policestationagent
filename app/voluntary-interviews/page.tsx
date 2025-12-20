@@ -4,14 +4,14 @@ import type { Metadata } from 'next';
 import { SITE_DOMAIN } from '@/config/site';
 
 export const metadata: Metadata = {
-  title: "Voluntary Police Interviews Kent | FREE Legal Advice 24/7",
-  description: "Expert advice for voluntary police interviews in Kent. FREE legal representation at Maidstone, Medway, Canterbury, Tonbridge. Available 24/7. Call 01732 247427.",
+  title: "Voluntary Police Interviews Kent | FREE Legal Advice (extended hours)",
+  description: "Expert advice for voluntary police interviews in Kent. FREE legal representation at Maidstone, Medway, Canterbury, Tonbridge. Available during extended hours. Call 01732 247427.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/voluntary-interviews`,
   },
   openGraph: {
-    title: "Voluntary Police Interviews Kent | FREE Legal Advice 24/7",
-    description: "Expert advice for voluntary police interviews in Kent. FREE legal representation at Maidstone, Medway, Canterbury, Tonbridge. Available 24/7.",
+    title: "Voluntary Police Interviews Kent | FREE Legal Advice (extended hours)",
+    description: "Expert advice for voluntary police interviews in Kent. FREE legal representation at Maidstone, Medway, Canterbury, Tonbridge. Available during extended hours.",
     url: `https://${SITE_DOMAIN}/voluntary-interviews`,
     siteName: 'Police Station Agent',
     type: 'website',

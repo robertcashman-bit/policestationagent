@@ -5,13 +5,13 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: "FAQ - Frequently Asked Questions | Police Station Agent",
-  description: "Comprehensive answers about police station representation in Kent. What we do and don't do, legal aid information, and how to get urgent help. Available 24/7.",
+  description: "Comprehensive answers about police station representation in Kent. What we do and don't do, legal aid information, and how to get urgent help. Available during extended hours.",
   alternates: {
     canonical: "https://policestationagent.com/faq",
   },
   openGraph: {
     title: "FAQ - Frequently Asked Questions | Police Station Agent",
-    description: "Comprehensive answers about police station representation in Kent. What we do and don't do, legal aid information, and how to get urgent help. Available 24/7.",
+    description: "Comprehensive answers about police station representation in Kent. What we do and don't do, legal aid information, and how to get urgent help. Available during extended hours.",
     type: 'website',
     url: "https://policestationagent.com/faq",
   },
@@ -52,7 +52,7 @@ export default function Page() {
             <section className="py-20 bg-gradient-to-br from-red-600 to-red-800">
               <div className="max-w-4xl mx-auto px-4 text-center">
                 <h2 className="text-4xl md:text-5xl font-black text-white mb-6">Still Have Questions?</h2>
-                <p className="text-xl text-red-100 mb-12">Get immediate answers and expert advice - available 24/7 across Kent</p>
+                <p className="text-xl text-red-100 mb-12">Get immediate answers and expert advice - available during extended hours across Kent</p>
                 <div className="grid md:grid-cols-3 gap-4">
                   <a href="tel:01732247427" className="bg-white/95 hover:bg-white p-8 rounded-3xl shadow-2xl transition-all duration-300 transform hover:scale-105">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-phone w-12 h-12 mx-auto mb-4 text-red-600">

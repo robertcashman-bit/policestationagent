@@ -151,7 +151,7 @@ export default function TestimonialsPage() {
               </a>
             </div>
             <p className="text-blue-100 mt-6 text-sm">
-              Available 24/7 • Free Legal Aid • No Means Testing
+              Available during extended hours • Free Legal Aid • No Means Testing
             </p>
           </div>
         </section>

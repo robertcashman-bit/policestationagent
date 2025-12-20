@@ -3,13 +3,13 @@ import Footer from '@/components/Footer';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Folkestone Police Station Solicitor | Robert Cashman | FREE 24/7",
+  title: "Folkestone Police Station Solicitor | Robert Cashman | FREE extended hours",
   description: "Police interview at Folkestone Custody Suite? Call Robert Cashman - Duty Solicitor. FREE legal advice, South Kent covered. 30+ years experience. 01732 247427.",
   alternates: {
     canonical: "https://policestationagent.com/folkestone-psa-station",
   },
   openGraph: {
-    title: "Folkestone Police Station Solicitor | Robert Cashman | FREE 24/7",
+    title: "Folkestone Police Station Solicitor | Robert Cashman | FREE extended hours",
     description: "Police interview at Folkestone Custody Suite? Call Robert Cashman - Duty Solicitor. FREE legal advice, South Kent covered. 30+ years experience. 01732 247427.",
     type: 'website',
     url: "https://policestationagent.com/folkestone-psa-station",

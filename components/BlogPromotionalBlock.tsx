@@ -16,7 +16,7 @@ export default function BlogPromotionalBlock() {
           PoliceStationAgent.com provides expert police station representation and legal services 
           across Kent and the UK. Our accredited duty solicitor, Robert Cashman, offers free legal 
           advice under Legal Aid for police station interviews, voluntary attendances, and custody 
-          matters. Available 24/7 for urgent legal assistance.
+          matters. Available during extended hours for urgent legal assistance.
         </p>
         <div className="flex flex-col sm:flex-row gap-4">
           <a

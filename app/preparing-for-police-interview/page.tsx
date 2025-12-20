@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Preparing for Police Interview | Expert Guide | Police Station Agent',
-  description: 'How to prepare for a police interview. Expert advice on your rights, what to expect, and why legal representation is essential. Free 24/7 advice available.',
+  description: 'How to prepare for a police interview. Expert advice on your rights, what to expect, and why legal representation is essential. Free extended hours advice available.',
   alternates: {
     canonical: 'https://policestationagent.com/preparing-for-police-interview',
   },
@@ -109,7 +109,7 @@ export default function Page() {
             <section className="mb-8 bg-blue-50 p-6 rounded-lg border border-blue-200">
               <h2 className="text-2xl font-semibold mb-4">Get Expert Legal Representation</h2>
               <p className="mb-4">
-                If you have been asked to attend a police interview, whether voluntary or under arrest, it is essential to have expert legal representation. We provide free 24/7 legal advice and representation.
+                If you have been asked to attend a police interview, whether voluntary or under arrest, it is essential to have expert legal representation. We provide free extended hours legal advice and representation.
               </p>
               <p className="mb-4">
                 <strong>Call us immediately on <a href="tel:01732247427" className="text-blue-600 hover:text-blue-800 font-semibold">01732 247427</a></strong> to arrange representation before your interview.

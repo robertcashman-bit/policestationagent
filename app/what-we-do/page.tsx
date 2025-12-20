@@ -5,13 +5,13 @@ import { SITE_DOMAIN, SITE_URL } from '@/config/site';
 
 export const metadata: Metadata = {
   title: "What We Do | Police Station Agent - Expert Legal Representation Kent",
-  description: "Expert police station representation and criminal defence services across Kent. FREE legal advice under Legal Aid, 24/7 availability, voluntary interviews, and agent cover for law firms.",
+  description: "Expert police station representation and criminal defence services across Kent. FREE legal advice under Legal Aid, extended hours availability, voluntary interviews, and agent cover for law firms.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/what-we-do`,
   },
   openGraph: {
     title: "What We Do | Police Station Agent",
-    description: "Expert police station representation and criminal defence services across Kent. FREE legal advice under Legal Aid, 24/7 availability.",
+    description: "Expert police station representation and criminal defence services across Kent. FREE legal advice under Legal Aid, extended hours availability.",
     url: `https://${SITE_DOMAIN}/what-we-do`,
     siteName: 'Police Station Agent',
     type: 'website',
@@ -48,14 +48,14 @@ export default function Page() {
                   </div>
                   <h2 className="text-2xl font-bold text-slate-900 mb-4">Police Station Representation</h2>
                   <p className="text-slate-600 leading-relaxed mb-4">
-                    We provide expert legal representation at police stations across Kent, available 24/7. Whether you've been arrested or invited for a voluntary interview, we're here to protect your rights and provide expert legal advice.
+                    We provide expert legal representation at police stations across Kent, available during extended hours. Whether you've been arrested or invited for a voluntary interview, we're here to protect your rights and provide expert legal advice.
                   </p>
                   <ul className="space-y-2 text-slate-600">
                     <li className="flex items-start gap-2">
                       <svg className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                       </svg>
-                      <span>Available 24/7 across all Kent police stations</span>
+                      <span>Available during extended hours across all Kent police stations</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <svg className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -152,7 +152,7 @@ export default function Page() {
                       <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
                     </svg>
                   </div>
-                  <h2 className="text-2xl font-bold text-slate-900 mb-4">24/7 Emergency Service</h2>
+                  <h2 className="text-2xl font-bold text-slate-900 mb-4">extended hours Emergency Service</h2>
                   <p className="text-slate-600 leading-relaxed mb-4">
                     We understand that arrests and police interviews can happen at any time. That's why we provide round-the-clock emergency legal representation across all Kent police stations.
                   </p>
@@ -266,7 +266,7 @@ export default function Page() {
 
               <div className="text-center">
                 <h2 className="text-3xl font-bold text-slate-900 mb-4">Need Help Now?</h2>
-                <p className="text-xl text-slate-600 mb-8">We're available 24/7 to provide expert legal representation</p>
+                <p className="text-xl text-slate-600 mb-8">We're available during extended hours to provide expert legal representation</p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <a href="tel:01732247427" className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 text-white shadow h-12 rounded-md px-8 bg-red-600 hover:bg-red-700 font-bold">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-phone w-5 h-5">

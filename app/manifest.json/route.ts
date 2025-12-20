@@ -4,7 +4,7 @@ export async function GET() {
   const manifest = {
     name: 'Police Station Agent - Police Station Agent',
     short_name: 'Police Station Agent',
-    description: 'Expert police station representation and legal services across Kent. Available 24/7 for urgent legal assistance.',
+    description: 'Expert police station representation and legal services across Kent. Available during extended hours for urgent legal assistance.',
     start_url: '/',
     display: 'standalone',
     background_color: '#ffffff',

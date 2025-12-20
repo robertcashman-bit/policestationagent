@@ -7,7 +7,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { saveBlogPost, createBlogPost } from '@/lib/blog-persistence';
+import { saveBlogPost, createBlogPost, type PersistenceResult } from '@/lib/blog-persistence';
 import db from '@/lib/db';
 
 // =============================================================================
@@ -178,7 +178,7 @@ export async function POST(request: NextRequest) {
   }
 
   // 4. Try to save to GitHub (optional - for cross-deployment persistence)
-  let githubResult = { success: false, error: 'GitHub not configured', filePath: '' };
+  let githubResult: PersistenceResult = { success: false, error: 'GitHub not configured' };
   
   if (process.env.GITHUB_TOKEN && process.env.GITHUB_REPO) {
     githubResult = await saveBlogPost(post);
@@ -204,8 +204,8 @@ export async function POST(request: NextRequest) {
     database: { saved: true, id: dbResult.id },
     github: { 
       saved: githubResult.success, 
-      filePath: githubResult.filePath,
-      error: githubResult.success ? undefined : githubResult.error,
+      filePath: githubResult.filePath || '',
+      error: githubResult.success ? undefined : (githubResult.error || 'Unknown GitHub persistence error'),
     },
   });
 }

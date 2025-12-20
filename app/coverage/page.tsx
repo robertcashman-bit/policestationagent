@@ -5,8 +5,8 @@ import { BreadcrumbList } from '@/components/StructuredData';
 import { SITE_URL, SITE_DOMAIN } from '@/config/site';
 
 export const metadata: Metadata = {
-  title: "Kent Police Station Rep Coverage | All Towns | FREE 24/7",
-  description: "Police station rep coverage across all Kent towns. FREE 24/7 representation at all Kent custody suites. Serving Medway, Maidstone, Canterbury, Gravesend, Tonbridge, Folkestone, Ashford, Dartford, Sittingbourne, Sevenoaks, Tunbridge Wells, Margate, Dover, Swanley, Bluewater.",
+  title: "Kent Police Station Rep Coverage | All Towns | FREE extended hours",
+  description: "Police station rep coverage across all Kent towns. FREE extended hours representation at all Kent custody suites. Serving Medway, Maidstone, Canterbury, Gravesend, Tonbridge, Folkestone, Ashford, Dartford, Sittingbourne, Sevenoaks, Tunbridge Wells, Margate, Dover, Swanley, Bluewater.",
   alternates: {
     canonical: `${SITE_URL}/coverage`,
   },

@@ -6,7 +6,7 @@ import { SITE_DOMAIN } from '@/config/site';
 
 export const metadata: Metadata = {
   title: "Police Station Interviews in Kent: Your Rights and What to Expect | Police Station Agent",
-  description: "Complete guide to police station interviews in Kent. Understand your rights under PACE 1984, what happens during interview, and why legal advice is essential. FREE legal aid available 24/7.",
+  description: "Complete guide to police station interviews in Kent. Understand your rights under PACE 1984, what happens during interview, and why legal advice is essential. FREE legal aid available during extended hours.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/police-station-interviews-kent-rights`,
   },
@@ -153,7 +153,7 @@ export default function Page() {
                               </li>
                               <li class="flex items-start gap-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-circle w-5 h-5 text-green-300 flex-shrink-0 mt-0.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                                <span><strong class="text-white">Available 24/7:</strong> Duty solicitors are available around the clock, including weekends and bank holidays.</span>
+                                <span><strong class="text-white">Available during extended hours:</strong> Duty solicitors are available around the clock, including weekends and bank holidays.</span>
                               </li>
                               <li class="flex items-start gap-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-circle w-5 h-5 text-green-300 flex-shrink-0 mt-0.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
@@ -383,7 +383,7 @@ export default function Page() {
                       <div class="rounded-xl bg-gradient-to-r from-red-600 to-red-800 text-white shadow-2xl border-0">
                         <div class="p-8 md:p-12 text-center">
                           <h3 class="text-3xl md:text-4xl font-black text-white mb-4">Need Legal Advice at a Kent Police Station?</h3>
-                          <p class="text-xl text-red-100 mb-8 max-w-2xl mx-auto">FREE legal advice available 24/7 at all Kent police stations. Call now for immediate assistance.</p>
+                          <p class="text-xl text-red-100 mb-8 max-w-2xl mx-auto">FREE legal advice available during extended hours at all Kent police stations. Call now for immediate assistance.</p>
                           <div class="flex flex-col sm:flex-row justify-center gap-4">
                             <a href="tel:01732247427" class="inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-10 rounded-md px-8 bg-white text-red-600 hover:bg-red-50 font-black text-lg shadow-xl flex items-center gap-2">
                               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone w-6 h-6"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> Call: 01732 247427

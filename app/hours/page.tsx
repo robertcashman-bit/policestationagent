@@ -3,14 +3,14 @@ import Footer from '@/components/Footer';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Opening Hours | Police Station Representation Kent | 24/7 Available",
-  description: "Police station representation available 24/7 across Kent. Extended hours service for arrests and interviews. Weekdays 9am-late, weekends and bank holidays on call. See Christmas hours for holiday availability.",
+  title: "Opening Hours | Police Station Representation Kent | extended hours Available",
+  description: "Police station representation available during extended hours across Kent. Extended hours service for arrests and interviews. Weekdays 9am-late, weekends and bank holidays on call. See Christmas hours for holiday availability.",
   alternates: {
     canonical: "https://policestationagent.com/hours",
   },
   openGraph: {
-    title: "Opening Hours | Police Station Representation Kent | 24/7 Available",
-    description: "Police station representation available 24/7 across Kent. Extended hours service for arrests and interviews.",
+    title: "Opening Hours | Police Station Representation Kent | extended hours Available",
+    description: "Police station representation available during extended hours across Kent. Extended hours service for arrests and interviews.",
     type: 'website',
     url: "https://policestationagent.com/hours",
     siteName: 'Police Station Agent',

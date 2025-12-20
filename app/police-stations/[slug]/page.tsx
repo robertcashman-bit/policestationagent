@@ -28,14 +28,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://policestationagent.com';
   
   return {
-    title: `Police Station Rep at ${station.name} | FREE 24/7 | Kent`,
-    description: `Expert police station rep at ${station.name}, Kent. FREE legal advice 24/7. Accredited duty solicitor Robert Cashman.${station.address ? ' Located at ' + station.address : ''} Call 01732 247427.`,
+    title: `Police Station Rep at ${station.name} | FREE extended hours | Kent`,
+    description: `Expert police station rep at ${station.name}, Kent. FREE legal advice extended hours. Accredited duty solicitor Robert Cashman.${station.address ? ' Located at ' + station.address : ''} Call 01732 247427.`,
     alternates: {
       canonical: `${siteUrl}/police-stations/${params.slug}`,
     },
     openGraph: {
-      title: `Police Station Rep at ${station.name} | FREE 24/7 | Kent`,
-      description: `Expert police station rep at ${station.name}, Kent. FREE legal advice 24/7. Accredited duty solicitor.`,
+      title: `Police Station Rep at ${station.name} | FREE extended hours | Kent`,
+      description: `Expert police station rep at ${station.name}, Kent. FREE legal advice extended hours. Accredited duty solicitor.`,
       url: `${siteUrl}/police-stations/${params.slug}`,
       siteName: 'Police Station Agent',
       type: 'website',
@@ -67,7 +67,7 @@ export default function PoliceStationPage({ params }: PageProps) {
     "@type": "LocalBusiness",
     "@id": `${siteUrl}/police-stations/${params.slug}#business`,
     "name": `Police Station Representative - ${station.name}`,
-    "description": `Expert police station rep service at ${station.name}, Kent. FREE 24/7 representation for police interviews and custody matters.`,
+    "description": `Expert police station rep service at ${station.name}, Kent. FREE extended hours representation for police interviews and custody matters.`,
     ...(station.address && {
       "address": {
         "@type": "PostalAddress",
@@ -151,7 +151,7 @@ export default function PoliceStationPage({ params }: PageProps) {
               <div className="bg-white p-8 rounded-xl mb-12 border-l-4 border-blue-600 shadow-sm">
                 <h2 className="text-2xl font-bold mb-4 text-slate-800">Police Station Representation at {station.name}</h2>
                 <p className="text-slate-700 leading-relaxed text-lg mb-4">
-                  We provide professional police station representation services at {station.name}. Our experienced duty solicitors are available 24/7 to protect your rights during police interviews and custody.
+                  We provide professional police station representation services at {station.name}. Our experienced duty solicitors are available during extended hours to protect your rights during police interviews and custody.
                 </p>
                 <div className="mt-6 space-y-3">
                   <div className="flex items-start gap-3">
@@ -166,7 +166,7 @@ export default function PoliceStationPage({ params }: PageProps) {
                       <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                       <polyline points="22 4 12 14.01 9 11.01"></polyline>
                     </svg>
-                    <p className="text-slate-700">Available 24/7 for urgent matters</p>
+                    <p className="text-slate-700">Available during extended hours for urgent matters</p>
                   </div>
                   <div className="flex items-start gap-3">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-check-circle text-green-600 w-5 h-5 mt-0.5 flex-shrink-0">

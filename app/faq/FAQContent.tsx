@@ -86,7 +86,7 @@ export default function FAQContent() {
         },
         {
           question: 'Do you provide legal advice for general queries?',
-          answer: 'We provide legal advice specifically related to police station representation and criminal defence. We do not provide general legal advice on other matters. If you have been arrested, invited for interview, or need urgent police station representation, we are here to help 24/7.'
+          answer: 'We provide legal advice specifically related to police station representation and criminal defence. We do not provide general legal advice on other matters. If you have been arrested, invited for interview, or need urgent police station representation, we are here to help extended hours.'
         },
         {
           question: 'Can you represent me at a police station outside Kent?',
