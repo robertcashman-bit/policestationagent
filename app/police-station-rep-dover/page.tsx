@@ -5,14 +5,14 @@ import { SITE_DOMAIN, SITE_URL } from '@/config/site';
 import Script from 'next/script';
 
 export const metadata: Metadata = {
-  title: "Police Station Rep Dover | FREE 24/7 | Accredited Duty Solicitor",
-  description: "Police station rep for Dover voluntary interviews. FREE legal advice 24/7. Accredited duty solicitor covering Dover and East Kent. Call 01732 247427.",
+  title: "Police Station Rep Dover | FREE extended hours | Accredited Duty Solicitor",
+  description: "Police station rep for Dover voluntary interviews. FREE legal advice extended hours. Accredited duty solicitor covering Dover and East Kent. Call 01732 247427.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/police-station-rep-dover`,
   },
   openGraph: {
-    title: "Police Station Rep Dover | FREE 24/7 | Accredited Duty Solicitor",
-    description: "Police station rep for Dover voluntary interviews. FREE legal advice 24/7. Accredited duty solicitor covering Dover and East Kent.",
+    title: "Police Station Rep Dover | FREE extended hours | Accredited Duty Solicitor",
+    description: "Police station rep for Dover voluntary interviews. FREE legal advice extended hours. Accredited duty solicitor covering Dover and East Kent.",
     url: `https://${SITE_DOMAIN}/police-station-rep-dover`,
     siteName: 'Police Station Agent',
     type: 'website',
@@ -24,7 +24,7 @@ const localBusinessSchema = {
   "@type": "LocalBusiness",
   "@id": `${SITE_URL}/police-station-rep-dover#business`,
   "name": "Police Station Representative - Dover, Kent",
-  "description": "Expert police station rep service in Dover, Kent. FREE 24/7 representation for voluntary interviews' for police interviews and custody matters.",
+  "description": "Expert police station rep service in Dover, Kent. FREE extended hours representation for voluntary interviews' for police interviews and custody matters.",
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Dover",
@@ -77,7 +77,7 @@ export default function Page() {
             <div className="max-w-4xl mx-auto px-4 text-center">
               <h1 className="text-3xl md:text-4xl font-bold mb-4">Police Station Representative in Dover, Kent</h1>
               <p className="mt-4 text-lg text-blue-200 max-w-3xl mx-auto">
-                Expert police station rep service covering Dover voluntary interviews. FREE 24/7 representation by accredited duty solicitor Robert Cashman.
+                Expert police station rep service covering Dover voluntary interviews. FREE extended hours representation by accredited duty solicitor Robert Cashman.
               </p>
             </div>
           </section>
@@ -89,7 +89,7 @@ export default function Page() {
                   <div className="p-6">
                     <h2 className="text-2xl font-bold text-slate-900 mb-4">Police Station Rep Coverage in Dover</h2>
                     <p className="text-slate-700 leading-relaxed mb-4">
-                      If you or someone you know has been arrested or invited for a police interview in Dover, you need expert representation. As Kent's leading police station rep service, we provide FREE legal advice 24/7 for voluntary interviews'.
+                      If you or someone you know has been arrested or invited for a police interview in Dover, you need expert representation. As Kent's leading police station rep service, we provide FREE legal advice extended hours for voluntary interviews'.
                     </p>
                     <p className="text-slate-700 leading-relaxed mb-4">
                       Our accredited duty solicitor Robert Cashman has 35+ years of experience and has handled 21,000+ cases. Unlike call-centre services, you get direct access to a qualified solicitor who understands Dover's police procedures.
@@ -107,7 +107,7 @@ export default function Page() {
                           <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                           <polyline points="22 4 12 14.01 9 11.01"></polyline>
                         </svg>
-                        <p className="text-slate-700">Available 24/7 including weekends and bank holidays</p>
+                        <p className="text-slate-700">Available during extended hours including weekends and bank holidays</p>
                       </div>
                       <div className="flex items-start gap-3">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-check-circle text-green-600 w-5 h-5 mt-0.5 flex-shrink-0">
@@ -170,7 +170,7 @@ export default function Page() {
               <aside className="space-y-6">
                 <div className="rounded-xl border bg-red-600 text-white shadow-lg p-6 text-center">
                   <h3 className="text-xl font-bold mb-4">Need a Police Station Rep in Dover?</h3>
-                  <p className="mb-4 text-red-100">Call now for FREE 24/7 representation</p>
+                  <p className="mb-4 text-red-100">Call now for FREE extended hours representation</p>
                   <a href="tel:01732247427" className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors h-10 px-6 w-full bg-white text-red-600 hover:bg-red-50 font-bold mb-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-phone w-5 h-5">
                       <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>

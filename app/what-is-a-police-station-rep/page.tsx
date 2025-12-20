@@ -3,8 +3,8 @@ import Footer from '@/components/Footer';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "What Is A Police Station Rep? | Kent | FREE 24/7",
-  description: "Learn about police station rep (police station representative) services in Kent. FREE legal advice 24/7 at all Kent custody suites. Accredited duty solicitor Robert Cashman.",
+  title: "What Is A Police Station Rep? | Kent | FREE extended hours",
+  description: "Learn about police station rep (police station representative) services in Kent. FREE legal advice extended hours at all Kent custody suites. Accredited duty solicitor Robert Cashman.",
   alternates: {
     canonical: "https://policestationagent.com/what-is-a-police-station-rep",
   },

@@ -57,26 +57,19 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
   
-  // TEMPORARILY DISABLED: Redirect logic to fix redirect loop with Wix DNS
-  // The redirect loop (ERR_TOO_MANY_REDIRECTS) is caused by Wix DNS redirects
-  // conflicting with middleware redirects. Disabling middleware redirects until
-  // DNS is properly configured at Wix to point directly to Vercel without redirects.
-  // 
-  // TODO: Re-enable redirects after:
-  // 1. Wix DNS is configured to point directly to Vercel (no Wix redirects)
-  // 2. SSL certificate is issued
-  // 3. Test that redirects work without loops
-  
-  // For now, allow all requests through to prevent redirect loops
-  // Only redirect legacy domains that are NOT managed by Wix
-  const shouldRedirect = REDIRECT_DOMAINS.includes(host) && 
-    !host.includes('policestationagent.com'); // Don't redirect policestationagent.com variants during DNS setup
+  // Redirect to canonical apex domain for known aliases (www + legacy domains).
+  // Loop-proof: only redirect when the target host differs.
+  const shouldRedirect = REDIRECT_DOMAINS.includes(host);
   
   if (shouldRedirect) {
     // Get the full path including query string
     const url = request.nextUrl.clone();
     url.host = CANONICAL_DOMAIN;
-    // Preserve original protocol (http/https) to allow Vercel SSL verification
+    // Preserve original protocol (http/https); SSL verification paths are excluded above.
+    const forwardedProto = request.headers.get('x-forwarded-proto');
+    if (forwardedProto === 'http' || forwardedProto === 'https') {
+      url.protocol = forwardedProto;
+    }
     
     // Preserve path and query string
     const redirectUrl = url.toString();

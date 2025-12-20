@@ -99,7 +99,7 @@ export default function Chatbot() {
     
     // How to get representation
     if (lowerMessage.includes('how do i get') || lowerMessage.includes('how to get') || lowerMessage.includes('get representation') || lowerMessage.includes('get help now')) {
-      return 'To get representation right now: 1) If you\'re at a police station, tell the custody sergeant you want a solicitor and ask for Robert Cashman, 2) Call us on 01732 247427 immediately, 3) We aim to attend within 45 minutes. Legal advice is free. Available 24/7.';
+      return 'To get representation right now: 1) If you\'re at a police station, tell the custody sergeant you want a solicitor and ask for Robert Cashman, 2) Call us on 01732 247427 immediately, 3) We aim to attend within 45 minutes. Legal advice is free. Available during extended hours.';
     }
     
     // What happens at interview
@@ -119,7 +119,7 @@ export default function Chatbot() {
     
     // Response time
     if (lowerMessage.includes('time') || lowerMessage.includes('how long') || lowerMessage.includes('quick')) {
-      return 'We aim to attend any Kent police station within 45 minutes. Our representatives are on call 24/7 to provide rapid response. For urgent matters, call 01732 247427 immediately.';
+      return 'We aim to attend any Kent police station within 45 minutes. Our representatives are on call extended hours to provide rapid response. For urgent matters, call 01732 247427 immediately.';
     }
     
     // Arrested
@@ -129,11 +129,11 @@ export default function Chatbot() {
     
     // Contact form prompt
     if (lowerMessage.includes('form') || lowerMessage.includes('submit') || lowerMessage.includes('request')) {
-      return 'To request police station representation, please complete our contact form at /contact or call 01732 247427 immediately. The form collects essential details so we can attend quickly. Legal advice is free and available 24/7.';
+      return 'To request police station representation, please complete our contact form at /contact or call 01732 247427 immediately. The form collects essential details so we can attend quickly. Legal advice is free and available during extended hours.';
     }
     
     // Default helpful response
-    return 'I can help with questions about police station representation, your rights under PACE 1984, free legal advice, and voluntary interviews. For urgent help, call 01732 247427 immediately. For detailed requests, please complete our contact form at /contact. Legal advice is free and available 24/7.';
+    return 'I can help with questions about police station representation, your rights under PACE 1984, free legal advice, and voluntary interviews. For urgent help, call 01732 247427 immediately. For detailed requests, please complete our contact form at /contact. Legal advice is free and available during extended hours.';
   };
 
   const handleQuickOption = async (option: string) => {
@@ -146,7 +146,7 @@ export default function Chatbot() {
 
     if (option === 'police-station') {
       userMessage = 'I Need Police Station Representation - I\'m in custody, arrested, or have an upcoming police interview';
-      botResponse = 'Thank you for contacting us. We understand this is urgent. Please complete our contact form at /contact to provide essential details, or call 01732 247427 immediately for immediate assistance. We are available 24/7 to provide expert legal representation at any Kent police station. Legal advice is free under Legal Aid.';
+      botResponse = 'Thank you for contacting us. We understand this is urgent. Please complete our contact form at /contact to provide essential details, or call 01732 247427 immediately for immediate assistance. We are available during extended hours to provide expert legal representation at any Kent police station. Legal advice is free under Legal Aid.';
       emailSubject = 'New Enquiry: Police Station Representation Request';
       emailBody = `A visitor has requested police station representation.\n\nDetails:\n- Service: Police Station Representation\n- Status: In custody, arrested, or has upcoming police interview\n- Urgency: High\n\nPlease contact them as soon as possible.\n\nContact: 01732 247427\n\nThis is an automated notification from the website chatbot.\n\nUser should complete contact form at /contact for full details.`;
       

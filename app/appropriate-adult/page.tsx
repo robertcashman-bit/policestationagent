@@ -103,6 +103,11 @@ export default function AppropriateAdultPage() {
               may not fully understand the procedures or their rights.
             </p>
             <p>
+              In my experience at Kent police stations, delays and misunderstandings are far more likely when a vulnerable
+              detainee does not have the right support in place early. An appropriate adult helps ensure the process is
+              fair and that the detainee can participate properly.
+            </p>
+            <p>
               The appropriate adult is there to support the detainee – not to replace a solicitor or to 
               assist the police. Their role is separate from and in addition to legal representation.
             </p>

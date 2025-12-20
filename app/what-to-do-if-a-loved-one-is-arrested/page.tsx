@@ -124,7 +124,7 @@ export default function Page() {
             <section className="mb-8 bg-blue-50 p-6 rounded-lg border border-blue-200">
               <h2 className="text-2xl font-semibold mb-4">Get Immediate Legal Representation</h2>
               <p className="mb-4">
-                If a loved one has been arrested, call us immediately. We provide free 24/7 legal advice and representation at all Kent police stations. You can instruct us on their behalf.
+                If a loved one has been arrested, call us immediately. We provide free extended hours legal advice and representation at all Kent police stations. You can instruct us on their behalf.
               </p>
               <p className="mb-4">
                 <strong>Call us now on <a href="tel:01732247427" className="text-blue-600 hover:text-blue-800 font-semibold">01732 247427</a></strong> for immediate assistance.

@@ -109,7 +109,7 @@ export default function Page() {
             <section className="mb-8 bg-blue-50 p-6 rounded-lg border border-blue-200">
               <h2 className="text-2xl font-semibold mb-4">Get Expert Legal Advice Now</h2>
               <p className="mb-4">
-                If you are dealing with the police, whether you have been arrested or invited for a voluntary interview, get expert legal advice immediately. We provide free 24/7 legal advice and representation.
+                If you are dealing with the police, whether you have been arrested or invited for a voluntary interview, get expert legal advice immediately. We provide free extended hours legal advice and representation.
               </p>
               <p className="mb-4">
                 <strong>Call us immediately on <a href="tel:01732247427" className="text-blue-600 hover:text-blue-800 font-semibold">01732 247427</a></strong> for free legal advice. The earlier you call, the better we can protect your interests.

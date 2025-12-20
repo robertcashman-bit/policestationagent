@@ -60,11 +60,6 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: '/termsandconditions',
-        destination: '/terms-and-conditions',
-        permanent: true,
-      },
-      {
         source: '/forsolicitors',
         destination: '/for-solicitors',
         permanent: true,
@@ -82,6 +77,41 @@ const nextConfig = {
       {
         source: '/whatisapolicestationrep',
         destination: '/what-is-a-police-station-rep',
+        permanent: true,
+      },
+      {
+        source: '/f-a-q',
+        destination: '/faq',
+        permanent: true,
+      },
+      {
+        source: '/g-d-p-r',
+        destination: '/gdpr',
+        permanent: true,
+      },
+      {
+        source: '/out-of-area',
+        destination: '/outofarea',
+        permanent: true,
+      },
+      {
+        source: '/can-we-help',
+        destination: '/canwehelp',
+        permanent: true,
+      },
+      {
+        source: '/court-representation',
+        destination: '/courtrepresentation',
+        permanent: true,
+      },
+      {
+        source: '/private-crime',
+        destination: '/privatecrime',
+        permanent: true,
+      },
+      {
+        source: '/voluntaryinterviews',
+        destination: '/voluntary-interviews',
         permanent: true,
       },
       {

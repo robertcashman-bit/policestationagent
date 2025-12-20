@@ -12,6 +12,84 @@ interface BlogPost {
   meta_description: string | null;
 }
 
+function isValidEmail(email: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function normalizePhone(raw: string): string {
+  return raw.replace(/[^\d+]/g, '');
+}
+
+function isProbablyPhone(raw: string): boolean {
+  const v = normalizePhone(raw);
+  // Very lightweight check (E.164-ish); allow leading + and 10-15 digits.
+  return /^\+?\d{10,15}$/.test(v);
+}
+
+async function sendEmailViaSendGrid(args: { to: string; subject: string; text: string }) {
+  const apiKey = process.env.SENDGRID_API_KEY;
+  const fromEmail = process.env.SEND_POST_FROM_EMAIL || process.env.SENDGRID_FROM_EMAIL;
+  const fromName = process.env.SEND_POST_FROM_NAME || 'Police Station Agent';
+
+  if (!apiKey || !fromEmail) {
+    return { sent: false as const, reason: 'missing_sendgrid_env' as const };
+  }
+
+  const res = await fetch('https://api.sendgrid.com/v3/mail/send', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      personalizations: [{ to: [{ email: args.to }] }],
+      from: { email: fromEmail, name: fromName },
+      subject: args.subject,
+      content: [{ type: 'text/plain', value: args.text }],
+    }),
+  });
+
+  if (!res.ok) {
+    const body = await res.text().catch(() => '');
+    throw new Error(`SendGrid send failed (${res.status}): ${body || res.statusText}`);
+  }
+
+  return { sent: true as const };
+}
+
+async function sendSmsViaTwilio(args: { to: string; body: string }) {
+  const accountSid = process.env.TWILIO_ACCOUNT_SID;
+  const authToken = process.env.TWILIO_AUTH_TOKEN;
+  const from = process.env.TWILIO_FROM_NUMBER;
+  if (!accountSid || !authToken || !from) {
+    return { sent: false as const, reason: 'missing_twilio_env' as const };
+  }
+
+  const url = `https://api.twilio.com/2010-04-01/Accounts/${encodeURIComponent(accountSid)}/Messages.json`;
+  const basic = Buffer.from(`${accountSid}:${authToken}`).toString('base64');
+
+  const form = new URLSearchParams();
+  form.set('From', from);
+  form.set('To', args.to);
+  form.set('Body', args.body);
+
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: {
+      Authorization: `Basic ${basic}`,
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    },
+    body: form.toString(),
+  });
+
+  if (!res.ok) {
+    const body = await res.text().catch(() => '');
+    throw new Error(`Twilio send failed (${res.status}): ${body || res.statusText}`);
+  }
+
+  return { sent: true as const };
+}
+
 /**
  * Email/SMS Sending API
  * 
@@ -65,8 +143,10 @@ export async function POST(request: NextRequest) {
     };
     
     if (method === 'email') {
-      // Email sending hook
-      // TODO: Integrate with your email service (SendGrid, AWS SES, etc.)
+      if (!isValidEmail(String(recipient))) {
+        return NextResponse.json({ error: 'Recipient must be a valid email address' }, { status: 400 });
+      }
+
       const emailSubject = shareContent.title;
       const emailBody = `
 ${shareContent.description}
@@ -79,10 +159,27 @@ Qualified Duty Solicitor & Higher Court Advocate
 Expert Police Station Representation in Kent
       `.trim();
       
-      // Return email data for client-side mailto link or server-side sending
+      // Attempt server-side send (SendGrid) when configured; otherwise return mailto fallback.
+      let provider: 'sendgrid' | 'mailto' = 'mailto';
+      let sent = false;
+      let sendError: string | null = null;
+
+      try {
+        const r = await sendEmailViaSendGrid({ to: recipient, subject: emailSubject, text: emailBody });
+        if (r.sent) {
+          provider = 'sendgrid';
+          sent = true;
+        }
+      } catch (e) {
+        sendError = e instanceof Error ? e.message : 'Unknown email send error';
+      }
+
       return NextResponse.json({
         success: true,
         method: 'email',
+        provider,
+        sent,
+        sendError,
         mailto: `mailto:${recipient}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`,
         data: {
           to: recipient,
@@ -91,17 +188,41 @@ Expert Police Station Representation in Kent
         },
       });
     } else if (method === 'sms') {
-      // SMS sending hook
-      // TODO: Integrate with your SMS service (Twilio, AWS SNS, etc.)
+      if (!isProbablyPhone(String(recipient))) {
+        return NextResponse.json(
+          { error: 'Recipient must be a valid phone number (ideally E.164, e.g. +447...)' },
+          { status: 400 }
+        );
+      }
+
+      const to = normalizePhone(String(recipient));
       const smsBody = `${shareContent.title}\n\n${shareContent.url}`;
+
+      // Attempt server-side send (Twilio) when configured; otherwise return sms: fallback.
+      let provider: 'twilio' | 'sms-link' = 'sms-link';
+      let sent = false;
+      let sendError: string | null = null;
+
+      try {
+        const r = await sendSmsViaTwilio({ to, body: smsBody });
+        if (r.sent) {
+          provider = 'twilio';
+          sent = true;
+        }
+      } catch (e) {
+        sendError = e instanceof Error ? e.message : 'Unknown SMS send error';
+      }
       
       // Return SMS data for client-side sms: link or server-side sending
       return NextResponse.json({
         success: true,
         method: 'sms',
-        smsLink: `sms:${recipient}?body=${encodeURIComponent(smsBody)}`,
+        provider,
+        sent,
+        sendError,
+        smsLink: `sms:${to}?body=${encodeURIComponent(smsBody)}`,
         data: {
-          to: recipient,
+          to,
           body: smsBody,
         },
       });
