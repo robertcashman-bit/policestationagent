@@ -650,6 +650,7 @@ export default function BlogGeneratorClient() {
                 {/* Featured Image Preview */}
                 {preview.image && (
                   <div className="border rounded-md overflow-hidden">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={preview.image}
                       alt={preview.title}
