@@ -1,27 +1,28 @@
 /**
  * CANONICAL DOMAIN MIDDLEWARE
  * 
- * ROOT CAUSE FIX: Apex domain (policestationagent.com) is pointed to Vercel via A record.
- * Middleware was redirecting apex to www, causing conflicts. Fixed to allow apex domain.
+ * ROOT CAUSE FIX: Vercel is currently enforcing www as the primary domain.
+ * If our middleware redirects www → apex while Vercel redirects apex → www,
+ * the site becomes unreachable due to a redirect loop.
  * 
  * Handles:
- * - Legacy domains → policestationagent.com (canonical apex)
- * - www subdomain → policestationagent.com (apex is canonical)
+ * - Legacy domains → www.policestationagent.com (canonical)
+ * - Apex domain → www.policestationagent.com (canonical)
  * - Preserves full paths and query strings
  * - Uses 301 (permanent) redirects for SEO
  * 
- * Canonical domain: https://policestationagent.com (apex, not www)
+ * Canonical domain: https://www.policestationagent.com
  */
 
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-// Canonical domain is the apex (policestationagent.com) - matches DNS A record configuration
-const CANONICAL_DOMAIN = 'policestationagent.com';
+// Canonical domain is www (matches current Vercel primary-domain redirects)
+const CANONICAL_DOMAIN = 'www.policestationagent.com';
 
 // Domains that should redirect to canonical apex domain
 const REDIRECT_DOMAINS = [
-  'www.policestationagent.com',  // www → apex
+  'policestationagent.com', // apex → www (also prevents loops if Vercel setting changes)
   'policestationagent.net',
   'policestationagent.org',
   'policestationrepkent.co.uk',
