@@ -25,7 +25,7 @@ export default function Header() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-2">
             <div className="text-center sm:text-left">
-              Free legal advice at police station interviews – England & Wales
+              Free legal advice at police stations – England & Wales
             </div>
             <a 
               href={`tel:${PHONE_NUMBER}`}
@@ -53,97 +53,35 @@ export default function Header() {
           
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-1" role="navigation" aria-label="Main navigation">
-            {/* Police Interviews Dropdown */}
-            <div className="relative group">
+            {/* Police Station Advice Dropdown */}
+            <div 
+              className="relative group"
+              onMouseLeave={closeDropdowns}
+            >
               <button
                 className="px-4 py-2 text-slate-700 hover:text-blue-600 font-medium transition-colors rounded-md hover:bg-slate-50 flex items-center gap-1"
-                onClick={() => handleDropdownToggle('interviews')}
-                aria-expanded={openDropdown === 'interviews'}
+                onClick={() => handleDropdownToggle('advice')}
+                aria-expanded={openDropdown === 'advice'}
                 aria-haspopup="true"
               >
-                Police Interviews
+                Police Station Advice
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-              {openDropdown === 'interviews' && (
+              {openDropdown === 'advice' && (
                 <div 
                   className="absolute top-full left-0 mt-1 w-64 bg-white rounded-md shadow-lg border border-slate-200 py-2 z-50"
-                  onMouseLeave={closeDropdowns}
                 >
                   <ul role="menu">
                     <li>
                       <Link 
-                        href="/voluntary-police-interview" 
+                        href="/what-is-a-police-station-rep" 
                         className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors"
                         role="menuitem"
                         onClick={closeDropdowns}
                       >
-                        Voluntary Police Interviews
-                      </Link>
-                    </li>
-                    <li>
-                      <Link 
-                        href="/article-interview-under-caution" 
-                        className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors"
-                        role="menuitem"
-                        onClick={closeDropdowns}
-                      >
-                        Interview Under Caution Explained
-                      </Link>
-                    </li>
-                    <li>
-                      <Link 
-                        href="/article-police-caution-before-interview" 
-                        className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors"
-                        role="menuitem"
-                        onClick={closeDropdowns}
-                      >
-                        Legal Advice Before Interview
-                      </Link>
-                    </li>
-                    <li>
-                      <Link 
-                        href="/after-a-police-interview" 
-                        className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors"
-                        role="menuitem"
-                        onClick={closeDropdowns}
-                      >
-                        What Happens After a Police Interview
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-              )}
-            </div>
-
-            {/* Arrest & Custody Dropdown */}
-            <div className="relative group">
-              <button
-                className="px-4 py-2 text-slate-700 hover:text-blue-600 font-medium transition-colors rounded-md hover:bg-slate-50 flex items-center gap-1"
-                onClick={() => handleDropdownToggle('arrest')}
-                aria-expanded={openDropdown === 'arrest'}
-                aria-haspopup="true"
-              >
-                Arrest & Custody
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              {openDropdown === 'arrest' && (
-                <div 
-                  className="absolute top-full left-0 mt-1 w-64 bg-white rounded-md shadow-lg border border-slate-200 py-2 z-50"
-                  onMouseLeave={closeDropdowns}
-                >
-                  <ul role="menu">
-                    <li>
-                      <Link 
-                        href="/arrested-at-police-station" 
-                        className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors"
-                        role="menuitem"
-                        onClick={closeDropdowns}
-                      >
-                        Arrested at a Police Station
+                        Police Station Representation
                       </Link>
                     </li>
                     <li>
@@ -154,6 +92,128 @@ export default function Header() {
                         onClick={closeDropdowns}
                       >
                         Duty Solicitor Advice
+                      </Link>
+                    </li>
+                    <li>
+                      <Link 
+                        href="/article-interview-under-caution" 
+                        className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        Interview Under Caution
+                      </Link>
+                    </li>
+                    <li>
+                      <Link 
+                        href="/what-to-expect-at-a-police-interview-in-kent" 
+                        className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        What Happens at the Police Station
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
+
+            {/* Voluntary Interviews Dropdown */}
+            <div 
+              className="relative group"
+              onMouseLeave={closeDropdowns}
+            >
+              <button
+                className="px-4 py-2 text-slate-700 hover:text-blue-600 font-medium transition-colors rounded-md hover:bg-slate-50 flex items-center gap-1"
+                onClick={() => handleDropdownToggle('voluntary')}
+                aria-expanded={openDropdown === 'voluntary'}
+                aria-haspopup="true"
+              >
+                Voluntary Interviews
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {openDropdown === 'voluntary' && (
+                <div 
+                  className="absolute top-full left-0 mt-1 w-64 bg-white rounded-md shadow-lg border border-slate-200 py-2 z-50"
+                >
+                  <ul role="menu">
+                    <li>
+                      <Link 
+                        href="/voluntary-police-interview" 
+                        className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        Voluntary Police Interview Explained
+                      </Link>
+                    </li>
+                    <li>
+                      <Link 
+                        href="/article-police-caution-before-interview" 
+                        className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        Legal Advice Before a Voluntary Interview
+                      </Link>
+                    </li>
+                    <li>
+                      <Link 
+                        href="/refusingpoliceinterview" 
+                        className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        Should I Attend a Voluntary Interview?
+                      </Link>
+                    </li>
+                    <li>
+                      <Link 
+                        href="/after-a-police-interview" 
+                        className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        What Happens After a Voluntary Interview
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
+
+            {/* Arrested & Custody Dropdown */}
+            <div 
+              className="relative group"
+              onMouseLeave={closeDropdowns}
+            >
+              <button
+                className="px-4 py-2 text-slate-700 hover:text-blue-600 font-medium transition-colors rounded-md hover:bg-slate-50 flex items-center gap-1"
+                onClick={() => handleDropdownToggle('arrested')}
+                aria-expanded={openDropdown === 'arrested'}
+                aria-haspopup="true"
+              >
+                Arrested & Custody
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {openDropdown === 'arrested' && (
+                <div 
+                  className="absolute top-full left-0 mt-1 w-64 bg-white rounded-md shadow-lg border border-slate-200 py-2 z-50"
+                >
+                  <ul role="menu">
+                    <li>
+                      <Link 
+                        href="/arrested-at-police-station" 
+                        className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        Arrested at a Police Station
                       </Link>
                     </li>
                     <li>
@@ -176,38 +236,50 @@ export default function Header() {
                         Police Bail Explained
                       </Link>
                     </li>
+                    <li>
+                      <Link 
+                        href="/released-under-investigation" 
+                        className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        Release Under Investigation (RUI)
+                      </Link>
+                    </li>
                   </ul>
                 </div>
               )}
             </div>
 
-            {/* Process & Rights Dropdown */}
-            <div className="relative group">
+            {/* Your Rights Dropdown */}
+            <div 
+              className="relative group"
+              onMouseLeave={closeDropdowns}
+            >
               <button
                 className="px-4 py-2 text-slate-700 hover:text-blue-600 font-medium transition-colors rounded-md hover:bg-slate-50 flex items-center gap-1"
-                onClick={() => handleDropdownToggle('process')}
-                aria-expanded={openDropdown === 'process'}
+                onClick={() => handleDropdownToggle('rights')}
+                aria-expanded={openDropdown === 'rights'}
                 aria-haspopup="true"
               >
-                Process & Rights
+                Your Rights
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-              {openDropdown === 'process' && (
+              {openDropdown === 'rights' && (
                 <div 
                   className="absolute top-full left-0 mt-1 w-64 bg-white rounded-md shadow-lg border border-slate-200 py-2 z-50"
-                  onMouseLeave={closeDropdowns}
                 >
                   <ul role="menu">
                     <li>
                       <Link 
-                        href="/what-is-a-police-station-rep" 
+                        href="/what-is-a-criminal-solicitor" 
                         className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors"
                         role="menuitem"
                         onClick={closeDropdowns}
                       >
-                        What Is Police Station Representation
+                        Right to a Solicitor
                       </Link>
                     </li>
                     <li>
@@ -245,6 +317,14 @@ export default function Header() {
               )}
             </div>
 
+            {/* Blog */}
+            <Link 
+              href="/blog" 
+              className="px-4 py-2 text-slate-700 hover:text-blue-600 font-medium transition-colors rounded-md hover:bg-slate-50"
+            >
+              Blog
+            </Link>
+
             {/* About */}
             <Link 
               href="/about" 
@@ -253,89 +333,13 @@ export default function Header() {
               About
             </Link>
 
-            {/* Articles Dropdown */}
-            <div className="relative group">
-              <button
-                className="px-4 py-2 text-slate-700 hover:text-blue-600 font-medium transition-colors rounded-md hover:bg-slate-50 flex items-center gap-1"
-                onClick={() => handleDropdownToggle('articles')}
-                aria-expanded={openDropdown === 'articles'}
-                aria-haspopup="true"
-              >
-                Articles
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              {openDropdown === 'articles' && (
-                <div 
-                  className="absolute top-full left-0 mt-1 w-64 bg-white rounded-md shadow-lg border border-slate-200 py-2 z-50"
-                  onMouseLeave={closeDropdowns}
-                >
-                  <ul role="menu">
-                    <li>
-                      <Link 
-                        href="/blog" 
-                        className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors"
-                        role="menuitem"
-                        onClick={closeDropdowns}
-                      >
-                        Latest Articles
-                      </Link>
-                    </li>
-                    <li>
-                      <Link 
-                        href="/blog" 
-                        className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors"
-                        role="menuitem"
-                        onClick={closeDropdowns}
-                      >
-                        Browse by Topic
-                      </Link>
-                    </li>
-                    <li>
-                      <Link 
-                        href="/blog" 
-                        className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors"
-                        role="menuitem"
-                        onClick={closeDropdowns}
-                      >
-                        Voluntary Interviews
-                      </Link>
-                    </li>
-                    <li>
-                      <Link 
-                        href="/blog" 
-                        className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors"
-                        role="menuitem"
-                        onClick={closeDropdowns}
-                      >
-                        Arrest & Custody
-                      </Link>
-                    </li>
-                    <li>
-                      <Link 
-                        href="/blog" 
-                        className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors"
-                        role="menuitem"
-                        onClick={closeDropdowns}
-                      >
-                        Your Rights
-                      </Link>
-                    </li>
-                    <li>
-                      <Link 
-                        href="/blog" 
-                        className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors font-semibold border-t border-slate-200 mt-1 pt-2"
-                        role="menuitem"
-                        onClick={closeDropdowns}
-                      >
-                        View All Articles
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-              )}
-            </div>
+            {/* Contact */}
+            <Link 
+              href="/contact" 
+              className="px-4 py-2 text-slate-700 hover:text-blue-600 font-medium transition-colors rounded-md hover:bg-slate-50"
+            >
+              Contact
+            </Link>
           </nav>
           
           {/* Desktop Call Now Button */}
@@ -366,7 +370,12 @@ export default function Header() {
             </a>
             <button
               className="flex items-center justify-center w-11 h-11 bg-slate-800 hover:bg-slate-900 text-white rounded-lg shadow-md transition-colors"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              onClick={() => {
+                setMobileMenuOpen(!mobileMenuOpen);
+                if (mobileMenuOpen) {
+                  closeDropdowns();
+                }
+              }}
               aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileMenuOpen}
             >
@@ -386,79 +395,26 @@ export default function Header() {
       {mobileMenuOpen && (
         <div className="lg:hidden border-t border-slate-200 bg-white relative z-50 shadow-lg">
           <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-1" role="navigation" aria-label="Mobile navigation">
-            {/* Police Interviews */}
+            {/* Police Station Advice */}
             <div>
               <button
                 className="w-full flex items-center justify-between px-4 py-3 text-slate-700 hover:text-blue-600 hover:bg-slate-50 font-medium rounded-md transition-colors"
-                onClick={() => handleDropdownToggle('mobile-interviews')}
+                onClick={() => handleDropdownToggle('mobile-advice')}
               >
-                Police Interviews
+                Police Station Advice
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-              {openDropdown === 'mobile-interviews' && (
+              {openDropdown === 'mobile-advice' && (
                 <ul className="pl-4 mt-1 space-y-1">
                   <li>
                     <Link 
-                      href="/voluntary-police-interview" 
+                      href="/what-is-a-police-station-rep" 
                       className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
                       onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
                     >
-                      Voluntary Police Interviews
-                    </Link>
-                  </li>
-                  <li>
-                    <Link 
-                      href="/article-interview-under-caution" 
-                      className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
-                    >
-                      Interview Under Caution Explained
-                    </Link>
-                  </li>
-                  <li>
-                    <Link 
-                      href="/article-police-caution-before-interview" 
-                      className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
-                    >
-                      Legal Advice Before Interview
-                    </Link>
-                  </li>
-                  <li>
-                    <Link 
-                      href="/after-a-police-interview" 
-                      className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
-                    >
-                      What Happens After a Police Interview
-                    </Link>
-                  </li>
-                </ul>
-              )}
-            </div>
-
-            {/* Arrest & Custody */}
-            <div>
-              <button
-                className="w-full flex items-center justify-between px-4 py-3 text-slate-700 hover:text-blue-600 hover:bg-slate-50 font-medium rounded-md transition-colors"
-                onClick={() => handleDropdownToggle('mobile-arrest')}
-              >
-                Arrest & Custody
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              {openDropdown === 'mobile-arrest' && (
-                <ul className="pl-4 mt-1 space-y-1">
-                  <li>
-                    <Link 
-                      href="/arrested-at-police-station" 
-                      className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
-                    >
-                      Arrested at a Police Station
+                      Police Station Representation
                     </Link>
                   </li>
                   <li>
@@ -468,6 +424,103 @@ export default function Header() {
                       onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
                     >
                       Duty Solicitor Advice
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      href="/article-interview-under-caution" 
+                      className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                    >
+                      Interview Under Caution
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      href="/what-to-expect-at-a-police-interview-in-kent" 
+                      className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                    >
+                      What Happens at the Police Station
+                    </Link>
+                  </li>
+                </ul>
+              )}
+            </div>
+
+            {/* Voluntary Interviews */}
+            <div>
+              <button
+                className="w-full flex items-center justify-between px-4 py-3 text-slate-700 hover:text-blue-600 hover:bg-slate-50 font-medium rounded-md transition-colors"
+                onClick={() => handleDropdownToggle('mobile-voluntary')}
+              >
+                Voluntary Interviews
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {openDropdown === 'mobile-voluntary' && (
+                <ul className="pl-4 mt-1 space-y-1">
+                  <li>
+                    <Link 
+                      href="/voluntary-police-interview" 
+                      className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                    >
+                      Voluntary Police Interview Explained
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      href="/article-police-caution-before-interview" 
+                      className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                    >
+                      Legal Advice Before a Voluntary Interview
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      href="/refusingpoliceinterview" 
+                      className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                    >
+                      Should I Attend a Voluntary Interview?
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      href="/after-a-police-interview" 
+                      className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                    >
+                      What Happens After a Voluntary Interview
+                    </Link>
+                  </li>
+                </ul>
+              )}
+            </div>
+
+            {/* Arrested & Custody */}
+            <div>
+              <button
+                className="w-full flex items-center justify-between px-4 py-3 text-slate-700 hover:text-blue-600 hover:bg-slate-50 font-medium rounded-md transition-colors"
+                onClick={() => handleDropdownToggle('mobile-arrested')}
+              >
+                Arrested & Custody
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {openDropdown === 'mobile-arrested' && (
+                <ul className="pl-4 mt-1 space-y-1">
+                  <li>
+                    <Link 
+                      href="/arrested-at-police-station" 
+                      className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                    >
+                      Arrested at a Police Station
                     </Link>
                   </li>
                   <li>
@@ -488,30 +541,39 @@ export default function Header() {
                       Police Bail Explained
                     </Link>
                   </li>
+                  <li>
+                    <Link 
+                      href="/released-under-investigation" 
+                      className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                    >
+                      Release Under Investigation (RUI)
+                    </Link>
+                  </li>
                 </ul>
               )}
             </div>
 
-            {/* Process & Rights */}
+            {/* Your Rights */}
             <div>
               <button
                 className="w-full flex items-center justify-between px-4 py-3 text-slate-700 hover:text-blue-600 hover:bg-slate-50 font-medium rounded-md transition-colors"
-                onClick={() => handleDropdownToggle('mobile-process')}
+                onClick={() => handleDropdownToggle('mobile-rights')}
               >
-                Process & Rights
+                Your Rights
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-              {openDropdown === 'mobile-process' && (
+              {openDropdown === 'mobile-rights' && (
                 <ul className="pl-4 mt-1 space-y-1">
                   <li>
                     <Link 
-                      href="/what-is-a-police-station-rep" 
+                      href="/what-is-a-criminal-solicitor" 
                       className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
                       onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
                     >
-                      What Is Police Station Representation
+                      Right to a Solicitor
                     </Link>
                   </li>
                   <li>
@@ -545,6 +607,15 @@ export default function Header() {
               )}
             </div>
 
+            {/* Blog */}
+            <Link 
+              href="/blog" 
+              className="block px-4 py-3 text-slate-700 hover:text-blue-600 hover:bg-slate-50 font-medium rounded-md transition-colors"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Blog
+            </Link>
+
             {/* About */}
             <Link 
               href="/about" 
@@ -554,76 +625,14 @@ export default function Header() {
               About
             </Link>
 
-            {/* Articles */}
-            <div>
-              <button
-                className="w-full flex items-center justify-between px-4 py-3 text-slate-700 hover:text-blue-600 hover:bg-slate-50 font-medium rounded-md transition-colors"
-                onClick={() => handleDropdownToggle('mobile-articles')}
-              >
-                Articles
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              {openDropdown === 'mobile-articles' && (
-                <ul className="pl-4 mt-1 space-y-1">
-                  <li>
-                    <Link 
-                      href="/blog" 
-                      className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
-                    >
-                      Latest Articles
-                    </Link>
-                  </li>
-                  <li>
-                    <Link 
-                      href="/blog" 
-                      className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
-                    >
-                      Browse by Topic
-                    </Link>
-                  </li>
-                  <li>
-                    <Link 
-                      href="/blog" 
-                      className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
-                    >
-                      Voluntary Interviews
-                    </Link>
-                  </li>
-                  <li>
-                    <Link 
-                      href="/blog" 
-                      className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
-                    >
-                      Arrest & Custody
-                    </Link>
-                  </li>
-                  <li>
-                    <Link 
-                      href="/blog" 
-                      className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
-                    >
-                      Your Rights
-                    </Link>
-                  </li>
-                  <li>
-                    <Link 
-                      href="/blog" 
-                      className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md font-semibold"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
-                    >
-                      View All Articles
-                    </Link>
-                  </li>
-                </ul>
-              )}
-            </div>
+            {/* Contact */}
+            <Link 
+              href="/contact" 
+              className="block px-4 py-3 text-slate-700 hover:text-blue-600 hover:bg-slate-50 font-medium rounded-md transition-colors"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Contact
+            </Link>
           </nav>
         </div>
       )}
