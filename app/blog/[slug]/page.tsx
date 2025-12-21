@@ -9,11 +9,9 @@ import { SITE_URL } from '@/config/site';
 import type { Metadata } from 'next';
 import { JsonLd } from '@/components/JsonLd';
 
-// Force dynamic rendering - blog posts may be created at runtime
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+// Use ISR for blog posts - revalidate every hour
+export const revalidate = 3600; // 1 hour
 export const dynamicParams = true;
-export const fetchCache = 'force-no-store';
 
 interface PageProps {
   params: {
@@ -44,6 +42,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       url: `${siteUrl}/blog/${post.slug}`,
       siteName: 'Police Station Agent',
       type: 'article',
+      locale: 'en_GB',
       images: post.featuredImage ? [{ 
         url: post.featuredImage.startsWith('/') ? `${siteUrl}${post.featuredImage}` : post.featuredImage,
         width: 1200,
@@ -62,6 +61,17 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       card: 'summary_large_image',
       title: post.metaTitle || post.title,
       description: post.metaDescription || generateExcerpt(post.contentHtml, 160),
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
     },
   };
 }
@@ -110,6 +120,32 @@ export default function BlogPostPage({ params }: PageProps) {
     inLanguage: 'en-GB',
   };
 
+  // BreadcrumbList schema
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: siteUrl,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Blog',
+        item: `${siteUrl}/blog`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: post.title,
+        item: `${siteUrl}/blog/${post.slug}`,
+      },
+    ],
+  };
+
   // Add FAQ schema if post has FAQs
   const faqSchema = post.faq && post.faq.length > 0 ? {
     '@context': 'https://schema.org',
@@ -127,6 +163,7 @@ export default function BlogPostPage({ params }: PageProps) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
       <JsonLd data={blogPostingSchema} />
+      <JsonLd data={breadcrumbSchema} />
       {faqSchema && <JsonLd data={faqSchema} />}
       <Header />
       <main className="flex-grow relative" id="main-content" role="main">

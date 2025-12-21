@@ -6,9 +6,8 @@ import { getAllPosts, formatBlogDate, generateExcerpt } from '@/lib/blog-reader'
 import { SITE_URL } from '@/config/site';
 import type { Metadata } from 'next';
 
-// Force dynamic rendering - blog posts may be created at runtime
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+// Use ISR for blog listing - revalidate every hour
+export const revalidate = 3600; // 1 hour
 
 export const metadata: Metadata = {
   title: "Blog | Police Station Agent",
@@ -28,6 +27,18 @@ export const metadata: Metadata = {
     url: `${SITE_URL}/blog`,
     siteName: 'Police Station Agent',
     type: 'website',
+    locale: 'en_GB',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 };
 

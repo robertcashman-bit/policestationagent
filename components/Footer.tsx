@@ -353,6 +353,7 @@ export default function Footer() {
         </div>
         
         <div className="border-t border-slate-700 mt-12 pt-8 text-center text-sm">
+          <p className="text-xs text-slate-400 mb-4">We act in relation to active police investigations and interviews. We do not provide general criminal law advice or hypothetical consultations.</p>
           <div className="footer-disclaimer-box mb-6 max-w-4xl mx-auto p-5 bg-white rounded-lg border border-slate-300 shadow-sm">
             <p className="leading-relaxed mb-3 font-semibold">
               Robert Cashman is a criminal defence solicitor. All legal services are provided through Tuckers Solicitors, which is authorised and regulated by the Solicitors Regulation Authority (SRA ID: 127795).

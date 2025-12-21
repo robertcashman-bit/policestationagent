@@ -89,11 +89,34 @@ export const metadata: Metadata = {
   },
 };
 
+// WebSite schema with SearchAction
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${siteUrl}#website`,
+  url: siteUrl,
+  name: 'Police Station Agent',
+  description: 'Expert police station representation and legal services across Kent and the UK.',
+  publisher: {
+    '@id': `${siteUrl}#legalservice`,
+  },
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: {
+      '@type': 'EntryPoint',
+      urlTemplate: `${siteUrl}/blog?search={search_term_string}`,
+    },
+    'query-input': 'required name=search_term_string',
+  },
+  inLanguage: 'en-GB',
+};
+
 // Comprehensive Legal Service Schema for Local SEO Dominance in Kent
 // Combines LegalService, Attorney, and LocalBusiness types using @graph
 const organizationSchema = {
   "@context": "https://schema.org",
   "@graph": [
+    websiteSchema,
     {
       "@type": "LegalService",
       "@id": `${siteUrl}#legalservice`,
@@ -360,6 +383,8 @@ export default function RootLayout({
             __html: JSON.stringify(organizationSchema),
           }}
         />
+        {/* Preload critical hero images for LCP optimization */}
+        <link rel="preload" as="image" href={`${siteUrl}/og-image.jpg`} />
       </head>
       <body className={inter.className}>
         {/* Skip to content link for accessibility */}

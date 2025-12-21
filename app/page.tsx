@@ -17,8 +17,20 @@ export const metadata: Metadata = {
     title: "Police Station Duty Solicitor Kent | Duty Solicitor Representation Kent | FREE Advice",
     description: "Police Station Duty Solicitor Kent - Expert representation by qualified solicitor Robert Cashman. Accredited Duty Solicitor & Higher Court Advocate. FREE legal advice under Legal Aid at Medway, Canterbury, Maidstone, Gravesend custody suites. 35 years experience, 21,000+ cases.",
     url: `https://${SITE_DOMAIN}/`,
-    siteName: 'Criminal Defence Kent',
+    siteName: 'Police Station Agent',
     type: 'website',
+    locale: 'en_GB',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 };
 
@@ -59,6 +71,23 @@ export default function Page() {
             dangerouslySetInnerHTML={{ __html: "<div class=\"fixed right-3 top-4 z-40 text-[10px] text-slate-400 select-none pointer-events-none bg-white/80 backdrop-blur-sm px-2 py-1 rounded border border-slate-200/50\" aria-hidden=\"true\">v4.4.0 — 12/12/2025</div><div class=\"bg-gradient-to-br from-slate-50 via-blue-50 to-white\"><section class=\"relative overflow-hidden bg-gradient-to-br from-blue-900 via-slate-900 to-slate-800 text-white pt-32 pb-32 md:pt-28 md:pb-40\" aria-labelledby=\"hero-heading\"><div class=\"absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(59,130,246,0.15),transparent_50%)]\" aria-hidden=\"true\"></div><div class=\"absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(147,51,234,0.1),transparent_50%)]\" aria-hidden=\"true\"></div><div class=\"max-w-7xl mx-auto px-4 relative z-10\"><div class=\"text-center max-w-5xl mx-auto\"><div class=\"flex flex-wrap justify-center gap-3 mb-6\"><a class=\"hover:scale-105 transition-transform\" href=\"/about\"><div class=\"inline-flex items-center transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-amber-400 text-slate-900 text-sm md:text-base font-bold px-6 py-3 rounded-full shadow-xl border-2 border-amber-500 cursor-pointer hover:bg-amber-300\" role=\"text\">⚖️ Accredited Duty Solicitor</div></a><a class=\"hover:scale-105 transition-transform\" href=\"/courtrepresentation\"><div class=\"inline-flex items-center border transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-purple-600 text-white text-sm md:text-base font-bold px-6 py-3 rounded-full shadow-xl cursor-pointer hover:bg-purple-500\" role=\"text\">Higher Court Advocate</div></a><a href=\"https://www.clsa.co.uk/\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"hover:scale-105 transition-transform\"><div class=\"inline-flex items-center border transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-green-500 text-white text-sm md:text-base font-bold px-6 py-3 rounded-full shadow-xl cursor-pointer hover:bg-green-400\" role=\"text\">✓ CLSA Member</div></a></div><h1 id=\"hero-heading\" class=\"text-4xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight text-white drop-shadow-lg\">Have You Been Contacted by the Police About an Interview?</h1><h2 class=\"text-xl md:text-2xl text-blue-100 mb-6 leading-relaxed max-w-4xl mx-auto font-medium\">If the police have been in touch, or have indicated that you may be asked to attend an interview under caution, you are entitled to free and independent legal advice before you go.</h2><p class=\"text-base md:text-lg text-blue-200 mb-4 leading-relaxed max-w-4xl mx-auto\">If you have already heard from the police, or an interview has been mentioned, we can advise you on the next steps and arrange appropriate representation.</p><p class=\"text-base md:text-lg text-blue-100 mb-8 leading-relaxed max-w-4xl mx-auto\">A voluntary interview is conducted under caution and carries the same legal risks as an interview following arrest.</p><div class=\"flex flex-wrap justify-center gap-4 mb-6\"><a href=\"tel:01732247427\" class=\"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-amber-400 hover:bg-amber-500 text-slate-900 font-bold px-8 py-3 rounded-full shadow-xl border-2 border-amber-500\">Arrange Legal Advice Before a Police Interview</a><a href=\"tel:01732247427\" class=\"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-2 border-white text-white hover:bg-white/10 font-bold px-8 py-3 rounded-full shadow-xl\">Call Regarding a Police Interview</a></div><p class=\"text-sm text-blue-200 mb-10 max-w-4xl mx-auto\">Legal advice at a voluntary police interview is free of charge and cannot be refused by the police.</p><div class=\"grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto\" role=\"list\" aria-label=\"Key statistics\"><div class=\"bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20 hover:bg-white/20 transition-all\" role=\"listitem\"><div class=\"text-3xl md:text-4xl font-black text-amber-300\">21,000+</div><div class=\"text-xs md:text-sm text-blue-100 mt-1 font-medium\">Clients Helped</div></div><div class=\"bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20 hover:bg-white/20 transition-all\" role=\"listitem\"><div class=\"text-3xl md:text-4xl font-black text-amber-300\">Extended hours service</div><div class=\"text-xs md:text-sm text-blue-100 mt-1 font-medium\">Available</div></div><div class=\"bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20 hover:bg-white/20 transition-all\" role=\"listitem\"><div class=\"text-3xl md:text-4xl font-black text-amber-300\">35+</div><div class=\"text-xs md:text-sm text-blue-100 mt-1 font-medium\">Years Experience</div></div><div class=\"bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20 hover:bg-white/20 transition-all\" role=\"listitem\"><div class=\"text-3xl md:text-4xl font-black text-amber-300\">100%</div><div class=\"text-xs md:text-sm text-blue-100 mt-1 font-medium\">Kent Coverage</div></div></div></div></div><div class=\"absolute bottom-0 left-0 right-0\" aria-hidden=\"true\"><svg viewBox=\"0 0 1440 120\" class=\"w-full h-auto\" role=\"presentation\"><path fill=\"#f8fafc\" d=\"M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z\"></path></svg></div></section></div>" }}
           />
           <section className="max-w-6xl mx-auto px-4 -mt-8 md:-mt-14 pb-10">
+            <div className="rounded-2xl border border-slate-200 bg-white shadow-sm p-6 md:p-8 mb-8">
+              <h2 className="text-2xl md:text-3xl font-black text-slate-900 mb-6">What Happens Next</h2>
+              <ul className="space-y-3 text-slate-700">
+                <li className="flex items-start gap-3">
+                  <span className="text-amber-500 font-bold mt-1">•</span>
+                  <span>We confirm whether the interview is voluntary or under arrest</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-amber-500 font-bold mt-1">•</span>
+                  <span>We liaise with the officer in charge and obtain disclosure</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-amber-500 font-bold mt-1">•</span>
+                  <span>We advise on attendance, preparation, and representation</span>
+                </li>
+              </ul>
+            </div>
             <div className="rounded-2xl border border-slate-200 bg-white shadow-sm p-6 md:p-8">
               <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
                 <div>
