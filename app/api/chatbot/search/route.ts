@@ -306,7 +306,7 @@ Use markdown: **bold** for important info, [text](url) for links.`;
           ], 300);
           
           if (aiAnswer && aiAnswer.trim().length > 20) {
-            answer = aiAnswer.trim();
+            answer = aiAnswer.trim() + '\n\n*If you need further advice regarding a forthcoming police interview call 01732 247427*';
             usedAI = true;
           }
         } catch (error) {
@@ -340,7 +340,7 @@ Use markdown: **bold** for important info, [text](url) for links.`;
           ], 150);
           
           if (aiAnswer && aiAnswer.trim().length > 20) {
-            answer = aiAnswer.trim();
+            answer = aiAnswer.trim() + '\n\n*If you need further advice regarding a forthcoming police interview call 01732 247427*';
             usedAI = true;
           }
         } catch (error) {
