@@ -28,13 +28,13 @@ function loadFAQContent() {
     }
     
     // Also try to extract from sections structure
-    const sectionsPattern = /items:\s*\[(.*?)\]/gs;
+    const sectionsPattern = /items:\s*\[([\s\S]*?)\]/g;
     const sectionsMatch = sectionsPattern.exec(faqContent);
     
     if (sectionsMatch && faqItems.length === 0) {
       // Fallback: extract all question/answer pairs more aggressively
       const allQuestions = faqContent.matchAll(/question:\s*['"`]([^'"`]+)['"`]/g);
-      const allAnswers = faqContent.matchAll(/answer:\s*['"`]([^'"`]+)['"`]/gs);
+      const allAnswers = faqContent.matchAll(/answer:\s*['"`]([\s\S]*?)['"`]/g);
       
       const questions = Array.from(allQuestions).map(m => m[1].trim());
       const answers = Array.from(allAnswers).map(m => {
