@@ -23,7 +23,10 @@ const LEGAL_DISCLAIMER = 'This chatbot provides general information only and doe
 const SUGGESTED_QUESTIONS = [
   'What is a voluntary police interview?',
   'Is legal advice free at police stations?',
-  'Which police stations do you cover?'
+  'Which police stations do you cover?',
+  'What are my rights if arrested?',
+  'How quickly can you attend?',
+  'What happens during a police interview?'
 ];
 
 export default function Chatbot() {
@@ -37,6 +40,7 @@ export default function Chatbot() {
       timestamp: new Date(),
     },
   ]);
+  const [showQuestions, setShowQuestions] = useState(true);
   const [viewMode, setViewMode] = useState<'options' | 'input'>('input');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [disclaimerExpanded, setDisclaimerExpanded] = useState(false);
@@ -126,6 +130,7 @@ export default function Chatbot() {
     setInputValue('');
     setViewMode('input');
     setShowHumanEscalation(false);
+    setShowQuestions(false); // Hide questions after first message
 
     if (isUrgentQuery(trimmedMessage)) {
       setShowHumanEscalation(true);
@@ -215,6 +220,7 @@ export default function Chatbot() {
     }]);
     setInputValue('');
     setDisclaimerExpanded(false);
+    setShowQuestions(true);
   };
 
   const followUpQuestions = messages.length > 1 && messages[messages.length - 1].type === 'bot' && messages[messages.length - 1].content !== '...'
@@ -310,6 +316,24 @@ export default function Chatbot() {
                       {followUpQuestions.map((q, idx) => (
                         <button key={idx} onClick={() => handleSendMessage(q)} className="text-[9px] px-1.5 py-0.5 bg-white border border-slate-200 rounded-full hover:bg-blue-50 hover:border-blue-300 transition-all">
                           {q.length > 25 ? q.substring(0, 25) + '...' : q}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                
+                {/* Quick Question Buttons */}
+                {showQuestions && messages.length === 1 && (
+                  <div className="space-y-1 pt-1">
+                    <p className="text-[10px] text-slate-500 px-1 mb-1">Quick questions:</p>
+                    <div className="flex flex-wrap gap-1">
+                      {SUGGESTED_QUESTIONS.map((q, idx) => (
+                        <button 
+                          key={idx} 
+                          onClick={() => handleSendMessage(q)} 
+                          className="text-[9px] px-1.5 py-1 bg-white border border-slate-200 rounded-full hover:bg-blue-50 hover:border-blue-300 transition-all text-left"
+                        >
+                          {q}
                         </button>
                       ))}
                     </div>
