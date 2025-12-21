@@ -90,6 +90,112 @@ export default function Header() {
         <div className="flex justify-between items-center h-16">
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-0.5 flex-nowrap flex-1" role="navigation" aria-label="Main navigation">
+            {/* Services Dropdown - FIRST (Most Important) */}
+            <div 
+              className="relative group flex-shrink-0"
+              onMouseLeave={closeDropdowns}
+            >
+              <button
+                className={`px-3 py-2 text-sm text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50 flex items-center gap-1 whitespace-nowrap ${
+                  openDropdown === 'services' ? 'text-blue-700 bg-slate-50' : ''
+                }`}
+                onClick={() => handleDropdownToggle('services')}
+                aria-expanded={openDropdown === 'services'}
+                aria-haspopup="true"
+              >
+                Services
+                <svg className={`w-3.5 h-3.5 transition-transform ${openDropdown === 'services' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {openDropdown === 'services' && (
+                <div 
+                  className="absolute top-full left-0 mt-1.5 w-72 bg-white rounded-lg shadow-xl border border-slate-200/80 py-1.5 z-50"
+                >
+                  <ul role="menu" aria-label="Services">
+                    <li role="none">
+                      <Link 
+                        href="/services" 
+                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        Police Station Rep Services Kent
+                      </Link>
+                    </li>
+                    <li role="none">
+                      <Link 
+                        href="/services/police-station-representation" 
+                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        Police Station Representation
+                      </Link>
+                    </li>
+                    <li role="none">
+                      <Link 
+                        href="/voluntary-interviews" 
+                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        Voluntary Interviews
+                      </Link>
+                    </li>
+                    <li role="none">
+                      <Link 
+                        href="/courtrepresentation" 
+                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        Court Representation
+                      </Link>
+                    </li>
+                    <li role="none">
+                      <Link 
+                        href="/for-solicitors" 
+                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        Agent Cover for Law Firms
+                      </Link>
+                    </li>
+                    <li role="none">
+                      <Link 
+                        href="/privatecrime" 
+                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        Private Client Service
+                      </Link>
+                    </li>
+                    <li role="none">
+                      <Link 
+                        href="/fees" 
+                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        Legal Aid & Fees
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
+
+            {/* Contact - SECOND (Urgent Action) */}
+            <Link 
+              href="/contact" 
+              className="px-3 py-2 text-sm text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50 whitespace-nowrap"
+            >
+              Contact
+            </Link>
+
             {/* Police Station Legal Advice Dropdown */}
             <div 
               className="relative group flex-shrink-0"
@@ -502,104 +608,6 @@ export default function Header() {
               )}
             </div>
 
-            {/* Services Dropdown */}
-            <div 
-              className="relative group flex-shrink-0"
-              onMouseLeave={closeDropdowns}
-            >
-              <button
-                className={`px-3 py-2 text-sm text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50 flex items-center gap-1 whitespace-nowrap ${
-                  openDropdown === 'services' ? 'text-blue-700 bg-slate-50' : ''
-                }`}
-                onClick={() => handleDropdownToggle('services')}
-                aria-expanded={openDropdown === 'services'}
-                aria-haspopup="true"
-              >
-                Services
-                <svg className={`w-3.5 h-3.5 transition-transform ${openDropdown === 'services' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              {openDropdown === 'services' && (
-                <div 
-                  className="absolute top-full left-0 mt-1.5 w-72 bg-white rounded-lg shadow-xl border border-slate-200/80 py-1.5 z-50"
-                >
-                  <ul role="menu" aria-label="Services">
-                    <li role="none">
-                      <Link 
-                        href="/services" 
-                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
-                        role="menuitem"
-                        onClick={closeDropdowns}
-                      >
-                        Police Station Rep Services Kent
-                      </Link>
-                    </li>
-                    <li role="none">
-                      <Link 
-                        href="/services/police-station-representation" 
-                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
-                        role="menuitem"
-                        onClick={closeDropdowns}
-                      >
-                        Police Station Representation
-                      </Link>
-                    </li>
-                    <li role="none">
-                      <Link 
-                        href="/voluntary-interviews" 
-                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
-                        role="menuitem"
-                        onClick={closeDropdowns}
-                      >
-                        Voluntary Interviews
-                      </Link>
-                    </li>
-                    <li role="none">
-                      <Link 
-                        href="/courtrepresentation" 
-                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
-                        role="menuitem"
-                        onClick={closeDropdowns}
-                      >
-                        Court Representation
-                      </Link>
-                    </li>
-                    <li role="none">
-                      <Link 
-                        href="/for-solicitors" 
-                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
-                        role="menuitem"
-                        onClick={closeDropdowns}
-                      >
-                        Agent Cover for Law Firms
-                      </Link>
-                    </li>
-                    <li role="none">
-                      <Link 
-                        href="/privatecrime" 
-                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
-                        role="menuitem"
-                        onClick={closeDropdowns}
-                      >
-                        Private Client Service
-                      </Link>
-                    </li>
-                    <li role="none">
-                      <Link 
-                        href="/fees" 
-                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
-                        role="menuitem"
-                        onClick={closeDropdowns}
-                      >
-                        Legal Aid & Fees
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-              )}
-            </div>
-
             {/* Coverage Dropdown */}
             <div 
               className="relative group flex-shrink-0"
@@ -647,14 +655,6 @@ export default function Header() {
                 </div>
               )}
             </div>
-
-            {/* Blog */}
-            <Link 
-              href="/blog" 
-              className="px-3 py-2 text-sm text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50 whitespace-nowrap"
-            >
-              Blog
-            </Link>
 
             {/* About Dropdown */}
             <div 
@@ -732,12 +732,12 @@ export default function Header() {
               FAQ
             </Link>
 
-            {/* Contact */}
+            {/* Blog */}
             <Link 
-              href="/contact" 
+              href="/blog" 
               className="px-3 py-2 text-sm text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50 whitespace-nowrap"
             >
-              Contact
+              Blog
             </Link>
           </nav>
           
@@ -761,6 +761,95 @@ export default function Header() {
       {mobileMenuOpen && (
         <div className="lg:hidden border-t border-slate-200 bg-white relative z-50 shadow-lg">
           <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-1" role="navigation" aria-label="Mobile navigation">
+            {/* Services - FIRST */}
+            <div>
+              <button
+                className="w-full flex items-center justify-between px-4 py-3 text-slate-700 hover:text-blue-600 hover:bg-slate-50 font-medium rounded-md transition-colors"
+                onClick={() => handleDropdownToggle('mobile-services')}
+              >
+                Services
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {openDropdown === 'mobile-services' && (
+                <ul className="pl-4 mt-1 space-y-1">
+                  <li>
+                    <Link 
+                      href="/services" 
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                    >
+                      Police Station Rep Services Kent
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      href="/services/police-station-representation" 
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                    >
+                      Police Station Representation
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      href="/voluntary-interviews" 
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                    >
+                      Voluntary Interviews
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      href="/courtrepresentation" 
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                    >
+                      Court Representation
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      href="/for-solicitors" 
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                    >
+                      Agent Cover for Law Firms
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      href="/privatecrime" 
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                    >
+                      Private Client Service
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      href="/fees" 
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                    >
+                      Legal Aid & Fees
+                    </Link>
+                  </li>
+                </ul>
+              )}
+            </div>
+
+            {/* Contact - SECOND */}
+            <Link 
+              href="/contact" 
+              className="block px-4 py-3 text-slate-700 hover:text-blue-600 hover:bg-slate-50 font-medium rounded-md transition-colors"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Contact
+            </Link>
+
             {/* Police Station Legal Advice */}
             <div>
               <button
@@ -1099,86 +1188,6 @@ export default function Header() {
               )}
             </div>
 
-            {/* Services */}
-            <div>
-              <button
-                className="w-full flex items-center justify-between px-4 py-3 text-slate-700 hover:text-blue-600 hover:bg-slate-50 font-medium rounded-md transition-colors"
-                onClick={() => handleDropdownToggle('mobile-services')}
-              >
-                Services
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              {openDropdown === 'mobile-services' && (
-                <ul className="pl-4 mt-1 space-y-1">
-                  <li>
-                    <Link 
-                      href="/services" 
-                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
-                    >
-                      Police Station Rep Services Kent
-                    </Link>
-                  </li>
-                  <li>
-                    <Link 
-                      href="/services/police-station-representation" 
-                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
-                    >
-                      Police Station Representation
-                    </Link>
-                  </li>
-                  <li>
-                    <Link 
-                      href="/voluntary-interviews" 
-                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
-                    >
-                      Voluntary Interviews
-                    </Link>
-                  </li>
-                  <li>
-                    <Link 
-                      href="/courtrepresentation" 
-                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
-                    >
-                      Court Representation
-                    </Link>
-                  </li>
-                  <li>
-                    <Link 
-                      href="/for-solicitors" 
-                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
-                    >
-                      Agent Cover for Law Firms
-                    </Link>
-                  </li>
-                  <li>
-                    <Link 
-                      href="/privatecrime" 
-                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
-                    >
-                      Private Client Service
-                    </Link>
-                  </li>
-                  <li>
-                    <Link 
-                      href="/fees" 
-                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
-                    >
-                      Legal Aid & Fees
-                    </Link>
-                  </li>
-                </ul>
-              )}
-            </div>
-
             {/* Coverage */}
             <div>
               <button
@@ -1213,15 +1222,6 @@ export default function Header() {
                 </ul>
               )}
             </div>
-
-            {/* Blog */}
-            <Link 
-              href="/blog" 
-              className="block px-4 py-3 text-slate-700 hover:text-blue-600 hover:bg-slate-50 font-medium rounded-md transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Blog
-            </Link>
 
             {/* About */}
             <div>
@@ -1285,13 +1285,13 @@ export default function Header() {
               FAQ
             </Link>
 
-            {/* Contact */}
+            {/* Blog */}
             <Link 
-              href="/contact" 
+              href="/blog" 
               className="block px-4 py-3 text-slate-700 hover:text-blue-600 hover:bg-slate-50 font-medium rounded-md transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
-              Contact
+              Blog
             </Link>
           </nav>
         </div>
