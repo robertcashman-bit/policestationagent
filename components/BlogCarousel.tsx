@@ -42,7 +42,7 @@ interface BlogCarouselProps {
 }
 
 export default function BlogCarousel({
-  maxPosts = 6,
+  maxPosts = 50,
   autoRotateInterval = 5000,
   showNavigation = true,
   className = '',
@@ -167,6 +167,16 @@ export default function BlogCarousel({
     }
   };
 
+  // Get image with fallback - cycles through available blog images based on index
+  const getPostImage = (post: BlogPost, index: number): string => {
+    if (post.featuredImage && post.featuredImage !== '/blog-images/blog-listing-0.jpg') {
+      return post.featuredImage;
+    }
+    // Cycle through the 8 available blog listing images
+    const imageIndex = index % 8;
+    return `/blog-images/blog-listing-${imageIndex}.${imageIndex === 0 ? 'jpg' : 'png'}`;
+  };
+
   // Loading state
   if (isLoading) {
     return (
@@ -247,40 +257,18 @@ export default function BlogCarousel({
           {/* Main Card */}
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-100 transition-all duration-500">
             <div className="grid md:grid-cols-2 gap-0">
-              {/* Image/Placeholder - Fixed 16:9 aspect ratio */}
+              {/* Image - Fixed 16:9 aspect ratio with cycling fallback images */}
               <div key={`image-container-${currentPost.slug}-${currentIndex}`} className="relative aspect-[16/9] md:aspect-[4/3] bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center overflow-hidden">
-                {currentPost.featuredImage ? (
-                  <Image
-                    key={`carousel-image-${currentPost.slug}-${currentIndex}`}
-                    src={currentPost.featuredImage}
-                    alt={currentPost.title || 'Blog post image'}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    priority={currentIndex === 0}
-                    loading={currentIndex === 0 ? undefined : 'lazy'}
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="80"
-                      height="80"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="text-white/50"
-                      aria-hidden="true"
-                    >
-                      <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
-                      <circle cx="9" cy="9" r="2"></circle>
-                      <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path>
-                    </svg>
-                  </div>
-                )}
+                <Image
+                  key={`carousel-image-${currentPost.slug}-${currentIndex}`}
+                  src={getPostImage(currentPost, currentIndex)}
+                  alt={currentPost.title || 'Blog post image'}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  priority={currentIndex === 0}
+                  loading={currentIndex === 0 ? undefined : 'lazy'}
+                />
               </div>
 
               {/* Content */}
@@ -390,21 +378,59 @@ export default function BlogCarousel({
           )}
         </div>
 
-        {/* Dots Indicator */}
+        {/* Progress Indicator */}
         {posts.length > 1 && (
-          <div className="flex justify-center gap-2 mt-6">
-            {posts.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => goToSlide(index)}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  index === currentIndex
-                    ? 'w-8 bg-blue-600'
-                    : 'w-2 bg-slate-300 hover:bg-slate-400'
-                }`}
-                aria-label={`Go to slide ${index + 1}`}
-              />
-            ))}
+          <div className="mt-6">
+            {/* Counter and progress bar for many posts */}
+            <div className="flex items-center justify-center gap-4">
+              <span className="text-sm font-medium text-slate-600">
+                {currentIndex + 1} of {posts.length}
+              </span>
+              <div className="flex-1 max-w-xs h-1 bg-slate-200 rounded-full overflow-hidden">
+                <div 
+                  className="h-full bg-blue-600 transition-all duration-300 ease-out"
+                  style={{ width: `${((currentIndex + 1) / posts.length) * 100}%` }}
+                />
+              </div>
+            </div>
+            {/* Mini dots for quick navigation (show first 10, current area, last 10) */}
+            <div className="flex justify-center gap-1 mt-3 flex-wrap max-w-md mx-auto">
+              {posts.map((_, index) => {
+                // Show dots near current position, first few, and last few
+                const isNearCurrent = Math.abs(index - currentIndex) <= 3;
+                const isFirst = index < 5;
+                const isLast = index >= posts.length - 5;
+                const shouldShow = isNearCurrent || isFirst || isLast;
+                
+                if (!shouldShow) {
+                  // Show ellipsis dots at boundaries
+                  if (index === 5 && currentIndex > 8) {
+                    return (
+                      <span key={index} className="w-4 text-center text-slate-400 text-xs">...</span>
+                    );
+                  }
+                  if (index === posts.length - 6 && currentIndex < posts.length - 9) {
+                    return (
+                      <span key={index} className="w-4 text-center text-slate-400 text-xs">...</span>
+                    );
+                  }
+                  return null;
+                }
+                
+                return (
+                  <button
+                    key={index}
+                    onClick={() => goToSlide(index)}
+                    className={`h-2 rounded-full transition-all duration-300 ${
+                      index === currentIndex
+                        ? 'w-6 bg-blue-600'
+                        : 'w-2 bg-slate-300 hover:bg-slate-400'
+                    }`}
+                    aria-label={`Go to slide ${index + 1}`}
+                  />
+                );
+              })}
+            </div>
           </div>
         )}
 

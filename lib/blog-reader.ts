@@ -143,7 +143,8 @@ function getLegacyPosts(): BlogPost[] {
         location: 'Kent',
         metaTitle: p.meta_title || p.title || 'Untitled',
         metaDescription: p.meta_description || p.excerpt || '',
-        featuredImage: p.image || '/blog-images/blog-listing-0.jpg',
+        // Cycle through available blog images based on post ID for variety
+        featuredImage: p.image || `/blog-images/blog-listing-${p.id % 8}.${p.id % 8 === 0 ? 'jpg' : 'png'}`,
         contentHtml: p.content || '',
         faq: [],
         author: 'Robert Cashman',

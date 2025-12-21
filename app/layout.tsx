@@ -387,8 +387,7 @@ export default function RootLayout({
         />
         {/* Preload critical hero images for LCP optimization */}
         <link rel="preload" as="image" href={`${siteUrl}/og-image.jpg`} />
-        {/* Optimize font loading with font-display swap */}
-        <link rel="preload" href="/_next/static/media/inter-latin.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        {/* Note: Font preloading is handled automatically by next/font/google - no manual link needed */}
       </head>
       <body className={inter.className}>
         {/* Skip to content link for accessibility */}
