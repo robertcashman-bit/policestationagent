@@ -193,7 +193,7 @@ export default function FAQContent() {
         },
         {
           question: 'Can you get me information about someone who has been arrested by the police?',
-          answer: 'We cannot provide information about someone else who has been arrested due to strict confidentiality and data protection laws. All communications between a solicitor and their client are protected by Legal Professional Privilege and are strictly confidential. We can only discuss a case with the person we represent, or with someone they have explicitly authorised us to speak with. If you are concerned about someone who has been arrested, you can contact us to arrange representation for them, but we cannot disclose details of their case without their express permission.'
+          answer: 'We cannot provide information about someone else who has been arrested due to strict confidentiality and data protection laws. All communications between a solicitor and their client are protected by Legal Professional Privilege and are strictly confidential. We can only discuss a case with the person we represent, or with someone they have explicitly authorised us to speak with. If you are concerned about someone who has been arrested, you can contact us to arrange representation for them. However, we cannot disclose any details of their case without their express permission.'
         },
         {
           question: 'Can you report matters on my behalf to the police?',
