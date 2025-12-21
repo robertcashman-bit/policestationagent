@@ -37,7 +37,7 @@ export default function Chatbot() {
       timestamp: new Date(),
     },
   ]);
-  const [viewMode, setViewMode] = useState<'options' | 'input'>('options');
+  const [viewMode, setViewMode] = useState<'options' | 'input'>('input');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [disclaimerExpanded, setDisclaimerExpanded] = useState(false);
   const [inputValue, setInputValue] = useState('');
@@ -236,9 +236,9 @@ export default function Chatbot() {
         </button>
       )}
 
-      {/* Chat Window - ULTRA COMPACT SIZE (2/3rds reduction) */}
+      {/* Chat Window - WIDER */}
       {isOpen && (
-        <div className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[9999] w-[calc(100vw-2rem)] sm:w-[213px] max-w-[213px] bg-white rounded-xl shadow-2xl border border-slate-200 flex flex-col transition-all duration-300 ${isMinimized ? 'h-14' : 'h-[333px] sm:h-[367px]'}`}>
+        <div className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[9999] w-[calc(100vw-2rem)] sm:w-[280px] max-w-[280px] bg-white rounded-xl shadow-2xl border border-slate-200 flex flex-col transition-all duration-300 ${isMinimized ? 'h-14' : 'h-[333px] sm:h-[367px]'}`}>
           {/* Header - ULTRA COMPACT */}
           <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-2 rounded-t-xl flex items-center justify-between flex-shrink-0">
             <div className="flex items-center gap-1.5">
@@ -319,52 +319,26 @@ export default function Chatbot() {
                 <div ref={messagesEndRef} />
               </div>
 
-              {/* Input Area - ULTRA COMPACT */}
-              <div className="bg-white border-t border-slate-200 flex-shrink-0">
-                <div className="flex border-b border-slate-100">
-                  <button onClick={() => setViewMode('options')} className={`flex-1 px-1 py-1 text-[10px] font-medium transition-colors ${viewMode === 'options' ? 'bg-blue-50 text-blue-700 border-b-2 border-blue-600' : 'text-slate-600 hover:bg-slate-50'}`}>
-                    Options
-                  </button>
-                  <button onClick={() => { setViewMode('input'); setTimeout(() => textareaRef.current?.focus(), 100); }} className={`flex-1 px-1 py-1 text-[10px] font-medium transition-colors ${viewMode === 'input' ? 'bg-blue-50 text-blue-700 border-b-2 border-blue-600' : 'text-slate-600 hover:bg-slate-50'}`}>
-                    Ask
+              {/* Input Area */}
+              <div className="bg-white border-t border-slate-200 flex-shrink-0 p-2">
+                <div className="flex gap-1 items-end">
+                  <textarea
+                    ref={textareaRef}
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    onKeyDown={handleKeyPress}
+                    placeholder="Ask a question..."
+                    className="flex-1 px-2 py-1.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500 text-[10px] resize-none max-h-[60px]"
+                    rows={1}
+                    disabled={isSubmitting}
+                  />
+                  <button onClick={() => handleSendMessage(inputValue)} disabled={!inputValue.trim() || isSubmitting} className="bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white px-2 py-1.5 rounded-lg transition-all flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="m22 2-7 20-4-9-9-4Z"></path>
+                      <path d="M22 2 11 13"></path>
+                    </svg>
                   </button>
                 </div>
-
-                {viewMode === 'options' && !isSubmitting && (
-                  <div className="p-2 space-y-1.5">
-                    <button onClick={() => handleQuickOption('police-station')} className="w-full text-left bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-medium px-2 py-1.5 rounded-lg transition-all shadow text-[10px]">
-                      <div className="font-semibold">🛡️ Police Station</div>
-                      <div className="text-red-100 mt-0.5 text-[9px]">Custody or interview</div>
-                    </button>
-                    <button onClick={() => handleQuickOption('law-firm')} className="w-full text-left bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium px-2 py-1.5 rounded-lg transition-all shadow text-[10px]">
-                      <div className="font-semibold">⚖️ Law Firm Cover</div>
-                      <div className="text-blue-100 mt-0.5 text-[9px]">Agent services</div>
-                    </button>
-                  </div>
-                )}
-
-                {viewMode === 'input' && (
-                  <div className="p-2">
-                    <div className="flex gap-1 items-end">
-                      <textarea
-                        ref={textareaRef}
-                        value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
-                        onKeyDown={handleKeyPress}
-                        placeholder="Ask..."
-                        className="flex-1 px-2 py-1 border border-slate-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500 text-[10px] resize-none max-h-[60px]"
-                        rows={1}
-                        disabled={isSubmitting}
-                      />
-                      <button onClick={() => handleSendMessage(inputValue)} disabled={!inputValue.trim() || isSubmitting} className="bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white px-2 py-1 rounded-lg transition-all flex-shrink-0">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="m22 2-7 20-4-9-9-4Z"></path>
-                          <path d="M22 2 11 13"></path>
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
-                )}
               </div>
 
               {/* Disclaimer - ULTRA COMPACT */}

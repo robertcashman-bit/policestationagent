@@ -292,7 +292,7 @@ Answer questions based ONLY on the provided context from our website (FAQ, blog 
 - Prioritize FAQ answers
 - Extract direct, actionable information
 - Be concise (under 150 words)
-- If context doesn't fully answer the question, say: "For specific advice about this, please call 01732 247427."
+- If context doesn't fully answer the question, say: "Please call 01732 247427."
 
 Use markdown: **bold** for important info, [text](url) for links.`;
 
@@ -335,8 +335,8 @@ Use markdown: **bold** for important info, [text](url) for links.`;
       if (OPENAI_API_KEY) {
         try {
           const aiAnswer = await callOpenAI([
-            { role: 'system', content: 'You are a helpful legal assistant for a Kent police station solicitor. Be brief and suggest calling 01732 247427.' },
-            { role: 'user', content: `Question: ${query}\n\nNo specific info found in our content. Provide a brief, helpful response and suggest calling 01732 247427.` }
+            { role: 'system', content: 'You are a helpful legal assistant for a Kent police station solicitor. Be brief.' },
+            { role: 'user', content: `Question: ${query}\n\nNo specific info found. Provide a brief, helpful response and suggest calling 01732 247427.` }
           ], 150);
           
           if (aiAnswer && aiAnswer.trim().length > 20) {
@@ -349,7 +349,7 @@ Use markdown: **bold** for important info, [text](url) for links.`;
       }
       
       if (!usedAI) {
-        answer = 'I don\'t have specific information about that. Please call **01732 247427** for detailed advice.';
+        answer = 'I don\'t have information about that. Please call **01732 247427**.';
       }
     }
     
