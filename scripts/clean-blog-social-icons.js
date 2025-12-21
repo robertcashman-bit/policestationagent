@@ -21,20 +21,61 @@ function cleanContent(content) {
   // Remove social media emoji (hearts, etc.)
   cleaned = cleaned.replace(/[❤💙💚💛💜🖤🤍❤️💙️💚️💛️💜️🖤️🤍️]/g, '');
   
+  // Remove social media engagement text patterns (more aggressive)
+  cleaned = cleaned.replace(/\d+\s*views?/gi, '');
+  cleaned = cleaned.replace(/\d+\s*like[s]?\.?\s*Post\s+not\s+marked\s+as\s+liked\d*/gi, '');
+  cleaned = cleaned.replace(/Post\s+not\s+marked\s+as\s+liked\d*/gi, '');
+  cleaned = cleaned.replace(/\d+\s*like[s]?/gi, '');
+  
+  // Remove any text containing "views" or "like" with numbers nearby
+  cleaned = cleaned.replace(/[^<>\s]*\d+[^<>\s]*\s*(views?|like[s]?)[^<>]*/gi, '');
+  
   // Remove social media buttons/links (common patterns)
-  // Remove divs with social/share classes
+  // Remove divs with social/share classes - be more aggressive
   cleaned = cleaned.replace(/<div[^>]*class[^>]*share[^>]*>.*?<\/div>/gis, '');
   cleaned = cleaned.replace(/<div[^>]*class[^>]*social[^>]*>.*?<\/div>/gis, '');
   cleaned = cleaned.replace(/<div[^>]*class[^>]*emoji[^>]*>.*?<\/div>/gis, '');
   
-  // Remove anchor tags with social media classes
-  cleaned = cleaned.replace(/<a[^>]*class[^>]*(share|social|facebook|twitter|linkedin|pinterest|instagram)[^>]*>.*?<\/a>/gis, '');
+  // Remove entire sections containing social media icons (Facebook, X/Twitter, LinkedIn, etc.)
+  // Look for sections with multiple social icons
+  cleaned = cleaned.replace(/<[^>]+>.*?(facebook|twitter|linkedin|paperclip|printer|eye|views?|like[s]?).*?(facebook|twitter|linkedin|paperclip|printer|eye|views?|like[s]?).*?<\/[^>]+>/gis, '');
+  
+  // Remove SVG icons for social media (Facebook f, X/Twitter, LinkedIn, etc.)
+  cleaned = cleaned.replace(/<svg[^>]*>.*?(facebook|twitter|linkedin|x-logo|paperclip|printer|eye|share).*?<\/svg>/gis, '');
+  
+  // Remove anchor tags with social media classes or hrefs
+  cleaned = cleaned.replace(/<a[^>]*(href|class)[^>]*(facebook|twitter|linkedin|share|social)[^>]*>.*?<\/a>/gis, '');
   
   // Remove spans with social/emoji classes
   cleaned = cleaned.replace(/<span[^>]*class[^>]*(share|social|emoji)[^>]*>.*?<\/span>/gis, '');
   
   // Remove entire sections that might contain social media (look for patterns like "Share this" or "Like this")
   cleaned = cleaned.replace(/<[^>]*>.*?(share|like|follow).*?this.*?<\/[^>]+>/gis, '');
+  
+  // Remove vertical lists of social icons (common pattern: multiple icons in a row)
+  // Look for patterns with Facebook, X, LinkedIn icons together
+  cleaned = cleaned.replace(/(<[^>]+>.*?)?(facebook|f\s+logo|x\s+logo|linkedin|in\s+logo).*?(facebook|f\s+logo|x\s+logo|linkedin|in\s+logo).*?(facebook|f\s+logo|x\s+logo|linkedin|in\s+logo).*?(<\/[^>]+>)?/gis, '');
+  
+  // Remove any div/section containing both social icons AND view/like counts
+  cleaned = cleaned.replace(/<div[^>]*>.*?(facebook|twitter|linkedin|x-logo|paperclip|printer|eye).*?(\d+\s*views?|\d+\s*like).*?<\/div>/gis, '');
+  cleaned = cleaned.replace(/<section[^>]*>.*?(facebook|twitter|linkedin|x-logo|paperclip|printer|eye).*?(\d+\s*views?|\d+\s*like).*?<\/section>/gis, '');
+  
+  // Remove any container that has multiple social media elements (Facebook, X, LinkedIn together)
+  // This catches the vertical widget shown in the image
+  cleaned = cleaned.replace(/<[^>]+>.*?(?:facebook|f\s+logo|x\s+logo|twitter|linkedin|in\s+logo).*?(?:facebook|f\s+logo|x\s+logo|twitter|linkedin|in\s+logo).*?(?:facebook|f\s+logo|x\s+logo|twitter|linkedin|in\s+logo|paperclip|printer|eye|views?|like).*?<\/[^>]+>/gis, '');
+  
+  // Remove standalone social media icon containers (any element with just social icons)
+  cleaned = cleaned.replace(/<[^>]+(?:class|id)=[^>]*(?:facebook|twitter|linkedin|x-logo|share|social)[^>]*>.*?<\/[^>]+>/gis, '');
+  
+  // Remove any element containing paperclip, printer, or eye icons (these are part of the widget)
+  cleaned = cleaned.replace(/<[^>]+>.*?(?:paperclip|printer|eye\s+icon).*?<\/[^>]+>/gis, '');
+  
+  // Remove entire social media widget blocks (look for patterns with icons + numbers + text)
+  // Pattern: icons followed by numbers and "views"/"like" text
+  cleaned = cleaned.replace(/<[^>]+>.*?(?:facebook|twitter|linkedin|x|paperclip|printer|eye).*?\d+.*?(?:views?|like).*?<\/[^>]+>/gis, '');
+  
+  // Remove any nested structure containing social widgets (multiple levels deep)
+  cleaned = cleaned.replace(/<div[^>]*>.*?<[^>]+>.*?(?:facebook|twitter|linkedin|x-logo|paperclip|printer|eye).*?(\d+\s*views?|\d+\s*like|Post\s+not\s+marked).*?<\/[^>]+>.*?<\/div>/gis, '');
   
   // Remove blur filters from images
   cleaned = cleaned.replace(/style=["'][^"']*blur[^"']*["']/gi, (match) => {
