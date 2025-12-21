@@ -197,6 +197,8 @@ export default function BlogPostPage({ params }: PageProps) {
                     fill
                     className="object-cover"
                     priority
+                    unoptimized={false}
+                    quality={95}
                   />
                 </div>
               )}
@@ -235,7 +237,7 @@ export default function BlogPostPage({ params }: PageProps) {
             <article className="prose prose-lg max-w-none">
               <div 
                 dangerouslySetInnerHTML={{ __html: post.contentHtml }} 
-                className="prose prose-lg max-w-none [&_img]:max-w-full [&_img]:h-auto [&_img]:my-6 [&_img]:mx-auto [&_img]:block [&_img]:rounded-lg [&_img]:shadow-md"
+                className="prose prose-lg max-w-none [&_img]:max-w-full [&_img]:h-auto [&_img]:my-6 [&_img]:mx-auto [&_img]:block [&_img]:rounded-lg [&_img]:shadow-md [&_img]:filter-none [&_img]:backdrop-filter-none"
               />
             </article>
             

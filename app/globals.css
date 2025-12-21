@@ -1113,3 +1113,23 @@ html body footer .footer-disclaimer-box span,
   background-color: transparent; /* Ensure no background override */
 }
 
+/* Prevent image blur in blog posts */
+.prose img,
+.prose div img,
+article img,
+.prose [class*="prose"] img {
+  filter: none !important;
+  backdrop-filter: none !important;
+  -webkit-filter: none !important;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* Remove any blur classes from images in blog content */
+.prose img[class*="blur"],
+.prose div img[class*="blur"],
+article img[class*="blur"] {
+  filter: none !important;
+  backdrop-filter: none !important;
+}
+
