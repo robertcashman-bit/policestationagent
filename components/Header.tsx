@@ -47,28 +47,28 @@ export default function Header() {
               className="block hover:text-blue-600 transition-colors group"
               aria-label="Police Station Agent home page"
             >
-              <div className="text-xl sm:text-2xl font-bold text-slate-900 leading-tight group-hover:text-blue-600 transition-colors">Police Station Agent</div>
-              <div className="text-xs sm:text-sm font-normal text-slate-600 leading-tight mt-0.5">Police Station Legal Advice & Representation</div>
+              <div className="text-lg sm:text-xl font-bold text-slate-900 leading-tight group-hover:text-blue-600 transition-colors">Police Station Agent</div>
+              <div className="text-[10px] sm:text-xs font-normal text-slate-600 leading-tight mt-0.5 block">Police Station Legal Advice & Representation</div>
             </Link>
           </div>
           
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-0.5" role="navigation" aria-label="Main navigation">
+          <nav className="hidden lg:flex items-center space-x-0.5 flex-nowrap" role="navigation" aria-label="Main navigation">
             {/* Police Station Legal Advice Dropdown */}
             <div 
-              className="relative group"
+              className="relative group flex-shrink-0"
               onMouseLeave={closeDropdowns}
             >
               <button
-                className={`px-4 py-2.5 text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50 flex items-center gap-1.5 ${
+                className={`px-3 py-2 text-sm text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50 flex items-center gap-1 whitespace-nowrap ${
                   openDropdown === 'advice' ? 'text-blue-700 bg-slate-50' : ''
                 }`}
                 onClick={() => handleDropdownToggle('advice')}
                 aria-expanded={openDropdown === 'advice'}
                 aria-haspopup="true"
               >
-                Police Station Legal Advice
-                <svg className={`w-4 h-4 transition-transform ${openDropdown === 'advice' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                Legal Advice
+                <svg className={`w-3.5 h-3.5 transition-transform ${openDropdown === 'advice' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
@@ -124,19 +124,19 @@ export default function Header() {
 
             {/* Police Interviews Dropdown */}
             <div 
-              className="relative group"
+              className="relative group flex-shrink-0"
               onMouseLeave={closeDropdowns}
             >
               <button
-                className={`px-4 py-2.5 text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50 flex items-center gap-1.5 ${
+                className={`px-3 py-2 text-sm text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50 flex items-center gap-1 whitespace-nowrap ${
                   openDropdown === 'voluntary' ? 'text-blue-700 bg-slate-50' : ''
                 }`}
                 onClick={() => handleDropdownToggle('voluntary')}
                 aria-expanded={openDropdown === 'voluntary'}
                 aria-haspopup="true"
               >
-                Police Interviews
-                <svg className={`w-4 h-4 transition-transform ${openDropdown === 'voluntary' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                Interviews
+                <svg className={`w-3.5 h-3.5 transition-transform ${openDropdown === 'voluntary' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
@@ -192,19 +192,19 @@ export default function Header() {
 
             {/* Arrest & Police Custody Dropdown */}
             <div 
-              className="relative group"
+              className="relative group flex-shrink-0"
               onMouseLeave={closeDropdowns}
             >
               <button
-                className={`px-4 py-2.5 text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50 flex items-center gap-1.5 ${
+                className={`px-3 py-2 text-sm text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50 flex items-center gap-1 whitespace-nowrap ${
                   openDropdown === 'arrested' ? 'text-blue-700 bg-slate-50' : ''
                 }`}
                 onClick={() => handleDropdownToggle('arrested')}
                 aria-expanded={openDropdown === 'arrested'}
                 aria-haspopup="true"
               >
-                Arrest & Police Custody
-                <svg className={`w-4 h-4 transition-transform ${openDropdown === 'arrested' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                Custody
+                <svg className={`w-3.5 h-3.5 transition-transform ${openDropdown === 'arrested' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
@@ -260,19 +260,19 @@ export default function Header() {
 
             {/* Your Legal Rights Dropdown */}
             <div 
-              className="relative group"
+              className="relative group flex-shrink-0"
               onMouseLeave={closeDropdowns}
             >
               <button
-                className={`px-4 py-2.5 text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50 flex items-center gap-1.5 ${
+                className={`px-3 py-2 text-sm text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50 flex items-center gap-1 whitespace-nowrap ${
                   openDropdown === 'rights' ? 'text-blue-700 bg-slate-50' : ''
                 }`}
                 onClick={() => handleDropdownToggle('rights')}
                 aria-expanded={openDropdown === 'rights'}
                 aria-haspopup="true"
               >
-                Your Legal Rights
-                <svg className={`w-4 h-4 transition-transform ${openDropdown === 'rights' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                Rights
+                <svg className={`w-3.5 h-3.5 transition-transform ${openDropdown === 'rights' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
@@ -329,7 +329,7 @@ export default function Header() {
             {/* Blog */}
             <Link 
               href="/blog" 
-              className="px-4 py-2.5 text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50"
+              className="px-3 py-2 text-sm text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50 whitespace-nowrap"
             >
               Blog
             </Link>
@@ -337,7 +337,7 @@ export default function Header() {
             {/* About */}
             <Link 
               href="/about" 
-              className="px-4 py-2.5 text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50"
+              className="px-3 py-2 text-sm text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50 whitespace-nowrap"
             >
               About
             </Link>
@@ -345,7 +345,7 @@ export default function Header() {
             {/* Contact */}
             <Link 
               href="/contact" 
-              className="px-4 py-2.5 text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50"
+              className="px-3 py-2 text-sm text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50 whitespace-nowrap"
             >
               Contact
             </Link>

@@ -23,13 +23,15 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 interface BlogPost {
-  id: number;
+  id: string;
   title: string;
   slug: string;
-  excerpt: string | null;
-  published_at: string | null;
-  created_at: string;
-  image: string | null;
+  date: string;
+  category: string;
+  metaTitle: string;
+  metaDescription: string;
+  featuredImage: string;
+  author: string;
 }
 
 interface BlogCarouselProps {
@@ -161,7 +163,7 @@ export default function BlogCarousel({
         year: 'numeric',
       });
     } catch {
-      return null;
+      return dateString;
     }
   };
 
@@ -247,9 +249,9 @@ export default function BlogCarousel({
             <div className="grid md:grid-cols-2 gap-0">
               {/* Image/Placeholder - Fixed 16:9 aspect ratio */}
               <div className="relative aspect-[16/9] md:aspect-[4/3] bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center overflow-hidden">
-                {currentPost.image ? (
+                {currentPost.featuredImage ? (
                   <Image
-                    src={currentPost.image}
+                    src={currentPost.featuredImage}
                     alt={currentPost.title || 'Blog post image'}
                     fill
                     className="object-cover"
@@ -282,7 +284,7 @@ export default function BlogCarousel({
 
               {/* Content */}
               <div className="p-8 md:p-10 flex flex-col justify-center">
-                {currentPost.published_at && (
+                {currentPost.date && (
                   <div className="flex items-center gap-2 text-sm text-slate-500 mb-4">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -301,7 +303,7 @@ export default function BlogCarousel({
                       <rect width="18" height="18" x="3" y="4" rx="2" />
                       <path d="M3 10h18" />
                     </svg>
-                    <time>{formatDate(currentPost.published_at)}</time>
+                    <time>{formatDate(currentPost.date)}</time>
                   </div>
                 )}
 
@@ -309,9 +311,9 @@ export default function BlogCarousel({
                   {currentPost.title}
                 </h3>
 
-                {currentPost.excerpt && (
+                {currentPost.metaDescription && (
                   <p className="text-slate-600 mb-6 line-clamp-3">
-                    {currentPost.excerpt.replace(/<[^>]+>/g, '')}
+                    {currentPost.metaDescription}
                   </p>
                 )}
 
