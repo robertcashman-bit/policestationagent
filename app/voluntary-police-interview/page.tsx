@@ -15,6 +15,18 @@ export const metadata: Metadata = {
     url: `https://${SITE_DOMAIN}/voluntary-police-interview`,
     siteName: 'Police Station Agent',
     type: 'website',
+    locale: 'en_GB',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 };
 
