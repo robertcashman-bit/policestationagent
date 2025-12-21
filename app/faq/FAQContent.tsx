@@ -190,6 +190,18 @@ export default function FAQContent() {
         {
           question: 'Can my family contact you on my behalf?',
           answer: 'Yes, absolutely. If someone you know has been arrested, you can contact us on their behalf. Under PACE Code C, if a solicitor is contacted by a third party (friend or relative) on the detainee\'s behalf, the police must inform the detainee. We will then contact the police station to arrange representation. This is a common and important way to ensure someone gets legal help when they cannot call themselves.'
+        },
+        {
+          question: 'Can you get me information about someone who has been arrested by the police?',
+          answer: 'We cannot provide information about someone else who has been arrested due to strict confidentiality and data protection laws. All communications between a solicitor and their client are protected by Legal Professional Privilege and are strictly confidential. We can only discuss a case with the person we represent, or with someone they have explicitly authorised us to speak with. If you are concerned about someone who has been arrested, you can contact us to arrange representation for them, but we cannot disclose details of their case without their express permission.'
+        },
+        {
+          question: 'Can you report matters on my behalf to the police?',
+          answer: 'We specialise in defending people who are suspected of criminal offences, not in reporting crimes to the police. If you need to report a crime, you should contact the police directly by calling 101 for non-emergency matters or 999 in an emergency. However, if you have been arrested or invited for interview regarding a matter you reported, we can represent you during any police investigation or interview that follows. We focus on providing legal representation and advice to those who are under investigation, rather than initiating police reports.'
+        },
+        {
+          question: 'Can you find out what happened in my case?',
+          answer: 'If we represented you at the police station, we can provide you with information about your case and what happened during the interview. However, we cannot obtain ongoing updates from the police about investigations unless we are formally instructed to represent you. If you have been released under investigation or on bail, we can liaise with the police on your behalf if you instruct us to do so. For cases where we provided representation, we maintain records and can discuss the outcome and next steps. If you need ongoing representation or updates, please contact us on 01732 247427 and we can discuss how we can help.'
         }
       ]
     },
