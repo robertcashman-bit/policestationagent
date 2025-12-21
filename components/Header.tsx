@@ -183,6 +183,26 @@ export default function Header() {
                         Legal Aid & Fees
                       </Link>
                     </li>
+                    <li role="none">
+                      <Link 
+                        href="/for-clients" 
+                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        For Clients
+                      </Link>
+                    </li>
+                    <li role="none">
+                      <Link 
+                        href="/emergency-police-station-representation" 
+                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        Emergency Representation
+                      </Link>
+                    </li>
                   </ul>
                 </div>
               )}
@@ -259,6 +279,76 @@ export default function Header() {
                         What Happens at the Police Station
                       </Link>
                     </li>
+                    <li role="none">
+                      <Link 
+                        href="/what-to-do-if-a-loved-one-is-arrested" 
+                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        What to Do if a Loved One is Arrested
+                      </Link>
+                    </li>
+                    <li role="none">
+                      <Link 
+                        href="/arrested-what-to-do" 
+                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        Arrested - What to Do
+                      </Link>
+                    </li>
+                    <li role="none">
+                      <Link 
+                        href="/article-loved-one-arrested-kent" 
+                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        Loved One Arrested in Kent
+                      </Link>
+                    </li>
+                    <li role="none">
+                      <Link 
+                        href="/importance-of-early-legal-advice" 
+                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        Importance of Early Legal Advice
+                      </Link>
+                    </li>
+                    <li role="none">
+                      <Link 
+                        href="/police-station-interviews-kent-rights" 
+                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        Police Station Interviews Kent Rights
+                      </Link>
+                    </li>
+                    <li role="none">
+                      <Link 
+                        href="/arrival-times-delays" 
+                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        Arrival Times & Delays
+                      </Link>
+                    </li>
+                    <li role="none">
+                      <Link 
+                        href="/booking-in-procedure-in-kent" 
+                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        Booking Procedure in Kent
+                      </Link>
+                    </li>
                   </ul>
                 </div>
               )}
@@ -325,6 +415,56 @@ export default function Header() {
                         onClick={closeDropdowns}
                       >
                         What Happens After a Police Interview
+                      </Link>
+                    </li>
+                    <li role="none">
+                      <Link 
+                        href="/preparing-for-police-interview" 
+                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        Preparing for Police Interview
+                      </Link>
+                    </li>
+                    <li role="none">
+                      <Link 
+                        href="/voluntary-police-interview-risks" 
+                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        Voluntary Interview Risks
+                      </Link>
+                    </li>
+                    <li role="none">
+                      <Link 
+                        href="/what-happens-if-ignore-police-interview" 
+                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        What Happens if You Ignore Interview
+                      </Link>
+                    </li>
+                    <li role="none">
+                      <Link 
+                        href="/policeinterviewhelp" 
+                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        Police Interview Help
+                      </Link>
+                    </li>
+                    <li role="none">
+                      <Link 
+                        href="/refusingpoliceinterview" 
+                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        Refusing Police Interview
                       </Link>
                     </li>
                   </ul>
@@ -423,6 +563,16 @@ export default function Header() {
                         onClick={closeDropdowns}
                       >
                         Appropriate Adults
+                      </Link>
+                    </li>
+                    <li role="none">
+                      <Link 
+                        href="/vulnerable-adults-in-custody" 
+                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        Vulnerable Adults in Custody
                       </Link>
                     </li>
                   </ul>
@@ -651,6 +801,46 @@ export default function Header() {
                         Service Coverage Areas
                       </Link>
                     </li>
+                    <li role="none">
+                      <Link 
+                        href="/kent-police-station-reps" 
+                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        Kent Police Station Reps
+                      </Link>
+                    </li>
+                    <li role="none">
+                      <Link 
+                        href="/kent-police-stations" 
+                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        Kent Police Stations
+                      </Link>
+                    </li>
+                    <li role="none">
+                      <Link 
+                        href="/psastations" 
+                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        PSA Stations
+                      </Link>
+                    </li>
+                    <li role="none">
+                      <Link 
+                        href="/out-of-area" 
+                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        Out of Area
+                      </Link>
+                    </li>
                   </ul>
                 </div>
               )}
@@ -717,6 +907,36 @@ export default function Header() {
                         onClick={closeDropdowns}
                       >
                         Client Testimonials
+                      </Link>
+                    </li>
+                    <li role="none">
+                      <Link 
+                        href="/for-clients" 
+                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        For Clients
+                      </Link>
+                    </li>
+                    <li role="none">
+                      <Link 
+                        href="/privateclientfaq" 
+                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        Private Client FAQ
+                      </Link>
+                    </li>
+                    <li role="none">
+                      <Link 
+                        href="/can-we-help" 
+                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        Can We Help
                       </Link>
                     </li>
                   </ul>
@@ -837,6 +1057,24 @@ export default function Header() {
                       Legal Aid & Fees
                     </Link>
                   </li>
+                  <li>
+                    <Link 
+                      href="/for-clients" 
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                    >
+                      For Clients
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      href="/emergency-police-station-representation" 
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                    >
+                      Emergency Representation
+                    </Link>
+                  </li>
                 </ul>
               )}
             </div>
@@ -899,6 +1137,69 @@ export default function Header() {
                       What Happens at the Police Station
                     </Link>
                   </li>
+                  <li>
+                    <Link 
+                      href="/what-to-do-if-a-loved-one-is-arrested" 
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                    >
+                      What to Do if a Loved One is Arrested
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      href="/arrested-what-to-do" 
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                    >
+                      Arrested - What to Do
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      href="/article-loved-one-arrested-kent" 
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                    >
+                      Loved One Arrested in Kent
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      href="/importance-of-early-legal-advice" 
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                    >
+                      Importance of Early Legal Advice
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      href="/police-station-interviews-kent-rights" 
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                    >
+                      Police Station Interviews Kent Rights
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      href="/arrival-times-delays" 
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                    >
+                      Arrival Times & Delays
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      href="/booking-in-procedure-in-kent" 
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                    >
+                      Booking Procedure in Kent
+                    </Link>
+                  </li>
                 </ul>
               )}
             </div>
@@ -950,6 +1251,51 @@ export default function Header() {
                       onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
                     >
                       What Happens After a Police Interview
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      href="/preparing-for-police-interview" 
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                    >
+                      Preparing for Police Interview
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      href="/voluntary-police-interview-risks" 
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                    >
+                      Voluntary Interview Risks
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      href="/what-happens-if-ignore-police-interview" 
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                    >
+                      What Happens if You Ignore Interview
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      href="/policeinterviewhelp" 
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                    >
+                      Police Interview Help
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      href="/refusingpoliceinterview" 
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                    >
+                      Refusing Police Interview
                     </Link>
                   </li>
                 </ul>
@@ -1030,6 +1376,15 @@ export default function Header() {
                       onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
                     >
                       Appropriate Adults
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      href="/vulnerable-adults-in-custody" 
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                    >
+                      Vulnerable Adults in Custody
                     </Link>
                   </li>
                 </ul>
@@ -1219,6 +1574,42 @@ export default function Header() {
                       Service Coverage Areas
                     </Link>
                   </li>
+                  <li>
+                    <Link 
+                      href="/kent-police-station-reps" 
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                    >
+                      Kent Police Station Reps
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      href="/kent-police-stations" 
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                    >
+                      Kent Police Stations
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      href="/psastations" 
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                    >
+                      PSA Stations
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      href="/out-of-area" 
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                    >
+                      Out of Area
+                    </Link>
+                  </li>
                 </ul>
               )}
             </div>
@@ -1270,6 +1661,33 @@ export default function Header() {
                       onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
                     >
                       Client Testimonials
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      href="/for-clients" 
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                    >
+                      For Clients
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      href="/privateclientfaq" 
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                    >
+                      Private Client FAQ
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      href="/can-we-help" 
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                    >
+                      Can We Help
                     </Link>
                   </li>
                 </ul>

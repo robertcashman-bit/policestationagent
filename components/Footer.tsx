@@ -125,6 +125,36 @@ export default function Footer() {
                     Legal Aid & Fees
                   </Link>
                 </li>
+                <li>
+                  <Link href="/for-clients" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    For Clients
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/emergency-police-station-representation" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Emergency Representation
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/court-representation" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Court Representation (Alt)
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/servicesvoluntaryinterviews" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Voluntary Interviews (Alt)
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/private-crime" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Private Crime (Alt)
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/forsolicitors" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    For Solicitors (Alt)
+                  </Link>
+                </li>
               </ul>
             </nav>
           </div>
@@ -209,6 +239,81 @@ export default function Footer() {
                     Legal Advice Blog
                   </Link>
                 </li>
+                <li>
+                  <Link href="/what-to-do-if-a-loved-one-is-arrested" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    What to Do if a Loved One is Arrested
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/arrested-what-to-do" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Arrested - What to Do
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/article-loved-one-arrested-kent" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Loved One Arrested in Kent
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/arrival-times-delays" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Arrival Times & Delays
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/booking-in-procedure-in-kent" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Booking Procedure in Kent
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/importance-of-early-legal-advice" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Importance of Early Legal Advice
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/preparing-for-police-interview" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Preparing for Police Interview
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/voluntary-police-interview-risks" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Voluntary Interview Risks
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/what-happens-if-ignore-police-interview" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    What Happens if You Ignore Interview
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/vulnerable-adults-in-custody" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Vulnerable Adults in Custody
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/police-station-interviews-kent-rights" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Police Station Interviews Kent Rights
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/policeinterviewhelp" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Police Interview Help
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/refusingpoliceinterview" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Refusing Police Interview
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/afterapoliceinterview" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    After Police Interview (Alt)
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/nofurtheractionafterpoliceinterview" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    No Further Action After Interview (Alt)
+                  </Link>
+                </li>
               </ul>
             </nav>
           </div>
@@ -268,6 +373,416 @@ export default function Footer() {
                     Sevenoaks Police Station
                   </Link>
                 </li>
+                <li>
+                  <Link href="/kent-police-station-reps" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Kent Police Station Reps
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/kent-police-stations" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Kent Police Stations
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/psastations" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    PSA Stations
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/policestationreps" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Police Station Reps (Alt)
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/accreditedpolicerep" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Accredited Police Rep
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/areas" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Areas
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/locations" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Locations
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/out-of-area" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Out of Area
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/outofarea" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Out of Area (Alt)
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/ashford-police-station" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Ashford Police Station
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/ashford-psa-station" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Ashford PSA Station
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/ashford-solicitor" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Ashford Solicitor
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/bluewater-police-station" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Bluewater Police Station
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/bluewater-psa-station" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Bluewater PSA Station
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/bluewater-solicitor" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Bluewater Solicitor
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/bromley-solicitor" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Bromley Solicitor
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/canterbury-psa-station" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Canterbury PSA Station
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/canterbury-solicitor" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Canterbury Solicitor
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/chatham-solicitor" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Chatham Solicitor
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/coldharbour-police-station" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Coldharbour Police Station
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/dartford-solicitor" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Dartford Solicitor
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/deal-solicitor" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Deal Solicitor
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/dover-police-station" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Dover Police Station
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/dover-psa-station" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Dover PSA Station
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/dover-solicitor" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Dover Solicitor
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/faversham-solicitor" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Faversham Solicitor
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/folkestone-psa-station" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Folkestone PSA Station
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/folkestone-solicitor" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Folkestone Solicitor
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/gillingham-solicitor" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Gillingham Solicitor
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/gravesend-police-station" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Gravesend Police Station
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/gravesend-solicitor" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Gravesend Solicitor
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/herne-bay-solicitor" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Herne Bay Solicitor
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/maidstone-psa-station" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Maidstone PSA Station
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/maidstone-solicitor" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Maidstone Solicitor
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/margate-psa-station" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Margate PSA Station
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/margate-solicitor" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Margate Solicitor
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/medway-psa-station" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Medway PSA Station
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/medway-solicitor" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Medway Solicitor
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/north-kent-gravesend-psa-station" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    North Kent Gravesend PSA Station
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/ramsgate-solicitor" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Ramsgate Solicitor
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/rochester-solicitor" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Rochester Solicitor
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/sandwich-solicitor" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Sandwich Solicitor
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/sevenoaks-psa-station" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Sevenoaks PSA Station
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/sevenoaks-solicitor" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Sevenoaks Solicitor
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/sittingbourne-police-station" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Sittingbourne Police Station
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/sittingbourne-psa-station" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Sittingbourne PSA Station
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/sittingbourne-solicitor" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Sittingbourne Solicitor
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/swanley-police-station" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Swanley Police Station
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/swanley-psa-station" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Swanley PSA Station
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/swanley-solicitor" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Swanley Solicitor
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/tonbridge-psa-station" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Tonbridge PSA Station
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/tonbridge-solicitor" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Tonbridge Solicitor
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/tunbridge-wells-police-station" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Tunbridge Wells Police Station
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/tunbridge-wells-psa-station" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Tunbridge Wells PSA Station
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/tunbridge-wells-solicitor" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Tunbridge Wells Solicitor
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/whitstable-solicitor" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Whitstable Solicitor
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/police-station-agent-ashford" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Police Station Agent Ashford
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/police-station-agent-canterbury" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Police Station Agent Canterbury
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/police-station-agent-dartford" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Police Station Agent Dartford
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/police-station-agent-folkestone" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Police Station Agent Folkestone
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/police-station-agent-gravesend" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Police Station Agent Gravesend
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/police-station-agent-kent" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Police Station Agent Kent
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/police-station-agent-maidstone" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Police Station Agent Maidstone
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/police-station-agent-medway" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Police Station Agent Medway
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/police-station-agent-sevenoaks" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Police Station Agent Sevenoaks
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/police-station-agent-sittingbourne" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Police Station Agent Sittingbourne
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/police-station-agent-tonbridge" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Police Station Agent Tonbridge
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/police-station-rep-ashford" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Police Station Rep Ashford
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/police-station-rep-bluewater" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Police Station Rep Bluewater
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/police-station-rep-canterbury" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Police Station Rep Canterbury
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/police-station-rep-dartford" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Police Station Rep Dartford
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/police-station-rep-dover" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Police Station Rep Dover
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/police-station-rep-folkestone" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Police Station Rep Folkestone
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/police-station-rep-gravesend" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Police Station Rep Gravesend
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/police-station-rep-maidstone" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Police Station Rep Maidstone
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/police-station-rep-margate" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Police Station Rep Margate
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/police-station-rep-medway" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Police Station Rep Medway
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/police-station-rep-sevenoaks" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Police Station Rep Sevenoaks
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/police-station-rep-sittingbourne" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Police Station Rep Sittingbourne
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/police-station-rep-swanley" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Police Station Rep Swanley
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/police-station-rep-tonbridge" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Police Station Rep Tonbridge
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/police-station-rep-tunbridge-wells" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Police Station Rep Tunbridge Wells
+                  </Link>
+                </li>
               </ul>
             </nav>
           </div>
@@ -300,6 +815,66 @@ export default function Footer() {
                 <li>
                   <Link href="/contact" className="text-slate-200 hover:text-white transition-colors text-sm">
                     Contact Us
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/privateclientfaq" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Private Client FAQ
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/can-we-help" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Can We Help
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/canwehelp" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Can We Help (Alt)
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/whatisapolicestationrep" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    What is a Police Station Rep (Alt)
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/hours" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Hours
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/extendedhours" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Extended Hours
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/christmashours" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Christmas Hours
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/guided-assistant" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Guided Assistant
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/join" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Join
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/repcover" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Rep Cover
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/arrestednow" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Arrested Now
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/home" className="text-slate-200 hover:text-white transition-colors text-sm">
+                    Home
                   </Link>
                 </li>
                 <li className="pt-2 mt-2 border-t border-slate-700">
@@ -343,6 +918,21 @@ export default function Footer() {
                     <li>
                       <Link href="/complaints" className="text-slate-300 hover:text-white transition-colors text-xs">
                         Complaints
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/f-a-q" className="text-slate-300 hover:text-white transition-colors text-xs">
+                        FAQ (Alt)
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/g-d-p-r" className="text-slate-300 hover:text-white transition-colors text-xs">
+                        GDPR (Alt)
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/termsandconditions" className="text-slate-300 hover:text-white transition-colors text-xs">
+                        Terms (Alt)
                       </Link>
                     </li>
                   </ul>
