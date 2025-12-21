@@ -208,14 +208,6 @@ export default function Header() {
               )}
             </div>
 
-            {/* Contact - SECOND (Urgent Action) */}
-            <Link 
-              href="/contact" 
-              className="px-3 py-2 text-sm text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50 whitespace-nowrap"
-            >
-              Contact
-            </Link>
-
             {/* Police Station Legal Advice Dropdown */}
             <div 
               className="relative group flex-shrink-0"
@@ -958,6 +950,14 @@ export default function Header() {
               className="px-3 py-2 text-sm text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50 whitespace-nowrap"
             >
               Blog
+            </Link>
+
+            {/* Contact - Far Right */}
+            <Link 
+              href="/contact" 
+              className="px-3 py-2 text-sm text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50 whitespace-nowrap ml-auto"
+            >
+              Contact
             </Link>
           </nav>
           
