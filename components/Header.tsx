@@ -41,19 +41,20 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <div className="flex-shrink-0">
+          <div className="flex-shrink-0 max-w-[calc(100%-8rem)] sm:max-w-none">
             <Link 
               href="/" 
-              className="text-2xl font-bold text-slate-800 hover:text-blue-600 transition-colors"
+              className="block hover:text-blue-600 transition-colors"
               aria-label="Police Station Agent home page"
             >
-              Police Station Agent
+              <div className="text-xl sm:text-2xl font-bold text-slate-800 leading-tight">Police Station Agent</div>
+              <div className="text-xs sm:text-sm font-normal text-slate-600 leading-tight mt-0.5">Police Station Legal Advice & Representation</div>
             </Link>
           </div>
           
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-1" role="navigation" aria-label="Main navigation">
-            {/* Police Station Advice Dropdown */}
+            {/* Police Station Legal Advice Dropdown */}
             <div 
               className="relative group"
               onMouseLeave={closeDropdowns}
@@ -64,7 +65,7 @@ export default function Header() {
                 aria-expanded={openDropdown === 'advice'}
                 aria-haspopup="true"
               >
-                Police Station Advice
+                Police Station Legal Advice
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
@@ -91,7 +92,7 @@ export default function Header() {
                         role="menuitem"
                         onClick={closeDropdowns}
                       >
-                        Duty Solicitor Advice
+                        Duty Solicitor at the Police Station
                       </Link>
                     </li>
                     <li>
@@ -119,7 +120,7 @@ export default function Header() {
               )}
             </div>
 
-            {/* Voluntary Interviews Dropdown */}
+            {/* Police Interviews Dropdown */}
             <div 
               className="relative group"
               onMouseLeave={closeDropdowns}
@@ -130,7 +131,7 @@ export default function Header() {
                 aria-expanded={openDropdown === 'voluntary'}
                 aria-haspopup="true"
               >
-                Voluntary Interviews
+                Police Interviews
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
@@ -147,7 +148,17 @@ export default function Header() {
                         role="menuitem"
                         onClick={closeDropdowns}
                       >
-                        Voluntary Police Interview Explained
+                        Voluntary Police Interviews
+                      </Link>
+                    </li>
+                    <li>
+                      <Link 
+                        href="/article-interview-under-caution" 
+                        className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        Interviews Under Caution Explained
                       </Link>
                     </li>
                     <li>
@@ -157,17 +168,7 @@ export default function Header() {
                         role="menuitem"
                         onClick={closeDropdowns}
                       >
-                        Legal Advice Before a Voluntary Interview
-                      </Link>
-                    </li>
-                    <li>
-                      <Link 
-                        href="/refusingpoliceinterview" 
-                        className="block px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors"
-                        role="menuitem"
-                        onClick={closeDropdowns}
-                      >
-                        Should I Attend a Voluntary Interview?
+                        Legal Advice Before Police Interview
                       </Link>
                     </li>
                     <li>
@@ -177,7 +178,7 @@ export default function Header() {
                         role="menuitem"
                         onClick={closeDropdowns}
                       >
-                        What Happens After a Voluntary Interview
+                        What Happens After a Police Interview
                       </Link>
                     </li>
                   </ul>
@@ -185,7 +186,7 @@ export default function Header() {
               )}
             </div>
 
-            {/* Arrested & Custody Dropdown */}
+            {/* Arrest & Police Custody Dropdown */}
             <div 
               className="relative group"
               onMouseLeave={closeDropdowns}
@@ -196,7 +197,7 @@ export default function Header() {
                 aria-expanded={openDropdown === 'arrested'}
                 aria-haspopup="true"
               >
-                Arrested & Custody
+                Arrest & Police Custody
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
@@ -251,7 +252,7 @@ export default function Header() {
               )}
             </div>
 
-            {/* Your Rights Dropdown */}
+            {/* Your Legal Rights Dropdown */}
             <div 
               className="relative group"
               onMouseLeave={closeDropdowns}
@@ -262,7 +263,7 @@ export default function Header() {
                 aria-expanded={openDropdown === 'rights'}
                 aria-haspopup="true"
               >
-                Your Rights
+                Your Legal Rights
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
@@ -395,13 +396,13 @@ export default function Header() {
       {mobileMenuOpen && (
         <div className="lg:hidden border-t border-slate-200 bg-white relative z-50 shadow-lg">
           <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-1" role="navigation" aria-label="Mobile navigation">
-            {/* Police Station Advice */}
+            {/* Police Station Legal Advice */}
             <div>
               <button
                 className="w-full flex items-center justify-between px-4 py-3 text-slate-700 hover:text-blue-600 hover:bg-slate-50 font-medium rounded-md transition-colors"
                 onClick={() => handleDropdownToggle('mobile-advice')}
               >
-                Police Station Advice
+                Police Station Legal Advice
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
@@ -423,7 +424,7 @@ export default function Header() {
                       className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
                       onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
                     >
-                      Duty Solicitor Advice
+                      Duty Solicitor at the Police Station
                     </Link>
                   </li>
                   <li>
@@ -448,13 +449,13 @@ export default function Header() {
               )}
             </div>
 
-            {/* Voluntary Interviews */}
+            {/* Police Interviews */}
             <div>
               <button
                 className="w-full flex items-center justify-between px-4 py-3 text-slate-700 hover:text-blue-600 hover:bg-slate-50 font-medium rounded-md transition-colors"
                 onClick={() => handleDropdownToggle('mobile-voluntary')}
               >
-                Voluntary Interviews
+                Police Interviews
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
@@ -467,7 +468,16 @@ export default function Header() {
                       className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
                       onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
                     >
-                      Voluntary Police Interview Explained
+                      Voluntary Police Interviews
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      href="/article-interview-under-caution" 
+                      className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                    >
+                      Interviews Under Caution Explained
                     </Link>
                   </li>
                   <li>
@@ -476,16 +486,7 @@ export default function Header() {
                       className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
                       onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
                     >
-                      Legal Advice Before a Voluntary Interview
-                    </Link>
-                  </li>
-                  <li>
-                    <Link 
-                      href="/refusingpoliceinterview" 
-                      className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
-                    >
-                      Should I Attend a Voluntary Interview?
+                      Legal Advice Before Police Interview
                     </Link>
                   </li>
                   <li>
@@ -494,20 +495,20 @@ export default function Header() {
                       className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
                       onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
                     >
-                      What Happens After a Voluntary Interview
+                      What Happens After a Police Interview
                     </Link>
                   </li>
                 </ul>
               )}
             </div>
 
-            {/* Arrested & Custody */}
+            {/* Arrest & Police Custody */}
             <div>
               <button
                 className="w-full flex items-center justify-between px-4 py-3 text-slate-700 hover:text-blue-600 hover:bg-slate-50 font-medium rounded-md transition-colors"
                 onClick={() => handleDropdownToggle('mobile-arrested')}
               >
-                Arrested & Custody
+                Arrest & Police Custody
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
@@ -554,13 +555,13 @@ export default function Header() {
               )}
             </div>
 
-            {/* Your Rights */}
+            {/* Your Legal Rights */}
             <div>
               <button
                 className="w-full flex items-center justify-between px-4 py-3 text-slate-700 hover:text-blue-600 hover:bg-slate-50 font-medium rounded-md transition-colors"
                 onClick={() => handleDropdownToggle('mobile-rights')}
               >
-                Your Rights
+                Your Legal Rights
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
