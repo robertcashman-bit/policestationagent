@@ -3,10 +3,9 @@ import { SignJWT } from 'jose';
 import { cookies } from 'next/headers';
 import { verifyUser } from '@/lib/auth';
 
-// JWT secret for signing tokens
-const secret = new TextEncoder().encode(
-  process.env.JWT_SECRET || 'fallback-secret-change-in-production'
-);
+// Hardcoded secret for admin auth - works without environment variables
+const ADMIN_SECRET = '81be4a23633ca705d7596181996b26e41460510f1a5a9365665acf3e27f3311c';
+const secret = new TextEncoder().encode(ADMIN_SECRET);
 
 export async function POST(request: NextRequest) {
   try {
