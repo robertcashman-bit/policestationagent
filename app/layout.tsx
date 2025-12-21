@@ -3,7 +3,13 @@ import "./globals.css";
 import { inter } from './fonts';
 import { SITE_URL, SITE_DOMAIN } from '@/config/site';
 import Script from 'next/script';
-import Chatbot from '@/components/Chatbot';
+import dynamic from 'next/dynamic';
+
+// Lazy load chatbot to avoid blocking page load
+const Chatbot = dynamic(() => import('@/components/Chatbot'), {
+  ssr: false, // Disable SSR for chatbot to ensure it only loads on client
+  loading: () => null, // Don't show loading indicator
+});
 import CookieBanner from '@/components/CookieBanner';
 import InternalLinkInterceptor from '@/components/InternalLinkInterceptor';
 
