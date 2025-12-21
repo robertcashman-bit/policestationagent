@@ -201,7 +201,7 @@ export default function FAQContent() {
         },
         {
           question: 'Can you find out what happened in my case?',
-          answer: 'If we represented you at the police station, we can provide you with information about your case and what happened during the interview. However, we cannot obtain ongoing updates from the police about investigations unless we are formally instructed to represent you. If you have been released under investigation or on bail, we can liaise with the police on your behalf if you instruct us to do so. For cases where we provided representation, we maintain records and can discuss the outcome and next steps. If you need ongoing representation or updates, please contact us on 01732 247427 and we can discuss how we can help.'
+          answer: 'If we represented you at the police station, we can provide you with information about your case and what happened during the interview. We maintain records of all cases where we provided representation and can discuss the outcome and next steps. However, if you were represented by another solicitor at the police station, we will be unable to find out about your case as we do not have access to those records due to confidentiality. If you have been released under investigation or on bail and need ongoing representation, we can liaise with the police on your behalf if you instruct us. Please contact us on 01732 247427 to discuss how we can help.'
         }
       ]
     },
