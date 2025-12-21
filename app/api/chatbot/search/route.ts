@@ -11,7 +11,8 @@ function loadFAQContent() {
     const faqItems: Array<{ question: string; answer: string }> = [];
     
     // Extract FAQ items using regex - handle both single and double quotes, and multiline strings
-    const faqPattern = /question:\s*['"`]([^'"`]+)['"`]\s*,\s*answer:\s*['"`]([^'"`]+)['"`]/gs;
+    // Use [\s\S] instead of . with s flag for ES2017 compatibility
+    const faqPattern = /question:\s*['"`]([^'"`]+)['"`]\s*,\s*answer:\s*['"`]([\s\S]*?)['"`]/g;
     let match;
     
     while ((match = faqPattern.exec(faqContent)) !== null) {
