@@ -12,7 +12,7 @@ export default function BlogAdvertBlock() {
   return (
     <div className="bg-blue-50 border-l-4 border-blue-600 p-6 my-8 rounded-r-lg">
       <h3 className="text-xl font-bold text-slate-900 mb-4">
-        PoliceStationAgent.com - Expert Police Station Representation
+        PoliceStationRep.com - Expert Police Station Representation
       </h3>
       
       <p className="text-slate-700 mb-4">
