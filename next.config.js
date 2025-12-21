@@ -8,6 +8,20 @@ const nextConfig = {
   compress: true,
   // Production optimizations
   productionBrowserSourceMaps: false,
+  // Performance: Enable SWC minification (faster and better compression)
+  swcMinify: true,
+  // Compiler optimizations for better performance
+  compiler: {
+    // Remove console logs in production
+    removeConsole: process.env.NODE_ENV === 'production' ? {
+      exclude: ['error', 'warn'],
+    } : false,
+  },
+  // Experimental optimizations
+  experimental: {
+    // Optimize package imports
+    optimizePackageImports: ['lucide-react'],
+  },
   // Performance: Optimize package imports for smaller bundles
   modularizeImports: {
     'lucide-react': {
