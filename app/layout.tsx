@@ -364,6 +364,10 @@ export default function RootLayout({
         <style dangerouslySetInnerHTML={{ __html: `
           .lcp-hero{font-size:1.25rem;line-height:1.75rem;color:rgb(191 219 254);margin-bottom:2rem;font-weight:500;max-width:56rem;margin-left:auto;margin-right:auto}
           @media(min-width:768px){.lcp-hero{font-size:1.5rem;line-height:2rem}}
+          /* Prevent layout shift */
+          body{margin:0;padding:0}
+          /* Critical above-fold styles */
+          header{position:relative;z-index:50}
         `}} />
         {/* DNS prefetch for external resources - early connection establishment */}
         <link rel="dns-prefetch" href="https://static.wixstatic.com" />
@@ -372,8 +376,6 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://images.unsplash.com" />
         {/* Preconnect for critical external resources - establish early connections */}
         <link rel="preconnect" href="https://static.wixstatic.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         {/* Organization structured data - defer to afterInteractive for better LCP */}
         <Script
           id="organization-schema"

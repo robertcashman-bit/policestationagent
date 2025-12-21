@@ -369,7 +369,7 @@ export default function Header() {
           <div className="lg:hidden flex items-center gap-2">
             <a 
               href={`tel:${PHONE_NUMBER}`}
-              className="inline-flex items-center justify-center gap-1.5 whitespace-nowrap text-xs sm:text-sm font-bold h-10 px-4 rounded-md bg-amber-400 hover:bg-amber-500 text-slate-900 shadow-md"
+              className="inline-flex items-center justify-center gap-1.5 whitespace-nowrap text-xs sm:text-sm font-bold min-h-[44px] h-11 px-4 rounded-md bg-amber-400 hover:bg-amber-500 text-slate-900 shadow-md"
               aria-label="Call now for legal advice"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-phone">
@@ -420,7 +420,7 @@ export default function Header() {
                   <li>
                     <Link 
                       href="/what-is-a-police-station-rep" 
-                      className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
                       onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
                     >
                       Police Station Representation
@@ -429,7 +429,7 @@ export default function Header() {
                   <li>
                     <Link 
                       href="/what-is-a-criminal-solicitor" 
-                      className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
                       onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
                     >
                       Duty Solicitor at the Police Station
@@ -438,7 +438,7 @@ export default function Header() {
                   <li>
                     <Link 
                       href="/article-interview-under-caution" 
-                      className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
                       onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
                     >
                       Interview Under Caution
@@ -447,7 +447,7 @@ export default function Header() {
                   <li>
                     <Link 
                       href="/what-to-expect-at-a-police-interview-in-kent" 
-                      className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
                       onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
                     >
                       What Happens at the Police Station
@@ -473,7 +473,7 @@ export default function Header() {
                   <li>
                     <Link 
                       href="/voluntary-police-interview" 
-                      className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
                       onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
                     >
                       Voluntary Police Interviews
@@ -482,7 +482,7 @@ export default function Header() {
                   <li>
                     <Link 
                       href="/article-interview-under-caution" 
-                      className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
                       onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
                     >
                       Interviews Under Caution Explained
@@ -491,7 +491,7 @@ export default function Header() {
                   <li>
                     <Link 
                       href="/article-police-caution-before-interview" 
-                      className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
                       onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
                     >
                       Legal Advice Before Police Interview
@@ -500,7 +500,7 @@ export default function Header() {
                   <li>
                     <Link 
                       href="/after-a-police-interview" 
-                      className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
                       onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
                     >
                       What Happens After a Police Interview
@@ -526,7 +526,7 @@ export default function Header() {
                   <li>
                     <Link 
                       href="/arrested-at-police-station" 
-                      className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
                       onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
                     >
                       Arrested at a Police Station
@@ -535,7 +535,7 @@ export default function Header() {
                   <li>
                     <Link 
                       href="/your-rights-in-custody" 
-                      className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
                       onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
                     >
                       Rights in Police Custody
@@ -544,7 +544,7 @@ export default function Header() {
                   <li>
                     <Link 
                       href="/police-bail-explained" 
-                      className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
                       onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
                     >
                       Police Bail Explained
@@ -553,7 +553,7 @@ export default function Header() {
                   <li>
                     <Link 
                       href="/released-under-investigation" 
-                      className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
                       onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
                     >
                       Release Under Investigation (RUI)
@@ -579,7 +579,7 @@ export default function Header() {
                   <li>
                     <Link 
                       href="/what-is-a-criminal-solicitor" 
-                      className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
                       onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
                     >
                       Right to a Solicitor
@@ -588,7 +588,7 @@ export default function Header() {
                   <li>
                     <Link 
                       href="/freelegaladvice" 
-                      className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
                       onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
                     >
                       Free Legal Advice Explained
@@ -597,7 +597,7 @@ export default function Header() {
                   <li>
                     <Link 
                       href="/article-rights-kent-police-station-2025" 
-                      className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
                       onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
                     >
                       Your Rights at the Police Station
@@ -606,7 +606,7 @@ export default function Header() {
                   <li>
                     <Link 
                       href="/after-a-police-interview" 
-                      className="block px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-md"
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
                       onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
                     >
                       What Happens After Police Contact
