@@ -248,9 +248,10 @@ export default function BlogCarousel({
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-100 transition-all duration-500">
             <div className="grid md:grid-cols-2 gap-0">
               {/* Image/Placeholder - Fixed 16:9 aspect ratio */}
-              <div className="relative aspect-[16/9] md:aspect-[4/3] bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center overflow-hidden">
+              <div key={`image-container-${currentPost.slug}-${currentIndex}`} className="relative aspect-[16/9] md:aspect-[4/3] bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center overflow-hidden">
                 {currentPost.featuredImage ? (
                   <Image
+                    key={`carousel-image-${currentPost.slug}-${currentIndex}`}
                     src={currentPost.featuredImage}
                     alt={currentPost.title || 'Blog post image'}
                     fill
