@@ -89,7 +89,7 @@ export default function Header() {
         {/* Navigation Row - Separate Line */}
         <div className="flex justify-between items-center h-16">
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-0.5 flex-nowrap flex-1" role="navigation" aria-label="Main navigation">
+          <nav className="hidden lg:flex items-center space-x-0.5 flex-nowrap flex-1 justify-between" role="navigation" aria-label="Main navigation">
             {/* Services Dropdown - FIRST (Most Important) */}
             <div 
               className="relative group flex-shrink-0"
@@ -951,15 +951,20 @@ export default function Header() {
             >
               Blog
             </Link>
+          </nav>
 
-            {/* Contact - Far Right */}
+          {/* Contact - Far Right */}
+          <div className="hidden lg:flex items-center ml-4 flex-shrink-0">
             <Link 
               href="/contact" 
-              className="px-3 py-2 text-sm text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50 whitespace-nowrap ml-auto"
+              className="px-3 py-2 text-sm text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50 whitespace-nowrap"
             >
               Contact
             </Link>
-          </nav>
+          </div>
+          
+          {/* Desktop Call Now Button */}
+          <div className="hidden lg:flex items-center ml-4 flex-shrink-0">
           
           {/* Desktop Call Now Button */}
           <div className="hidden lg:flex items-center ml-4 flex-shrink-0">
