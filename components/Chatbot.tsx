@@ -205,8 +205,7 @@ export default function Chatbot() {
     }
     setIsOpen(false);
     setIsMinimized(false);
-    setViewMode('options');
-    setShowHumanEscalation(false);
+    setViewMode('input');
     setMessages([{
       id: '1',
       type: 'bot',
