@@ -376,22 +376,6 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://images.unsplash.com" />
         {/* Preconnect for critical external resources - establish early connections */}
         <link rel="preconnect" href="https://static.wixstatic.com" crossOrigin="anonymous" />
-        {/* Trusted Types policy for DOM-based XSS protection */}
-        <Script
-          id="trusted-types"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              if (typeof window !== 'undefined' && window.trustedTypes && window.trustedTypes.createPolicy) {
-                window.trustedTypes.createPolicy('default', {
-                  createHTML: (string) => string,
-                  createScript: (string) => string,
-                  createScriptURL: (string) => string,
-                });
-              }
-            `,
-          }}
-        />
         {/* Organization structured data - defer to afterInteractive for better LCP */}
         <Script
           id="organization-schema"
