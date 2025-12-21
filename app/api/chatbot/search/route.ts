@@ -345,15 +345,19 @@ export async function POST(request: NextRequest) {
               ).join('\n')
             : '';
 
-          const systemPrompt = `You are a helpful legal assistant for a police station duty solicitor service in Kent, UK. 
-Answer questions based ONLY on the provided context from our website (FAQ, blog posts, and pages). 
-- Be succinct and to the point
-- Extract only the most important information
-- Maximum 100 words
-- Use simple, clear language
-- If context doesn't fully answer, provide what you can
+          const systemPrompt = `You are a helpful legal assistant for Police Station Agent (policestationagent.com), a Kent police station duty solicitor service.
 
-Use markdown: **bold** for key points.`;
+CRITICAL RULES:
+1. Answer questions based STRICTLY on the provided context from our website ONLY
+2. Do NOT use general legal knowledge - only use information from the provided context
+3. If the context doesn't contain relevant information, say "I don't have specific information about that on our website. Please check our [FAQ page](/faq) or [contact us](/contact) for more details."
+4. Be specific and directly relevant to the question asked
+5. Reference specific details from the website content (locations, services, procedures mentioned)
+6. Maximum 100 words
+7. Use simple, clear language
+8. Use markdown: **bold** for key points
+
+Focus on providing accurate, site-specific information that directly answers the user's question.`;
 
           const userPrompt = conversationContext
             ? `Previous conversation:\n${conversationContext}\n\nQuestion: ${query}\n\nWebsite Context:\n${context}`
@@ -365,10 +369,8 @@ Use markdown: **bold** for key points.`;
           ], 200);
           
           if (aiAnswer && aiAnswer.trim().length > 20) {
-            const phoneMessage = isGenuineLegalClient(query) 
-              ? '\n\n*If you need further advice regarding a forthcoming police interview call 01732 247427*'
-              : '';
-            answer = aiAnswer.trim() + phoneMessage;
+            // Remove phone message - users can find contact info elsewhere
+            answer = aiAnswer.trim();
             usedAI = true;
           }
         } catch (error) {
@@ -383,14 +385,12 @@ Use markdown: **bold** for key points.`;
           ? cleanContent 
           : cleanContent.length > 200 ? cleanContent.substring(0, 200) + '...' : cleanContent;
         
-        const phoneMessage = isGenuineLegalClient(query) 
-          ? '\n\n*If you need further advice regarding a forthcoming police interview call 01732 247427*'
-          : '';
+        // Remove phone message - users can find contact info elsewhere
         
         if (topResult.type === 'faq') {
-          answer = displayContent + phoneMessage;
+          answer = displayContent;
         } else {
-          answer = `Based on "${topResult.title}": ${displayContent}` + phoneMessage;
+          answer = `Based on "${topResult.title}": ${displayContent}`;
         }
         
         if (topResults.length > 1 && topResults[1].score > 10) {
@@ -398,31 +398,8 @@ Use markdown: **bold** for key points.`;
         }
       }
     } else {
-      if (OPENAI_API_KEY) {
-        try {
-          const aiAnswer = await callOpenAI([
-            { role: 'system', content: 'You are a helpful legal assistant for a Kent police station solicitor. Be brief, clear, and to the point. Maximum 80 words.' },
-            { role: 'user', content: `Question: ${query}\n\nNo specific info found. Provide a brief, helpful general response based on criminal law knowledge.` }
-          ], 120);
-          
-          if (aiAnswer && aiAnswer.trim().length > 20) {
-            const phoneMessage = isGenuineLegalClient(query) 
-              ? '\n\n*If you need further advice regarding a forthcoming police interview call 01732 247427*'
-              : '';
-            answer = aiAnswer.trim() + phoneMessage;
-            usedAI = true;
-          }
-        } catch (error) {
-          console.error('OpenAI fallback failed:', error);
-        }
-      }
-      
-      if (!usedAI) {
-        const phoneMessage = isGenuineLegalClient(query) 
-          ? '\n\n*If you need further advice regarding a forthcoming police interview call 01732 247427*'
-          : '';
-        answer = 'I don\'t have specific information about that in our resources.' + phoneMessage;
-      }
+      // When no results found, don't use general AI knowledge - only reference site resources
+      answer = `I don't have specific information about that on our website. Please check our [FAQ page](/faq), [blog articles](/blog), or [contact us](/contact) for more details about police station representation in Kent.`;
     }
     
     return NextResponse.json({

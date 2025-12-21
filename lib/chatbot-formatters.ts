@@ -40,17 +40,13 @@ export function isUrgentQuery(query: string): boolean {
 
 /**
  * Extract quick actions from message content
+ * REMOVED: Red call box - no longer showing call buttons in chat responses
  */
 export function extractQuickActions(content: string, sources?: Array<{ type: string; title: string; url?: string }>): Array<{ label: string; action: string; type: 'call' | 'link' | 'form' }> {
   const actions: Array<{ label: string; action: string; type: 'call' | 'link' | 'form' }> = [];
   
-  if (isUrgentQuery(content)) {
-    actions.push({
-      label: 'Call Now: 01732 247427',
-      action: 'tel:01732247427',
-      type: 'call'
-    });
-  }
+  // Removed urgent call button - users can find contact info in footer/header
+  // No actions returned to prevent red call box from appearing
   
   return actions;
 }
