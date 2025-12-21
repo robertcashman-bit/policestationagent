@@ -45,7 +45,6 @@ export default function Chatbot() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [disclaimerExpanded, setDisclaimerExpanded] = useState(false);
   const [inputValue, setInputValue] = useState('');
-  const [showHumanEscalation, setShowHumanEscalation] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
@@ -129,11 +128,10 @@ export default function Chatbot() {
     const trimmedMessage = message.trim();
     setInputValue('');
     setViewMode('input');
-    setShowHumanEscalation(false);
     setShowQuestions(false); // Hide questions after first message
 
     if (isUrgentQuery(trimmedMessage)) {
-      setShowHumanEscalation(true);
+      // Just track it, don't show escalation box
     }
 
     const userMsg: ChatMessage = {
@@ -199,9 +197,6 @@ export default function Chatbot() {
     setMessages(prev => prev.map(msg => 
       msg.id === messageId ? { ...msg, feedback } : msg
     ));
-    if (feedback === 'negative') {
-      setShowHumanEscalation(true);
-    }
   };
 
   const resetChat = () => {

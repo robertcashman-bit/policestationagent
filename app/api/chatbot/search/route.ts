@@ -289,12 +289,13 @@ export async function POST(request: NextRequest) {
 
           const systemPrompt = `You are a helpful legal assistant for a police station duty solicitor service in Kent, UK. 
 Answer questions based ONLY on the provided context from our website (FAQ, blog posts, and pages). 
-- Prioritize FAQ answers
-- Extract direct, actionable information
-- Be concise (under 150 words)
-- If context doesn't fully answer the question, provide what you can from the available information.
+- Be succinct and to the point
+- Extract only the most important information
+- Maximum 100 words
+- Use simple, clear language
+- If context doesn't fully answer, provide what you can
 
-Use markdown: **bold** for important info, [text](url) for links.`;
+Use markdown: **bold** for key points.`;
 
           const userPrompt = conversationContext
             ? `Previous conversation:\n${conversationContext}\n\nQuestion: ${query}\n\nWebsite Context:\n${context}`
@@ -303,7 +304,7 @@ Use markdown: **bold** for important info, [text](url) for links.`;
           const aiAnswer = await callOpenAI([
             { role: 'system', content: systemPrompt },
             { role: 'user', content: userPrompt }
-          ], 300);
+          ], 200);
           
           if (aiAnswer && aiAnswer.trim().length > 20) {
             answer = aiAnswer.trim() + '\n\n*If you need further advice regarding a forthcoming police interview call 01732 247427*';
@@ -335,9 +336,9 @@ Use markdown: **bold** for important info, [text](url) for links.`;
       if (OPENAI_API_KEY) {
         try {
           const aiAnswer = await callOpenAI([
-            { role: 'system', content: 'You are a helpful legal assistant for a Kent police station solicitor. Be brief and helpful.' },
+            { role: 'system', content: 'You are a helpful legal assistant for a Kent police station solicitor. Be brief, clear, and to the point. Maximum 80 words.' },
             { role: 'user', content: `Question: ${query}\n\nNo specific info found. Provide a brief, helpful general response based on criminal law knowledge.` }
-          ], 150);
+          ], 120);
           
           if (aiAnswer && aiAnswer.trim().length > 20) {
             answer = aiAnswer.trim() + '\n\n*If you need further advice regarding a forthcoming police interview call 01732 247427*';
