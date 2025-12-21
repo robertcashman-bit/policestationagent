@@ -5,6 +5,64 @@ import { processQuery, calculateSearchScore } from '@/lib/chatbot-utils';
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
+function isGenuineLegalClient(query: string): boolean {
+  const lowerQuery = query.toLowerCase();
+  
+  // EXCLUDE: Third-party queries (asking about others)
+  const thirdPartyIndicators = [
+    'someone', 'friend', 'family', 'relative', 'loved one', 'partner',
+    'they', 'them', 'their', 'person', 'he', 'she', 'his', 'her',
+    'find out about', 'information about', 'get information',
+    'someone in custody', 'friend arrested', 'family member arrested'
+  ];
+  
+  if (thirdPartyIndicators.some(ind => lowerQuery.includes(ind))) {
+    return false;
+  }
+  
+  // EXCLUDE: Crime reporting
+  const crimeReportingIndicators = [
+    'report a crime', 'report an incident', 'make a report',
+    'been a victim', 'report to police', 'file a report'
+  ];
+  
+  if (crimeReportingIndicators.some(ind => lowerQuery.includes(ind))) {
+    return false;
+  }
+  
+  // EXCLUDE: Pure informational/educational queries
+  const informationalIndicators = [
+    'what is', 'what are', 'how does', 'how long', 'explain',
+    'tell me about', 'which police stations', 'do you cover',
+    'is legal advice free', 'how much does', 'what happens if'
+  ];
+  
+  // Only exclude if purely informational (no action words)
+  const hasActionWords = ['need', 'want', 'should i', 'going to'].some(w => lowerQuery.includes(w));
+  
+  if (informationalIndicators.some(ind => lowerQuery.includes(ind)) && !hasActionWords) {
+    return false;
+  }
+  
+  // INCLUDE: First-person with immediate legal need
+  const firstPersonIndicators = [
+    ' i ', ' me ', ' my ', 'myself', "i've", "i have", "i need", "i want", "i'm", " i am"
+  ];
+  
+  const immediateLegalNeedIndicators = [
+    'voluntary interview', 'police interview', 'been arrested', 'arrested me',
+    'interview coming', 'interview next', 'going to be interviewed',
+    'need a solicitor', 'need representation', 'need legal advice',
+    'what should i do', 'contacted by police', 'police want to interview',
+    'going to police station', 'interview under caution'
+  ];
+  
+  const isFirstPerson = firstPersonIndicators.some(ind => lowerQuery.includes(ind));
+  const hasImmediateNeed = immediateLegalNeedIndicators.some(ind => lowerQuery.includes(ind));
+  
+  return isFirstPerson && hasImmediateNeed;
+}
+
 async function callOpenAI(
   messages: Array<{ role: string; content: string }>,
   maxTokens: number = 300
@@ -307,7 +365,10 @@ Use markdown: **bold** for key points.`;
           ], 200);
           
           if (aiAnswer && aiAnswer.trim().length > 20) {
-            answer = aiAnswer.trim() + '\n\n*If you need further advice regarding a forthcoming police interview call 01732 247427*';
+            const phoneMessage = isGenuineLegalClient(query) 
+              ? '\n\n*If you need further advice regarding a forthcoming police interview call 01732 247427*'
+              : '';
+            answer = aiAnswer.trim() + phoneMessage;
             usedAI = true;
           }
         } catch (error) {
@@ -322,10 +383,14 @@ Use markdown: **bold** for key points.`;
           ? cleanContent 
           : cleanContent.length > 200 ? cleanContent.substring(0, 200) + '...' : cleanContent;
         
+        const phoneMessage = isGenuineLegalClient(query) 
+          ? '\n\n*If you need further advice regarding a forthcoming police interview call 01732 247427*'
+          : '';
+        
         if (topResult.type === 'faq') {
-          answer = displayContent + '\n\n*If you need further advice regarding a forthcoming police interview call 01732 247427*';
+          answer = displayContent + phoneMessage;
         } else {
-          answer = `Based on "${topResult.title}": ${displayContent}\n\n*If you need further advice regarding a forthcoming police interview call 01732 247427*`;
+          answer = `Based on "${topResult.title}": ${displayContent}` + phoneMessage;
         }
         
         if (topResults.length > 1 && topResults[1].score > 10) {
@@ -341,7 +406,10 @@ Use markdown: **bold** for key points.`;
           ], 120);
           
           if (aiAnswer && aiAnswer.trim().length > 20) {
-            answer = aiAnswer.trim() + '\n\n*If you need further advice regarding a forthcoming police interview call 01732 247427*';
+            const phoneMessage = isGenuineLegalClient(query) 
+              ? '\n\n*If you need further advice regarding a forthcoming police interview call 01732 247427*'
+              : '';
+            answer = aiAnswer.trim() + phoneMessage;
             usedAI = true;
           }
         } catch (error) {
@@ -350,7 +418,10 @@ Use markdown: **bold** for key points.`;
       }
       
       if (!usedAI) {
-        answer = 'I don\'t have specific information about that in our resources.\n\n*If you need further advice regarding a forthcoming police interview call 01732 247427*';
+        const phoneMessage = isGenuineLegalClient(query) 
+          ? '\n\n*If you need further advice regarding a forthcoming police interview call 01732 247427*'
+          : '';
+        answer = 'I don\'t have specific information about that in our resources.' + phoneMessage;
       }
     }
     
