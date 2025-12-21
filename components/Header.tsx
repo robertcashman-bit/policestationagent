@@ -39,9 +39,9 @@ export default function Header() {
 
       {/* Main Header */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
-          {/* Logo */}
-          <div className="flex-shrink-0 max-w-[calc(100%-8rem)] sm:max-w-none">
+        {/* Logo Row - Separate Line */}
+        <div className="flex justify-between items-center py-3 border-b border-slate-200">
+          <div className="flex-shrink-0">
             <Link 
               href="/" 
               className="block hover:text-blue-600 transition-colors group"
@@ -52,8 +52,44 @@ export default function Header() {
             </Link>
           </div>
           
+          {/* Mobile: Call Now Button + Hamburger */}
+          <div className="lg:hidden flex items-center gap-2">
+            <a 
+              href={`tel:${PHONE_NUMBER}`}
+              className="inline-flex items-center justify-center gap-1.5 whitespace-nowrap text-xs sm:text-sm font-bold min-h-[44px] h-11 px-4 rounded-md bg-amber-400 hover:bg-amber-500 text-slate-900 shadow-md"
+              aria-label="Call now for legal advice"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-phone">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+              <span className="hidden sm:inline">Call Now</span>
+            </a>
+            <button
+              className="flex items-center justify-center w-11 h-11 bg-slate-800 hover:bg-slate-900 text-white rounded-lg shadow-md transition-colors"
+              onClick={() => {
+                setMobileMenuOpen(!mobileMenuOpen);
+                if (mobileMenuOpen) {
+                  closeDropdowns();
+                }
+              }}
+              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileMenuOpen}
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                {mobileMenuOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        {/* Navigation Row - Separate Line */}
+        <div className="flex justify-between items-center h-16">
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-0.5 flex-nowrap" role="navigation" aria-label="Main navigation">
+          <nav className="hidden lg:flex items-center space-x-0.5 flex-nowrap flex-1" role="navigation" aria-label="Main navigation">
             {/* Police Station Legal Advice Dropdown */}
             <div 
               className="relative group flex-shrink-0"
@@ -706,7 +742,7 @@ export default function Header() {
           </nav>
           
           {/* Desktop Call Now Button */}
-          <div className="hidden lg:flex items-center ml-2">
+          <div className="hidden lg:flex items-center ml-4 flex-shrink-0">
             <a 
               href={`tel:${PHONE_NUMBER}`}
               className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 rounded-lg px-6 bg-amber-400 hover:bg-amber-500 text-slate-900 shadow-md hover:shadow-lg hover:scale-105"
@@ -717,39 +753,6 @@ export default function Header() {
               </svg>
               Call Now
             </a>
-          </div>
-          
-          {/* Mobile: Call Now Button + Hamburger */}
-          <div className="lg:hidden flex items-center gap-2">
-            <a 
-              href={`tel:${PHONE_NUMBER}`}
-              className="inline-flex items-center justify-center gap-1.5 whitespace-nowrap text-xs sm:text-sm font-bold min-h-[44px] h-11 px-4 rounded-md bg-amber-400 hover:bg-amber-500 text-slate-900 shadow-md"
-              aria-label="Call now for legal advice"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-phone">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-              </svg>
-              <span className="hidden sm:inline">Call Now</span>
-            </a>
-            <button
-              className="flex items-center justify-center w-11 h-11 bg-slate-800 hover:bg-slate-900 text-white rounded-lg shadow-md transition-colors"
-              onClick={() => {
-                setMobileMenuOpen(!mobileMenuOpen);
-                if (mobileMenuOpen) {
-                  closeDropdowns();
-                }
-              }}
-              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-              aria-expanded={mobileMenuOpen}
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                {mobileMenuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
           </div>
         </div>
       </div>
