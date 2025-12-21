@@ -273,8 +273,10 @@ export default function Header() {
               {openDropdown === 'rights' && (
                 <div 
                   className="absolute top-full left-0 mt-1.5 w-72 bg-white rounded-lg shadow-xl border border-slate-200/80 py-1.5 z-50"
+                  role="region"
+                  aria-label="Your Legal Rights submenu"
                 >
-                  <ul role="menu">
+                  <ul>
                     <li>
                       <Link 
                         href="/what-is-a-criminal-solicitor" 
