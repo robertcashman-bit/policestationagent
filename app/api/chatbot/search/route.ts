@@ -322,9 +322,9 @@ Use markdown: **bold** for important info, [text](url) for links.`;
           : cleanContent.length > 200 ? cleanContent.substring(0, 200) + '...' : cleanContent;
         
         if (topResult.type === 'faq') {
-          answer = displayContent;
+          answer = displayContent + '\n\n*If you need further advice regarding a forthcoming police interview call 01732 247427*';
         } else {
-          answer = `Based on "${topResult.title}": ${displayContent}`;
+          answer = `Based on "${topResult.title}": ${displayContent}\n\n*If you need further advice regarding a forthcoming police interview call 01732 247427*`;
         }
         
         if (topResults.length > 1 && topResults[1].score > 10) {
@@ -349,7 +349,7 @@ Use markdown: **bold** for important info, [text](url) for links.`;
       }
       
       if (!usedAI) {
-        answer = 'I don\'t have specific information about that in our resources.';
+        answer = 'I don\'t have specific information about that in our resources.\n\n*If you need further advice regarding a forthcoming police interview call 01732 247427*';
       }
     }
     
