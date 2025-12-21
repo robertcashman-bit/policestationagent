@@ -3,6 +3,12 @@ import "./globals.css";
 import { inter } from './fonts';
 import { SITE_URL, SITE_DOMAIN } from '@/config/site';
 import Script from 'next/script';
+import dynamic from 'next/dynamic';
+
+const Chatbot = dynamic(() => import('@/components/Chatbot'), {
+  ssr: false,
+  loading: () => null,
+});
 import CookieBanner from '@/components/CookieBanner';
 import InternalLinkInterceptor from '@/components/InternalLinkInterceptor';
 
@@ -399,6 +405,8 @@ export default function RootLayout({
         <InternalLinkInterceptor>{children}</InternalLinkInterceptor>
         {/* Cookie Consent Banner - Minimal, compliant */}
         <CookieBanner />
+        {/* Chatbot Assistant */}
+        <Chatbot />
       </body>
     </html>
   );
