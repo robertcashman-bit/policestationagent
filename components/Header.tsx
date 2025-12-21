@@ -75,41 +75,43 @@ export default function Header() {
               {openDropdown === 'advice' && (
                 <div 
                   className="absolute top-full left-0 mt-1.5 w-72 bg-white rounded-lg shadow-xl border border-slate-200/80 py-1.5 z-50"
-                  role="region"
-                  aria-label="Police Station Legal Advice submenu"
                 >
-                  <ul>
-                    <li>
+                  <ul role="menu" aria-label="Police Station Legal Advice">
+                    <li role="none">
                       <Link 
                         href="/what-is-a-police-station-rep" 
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
                         onClick={closeDropdowns}
                       >
                         Police Station Representation
                       </Link>
                     </li>
-                    <li>
+                    <li role="none">
                       <Link 
                         href="/what-is-a-criminal-solicitor" 
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
                         onClick={closeDropdowns}
                       >
                         Duty Solicitor at the Police Station
                       </Link>
                     </li>
-                    <li>
+                    <li role="none">
                       <Link 
                         href="/article-interview-under-caution" 
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
                         onClick={closeDropdowns}
                       >
                         Interview Under Caution
                       </Link>
                     </li>
-                    <li>
+                    <li role="none">
                       <Link 
                         href="/what-to-expect-at-a-police-interview-in-kent" 
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
                         onClick={closeDropdowns}
                       >
                         What Happens at the Police Station
@@ -141,41 +143,43 @@ export default function Header() {
               {openDropdown === 'voluntary' && (
                 <div 
                   className="absolute top-full left-0 mt-1.5 w-72 bg-white rounded-lg shadow-xl border border-slate-200/80 py-1.5 z-50"
-                  role="region"
-                  aria-label="Police Interviews submenu"
                 >
-                  <ul>
-                    <li>
+                  <ul role="menu" aria-label="Police Interviews">
+                    <li role="none">
                       <Link 
                         href="/voluntary-police-interview" 
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
                         onClick={closeDropdowns}
                       >
                         Voluntary Police Interviews
                       </Link>
                     </li>
-                    <li>
+                    <li role="none">
                       <Link 
                         href="/article-interview-under-caution" 
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
                         onClick={closeDropdowns}
                       >
                         Interviews Under Caution Explained
                       </Link>
                     </li>
-                    <li>
+                    <li role="none">
                       <Link 
                         href="/article-police-caution-before-interview" 
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
                         onClick={closeDropdowns}
                       >
                         Legal Advice Before Police Interview
                       </Link>
                     </li>
-                    <li>
+                    <li role="none">
                       <Link 
                         href="/after-a-police-interview" 
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
                         onClick={closeDropdowns}
                       >
                         What Happens After a Police Interview
@@ -207,41 +211,43 @@ export default function Header() {
               {openDropdown === 'arrested' && (
                 <div 
                   className="absolute top-full left-0 mt-1.5 w-72 bg-white rounded-lg shadow-xl border border-slate-200/80 py-1.5 z-50"
-                  role="region"
-                  aria-label="Arrest & Police Custody submenu"
                 >
-                  <ul>
-                    <li>
+                  <ul role="menu" aria-label="Arrest & Police Custody">
+                    <li role="none">
                       <Link 
                         href="/arrested-at-police-station" 
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
                         onClick={closeDropdowns}
                       >
                         Arrested at a Police Station
                       </Link>
                     </li>
-                    <li>
+                    <li role="none">
                       <Link 
                         href="/your-rights-in-custody" 
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
                         onClick={closeDropdowns}
                       >
                         Rights in Police Custody
                       </Link>
                     </li>
-                    <li>
+                    <li role="none">
                       <Link 
                         href="/police-bail-explained" 
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
                         onClick={closeDropdowns}
                       >
                         Police Bail Explained
                       </Link>
                     </li>
-                    <li>
+                    <li role="none">
                       <Link 
                         href="/released-under-investigation" 
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
                         onClick={closeDropdowns}
                       >
                         Release Under Investigation (RUI)
@@ -273,41 +279,43 @@ export default function Header() {
               {openDropdown === 'rights' && (
                 <div 
                   className="absolute top-full left-0 mt-1.5 w-72 bg-white rounded-lg shadow-xl border border-slate-200/80 py-1.5 z-50"
-                  role="region"
-                  aria-label="Your Legal Rights submenu"
                 >
-                  <ul>
-                    <li>
+                  <ul role="menu" aria-label="Your Legal Rights">
+                    <li role="none">
                       <Link 
                         href="/what-is-a-criminal-solicitor" 
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
                         onClick={closeDropdowns}
                       >
                         Right to a Solicitor
                       </Link>
                     </li>
-                    <li>
+                    <li role="none">
                       <Link 
                         href="/freelegaladvice" 
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
                         onClick={closeDropdowns}
                       >
                         Free Legal Advice Explained
                       </Link>
                     </li>
-                    <li>
+                    <li role="none">
                       <Link 
                         href="/article-rights-kent-police-station-2025" 
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
                         onClick={closeDropdowns}
                       >
                         Your Rights at the Police Station
                       </Link>
                     </li>
-                    <li>
+                    <li role="none">
                       <Link 
                         href="/after-a-police-interview" 
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
                         onClick={closeDropdowns}
                       >
                         What Happens After Police Contact
