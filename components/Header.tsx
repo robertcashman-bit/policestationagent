@@ -965,9 +965,6 @@ export default function Header() {
           
           {/* Desktop Call Now Button */}
           <div className="hidden lg:flex items-center ml-4 flex-shrink-0">
-          
-          {/* Desktop Call Now Button */}
-          <div className="hidden lg:flex items-center ml-4 flex-shrink-0">
             <a 
               href={`tel:${PHONE_NUMBER}`}
               className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 rounded-lg px-6 bg-amber-400 hover:bg-amber-500 text-slate-900 shadow-md hover:shadow-lg hover:scale-105"
