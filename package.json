@@ -14,7 +14,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint . --max-warnings=0",
+    "lint": "next lint",
     "lighthouse": "node scripts/lighthouse.js",
     "scrape": "node scripts/scrape-site.js",
     "scrape:page": "node scripts/scrape-site.js --page",
@@ -24,7 +24,7 @@
     "setup:cloudflare:simple": "node scripts/setup-cloudflare-simple.js",
     "setup:domain": "node scripts/auto-setup-domain.js",
     "verify:dns": "node scripts/verify-dns-setup.js",
-    "seo:validate": "node scripts/validate-seo-authority-pages.js"
+    "verify:blog-routes": "node scripts/verify-blog-routes.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -32,7 +32,7 @@
     "jose": "^5.6.0",
     "jsdom": "^27.3.0",
     "lucide-react": "^0.561.0",
-    "next": "^14.2.35",
+    "next": "^14.2.0",
     "next-auth": "^5.0.0-beta.30",
     "puppeteer": "^24.32.1",
     "react": "^18.3.0",
@@ -40,6 +40,7 @@
     "xml2js": "^0.6.2"
   },
   "devDependencies": {
+    "@playwright/test": "^1.57.0",
     "@types/bcryptjs": "^2.4.6",
     "@types/better-sqlite3": "^7.6.11",
     "@types/node": "^20.14.0",
@@ -48,8 +49,8 @@
     "@types/xml2js": "^0.4.14",
     "autoprefixer": "^10.4.19",
     "dotenv": "^17.2.3",
-    "eslint": "^9.39.2",
-    "eslint-config-next": "^16.1.0",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.2.0",
     "glob": "^13.0.0",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.0",

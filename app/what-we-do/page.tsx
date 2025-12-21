@@ -255,7 +255,7 @@ export default function Page() {
                     <span>Trusted by law firms nationwide</span>
                   </li>
                 </ul>
-                <a href="/forsolicitors" className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 shadow h-10 rounded-md px-6 bg-amber-600 hover:bg-amber-700 text-white font-bold">
+                <a href="/for-solicitors" className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 shadow h-10 rounded-md px-6 bg-amber-600 hover:bg-amber-700 text-white font-bold">
                   Learn About Agent Services
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-right w-4 h-4 ml-2">
                     <path d="M5 12h14"></path>
