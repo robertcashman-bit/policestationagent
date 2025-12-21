@@ -7,7 +7,7 @@ const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
 async function callOpenAI(
   messages: Array<{ role: string; content: string }>,
-  maxTokens: number = 250
+  maxTokens: number = 300
 ): Promise<string> {
   if (!OPENAI_API_KEY) {
     throw new Error('OPENAI_API_KEY not configured');
@@ -36,6 +36,21 @@ async function callOpenAI(
   return data.choices[0]?.message?.content || '';
 }
 
+function stripHTML(html: string): string {
+  if (!html) return '';
+  let text = html.replace(/<[^>]*>/g, '');
+  text = text.replace(/&nbsp;/g, ' ');
+  text = text.replace(/&amp;/g, '&');
+  text = text.replace(/&lt;/g, '<');
+  text = text.replace(/&gt;/g, '>');
+  text = text.replace(/&quot;/g, '"');
+  text = text.replace(/&#39;/g, "'");
+  text = text.replace(/&hellip;/g, '...');
+  text = text.replace(/\s+/g, ' ').trim();
+  return text;
+}
+
+// Load FAQ from FAQContent.tsx
 function loadFAQContent() {
   try {
     const faqPath = path.join(process.cwd(), 'app', 'faq', 'FAQContent.tsx');
@@ -62,6 +77,7 @@ function loadFAQContent() {
   }
 }
 
+// Load blog posts
 function loadBlogPosts() {
   try {
     const blogPath = path.join(process.cwd(), 'data', 'blog-posts-full.json');
@@ -70,7 +86,7 @@ function loadBlogPosts() {
       const posts = JSON.parse(blogData);
       return posts.map((post: any) => ({
         title: post.title,
-        content: post.content || post.excerpt || '',
+        content: stripHTML(post.content || post.excerpt || ''),
         slug: post.slug
       }));
     }
@@ -81,17 +97,53 @@ function loadBlogPosts() {
   }
 }
 
-function stripHTML(html: string): string {
-  if (!html) return '';
-  let text = html.replace(/<[^>]*>/g, '');
-  text = text.replace(/&nbsp;/g, ' ');
-  text = text.replace(/&amp;/g, '&');
-  text = text.replace(/&lt;/g, '<');
-  text = text.replace(/&gt;/g, '>');
-  text = text.replace(/&quot;/g, '"');
-  text = text.replace(/&#39;/g, "'");
-  text = text.replace(/\s+/g, ' ').trim();
-  return text;
+// Crawl all app pages for content
+function crawlAllPages() {
+  const pages: Array<{ title: string; content: string; url: string }> = [];
+  
+  try {
+    const appDir = path.join(process.cwd(), 'app');
+    const directories = fs.readdirSync(appDir, { withFileTypes: true });
+    
+    for (const dir of directories) {
+      if (dir.isDirectory()) {
+        const pagePath = path.join(appDir, dir.name, 'page.tsx');
+        if (fs.existsSync(pagePath)) {
+          try {
+            const pageContent = fs.readFileSync(pagePath, 'utf8');
+            
+            // Extract dangerouslySetInnerHTML content
+            const htmlMatch = pageContent.match(/dangerouslySetInnerHTML=\{\s*\{\s*__html:\s*`([^`]+)`/);
+            if (htmlMatch) {
+              const htmlContent = stripHTML(htmlMatch[1]);
+              const cleanContent = htmlContent.substring(0, 5000); // Limit to 5000 chars per page
+              
+              // Get page URL
+              const url = dir.name === 'home' ? '/' : `/${dir.name}`;
+              
+              // Extract title from content or use directory name
+              const titleMatch = htmlContent.match(/<h1[^>]*>([^<]+)<\/h1>/i);
+              const title = titleMatch ? titleMatch[1] : dir.name.replace(/-/g, ' ');
+              
+              if (cleanContent.length > 100) {
+                pages.push({
+                  title: title,
+                  content: cleanContent,
+                  url: url
+                });
+              }
+            }
+          } catch (err) {
+            // Skip pages that can't be read
+          }
+        }
+      }
+    }
+  } catch (error) {
+    console.error('Error crawling pages:', error);
+  }
+  
+  return pages;
 }
 
 export async function POST(request: NextRequest) {
@@ -105,20 +157,19 @@ export async function POST(request: NextRequest) {
     const { normalized: searchQuery } = processQuery(query);
     
     const results: Array<{
-      type: 'faq' | 'blog';
+      type: 'faq' | 'blog' | 'page';
       title: string;
       content: string;
       url: string;
       score: number;
     }> = [];
     
-    // Search FAQ with enhanced scoring
+    // Search FAQ
     const faqContent = loadFAQContent();
     faqContent.forEach(item => {
       const questionScore = calculateSearchScore(searchQuery, item.question, true, true);
       const answerScore = calculateSearchScore(searchQuery, item.answer, false, false);
       
-      // Boost for specific query patterns
       let boost = 0;
       const queryLower = searchQuery.toLowerCase();
       const questionLower = item.question.toLowerCase();
@@ -128,7 +179,6 @@ export async function POST(request: NextRequest) {
         boost = 15;
       }
       
-      // Exact question match bonus
       if (queryLower === questionLower || questionLower.includes(queryLower) || queryLower.includes(questionLower.substring(0, 20))) {
         boost += 20;
       }
@@ -149,13 +199,12 @@ export async function POST(request: NextRequest) {
     // Search blog posts
     const blogPosts = loadBlogPosts();
     blogPosts.forEach((post: any) => {
-      const cleanContent = stripHTML(post.content || post.excerpt || '');
       const titleScore = calculateSearchScore(searchQuery, post.title, true, false);
-      const contentScore = calculateSearchScore(searchQuery, cleanContent, false, false);
+      const contentScore = calculateSearchScore(searchQuery, post.content, false, false);
       const totalScore = titleScore * 2.5 + contentScore;
       
       if (totalScore > 10) {
-        const excerpt = cleanContent.length > 300 ? cleanContent.substring(0, 300) + '...' : cleanContent;
+        const excerpt = post.content.length > 600 ? post.content.substring(0, 600) + '...' : post.content;
         
         results.push({
           type: 'blog',
@@ -167,16 +216,36 @@ export async function POST(request: NextRequest) {
       }
     });
     
-    // Sort by score, then FAQ first
+    // Search ALL website pages
+    const allPages = crawlAllPages();
+    allPages.forEach(page => {
+      const titleScore = calculateSearchScore(searchQuery, page.title, true, false);
+      const contentScore = calculateSearchScore(searchQuery, page.content, false, false);
+      const totalScore = titleScore * 2 + contentScore;
+      
+      if (totalScore > 8) {
+        const excerpt = page.content.length > 600 ? page.content.substring(0, 600) + '...' : page.content;
+        
+        results.push({
+          type: 'page',
+          title: page.title,
+          content: excerpt,
+          url: page.url,
+          score: totalScore
+        });
+      }
+    });
+    
+    // Sort by score, prioritize FAQ
     results.sort((a, b) => {
       if (b.score !== a.score) return b.score - a.score;
-      if (a.type === 'faq' && b.type === 'blog') return -1;
-      if (a.type === 'blog' && b.type === 'faq') return 1;
+      if (a.type === 'faq') return -1;
+      if (b.type === 'faq') return 1;
       return 0;
     });
-    const topResults = results.slice(0, 5);
+    const topResults = results.slice(0, 7);
 
-    // Special handling for "find out about someone in custody" queries
+    // Special handling for "find out about someone in custody"
     const queryLower = query.toLowerCase();
     if ((queryLower.includes('find') || queryLower.includes('find out')) && 
         (queryLower.includes('someone') || queryLower.includes('person')) && 
@@ -207,11 +276,10 @@ export async function POST(request: NextRequest) {
     if (topResults.length > 0) {
       if (OPENAI_API_KEY && topResults[0].score > 10) {
         try {
-          // Build context - 500 chars per result, top 5 results
-          const context = topResults.slice(0, 5).map(r => {
-            const content = r.type === 'faq' ? r.content : r.content.substring(0, 500);
-            return `Q: ${r.title}\nA: ${stripHTML(content)}`;
-          }).join('\n\n');
+          // Build context from top 7 results, 600 chars each
+          const context = topResults.slice(0, 7).map(r => {
+            return `Source: ${r.title} (${r.type})\n${stripHTML(r.content)}`;
+          }).join('\n\n---\n\n');
           
           const conversationContext = conversationHistory && conversationHistory.length > 0
             ? conversationHistory.slice(-3).map((msg: any) => 
@@ -220,22 +288,22 @@ export async function POST(request: NextRequest) {
             : '';
 
           const systemPrompt = `You are a helpful legal assistant for a police station duty solicitor service in Kent, UK. 
-Answer questions based ONLY on the provided context from our FAQ and blog posts. 
-- Prioritize FAQ answers over blog posts
-- Extract direct answers, not summaries
+Answer questions based ONLY on the provided context from our website (FAQ, blog posts, and pages). 
+- Prioritize FAQ answers
+- Extract direct, actionable information
 - Be concise (under 150 words)
-- If context doesn't answer the question, say: "I don't have specific information about that. Please call 01732 247427."
+- If context doesn't fully answer the question, say: "For specific advice about this, please call 01732 247427."
 
 Use markdown: **bold** for important info, [text](url) for links.`;
 
           const userPrompt = conversationContext
-            ? `Previous conversation:\n${conversationContext}\n\nQuestion: ${query}\n\nContext:\n${context}`
-            : `Question: ${query}\n\nContext:\n${context}`;
+            ? `Previous conversation:\n${conversationContext}\n\nQuestion: ${query}\n\nWebsite Context:\n${context}`
+            : `Question: ${query}\n\nWebsite Context:\n${context}`;
 
           const aiAnswer = await callOpenAI([
             { role: 'system', content: systemPrompt },
             { role: 'user', content: userPrompt }
-          ], 250);
+          ], 300);
           
           if (aiAnswer && aiAnswer.trim().length > 20) {
             answer = aiAnswer.trim();
@@ -260,7 +328,7 @@ Use markdown: **bold** for important info, [text](url) for links.`;
         }
         
         if (topResults.length > 1 && topResults[1].score > 10) {
-          answer += `\n\nFor more info, check our ${topResults.slice(1, 3).map(r => r.type === 'faq' ? '[FAQ](/faq)' : '[blog](/blog)').join(' and ')}.`;
+          answer += `\n\nSee also: [${topResults[1].title}](${topResults[1].url})`;
         }
       }
     } else {
@@ -268,7 +336,7 @@ Use markdown: **bold** for important info, [text](url) for links.`;
         try {
           const aiAnswer = await callOpenAI([
             { role: 'system', content: 'You are a helpful legal assistant for a Kent police station solicitor. Be brief and suggest calling 01732 247427.' },
-            { role: 'user', content: `Question: ${query}\n\nNo specific info found. Provide a brief response and suggest calling 01732 247427.` }
+            { role: 'user', content: `Question: ${query}\n\nNo specific info found in our content. Provide a brief, helpful response and suggest calling 01732 247427.` }
           ], 150);
           
           if (aiAnswer && aiAnswer.trim().length > 20) {
@@ -302,4 +370,3 @@ Use markdown: **bold** for important info, [text](url) for links.`;
     );
   }
 }
-

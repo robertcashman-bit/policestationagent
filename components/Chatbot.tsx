@@ -236,39 +236,38 @@ export default function Chatbot() {
         </button>
       )}
 
-      {/* Chat Window - COMPACT SIZE */}
+      {/* Chat Window - ULTRA COMPACT SIZE (2/3rds reduction) */}
       {isOpen && (
-        <div className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[9999] w-[calc(100vw-2rem)] sm:w-80 max-w-[320px] bg-white rounded-xl shadow-2xl border border-slate-200 flex flex-col transition-all duration-300 ${isMinimized ? 'h-14' : 'h-[500px] sm:h-[550px]'}`}>
-          {/* Header - COMPACT */}
-          <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-3 rounded-t-xl flex items-center justify-between flex-shrink-0">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <div className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[9999] w-[calc(100vw-2rem)] sm:w-[213px] max-w-[213px] bg-white rounded-xl shadow-2xl border border-slate-200 flex flex-col transition-all duration-300 ${isMinimized ? 'h-14' : 'h-[333px] sm:h-[367px]'}`}>
+          {/* Header - ULTRA COMPACT */}
+          <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-2 rounded-t-xl flex items-center justify-between flex-shrink-0">
+            <div className="flex items-center gap-1.5">
+              <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                   <circle cx="12" cy="7" r="4"></circle>
                 </svg>
               </div>
               <div className="min-w-0">
-                <div className="flex items-center gap-1.5">
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                  <h3 className="font-semibold text-sm truncate">Need Help?</h3>
+                <div className="flex items-center gap-1">
+                  <div className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></div>
+                  <h3 className="font-semibold text-xs truncate">Help</h3>
                 </div>
-                <p className="text-xs text-blue-100">Extended hours</p>
               </div>
             </div>
             <div className="flex items-center gap-0.5">
-              <a href="tel:01732247427" className="text-white hover:text-blue-200 p-1.5 rounded hover:bg-white/10" aria-label="Call">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <a href="tel:01732247427" className="text-white hover:text-blue-200 p-1 rounded hover:bg-white/10" aria-label="Call">
+                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
                 </svg>
               </a>
-              <button onClick={() => setIsMinimized(!isMinimized)} className="text-white hover:text-blue-200 p-1.5 rounded hover:bg-white/10" aria-label={isMinimized ? 'Expand' : 'Minimize'}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <button onClick={() => setIsMinimized(!isMinimized)} className="text-white hover:text-blue-200 p-1 rounded hover:bg-white/10" aria-label={isMinimized ? 'Expand' : 'Minimize'}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   {isMinimized ? <path d="M5 12h14M12 5v14"></path> : <path d="M5 12h14"></path>}
                 </svg>
               </button>
-              <button onClick={resetChat} className="text-white hover:text-blue-200 p-1.5 rounded hover:bg-white/10" aria-label="Close">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <button onClick={resetChat} className="text-white hover:text-blue-200 p-1 rounded hover:bg-white/10" aria-label="Close">
+                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M18 6 6 18M6 6l12 12"></path>
                 </svg>
               </button>
@@ -277,8 +276,8 @@ export default function Chatbot() {
 
           {!isMinimized && (
             <>
-              {/* Messages - COMPACT */}
-              <div className="flex-1 overflow-y-auto p-3 space-y-3 bg-gradient-to-b from-slate-50 to-white scroll-smooth">
+              {/* Messages - ULTRA COMPACT */}
+              <div className="flex-1 overflow-y-auto p-2 space-y-2 bg-gradient-to-b from-slate-50 to-white scroll-smooth">
                 {messages.map((msg) => (
                   <ChatbotMessage
                     key={msg.id}
@@ -293,24 +292,24 @@ export default function Chatbot() {
                 ))}
                 
                 {showHumanEscalation && (
-                  <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
-                    <p className="text-xs font-medium text-amber-900 mb-2">Need to speak with someone?</p>
-                    <a href="tel:01732247427" className="inline-flex items-center gap-1 px-2.5 py-1 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold rounded transition-all">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <div className="bg-amber-50 border border-amber-200 rounded-lg p-2">
+                    <p className="text-[10px] font-medium text-amber-900 mb-1">Need help?</p>
+                    <a href="tel:01732247427" className="inline-flex items-center gap-0.5 px-2 py-0.5 bg-red-600 hover:bg-red-700 text-white text-[10px] font-semibold rounded transition-all">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
                       </svg>
-                      Call Now
+                      Call
                     </a>
                   </div>
                 )}
                 
                 {followUpQuestions.length > 0 && viewMode === 'input' && !isSubmitting && (
-                  <div className="space-y-1.5 pt-1">
-                    <p className="text-xs text-slate-500 px-1">You might ask:</p>
-                    <div className="flex flex-wrap gap-1.5">
+                  <div className="space-y-1 pt-1">
+                    <p className="text-[10px] text-slate-500 px-1">Ask:</p>
+                    <div className="flex flex-wrap gap-1">
                       {followUpQuestions.map((q, idx) => (
-                        <button key={idx} onClick={() => handleSendMessage(q)} className="text-xs px-2 py-1 bg-white border border-slate-200 rounded-full hover:bg-blue-50 hover:border-blue-300 transition-all">
-                          {q}
+                        <button key={idx} onClick={() => handleSendMessage(q)} className="text-[9px] px-1.5 py-0.5 bg-white border border-slate-200 rounded-full hover:bg-blue-50 hover:border-blue-300 transition-all">
+                          {q.length > 25 ? q.substring(0, 25) + '...' : q}
                         </button>
                       ))}
                     </div>
@@ -320,45 +319,45 @@ export default function Chatbot() {
                 <div ref={messagesEndRef} />
               </div>
 
-              {/* Input Area - COMPACT */}
+              {/* Input Area - ULTRA COMPACT */}
               <div className="bg-white border-t border-slate-200 flex-shrink-0">
                 <div className="flex border-b border-slate-100">
-                  <button onClick={() => setViewMode('options')} className={`flex-1 px-2 py-1.5 text-xs font-medium transition-colors ${viewMode === 'options' ? 'bg-blue-50 text-blue-700 border-b-2 border-blue-600' : 'text-slate-600 hover:bg-slate-50'}`}>
-                    Quick Options
+                  <button onClick={() => setViewMode('options')} className={`flex-1 px-1 py-1 text-[10px] font-medium transition-colors ${viewMode === 'options' ? 'bg-blue-50 text-blue-700 border-b-2 border-blue-600' : 'text-slate-600 hover:bg-slate-50'}`}>
+                    Options
                   </button>
-                  <button onClick={() => { setViewMode('input'); setTimeout(() => textareaRef.current?.focus(), 100); }} className={`flex-1 px-2 py-1.5 text-xs font-medium transition-colors ${viewMode === 'input' ? 'bg-blue-50 text-blue-700 border-b-2 border-blue-600' : 'text-slate-600 hover:bg-slate-50'}`}>
-                    Type Question
+                  <button onClick={() => { setViewMode('input'); setTimeout(() => textareaRef.current?.focus(), 100); }} className={`flex-1 px-1 py-1 text-[10px] font-medium transition-colors ${viewMode === 'input' ? 'bg-blue-50 text-blue-700 border-b-2 border-blue-600' : 'text-slate-600 hover:bg-slate-50'}`}>
+                    Ask
                   </button>
                 </div>
 
                 {viewMode === 'options' && !isSubmitting && (
-                  <div className="p-3 space-y-2">
-                    <button onClick={() => handleQuickOption('police-station')} className="w-full text-left bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-medium px-3 py-2.5 rounded-lg transition-all shadow text-xs">
-                      <div className="font-semibold">🛡️ Police Station Representation</div>
-                      <div className="text-red-100 mt-0.5">In custody or have an interview</div>
+                  <div className="p-2 space-y-1.5">
+                    <button onClick={() => handleQuickOption('police-station')} className="w-full text-left bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-medium px-2 py-1.5 rounded-lg transition-all shadow text-[10px]">
+                      <div className="font-semibold">🛡️ Police Station</div>
+                      <div className="text-red-100 mt-0.5 text-[9px]">Custody or interview</div>
                     </button>
-                    <button onClick={() => handleQuickOption('law-firm')} className="w-full text-left bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium px-3 py-2.5 rounded-lg transition-all shadow text-xs">
-                      <div className="font-semibold">⚖️ Law Firm Agent Cover</div>
-                      <div className="text-blue-100 mt-0.5">Need cover for your clients</div>
+                    <button onClick={() => handleQuickOption('law-firm')} className="w-full text-left bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium px-2 py-1.5 rounded-lg transition-all shadow text-[10px]">
+                      <div className="font-semibold">⚖️ Law Firm Cover</div>
+                      <div className="text-blue-100 mt-0.5 text-[9px]">Agent services</div>
                     </button>
                   </div>
                 )}
 
                 {viewMode === 'input' && (
-                  <div className="p-3">
-                    <div className="flex gap-2 items-end">
+                  <div className="p-2">
+                    <div className="flex gap-1 items-end">
                       <textarea
                         ref={textareaRef}
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
                         onKeyDown={handleKeyPress}
-                        placeholder="Type your question..."
-                        className="flex-1 px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs resize-none max-h-[80px]"
+                        placeholder="Ask..."
+                        className="flex-1 px-2 py-1 border border-slate-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500 text-[10px] resize-none max-h-[60px]"
                         rows={1}
                         disabled={isSubmitting}
                       />
-                      <button onClick={() => handleSendMessage(inputValue)} disabled={!inputValue.trim() || isSubmitting} className="bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white px-3 py-2 rounded-lg transition-all flex-shrink-0">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <button onClick={() => handleSendMessage(inputValue)} disabled={!inputValue.trim() || isSubmitting} className="bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white px-2 py-1 rounded-lg transition-all flex-shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                           <path d="m22 2-7 20-4-9-9-4Z"></path>
                           <path d="M22 2 11 13"></path>
                         </svg>
@@ -368,16 +367,16 @@ export default function Chatbot() {
                 )}
               </div>
 
-              {/* Disclaimer - COMPACT */}
+              {/* Disclaimer - ULTRA COMPACT */}
               <div className="bg-slate-50 border-t border-slate-200 flex-shrink-0">
-                <button onClick={() => setDisclaimerExpanded(!disclaimerExpanded)} className="w-full px-3 py-2 flex items-center justify-between text-xs text-slate-600 hover:bg-slate-100 transition-colors">
-                  <span className="font-medium">⚠️ Legal Disclaimer</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`transition-transform ${disclaimerExpanded ? 'rotate-180' : ''}`}>
+                <button onClick={() => setDisclaimerExpanded(!disclaimerExpanded)} className="w-full px-2 py-1 flex items-center justify-between text-[9px] text-slate-600 hover:bg-slate-100 transition-colors">
+                  <span className="font-medium">⚠️ Disclaimer</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`transition-transform ${disclaimerExpanded ? 'rotate-180' : ''}`}>
                     <path d="m6 9 6 6 6-6"></path>
                   </svg>
                 </button>
                 {disclaimerExpanded && (
-                  <div className="px-3 pb-3 text-xs text-slate-600 leading-relaxed">
+                  <div className="px-2 pb-2 text-[9px] text-slate-600 leading-relaxed">
                     {LEGAL_DISCLAIMER}
                   </div>
                 )}
