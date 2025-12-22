@@ -19,6 +19,10 @@ const serviceLinks = [
   { href: "/servicesvoluntaryinterviews", label: "Voluntary Interviews (Alt)" },
   { href: "/private-crime", label: "Private Crime (Alt)" },
   { href: "/forsolicitors", label: "For Solicitors (Alt)" },
+  { href: "/freelegaladvice", label: "Free Legal Advice" },
+  { href: "/voluntary-police-interview", label: "Voluntary Police Interview" },
+  { href: "/voluntary-police-interview-solicitor", label: "Voluntary Interview Solicitor" },
+  { href: "/voluntaryinterviews", label: "Voluntary Interviews (Alt 2)" },
 ];
 
 const helpLinks = [
@@ -52,6 +56,15 @@ const helpLinks = [
   { href: "/refusingpoliceinterview", label: "Refusing Police Interview" },
   { href: "/afterapoliceinterview", label: "After Police Interview (Alt)" },
   { href: "/nofurtheractionafterpoliceinterview", label: "No Further Action After Interview (Alt)" },
+  { href: "/after-a-police-interview", label: "After a Police Interview" },
+  { href: "/arrested-at-police-station", label: "Arrested at Police Station" },
+  { href: "/article-interview-under-caution", label: "Interview Under Caution Guide" },
+  { href: "/article-police-caution-before-interview", label: "Police Caution Before Interview" },
+  { href: "/article-rights-kent-police-station-2025", label: "Your Rights at Kent Police Stations 2025" },
+  { href: "/what-is-a-criminal-solicitor", label: "What is a Criminal Solicitor?" },
+  { href: "/what-is-a-police-station-rep", label: "What is a Police Station Rep?" },
+  { href: "/what-to-expect-at-a-police-interview-in-kent", label: "What to Expect at Police Interview" },
+  { href: "/your-rights-in-custody", label: "Your Rights in Custody" },
 ];
 
 const locationLinks = [
@@ -167,6 +180,8 @@ const resourceLinks = [
   { href: "/repcover", label: "Rep Cover" },
   { href: "/arrestednow", label: "Arrested Now" },
   { href: "/home", label: "Home" },
+  { href: "/case-status", label: "Case Status" },
+  { href: "/criminaldefencekent", label: "Criminal Defence Kent" },
 ];
 
 const legalLinks = [

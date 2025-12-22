@@ -24,7 +24,8 @@
     "setup:cloudflare:simple": "node scripts/setup-cloudflare-simple.js",
     "setup:domain": "node scripts/auto-setup-domain.js",
     "verify:dns": "node scripts/verify-dns-setup.js",
-    "verify:blog-routes": "node scripts/verify-blog-routes.js"
+    "verify:blog-routes": "node scripts/verify-blog-routes.js",
+    "notify:search-engines": "node scripts/notify-search-engines.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

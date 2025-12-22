@@ -1,0 +1,76 @@
+name: Notify Search Engines
+
+# Trigger after push to master (after Vercel deploys)
+on:
+  push:
+    branches:
+      - master
+      - main
+  # Also allow manual trigger
+  workflow_dispatch:
+
+jobs:
+  notify:
+    name: Notify Search Engines
+    runs-on: ubuntu-latest
+    # Wait for Vercel to deploy (typically 1-3 minutes)
+    # This delay ensures the site is live before pinging
+    steps:
+      - name: Wait for Vercel deployment
+        run: sleep 120  # Wait 2 minutes for Vercel to deploy
+
+      - name: Ping Google with Sitemap
+        run: |
+          echo "Pinging Google..."
+          curl -s "https://www.google.com/ping?sitemap=https://policestationagent.com/sitemap.xml" || true
+          echo "Done"
+
+      - name: Ping Bing with Sitemap
+        run: |
+          echo "Pinging Bing..."
+          curl -s "https://www.bing.com/ping?sitemap=https://policestationagent.com/sitemap.xml" || true
+          echo "Done"
+
+      - name: Submit to IndexNow
+        run: |
+          echo "Submitting to IndexNow..."
+          curl -s -X POST "https://api.indexnow.org/indexnow" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "host": "policestationagent.com",
+              "key": "655b1cdbce5c462b9fe51c4e19f92678",
+              "keyLocation": "https://policestationagent.com/655b1cdbce5c462b9fe51c4e19f92678.txt",
+              "urlList": [
+                "https://policestationagent.com/",
+                "https://policestationagent.com/about",
+                "https://policestationagent.com/services",
+                "https://policestationagent.com/contact",
+                "https://policestationagent.com/blog",
+                "https://policestationagent.com/faq",
+                "https://policestationagent.com/police-stations",
+                "https://policestationagent.com/coverage",
+                "https://policestationagent.com/voluntary-interviews",
+                "https://policestationagent.com/police-custody-rights",
+                "https://policestationagent.com/police-interview-rights",
+                "https://policestationagent.com/pace-code-c",
+                "https://policestationagent.com/medway-police-station",
+                "https://policestationagent.com/maidstone-police-station",
+                "https://policestationagent.com/canterbury-police-station"
+              ]
+            }' || true
+          echo "Done"
+
+      - name: Call site's IndexNow API endpoint
+        run: |
+          echo "Calling site API endpoint..."
+          curl -s -X POST "https://policestationagent.com/api/index-now" || true
+          echo "Done"
+
+      - name: Summary
+        run: |
+          echo "✅ Search engine notifications complete!"
+          echo "- Google sitemap ping sent"
+          echo "- Bing sitemap ping sent"  
+          echo "- IndexNow submission sent"
+          echo "- Site API endpoint called"
+
