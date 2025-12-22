@@ -56,8 +56,8 @@ const serviceSchema = {
 export default function PoliceStationRepresentationPage() {
   const faqItems = [
     {
-      question: "What is a police station duty solicitor?",
-      answer: "A police station duty solicitor is a qualified solicitor accredited by the Law Society to provide FREE legal advice and representation at Kent police stations under Legal Aid. Robert Cashman is a qualified solicitor, Accredited Duty Solicitor, and Higher Court Advocate with 35+ years experience representing clients at all Kent custody suites."
+      question: "Are police station solicitors independent of the police?",
+      answer: "Yes, absolutely. Your solicitor is completely independent of the police and works only for YOU. We are not employed by, paid by, or connected to the police in any way. Legal Aid funds your representation, not the police. Everything you discuss with your solicitor is confidential and cannot be shared with police without your consent."
     },
     {
       question: "Is police station rep service free in Kent?",
@@ -72,8 +72,8 @@ export default function PoliceStationRepresentationPage() {
       answer: "We cover all Kent custody suites including Medway (Gillingham), Maidstone, North Kent (Gravesend), Canterbury, Tonbridge, Folkestone, Ashford, Dartford, Sittingbourne, Sevenoaks, Tunbridge Wells, Margate, Dover, Swanley, and Bluewater. We also cover voluntary interview locations across Kent."
     },
     {
-      question: "What's the difference between a police station agent and a duty solicitor?",
-      answer: "A duty solicitor is a qualified solicitor accredited by the Law Society to provide legal advice at police stations. A police station agent (or accredited representative) is a non-solicitor who has passed the Police Station Qualification to attend on behalf of a solicitor's firm. Robert Cashman is a qualified solicitor and Accredited Duty Solicitor with Higher Court Advocate status, not just an agent."
+      question: "What's the difference between a qualified solicitor and a police station agent?",
+      answer: "A qualified solicitor is a fully trained legal professional who has completed the Legal Practice Course and training contract. A police station agent (accredited representative) is a non-solicitor who has passed the Police Station Qualification. Robert Cashman is a qualified solicitor with 35+ years experience and Higher Court Advocate status — not just an agent — providing expert independent legal advice."
     }
   ];
 
@@ -92,10 +92,13 @@ export default function PoliceStationRepresentationPage() {
       <main className="flex-grow relative" id="main-content" role="main" aria-live="polite">
         <div className="bg-slate-50 min-h-screen">
           <div className="prose prose-lg max-w-6xl mx-auto px-4 py-16">
-            <h1 className="text-4xl font-bold mb-6">Police Station Duty Solicitor Kent</h1>
+            <h1 className="text-4xl font-bold mb-6">Independent Police Station Solicitor Kent</h1>
             <p className="lead text-xl text-slate-700 mb-8">
-              Expert police station representation by qualified solicitor. FREE legal advice under Legal Aid at all Kent custody suites. Accredited Duty Solicitor & Higher Court Advocate Robert Cashman - 35+ years experience, 21,000+ cases.
+              Expert police station representation by qualified solicitor. FREE legal advice under Legal Aid at all Kent custody suites. Independent Defence Solicitor & Higher Court Advocate Robert Cashman - 35+ years experience, 21,000+ cases.
             </p>
+            <div className="bg-green-50 border border-green-200 rounded-xl px-6 py-4 mb-8">
+              <p className="text-green-800 font-medium text-sm m-0">🛡️ <strong>We are completely independent of the police.</strong> Your solicitor works for YOU — not the police, not the CPS. Everything you discuss is confidential.</p>
+            </div>
           </div>
         </div>
       </main>

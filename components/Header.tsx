@@ -262,7 +262,7 @@ export default function Header() {
                         role="menuitem"
                         onClick={closeDropdowns}
                       >
-                        Duty Solicitor at the Police Station
+                        Independent Solicitor at the Police Station
                       </Link>
                     </li>
                     <li role="none">
@@ -567,7 +567,7 @@ export default function Header() {
                         role="menuitem"
                         onClick={closeDropdowns}
                       >
-                        About Qualified Duty Solicitor
+                        About Your Independent Solicitor
                       </Link>
                     </li>
                     <li role="none">
@@ -832,7 +832,7 @@ export default function Header() {
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
                       onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
                     >
-                      Duty Solicitor at the Police Station
+                      Independent Solicitor at the Police Station
                     </Link>
                   </li>
                   <li>
@@ -1091,7 +1091,7 @@ export default function Header() {
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
                       onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
                     >
-                      About Qualified Duty Solicitor
+                      About Your Independent Solicitor
                     </Link>
                   </li>
                   <li>

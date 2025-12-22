@@ -51,12 +51,12 @@ export default function Page() {
       answer: "We cover all Kent custody suites including Medway (Gillingham), Maidstone, North Kent (Gravesend), Canterbury, Tonbridge, Folkestone, Ashford, Sittingbourne, Margate, Dover, Sevenoaks, and Tunbridge Wells."
     },
     {
-      question: "What is a police station duty solicitor?",
-      answer: "A police station duty solicitor is a qualified solicitor accredited by the Law Society to provide free legal advice at police stations under Legal Aid. Robert Cashman is both a qualified solicitor and an accredited duty solicitor with Higher Court Advocate status, providing expert representation at all Kent custody suites."
+      question: "Are police station solicitors independent of the police?",
+      answer: "Yes, absolutely. Your solicitor is completely independent of the police and works only for YOU. We are not employed by, paid by, or connected to the police in any way. Legal Aid funds your representation, not the police. Everything you discuss with your solicitor is confidential and cannot be shared with the police without your consent."
     },
     {
-      question: "What is the difference between a duty solicitor and a police station rep?",
-      answer: "A duty solicitor is a qualified solicitor on the Legal Aid duty rota who provides legal advice at police stations. A police station rep (or accredited representative) is a non-solicitor who has passed the Police Station Qualification to attend on behalf of a solicitor's firm. Robert Cashman is a qualified solicitor and accredited duty solicitor, not just an agent."
+      question: "What is the difference between a qualified solicitor and a police station rep?",
+      answer: "A qualified solicitor is a fully trained legal professional who has completed the Legal Practice Course and training contract. A police station rep (accredited representative) is a non-solicitor who has passed the Police Station Qualification. Robert Cashman is a qualified solicitor with 35+ years experience — not just an accredited representative — providing expert independent legal advice at all Kent police stations."
     }
   ];
 

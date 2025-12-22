@@ -163,7 +163,7 @@ const locationLinks = [
 ];
 
 const resourceLinks = [
-  { href: "/about", label: "About Qualified Duty Solicitor", priority: true },
+  { href: "/about", label: "About Your Independent Solicitor", priority: true },
   { href: "/why-use-us", label: "Why Use Us" },
   { href: "/what-we-do", label: "What We Do" },
   { href: "/testimonials", label: "Client Testimonials" },
