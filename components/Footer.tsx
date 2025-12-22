@@ -272,7 +272,7 @@ export default function Footer() {
         <div className="flex justify-center mt-4">
           <button
             onClick={() => setIsExpanded(!isExpanded)}
-            className="flex items-center gap-2 px-4 py-2 text-xs text-slate-400 hover:text-white border border-slate-700 hover:border-slate-500 rounded-full transition-all duration-200"
+            className="flex items-center gap-2 px-4 py-2 text-xs text-white hover:text-blue-300 border border-slate-600 hover:border-slate-400 rounded-full transition-all duration-200"
             aria-expanded={isExpanded}
             aria-controls="full-sitemap"
           >
