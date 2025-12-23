@@ -9,59 +9,86 @@ export default function NotFound() {
       <Header />
       <main className="flex-grow relative" id="main-content" role="main">
         {/* Hero Section with 404 Message */}
-        <section className="relative bg-gradient-to-br from-slate-800 via-blue-900 to-slate-900 text-white py-16 md:py-20">
+        <section className="relative bg-gradient-to-br from-slate-800 via-blue-900 to-slate-900 text-white py-20 md:py-28">
           <div className="absolute inset-0 opacity-10">
             <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '40px 40px' }}></div>
           </div>
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div className="max-w-2xl mx-auto">
-              {/* 404 Icon */}
-              <div className="mb-6">
-                <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-amber-500/20 mb-4">
-                  <span className="text-5xl font-black text-amber-400">404</span>
-                </div>
+            <div className="max-w-3xl mx-auto">
+              {/* Subtle 404 badge */}
+              <div className="mb-4">
+                <span className="inline-block px-3 py-1 text-sm font-medium text-amber-400/80 bg-amber-500/10 rounded-full border border-amber-500/20">
+                  Page not found
+                </span>
               </div>
               
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-white leading-tight">
-                Page Not Found
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white leading-tight">
+                Oops! This Page Has <span className="text-amber-400">Moved</span>
               </h1>
-              <p className="text-lg md:text-xl text-blue-200 mb-8">
-                Sorry, the page you&apos;re looking for doesn&apos;t exist or may have been moved. 
-                But don&apos;t worry – explore our helpful articles or navigate to one of our main pages!
+              <p className="text-xl md:text-2xl text-blue-100 mb-10 max-w-2xl mx-auto">
+                The article you&apos;re looking for may have been updated. Check out our homepage or browse our latest legal insights below!
               </p>
               
-              <div className="flex flex-wrap justify-center gap-4">
+              {/* BIG Homepage Button */}
+              <div className="mb-8">
                 <Link 
                   href="/" 
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold rounded-lg transition-colors"
+                  className="inline-flex items-center gap-3 px-10 py-5 bg-amber-500 hover:bg-amber-400 text-slate-900 text-xl font-bold rounded-xl transition-all transform hover:scale-105 shadow-lg shadow-amber-500/30"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
                     <polyline points="9 22 9 12 15 12 15 22"/>
                   </svg>
                   Go to Homepage
                 </Link>
-                <Link 
-                  href="/blog" 
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-bold rounded-lg transition-colors"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
-                    <polyline points="14 2 14 8 20 8"/>
-                  </svg>
-                  View All Blog Posts
-                </Link>
+              </div>
+              
+              {/* Secondary buttons */}
+              <div className="flex flex-wrap justify-center gap-4">
                 <Link 
                   href="/contact" 
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-bold rounded-lg transition-colors"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-lg transition-colors"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
                   </svg>
                   Contact Us
                 </Link>
+                <a
+                  href="tel:01732247427"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-lg transition-colors"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                  </svg>
+                  Call Now
+                </a>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* BIG Blog Articles CTA Section */}
+        <section className="py-12 bg-gradient-to-b from-blue-600 to-blue-700">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              Browse Our <span className="text-amber-300">Legal Articles</span>
+            </h2>
+            <p className="text-lg text-blue-100 mb-8 max-w-2xl mx-auto">
+              Expert insights on police station representation, your rights during arrest, and more
+            </p>
+            <Link 
+              href="/blog" 
+              className="inline-flex items-center gap-3 px-10 py-5 bg-white hover:bg-slate-100 text-blue-700 text-xl font-bold rounded-xl transition-all transform hover:scale-105 shadow-lg"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+              </svg>
+              View All Blog Articles
+            </Link>
           </div>
         </section>
 
