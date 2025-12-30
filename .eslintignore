@@ -1,0 +1,8 @@
+scripts/**
+legacy/**
+data/**
+.next/**
+out/**
+build/**
+node_modules/**
+

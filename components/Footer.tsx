@@ -21,7 +21,8 @@ const serviceLinks = [
   { href: "/forsolicitors", label: "For Solicitors (Alt)" },
   { href: "/freelegaladvice", label: "Free Legal Advice" },
   { href: "/voluntary-police-interview", label: "Voluntary Police Interview" },
-  { href: "/voluntary-police-interview-solicitor", label: "Voluntary Interview Solicitor" },
+  // Keep legacy slug around only if a page exists; otherwise link to the canonical route.
+  { href: "/voluntary-police-interview", label: "Voluntary Interview Solicitor" },
   { href: "/voluntaryinterviews", label: "Voluntary Interviews (Alt 2)" },
 ];
 
@@ -181,7 +182,8 @@ const resourceLinks = [
   { href: "/arrestednow", label: "Arrested Now" },
   { href: "/home", label: "Home" },
   { href: "/case-status", label: "Case Status" },
-  { href: "/criminaldefencekent", label: "Criminal Defence Kent" },
+  // The previous internal route '/criminaldefencekent' 404s on production; link to About instead.
+  { href: "/about", label: "Criminal Defence Kent" },
 ];
 
 const legalLinks = [
