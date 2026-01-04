@@ -26,7 +26,11 @@
     "verify:dns": "node scripts/verify-dns-setup.js",
     "verify:blog-routes": "node scripts/verify-blog-routes.js",
     "notify:search-engines": "node scripts/notify-search-engines.js",
-    "compliance:check": "node scripts/compliance-check.js"
+    "compliance:check": "node scripts/compliance-check.js",
+    "compliance:scan": "node scripts/compliance-scan-and-fix.js --check",
+    "compliance:fix": "node scripts/compliance-scan-and-fix.js --fix",
+    "compliance:http": "node scripts/compliance-http-scan.mjs",
+    "build:verified": "npm run compliance:fix && npm run compliance:scan && npm run compliance:http"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -56,6 +60,7 @@
     "glob": "^13.0.0",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.0",
+    "tsx": "^4.21.0",
     "typescript": "^5.5.0"
   }
 }

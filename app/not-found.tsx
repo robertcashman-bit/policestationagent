@@ -156,7 +156,7 @@ export default function NotFound() {
               Need Urgent <span className="text-amber-400">Legal Help?</span>
             </h2>
             <p className="text-lg text-slate-300 max-w-2xl mx-auto mb-8">
-              If you&apos;ve been arrested or need police station representation, we&apos;re here to help 24/7.
+              If you&apos;ve been arrested or need police station representation, contact us for immediate assistance.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <a
