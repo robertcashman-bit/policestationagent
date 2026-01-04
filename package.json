@@ -30,7 +30,9 @@
     "compliance:scan": "node scripts/compliance-scan-and-fix.js --check",
     "compliance:fix": "node scripts/compliance-scan-and-fix.js --fix",
     "compliance:http": "node scripts/compliance-http-scan.mjs",
-    "build:verified": "npm run compliance:fix && npm run compliance:scan && npm run compliance:http"
+    "build:verified": "npm run compliance:fix && npm run compliance:scan && npm run compliance:http",
+    "verify:deployment": "node scripts/verify-deployment-target.js",
+    "prebuild": "npm run verify:deployment"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
