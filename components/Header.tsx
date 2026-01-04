@@ -20,6 +20,17 @@ export default function Header() {
 
   return (
     <header className="bg-white shadow-md border-b border-slate-200/60 relative z-50">
+      {/* Compliance Strip - PHASE 2A */}
+      <div className="bg-slate-800 text-white text-xs py-1.5 px-4">
+        <div className="max-w-7xl mx-auto text-center">
+          <Link 
+            href="/regulatory-information" 
+            className="hover:text-amber-300 underline transition-colors"
+          >
+            Legal services provided by Tuckers Solicitors LLP (SRA ID: 127795).
+          </Link>
+        </div>
+      </div>
       {/* Top Strip */}
       <div className="bg-blue-900 text-white text-xs sm:text-sm py-2">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
