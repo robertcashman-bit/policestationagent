@@ -1,6 +1,7 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ContactForm from '@/components/ContactForm';
+import WhoProvidesLegalService from '@/components/WhoProvidesLegalService';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -47,6 +48,9 @@ export default function Page() {
                 </p>
               </div>
             </section>
+            
+            {/* Who Provides Legal Service */}
+            <WhoProvidesLegalService />
             
             {/* Contact Form */}
             <ContactForm />

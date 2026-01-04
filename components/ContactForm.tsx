@@ -442,6 +442,9 @@ export default function ContactForm() {
         
         {/* Consent */}
         <div className="border-t border-slate-200 pt-6">
+          <p className="text-xs text-slate-600 mb-3">
+            By contacting us you consent to your details being used to respond and, where appropriate, shared with Tuckers Solicitors LLP for that purpose.
+          </p>
           <label className="flex items-start">
             <input
               type="checkbox"

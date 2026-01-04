@@ -256,6 +256,14 @@ export default function BlogPostPage({ params }: PageProps) {
               </div>
             )}
             
+            {/* Legal Disclaimer */}
+            <div className="mt-12 pt-8 border-t border-slate-200">
+              <div className="bg-blue-50 border-l-4 border-blue-500 p-4 text-sm text-slate-700 rounded-r-lg">
+                <p className="font-semibold mb-1">Legal Disclaimer</p>
+                <p>This article is general information only. If you are detained, ask custody staff to contact a solicitor. Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795).</p>
+              </div>
+            </div>
+            
             {/* Mandatory Advert Block */}
             <BlogAdvertBlock />
           </div>

@@ -266,7 +266,7 @@ export default function PreparedStatementsPage() {
             <h3 className="text-2xl font-bold mb-4">Need Help with Your Interview Strategy?</h3>
             <p className="text-slate-300 mb-6">
               If you're facing a police interview and want advice on whether a prepared statement is right 
-              for your case, I can help. I offer free police station representation across Kent.
+              for your case, I can help. Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795).
             </p>
             <div className="flex flex-wrap gap-4">
               <a href="tel:01732247427" className="inline-flex items-center px-6 py-3 bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold rounded-lg">

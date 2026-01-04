@@ -49,7 +49,7 @@ export default function FAQContent() {
         },
         {
           question: 'Are you available for extended hours?',
-          answer: 'Yes, we provide extended hours service covering evenings, weekends and bank holidays. Our aim is to attend any Kent custody suite within 30-45 minutes when contacted. Simply call 01732 247427 and we will arrange for a qualified duty solicitor to attend the police station.'
+          answer: 'Yes, we provide extended hours service covering evenings, weekends and bank holidays. We aim to respond promptly. Attendance times depend on location, custody demand and solicitor availability. Simply call 01732 247427 and we will arrange for a qualified duty solicitor to attend the police station.'
         },
         {
           question: 'Do you cover Legal Aid and private work?',

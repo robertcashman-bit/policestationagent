@@ -39,8 +39,7 @@ export default function BlogPromotionalBlock() {
           </Link>
         </div>
         <p className="text-xs text-slate-500 mt-4">
-          Free legal advice applies to police station interviews only – either in custody or voluntary 
-          interviews under caution. Subject to availability and Legal Aid eligibility.
+          Police station legal advice is free and independent. If detained, you can ask custody staff to contact a solicitor or law firm. For Kent matters, you can request Tuckers Solicitors LLP and may request Robert Cashman as your named solicitor, subject to availability and conflicts.
         </p>
       </div>
     </div>
