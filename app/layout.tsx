@@ -11,6 +11,7 @@ const Chatbot = dynamic(() => import('@/components/Chatbot'), {
 });
 import CookieBanner from '@/components/CookieBanner';
 import InternalLinkInterceptor from '@/components/InternalLinkInterceptor';
+import ComplianceStrip from '@/components/compliance/ComplianceStrip';
 
 function getSafeSiteUrl(): string {
   const raw =
@@ -395,6 +396,7 @@ export default function RootLayout({
         {/* Note: Font preloading is handled automatically by next/font/google - no manual link needed */}
       </head>
       <body className={inter.className}>
+        <ComplianceStrip />
         {/* Skip to content link for accessibility */}
         <a
           href="#main-content"

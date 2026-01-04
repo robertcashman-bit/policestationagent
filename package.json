@@ -25,7 +25,9 @@
     "setup:domain": "node scripts/auto-setup-domain.js",
     "verify:dns": "node scripts/verify-dns-setup.js",
     "verify:blog-routes": "node scripts/verify-blog-routes.js",
-    "notify:search-engines": "node scripts/notify-search-engines.js"
+    "notify:search-engines": "node scripts/notify-search-engines.js",
+    "compliance:check": "node scripts/compliance-check.js",
+    "prebuild": "npm run compliance:check"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
