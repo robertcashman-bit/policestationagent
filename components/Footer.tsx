@@ -175,7 +175,6 @@ const resourceLinks = [
   { href: "/whatisapolicestationrep", label: "What is a Police Station Rep (Alt)" },
   { href: "/hours", label: "Hours" },
   { href: "/extendedhours", label: "Extended Hours" },
-  { href: "/christmashours", label: "Christmas Hours" },
   { href: "/guided-assistant", label: "Guided Assistant" },
   { href: "/join", label: "Join" },
   { href: "/repcover", label: "Rep Cover" },
