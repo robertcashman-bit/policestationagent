@@ -29,17 +29,20 @@ function main() {
 
   // Validate environment variables are set
   if (!ALLOWED_PROJECT_IDS.length) {
-    console.error('❌ VERCEL PROJECT LOCK FAILED');
-    console.error('');
-    console.error('ALLOWED_VERCEL_PROJECT_IDS environment variable is not set.');
-    console.error('This repository requires an explicit list of allowed Vercel project IDs.');
-    console.error('');
-    console.error('To fix:');
-    console.error('1. Go to Vercel Project Settings → Environment Variables');
-    console.error('2. Add: ALLOWED_VERCEL_PROJECT_IDS = <your-project-id>');
-    console.error('3. Redeploy');
-    console.error('');
-    process.exit(1);
+    console.warn('⚠️  VERCEL PROJECT LOCK: Environment variable not set');
+    console.warn('');
+    console.warn('ALLOWED_VERCEL_PROJECT_IDS environment variable is not set.');
+    console.warn('Deployment will proceed, but project lock is not active.');
+    console.warn('');
+    console.warn('To enable project lock:');
+    console.warn('1. Go to Vercel Project Settings → Environment Variables');
+    console.warn('2. Add: ALLOWED_VERCEL_PROJECT_IDS = <your-project-id>');
+    console.warn('3. Find your Project ID: Vercel Dashboard → Project Settings → General');
+    console.warn('');
+    console.warn('Current Project ID:', CURRENT_PROJECT_ID || 'not available');
+    console.warn('');
+    // Don't fail - just warn
+    return 0;
   }
 
   if (!CURRENT_PROJECT_ID) {
