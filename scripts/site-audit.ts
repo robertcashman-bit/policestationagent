@@ -3,12 +3,12 @@
  * Detects hidden pages (routes not linked from navigation or content)
  */
 
-import * as fs from 'fs';
-import * as path from 'path';
-import { glob } from 'glob';
+import * as fs from "fs";
+import * as path from "path";
+import { glob } from "glob";
 
-const APP_DIR = path.join(__dirname, '..', 'app');
-const REPORTS_DIR = path.join(__dirname, '..', 'reports');
+const APP_DIR = path.join(__dirname, "..", "app");
+const REPORTS_DIR = path.join(__dirname, "..", "reports");
 
 // Ensure reports directory exists
 if (!fs.existsSync(REPORTS_DIR)) {
@@ -48,41 +48,45 @@ interface AuditReport {
  */
 function enumerateRoutes(): RouteInfo[] {
   const routes: RouteInfo[] = [];
-  
+
   // Find all page.tsx, page.ts files
-  const pageFiles = glob.sync('**/page.{tsx,ts}', {
+  const pageFiles = glob.sync("**/page.{tsx,ts}", {
     cwd: APP_DIR,
     absolute: true,
   });
 
   for (const filePath of pageFiles) {
     const relativePath = path.relative(APP_DIR, filePath);
-    const route = '/' + relativePath
-      .replace(/\\/g, '/')
-      .replace(/\/page\.(tsx|ts)$/, '')
-      .replace(/^\/+/, '')
-      .replace(/\/+$/, '') || '/';
+    const route =
+      "/" +
+        relativePath
+          .replace(/\\/g, "/")
+          .replace(/\/page\.(tsx|ts)$/, "")
+          .replace(/^\/+/, "")
+          .replace(/\/+$/, "") || "/";
 
     // Skip certain routes
-    if (route.startsWith('/api/') || 
-        route.startsWith('/_') ||
-        route.includes('/[') && !route.includes('/blog/[')) {
+    if (
+      route.startsWith("/api/") ||
+      route.startsWith("/_") ||
+      (route.includes("/[") && !route.includes("/blog/["))
+    ) {
       continue;
     }
 
     const routeInfo: RouteInfo = {
       route,
-      path: route === '/' ? '/' : route,
+      path: route === "/" ? "/" : route,
       filePath: relativePath,
-      isApi: route.startsWith('/api'),
-      isAdmin: route.startsWith('/admin'),
-      isError: route.includes('404') || route.includes('error'),
+      isApi: route.startsWith("/api"),
+      isAdmin: route.startsWith("/admin"),
+      isError: route.includes("404") || route.includes("error"),
     };
 
     // Try to extract metadata from file
     try {
-      const content = fs.readFileSync(filePath, 'utf8');
-      
+      const content = fs.readFileSync(filePath, "utf8");
+
       // Extract title from metadata
       const titleMatch = content.match(/title:\s*["']([^"']+)["']/);
       if (titleMatch) {
@@ -96,12 +100,12 @@ function enumerateRoutes(): RouteInfo[] {
       }
 
       // Check for noindex
-      if (content.includes('noindex') || content.includes('index: false')) {
+      if (content.includes("noindex") || content.includes("index: false")) {
         routeInfo.isNoIndex = true;
       }
 
       // Check for draft
-      if (content.includes('draft:') && content.match(/draft:\s*true/)) {
+      if (content.includes("draft:") && content.match(/draft:\s*true/)) {
         routeInfo.isDraft = true;
       }
 
@@ -125,21 +129,21 @@ function enumerateRoutes(): RouteInfo[] {
  */
 function extractNavigationLinks(): Set<string> {
   const navRoutes = new Set<string>();
-  
-  // Read Header and Footer components
-  const headerPath = path.join(__dirname, '..', 'components', 'Header.tsx');
-  const footerPath = path.join(__dirname, '..', 'components', 'Footer.tsx');
 
-  [headerPath, footerPath].forEach(filePath => {
+  // Read Header and Footer components
+  const headerPath = path.join(__dirname, "..", "components", "Header.tsx");
+  const footerPath = path.join(__dirname, "..", "components", "Footer.tsx");
+
+  [headerPath, footerPath].forEach((filePath) => {
     if (fs.existsSync(filePath)) {
-      const content = fs.readFileSync(filePath, 'utf8');
-      
+      const content = fs.readFileSync(filePath, "utf8");
+
       // Extract href attributes
       const hrefMatches = content.matchAll(/href=["']([^"']+)["']/g);
       for (const match of hrefMatches) {
         const href = match[1];
-        if (href.startsWith('/') && !href.startsWith('//')) {
-          navRoutes.add(href.split('?')[0].split('#')[0]);
+        if (href.startsWith("/") && !href.startsWith("//")) {
+          navRoutes.add(href.split("?")[0].split("#")[0]);
         }
       }
     }
@@ -155,36 +159,36 @@ function crawlInternalLinks(routes: RouteInfo[]): { linkGraph: LinkGraph; reacha
   const linkGraph: LinkGraph = {};
   const reachable = new Set<string>();
   const visited = new Set<string>();
-  const queue: string[] = ['/'];
+  const queue: string[] = ["/"];
 
   // Initialize link graph
-  routes.forEach(route => {
+  routes.forEach((route) => {
     linkGraph[route.route] = [];
   });
 
   // Extract links from page files
-  routes.forEach(routeInfo => {
+  routes.forEach((routeInfo) => {
     try {
       const fullPath = path.join(APP_DIR, routeInfo.filePath);
       if (fs.existsSync(fullPath)) {
-        const content = fs.readFileSync(fullPath, 'utf8');
-        
+        const content = fs.readFileSync(fullPath, "utf8");
+
         // Find all href attributes
         const hrefMatches = content.matchAll(/href=["']([^"']+)["']/g);
         const links = new Set<string>();
-        
+
         for (const match of hrefMatches) {
           let href = match[1];
-          
+
           // Only process internal links
-          if (href.startsWith('/') && !href.startsWith('//') && !href.startsWith('/api')) {
-            href = href.split('?')[0].split('#')[0];
+          if (href.startsWith("/") && !href.startsWith("//") && !href.startsWith("/api")) {
+            href = href.split("?")[0].split("#")[0];
             if (href && href !== routeInfo.route) {
               links.add(href);
             }
           }
         }
-        
+
         linkGraph[routeInfo.route] = Array.from(links);
       }
     } catch (error) {
@@ -214,25 +218,25 @@ function crawlInternalLinks(routes: RouteInfo[]): { linkGraph: LinkGraph; reacha
  * Main audit function
  */
 function runAudit(): AuditReport {
-  console.log('🔍 Starting site audit...\n');
+  console.log("🔍 Starting site audit...\n");
 
   // Enumerate all routes
-  console.log('📋 Enumerating routes...');
+  console.log("📋 Enumerating routes...");
   const routes = enumerateRoutes();
   console.log(`   Found ${routes.length} routes\n`);
 
   // Extract navigation links
-  console.log('🧭 Extracting navigation links...');
+  console.log("🧭 Extracting navigation links...");
   const navRoutes = extractNavigationLinks();
   console.log(`   Found ${navRoutes.size} navigation links\n`);
 
   // Crawl internal links
-  console.log('🕷️  Crawling internal links...');
+  console.log("🕷️  Crawling internal links...");
   const { linkGraph, reachable } = crawlInternalLinks(routes);
   console.log(`   Found ${reachable.size} reachable routes\n`);
 
   // Identify hidden routes
-  const hiddenRoutes = routes.filter(route => {
+  const hiddenRoutes = routes.filter((route) => {
     // Exclude intentionally hidden routes
     if (route.isNoIndex || route.isDraft || route.isAdmin || route.isApi || route.isError) {
       return false;
@@ -257,8 +261,8 @@ function runAudit(): AuditReport {
   console.log(`   Hidden routes: ${hiddenRoutes.length}\n`);
 
   if (hiddenRoutes.length > 0) {
-    console.log('🔍 Hidden Routes:\n');
-    hiddenRoutes.forEach(route => {
+    console.log("🔍 Hidden Routes:\n");
+    hiddenRoutes.forEach((route) => {
       console.log(`   - ${route.route}`);
       if (route.title) console.log(`     Title: ${route.title}`);
       if (route.h1) console.log(`     H1: ${route.h1}`);
@@ -276,7 +280,7 @@ function runAudit(): AuditReport {
   };
 
   // Write JSON report
-  const reportPath = path.join(REPORTS_DIR, 'site-audit.json');
+  const reportPath = path.join(REPORTS_DIR, "site-audit.json");
   fs.writeFileSync(reportPath, JSON.stringify(report, null, 2));
   console.log(`\n✅ Report written to: ${reportPath}`);
 
@@ -289,46 +293,3 @@ if (require.main === module) {
 }
 
 export { runAudit, enumerateRoutes };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

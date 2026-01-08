@@ -1,21 +1,23 @@
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import type { Metadata } from 'next';
-import { SITE_DOMAIN } from '@/config/site';
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import type { Metadata } from "next";
+import { SITE_DOMAIN } from "@/config/site";
 
 export const metadata: Metadata = {
   title: "Voluntary Police Interview – Legal Advice Before Attendance",
-  description: "Expert legal advice before attending a voluntary police interview. Free legal representation under Legal Aid. Call 01732 247427.",
+  description:
+    "Expert legal advice before attending a voluntary police interview. Free legal representation under Legal Aid. Call 01732 247427.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/voluntary-police-interview`,
   },
   openGraph: {
     title: "Voluntary Police Interview – Legal Advice Before Attendance",
-    description: "Expert legal advice before attending a voluntary police interview. Free legal representation under Legal Aid.",
+    description:
+      "Expert legal advice before attending a voluntary police interview. Free legal representation under Legal Aid.",
     url: `https://${SITE_DOMAIN}/voluntary-police-interview`,
-    siteName: 'Police Station Agent',
-    type: 'website',
-    locale: 'en_GB',
+    siteName: "Police Station Agent",
+    type: "website",
+    locale: "en_GB",
   },
   robots: {
     index: true,
@@ -23,9 +25,9 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
   },
 };
@@ -34,7 +36,12 @@ export default function VoluntaryPoliceInterviewPage() {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50" id="main-content" role="main" aria-live="polite">
+      <main
+        className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50"
+        id="main-content"
+        role="main"
+        aria-live="polite"
+      >
         <div className="prose prose-lg max-w-6xl mx-auto px-4 py-16">
           <div
             dangerouslySetInnerHTML={{
@@ -47,4 +54,3 @@ export default function VoluntaryPoliceInterviewPage() {
     </>
   );
 }
-

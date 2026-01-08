@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
 /**
  * BLOG CAROUSEL COMPONENT
- * 
+ *
  * Dynamic, auto-rotating carousel that displays recent blog posts.
  * Uses the authoritative blog API endpoint.
- * 
+ *
  * Key features:
  * - Fetches from /api/blog/posts (same data source as menu)
  * - Auto-rotates every 5 seconds
@@ -18,9 +18,9 @@
  * - Touch/swipe enabled on mobile
  */
 
-import { useState, useEffect, useCallback, useRef } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
+import { useState, useEffect, useCallback, useRef } from "react";
+import Link from "next/link";
+import Image from "next/image";
 
 interface BlogPost {
   id: string;
@@ -45,7 +45,7 @@ export default function BlogCarousel({
   maxPosts = 50,
   autoRotateInterval = 5000,
   showNavigation = true,
-  className = '',
+  className = "",
 }: BlogCarouselProps) {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -62,20 +62,20 @@ export default function BlogCarousel({
     const timeoutId = setTimeout(() => {
       async function fetchPosts() {
         try {
-          const res = await fetch('/api/blog/posts', {
+          const res = await fetch("/api/blog/posts", {
             // Add cache headers for better performance
             next: { revalidate: 300 }, // Revalidate every 5 minutes
           });
           const data = await res.json();
-          
+
           if (data.posts && Array.isArray(data.posts)) {
             setPosts(data.posts.slice(0, maxPosts));
           } else {
             setPosts([]);
           }
         } catch (err) {
-          console.error('[BlogCarousel] Error fetching posts:', err);
-          setError('Unable to load blog posts');
+          console.error("[BlogCarousel] Error fetching posts:", err);
+          setError("Unable to load blog posts");
           setPosts([]);
         } finally {
           setIsLoading(false);
@@ -122,7 +122,7 @@ export default function BlogCarousel({
 
   const handleTouchEnd = useCallback(() => {
     if (!touchStartX.current || !touchEndX.current) return;
-    
+
     const distance = touchStartX.current - touchEndX.current;
     const minSwipeDistance = 50;
 
@@ -139,28 +139,31 @@ export default function BlogCarousel({
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (carouselRef.current && document.activeElement?.closest('[role="region"]') === carouselRef.current) {
-        if (e.key === 'ArrowLeft') {
+      if (
+        carouselRef.current &&
+        document.activeElement?.closest('[role="region"]') === carouselRef.current
+      ) {
+        if (e.key === "ArrowLeft") {
           e.preventDefault();
           goToPrev();
-        } else if (e.key === 'ArrowRight') {
+        } else if (e.key === "ArrowRight") {
           e.preventDefault();
           goToNext();
         }
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [goToNext, goToPrev]);
 
   const formatDate = (dateString: string | null): string | null => {
     if (!dateString) return null;
     try {
-      return new Date(dateString).toLocaleDateString('en-GB', {
-        day: 'numeric',
-        month: 'short',
-        year: 'numeric',
+      return new Date(dateString).toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
       });
     } catch {
       return dateString;
@@ -169,12 +172,12 @@ export default function BlogCarousel({
 
   // Get image with fallback - cycles through available blog images based on index
   const getPostImage = (post: BlogPost, index: number): string => {
-    if (post.featuredImage && post.featuredImage !== '/blog-images/blog-listing-0.jpg') {
+    if (post.featuredImage && post.featuredImage !== "/blog-images/blog-listing-0.jpg") {
       return post.featuredImage;
     }
     // Cycle through the 8 available blog listing images
     const imageIndex = index % 8;
-    return `/blog-images/blog-listing-${imageIndex}.${imageIndex === 0 ? 'jpg' : 'png'}`;
+    return `/blog-images/blog-listing-${imageIndex}.${imageIndex === 0 ? "jpg" : "png"}`;
   };
 
   // Loading state
@@ -186,9 +189,7 @@ export default function BlogCarousel({
             <div className="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold bg-amber-100 text-amber-800 mb-4">
               Latest Insights
             </div>
-            <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-4">
-              Blog Posts
-            </h2>
+            <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-4">Blog Posts</h2>
             <div className="animate-pulse flex justify-center">
               <div className="h-64 w-full max-w-2xl bg-slate-200 rounded-2xl"></div>
             </div>
@@ -206,7 +207,7 @@ export default function BlogCarousel({
   const currentPost = posts[currentIndex];
 
   return (
-    <section 
+    <section
       ref={carouselRef}
       className={`py-16 bg-gradient-to-br from-slate-50 to-blue-50 ${className}`}
       onMouseEnter={() => setIsPaused(true)}
@@ -225,25 +226,23 @@ export default function BlogCarousel({
             <div className="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold bg-amber-100 text-amber-800 mb-2">
               Latest Insights
             </div>
-            <h2 className="text-3xl md:text-4xl font-black text-slate-900">
-              From Our Blog
-            </h2>
+            <h2 className="text-3xl md:text-4xl font-black text-slate-900">From Our Blog</h2>
           </div>
-          <Link 
-            href="/blog" 
+          <Link
+            href="/blog"
             className="hidden md:flex items-center text-blue-600 font-semibold hover:text-blue-700 transition-colors"
           >
             View all articles
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              width="24" 
-              height="24" 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke="currentColor" 
-              strokeWidth="2" 
-              strokeLinecap="round" 
-              strokeLinejoin="round" 
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               className="w-4 h-4 ml-2"
             >
               <path d="M5 12h14"></path>
@@ -258,16 +257,19 @@ export default function BlogCarousel({
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-100 transition-all duration-500">
             <div className="grid md:grid-cols-2 gap-0">
               {/* Image - Fixed 16:9 aspect ratio with cycling fallback images */}
-              <div key={`image-container-${currentPost.slug}-${currentIndex}`} className="relative aspect-[16/9] md:aspect-[4/3] bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center overflow-hidden">
+              <div
+                key={`image-container-${currentPost.slug}-${currentIndex}`}
+                className="relative aspect-[16/9] md:aspect-[4/3] bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center overflow-hidden"
+              >
                 <Image
                   key={`carousel-image-${currentPost.slug}-${currentIndex}`}
                   src={getPostImage(currentPost, currentIndex)}
-                  alt={currentPost.title || 'Blog post image'}
+                  alt={currentPost.title || "Blog post image"}
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, 50vw"
                   priority={currentIndex === 0}
-                  loading={currentIndex === 0 ? undefined : 'lazy'}
+                  loading={currentIndex === 0 ? undefined : "lazy"}
                 />
               </div>
 
@@ -301,9 +303,7 @@ export default function BlogCarousel({
                 </h3>
 
                 {currentPost.metaDescription && (
-                  <p className="text-slate-600 mb-6 line-clamp-3">
-                    {currentPost.metaDescription}
-                  </p>
+                  <p className="text-slate-600 mb-6 line-clamp-3">{currentPost.metaDescription}</p>
                 )}
 
                 <Link
@@ -387,7 +387,7 @@ export default function BlogCarousel({
                 {currentIndex + 1} of {posts.length}
               </span>
               <div className="flex-1 max-w-xs h-1 bg-slate-200 rounded-full overflow-hidden">
-                <div 
+                <div
                   className="h-full bg-blue-600 transition-all duration-300 ease-out"
                   style={{ width: `${((currentIndex + 1) / posts.length) * 100}%` }}
                 />
@@ -401,30 +401,34 @@ export default function BlogCarousel({
                 const isFirst = index < 5;
                 const isLast = index >= posts.length - 5;
                 const shouldShow = isNearCurrent || isFirst || isLast;
-                
+
                 if (!shouldShow) {
                   // Show ellipsis dots at boundaries
                   if (index === 5 && currentIndex > 8) {
                     return (
-                      <span key={index} className="w-4 text-center text-slate-400 text-xs">...</span>
+                      <span key={index} className="w-4 text-center text-slate-400 text-xs">
+                        ...
+                      </span>
                     );
                   }
                   if (index === posts.length - 6 && currentIndex < posts.length - 9) {
                     return (
-                      <span key={index} className="w-4 text-center text-slate-400 text-xs">...</span>
+                      <span key={index} className="w-4 text-center text-slate-400 text-xs">
+                        ...
+                      </span>
                     );
                   }
                   return null;
                 }
-                
+
                 return (
                   <button
                     key={index}
                     onClick={() => goToSlide(index)}
                     className={`h-2 rounded-full transition-all duration-300 ${
                       index === currentIndex
-                        ? 'w-6 bg-blue-600'
-                        : 'w-2 bg-slate-300 hover:bg-slate-400'
+                        ? "w-6 bg-blue-600"
+                        : "w-2 bg-slate-300 hover:bg-slate-400"
                     }`}
                     aria-label={`Go to slide ${index + 1}`}
                   />
@@ -462,10 +466,3 @@ export default function BlogCarousel({
     </section>
   );
 }
-
-
-
-
-
-
-

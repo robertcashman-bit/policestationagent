@@ -11,11 +11,11 @@
  * - timeouts
  */
 
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 const WORKSPACE = process.cwd();
-const SITE_ORIGIN = process.env.SITE_ORIGIN || 'https://policestationagent.com';
+const SITE_ORIGIN = process.env.SITE_ORIGIN || "https://policestationagent.com";
 const BLOG_API = `${SITE_ORIGIN}/api/blog/posts`;
 
 const CONCURRENCY = Number(process.env.CRAWL_CONCURRENCY || 6);
@@ -28,28 +28,28 @@ function sleep(ms) {
 }
 
 function stripQueryAndHash(href) {
-  const idxQ = href.indexOf('?');
-  const idxH = href.indexOf('#');
+  const idxQ = href.indexOf("?");
+  const idxH = href.indexOf("#");
   const cut = [idxQ, idxH].filter((n) => n >= 0).sort((a, b) => a - b)[0];
   return cut === undefined ? href : href.slice(0, cut);
 }
 
 function isIgnorableHref(href) {
   if (!href) return true;
-  if (href.startsWith('#')) return true;
+  if (href.startsWith("#")) return true;
   const lower = href.toLowerCase();
   return (
-    lower.startsWith('mailto:') ||
-    lower.startsWith('tel:') ||
-    lower.startsWith('sms:') ||
-    lower.startsWith('javascript:')
+    lower.startsWith("mailto:") ||
+    lower.startsWith("tel:") ||
+    lower.startsWith("sms:") ||
+    lower.startsWith("javascript:")
   );
 }
 
 function extractHrefsFromHtml(html) {
   /** @type {string[]} */
   const hrefs = [];
-  if (!html || typeof html !== 'string') return hrefs;
+  if (!html || typeof html !== "string") return hrefs;
   const re = /href\s*=\s*(["'])([^"']+)\1/gi;
   let m;
   while ((m = re.exec(html)) !== null) hrefs.push(m[2]);
@@ -61,10 +61,10 @@ async function fetchWithTimeout(url, init = {}) {
   const t = setTimeout(() => controller.abort(), TIMEOUT_MS);
   try {
     const res = await fetch(url, {
-      redirect: 'follow',
+      redirect: "follow",
       ...init,
       headers: {
-        'User-Agent': 'policestationagent-link-audit/1.0 (+https://policestationagent.com)',
+        "User-Agent": "policestationagent-link-audit/1.0 (+https://policestationagent.com)",
         ...(init.headers || {}),
       },
       signal: controller.signal,
@@ -76,7 +76,7 @@ async function fetchWithTimeout(url, init = {}) {
 }
 
 async function fetchJson(url) {
-  const res = await fetchWithTimeout(url, { method: 'GET' });
+  const res = await fetchWithTimeout(url, { method: "GET" });
   if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
   return await res.json();
 }
@@ -84,13 +84,13 @@ async function fetchJson(url) {
 async function checkUrl(url) {
   try {
     // Try HEAD then GET
-    let res = await fetchWithTimeout(url, { method: 'HEAD' });
+    let res = await fetchWithTimeout(url, { method: "HEAD" });
     if (!res.ok && (res.status === 405 || res.status === 403 || res.status === 400)) {
-      res = await fetchWithTimeout(url, { method: 'GET' });
+      res = await fetchWithTimeout(url, { method: "GET" });
     }
     return { ok: res.ok, status: res.status, finalUrl: res.url };
   } catch (e) {
-    return { ok: false, error: e && e.name === 'AbortError' ? 'timeout' : 'network_error' };
+    return { ok: false, error: e && e.name === "AbortError" ? "timeout" : "network_error" };
   }
 }
 
@@ -124,7 +124,7 @@ async function main() {
 
   const posts = Array.isArray(postsResponse.posts) ? postsResponse.posts : [];
   const slugs = posts
-    .map((p) => (p && p.slug ? String(p.slug) : ''))
+    .map((p) => (p && p.slug ? String(p.slug) : ""))
     .filter(Boolean)
     .slice(0, MAX_POSTS);
 
@@ -150,10 +150,16 @@ async function main() {
       const url = `${SITE_ORIGIN}/blog/${slug}`;
       let res;
       try {
-        res = await fetchWithTimeout(url, { method: 'GET' });
+        res = await fetchWithTimeout(url, { method: "GET" });
       } catch (e) {
-        pageSummaries.push({ slug, url, ok: false, error: e && e.name === 'AbortError' ? 'timeout' : 'network_error', hrefs: 0 });
-        pageStatusCounts.set('fetch_error', (pageStatusCounts.get('fetch_error') || 0) + 1);
+        pageSummaries.push({
+          slug,
+          url,
+          ok: false,
+          error: e && e.name === "AbortError" ? "timeout" : "network_error",
+          hrefs: 0,
+        });
+        pageStatusCounts.set("fetch_error", (pageStatusCounts.get("fetch_error") || 0) + 1);
         return;
       }
 
@@ -169,17 +175,23 @@ async function main() {
 
       for (const href of hrefs) {
         const lower = href.toLowerCase();
-        const isExternal = href.startsWith('//') || lower.startsWith('http://') || lower.startsWith('https://');
+        const isExternal =
+          href.startsWith("//") || lower.startsWith("http://") || lower.startsWith("https://");
         if (isExternal) {
-          const full = href.startsWith('//') ? `https:${href}` : href;
+          const full = href.startsWith("//") ? `https:${href}` : href;
           externalTargets.set(full, (externalTargets.get(full) || 0) + 1);
           continue;
         }
-        if (!href.startsWith('/')) continue;
+        if (!href.startsWith("/")) continue;
 
         const pathname = stripQueryAndHash(href);
         // ignore common assets
-        if (pathname.startsWith('/_next/') || pathname.startsWith('/blog-images/') || pathname.startsWith('/images/')) continue;
+        if (
+          pathname.startsWith("/_next/") ||
+          pathname.startsWith("/blog-images/") ||
+          pathname.startsWith("/images/")
+        )
+          continue;
 
         // Track internal targets by path
         brokenTargets.set(pathname, (brokenTargets.get(pathname) || 0) + 0); // ensure key exists
@@ -215,7 +227,9 @@ async function main() {
 
   // Validate external targets (cap unique)
   const externalUnique = Array.from(externalTargets.keys()).slice(0, MAX_EXTERNAL_UNIQUE);
-  console.log(`Unique external targets to validate (cap ${MAX_EXTERNAL_UNIQUE}): ${externalUnique.length}`);
+  console.log(
+    `Unique external targets to validate (cap ${MAX_EXTERNAL_UNIQUE}): ${externalUnique.length}`
+  );
 
   const externalResults = await runPool(
     externalUnique,
@@ -237,19 +251,19 @@ async function main() {
       .sort((a, b) => b[1] - a[1])
       .slice(0, n);
 
-  console.log('\n--- Live crawl summary ---');
-  console.log('Blog page HTTP statuses (count):');
+  console.log("\n--- Live crawl summary ---");
+  console.log("Blog page HTTP statuses (count):");
   for (const [k, v] of top(pageStatusCounts, 50)) console.log(`- ${v}x ${k}`);
 
   console.log(`\nBroken INTERNAL targets (unique): ${brokenTargets.size}`);
   if (brokenTargets.size) {
-    console.log('Top broken internal targets:');
+    console.log("Top broken internal targets:");
     for (const [k, v] of top(brokenTargets, 30)) console.log(`- ${v}x ${k}`);
   }
 
   console.log(`\nRedirecting INTERNAL targets (unique): ${redirectTargets.size}`);
   if (redirectTargets.size) {
-    console.log('Top redirects (up to 20):');
+    console.log("Top redirects (up to 20):");
     for (const [k, v] of top(redirectTargets, 20)) console.log(`- ${v}x ${k}`);
   }
 
@@ -257,7 +271,7 @@ async function main() {
   console.log(`External targets checked (unique): ${externalUnique.length}`);
   console.log(`Broken external checks (unique): ${externalBroken.size}`);
   if (externalBroken.size) {
-    console.log('Top broken external (up to 20):');
+    console.log("Top broken external (up to 20):");
     for (const [k, v] of top(externalBroken, 20)) console.log(`- ${v}x ${k}`);
   }
 
@@ -277,9 +291,9 @@ async function main() {
     pageSummaries,
   };
 
-  const outPath = path.join(WORKSPACE, 'playwright-results', 'live-blog-link-audit.json');
+  const outPath = path.join(WORKSPACE, "playwright-results", "live-blog-link-audit.json");
   fs.mkdirSync(path.dirname(outPath), { recursive: true });
-  fs.writeFileSync(outPath, JSON.stringify(report, null, 2) + '\n', 'utf8');
+  fs.writeFileSync(outPath, JSON.stringify(report, null, 2) + "\n", "utf8");
   console.log(`\nWrote report: ${outPath}`);
 
   // Non-zero if internal targets broken
@@ -290,4 +304,3 @@ main().catch((e) => {
   console.error(e);
   process.exit(1);
 });
-

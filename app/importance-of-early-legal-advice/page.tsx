@@ -1,19 +1,21 @@
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import type { Metadata } from 'next';
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'Importance of Early Legal Advice | Why You Need a Solicitor Immediately',
-  description: 'Why early legal advice is crucial when dealing with the police. Learn how getting a solicitor immediately can protect your rights and improve your case outcome.',
+  title: "Importance of Early Legal Advice | Why You Need a Solicitor Immediately",
+  description:
+    "Why early legal advice is crucial when dealing with the police. Learn how getting a solicitor immediately can protect your rights and improve your case outcome.",
   alternates: {
-    canonical: 'https://policestationagent.com/importance-of-early-legal-advice',
+    canonical: "https://policestationagent.com/importance-of-early-legal-advice",
   },
   openGraph: {
-    title: 'Importance of Early Legal Advice | Why You Need a Solicitor Immediately',
-    description: 'Why early legal advice is crucial when dealing with the police. Learn how getting a solicitor immediately can protect your rights.',
-    url: 'https://policestationagent.com/importance-of-early-legal-advice',
-    siteName: 'Police Station Agent',
-    type: 'website',
+    title: "Importance of Early Legal Advice | Why You Need a Solicitor Immediately",
+    description:
+      "Why early legal advice is crucial when dealing with the police. Learn how getting a solicitor immediately can protect your rights.",
+    url: "https://policestationagent.com/importance-of-early-legal-advice",
+    siteName: "Police Station Agent",
+    type: "website",
   },
 };
 
@@ -25,15 +27,19 @@ export default function Page() {
         <div className="bg-slate-50 min-h-screen">
           <div className="prose prose-lg max-w-6xl mx-auto px-4 py-16">
             <h1 className="text-4xl font-bold mb-6">The Importance of Early Legal Advice</h1>
-            
+
             <p className="lead text-xl text-slate-700 mb-8">
-              Getting legal advice as early as possible when dealing with the police can significantly impact the outcome of your case. Early intervention by a solicitor can protect your rights and improve your position.
+              Getting legal advice as early as possible when dealing with the police can
+              significantly impact the outcome of your case. Early intervention by a solicitor can
+              protect your rights and improve your position.
             </p>
 
             <section className="mb-8">
               <h2 className="text-3xl font-semibold mb-4">Why Timing Matters</h2>
               <p className="mb-4">
-                The earlier you get legal advice, the better protected you are. Research shows that cases where legal advice is obtained early have better outcomes.<sup>1</sup> This is because:
+                The earlier you get legal advice, the better protected you are. Research shows that
+                cases where legal advice is obtained early have better outcomes.<sup>1</sup> This is
+                because:
               </p>
               <ul className="list-disc pl-6 mb-4 space-y-2">
                 <li>Your solicitor can advise you before you make any statements</li>
@@ -47,7 +53,8 @@ export default function Page() {
             <section className="mb-8">
               <h2 className="text-3xl font-semibold mb-4">Protection of Your Rights</h2>
               <p className="mb-4">
-                Under PACE Code C, you have the right to free legal advice at any time while in custody.<sup>2</sup> Early legal advice ensures:
+                Under PACE Code C, you have the right to free legal advice at any time while in
+                custody.<sup>2</sup> Early legal advice ensures:
               </p>
               <ul className="list-disc pl-6 mb-4 space-y-2">
                 <li>You understand your rights from the beginning</li>
@@ -73,9 +80,7 @@ export default function Page() {
 
             <section className="mb-8">
               <h2 className="text-3xl font-semibold mb-4">Early Case Assessment</h2>
-              <p className="mb-4">
-                An early assessment of your case allows your solicitor to:
-              </p>
+              <p className="mb-4">An early assessment of your case allows your solicitor to:</p>
               <ul className="list-disc pl-6 mb-4 space-y-2">
                 <li>Identify weaknesses in the prosecution case</li>
                 <li>Gather evidence in your favour</li>
@@ -87,9 +92,7 @@ export default function Page() {
 
             <section className="mb-8">
               <h2 className="text-3xl font-semibold mb-4">The Consequences of Delay</h2>
-              <p className="mb-4">
-                Delaying legal advice can have serious consequences:
-              </p>
+              <p className="mb-4">Delaying legal advice can have serious consequences:</p>
               <ul className="list-disc pl-6 mb-4 space-y-2">
                 <li>You may make statements that harm your case</li>
                 <li>Evidence may be lost or destroyed</li>
@@ -100,26 +103,45 @@ export default function Page() {
             </section>
 
             <section className="mb-8 bg-red-50 p-6 rounded-lg border border-red-200">
-              <h2 className="text-2xl font-semibold mb-4 text-red-800">Free Legal Advice is Available</h2>
+              <h2 className="text-2xl font-semibold mb-4 text-red-800">
+                Free Legal Advice is Available
+              </h2>
               <p className="mb-4">
-                Legal advice at the police station is free under the Legal Aid scheme, regardless of your financial circumstances.<sup>3</sup> There is no reason to delay getting advice.
+                Legal advice at the police station is free under the Legal Aid scheme, regardless of
+                your financial circumstances.<sup>3</sup> There is no reason to delay getting
+                advice.
               </p>
             </section>
 
             <section className="mb-8 bg-blue-50 p-6 rounded-lg border border-blue-200">
               <h2 className="text-2xl font-semibold mb-4">Get Expert Legal Advice Now</h2>
               <p className="mb-4">
-                If you are dealing with the police, whether you have been arrested or invited for a voluntary interview, get expert legal advice immediately. We provide free extended hours legal advice and representation.
+                If you are dealing with the police, whether you have been arrested or invited for a
+                voluntary interview, get expert legal advice immediately. We provide free extended
+                hours legal advice and representation.
               </p>
               <p className="mb-4">
-                <strong>Call us immediately on <a href="tel:01732247427" className="text-blue-600 hover:text-blue-800 font-semibold">01732 247427</a></strong> for free legal advice. The earlier you call, the better we can protect your interests.
+                <strong>
+                  Call us immediately on{" "}
+                  <a
+                    href="tel:01732247427"
+                    className="text-blue-600 hover:text-blue-800 font-semibold"
+                  >
+                    01732 247427
+                  </a>
+                </strong>{" "}
+                for free legal advice. The earlier you call, the better we can protect your
+                interests.
               </p>
             </section>
 
             <section className="mt-12 pt-8 border-t border-slate-300">
               <h2 className="text-2xl font-semibold mb-4">References</h2>
               <ol className="list-decimal pl-6 space-y-2 text-sm text-slate-600">
-                <li>Ministry of Justice, "Legal Aid Statistics: Legal Aid Agency Statistics Quarterly" (2023)</li>
+                <li>
+                  Ministry of Justice, "Legal Aid Statistics: Legal Aid Agency Statistics Quarterly"
+                  (2023)
+                </li>
                 <li>Police and Criminal Evidence Act 1984, Code C, paragraph 6.1</li>
                 <li>Legal Aid, Sentencing and Punishment of Offenders Act 2012, Section 13</li>
               </ol>

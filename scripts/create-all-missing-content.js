@@ -4,10 +4,10 @@
  * Create proper content for all missing pages
  */
 
-const fs = require('fs').promises;
-const path = require('path');
+const fs = require("fs").promises;
+const path = require("path");
 
-const APP_DIR = path.join(__dirname, '..', 'app');
+const APP_DIR = path.join(__dirname, "..", "app");
 
 const WHY_USE_US_CONTENT = `<div class="bg-gradient-to-br from-slate-50 to-blue-50">
 <section class="bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 text-white py-20">
@@ -181,12 +181,12 @@ const WHY_USE_US_CONTENT = `<div class="bg-gradient-to-br from-slate-50 to-blue-
 </div>`;
 
 async function createPage(route, content, title, description) {
-  const routePath = route === '/' ? 'app/page.tsx' : `app${route}/page.tsx`;
-  const filePath = path.join(__dirname, '..', routePath);
+  const routePath = route === "/" ? "app/page.tsx" : `app${route}/page.tsx`;
+  const filePath = path.join(__dirname, "..", routePath);
   const dirPath = path.dirname(filePath);
-  
+
   await fs.mkdir(dirPath, { recursive: true });
-  
+
   const pageContent = `import type { Metadata } from 'next';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -222,64 +222,22 @@ export default function Page() {
   );
 }
 `;
-  
-  await fs.writeFile(filePath, pageContent, 'utf-8');
+
+  await fs.writeFile(filePath, pageContent, "utf-8");
   console.log(`✅ Created: ${routePath}`);
 }
 
 async function main() {
-  console.log('Creating missing pages...\n');
-  
+  console.log("Creating missing pages...\n");
+
   await createPage(
-    '/why-use-us',
+    "/why-use-us",
     WHY_USE_US_CONTENT,
-    'Why Use Us As Your Police Station Agent In Kent? | Criminal Defence Kent',
-    'Expert police station representation in Kent. 35+ years experience, available 24/7, free Legal Aid, and complete Kent coverage. Professional association with Tuckers Solicitors LLP.'
+    "Why Use Us As Your Police Station Agent In Kent? | Criminal Defence Kent",
+    "Expert police station representation in Kent. 35+ years experience, available 24/7, free Legal Aid, and complete Kent coverage. Professional association with Tuckers Solicitors LLP."
   );
-  
-  console.log('\n✅ Done!');
+
+  console.log("\n✅ Done!");
 }
 
 main().catch(console.error);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

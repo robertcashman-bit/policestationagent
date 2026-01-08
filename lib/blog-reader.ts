@@ -1,6 +1,6 @@
 /**
  * Blog Reader Module
- * 
+ *
  * DESIGN PRINCIPLES:
  * - Read-only operations
  * - Works at build time and runtime
@@ -9,9 +9,9 @@
  * - No mutations, no writes
  */
 
-import fs from 'fs';
-import path from 'path';
-import { BlogPost } from './blog-persistence';
+import fs from "fs";
+import path from "path";
+import { BlogPost } from "./blog-persistence";
 
 // =============================================================================
 // LEGACY IMPORTS (for backward compatibility)
@@ -54,8 +54,8 @@ export interface BlogPostSummary {
 // DIRECTORY CONFIGURATION
 // =============================================================================
 
-const BLOG_POSTS_DIR = path.join(process.cwd(), 'data', 'blog-posts');
-const LEGACY_JSON_PATH = path.join(process.cwd(), 'data', 'blog-posts-full.json');
+const BLOG_POSTS_DIR = path.join(process.cwd(), "data", "blog-posts");
+const LEGACY_JSON_PATH = path.join(process.cwd(), "data", "blog-posts-full.json");
 
 // =============================================================================
 // ENSURE DIRECTORY EXISTS
@@ -72,18 +72,18 @@ function ensureDirectoryExists(): void {
 // =============================================================================
 
 function normalizeSlug(input: string): string {
-  if (!input || typeof input !== 'string') return '';
-  
+  if (!input || typeof input !== "string") return "";
+
   return input
     .toLowerCase()
     .trim()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/['']/g, '')
-    .replace(/[^\w\s-]/g, '')
-    .replace(/[\s_]+/g, '-')
-    .replace(/-+/g, '-')
-    .replace(/^-+|-+$/g, '');
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/['']/g, "")
+    .replace(/[^\w\s-]/g, "")
+    .replace(/[\s_]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-+|-+$/g, "");
 }
 
 // =============================================================================
@@ -94,18 +94,18 @@ function getNewFormatPosts(): BlogPost[] {
   ensureDirectoryExists();
 
   const files = fs.readdirSync(BLOG_POSTS_DIR);
-  const jsonFiles = files.filter(f => f.endsWith('.json'));
+  const jsonFiles = files.filter((f) => f.endsWith(".json"));
 
   const posts: BlogPost[] = [];
 
   for (const file of jsonFiles) {
     try {
       const filePath = path.join(BLOG_POSTS_DIR, file);
-      const content = fs.readFileSync(filePath, 'utf-8');
+      const content = fs.readFileSync(filePath, "utf-8");
       const post = JSON.parse(content) as BlogPost;
-      
+
       // Only include published posts
-      if (post.status === 'published') {
+      if (post.status === "published") {
         posts.push(post);
       }
     } catch (error) {
@@ -126,32 +126,33 @@ function getLegacyPosts(): BlogPost[] {
       return [];
     }
 
-    const content = fs.readFileSync(LEGACY_JSON_PATH, 'utf-8');
+    const content = fs.readFileSync(LEGACY_JSON_PATH, "utf-8");
     const legacyPosts = JSON.parse(content) as LegacyBlogPost[];
 
     // Convert legacy format to new format
     return legacyPosts
-      .filter(p => p.published === 1)
-      .map(p => ({
+      .filter((p) => p.published === 1)
+      .map((p) => ({
         id: `legacy-${p.id}`,
-        title: p.title || 'Untitled',
+        title: p.title || "Untitled",
         slug: normalizeSlug(p.slug || p.title),
-        date: (p.published_at || p.created_at || new Date().toISOString()).split('T')[0],
-        category: 'Police Station Advice',
-        primaryKeyword: '',
+        date: (p.published_at || p.created_at || new Date().toISOString()).split("T")[0],
+        category: "Police Station Advice",
+        primaryKeyword: "",
         secondaryKeywords: [],
-        location: 'Kent',
-        metaTitle: p.meta_title || p.title || 'Untitled',
-        metaDescription: p.meta_description || p.excerpt || '',
+        location: "Kent",
+        metaTitle: p.meta_title || p.title || "Untitled",
+        metaDescription: p.meta_description || p.excerpt || "",
         // Cycle through available blog images based on post ID for variety
-        featuredImage: p.image || `/blog-images/blog-listing-${p.id % 8}.${p.id % 8 === 0 ? 'jpg' : 'png'}`,
-        contentHtml: p.content || '',
+        featuredImage:
+          p.image || `/blog-images/blog-listing-${p.id % 8}.${p.id % 8 === 0 ? "jpg" : "png"}`,
+        contentHtml: p.content || "",
         faq: [],
-        author: 'Robert Cashman',
-        status: 'published' as const,
+        author: "Robert Cashman",
+        status: "published" as const,
       }));
   } catch (error) {
-    console.error('[blog-reader] Error reading legacy JSON:', error);
+    console.error("[blog-reader] Error reading legacy JSON:", error);
     return [];
   }
 }
@@ -183,7 +184,9 @@ export function getAllPosts(): BlogPost[] {
   // Sort by date, newest first
   posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-  console.log(`[blog-reader] Found ${newPosts.length} new posts, ${legacyPosts.length} legacy posts, ${posts.length} total unique`);
+  console.log(
+    `[blog-reader] Found ${newPosts.length} new posts, ${legacyPosts.length} legacy posts, ${posts.length} total unique`
+  );
 
   return posts;
 }
@@ -195,7 +198,7 @@ export function getAllPosts(): BlogPost[] {
 export function getPostSummaries(): BlogPostSummary[] {
   const posts = getAllPosts();
 
-  return posts.map(post => ({
+  return posts.map((post) => ({
     id: post.id,
     title: post.title,
     slug: post.slug,
@@ -216,7 +219,7 @@ export function getPostBySlug(slug: string): BlogPost | null {
   const normalizedInput = normalizeSlug(slug);
   const posts = getAllPosts();
 
-  const post = posts.find(p => normalizeSlug(p.slug) === normalizedInput);
+  const post = posts.find((p) => normalizeSlug(p.slug) === normalizedInput);
 
   if (post) {
     console.log(`[blog-reader] Found post: ${post.slug}`);
@@ -233,7 +236,7 @@ export function getPostBySlug(slug: string): BlogPost | null {
 
 export function getAllSlugs(): string[] {
   const posts = getAllPosts();
-  return posts.map(post => post.slug);
+  return posts.map((post) => post.slug);
 }
 
 // =============================================================================
@@ -242,7 +245,7 @@ export function getAllSlugs(): string[] {
 
 export function getPostsByCategory(category: string): BlogPost[] {
   const posts = getAllPosts();
-  return posts.filter(post => post.category === category);
+  return posts.filter((post) => post.category === category);
 }
 
 // =============================================================================
@@ -260,7 +263,7 @@ export function getRecentPosts(count: number = 5): BlogPost[] {
 
 export function getAllCategories(): string[] {
   const posts = getAllPosts();
-  const categories = new Set(posts.map(post => post.category));
+  const categories = new Set(posts.map((post) => post.category));
   return Array.from(categories).sort();
 }
 
@@ -270,12 +273,12 @@ export function getAllCategories(): string[] {
 
 export function generateExcerpt(html: string, maxLength: number = 160): string {
   const textOnly = html
-    .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
-    .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
-    .replace(/<[^>]+>/g, '')
-    .replace(/&nbsp;/g, ' ')
-    .replace(/&[a-z]+;/gi, ' ')
-    .replace(/\s+/g, ' ')
+    .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, "")
+    .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, "")
+    .replace(/<[^>]+>/g, "")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&[a-z]+;/gi, " ")
+    .replace(/\s+/g, " ")
     .trim();
 
   if (textOnly.length <= maxLength) {
@@ -283,13 +286,13 @@ export function generateExcerpt(html: string, maxLength: number = 160): string {
   }
 
   const truncated = textOnly.substring(0, maxLength);
-  const lastSpace = truncated.lastIndexOf(' ');
-  
+  const lastSpace = truncated.lastIndexOf(" ");
+
   if (lastSpace > maxLength * 0.7) {
-    return truncated.substring(0, lastSpace) + '...';
+    return truncated.substring(0, lastSpace) + "...";
   }
 
-  return truncated + '...';
+  return truncated + "...";
 }
 
 // =============================================================================
@@ -298,10 +301,10 @@ export function generateExcerpt(html: string, maxLength: number = 160): string {
 
 export function formatBlogDate(dateString: string): string {
   try {
-    return new Date(dateString).toLocaleDateString('en-GB', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
+    return new Date(dateString).toLocaleDateString("en-GB", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
   } catch {
     return dateString;

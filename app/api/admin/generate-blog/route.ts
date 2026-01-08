@@ -1,6 +1,6 @@
 /**
  * Blog Content Generation API
- * 
+ *
  * DESIGN PRINCIPLES:
  * - Uses OpenAI for content generation only
  * - No image generation (DALL-E removed)
@@ -8,9 +8,9 @@
  * - Returns structured content for preview
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { getAdminSession } from '@/lib/admin-auth';
-import { generateSlug } from '@/lib/blog-persistence';
+import { NextRequest, NextResponse } from "next/server";
+import { getAdminSession } from "@/lib/admin-auth";
+import { generateSlug } from "@/lib/blog-persistence";
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
@@ -23,17 +23,17 @@ async function callOpenAI(
   maxTokens: number = 2000
 ): Promise<string> {
   if (!OPENAI_API_KEY) {
-    throw new Error('OPENAI_API_KEY not configured');
+    throw new Error("OPENAI_API_KEY not configured");
   }
 
-  const response = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
+  const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${OPENAI_API_KEY}`,
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${OPENAI_API_KEY}`,
     },
     body: JSON.stringify({
-      model: 'gpt-4o',
+      model: "gpt-4o",
       messages,
       max_tokens: maxTokens,
       temperature: 0.7,
@@ -42,11 +42,11 @@ async function callOpenAI(
 
   if (!response.ok) {
     const error = await response.json();
-    throw new Error(`OpenAI API error: ${error.error?.message || 'Unknown error'}`);
+    throw new Error(`OpenAI API error: ${error.error?.message || "Unknown error"}`);
   }
 
   const data = await response.json();
-  return data.choices[0]?.message?.content || '';
+  return data.choices[0]?.message?.content || "";
 }
 
 // =============================================================================
@@ -75,10 +75,10 @@ async function generateAIContent(formData: {
   const {
     topic,
     primaryKeyword,
-    secondaryKeywords = '',
-    location = 'Kent',
-    category = 'Police Station Advice',
-    seoLength = 'optimal',
+    secondaryKeywords = "",
+    location = "Kent",
+    category = "Police Station Advice",
+    seoLength = "optimal",
     includeFAQ = true,
     includeInternalLinks = true,
   } = formData;
@@ -93,8 +93,8 @@ async function generateAIContent(formData: {
 
   // Parse secondary keywords
   const secondaryKeywordsList = secondaryKeywords
-    .split(',')
-    .map(k => k.trim())
+    .split(",")
+    .map((k) => k.trim())
     .filter(Boolean);
 
   // Build content prompt
@@ -104,7 +104,7 @@ Write a comprehensive, SEO-optimized blog article for PoliceStationAgent.com abo
 
 **Topic:** ${topic}
 **Primary Keyword:** ${primaryKeyword}
-**Secondary Keywords:** ${secondaryKeywordsList.join(', ') || 'duty solicitor, PACE rights, police station representation'}
+**Secondary Keywords:** ${secondaryKeywordsList.join(", ") || "duty solicitor, PACE rights, police station representation"}
 **Target Location:** ${location}
 **Target Word Count:** ${targetWords} words
 **Category:** ${category}
@@ -136,27 +136,38 @@ Write a comprehensive, SEO-optimized blog article for PoliceStationAgent.com abo
    - Available 9am to late, including weekends and bank holidays
    - Phone: 01732 247427
 
-${includeInternalLinks ? `6. **Internal Links:** Include 2-3 relevant internal links to:
+${
+  includeInternalLinks
+    ? `6. **Internal Links:** Include 2-3 relevant internal links to:
    - /services/police-station-representation
    - /services/arrest-advice
    - /services/bail-advice
-   - /contact` : ''}
+   - /contact`
+    : ""
+}
 
 **OUTPUT FORMAT:**
 Return ONLY HTML content (no markdown). Use: <h2>, <h3>, <p>, <ul>, <li>, <strong>, <a href="...">.
 Do NOT include <h1>. Do NOT include preamble.`;
 
   // Generate content
-  let content = await callOpenAI([
-    { role: 'system', content: 'You are a professional legal content writer for UK criminal defence. Write in British English. Be authoritative, helpful, and SEO-optimized.' },
-    { role: 'user', content: contentPrompt },
-  ], 3000);
+  let content = await callOpenAI(
+    [
+      {
+        role: "system",
+        content:
+          "You are a professional legal content writer for UK criminal defence. Write in British English. Be authoritative, helpful, and SEO-optimized.",
+      },
+      { role: "user", content: contentPrompt },
+    ],
+    3000
+  );
 
   // Clean markdown artifacts
   content = content
-    .replace(/^```html\s*/i, '')
-    .replace(/^```\s*/gm, '')
-    .replace(/```$/gm, '')
+    .replace(/^```html\s*/i, "")
+    .replace(/^```\s*/gm, "")
+    .replace(/```$/gm, "")
     .trim();
 
   // Add mandatory advert block
@@ -175,18 +186,27 @@ TITLE: [your title here]
 META: [your meta description here]
 EXCERPT: [your excerpt here]`;
 
-  const metaResponse = await callOpenAI([
-    { role: 'system', content: 'You are an SEO specialist. Be concise and follow character limits exactly.' },
-    { role: 'user', content: metaPrompt },
-  ], 500);
+  const metaResponse = await callOpenAI(
+    [
+      {
+        role: "system",
+        content: "You are an SEO specialist. Be concise and follow character limits exactly.",
+      },
+      { role: "user", content: metaPrompt },
+    ],
+    500
+  );
 
   // Parse meta response
   const titleMatch = metaResponse.match(/TITLE:\s*(.+?)(?:\n|$)/i);
   const metaMatch = metaResponse.match(/META:\s*(.+?)(?:\n|$)/i);
   const excerptMatch = metaResponse.match(/EXCERPT:\s*(.+?)(?:\n|$)/i);
 
-  const metaTitle = titleMatch?.[1]?.trim().substring(0, 60) || `${topic} | ${location} Duty Solicitor`;
-  const metaDescription = metaMatch?.[1]?.trim().substring(0, 155) || `Expert guidance on ${topic.toLowerCase()} from qualified Duty Solicitor in ${location}. PACE-compliant police station representation.`;
+  const metaTitle =
+    titleMatch?.[1]?.trim().substring(0, 60) || `${topic} | ${location} Duty Solicitor`;
+  const metaDescription =
+    metaMatch?.[1]?.trim().substring(0, 155) ||
+    `Expert guidance on ${topic.toLowerCase()} from qualified Duty Solicitor in ${location}. PACE-compliant police station representation.`;
   const excerpt = excerptMatch?.[1]?.trim() || metaDescription;
 
   // Generate FAQs
@@ -207,18 +227,27 @@ A: [Answer here - 2-3 sentences]
 Q: [Question here]
 A: [Answer here - 2-3 sentences]`;
 
-    const faqResponse = await callOpenAI([
-      { role: 'system', content: 'You are a legal FAQ writer. Create clear, helpful FAQs about UK criminal law.' },
-      { role: 'user', content: faqPrompt },
-    ], 1500);
+    const faqResponse = await callOpenAI(
+      [
+        {
+          role: "system",
+          content: "You are a legal FAQ writer. Create clear, helpful FAQs about UK criminal law.",
+        },
+        { role: "user", content: faqPrompt },
+      ],
+      1500
+    );
 
     // Parse FAQs
     const faqPairs = faqResponse.split(/Q:\s*/i).filter(Boolean);
     for (const pair of faqPairs) {
       const parts = pair.split(/A:\s*/i);
       if (parts.length >= 2) {
-        const question = parts[0].trim().replace(/\??\s*$/, '?');
-        const answer = parts[1].trim().split(/\n\nQ:/i)[0].trim();
+        const question = parts[0].trim().replace(/\??\s*$/, "?");
+        const answer = parts[1]
+          .trim()
+          .split(/\n\nQ:/i)[0]
+          .trim();
         if (question && answer && question.length > 10) {
           faqs.push({ question, answer });
         }
@@ -251,15 +280,19 @@ function generateFallbackContent(formData: {
   const {
     topic,
     primaryKeyword,
-    secondaryKeywords = '',
-    location = 'Kent',
+    secondaryKeywords = "",
+    location = "Kent",
     includeFAQ = true,
     includeInternalLinks = true,
   } = formData;
 
-  const secondaryList = secondaryKeywords.split(',').map(k => k.trim()).filter(Boolean);
+  const secondaryList = secondaryKeywords
+    .split(",")
+    .map((k) => k.trim())
+    .filter(Boolean);
 
-  const content = `
+  const content =
+    `
 <p>
   ${topic} is an important topic for anyone facing police investigation in ${location}. 
   Understanding your rights and options is essential for protecting your interests.
@@ -274,7 +307,7 @@ function generateFallbackContent(formData: {
 </p>
 
 <p>
-  ${secondaryList.length > 0 ? `Related matters such as ${secondaryList.slice(0, 2).join(' and ')} are also important considerations. ` : ''}
+  ${secondaryList.length > 0 ? `Related matters such as ${secondaryList.slice(0, 2).join(" and ")} are also important considerations. ` : ""}
   As a qualified Duty Solicitor with Higher Rights of Audience (Criminal), I provide expert representation 
   across all ${location} custody suites.
 </p>
@@ -298,7 +331,9 @@ function generateFallbackContent(formData: {
   including at Medway, Maidstone, Canterbury, and Gravesend police stations.
 </p>
 
-${includeInternalLinks ? `
+${
+  includeInternalLinks
+    ? `
 <h2>Getting Help</h2>
 
 <p>
@@ -306,7 +341,9 @@ ${includeInternalLinks ? `
   Learn more about <a href="/services/police-station-representation">police station representation</a> or 
   <a href="/contact">contact me directly</a>.
 </p>
-` : ''}
+`
+    : ""
+}
 
 <h2>Contact for ${location} Police Station Representation</h2>
 
@@ -321,23 +358,29 @@ ${includeInternalLinks ? `
 ` + generateAdvertBlock();
 
   const metaTitle = `${topic} | ${location} Duty Solicitor`.substring(0, 60);
-  const metaDescription = `Expert guidance on ${topic.toLowerCase()} from qualified Duty Solicitor in ${location}. Free legal advice under PACE 1984.`.substring(0, 155);
+  const metaDescription =
+    `Expert guidance on ${topic.toLowerCase()} from qualified Duty Solicitor in ${location}. Free legal advice under PACE 1984.`.substring(
+      0,
+      155
+    );
   const excerpt = `Understanding ${topic.toLowerCase()} is essential when facing police investigation. Get expert legal guidance from a qualified Duty Solicitor in ${location}.`;
 
-  const faqs: Array<{ question: string; answer: string }> = includeFAQ ? [
-    {
-      question: `What should I know about ${topic.toLowerCase()}?`,
-      answer: `${topic} is an important consideration in any police matter. You have the right to free legal advice under PACE 1984.`,
-    },
-    {
-      question: `Can I get free legal advice for ${primaryKeyword}?`,
-      answer: `Yes, legal advice at the police station is always free. I provide this service across all ${location} police stations.`,
-    },
-    {
-      question: `How quickly can a solicitor help in ${location}?`,
-      answer: `I aim to attend all ${location} custody suites promptly. Available 9am to late, including weekends and bank holidays.`,
-    },
-  ] : [];
+  const faqs: Array<{ question: string; answer: string }> = includeFAQ
+    ? [
+        {
+          question: `What should I know about ${topic.toLowerCase()}?`,
+          answer: `${topic} is an important consideration in any police matter. You have the right to free legal advice under PACE 1984.`,
+        },
+        {
+          question: `Can I get free legal advice for ${primaryKeyword}?`,
+          answer: `Yes, legal advice at the police station is always free. I provide this service across all ${location} police stations.`,
+        },
+        {
+          question: `How quickly can a solicitor help in ${location}?`,
+          answer: `I aim to attend all ${location} custody suites promptly. Available 9am to late, including weekends and bank holidays.`,
+        },
+      ]
+    : [];
 
   return {
     title: topic,
@@ -398,17 +441,14 @@ export async function POST(request: NextRequest) {
     // Verify admin session
     const session = await getAdminSession();
     if (!session) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     // Parse request
     const formData = await request.json();
 
     if (!formData.topic || !formData.primaryKeyword) {
-      return NextResponse.json(
-        { error: 'topic and primaryKeyword are required' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "topic and primaryKeyword are required" }, { status: 400 });
     }
 
     // Generate content
@@ -418,7 +458,7 @@ export async function POST(request: NextRequest) {
       try {
         generatedContent = await generateAIContent(formData);
       } catch (aiError) {
-        console.error('AI generation failed, using fallback:', aiError);
+        console.error("AI generation failed, using fallback:", aiError);
         generatedContent = generateFallbackContent(formData);
       }
     } else {
@@ -437,9 +477,9 @@ export async function POST(request: NextRequest) {
       faqs: generatedContent.faqs,
     });
   } catch (error) {
-    console.error('Blog generation error:', error);
+    console.error("Blog generation error:", error);
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Failed to generate blog post' },
+      { error: error instanceof Error ? error.message : "Failed to generate blog post" },
       { status: 500 }
     );
   }

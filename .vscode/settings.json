@@ -1,0 +1,13 @@
+{
+  "sonarlint.connectedMode.servers": [],
+  "sonarlint.rules": {
+    "typescript:S1481": "off",
+    "typescript:S1854": "off"
+  },
+  "sonarlint.pathToNodeExecutable": "node",
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/node_modules": true
+  }
+}

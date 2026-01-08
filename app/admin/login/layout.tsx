@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Admin Login | Police Station Agent",
@@ -9,52 +9,6 @@ export const metadata: Metadata = {
   },
 };
 
-export default function AdminLoginLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function AdminLoginLayout({ children }: { children: React.ReactNode }) {
   return children;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

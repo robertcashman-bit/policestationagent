@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from "next/link";
 
 export type LegalSource = {
   id: string;
@@ -18,7 +18,7 @@ export function Ref({ n }: { n: number }) {
 
 export function LegalReferences({
   sources,
-  heading = 'Sources',
+  heading = "Sources",
 }: {
   sources: LegalSource[];
   heading?: string;
@@ -33,7 +33,7 @@ export function LegalReferences({
           <li key={s.id} id={`source-${idx + 1}`} className="break-words">
             <span className="font-medium">{s.label}</span>
             <span className="mx-2 text-slate-400">—</span>
-            {s.href.startsWith('/') ? (
+            {s.href.startsWith("/") ? (
               <Link href={s.href} className="text-blue-700 hover:underline">
                 {s.href}
               </Link>
@@ -51,9 +51,9 @@ export function LegalReferences({
         ))}
       </ol>
       <p className="mt-4 text-xs text-slate-500">
-        Note: UK legislation changes. If something is urgent or unclear, get advice for your specific situation.
+        Note: UK legislation changes. If something is urgent or unclear, get advice for your
+        specific situation.
       </p>
     </section>
   );
 }
-

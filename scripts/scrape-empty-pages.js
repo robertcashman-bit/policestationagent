@@ -1,69 +1,70 @@
 #!/usr/bin/env node
 
-const puppeteer = require('puppeteer');
-const fs = require('fs');
-const path = require('path');
+const puppeteer = require("puppeteer");
+const fs = require("fs");
+const path = require("path");
 
 const EMPTY_PAGES = [
   // PSA stations - these might redirect to their police-station equivalents
-  '/ashford-psa-station',
-  '/bluewater-psa-station',
-  '/canterbury-psa-station',
-  '/dover-psa-station',
-  '/folkestone-psa-station',
-  '/maidstone-psa-station',
-  '/margate-psa-station',
-  '/medway-psa-station',
-  '/north-kent-gravesend-psa-station',
-  '/sevenoaks-psa-station',
-  '/sittingbourne-psa-station',
-  '/swanley-psa-station',
-  '/tonbridge-psa-station',
-  '/tunbridge-wells-psa-station',
+  "/ashford-psa-station",
+  "/bluewater-psa-station",
+  "/canterbury-psa-station",
+  "/dover-psa-station",
+  "/folkestone-psa-station",
+  "/maidstone-psa-station",
+  "/margate-psa-station",
+  "/medway-psa-station",
+  "/north-kent-gravesend-psa-station",
+  "/sevenoaks-psa-station",
+  "/sittingbourne-psa-station",
+  "/swanley-psa-station",
+  "/tonbridge-psa-station",
+  "/tunbridge-wells-psa-station",
 ];
 
 async function scrapeAndSave(browser, route) {
   const page = await browser.newPage();
-  
+
   try {
     const url = `https://policestationagent.com${route}`;
     console.log(`  Scraping ${route}...`);
-    
-    await page.goto(url, { waitUntil: 'networkidle0', timeout: 30000 });
-    await new Promise(r => setTimeout(r, 2000));
-    
+
+    await page.goto(url, { waitUntil: "networkidle0", timeout: 30000 });
+    await new Promise((r) => setTimeout(r, 2000));
+
     // Get page content
     const data = await page.evaluate(() => {
-      const title = document.title || '';
+      const title = document.title || "";
       const metaDesc = document.querySelector('meta[name="description"]');
-      const description = metaDesc ? metaDesc.getAttribute('content') || '' : '';
-      
+      const description = metaDesc ? metaDesc.getAttribute("content") || "" : "";
+
       // Try to get main content
-      const main = document.querySelector('main') || document.querySelector('#root') || document.body;
-      let html = main ? main.innerHTML : '';
-      
+      const main =
+        document.querySelector("main") || document.querySelector("#root") || document.body;
+      let html = main ? main.innerHTML : "";
+
       // Clean up - remove scripts and styles
-      const temp = document.createElement('div');
+      const temp = document.createElement("div");
       temp.innerHTML = html;
-      temp.querySelectorAll('script, style, noscript').forEach(el => el.remove());
+      temp.querySelectorAll("script, style, noscript").forEach((el) => el.remove());
       html = temp.innerHTML;
-      
+
       return { title, description, html };
     });
-    
+
     if (data.html && data.html.length > 100) {
       // Save the page
       const pagePath = `app${route}/page.tsx`;
       const dir = path.dirname(pagePath);
-      
+
       if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir, { recursive: true });
       }
-      
-      const safeTitle = (data.title || 'Page').replace(/`/g, "'").replace(/\$/g, '');
-      const safeDesc = (data.description || '').replace(/`/g, "'").replace(/\$/g, '');
-      const safeHtml = data.html.replace(/`/g, '\\`').replace(/\${/g, '\\${');
-      
+
+      const safeTitle = (data.title || "Page").replace(/`/g, "'").replace(/\$/g, "");
+      const safeDesc = (data.description || "").replace(/`/g, "'").replace(/\$/g, "");
+      const safeHtml = data.html.replace(/`/g, "\\`").replace(/\${/g, "\\${");
+
       const pageContent = `import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import type { Metadata } from 'next';
@@ -116,13 +117,13 @@ export default function Page() {
 }
 
 async function main() {
-  console.log('╔════════════════════════════════════════════════════════════════════╗');
-  console.log('║              SCRAPING EMPTY PAGES FROM ORIGINAL SITE               ║');
-  console.log('╚════════════════════════════════════════════════════════════════════╝\n');
+  console.log("╔════════════════════════════════════════════════════════════════════╗");
+  console.log("║              SCRAPING EMPTY PAGES FROM ORIGINAL SITE               ║");
+  console.log("╚════════════════════════════════════════════════════════════════════╝\n");
 
-  const browser = await puppeteer.launch({ 
-    headless: 'new',
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
+  const browser = await puppeteer.launch({
+    headless: "new",
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
   });
 
   let success = 0;
@@ -136,11 +137,10 @@ async function main() {
 
   await browser.close();
 
-  console.log('\n═══════════════════════════════════════════════════════════════════════');
+  console.log("\n═══════════════════════════════════════════════════════════════════════");
   console.log(`✅ Successfully scraped: ${success}`);
   console.log(`❌ Failed: ${failed}`);
-  console.log('═══════════════════════════════════════════════════════════════════════\n');
+  console.log("═══════════════════════════════════════════════════════════════════════\n");
 }
 
 main().catch(console.error);
-

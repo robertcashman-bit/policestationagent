@@ -3,18 +3,18 @@
  * Uses the blog-posts-sitemap.xml to discover all posts
  */
 
-const https = require('https');
-const { parseString } = require('xml2js');
-const Database = require('better-sqlite3');
-const path = require('path');
-const fs = require('fs');
-const { JSDOM } = require('jsdom');
+const https = require("https");
+const { parseString } = require("xml2js");
+const Database = require("better-sqlite3");
+const path = require("path");
+const fs = require("fs");
+const { JSDOM } = require("jsdom");
 
-const SITEMAP_URL = 'https://robertdcashman.wixsite.com/website/blog-posts-sitemap.xml';
-const BASE_URL = 'https://robertdcashman.wixsite.com/website';
+const SITEMAP_URL = "https://robertdcashman.wixsite.com/website/blog-posts-sitemap.xml";
+const BASE_URL = "https://robertdcashman.wixsite.com/website";
 
 // Initialize database
-const dbPath = path.join(__dirname, '..', 'data', 'web44ai.db');
+const dbPath = path.join(__dirname, "..", "data", "web44ai.db");
 const dbDir = path.dirname(dbPath);
 
 if (!fs.existsSync(dbDir)) {
@@ -48,15 +48,17 @@ db.exec(`CREATE INDEX IF NOT EXISTS idx_blog_slug ON blog_posts(slug);`);
  */
 function fetchXML(url) {
   return new Promise((resolve, reject) => {
-    https.get(url, (res) => {
-      let data = '';
-      res.on('data', (chunk) => {
-        data += chunk;
-      });
-      res.on('end', () => {
-        resolve(data);
-      });
-    }).on('error', reject);
+    https
+      .get(url, (res) => {
+        let data = "";
+        res.on("data", (chunk) => {
+          data += chunk;
+        });
+        res.on("end", () => {
+          resolve(data);
+        });
+      })
+      .on("error", reject);
   });
 }
 
@@ -65,15 +67,17 @@ function fetchXML(url) {
  */
 function fetchHTML(url) {
   return new Promise((resolve, reject) => {
-    https.get(url, (res) => {
-      let data = '';
-      res.on('data', (chunk) => {
-        data += chunk;
-      });
-      res.on('end', () => {
-        resolve(data);
-      });
-    }).on('error', reject);
+    https
+      .get(url, (res) => {
+        let data = "";
+        res.on("data", (chunk) => {
+          data += chunk;
+        });
+        res.on("end", () => {
+          resolve(data);
+        });
+      })
+      .on("error", reject);
   });
 }
 
@@ -81,22 +85,22 @@ function fetchHTML(url) {
  * Parse sitemap XML to extract post URLs
  */
 async function getPostUrlsFromSitemap() {
-  console.log('Fetching sitemap...');
+  console.log("Fetching sitemap...");
   const xml = await fetchXML(SITEMAP_URL);
-  
+
   return new Promise((resolve, reject) => {
     parseString(xml, (err, result) => {
       if (err) {
         reject(err);
         return;
       }
-      
+
       const urls = [];
       if (result.urlset && result.urlset.url) {
         for (const urlEntry of result.urlset.url) {
           const loc = urlEntry.loc && urlEntry.loc[0];
-          if (loc && loc.includes('/post/')) {
-            const slug = loc.split('/post/')[1];
+          if (loc && loc.includes("/post/")) {
+            const slug = loc.split("/post/")[1];
             const lastmod = urlEntry.lastmod && urlEntry.lastmod[0];
             urls.push({ url: loc, slug, lastmod });
           }
@@ -113,13 +117,13 @@ async function getPostUrlsFromSitemap() {
 function extractPostContent(html, url) {
   const dom = new JSDOM(html);
   const document = dom.window.document;
-  
+
   const post = {
-    title: '',
-    content: '',
-    excerpt: '',
+    title: "",
+    content: "",
+    excerpt: "",
     published_at: null,
-    slug: '',
+    slug: "",
   };
 
   // Extract slug from URL
@@ -129,18 +133,18 @@ function extractPostContent(html, url) {
   }
 
   // Extract title
-  const h1 = document.querySelector('h1');
+  const h1 = document.querySelector("h1");
   if (h1) {
     post.title = h1.textContent.trim();
   } else {
-    const titleTag = document.querySelector('title');
+    const titleTag = document.querySelector("title");
     if (titleTag) {
       post.title = titleTag.textContent.trim();
     }
   }
 
   // Extract date
-  const timeTag = document.querySelector('time');
+  const timeTag = document.querySelector("time");
   if (timeTag) {
     const dateText = timeTag.textContent.trim();
     try {
@@ -150,13 +154,27 @@ function extractPostContent(html, url) {
       if (dateText.match(/\w+\s+\d+/)) {
         // Format like "Sep 6" or "Sep 17"
         const now = new Date();
-        const [month, day] = dateText.split(' ');
+        const [month, day] = dateText.split(" ");
         const monthMap = {
-          'Jan': 0, 'Feb': 1, 'Mar': 2, 'Apr': 3, 'May': 4, 'Jun': 5,
-          'Jul': 6, 'Aug': 7, 'Sep': 8, 'Oct': 9, 'Nov': 10, 'Dec': 11
+          Jan: 0,
+          Feb: 1,
+          Mar: 2,
+          Apr: 3,
+          May: 4,
+          Jun: 5,
+          Jul: 6,
+          Aug: 7,
+          Sep: 8,
+          Oct: 9,
+          Nov: 10,
+          Dec: 11,
         };
         if (monthMap[month.substring(0, 3)]) {
-          post.published_at = new Date(now.getFullYear(), monthMap[month.substring(0, 3)], parseInt(day)).toISOString();
+          post.published_at = new Date(
+            now.getFullYear(),
+            monthMap[month.substring(0, 3)],
+            parseInt(day)
+          ).toISOString();
         }
       }
     }
@@ -173,47 +191,48 @@ function extractPostContent(html, url) {
   }
 
   // Extract main content
-  const article = document.querySelector('article');
+  const article = document.querySelector("article");
   if (article) {
     // Get all paragraphs and headings
-    const contentElements = article.querySelectorAll('p, h2, h3, h4, ul, ol, blockquote');
+    const contentElements = article.querySelectorAll("p, h2, h3, h4, ul, ol, blockquote");
     const contentParts = [];
-    
-    contentElements.forEach(el => {
+
+    contentElements.forEach((el) => {
       const tagName = el.tagName.toLowerCase();
       const text = el.textContent.trim();
-      
-      if (text && text.length > 10) { // Filter out very short text
-        if (tagName.startsWith('h')) {
+
+      if (text && text.length > 10) {
+        // Filter out very short text
+        if (tagName.startsWith("h")) {
           const level = parseInt(tagName.charAt(1));
-          const prefix = '#'.repeat(level) + ' ';
+          const prefix = "#".repeat(level) + " ";
           contentParts.push(`<${tagName}>${text}</${tagName}>`);
         } else {
           contentParts.push(`<${tagName}>${text}</${tagName}>`);
         }
       }
     });
-    
-    post.content = contentParts.join('\n\n');
-    
+
+    post.content = contentParts.join("\n\n");
+
     // Extract excerpt from first paragraph
-    const firstP = article.querySelector('p');
+    const firstP = article.querySelector("p");
     if (firstP) {
       post.excerpt = firstP.textContent.trim().substring(0, 200);
     }
   } else {
     // Fallback: try to find main content area
-    const main = document.querySelector('main');
+    const main = document.querySelector("main");
     if (main) {
-      const paragraphs = main.querySelectorAll('p');
+      const paragraphs = main.querySelectorAll("p");
       const contentParts = [];
-      paragraphs.forEach(p => {
+      paragraphs.forEach((p) => {
         const text = p.textContent.trim();
         if (text && text.length > 10) {
           contentParts.push(`<p>${text}</p>`);
         }
       });
-      post.content = contentParts.join('\n\n');
+      post.content = contentParts.join("\n\n");
       if (paragraphs[0]) {
         post.excerpt = paragraphs[0].textContent.trim().substring(0, 200);
       }
@@ -226,7 +245,7 @@ function extractPostContent(html, url) {
     if (body) {
       const text = body.textContent.trim();
       // Remove navigation and footer content
-      const mainText = text.split('View More')[0].split('Social Bar')[0];
+      const mainText = text.split("View More")[0].split("Social Bar")[0];
       post.content = `<p>${mainText.substring(0, 5000)}</p>`;
       post.excerpt = mainText.substring(0, 200);
     }
@@ -241,8 +260,8 @@ function extractPostContent(html, url) {
 function generateSlug(title) {
   return title
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
     .substring(0, 100);
 }
 
@@ -276,7 +295,7 @@ async function importPost(postUrl, lastmod) {
     }
 
     // Check if post already exists
-    const existing = db.prepare('SELECT id FROM blog_posts WHERE slug = ?').get(post.slug);
+    const existing = db.prepare("SELECT id FROM blog_posts WHERE slug = ?").get(post.slug);
     if (existing) {
       console.log(`  ✓ Already exists: ${post.slug}`);
       return { slug: post.slug, exists: true };
@@ -289,7 +308,7 @@ async function importPost(postUrl, lastmod) {
       VALUES (?, ?, ?, ?, 1, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
     `);
 
-    const metaDescription = post.excerpt || post.content.replace(/<[^>]+>/g, '').substring(0, 160);
+    const metaDescription = post.excerpt || post.content.replace(/<[^>]+>/g, "").substring(0, 160);
 
     stmt.run(
       post.title,
@@ -314,9 +333,9 @@ async function importPost(postUrl, lastmod) {
  * Main import function
  */
 async function main() {
-  console.log('='.repeat(60));
-  console.log('Wix Blog Import Script');
-  console.log('='.repeat(60));
+  console.log("=".repeat(60));
+  console.log("Wix Blog Import Script");
+  console.log("=".repeat(60));
 
   try {
     // Get all post URLs from sitemap
@@ -331,9 +350,9 @@ async function main() {
     for (let i = 0; i < posts.length; i++) {
       const { url, slug, lastmod } = posts[i];
       console.log(`[${i + 1}/${posts.length}] Processing: ${slug}`);
-      
+
       const result = await importPost(url, lastmod);
-      
+
       if (result) {
         if (result.exists) {
           skipped.push(result);
@@ -341,19 +360,19 @@ async function main() {
           imported.push(result);
         }
       } else {
-        errors.push({ slug, error: 'Import failed' });
+        errors.push({ slug, error: "Import failed" });
       }
 
       // Be respectful - add delay between requests
       if (i < posts.length - 1) {
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        await new Promise((resolve) => setTimeout(resolve, 1500));
       }
     }
 
     // Summary
-    console.log('\n' + '='.repeat(60));
-    console.log('IMPORT SUMMARY');
-    console.log('='.repeat(60));
+    console.log("\n" + "=".repeat(60));
+    console.log("IMPORT SUMMARY");
+    console.log("=".repeat(60));
     console.log(`Total posts in sitemap: ${posts.length}`);
     console.log(`✓ Successfully imported: ${imported.length}`);
     console.log(`⊘ Already existed: ${skipped.length}`);
@@ -361,23 +380,23 @@ async function main() {
 
     if (imported.length > 0) {
       console.log(`\nNewly imported posts:`);
-      imported.forEach(p => console.log(`  - ${p.title}`));
-      console.log(`    URLs: /blog/${imported.map(p => p.slug).join(', /blog/')}`);
+      imported.forEach((p) => console.log(`  - ${p.title}`));
+      console.log(`    URLs: /blog/${imported.map((p) => p.slug).join(", /blog/")}`);
     }
 
     if (errors.length > 0) {
       console.log(`\nPosts with errors:`);
-      errors.forEach(e => console.log(`  - ${e.slug}: ${e.error}`));
+      errors.forEach((e) => console.log(`  - ${e.slug}: ${e.error}`));
     }
 
-    console.log('\n' + '='.repeat(60));
-    console.log('Import complete!');
-    console.log('='.repeat(60));
-    
+    console.log("\n" + "=".repeat(60));
+    console.log("Import complete!");
+    console.log("=".repeat(60));
+
     // Close database
     db.close();
   } catch (error) {
-    console.error('Fatal error:', error);
+    console.error("Fatal error:", error);
     db.close();
     process.exit(1);
   }
@@ -389,32 +408,3 @@ if (require.main === module) {
 }
 
 module.exports = { getPostUrlsFromSitemap, importPost, extractPostContent };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

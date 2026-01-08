@@ -2,11 +2,11 @@
  * Apply menu approvals from config
  */
 
-import * as fs from 'fs';
-import * as path from 'path';
+import * as fs from "fs";
+import * as path from "path";
 
-const CONFIG_DIR = path.join(__dirname, '..', 'config');
-const CONFIG_PATH = path.join(CONFIG_DIR, 'menu-approval.json');
+const CONFIG_DIR = path.join(__dirname, "..", "config");
+const CONFIG_PATH = path.join(CONFIG_DIR, "menu-approval.json");
 
 interface MenuConfig {
   approvedRoutes: string[];
@@ -17,25 +17,27 @@ interface MenuConfig {
 
 function loadConfig(): MenuConfig {
   if (!fs.existsSync(CONFIG_PATH)) {
-    throw new Error(`Config file not found: ${CONFIG_PATH}\nRun 'npm run site:propose-menu' first.`);
+    throw new Error(
+      `Config file not found: ${CONFIG_PATH}\nRun 'npm run site:propose-menu' first.`
+    );
   }
-  return JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf8'));
+  return JSON.parse(fs.readFileSync(CONFIG_PATH, "utf8"));
 }
 
 function validateConfig(config: MenuConfig): { valid: boolean; errors: string[] } {
   const errors: string[] = [];
 
   if (!Array.isArray(config.approvedRoutes)) {
-    errors.push('approvedRoutes must be an array');
+    errors.push("approvedRoutes must be an array");
   }
   if (!Array.isArray(config.rejectedRoutes)) {
-    errors.push('rejectedRoutes must be an array');
+    errors.push("rejectedRoutes must be an array");
   }
-  if (typeof config.customLabels !== 'object') {
-    errors.push('customLabels must be an object');
+  if (typeof config.customLabels !== "object") {
+    errors.push("customLabels must be an object");
   }
-  if (typeof config.customSection !== 'object') {
-    errors.push('customSection must be an object');
+  if (typeof config.customSection !== "object") {
+    errors.push("customSection must be an object");
   }
 
   return {
@@ -45,14 +47,14 @@ function validateConfig(config: MenuConfig): { valid: boolean; errors: string[] 
 }
 
 function applyMenu() {
-  console.log('🔧 Applying menu configuration...\n');
+  console.log("🔧 Applying menu configuration...\n");
 
   const config = loadConfig();
   const validation = validateConfig(config);
 
   if (!validation.valid) {
-    console.error('❌ Configuration errors:');
-    validation.errors.forEach(err => console.error(`   - ${err}`));
+    console.error("❌ Configuration errors:");
+    validation.errors.forEach((err) => console.error(`   - ${err}`));
     process.exit(1);
   }
 
@@ -63,16 +65,16 @@ function applyMenu() {
   console.log(`   Custom sections: ${Object.keys(config.customSection).length}\n`);
 
   if (config.approvedRoutes.length > 0) {
-    console.log('📋 Approved routes to add to menu:\n');
-    config.approvedRoutes.forEach(route => {
+    console.log("📋 Approved routes to add to menu:\n");
+    config.approvedRoutes.forEach((route) => {
       const label = config.customLabels[route] || route;
-      const section = config.customSection[route] || 'Information';
+      const section = config.customSection[route] || "Information";
       console.log(`   - ${label} (${route}) → ${section}`);
     });
   }
 
-  console.log('\n✅ Menu configuration validated.');
-  console.log('   Note: Menu rendering must be updated in Header.tsx to use this config.\n');
+  console.log("\n✅ Menu configuration validated.");
+  console.log("   Note: Menu rendering must be updated in Header.tsx to use this config.\n");
 }
 
 if (require.main === module) {
@@ -80,46 +82,3 @@ if (require.main === module) {
 }
 
 export { loadConfig, validateConfig };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,26 +1,26 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function NewPostPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    title: '',
-    slug: '',
-    content: '',
-    excerpt: '',
+    title: "",
+    slug: "",
+    content: "",
+    excerpt: "",
     published: false,
-    meta_title: '',
-    meta_description: '',
+    meta_title: "",
+    meta_description: "",
   });
 
   const generateSlug = (title: string) => {
     return title
       .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-+|-+$/g, '');
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
   };
 
   const handleTitleChange = (title: string) => {
@@ -36,20 +36,20 @@ export default function NewPostPage() {
     setLoading(true);
 
     try {
-      const response = await fetch('/api/admin/posts', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/admin/posts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
       if (response.ok) {
-        router.push('/admin');
+        router.push("/admin");
       } else {
         const data = await response.json();
-        alert(data.error || 'Failed to create post');
+        alert(data.error || "Failed to create post");
       }
     } catch (error) {
-      alert('An error occurred');
+      alert("An error occurred");
     } finally {
       setLoading(false);
     }
@@ -62,9 +62,7 @@ export default function NewPostPage() {
           <h1 className="text-2xl font-bold mb-6">New Blog Post</h1>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Title *
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Title *</label>
               <input
                 type="text"
                 required
@@ -74,9 +72,7 @@ export default function NewPostPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Slug *
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Slug *</label>
               <input
                 type="text"
                 required
@@ -86,9 +82,7 @@ export default function NewPostPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Content *
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Content *</label>
               <textarea
                 required
                 rows={15}
@@ -98,9 +92,7 @@ export default function NewPostPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Excerpt
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Excerpt</label>
               <textarea
                 rows={3}
                 value={formData.excerpt}
@@ -109,9 +101,7 @@ export default function NewPostPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Meta Title
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Meta Title</label>
               <input
                 type="text"
                 value={formData.meta_title}
@@ -148,7 +138,7 @@ export default function NewPostPage() {
                 disabled={loading}
                 className="bg-[#0A2342] text-white px-6 py-2 rounded hover:bg-[#08192e] disabled:opacity-50"
               >
-                {loading ? 'Creating...' : 'Create Post'}
+                {loading ? "Creating..." : "Create Post"}
               </button>
               <button
                 type="button"
@@ -164,4 +154,3 @@ export default function NewPostPage() {
     </div>
   );
 }
-

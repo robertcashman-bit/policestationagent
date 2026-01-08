@@ -1,6 +1,6 @@
-import { requireAdminAuth, isJWTSecretConfigured } from '@/lib/admin-auth';
-import { redirect } from 'next/navigation';
-import type { Metadata } from 'next';
+import { requireAdminAuth, isJWTSecretConfigured } from "@/lib/admin-auth";
+import { redirect } from "next/navigation";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "New Post | Admin | Police Station Agent",
@@ -11,14 +11,10 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function NewPostLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default async function NewPostLayout({ children }: { children: React.ReactNode }) {
   // Validate JWT_SECRET
   if (!isJWTSecretConfigured()) {
-    redirect('/admin/login');
+    redirect("/admin/login");
   }
 
   // Require authentication - redirects to login if not authenticated
@@ -26,6 +22,3 @@ export default async function NewPostLayout({
 
   return <>{children}</>;
 }
-
-
-

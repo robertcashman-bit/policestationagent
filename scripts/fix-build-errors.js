@@ -2,22 +2,24 @@
  * Fix Build Errors - Fix broken metadata strings
  */
 
-const fs = require('fs').promises;
-const path = require('path');
-const { glob } = require('glob');
+const fs = require("fs").promises;
+const path = require("path");
+const { glob } = require("glob");
 
 async function fixBrokenMetadata(filePath) {
   try {
-    let content = await fs.readFile(filePath, 'utf8');
+    let content = await fs.readFile(filePath, "utf8");
     let fixed = false;
 
     // Fix broken title strings
-    const brokenTitlePattern = /title:\s*"\s*\n\s*Police Station Agent\s*\n\s*\|\s*Police Station Agent"/g;
+    const brokenTitlePattern =
+      /title:\s*"\s*\n\s*Police Station Agent\s*\n\s*\|\s*Police Station Agent"/g;
     if (brokenTitlePattern.test(content)) {
-      const route = filePath.replace(/.*app[\\\/]([^\\\/]+)[\\\/]page\.tsx$/, '$1');
-      const pageName = route.split(/[\/\\-]/).map(word => 
-        word.charAt(0).toUpperCase() + word.slice(1)
-      ).join(' ');
+      const route = filePath.replace(/.*app[\\\/]([^\\\/]+)[\\\/]page\.tsx$/, "$1");
+      const pageName = route
+        .split(/[\/\\-]/)
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
       content = content.replace(brokenTitlePattern, `title: "${pageName} | Police Station Agent"`);
       fixed = true;
     }
@@ -25,12 +27,15 @@ async function fixBrokenMetadata(filePath) {
     // Fix broken description strings
     const brokenDescPattern = /description:\s*"\s*\n\s*Police Station Agent\s*\n\s*"/g;
     if (brokenDescPattern.test(content)) {
-      content = content.replace(brokenDescPattern, 'description: "Police Station Agent services and information"');
+      content = content.replace(
+        brokenDescPattern,
+        'description: "Police Station Agent services and information"'
+      );
       fixed = true;
     }
 
     if (fixed) {
-      await fs.writeFile(filePath, content, 'utf8');
+      await fs.writeFile(filePath, content, "utf8");
       return true;
     }
     return false;
@@ -41,11 +46,11 @@ async function fixBrokenMetadata(filePath) {
 }
 
 async function main() {
-  console.log('🔧 Fixing build errors...\n');
+  console.log("🔧 Fixing build errors...\n");
 
   // Find all page.tsx files with broken metadata
-  const files = await glob('app/**/page.tsx', { ignore: ['node_modules/**'] });
-  
+  const files = await glob("app/**/page.tsx", { ignore: ["node_modules/**"] });
+
   let fixedCount = 0;
   for (const file of files) {
     if (await fixBrokenMetadata(file)) {
@@ -57,12 +62,12 @@ async function main() {
   console.log(`\n✅ Fixed ${fixedCount} files`);
 
   // Check if PostDetail component exists
-  const postDetailPath = path.join('components', 'PostDetail.tsx');
+  const postDetailPath = path.join("components", "PostDetail.tsx");
   try {
     await fs.access(postDetailPath);
-    console.log('✅ PostDetail component exists');
+    console.log("✅ PostDetail component exists");
   } catch {
-    console.log('⚠️  PostDetail component missing - creating placeholder...');
+    console.log("⚠️  PostDetail component missing - creating placeholder...");
     const postDetailContent = `'use client';
 
 import { useSearchParams } from 'next/navigation';
@@ -107,14 +112,11 @@ export default function PostDetail() {
   );
 }
 `;
-    await fs.writeFile(postDetailPath, postDetailContent, 'utf8');
-    console.log('✅ Created PostDetail component');
+    await fs.writeFile(postDetailPath, postDetailContent, "utf8");
+    console.log("✅ Created PostDetail component");
   }
 
-  console.log('\n✅ Build errors fixed! Try running: npm run build');
+  console.log("\n✅ Build errors fixed! Try running: npm run build");
 }
 
 main().catch(console.error);
-
-
-

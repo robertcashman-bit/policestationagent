@@ -1,33 +1,35 @@
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import Link from 'next/link';
-import Image from 'next/image';
-import { getAllPosts, formatBlogDate, generateExcerpt } from '@/lib/blog-reader';
-import { SITE_URL } from '@/config/site';
-import type { Metadata } from 'next';
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import Link from "next/link";
+import Image from "next/image";
+import { getAllPosts, formatBlogDate, generateExcerpt } from "@/lib/blog-reader";
+import { SITE_URL } from "@/config/site";
+import type { Metadata } from "next";
 
 // Use ISR for blog listing - revalidate every hour
 export const revalidate = 3600; // 1 hour
 
 export const metadata: Metadata = {
   title: "Blog | Police Station Agent",
-  description: "Expert legal insights on police station representation, criminal defence procedures, and your rights in custody. Authored by Robert Cashman.",
+  description:
+    "Expert legal insights on police station representation, criminal defence procedures, and your rights in custody. Authored by Robert Cashman.",
   alternates: {
     canonical: `${SITE_URL}/blog`,
     types: {
-      'application/rss+xml': [
-        { url: `${SITE_URL}/feed.xml`, title: 'Police Station Agent - All Posts' },
-        { url: `${SITE_URL}/feed/recent`, title: 'Police Station Agent - Recent Posts' },
+      "application/rss+xml": [
+        { url: `${SITE_URL}/feed.xml`, title: "Police Station Agent - All Posts" },
+        { url: `${SITE_URL}/feed/recent`, title: "Police Station Agent - Recent Posts" },
       ],
     },
   },
   openGraph: {
     title: "Blog | Police Station Agent",
-    description: "Expert legal insights on police station representation, criminal defence procedures, and your rights in custody. Authored by Robert Cashman.",
+    description:
+      "Expert legal insights on police station representation, criminal defence procedures, and your rights in custody. Authored by Robert Cashman.",
     url: `${SITE_URL}/blog`,
-    siteName: 'Police Station Agent',
-    type: 'website',
-    locale: 'en_GB',
+    siteName: "Police Station Agent",
+    type: "website",
+    locale: "en_GB",
   },
   robots: {
     index: true,
@@ -35,9 +37,9 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
   },
 };
@@ -58,22 +60,33 @@ export default function BlogPage() {
                 Legal Insights & <span className="text-amber-500">Advice</span>
               </h1>
               <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto mb-6">
-                Expert guidance on police station procedures, your rights in custody, and criminal defence strategies.
+                Expert guidance on police station procedures, your rights in custody, and criminal
+                defence strategies.
               </p>
               <div className="flex flex-wrap justify-center gap-3">
-                <a 
+                <a
                   href={`${SITE_URL}/feed.xml`}
                   className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-colors text-sm"
                   title="Subscribe to RSS feed"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <path d="M4 11a9 9 0 0 1 9 9"></path>
                     <path d="M4 4a16 16 0 0 1 16 16"></path>
                     <circle cx="5" cy="19" r="1"></circle>
                   </svg>
                   RSS Feed
                 </a>
-                <Link 
+                <Link
                   href="/feed"
                   className="inline-flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-semibold transition-colors text-sm"
                 >
@@ -105,7 +118,18 @@ export default function BlogPage() {
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-100 via-slate-100 to-slate-200">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-slate-400">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="48"
+                            height="48"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="text-slate-400"
+                          >
                             <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
                             <circle cx="9" cy="9" r="2"></circle>
                             <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path>
@@ -115,9 +139,7 @@ export default function BlogPage() {
                     </Link>
                     <div className="flex flex-col flex-grow p-5">
                       <h3 className="text-xl font-bold text-slate-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
-                        <Link href={`/blog/${post.slug}`}>
-                          {post.title}
-                        </Link>
+                        <Link href={`/blog/${post.slug}`}>{post.title}</Link>
                       </h3>
                       <div className="text-sm text-slate-500 mb-4 line-clamp-3 flex-grow min-h-[3rem]">
                         {post.metaDescription || generateExcerpt(post.contentHtml, 160)}
@@ -127,22 +149,42 @@ export default function BlogPage() {
                         className="text-sm font-medium text-blue-600 hover:text-blue-700 mt-auto inline-flex items-center gap-1 group/link"
                       >
                         Read more
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover/link:translate-x-1 transition-transform">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="group-hover/link:translate-x-1 transition-transform"
+                        >
                           <path d="M5 12h14"></path>
                           <path d="m12 5 7 7-7 7"></path>
                         </svg>
                       </Link>
                       <div className="pt-4 border-t border-slate-50 flex items-center justify-between mt-auto">
                         <div className="flex items-center gap-2 text-xs text-slate-500">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3 h-3">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="w-3 h-3"
+                          >
                             <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
                             <circle cx="12" cy="7" r="4"></circle>
                           </svg>
                           <span>{post.author}</span>
                         </div>
-                        <span className="text-xs text-slate-400">
-                          {formatBlogDate(post.date)}
-                        </span>
+                        <span className="text-xs text-slate-400">{formatBlogDate(post.date)}</span>
                       </div>
                     </div>
                   </article>
@@ -163,7 +205,8 @@ export default function BlogPage() {
                   Need Legal <span className="text-amber-400">Advice?</span>
                 </h2>
                 <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed">
-                  If you&apos;ve been arrested or need police station representation, contact us immediately.
+                  If you&apos;ve been arrested or need police station representation, contact us
+                  immediately.
                 </p>
                 <div className="flex flex-wrap justify-center gap-4">
                   <a

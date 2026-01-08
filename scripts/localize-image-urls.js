@@ -6,12 +6,12 @@
  * /images/<filename> paths when a matching filename exists in public/images.
  */
 
-const fs = require('fs');
-const path = require('path');
-const { globSync } = require('glob');
+const fs = require("fs");
+const path = require("path");
+const { globSync } = require("glob");
 
-const APP_DIR = path.join(__dirname, '..', 'app');
-const PUBLIC_IMAGES_DIR = path.join(__dirname, '..', 'public', 'images');
+const APP_DIR = path.join(__dirname, "..", "app");
+const PUBLIC_IMAGES_DIR = path.join(__dirname, "..", "public", "images");
 
 function getLocalImageFilenames() {
   if (!fs.existsSync(PUBLIC_IMAGES_DIR)) return new Set();
@@ -29,7 +29,7 @@ function tryGetFilenameFromUrl(raw) {
 }
 
 function localizeFile(filePath, knownFilenames) {
-  const original = fs.readFileSync(filePath, 'utf8');
+  const original = fs.readFileSync(filePath, "utf8");
   let updated = original;
 
   // Match URLs in common HTML contexts: src="...", url(...), etc.
@@ -47,7 +47,7 @@ function localizeFile(filePath, knownFilenames) {
   }
 
   if (updated !== original) {
-    fs.writeFileSync(filePath, updated, 'utf8');
+    fs.writeFileSync(filePath, updated, "utf8");
     return true;
   }
   return false;
@@ -56,11 +56,11 @@ function localizeFile(filePath, knownFilenames) {
 function main() {
   const knownFilenames = getLocalImageFilenames();
   if (knownFilenames.size === 0) {
-    console.log('No local images found in public/images. Run scripts/download-images.js first.');
+    console.log("No local images found in public/images. Run scripts/download-images.js first.");
     process.exit(1);
   }
 
-  const files = globSync('**/*.tsx', { cwd: APP_DIR, absolute: true, nodir: true });
+  const files = globSync("**/*.tsx", { cwd: APP_DIR, absolute: true, nodir: true });
   let changed = 0;
 
   for (const filePath of files) {
@@ -74,4 +74,3 @@ function main() {
 if (require.main === module) {
   main();
 }
-

@@ -1,10 +1,6 @@
 {
   "complete": [],
-  "missing": [
-    "/home",
-    "/contact",
-    "tel:01732 247 427"
-  ],
+  "missing": ["/home", "/contact", "tel:01732 247 427"],
   "incomplete": [],
   "different": []
 }

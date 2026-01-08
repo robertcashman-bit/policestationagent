@@ -1,147 +1,161 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 const towns = [
   {
-    slug: 'maidstone',
-    name: 'Maidstone',
-    displayName: 'Maidstone',
-    type: 'Voluntary Interviews',
-    address: 'Palace Avenue, Maidstone, Kent ME15 6NF',
-    areaServed: ['Maidstone', 'Mid-Kent'],
-    stationLink: '/maidstone-police-station',
-    description: 'Police station rep for Maidstone voluntary interviews. FREE legal advice 24/7. Accredited duty solicitor covering Maidstone and mid-Kent.'
+    slug: "maidstone",
+    name: "Maidstone",
+    displayName: "Maidstone",
+    type: "Voluntary Interviews",
+    address: "Palace Avenue, Maidstone, Kent ME15 6NF",
+    areaServed: ["Maidstone", "Mid-Kent"],
+    stationLink: "/maidstone-police-station",
+    description:
+      "Police station rep for Maidstone voluntary interviews. FREE legal advice 24/7. Accredited duty solicitor covering Maidstone and mid-Kent.",
   },
   {
-    slug: 'canterbury',
-    name: 'Canterbury',
-    displayName: 'Canterbury',
-    type: 'Custody Suite',
-    address: 'Old Dover Road, Canterbury',
-    areaServed: ['Canterbury', 'East Kent', 'Dover', 'Margate', 'Ramsgate'],
-    stationLink: '/canterbury-police-station',
-    description: 'Expert police station rep in Canterbury, Kent. FREE We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor. at Canterbury custody suite. Serving East Kent.'
+    slug: "canterbury",
+    name: "Canterbury",
+    displayName: "Canterbury",
+    type: "Custody Suite",
+    address: "Old Dover Road, Canterbury",
+    areaServed: ["Canterbury", "East Kent", "Dover", "Margate", "Ramsgate"],
+    stationLink: "/canterbury-police-station",
+    description:
+      "Expert police station rep in Canterbury, Kent. FREE We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor. at Canterbury custody suite. Serving East Kent.",
   },
   {
-    slug: 'gravesend',
-    name: 'Gravesend',
-    displayName: 'Gravesend',
-    type: 'Custody Suite',
-    address: 'Thames Way, Northfleet DA11 8BD',
-    areaServed: ['Gravesend', 'Dartford', 'North Kent'],
-    stationLink: '/north-kent-gravesend-police-station',
-    description: 'Police station rep in Gravesend, Kent. FREE legal advice 24/7 at North Kent custody suite. Serving Gravesend, Dartford, and North Kent.'
+    slug: "gravesend",
+    name: "Gravesend",
+    displayName: "Gravesend",
+    type: "Custody Suite",
+    address: "Thames Way, Northfleet DA11 8BD",
+    areaServed: ["Gravesend", "Dartford", "North Kent"],
+    stationLink: "/north-kent-gravesend-police-station",
+    description:
+      "Police station rep in Gravesend, Kent. FREE legal advice 24/7 at North Kent custody suite. Serving Gravesend, Dartford, and North Kent.",
   },
   {
-    slug: 'tonbridge',
-    name: 'Tonbridge',
-    displayName: 'Tonbridge',
-    type: 'Custody Suite',
-    address: '1 Pembury Road, Tonbridge TN9 2HS',
-    areaServed: ['Tonbridge', 'West Kent'],
-    stationLink: '/tonbridge-police-station',
-    description: 'Expert police station rep in Tonbridge, Kent. FREE We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor. at Tonbridge custody suite. Serving West Kent.'
+    slug: "tonbridge",
+    name: "Tonbridge",
+    displayName: "Tonbridge",
+    type: "Custody Suite",
+    address: "1 Pembury Road, Tonbridge TN9 2HS",
+    areaServed: ["Tonbridge", "West Kent"],
+    stationLink: "/tonbridge-police-station",
+    description:
+      "Expert police station rep in Tonbridge, Kent. FREE We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor. at Tonbridge custody suite. Serving West Kent.",
   },
   {
-    slug: 'folkestone',
-    name: 'Folkestone',
-    displayName: 'Folkestone',
-    type: 'Custody Suite',
-    address: 'Bouverie House, Folkestone',
-    areaServed: ['Folkestone', 'East Kent'],
-    stationLink: '/folkestone-police-station',
-    description: 'Expert police station rep in Folkestone, Kent. FREE We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor. at Folkestone custody suite. Serving East Kent.'
+    slug: "folkestone",
+    name: "Folkestone",
+    displayName: "Folkestone",
+    type: "Custody Suite",
+    address: "Bouverie House, Folkestone",
+    areaServed: ["Folkestone", "East Kent"],
+    stationLink: "/folkestone-police-station",
+    description:
+      "Expert police station rep in Folkestone, Kent. FREE We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor. at Folkestone custody suite. Serving East Kent.",
   },
   {
-    slug: 'ashford',
-    name: 'Ashford',
-    displayName: 'Ashford',
-    type: 'Voluntary Interviews',
-    address: 'Tufton Street, Ashford',
-    areaServed: ['Ashford', 'Mid-Kent'],
-    stationLink: '/ashford-police-station',
-    description: 'Police station rep for Ashford voluntary interviews. FREE legal advice 24/7. Accredited duty solicitor covering Ashford and mid-Kent.'
+    slug: "ashford",
+    name: "Ashford",
+    displayName: "Ashford",
+    type: "Voluntary Interviews",
+    address: "Tufton Street, Ashford",
+    areaServed: ["Ashford", "Mid-Kent"],
+    stationLink: "/ashford-police-station",
+    description:
+      "Police station rep for Ashford voluntary interviews. FREE legal advice 24/7. Accredited duty solicitor covering Ashford and mid-Kent.",
   },
   {
-    slug: 'dartford',
-    name: 'Dartford',
-    displayName: 'Dartford',
-    type: 'Coverage Area',
-    address: 'North Kent area',
-    areaServed: ['Dartford', 'North Kent', 'Gravesend'],
-    stationLink: '/north-kent-gravesend-police-station',
-    description: 'Police station rep in Dartford, Kent. FREE legal advice 24/7. Serving Dartford and North Kent area.'
+    slug: "dartford",
+    name: "Dartford",
+    displayName: "Dartford",
+    type: "Coverage Area",
+    address: "North Kent area",
+    areaServed: ["Dartford", "North Kent", "Gravesend"],
+    stationLink: "/north-kent-gravesend-police-station",
+    description:
+      "Police station rep in Dartford, Kent. FREE legal advice 24/7. Serving Dartford and North Kent area.",
   },
   {
-    slug: 'sittingbourne',
-    name: 'Sittingbourne',
-    displayName: 'Sittingbourne',
-    type: 'Voluntary Interviews',
-    address: 'Sittingbourne area',
-    areaServed: ['Sittingbourne', 'Mid-Kent'],
-    stationLink: '/sittingbourne-police-station',
-    description: 'Police station rep for Sittingbourne voluntary interviews. FREE legal advice 24/7. Accredited duty solicitor covering Sittingbourne.'
+    slug: "sittingbourne",
+    name: "Sittingbourne",
+    displayName: "Sittingbourne",
+    type: "Voluntary Interviews",
+    address: "Sittingbourne area",
+    areaServed: ["Sittingbourne", "Mid-Kent"],
+    stationLink: "/sittingbourne-police-station",
+    description:
+      "Police station rep for Sittingbourne voluntary interviews. FREE legal advice 24/7. Accredited duty solicitor covering Sittingbourne.",
   },
   {
-    slug: 'sevenoaks',
-    name: 'Sevenoaks',
-    displayName: 'Sevenoaks',
-    type: 'Voluntary Interviews',
-    address: 'Sevenoaks area',
-    areaServed: ['Sevenoaks', 'West Kent'],
-    stationLink: '/sevenoaks-police-station',
-    description: 'Police station rep for Sevenoaks voluntary interviews. FREE legal advice 24/7. Accredited duty solicitor covering Sevenoaks and West Kent.'
+    slug: "sevenoaks",
+    name: "Sevenoaks",
+    displayName: "Sevenoaks",
+    type: "Voluntary Interviews",
+    address: "Sevenoaks area",
+    areaServed: ["Sevenoaks", "West Kent"],
+    stationLink: "/sevenoaks-police-station",
+    description:
+      "Police station rep for Sevenoaks voluntary interviews. FREE legal advice 24/7. Accredited duty solicitor covering Sevenoaks and West Kent.",
   },
   {
-    slug: 'tunbridge-wells',
-    name: 'Tunbridge Wells',
-    displayName: 'Tunbridge Wells',
-    type: 'Voluntary Interviews',
-    address: 'Tunbridge Wells area',
-    areaServed: ['Tunbridge Wells', 'West Kent'],
-    stationLink: '/tunbridge-wells-police-station',
-    description: 'Police station rep for Tunbridge Wells voluntary interviews. FREE legal advice 24/7. Accredited duty solicitor covering Tunbridge Wells.'
+    slug: "tunbridge-wells",
+    name: "Tunbridge Wells",
+    displayName: "Tunbridge Wells",
+    type: "Voluntary Interviews",
+    address: "Tunbridge Wells area",
+    areaServed: ["Tunbridge Wells", "West Kent"],
+    stationLink: "/tunbridge-wells-police-station",
+    description:
+      "Police station rep for Tunbridge Wells voluntary interviews. FREE legal advice 24/7. Accredited duty solicitor covering Tunbridge Wells.",
   },
   {
-    slug: 'margate',
-    name: 'Margate',
-    displayName: 'Margate',
-    type: 'Custody Suite',
-    address: 'Fort Hill, Margate',
-    areaServed: ['Margate', 'East Kent', 'Thanet'],
-    stationLink: '/margate-police-station',
-    description: 'Expert police station rep in Margate, Kent. FREE We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor. at Margate custody suite. Serving East Kent and Thanet.'
+    slug: "margate",
+    name: "Margate",
+    displayName: "Margate",
+    type: "Custody Suite",
+    address: "Fort Hill, Margate",
+    areaServed: ["Margate", "East Kent", "Thanet"],
+    stationLink: "/margate-police-station",
+    description:
+      "Expert police station rep in Margate, Kent. FREE We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor. at Margate custody suite. Serving East Kent and Thanet.",
   },
   {
-    slug: 'dover',
-    name: 'Dover',
-    displayName: 'Dover',
-    type: 'Voluntary Interviews',
-    address: 'Park Place, Dover',
-    areaServed: ['Dover', 'East Kent'],
-    stationLink: '/dover-police-station',
-    description: 'Police station rep for Dover voluntary interviews. FREE legal advice 24/7. Accredited duty solicitor covering Dover and East Kent.'
+    slug: "dover",
+    name: "Dover",
+    displayName: "Dover",
+    type: "Voluntary Interviews",
+    address: "Park Place, Dover",
+    areaServed: ["Dover", "East Kent"],
+    stationLink: "/dover-police-station",
+    description:
+      "Police station rep for Dover voluntary interviews. FREE legal advice 24/7. Accredited duty solicitor covering Dover and East Kent.",
   },
   {
-    slug: 'swanley',
-    name: 'Swanley',
-    displayName: 'Swanley',
-    type: 'Voluntary Interviews',
-    address: 'Swanley area',
-    areaServed: ['Swanley', 'North Kent'],
-    stationLink: '/swanley-police-station',
-    description: 'Police station rep for Swanley voluntary interviews. FREE legal advice 24/7. Accredited duty solicitor covering Swanley and North Kent.'
+    slug: "swanley",
+    name: "Swanley",
+    displayName: "Swanley",
+    type: "Voluntary Interviews",
+    address: "Swanley area",
+    areaServed: ["Swanley", "North Kent"],
+    stationLink: "/swanley-police-station",
+    description:
+      "Police station rep for Swanley voluntary interviews. FREE legal advice 24/7. Accredited duty solicitor covering Swanley and North Kent.",
   },
   {
-    slug: 'bluewater',
-    name: 'Bluewater',
-    displayName: 'Bluewater',
-    type: 'Voluntary Interviews',
-    address: 'Bluewater area',
-    areaServed: ['Bluewater', 'North Kent', 'Dartford'],
-    stationLink: '/bluewater-police-station',
-    description: 'Police station rep for Bluewater voluntary interviews. FREE legal advice 24/7. Accredited duty solicitor covering Bluewater and North Kent.'
-  }
+    slug: "bluewater",
+    name: "Bluewater",
+    displayName: "Bluewater",
+    type: "Voluntary Interviews",
+    address: "Bluewater area",
+    areaServed: ["Bluewater", "North Kent", "Dartford"],
+    stationLink: "/bluewater-police-station",
+    description:
+      "Police station rep for Bluewater voluntary interviews. FREE legal advice 24/7. Accredited duty solicitor covering Bluewater and North Kent.",
+  },
 ];
 
 const template = (town) => `import Header from '@/components/Header';
@@ -170,7 +184,7 @@ const localBusinessSchema = {
   "@type": "LocalBusiness",
   "@id": \`\${SITE_URL}/police-station-rep-${town.slug}#business\`,
   "name": "Police Station Representative - ${town.displayName}, Kent",
-  "description": "Expert police station rep service in ${town.displayName}, Kent. FREE We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor.${town.type === 'Custody Suite' ? ' at ' + town.displayName + ' custody suite' : ' for ' + town.type.toLowerCase()}' for police interviews and custody matters.",
+  "description": "Expert police station rep service in ${town.displayName}, Kent. FREE We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor.${town.type === "Custody Suite" ? " at " + town.displayName + " custody suite" : " for " + town.type.toLowerCase()}' for police interviews and custody matters.",
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "${town.displayName}",
@@ -178,14 +192,18 @@ const localBusinessSchema = {
     "addressCountry": "GB"
   },
   "areaServed": [
-${town.areaServed.map(area => `    {
+${town.areaServed
+  .map(
+    (area) => `    {
       "@type": "City",
       "name": "${area}",
       "containedIn": {
         "@type": "State",
         "name": "Kent"
       }
-    }`).join(',\n')},
+    }`
+  )
+  .join(",\n")},
     {
       "@type": "State",
       "name": "Kent"
@@ -215,7 +233,7 @@ export default function Page() {
             <div className="max-w-4xl mx-auto px-4 text-center">
               <h1 className="text-3xl md:text-4xl font-bold mb-4">Police Station Representative in ${town.displayName}, Kent</h1>
               <p className="mt-4 text-lg text-blue-200 max-w-3xl mx-auto">
-                Expert police station rep service covering ${town.displayName}${town.type === 'Custody Suite' ? ' custody suite' : ' ' + town.type.toLowerCase()}. FREE We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor. by accredited duty solicitor Robert Cashman.
+                Expert police station rep service covering ${town.displayName}${town.type === "Custody Suite" ? " custody suite" : " " + town.type.toLowerCase()}. FREE We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor. by accredited duty solicitor Robert Cashman.
               </p>
             </div>
           </section>
@@ -227,7 +245,7 @@ export default function Page() {
                   <div className="p-6">
                     <h2 className="text-2xl font-bold text-slate-900 mb-4">Police Station Rep Coverage in ${town.displayName}</h2>
                     <p className="text-slate-700 leading-relaxed mb-4">
-                      If you or someone you know has been arrested or invited for a police interview in ${town.displayName}, you need expert representation. As Kent's leading police station rep service, we provide FREE legal advice 24/7${town.type === 'Custody Suite' ? ' at ' + town.displayName + ' custody suite' : ' for ' + town.type.toLowerCase()}'.
+                      If you or someone you know has been arrested or invited for a police interview in ${town.displayName}, you need expert representation. As Kent's leading police station rep service, we provide FREE legal advice 24/7${town.type === "Custody Suite" ? " at " + town.displayName + " custody suite" : " for " + town.type.toLowerCase()}'.
                     </p>
                     <p className="text-slate-700 leading-relaxed mb-4">
                       Our accredited duty solicitor Robert Cashman has 35+ years of experience and has handled 21,000+ cases. Unlike call-centre services, you get direct access to a qualified solicitor who understands ${town.displayName}'s police procedures.
@@ -238,7 +256,7 @@ export default function Page() {
                           <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                           <polyline points="22 4 12 14.01 9 11.01"></polyline>
                         </svg>
-                        <p className="text-slate-700">FREE legal advice under Legal Aid${town.type === 'Custody Suite' ? ' at ' + town.displayName + ' custody suite' : ''}</p>
+                        <p className="text-slate-700">FREE legal advice under Legal Aid${town.type === "Custody Suite" ? " at " + town.displayName + " custody suite" : ""}</p>
                       </div>
                       <div className="flex items-start gap-3">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-check-circle text-green-600 w-5 h-5 mt-0.5 flex-shrink-0">
@@ -252,7 +270,7 @@ export default function Page() {
                           <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                           <polyline points="22 4 12 14.01 9 11.01"></polyline>
                         </svg>
-                        <p className="text-slate-700">45-minute response time to ${town.displayName}${town.type === 'Custody Suite' ? ' custody suite' : ''}</p>
+                        <p className="text-slate-700">45-minute response time to ${town.displayName}${town.type === "Custody Suite" ? " custody suite" : ""}</p>
                       </div>
                       <div className="flex items-start gap-3">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-check-circle text-green-600 w-5 h-5 mt-0.5 flex-shrink-0">
@@ -267,12 +285,12 @@ export default function Page() {
 
                 <div className="rounded-xl border bg-card text-card-foreground shadow-lg">
                   <div className="p-6">
-                    <h2 className="text-2xl font-bold text-slate-900 mb-4">${town.displayName} ${town.type === 'Custody Suite' ? 'Custody Suite' : 'Police Station'} Coverage</h2>
+                    <h2 className="text-2xl font-bold text-slate-900 mb-4">${town.displayName} ${town.type === "Custody Suite" ? "Custody Suite" : "Police Station"} Coverage</h2>
                     <p className="text-slate-700 leading-relaxed mb-4">
-                      ${town.type === 'Custody Suite' ? town.displayName + ' custody suite' : town.displayName + ' police station'}${town.address ? ' is located at ' + town.address + '.' : '.'} We provide expert <a href="${town.stationLink}" className="text-blue-600 hover:underline font-semibold">police station rep at ${town.displayName}${town.type === 'Custody Suite' ? ' custody suite' : ''}</a> for all arrests and voluntary interviews in the ${town.displayName} area.
+                      ${town.type === "Custody Suite" ? town.displayName + " custody suite" : town.displayName + " police station"}${town.address ? " is located at " + town.address + "." : "."} We provide expert <a href="${town.stationLink}" className="text-blue-600 hover:underline font-semibold">police station rep at ${town.displayName}${town.type === "Custody Suite" ? " custody suite" : ""}</a> for all arrests and voluntary interviews in the ${town.displayName} area.
                     </p>
                     <p className="text-slate-700 leading-relaxed mb-4">
-                      We cover ${town.type === 'Custody Suite' ? 'all custody matters' : 'voluntary interviews'} at ${town.displayName} police stations. Whether you're in ${town.areaServed.slice(0, 2).join(' or ')}, we can provide immediate representation.
+                      We cover ${town.type === "Custody Suite" ? "all custody matters" : "voluntary interviews"} at ${town.displayName} police stations. Whether you're in ${town.areaServed.slice(0, 2).join(" or ")}, we can provide immediate representation.
                     </p>
                   </div>
                 </div>
@@ -326,9 +344,9 @@ export default function Page() {
                 <div className="rounded-xl border bg-card text-card-foreground shadow-md">
                   <div className="p-6">
                     <h3 className="font-semibold text-slate-900 mb-4">${town.displayName} Police Station</h3>
-                    <p className="text-slate-600 text-sm mb-2">${town.address || town.displayName + ', Kent'}</p>
+                    <p className="text-slate-600 text-sm mb-2">${town.address || town.displayName + ", Kent"}</p>
                     <a href="${town.stationLink}" className="text-blue-600 hover:underline text-sm font-medium">
-                      View police station rep at ${town.displayName}${town.type === 'Custody Suite' ? ' custody suite' : ''} →
+                      View police station rep at ${town.displayName}${town.type === "Custody Suite" ? " custody suite" : ""} →
                     </a>
                   </div>
                 </div>
@@ -344,15 +362,14 @@ export default function Page() {
 `;
 
 // Generate all pages
-towns.forEach(town => {
-  const dir = path.join(__dirname, '..', 'app', `police-station-rep-${town.slug}`);
+towns.forEach((town) => {
+  const dir = path.join(__dirname, "..", "app", `police-station-rep-${town.slug}`);
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
   }
-  const filePath = path.join(dir, 'page.tsx');
+  const filePath = path.join(dir, "page.tsx");
   fs.writeFileSync(filePath, template(town));
   console.log(`Generated: ${filePath}`);
 });
 
 console.log(`\nGenerated ${towns.length} town pages successfully!`);
-

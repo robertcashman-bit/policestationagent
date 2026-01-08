@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useState, ChangeEvent } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, ChangeEvent } from "react";
+import { useRouter } from "next/navigation";
 
 /**
  * Blog Generator Client
- * 
+ *
  * DESIGN PRINCIPLES:
  * - Simple, reliable, boring
  * - Static images only (from /public/blog-images/)
@@ -23,7 +23,7 @@ interface FormData {
   secondaryKeywords: string;
   location: string;
   category: string;
-  seoLength: 'short' | 'optimal' | 'long';
+  seoLength: "short" | "optimal" | "long";
   includeFAQ: boolean;
   includeInternalLinks: boolean;
   imageFilename: string;
@@ -43,22 +43,42 @@ interface GeneratedContent {
 // =============================================================================
 
 const CATEGORIES = [
-  { value: 'Police Station Advice', label: 'Police Station Advice' },
-  { value: 'Duty Solicitor', label: 'Duty Solicitor Explanation' },
-  { value: 'Arrest & Custody', label: 'Arrest & Custody Guidance' },
-  { value: 'Bail Advice', label: 'Bail / Pre-charge Advice' },
-  { value: 'PACE Rights', label: 'Rights at the Police Station' },
+  { value: "Police Station Advice", label: "Police Station Advice" },
+  { value: "Duty Solicitor", label: "Duty Solicitor Explanation" },
+  { value: "Arrest & Custody", label: "Arrest & Custody Guidance" },
+  { value: "Bail Advice", label: "Bail / Pre-charge Advice" },
+  { value: "PACE Rights", label: "Rights at the Police Station" },
 ];
 
 const AVAILABLE_IMAGES = [
-  { value: 'blog-listing-0.jpg', label: 'Legal Office', preview: '/blog-images/blog-listing-0.jpg' },
-  { value: 'blog-listing-1.png', label: 'Police Station', preview: '/blog-images/blog-listing-1.png' },
-  { value: 'blog-listing-2.png', label: 'Courtroom', preview: '/blog-images/blog-listing-2.png' },
-  { value: 'blog-listing-3.png', label: 'Legal Documents', preview: '/blog-images/blog-listing-3.png' },
-  { value: 'blog-listing-4.png', label: 'Consultation', preview: '/blog-images/blog-listing-4.png' },
-  { value: 'blog-listing-5.png', label: 'Justice', preview: '/blog-images/blog-listing-5.png' },
-  { value: 'blog-listing-6.png', label: 'Law Books', preview: '/blog-images/blog-listing-6.png' },
-  { value: 'blog-listing-7.png', label: 'Client Meeting', preview: '/blog-images/blog-listing-7.png' },
+  {
+    value: "blog-listing-0.jpg",
+    label: "Legal Office",
+    preview: "/blog-images/blog-listing-0.jpg",
+  },
+  {
+    value: "blog-listing-1.png",
+    label: "Police Station",
+    preview: "/blog-images/blog-listing-1.png",
+  },
+  { value: "blog-listing-2.png", label: "Courtroom", preview: "/blog-images/blog-listing-2.png" },
+  {
+    value: "blog-listing-3.png",
+    label: "Legal Documents",
+    preview: "/blog-images/blog-listing-3.png",
+  },
+  {
+    value: "blog-listing-4.png",
+    label: "Consultation",
+    preview: "/blog-images/blog-listing-4.png",
+  },
+  { value: "blog-listing-5.png", label: "Justice", preview: "/blog-images/blog-listing-5.png" },
+  { value: "blog-listing-6.png", label: "Law Books", preview: "/blog-images/blog-listing-6.png" },
+  {
+    value: "blog-listing-7.png",
+    label: "Client Meeting",
+    preview: "/blog-images/blog-listing-7.png",
+  },
 ];
 
 // =============================================================================
@@ -70,15 +90,15 @@ export default function BlogGeneratorClient() {
 
   // Form state
   const [formData, setFormData] = useState<FormData>({
-    topic: '',
-    primaryKeyword: '',
-    secondaryKeywords: '',
-    location: 'Kent',
-    category: 'Police Station Advice',
-    seoLength: 'optimal',
+    topic: "",
+    primaryKeyword: "",
+    secondaryKeywords: "",
+    location: "Kent",
+    category: "Police Station Advice",
+    seoLength: "optimal",
     includeFAQ: true,
     includeInternalLinks: true,
-    imageFilename: 'blog-listing-0.jpg', // Default to first image
+    imageFilename: "blog-listing-0.jpg", // Default to first image
   });
 
   // UI state
@@ -97,11 +117,11 @@ export default function BlogGeneratorClient() {
 
   const handleLogout = async () => {
     try {
-      await fetch('/api/admin/logout', { method: 'POST' });
+      await fetch("/api/admin/logout", { method: "POST" });
     } catch {
       // Ignore logout errors
     }
-    router.push('/');
+    router.push("/");
   };
 
   const handleInputChange = (
@@ -110,15 +130,15 @@ export default function BlogGeneratorClient() {
     const { name, value, type } = e.target;
     const checked = (e.target as HTMLInputElement).checked;
 
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
   const handleGenerate = async () => {
     if (!formData.topic || !formData.primaryKeyword) {
-      setError('Topic and primary keyword are required');
+      setError("Topic and primary keyword are required");
       return;
     }
 
@@ -127,9 +147,9 @@ export default function BlogGeneratorClient() {
     setSuccess(null);
 
     try {
-      const response = await fetch('/api/admin/generate-blog', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/admin/generate-blog", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           topic: formData.topic,
           primaryKeyword: formData.primaryKeyword,
@@ -144,13 +164,13 @@ export default function BlogGeneratorClient() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to generate blog post');
+        throw new Error(errorData.error || "Failed to generate blog post");
       }
 
       const data = await response.json();
       setPreview(data);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to generate blog post');
+      setError(err instanceof Error ? err.message : "Failed to generate blog post");
     } finally {
       setLoading(false);
     }
@@ -163,22 +183,22 @@ export default function BlogGeneratorClient() {
     setError(null);
 
     try {
-      const response = await fetch('/api/admin/posts', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/admin/posts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           title: preview.title,
           category: formData.category,
           primaryKeyword: formData.primaryKeyword,
           secondaryKeywords: formData.secondaryKeywords
-            .split(',')
-            .map(k => k.trim())
+            .split(",")
+            .map((k) => k.trim())
             .filter(Boolean),
           location: formData.location,
           metaTitle: preview.metaTitle,
           metaDescription: preview.metaDescription,
           contentHtml: preview.content,
-          faq: preview.faqs.map(f => ({ q: f.question, a: f.answer })),
+          faq: preview.faqs.map((f) => ({ q: f.question, a: f.answer })),
           imageFilename: formData.imageFilename,
         }),
       });
@@ -186,7 +206,7 @@ export default function BlogGeneratorClient() {
       const data = await response.json();
 
       if (!response.ok || !data.success) {
-        throw new Error(data.error || 'Failed to publish post');
+        throw new Error(data.error || "Failed to publish post");
       }
 
       setSuccess({
@@ -196,7 +216,7 @@ export default function BlogGeneratorClient() {
       });
       setPreview(null);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to publish post');
+      setError(err instanceof Error ? err.message : "Failed to publish post");
     } finally {
       setLoading(false);
     }
@@ -204,15 +224,15 @@ export default function BlogGeneratorClient() {
 
   const handleReset = () => {
     setFormData({
-      topic: '',
-      primaryKeyword: '',
-      secondaryKeywords: '',
-      location: 'Kent',
-      category: 'Police Station Advice',
-      seoLength: 'optimal',
+      topic: "",
+      primaryKeyword: "",
+      secondaryKeywords: "",
+      location: "Kent",
+      category: "Police Station Advice",
+      seoLength: "optimal",
       includeFAQ: true,
       includeInternalLinks: true,
-      imageFilename: '',
+      imageFilename: "",
     });
     setPreview(null);
     setError(null);
@@ -263,7 +283,7 @@ export default function BlogGeneratorClient() {
                 <span className="text-green-600 mr-2 text-xl">✓</span>
                 <p className="font-bold text-green-800 text-lg">Published Successfully!</p>
               </div>
-              
+
               {/* Status badges */}
               <div className="flex flex-wrap gap-2 mt-1">
                 <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-800">
@@ -290,14 +310,11 @@ export default function BlogGeneratorClient() {
                 >
                   View Post →
                 </a>
-                <button
-                  onClick={handleReset}
-                  className="text-green-700 underline text-sm"
-                >
+                <button onClick={handleReset} className="text-green-700 underline text-sm">
                   Create another post
                 </button>
               </div>
-              
+
               <p className="text-xs text-green-600 mt-1">
                 Post is now visible in the blog dropdown menu.
               </p>
@@ -373,16 +390,14 @@ export default function BlogGeneratorClient() {
 
               {/* Category */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Category
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
                 <select
                   name="category"
                   value={formData.category}
                   onChange={handleInputChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
                 >
-                  {CATEGORIES.map(cat => (
+                  {CATEGORIES.map((cat) => (
                     <option key={cat.value} value={cat.value}>
                       {cat.label}
                     </option>
@@ -412,31 +427,31 @@ export default function BlogGeneratorClient() {
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Featured Image
                 </label>
-                
+
                 {/* Image Preview */}
                 <div className="mb-3 border rounded-lg overflow-hidden bg-gray-100">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={`/blog-images/${formData.imageFilename || 'blog-listing-0.jpg'}`}
+                    src={`/blog-images/${formData.imageFilename || "blog-listing-0.jpg"}`}
                     alt="Selected featured image"
                     className="w-full h-40 object-cover"
                     onError={(e) => {
-                      (e.target as HTMLImageElement).src = '/blog-images/blog-listing-0.jpg';
+                      (e.target as HTMLImageElement).src = "/blog-images/blog-listing-0.jpg";
                     }}
                   />
                 </div>
 
                 {/* Image Selection Grid */}
                 <div className="grid grid-cols-4 gap-2">
-                  {AVAILABLE_IMAGES.map(img => (
+                  {AVAILABLE_IMAGES.map((img) => (
                     <button
                       key={img.value}
                       type="button"
-                      onClick={() => setFormData(prev => ({ ...prev, imageFilename: img.value }))}
+                      onClick={() => setFormData((prev) => ({ ...prev, imageFilename: img.value }))}
                       className={`relative aspect-video rounded overflow-hidden border-2 transition-all ${
                         formData.imageFilename === img.value
-                          ? 'border-blue-500 ring-2 ring-blue-200'
-                          : 'border-gray-200 hover:border-gray-400'
+                          ? "border-blue-500 ring-2 ring-blue-200"
+                          : "border-gray-200 hover:border-gray-400"
                       }`}
                     >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -447,7 +462,9 @@ export default function BlogGeneratorClient() {
                       />
                       {formData.imageFilename === img.value && (
                         <div className="absolute inset-0 bg-blue-500 bg-opacity-20 flex items-center justify-center">
-                          <span className="bg-blue-500 text-white text-xs px-2 py-1 rounded">✓</span>
+                          <span className="bg-blue-500 text-white text-xs px-2 py-1 rounded">
+                            ✓
+                          </span>
                         </div>
                       )}
                     </button>
@@ -489,7 +506,7 @@ export default function BlogGeneratorClient() {
                 disabled={loading || !formData.topic || !formData.primaryKeyword}
                 className="w-full mt-6 bg-blue-600 text-white py-3 px-4 rounded-md hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed font-medium"
               >
-                {loading ? 'Generating...' : 'Generate Blog Post'}
+                {loading ? "Generating..." : "Generate Blog Post"}
               </button>
             </div>
           </div>
@@ -507,18 +524,22 @@ export default function BlogGeneratorClient() {
                   </p>
                   <p>
                     <strong>Meta Title:</strong> {preview.metaTitle}
-                    <span className={`ml-2 text-xs ${preview.metaTitle.length <= 60 ? 'text-green-600' : 'text-red-600'}`}>
+                    <span
+                      className={`ml-2 text-xs ${preview.metaTitle.length <= 60 ? "text-green-600" : "text-red-600"}`}
+                    >
                       ({preview.metaTitle.length}/60)
                     </span>
                   </p>
                   <p>
                     <strong>Meta Description:</strong> {preview.metaDescription}
-                    <span className={`ml-2 text-xs ${preview.metaDescription.length <= 155 ? 'text-green-600' : 'text-red-600'}`}>
+                    <span
+                      className={`ml-2 text-xs ${preview.metaDescription.length <= 155 ? "text-green-600" : "text-red-600"}`}
+                    >
                       ({preview.metaDescription.length}/155)
                     </span>
                   </p>
                   <p>
-                    <strong>Image:</strong> {formData.imageFilename || 'default.jpg'}
+                    <strong>Image:</strong> {formData.imageFilename || "default.jpg"}
                   </p>
                 </div>
 
@@ -548,7 +569,7 @@ export default function BlogGeneratorClient() {
                     disabled={loading}
                     className="flex-1 bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 disabled:bg-gray-400 font-medium"
                   >
-                    {loading ? 'Publishing...' : 'Publish to GitHub'}
+                    {loading ? "Publishing..." : "Publish to GitHub"}
                   </button>
                   <button
                     onClick={() => setPreview(null)}

@@ -1,9 +1,9 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
-const appDir = path.join(__dirname, '..', 'app');
+const appDir = path.join(__dirname, "..", "app");
 
-function find404Pages(dir, basePath = '') {
+function find404Pages(dir, basePath = "") {
   const results = [];
   const entries = fs.readdirSync(dir, { withFileTypes: true });
 
@@ -13,22 +13,24 @@ function find404Pages(dir, basePath = '') {
 
     if (entry.isDirectory()) {
       // Skip node_modules and other non-app directories
-      if (entry.name === 'node_modules' || entry.name.startsWith('.')) {
+      if (entry.name === "node_modules" || entry.name.startsWith(".")) {
         continue;
       }
       results.push(...find404Pages(fullPath, relativePath));
-    } else if (entry.name === 'page.tsx' || entry.name === 'page.ts') {
-      const content = fs.readFileSync(fullPath, 'utf8');
-      
+    } else if (entry.name === "page.tsx" || entry.name === "page.ts") {
+      const content = fs.readFileSync(fullPath, "utf8");
+
       // Check for 404 content
-      if (content.includes('404') || 
-          content.includes('Page Not Found') || 
-          content.includes('could not be found')) {
-        const route = '/' + relativePath.replace(/\\/g, '/').replace(/\/page\.tsx?$/, '');
+      if (
+        content.includes("404") ||
+        content.includes("Page Not Found") ||
+        content.includes("could not be found")
+      ) {
+        const route = "/" + relativePath.replace(/\\/g, "/").replace(/\/page\.tsx?$/, "");
         results.push({
           file: fullPath,
           route: route,
-          has404: true
+          has404: true,
         });
       }
     }
@@ -39,7 +41,7 @@ function find404Pages(dir, basePath = '') {
 
 const pages404 = find404Pages(appDir);
 
-console.log('\n=== 404 PAGES FOUND ===\n');
+console.log("\n=== 404 PAGES FOUND ===\n");
 console.log(`Total pages with 404 content: ${pages404.length}\n`);
 
 pages404.forEach((page, index) => {
@@ -50,14 +52,14 @@ pages404.forEach((page, index) => {
 // Save to JSON for reference
 const report = {
   total: pages404.length,
-  pages: pages404.map(p => ({
+  pages: pages404.map((p) => ({
     route: p.route,
-    file: path.relative(process.cwd(), p.file)
-  }))
+    file: path.relative(process.cwd(), p.file),
+  })),
 };
 
 fs.writeFileSync(
-  path.join(__dirname, '..', '404-pages-report.json'),
+  path.join(__dirname, "..", "404-pages-report.json"),
   JSON.stringify(report, null, 2)
 );
 

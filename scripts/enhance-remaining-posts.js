@@ -1,18 +1,23 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
-const blogPostsPath = path.join(__dirname, '..', 'data', 'blog-posts-full.json');
-const posts = JSON.parse(fs.readFileSync(blogPostsPath, 'utf8'));
+const blogPostsPath = path.join(__dirname, "..", "data", "blog-posts-full.json");
+const posts = JSON.parse(fs.readFileSync(blogPostsPath, "utf8"));
 
 // Function to get text word count
 function getWordCount(html) {
   if (!html) return 0;
-  return html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().split(' ').filter(w => w.length > 0).length;
+  return html
+    .replace(/<[^>]*>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .split(" ")
+    .filter((w) => w.length > 0).length;
 }
 
 // Enhanced content templates for specific topics
 const enhancedContent = {
-  'welcome-to-our-blog': `<h2>Welcome to the Police Station Agent Blog</h2>
+  "welcome-to-our-blog": `<h2>Welcome to the Police Station Agent Blog</h2>
 <p>Welcome to the Police Station Agent blog, your comprehensive resource for expert insights on police station representation, criminal defence procedures, and your legal rights in custody across Kent and the UK.</p>
 
 <h3>About This Blog</h3>
@@ -40,7 +45,7 @@ const enhancedContent = {
 <li>PACE Code C - Code of Practice for the Detention, Treatment and Questioning of Persons</li>
 </ul>`,
 
-  'kent-police-stations-legal-representation': `<h2>Complete Guide to Legal Representation at Kent Police Stations</h2>
+  "kent-police-stations-legal-representation": `<h2>Complete Guide to Legal Representation at Kent Police Stations</h2>
 <p>If you are arrested or invited for a voluntary interview at any Kent police station, you have the right to free legal representation under the Police and Criminal Evidence Act 1984 (PACE). This guide explains your rights and how to access expert legal advice.</p>
 
 <h3>Kent Police Stations Covered</h3>
@@ -86,7 +91,7 @@ const enhancedContent = {
 <li>Legal Aid, Sentencing and Punishment of Offenders Act 2012</li>
 </ul>`,
 
-  'police-station-interview-rights-kent': `<h2>What to Expect During a Police Station Interview in Kent</h2>
+  "police-station-interview-rights-kent": `<h2>What to Expect During a Police Station Interview in Kent</h2>
 <p>If you are arrested or invited for a voluntary interview at a Kent police station, understanding what to expect can help you prepare and protect your rights. This guide explains the interview process and your legal rights.</p>
 
 <h3>Before the Interview</h3>
@@ -134,31 +139,31 @@ const enhancedContent = {
 <li>Police and Criminal Evidence Act 1984 (PACE)</li>
 <li>PACE Code C - Code of Practice for the Detention, Treatment and Questioning of Persons</li>
 <li>Police and Criminal Evidence Act 1984 (Codes of Practice) Order 2015</li>
-</ul>`
+</ul>`,
 };
 
 // Enhance posts that need more content
 let updated = 0;
 const enhancedPosts = posts.map((post) => {
   const wordCount = getWordCount(post.content);
-  
+
   // If content is less than 200 words, enhance it
   if (wordCount < 200) {
     // Check if we have specific content for this slug
     const specificContent = enhancedContent[post.slug];
-    
+
     if (specificContent) {
       updated++;
       return {
         ...post,
-        content: `<div class="blog-content">${specificContent}</div>`
+        content: `<div class="blog-content">${specificContent}</div>`,
       };
     } else {
       // Generate generic enhanced content
       const titleLower = post.title.toLowerCase();
-      let enhanced = '';
-      
-      if (titleLower.includes('kent') || titleLower.includes('police station')) {
+      let enhanced = "";
+
+      if (titleLower.includes("kent") || titleLower.includes("police station")) {
         enhanced = `<h2>${post.title}</h2>
 <p>This comprehensive guide provides expert information about ${post.title.toLowerCase()} in Kent, UK. Understanding your rights and legal options is crucial when dealing with the police.</p>
 
@@ -216,15 +221,15 @@ const enhancedPosts = posts.map((post) => {
 <li>Legal Aid, Sentencing and Punishment of Offenders Act 2012</li>
 </ul>`;
       }
-      
+
       updated++;
       return {
         ...post,
-        content: `<div class="blog-content">${enhanced}</div>`
+        content: `<div class="blog-content">${enhanced}</div>`,
       };
     }
   }
-  
+
   return post;
 });
 
@@ -234,6 +239,5 @@ console.log(`Enhanced ${updated} blog posts with comprehensive content.`);
 console.log(`Total posts: ${posts.length}`);
 
 // Verify
-const finalIncomplete = enhancedPosts.filter(p => getWordCount(p.content) < 200);
+const finalIncomplete = enhancedPosts.filter((p) => getWordCount(p.content) < 200);
 console.log(`Posts still needing content: ${finalIncomplete.length}`);
-

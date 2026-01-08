@@ -3,16 +3,16 @@
  * Handles JavaScript-rendered content properly
  */
 
-const puppeteer = require('puppeteer');
-const Database = require('better-sqlite3');
-const path = require('path');
-const fs = require('fs');
+const puppeteer = require("puppeteer");
+const Database = require("better-sqlite3");
+const path = require("path");
+const fs = require("fs");
 
-const SITEMAP_URL = 'https://robertdcashman.wixsite.com/website/blog-posts-sitemap.xml';
-const BASE_URL = 'https://robertdcashman.wixsite.com/website';
+const SITEMAP_URL = "https://robertdcashman.wixsite.com/website/blog-posts-sitemap.xml";
+const BASE_URL = "https://robertdcashman.wixsite.com/website";
 
 // Initialize database
-const dbPath = path.join(__dirname, '..', 'data', 'web44ai.db');
+const dbPath = path.join(__dirname, "..", "data", "web44ai.db");
 const dbDir = path.dirname(dbPath);
 
 if (!fs.existsSync(dbDir)) {
@@ -47,25 +47,29 @@ db.exec(`CREATE INDEX IF NOT EXISTS idx_blog_slug ON blog_posts(slug);`);
 async function getPostUrls() {
   const browser = await puppeteer.launch({ headless: true });
   const page = await browser.newPage();
-  
+
   try {
-    await page.goto(SITEMAP_URL, { waitUntil: 'networkidle0' });
+    await page.goto(SITEMAP_URL, { waitUntil: "networkidle0" });
     const content = await page.content();
-    
+
     // Parse XML to extract URLs
     const urlMatches = content.matchAll(/<loc>(https:\/\/[^<]+)<\/loc>/g);
     const posts = [];
-    
+
     for (const match of urlMatches) {
       const url = match[1];
-      if (url.includes('/post/')) {
-        const slug = url.split('/post/')[1];
-        const lastmodMatch = content.match(new RegExp(`<loc>${url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}<\/loc>[\\s\\S]*?<lastmod>([^<]+)<\/lastmod>`));
+      if (url.includes("/post/")) {
+        const slug = url.split("/post/")[1];
+        const lastmodMatch = content.match(
+          new RegExp(
+            `<loc>${url.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}<\/loc>[\\s\\S]*?<lastmod>([^<]+)<\/lastmod>`
+          )
+        );
         const lastmod = lastmodMatch ? lastmodMatch[1] : null;
         posts.push({ url, slug, lastmod });
       }
     }
-    
+
     await browser.close();
     return posts;
   } catch (error) {
@@ -79,32 +83,32 @@ async function getPostUrls() {
  */
 async function extractPost(page, url) {
   try {
-    await page.goto(url, { waitUntil: 'networkidle0', timeout: 30000 });
-    
+    await page.goto(url, { waitUntil: "networkidle0", timeout: 30000 });
+
     // Wait for content to load
-    await page.waitForSelector('article, h1, main', { timeout: 10000 }).catch(() => {});
-    
+    await page.waitForSelector("article, h1, main", { timeout: 10000 }).catch(() => {});
+
     const post = await page.evaluate(() => {
       const result = {
-        title: '',
-        content: '',
-        excerpt: '',
+        title: "",
+        content: "",
+        excerpt: "",
         published_at: null,
       };
 
       // Extract title
-      const h1 = document.querySelector('h1');
+      const h1 = document.querySelector("h1");
       if (h1) {
         result.title = h1.textContent.trim();
       } else {
-        const title = document.querySelector('title');
+        const title = document.querySelector("title");
         if (title) {
           result.title = title.textContent.trim();
         }
       }
 
       // Extract date
-      const timeTag = document.querySelector('time');
+      const timeTag = document.querySelector("time");
       if (timeTag) {
         result.published_at = timeTag.textContent.trim();
       }
@@ -117,31 +121,33 @@ async function extractPost(page, url) {
       }
 
       // Extract main content
-      const article = document.querySelector('article');
+      const article = document.querySelector("article");
       if (article) {
         // Clone to avoid modifying original
         const clone = article.cloneNode(true);
-        
+
         // Remove unwanted elements
-        clone.querySelectorAll('nav, footer, header, script, style, .social-share, button').forEach(el => el.remove());
-        
+        clone
+          .querySelectorAll("nav, footer, header, script, style, .social-share, button")
+          .forEach((el) => el.remove());
+
         // Get HTML content
         result.content = clone.innerHTML;
-        
+
         // Extract excerpt from first paragraph
-        const firstP = clone.querySelector('p');
+        const firstP = clone.querySelector("p");
         if (firstP) {
           result.excerpt = firstP.textContent.trim().substring(0, 200);
         }
       } else {
         // Fallback: try main element
-        const main = document.querySelector('main');
+        const main = document.querySelector("main");
         if (main) {
           const clone = main.cloneNode(true);
-          clone.querySelectorAll('nav, footer, header, script, style').forEach(el => el.remove());
+          clone.querySelectorAll("nav, footer, header, script, style").forEach((el) => el.remove());
           result.content = clone.innerHTML;
-          
-          const firstP = clone.querySelector('p');
+
+          const firstP = clone.querySelector("p");
           if (firstP) {
             result.excerpt = firstP.textContent.trim().substring(0, 200);
           }
@@ -161,8 +167,18 @@ async function extractPost(page, url) {
           // Try parsing formats like "Sep 6" or "Dec 1"
           const dateStr = post.published_at.trim();
           const monthMap = {
-            'Jan': 0, 'Feb': 1, 'Mar': 2, 'Apr': 3, 'May': 4, 'Jun': 5,
-            'Jul': 6, 'Aug': 7, 'Sep': 8, 'Oct': 9, 'Nov': 10, 'Dec': 11
+            Jan: 0,
+            Feb: 1,
+            Mar: 2,
+            Apr: 3,
+            May: 4,
+            Jun: 5,
+            Jul: 6,
+            Aug: 7,
+            Sep: 8,
+            Oct: 9,
+            Nov: 10,
+            Dec: 11,
           };
           const match = dateStr.match(/(\w+)\s+(\d+)/);
           if (match) {
@@ -170,7 +186,11 @@ async function extractPost(page, url) {
             const monthIndex = monthMap[month.substring(0, 3)];
             if (monthIndex !== undefined) {
               const now = new Date();
-              post.published_at = new Date(now.getFullYear(), monthIndex, parseInt(day)).toISOString();
+              post.published_at = new Date(
+                now.getFullYear(),
+                monthIndex,
+                parseInt(day)
+              ).toISOString();
             }
           }
         }
@@ -192,8 +212,8 @@ async function extractPost(page, url) {
 function generateSlug(title) {
   return title
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
     .substring(0, 100);
 }
 
@@ -203,7 +223,7 @@ function generateSlug(title) {
 async function importPost(page, postUrl, slug, lastmod) {
   try {
     const post = await extractPost(page, postUrl);
-    
+
     if (!post || !post.title) {
       console.warn(`  ⚠ Skipping: No title found`);
       return null;
@@ -218,14 +238,15 @@ async function importPost(page, postUrl, slug, lastmod) {
     const finalSlug = slug || generateSlug(post.title);
 
     // Check if already exists
-    const existing = db.prepare('SELECT id FROM blog_posts WHERE slug = ?').get(finalSlug);
+    const existing = db.prepare("SELECT id FROM blog_posts WHERE slug = ?").get(finalSlug);
     if (existing) {
       console.log(`  ✓ Already exists: ${finalSlug}`);
       return { slug: finalSlug, exists: true };
     }
 
     // Use lastmod from sitemap if no date found
-    const publishedAt = post.published_at || (lastmod ? new Date(lastmod).toISOString() : new Date().toISOString());
+    const publishedAt =
+      post.published_at || (lastmod ? new Date(lastmod).toISOString() : new Date().toISOString());
 
     // Insert into database
     const stmt = db.prepare(`
@@ -234,7 +255,7 @@ async function importPost(page, postUrl, slug, lastmod) {
       VALUES (?, ?, ?, ?, 1, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
     `);
 
-    const metaDescription = post.excerpt || post.content.replace(/<[^>]+>/g, '').substring(0, 160);
+    const metaDescription = post.excerpt || post.content.replace(/<[^>]+>/g, "").substring(0, 160);
 
     stmt.run(
       post.title,
@@ -258,19 +279,19 @@ async function importPost(page, postUrl, slug, lastmod) {
  * Main function
  */
 async function main() {
-  console.log('='.repeat(60));
-  console.log('Wix Blog Import (Puppeteer)');
-  console.log('='.repeat(60));
+  console.log("=".repeat(60));
+  console.log("Wix Blog Import (Puppeteer)");
+  console.log("=".repeat(60));
 
-  const browser = await puppeteer.launch({ 
+  const browser = await puppeteer.launch({
     headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
   });
   const page = await browser.newPage();
 
   try {
     // Get all post URLs
-    console.log('\nFetching sitemap...');
+    console.log("\nFetching sitemap...");
     const posts = await getPostUrls();
     console.log(`Found ${posts.length} posts\n`);
 
@@ -282,9 +303,9 @@ async function main() {
     for (let i = 0; i < posts.length; i++) {
       const { url, slug, lastmod } = posts[i];
       console.log(`[${i + 1}/${posts.length}] ${slug}`);
-      
+
       const result = await importPost(page, url, slug, lastmod);
-      
+
       if (result) {
         if (result.exists) {
           skipped.push(result);
@@ -292,19 +313,19 @@ async function main() {
           imported.push(result);
         }
       } else {
-        errors.push({ slug, error: 'Import failed' });
+        errors.push({ slug, error: "Import failed" });
       }
 
       // Delay between requests
       if (i < posts.length - 1) {
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        await new Promise((resolve) => setTimeout(resolve, 2000));
       }
     }
 
     // Summary
-    console.log('\n' + '='.repeat(60));
-    console.log('IMPORT SUMMARY');
-    console.log('='.repeat(60));
+    console.log("\n" + "=".repeat(60));
+    console.log("IMPORT SUMMARY");
+    console.log("=".repeat(60));
     console.log(`Total posts: ${posts.length}`);
     console.log(`✓ Imported: ${imported.length}`);
     console.log(`⊘ Already existed: ${skipped.length}`);
@@ -312,20 +333,20 @@ async function main() {
 
     if (imported.length > 0) {
       console.log(`\nNewly imported:`);
-      imported.forEach(p => console.log(`  - ${p.title} (/${p.slug})`));
+      imported.forEach((p) => console.log(`  - ${p.title} (/${p.slug})`));
     }
 
     if (errors.length > 0) {
       console.log(`\nErrors:`);
-      errors.forEach(e => console.log(`  - ${e.slug}: ${e.error}`));
+      errors.forEach((e) => console.log(`  - ${e.slug}: ${e.error}`));
     }
 
     await browser.close();
     db.close();
-    
-    console.log('\n✓ Import complete!');
+
+    console.log("\n✓ Import complete!");
   } catch (error) {
-    console.error('Fatal error:', error);
+    console.error("Fatal error:", error);
     await browser.close();
     db.close();
     process.exit(1);
@@ -338,32 +359,3 @@ if (require.main === module) {
 }
 
 module.exports = { getPostUrls, importPost };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

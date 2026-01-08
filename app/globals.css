@@ -15,7 +15,12 @@
 
 body {
   background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #f1f5f9 100%);
-  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-family:
+    var(--font-inter),
+    -apple-system,
+    BlinkMacSystemFont,
+    system-ui,
+    sans-serif;
 }
 
 .glass-effect {
@@ -27,10 +32,10 @@ body {
 :root {
   --background: #ffffff;
   --foreground: #1a1a1a;
-  --primary: #0A2342;
+  --primary: #0a2342;
   --primary-dark: #08192e;
   --primary-light: #0d2d52;
-  --accent: #CBA135;
+  --accent: #cba135;
   --accent-dark: #a8822a;
   --accent-light: #d4b04a;
   --primary-foreground: #ffffff;
@@ -134,15 +139,34 @@ div[class*="select-none"][class*="right-4"][class*="top-4"][class*="text-slate-4
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
   font-size: 16px;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
   font-weight: 700;
   line-height: 1.2;
   color: var(--primary);
@@ -213,7 +237,8 @@ a {
   line-height: 1.75;
 }
 
-.prose ul, .prose ol {
+.prose ul,
+.prose ol {
   margin: 1.5rem 0;
   padding-left: 2rem;
   color: var(--gray-700);
@@ -737,7 +762,7 @@ article img[src],
 @layer utilities {
   /* CRITICAL: Override Tailwind text colors for accessibility */
   /* These must be in @layer utilities to override Tailwind's generated classes */
-  
+
   /* Dark backgrounds need light/white text */
   .bg-slate-900 .text-slate-300,
   .bg-slate-800 .text-slate-300,
@@ -745,18 +770,18 @@ article img[src],
   .bg-blue-900 .text-slate-300 {
     color: #ffffff !important;
   }
-  
+
   .bg-slate-900 .text-slate-400,
   .bg-slate-800 .text-slate-400 {
     color: #e2e8f0 !important;
   }
-  
-  /* Light backgrounds need darker text */  
+
+  /* Light backgrounds need darker text */
   .bg-white .text-slate-300,
   .bg-slate-50 .text-slate-300 {
     color: #475569 !important;
   }
-  
+
   .bg-white .text-slate-400,
   .bg-slate-50 .text-slate-400 {
     color: #64748b !important;
@@ -765,26 +790,26 @@ article img[src],
   .text-balance {
     text-wrap: balance;
   }
-  
+
   .gradient-text {
     background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-  
+
   .container-custom {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 1rem;
   }
-  
+
   @media (min-width: 640px) {
     .container-custom {
       padding: 0 1.5rem;
     }
   }
-  
+
   @media (min-width: 1024px) {
     .container-custom {
       padding: 0 2rem;
@@ -1132,4 +1157,3 @@ article img[class*="blur"] {
   filter: none !important;
   backdrop-filter: none !important;
 }
-

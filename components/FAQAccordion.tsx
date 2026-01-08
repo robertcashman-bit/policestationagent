@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 
 interface FAQItem {
   question: string;
@@ -38,10 +38,10 @@ export default function FAQAccordion({ sections }: FAQAccordionProps) {
       {sections.map((section, sectionIndex) => (
         <div key={sectionIndex} className="mb-16">
           <div className="flex items-center gap-3 mb-8">
-            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${section.iconBg}`}>
-              <div className={section.iconColor}>
-                {section.icon}
-              </div>
+            <div
+              className={`w-12 h-12 rounded-2xl flex items-center justify-center ${section.iconBg}`}
+            >
+              <div className={section.iconColor}>{section.icon}</div>
             </div>
             <h2 className="text-3xl font-black text-slate-900">{section.title}</h2>
           </div>
@@ -72,7 +72,7 @@ export default function FAQAccordion({ sections }: FAQAccordionProps) {
                       strokeWidth="2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      className={`lucide lucide-chevron-down w-6 h-6 text-blue-600 flex-shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
+                      className={`lucide lucide-chevron-down w-6 h-6 text-blue-600 flex-shrink-0 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
                     >
                       <path d="m6 9 6 6 6-6"></path>
                     </svg>
@@ -93,7 +93,3 @@ export default function FAQAccordion({ sections }: FAQAccordionProps) {
     </div>
   );
 }
-
-
-
-

@@ -1,22 +1,22 @@
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import type { Metadata } from 'next';
-import Link from 'next/link';
-import { LegalReferences, Ref, type LegalSource } from '@/components/LegalReferences';
-import { SITE_DOMAIN } from '@/config/site';
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { LegalReferences, Ref, type LegalSource } from "@/components/LegalReferences";
+import { SITE_DOMAIN } from "@/config/site";
 
 export const metadata: Metadata = {
-  title: 'Your Rights in Police Custody (England & Wales) | PACE Code C',
+  title: "Your Rights in Police Custody (England & Wales) | PACE Code C",
   description:
-    'A plain-English summary of core rights in police custody and where to find the rules (PACE + Code C). Sources included.',
+    "A plain-English summary of core rights in police custody and where to find the rules (PACE + Code C). Sources included.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/your-rights-in-custody`,
   },
   openGraph: {
-    title: 'Your Rights in Police Custody (England & Wales) | PACE Code C',
+    title: "Your Rights in Police Custody (England & Wales) | PACE Code C",
     description:
-      'A plain-English summary of core rights in police custody and where to find the rules (PACE + Code C). Sources included.',
-    type: 'website',
+      "A plain-English summary of core rights in police custody and where to find the rules (PACE + Code C). Sources included.",
+    type: "website",
     url: `https://${SITE_DOMAIN}/your-rights-in-custody`,
   },
 };
@@ -24,23 +24,24 @@ export const metadata: Metadata = {
 export default function Page() {
   const sources: LegalSource[] = [
     {
-      id: 'pace-s56',
-      label: 'Police and Criminal Evidence Act 1984 (PACE) s.56 (right to have someone informed)',
-      href: 'https://www.legislation.gov.uk/ukpga/1984/60/section/56',
+      id: "pace-s56",
+      label: "Police and Criminal Evidence Act 1984 (PACE) s.56 (right to have someone informed)",
+      href: "https://www.legislation.gov.uk/ukpga/1984/60/section/56",
     },
     {
-      id: 'pace-s58',
-      label: 'PACE s.58 (right to legal advice)',
-      href: 'https://www.legislation.gov.uk/ukpga/1984/60/section/58',
+      id: "pace-s58",
+      label: "PACE s.58 (right to legal advice)",
+      href: "https://www.legislation.gov.uk/ukpga/1984/60/section/58",
     },
     {
-      id: 'code-c-2023',
-      label: 'Home Office: PACE Code C (December 2023) – detention, treatment and questioning (PDF)',
-      href: 'https://www.gov.uk/government/publications/pace-code-c-2023',
+      id: "code-c-2023",
+      label:
+        "Home Office: PACE Code C (December 2023) – detention, treatment and questioning (PDF)",
+      href: "https://www.gov.uk/government/publications/pace-code-c-2023",
     },
   ];
 
-  const useLegacy = process.env.NEXT_PUBLIC_USE_LEGACY_LEGAL_PAGES === '1';
+  const useLegacy = process.env.NEXT_PUBLIC_USE_LEGACY_LEGAL_PAGES === "1";
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
@@ -57,15 +58,23 @@ export default function Page() {
           ) : (
             <div className="max-w-4xl mx-auto px-4 py-14">
               <div className="mb-10">
-                <h1 className="text-4xl font-bold text-slate-900 mb-3">Your rights in police custody</h1>
+                <h1 className="text-4xl font-bold text-slate-900 mb-3">
+                  Your rights in police custody
+                </h1>
                 <p className="text-lg text-slate-700">
-                  This page summarises a few core rights and points you to the official rules. For details on interviews, bail, and time limits, use the linked guides below.
+                  This page summarises a few core rights and points you to the official rules. For
+                  details on interviews, bail, and time limits, use the linked guides below.
                 </p>
               </div>
 
               <div className="bg-blue-50 border-l-4 border-blue-600 p-6 rounded-r-lg mb-10">
                 <p className="text-slate-900">
-                  <strong>Quick Answer:</strong> You have a right to legal advice (PACE s.58).<Ref n={2} /> You also have a right to have someone informed of your arrest (PACE s.56).<Ref n={1} /> The day‑to‑day rules on detention, treatment and questioning are set out in PACE Code C.<Ref n={3} />
+                  <strong>Quick Answer:</strong> You have a right to legal advice (PACE s.58).
+                  <Ref n={2} /> You also have a right to have someone informed of your arrest (PACE
+                  s.56).
+                  <Ref n={1} /> The day‑to‑day rules on detention, treatment and questioning are set
+                  out in PACE Code C.
+                  <Ref n={3} />
                 </p>
               </div>
 
@@ -73,23 +82,33 @@ export default function Page() {
                 <h2>Key rights to ask for immediately</h2>
                 <ul>
                   <li>
-                    <strong>Legal advice</strong> (free and independent): ask to speak to a solicitor. (PACE s.58.)<Ref n={2} />
+                    <strong>Legal advice</strong> (free and independent): ask to speak to a
+                    solicitor. (PACE s.58.)
+                    <Ref n={2} />
                   </li>
                   <li>
-                    <strong>Someone told you are in custody</strong>: ask for a friend/relative to be informed. (PACE s.56.)<Ref n={1} />
+                    <strong>Someone told you are in custody</strong>: ask for a friend/relative to
+                    be informed. (PACE s.56.)
+                    <Ref n={1} />
                   </li>
                   <li>
-                    <strong>Know the rules</strong>: ask to see PACE Code C, and ask your solicitor to check custody record entries. (Code C.)<Ref n={3} />
+                    <strong>Know the rules</strong>: ask to see PACE Code C, and ask your solicitor
+                    to check custody record entries. (Code C.)
+                    <Ref n={3} />
                   </li>
                 </ul>
 
                 <h2>Next: the most relevant detailed guides</h2>
                 <ul>
                   <li>
-                    <Link href="/police-custody-rights">Police custody rights (detailed guide)</Link>
+                    <Link href="/police-custody-rights">
+                      Police custody rights (detailed guide)
+                    </Link>
                   </li>
                   <li>
-                    <Link href="/police-interview-rights">Police interview rights (PACE Code C)</Link>
+                    <Link href="/police-interview-rights">
+                      Police interview rights (PACE Code C)
+                    </Link>
                   </li>
                   <li>
                     <Link href="/custody-time-limits">Police custody time limits (PACE)</Link>
@@ -109,5 +128,3 @@ export default function Page() {
     </div>
   );
 }
-
-

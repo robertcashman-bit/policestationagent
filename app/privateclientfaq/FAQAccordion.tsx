@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 
 export default function FAQAccordion() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -10,7 +10,7 @@ export default function FAQAccordion() {
       question: "How do I request Robert Cashman at the police station?",
       answer: `<p>When arrested or invited for a voluntary interview, tell the custody officer or interviewing officer: <strong>"I want Robert Cashman"</strong> or <strong>"I want Tuckers Solicitors LLP - Robert Cashman"</strong>. They must contact us.</p>
 <p>You can also call us directly on <strong>01732 247427</strong> or <strong>01732 247427</strong> and we will arrange representation.</p>
-<p>For private clients, you can pre-arrange representation by calling us before attending the police station. Simply tell the police when you arrive that you have already instructed Robert Cashman.</p>`
+<p>For private clients, you can pre-arrange representation by calling us before attending the police station. Simply tell the police when you arrive that you have already instructed Robert Cashman.</p>`,
     },
     {
       question: "What are your fees for private representation?",
@@ -24,7 +24,7 @@ export default function FAQAccordion() {
 <li>Post-interview advice</li>
 <li>Written summary of attendance</li>
 </ul>
-<p>All fees are agreed upfront with no hidden costs.</p>`
+<p>All fees are agreed upfront with no hidden costs.</p>`,
     },
     {
       question: "Why should I pay privately if police station advice is free?",
@@ -36,7 +36,7 @@ export default function FAQAccordion() {
 <li><strong>Flexibility:</strong> Greater flexibility in communication and meeting arrangements</li>
 <li><strong>Peace of mind:</strong> Knowing you have a dedicated legal expert focused solely on your case</li>
 </ul>
-<p>For professionals, high-profile individuals, or those facing serious allegations, private representation can provide the enhanced service and continuity that may be crucial to the outcome.</p>`
+<p>For professionals, high-profile individuals, or those facing serious allegations, private representation can provide the enhanced service and continuity that may be crucial to the outcome.</p>`,
     },
     {
       question: "What is included in a fixed-fee police station attendance?",
@@ -49,14 +49,14 @@ export default function FAQAccordion() {
 <li><strong>Post-interview advice:</strong> Explanation of what happens next, potential outcomes, and next steps</li>
 <li><strong>Follow-up:</strong> Written summary and ongoing support if the case proceeds to court</li>
 </ul>
-<p>All fees are agreed upfront with no hidden costs.</p>`
+<p>All fees are agreed upfront with no hidden costs.</p>`,
     },
     {
       question: "Can I get Robert Cashman even if I'm not paying privately?",
       answer: `<p>Yes, you can request Robert Cashman under Legal Aid. When you ask for legal representation at the police station, tell the custody officer: <strong>"I want Robert Cashman"</strong> or <strong>"I want Tuckers Solicitors LLP - Robert Cashman"</strong>.</p>
 <p>However, under Legal Aid, representation is subject to availability and the duty rota. While we will do our best to ensure Robert Cashman attends, we cannot guarantee it will be him on every occasion.</p>
 <p>With private funding, you are <strong>guaranteed</strong> to be represented by Robert Cashman, providing certainty and continuity.</p>
-<p>If you specifically want Robert Cashman and want to ensure he attends, private funding is the way to guarantee this.</p>`
+<p>If you specifically want Robert Cashman and want to ensure he attends, private funding is the way to guarantee this.</p>`,
     },
     {
       question: "What's the difference between your Legal Aid and private service?",
@@ -85,8 +85,8 @@ export default function FAQAccordion() {
 </ul>
 </div>
 </div>
-<p>Both services provide expert representation. The choice depends on your priorities: cost (Legal Aid) or guaranteed continuity and enhanced service (private).</p>`
-    }
+<p>Both services provide expert representation. The choice depends on your priorities: cost (Legal Aid) or guaranteed continuity and enhanced service (private).</p>`,
+    },
   ];
 
   return (
@@ -111,14 +111,14 @@ export default function FAQAccordion() {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className={`lucide lucide-chevron-down h-4 w-4 shrink-0 text-blue-600 transition-transform duration-200 ${openIndex === index ? 'rotate-180' : ''}`}
+                  className={`lucide lucide-chevron-down h-4 w-4 shrink-0 text-blue-600 transition-transform duration-200 ${openIndex === index ? "rotate-180" : ""}`}
                 >
                   <path d="m6 9 6 6 6-6"></path>
                 </svg>
               </button>
               {openIndex === index && (
                 <div className="overflow-hidden pb-4 text-slate-800">
-                  <div 
+                  <div
                     className="prose prose-slate max-w-none text-slate-800"
                     dangerouslySetInnerHTML={{ __html: faq.answer }}
                   />
@@ -131,4 +131,3 @@ export default function FAQAccordion() {
     </div>
   );
 }
-

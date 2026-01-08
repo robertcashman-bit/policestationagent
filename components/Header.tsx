@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { useState } from 'react';
+import Link from "next/link";
+import { useState } from "react";
 
-const PHONE_NUMBER = '01732247427';
-const PHONE_DISPLAY = '01732 247427';
+const PHONE_NUMBER = "01732247427";
+const PHONE_DISPLAY = "01732 247427";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -27,7 +27,7 @@ export default function Header() {
             <div className="text-center sm:text-left">
               Kent police station legal advice (Legal Aid) — via Tuckers Solicitors LLP
             </div>
-            <a 
+            <a
               href={`tel:${PHONE_NUMBER}`}
               className="text-amber-400 hover:text-amber-300 font-semibold whitespace-nowrap"
             >
@@ -42,24 +42,39 @@ export default function Header() {
         {/* Logo Row - Separate Line */}
         <div className="flex justify-between items-center py-3 border-b border-slate-200">
           <div className="flex-shrink-0">
-            <Link 
-              href="/" 
+            <Link
+              href="/"
               className="block hover:text-blue-600 transition-colors group"
               aria-label="Police Station Agent home page"
             >
-              <div className="text-lg sm:text-xl font-bold text-slate-900 leading-tight group-hover:text-blue-600 transition-colors">Police Station Agent</div>
-              <div className="text-[10px] sm:text-xs font-normal text-slate-600 leading-tight mt-0.5 block">Police Station Legal Advice & Representation</div>
+              <div className="text-lg sm:text-xl font-bold text-slate-900 leading-tight group-hover:text-blue-600 transition-colors">
+                Police Station Agent
+              </div>
+              <div className="text-[10px] sm:text-xs font-normal text-slate-600 leading-tight mt-0.5 block">
+                Police Station Legal Advice & Representation
+              </div>
             </Link>
           </div>
-          
+
           {/* Mobile: Call Now Button + Hamburger */}
           <div className="lg:hidden flex items-center gap-2">
-            <a 
+            <a
               href={`tel:${PHONE_NUMBER}`}
               className="inline-flex items-center justify-center gap-1.5 whitespace-nowrap text-xs sm:text-sm font-bold min-h-[44px] h-11 px-4 rounded-md bg-amber-400 hover:bg-amber-500 text-slate-900 shadow-md"
               aria-label="Call now for legal advice"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-phone">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="lucide lucide-phone"
+              >
                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
               </svg>
               <span className="hidden sm:inline">Call Now</span>
@@ -77,9 +92,19 @@ export default function Header() {
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 {mobileMenuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2.5}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 6h16M4 12h16M4 18h16" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2.5}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
                 )}
               </svg>
             </button>
@@ -89,45 +114,65 @@ export default function Header() {
         {/* Navigation Row - Separate Line */}
         <div className="flex justify-between items-center h-16">
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-0.5 flex-nowrap flex-1 justify-between" role="navigation" aria-label="Main navigation">
+          <nav
+            className="hidden lg:flex items-center space-x-0.5 flex-nowrap flex-1 justify-between"
+            role="navigation"
+            aria-label="Main navigation"
+          >
             {/* Home Button - FIRST */}
-            <Link 
-              href="/" 
+            <Link
+              href="/"
               className="px-3 py-2 text-sm text-slate-700 hover:text-blue-700 font-semibold transition-all rounded-md hover:bg-slate-50 whitespace-nowrap flex items-center gap-1.5"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-home">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="lucide lucide-home"
+              >
                 <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                 <polyline points="9 22 9 12 15 12 15 22"></polyline>
               </svg>
               Home
             </Link>
-            
+
             {/* Services Dropdown - SECOND */}
-            <div 
-              className="relative group flex-shrink-0"
-              onMouseLeave={closeDropdowns}
-            >
+            <div className="relative group flex-shrink-0" onMouseLeave={closeDropdowns}>
               <button
                 className={`px-3 py-2 text-sm text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50 flex items-center gap-1 whitespace-nowrap ${
-                  openDropdown === 'services' ? 'text-blue-700 bg-slate-50' : ''
+                  openDropdown === "services" ? "text-blue-700 bg-slate-50" : ""
                 }`}
-                onClick={() => handleDropdownToggle('services')}
-                aria-expanded={openDropdown === 'services'}
+                onClick={() => handleDropdownToggle("services")}
+                aria-expanded={openDropdown === "services"}
                 aria-haspopup="true"
               >
                 Services
-                <svg className={`w-3.5 h-3.5 transition-transform ${openDropdown === 'services' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                <svg
+                  className={`w-3.5 h-3.5 transition-transform ${openDropdown === "services" ? "rotate-180" : ""}`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
                 </svg>
               </button>
-              {openDropdown === 'services' && (
-                <div 
-                  className="absolute top-full left-0 mt-1.5 w-72 bg-white rounded-lg shadow-xl border border-slate-200/80 py-1.5 z-50"
-                >
+              {openDropdown === "services" && (
+                <div className="absolute top-full left-0 mt-1.5 w-72 bg-white rounded-lg shadow-xl border border-slate-200/80 py-1.5 z-50">
                   <ul role="menu" aria-label="Services">
                     <li role="none">
-                      <Link 
-                        href="/services" 
+                      <Link
+                        href="/services"
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -136,8 +181,8 @@ export default function Header() {
                       </Link>
                     </li>
                     <li role="none">
-                      <Link 
-                        href="/services/police-station-representation" 
+                      <Link
+                        href="/services/police-station-representation"
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -146,8 +191,8 @@ export default function Header() {
                       </Link>
                     </li>
                     <li role="none">
-                      <Link 
-                        href="/voluntary-interviews" 
+                      <Link
+                        href="/voluntary-interviews"
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -156,8 +201,8 @@ export default function Header() {
                       </Link>
                     </li>
                     <li role="none">
-                      <Link 
-                        href="/courtrepresentation" 
+                      <Link
+                        href="/courtrepresentation"
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -166,8 +211,8 @@ export default function Header() {
                       </Link>
                     </li>
                     <li role="none">
-                      <Link 
-                        href="/for-solicitors" 
+                      <Link
+                        href="/for-solicitors"
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -176,8 +221,8 @@ export default function Header() {
                       </Link>
                     </li>
                     <li role="none">
-                      <Link 
-                        href="/privatecrime" 
+                      <Link
+                        href="/privatecrime"
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -186,8 +231,8 @@ export default function Header() {
                       </Link>
                     </li>
                     <li role="none">
-                      <Link 
-                        href="/fees" 
+                      <Link
+                        href="/fees"
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -196,8 +241,8 @@ export default function Header() {
                       </Link>
                     </li>
                     <li role="none">
-                      <Link 
-                        href="/for-clients" 
+                      <Link
+                        href="/for-clients"
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -206,8 +251,8 @@ export default function Header() {
                       </Link>
                     </li>
                     <li role="none">
-                      <Link 
-                        href="/emergency-police-station-representation" 
+                      <Link
+                        href="/emergency-police-station-representation"
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -221,33 +266,43 @@ export default function Header() {
             </div>
 
             {/* Information Dropdown - Consolidated Legal Advice, Interviews, Custody, Rights */}
-            <div 
-              className="relative group flex-shrink-0"
-              onMouseLeave={closeDropdowns}
-            >
+            <div className="relative group flex-shrink-0" onMouseLeave={closeDropdowns}>
               <button
                 className={`px-3 py-2 text-sm text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50 flex items-center gap-1 whitespace-nowrap ${
-                  openDropdown === 'information' ? 'text-blue-700 bg-slate-50' : ''
+                  openDropdown === "information" ? "text-blue-700 bg-slate-50" : ""
                 }`}
-                onClick={() => handleDropdownToggle('information')}
-                aria-expanded={openDropdown === 'information'}
+                onClick={() => handleDropdownToggle("information")}
+                aria-expanded={openDropdown === "information"}
                 aria-haspopup="true"
               >
                 Information
-                <svg className={`w-3.5 h-3.5 transition-transform ${openDropdown === 'information' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                <svg
+                  className={`w-3.5 h-3.5 transition-transform ${openDropdown === "information" ? "rotate-180" : ""}`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
                 </svg>
               </button>
-              {openDropdown === 'information' && (
-                <div 
-                  className="absolute top-full left-0 mt-1.5 w-80 bg-white rounded-lg shadow-xl border border-slate-200/80 py-1.5 z-50 max-h-[600px] overflow-y-auto"
-                >
+              {openDropdown === "information" && (
+                <div className="absolute top-full left-0 mt-1.5 w-80 bg-white rounded-lg shadow-xl border border-slate-200/80 py-1.5 z-50 max-h-[600px] overflow-y-auto">
                   <ul role="menu" aria-label="Information & Resources">
                     {/* Legal Advice Section */}
-                    <li role="none" className="px-4 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wide">Legal Advice</li>
+                    <li
+                      role="none"
+                      className="px-4 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wide"
+                    >
+                      Legal Advice
+                    </li>
                     <li role="none">
-                      <Link 
-                        href="/what-is-a-police-station-rep" 
+                      <Link
+                        href="/what-is-a-police-station-rep"
                         className="block px-4 py-2 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -256,8 +311,8 @@ export default function Header() {
                       </Link>
                     </li>
                     <li role="none">
-                      <Link 
-                        href="/what-is-a-criminal-solicitor" 
+                      <Link
+                        href="/what-is-a-criminal-solicitor"
                         className="block px-4 py-2 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -266,8 +321,8 @@ export default function Header() {
                       </Link>
                     </li>
                     <li role="none">
-                      <Link 
-                        href="/what-to-expect-at-a-police-interview-in-kent" 
+                      <Link
+                        href="/what-to-expect-at-a-police-interview-in-kent"
                         className="block px-4 py-2 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -276,8 +331,8 @@ export default function Header() {
                       </Link>
                     </li>
                     <li role="none">
-                      <Link 
-                        href="/importance-of-early-legal-advice" 
+                      <Link
+                        href="/importance-of-early-legal-advice"
                         className="block px-4 py-2 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -285,12 +340,17 @@ export default function Header() {
                         Importance of Early Legal Advice
                       </Link>
                     </li>
-                    
+
                     {/* Interviews Section */}
-                    <li role="none" className="px-4 py-2 mt-2 text-xs font-semibold text-slate-500 uppercase tracking-wide border-t border-slate-100">Interviews</li>
+                    <li
+                      role="none"
+                      className="px-4 py-2 mt-2 text-xs font-semibold text-slate-500 uppercase tracking-wide border-t border-slate-100"
+                    >
+                      Interviews
+                    </li>
                     <li role="none">
-                      <Link 
-                        href="/voluntary-police-interview" 
+                      <Link
+                        href="/voluntary-police-interview"
                         className="block px-4 py-2 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -299,8 +359,8 @@ export default function Header() {
                       </Link>
                     </li>
                     <li role="none">
-                      <Link 
-                        href="/article-interview-under-caution" 
+                      <Link
+                        href="/article-interview-under-caution"
                         className="block px-4 py-2 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -309,8 +369,8 @@ export default function Header() {
                       </Link>
                     </li>
                     <li role="none">
-                      <Link 
-                        href="/preparing-for-police-interview" 
+                      <Link
+                        href="/preparing-for-police-interview"
                         className="block px-4 py-2 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -319,8 +379,8 @@ export default function Header() {
                       </Link>
                     </li>
                     <li role="none">
-                      <Link 
-                        href="/voluntary-police-interview-risks" 
+                      <Link
+                        href="/voluntary-police-interview-risks"
                         className="block px-4 py-2 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -329,8 +389,8 @@ export default function Header() {
                       </Link>
                     </li>
                     <li role="none">
-                      <Link 
-                        href="/after-a-police-interview" 
+                      <Link
+                        href="/after-a-police-interview"
                         className="block px-4 py-2 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -338,12 +398,17 @@ export default function Header() {
                         What Happens After a Police Interview
                       </Link>
                     </li>
-                    
+
                     {/* Custody Section */}
-                    <li role="none" className="px-4 py-2 mt-2 text-xs font-semibold text-slate-500 uppercase tracking-wide border-t border-slate-100">Custody</li>
+                    <li
+                      role="none"
+                      className="px-4 py-2 mt-2 text-xs font-semibold text-slate-500 uppercase tracking-wide border-t border-slate-100"
+                    >
+                      Custody
+                    </li>
                     <li role="none">
-                      <Link 
-                        href="/arrested-at-police-station" 
+                      <Link
+                        href="/arrested-at-police-station"
                         className="block px-4 py-2 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -352,8 +417,8 @@ export default function Header() {
                       </Link>
                     </li>
                     <li role="none">
-                      <Link 
-                        href="/your-rights-in-custody" 
+                      <Link
+                        href="/your-rights-in-custody"
                         className="block px-4 py-2 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -362,8 +427,8 @@ export default function Header() {
                       </Link>
                     </li>
                     <li role="none">
-                      <Link 
-                        href="/police-bail-explained" 
+                      <Link
+                        href="/police-bail-explained"
                         className="block px-4 py-2 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -372,8 +437,8 @@ export default function Header() {
                       </Link>
                     </li>
                     <li role="none">
-                      <Link 
-                        href="/released-under-investigation" 
+                      <Link
+                        href="/released-under-investigation"
                         className="block px-4 py-2 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -382,8 +447,8 @@ export default function Header() {
                       </Link>
                     </li>
                     <li role="none">
-                      <Link 
-                        href="/custody-time-limits" 
+                      <Link
+                        href="/custody-time-limits"
                         className="block px-4 py-2 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -391,12 +456,17 @@ export default function Header() {
                         Custody Time Limits
                       </Link>
                     </li>
-                    
+
                     {/* Rights Section */}
-                    <li role="none" className="px-4 py-2 mt-2 text-xs font-semibold text-slate-500 uppercase tracking-wide border-t border-slate-100">Your Rights</li>
+                    <li
+                      role="none"
+                      className="px-4 py-2 mt-2 text-xs font-semibold text-slate-500 uppercase tracking-wide border-t border-slate-100"
+                    >
+                      Your Rights
+                    </li>
                     <li role="none">
-                      <Link 
-                        href="/article-rights-kent-police-station-2025" 
+                      <Link
+                        href="/article-rights-kent-police-station-2025"
                         className="block px-4 py-2 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -405,8 +475,8 @@ export default function Header() {
                       </Link>
                     </li>
                     <li role="none">
-                      <Link 
-                        href="/freelegaladvice" 
+                      <Link
+                        href="/freelegaladvice"
                         className="block px-4 py-2 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -415,8 +485,8 @@ export default function Header() {
                       </Link>
                     </li>
                     <li role="none">
-                      <Link 
-                        href="/pace-code-c" 
+                      <Link
+                        href="/pace-code-c"
                         className="block px-4 py-2 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -425,8 +495,8 @@ export default function Header() {
                       </Link>
                     </li>
                     <li role="none">
-                      <Link 
-                        href="/no-comment-interview" 
+                      <Link
+                        href="/no-comment-interview"
                         className="block px-4 py-2 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -435,8 +505,8 @@ export default function Header() {
                       </Link>
                     </li>
                     <li role="none">
-                      <Link 
-                        href="/police-interview-rights" 
+                      <Link
+                        href="/police-interview-rights"
                         className="block px-4 py-2 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -450,31 +520,36 @@ export default function Header() {
             </div>
 
             {/* Coverage Dropdown */}
-            <div 
-              className="relative group flex-shrink-0"
-              onMouseLeave={closeDropdowns}
-            >
+            <div className="relative group flex-shrink-0" onMouseLeave={closeDropdowns}>
               <button
                 className={`px-3 py-2 text-sm text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50 flex items-center gap-1 whitespace-nowrap ${
-                  openDropdown === 'coverage' ? 'text-blue-700 bg-slate-50' : ''
+                  openDropdown === "coverage" ? "text-blue-700 bg-slate-50" : ""
                 }`}
-                onClick={() => handleDropdownToggle('coverage')}
-                aria-expanded={openDropdown === 'coverage'}
+                onClick={() => handleDropdownToggle("coverage")}
+                aria-expanded={openDropdown === "coverage"}
                 aria-haspopup="true"
               >
                 Coverage
-                <svg className={`w-3.5 h-3.5 transition-transform ${openDropdown === 'coverage' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                <svg
+                  className={`w-3.5 h-3.5 transition-transform ${openDropdown === "coverage" ? "rotate-180" : ""}`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
                 </svg>
               </button>
-              {openDropdown === 'coverage' && (
-                <div 
-                  className="absolute top-full left-0 mt-1.5 w-72 bg-white rounded-lg shadow-xl border border-slate-200/80 py-1.5 z-50"
-                >
+              {openDropdown === "coverage" && (
+                <div className="absolute top-full left-0 mt-1.5 w-72 bg-white rounded-lg shadow-xl border border-slate-200/80 py-1.5 z-50">
                   <ul role="menu" aria-label="Coverage">
                     <li role="none">
-                      <Link 
-                        href="/police-stations" 
+                      <Link
+                        href="/police-stations"
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -483,8 +558,8 @@ export default function Header() {
                       </Link>
                     </li>
                     <li role="none">
-                      <Link 
-                        href="/coverage" 
+                      <Link
+                        href="/coverage"
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -493,8 +568,8 @@ export default function Header() {
                       </Link>
                     </li>
                     <li role="none">
-                      <Link 
-                        href="/kent-police-station-reps" 
+                      <Link
+                        href="/kent-police-station-reps"
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -503,8 +578,8 @@ export default function Header() {
                       </Link>
                     </li>
                     <li role="none">
-                      <Link 
-                        href="/kent-police-stations" 
+                      <Link
+                        href="/kent-police-stations"
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -513,8 +588,8 @@ export default function Header() {
                       </Link>
                     </li>
                     <li role="none">
-                      <Link 
-                        href="/psastations" 
+                      <Link
+                        href="/psastations"
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -523,8 +598,8 @@ export default function Header() {
                       </Link>
                     </li>
                     <li role="none">
-                      <Link 
-                        href="/out-of-area" 
+                      <Link
+                        href="/out-of-area"
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -538,31 +613,36 @@ export default function Header() {
             </div>
 
             {/* About Dropdown */}
-            <div 
-              className="relative group flex-shrink-0"
-              onMouseLeave={closeDropdowns}
-            >
+            <div className="relative group flex-shrink-0" onMouseLeave={closeDropdowns}>
               <button
                 className={`px-3 py-2 text-sm text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50 flex items-center gap-1 whitespace-nowrap ${
-                  openDropdown === 'about' ? 'text-blue-700 bg-slate-50' : ''
+                  openDropdown === "about" ? "text-blue-700 bg-slate-50" : ""
                 }`}
-                onClick={() => handleDropdownToggle('about')}
-                aria-expanded={openDropdown === 'about'}
+                onClick={() => handleDropdownToggle("about")}
+                aria-expanded={openDropdown === "about"}
                 aria-haspopup="true"
               >
                 About
-                <svg className={`w-3.5 h-3.5 transition-transform ${openDropdown === 'about' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                <svg
+                  className={`w-3.5 h-3.5 transition-transform ${openDropdown === "about" ? "rotate-180" : ""}`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
                 </svg>
               </button>
-              {openDropdown === 'about' && (
-                <div 
-                  className="absolute top-full left-0 mt-1.5 w-72 bg-white rounded-lg shadow-xl border border-slate-200/80 py-1.5 z-50"
-                >
+              {openDropdown === "about" && (
+                <div className="absolute top-full left-0 mt-1.5 w-72 bg-white rounded-lg shadow-xl border border-slate-200/80 py-1.5 z-50">
                   <ul role="menu" aria-label="About">
                     <li role="none">
-                      <Link 
-                        href="/about" 
+                      <Link
+                        href="/about"
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -571,8 +651,8 @@ export default function Header() {
                       </Link>
                     </li>
                     <li role="none">
-                      <Link 
-                        href="/why-use-us" 
+                      <Link
+                        href="/why-use-us"
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -581,8 +661,8 @@ export default function Header() {
                       </Link>
                     </li>
                     <li role="none">
-                      <Link 
-                        href="/what-we-do" 
+                      <Link
+                        href="/what-we-do"
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -591,8 +671,8 @@ export default function Header() {
                       </Link>
                     </li>
                     <li role="none">
-                      <Link 
-                        href="/testimonials" 
+                      <Link
+                        href="/testimonials"
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -601,8 +681,8 @@ export default function Header() {
                       </Link>
                     </li>
                     <li role="none">
-                      <Link 
-                        href="/for-clients" 
+                      <Link
+                        href="/for-clients"
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -611,8 +691,8 @@ export default function Header() {
                       </Link>
                     </li>
                     <li role="none">
-                      <Link 
-                        href="/privateclientfaq" 
+                      <Link
+                        href="/privateclientfaq"
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -621,8 +701,8 @@ export default function Header() {
                       </Link>
                     </li>
                     <li role="none">
-                      <Link 
-                        href="/can-we-help" 
+                      <Link
+                        href="/can-we-help"
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
@@ -636,16 +716,16 @@ export default function Header() {
             </div>
 
             {/* FAQ */}
-            <Link 
-              href="/faq" 
+            <Link
+              href="/faq"
               className="px-3 py-2 text-sm text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50 whitespace-nowrap"
             >
               FAQ
             </Link>
 
             {/* Blog */}
-            <Link 
-              href="/blog" 
+            <Link
+              href="/blog"
               className="px-3 py-2 text-sm text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50 whitespace-nowrap"
             >
               Blog
@@ -654,22 +734,33 @@ export default function Header() {
 
           {/* Contact - Far Right */}
           <div className="hidden lg:flex items-center ml-4 flex-shrink-0">
-            <Link 
-              href="/contact" 
+            <Link
+              href="/contact"
               className="px-3 py-2 text-sm text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50 whitespace-nowrap"
             >
               Contact
             </Link>
           </div>
-          
+
           {/* Desktop Call Now Button */}
           <div className="hidden lg:flex items-center ml-4 flex-shrink-0">
-            <a 
+            <a
               href={`tel:${PHONE_NUMBER}`}
               className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 rounded-lg px-6 bg-amber-400 hover:bg-amber-500 text-slate-900 shadow-md hover:shadow-lg hover:scale-105"
               aria-label="Call now for legal advice"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-phone">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="lucide lucide-phone"
+              >
                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
               </svg>
               Call Now
@@ -677,114 +768,161 @@ export default function Header() {
           </div>
         </div>
       </div>
-      
+
       {/* Mobile Navigation */}
       {mobileMenuOpen && (
         <div className="lg:hidden border-t border-slate-200 bg-white relative z-50 shadow-lg">
-          <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-1" role="navigation" aria-label="Mobile navigation">
+          <nav
+            className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-1"
+            role="navigation"
+            aria-label="Mobile navigation"
+          >
             {/* Home - FIRST */}
-            <Link 
-              href="/" 
+            <Link
+              href="/"
               className="block px-4 py-3 text-slate-700 hover:text-blue-600 hover:bg-slate-50 font-semibold rounded-md transition-colors flex items-center gap-2"
               onClick={() => setMobileMenuOpen(false)}
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-home">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="lucide lucide-home"
+              >
                 <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                 <polyline points="9 22 9 12 15 12 15 22"></polyline>
               </svg>
               Home
             </Link>
-            
+
             {/* Services - SECOND */}
             <div>
               <button
                 className="w-full flex items-center justify-between px-4 py-3 text-slate-700 hover:text-blue-600 hover:bg-slate-50 font-medium rounded-md transition-colors"
-                onClick={() => handleDropdownToggle('mobile-services')}
+                onClick={() => handleDropdownToggle("mobile-services")}
               >
                 Services
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
                 </svg>
               </button>
-              {openDropdown === 'mobile-services' && (
+              {openDropdown === "mobile-services" && (
                 <ul className="pl-4 mt-1 space-y-1">
                   <li>
-                    <Link 
-                      href="/services" 
+                    <Link
+                      href="/services"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       Police Station Rep Services Kent
                     </Link>
                   </li>
                   <li>
-                    <Link 
-                      href="/services/police-station-representation" 
+                    <Link
+                      href="/services/police-station-representation"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       Police Station Representation
                     </Link>
                   </li>
                   <li>
-                    <Link 
-                      href="/voluntary-interviews" 
+                    <Link
+                      href="/voluntary-interviews"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       Voluntary Interviews
                     </Link>
                   </li>
                   <li>
-                    <Link 
-                      href="/courtrepresentation" 
+                    <Link
+                      href="/courtrepresentation"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       Court Representation
                     </Link>
                   </li>
                   <li>
-                    <Link 
-                      href="/for-solicitors" 
+                    <Link
+                      href="/for-solicitors"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       Agent Cover for Law Firms
                     </Link>
                   </li>
                   <li>
-                    <Link 
-                      href="/privatecrime" 
+                    <Link
+                      href="/privatecrime"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       Private Client Service
                     </Link>
                   </li>
                   <li>
-                    <Link 
-                      href="/fees" 
+                    <Link
+                      href="/fees"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       Legal Aid & Fees
                     </Link>
                   </li>
                   <li>
-                    <Link 
-                      href="/for-clients" 
+                    <Link
+                      href="/for-clients"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       For Clients
                     </Link>
                   </li>
                   <li>
-                    <Link 
-                      href="/emergency-police-station-representation" 
+                    <Link
+                      href="/emergency-police-station-representation"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       Emergency Representation
                     </Link>
@@ -794,8 +932,8 @@ export default function Header() {
             </div>
 
             {/* Contact - SECOND */}
-            <Link 
-              href="/contact" 
+            <Link
+              href="/contact"
               className="block px-4 py-3 text-slate-700 hover:text-blue-600 hover:bg-slate-50 font-medium rounded-md transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
@@ -806,193 +944,263 @@ export default function Header() {
             <div>
               <button
                 className="w-full flex items-center justify-between px-4 py-3 text-slate-700 hover:text-blue-600 hover:bg-slate-50 font-medium rounded-md transition-colors"
-                onClick={() => handleDropdownToggle('mobile-information')}
+                onClick={() => handleDropdownToggle("mobile-information")}
               >
                 Information
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
                 </svg>
               </button>
-              {openDropdown === 'mobile-information' && (
+              {openDropdown === "mobile-information" && (
                 <ul className="pl-4 mt-1 space-y-1">
                   {/* Legal Advice */}
-                  <li className="px-4 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wide">Legal Advice</li>
+                  <li className="px-4 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wide">
+                    Legal Advice
+                  </li>
                   <li>
-                    <Link 
-                      href="/what-is-a-police-station-rep" 
+                    <Link
+                      href="/what-is-a-police-station-rep"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       Police Station Representation
                     </Link>
                   </li>
                   <li>
-                    <Link 
-                      href="/what-is-a-criminal-solicitor" 
+                    <Link
+                      href="/what-is-a-criminal-solicitor"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       Independent Solicitor at the Police Station
                     </Link>
                   </li>
                   <li>
-                    <Link 
-                      href="/what-to-expect-at-a-police-interview-in-kent" 
+                    <Link
+                      href="/what-to-expect-at-a-police-interview-in-kent"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       What Happens at the Police Station
                     </Link>
                   </li>
                   <li>
-                    <Link 
-                      href="/importance-of-early-legal-advice" 
+                    <Link
+                      href="/importance-of-early-legal-advice"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       Importance of Early Legal Advice
                     </Link>
                   </li>
-                  
+
                   {/* Interviews */}
-                  <li className="px-4 py-2 mt-2 text-xs font-semibold text-slate-500 uppercase tracking-wide border-t border-slate-100">Interviews</li>
+                  <li className="px-4 py-2 mt-2 text-xs font-semibold text-slate-500 uppercase tracking-wide border-t border-slate-100">
+                    Interviews
+                  </li>
                   <li>
-                    <Link 
-                      href="/voluntary-police-interview" 
+                    <Link
+                      href="/voluntary-police-interview"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       Voluntary Police Interviews
                     </Link>
                   </li>
                   <li>
-                    <Link 
-                      href="/article-interview-under-caution" 
+                    <Link
+                      href="/article-interview-under-caution"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       Interviews Under Caution
                     </Link>
                   </li>
                   <li>
-                    <Link 
-                      href="/preparing-for-police-interview" 
+                    <Link
+                      href="/preparing-for-police-interview"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       Preparing for Police Interview
                     </Link>
                   </li>
                   <li>
-                    <Link 
-                      href="/voluntary-police-interview-risks" 
+                    <Link
+                      href="/voluntary-police-interview-risks"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       Voluntary Interview Risks
                     </Link>
                   </li>
                   <li>
-                    <Link 
-                      href="/after-a-police-interview" 
+                    <Link
+                      href="/after-a-police-interview"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       What Happens After a Police Interview
                     </Link>
                   </li>
-                  
+
                   {/* Custody */}
-                  <li className="px-4 py-2 mt-2 text-xs font-semibold text-slate-500 uppercase tracking-wide border-t border-slate-100">Custody</li>
+                  <li className="px-4 py-2 mt-2 text-xs font-semibold text-slate-500 uppercase tracking-wide border-t border-slate-100">
+                    Custody
+                  </li>
                   <li>
-                    <Link 
-                      href="/arrested-at-police-station" 
+                    <Link
+                      href="/arrested-at-police-station"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       Arrested at a Police Station
                     </Link>
                   </li>
                   <li>
-                    <Link 
-                      href="/your-rights-in-custody" 
+                    <Link
+                      href="/your-rights-in-custody"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       Rights in Police Custody
                     </Link>
                   </li>
                   <li>
-                    <Link 
-                      href="/police-bail-explained" 
+                    <Link
+                      href="/police-bail-explained"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       Police Bail Explained
                     </Link>
                   </li>
                   <li>
-                    <Link 
-                      href="/released-under-investigation" 
+                    <Link
+                      href="/released-under-investigation"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       Release Under Investigation (RUI)
                     </Link>
                   </li>
                   <li>
-                    <Link 
-                      href="/custody-time-limits" 
+                    <Link
+                      href="/custody-time-limits"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       Custody Time Limits
                     </Link>
                   </li>
-                  
+
                   {/* Rights */}
-                  <li className="px-4 py-2 mt-2 text-xs font-semibold text-slate-500 uppercase tracking-wide border-t border-slate-100">Your Rights</li>
+                  <li className="px-4 py-2 mt-2 text-xs font-semibold text-slate-500 uppercase tracking-wide border-t border-slate-100">
+                    Your Rights
+                  </li>
                   <li>
-                    <Link 
-                      href="/article-rights-kent-police-station-2025" 
+                    <Link
+                      href="/article-rights-kent-police-station-2025"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       Your Rights at the Police Station
                     </Link>
                   </li>
                   <li>
-                    <Link 
-                      href="/freelegaladvice" 
+                    <Link
+                      href="/freelegaladvice"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       Free Legal Advice Explained
                     </Link>
                   </li>
                   <li>
-                    <Link 
-                      href="/pace-code-c" 
+                    <Link
+                      href="/pace-code-c"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       PACE Code C Rights
                     </Link>
                   </li>
                   <li>
-                    <Link 
-                      href="/no-comment-interview" 
+                    <Link
+                      href="/no-comment-interview"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       No Comment Interviews
                     </Link>
                   </li>
                   <li>
-                    <Link 
-                      href="/police-interview-rights" 
+                    <Link
+                      href="/police-interview-rights"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       Police Interview Rights
                     </Link>
@@ -1005,65 +1213,88 @@ export default function Header() {
             <div>
               <button
                 className="w-full flex items-center justify-between px-4 py-3 text-slate-700 hover:text-blue-600 hover:bg-slate-50 font-medium rounded-md transition-colors"
-                onClick={() => handleDropdownToggle('mobile-coverage')}
+                onClick={() => handleDropdownToggle("mobile-coverage")}
               >
                 Coverage
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
                 </svg>
               </button>
-              {openDropdown === 'mobile-coverage' && (
+              {openDropdown === "mobile-coverage" && (
                 <ul className="pl-4 mt-1 space-y-1">
                   <li>
-                    <Link 
-                      href="/police-stations" 
+                    <Link
+                      href="/police-stations"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       All Kent Police Stations
                     </Link>
                   </li>
                   <li>
-                    <Link 
-                      href="/coverage" 
+                    <Link
+                      href="/coverage"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       Service Coverage Areas
                     </Link>
                   </li>
                   <li>
-                    <Link 
-                      href="/kent-police-station-reps" 
+                    <Link
+                      href="/kent-police-station-reps"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       Kent Police Station Reps
                     </Link>
                   </li>
                   <li>
-                    <Link 
-                      href="/kent-police-stations" 
+                    <Link
+                      href="/kent-police-stations"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       Kent Police Stations
                     </Link>
                   </li>
                   <li>
-                    <Link 
-                      href="/psastations" 
+                    <Link
+                      href="/psastations"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       PSA Stations
                     </Link>
                   </li>
                   <li>
-                    <Link 
-                      href="/out-of-area" 
+                    <Link
+                      href="/out-of-area"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       Out of Area
                     </Link>
@@ -1076,74 +1307,100 @@ export default function Header() {
             <div>
               <button
                 className="w-full flex items-center justify-between px-4 py-3 text-slate-700 hover:text-blue-600 hover:bg-slate-50 font-medium rounded-md transition-colors"
-                onClick={() => handleDropdownToggle('mobile-about')}
+                onClick={() => handleDropdownToggle("mobile-about")}
               >
                 About
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
                 </svg>
               </button>
-              {openDropdown === 'mobile-about' && (
+              {openDropdown === "mobile-about" && (
                 <ul className="pl-4 mt-1 space-y-1">
                   <li>
-                    <Link 
-                      href="/about" 
+                    <Link
+                      href="/about"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       About Your Independent Solicitor
                     </Link>
                   </li>
                   <li>
-                    <Link 
-                      href="/why-use-us" 
+                    <Link
+                      href="/why-use-us"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       Why Use Us
                     </Link>
                   </li>
                   <li>
-                    <Link 
-                      href="/what-we-do" 
+                    <Link
+                      href="/what-we-do"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       What We Do
                     </Link>
                   </li>
                   <li>
-                    <Link 
-                      href="/testimonials" 
+                    <Link
+                      href="/testimonials"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       Client Testimonials
                     </Link>
                   </li>
                   <li>
-                    <Link 
-                      href="/for-clients" 
+                    <Link
+                      href="/for-clients"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       For Clients
                     </Link>
                   </li>
                   <li>
-                    <Link 
-                      href="/privateclientfaq" 
+                    <Link
+                      href="/privateclientfaq"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       Private Client FAQ
                     </Link>
                   </li>
                   <li>
-                    <Link 
-                      href="/can-we-help" 
+                    <Link
+                      href="/can-we-help"
                       className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
-                      onClick={() => { setMobileMenuOpen(false); closeDropdowns(); }}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
                     >
                       Can We Help
                     </Link>
@@ -1153,8 +1410,8 @@ export default function Header() {
             </div>
 
             {/* FAQ */}
-            <Link 
-              href="/faq" 
+            <Link
+              href="/faq"
               className="block px-4 py-3 text-slate-700 hover:text-blue-600 hover:bg-slate-50 font-medium rounded-md transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
@@ -1162,8 +1419,8 @@ export default function Header() {
             </Link>
 
             {/* Blog */}
-            <Link 
-              href="/blog" 
+            <Link
+              href="/blog"
               className="block px-4 py-3 text-slate-700 hover:text-blue-600 hover:bg-slate-50 font-medium rounded-md transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >

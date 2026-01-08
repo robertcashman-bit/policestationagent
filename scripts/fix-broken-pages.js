@@ -3,10 +3,10 @@
  * Restores dynamic route pages that were overwritten
  */
 
-const fs = require('fs').promises;
-const path = require('path');
+const fs = require("fs").promises;
+const path = require("path");
 
-const APP_DIR = path.join(__dirname, '..', 'app');
+const APP_DIR = path.join(__dirname, "..", "app");
 
 // Police Stations [slug] page - correct implementation
 const POLICE_STATION_SLUG_PAGE = `import Header from '@/components/Header';
@@ -165,18 +165,21 @@ export default function PoliceStationPage({ params }: PageProps) {
 `;
 
 async function fixPoliceStationSlugPage() {
-  const filePath = path.join(APP_DIR, 'police-stations', '[slug]', 'page.tsx');
-  await fs.writeFile(filePath, POLICE_STATION_SLUG_PAGE, 'utf8');
-  console.log('✅ Fixed: app/police-stations/[slug]/page.tsx');
+  const filePath = path.join(APP_DIR, "police-stations", "[slug]", "page.tsx");
+  await fs.writeFile(filePath, POLICE_STATION_SLUG_PAGE, "utf8");
+  console.log("✅ Fixed: app/police-stations/[slug]/page.tsx");
 }
 
 async function checkAndFixEmptyFiles() {
   const emptyFiles = [
-    { path: path.join(APP_DIR, 'blog', '[slug]', 'page.tsx'), name: 'blog/[slug]' },
-    { path: path.join(APP_DIR, 'services', '[slug]', 'page.tsx'), name: 'services/[slug]' },
-    { path: path.join(APP_DIR, 'admin', 'posts', '[id]', 'edit', 'page.tsx'), name: 'admin/posts/[id]/edit' },
+    { path: path.join(APP_DIR, "blog", "[slug]", "page.tsx"), name: "blog/[slug]" },
+    { path: path.join(APP_DIR, "services", "[slug]", "page.tsx"), name: "services/[slug]" },
+    {
+      path: path.join(APP_DIR, "admin", "posts", "[id]", "edit", "page.tsx"),
+      name: "admin/posts/[id]/edit",
+    },
   ];
-  
+
   for (const file of emptyFiles) {
     try {
       const stats = await fs.stat(file.path);
@@ -192,12 +195,12 @@ async function checkAndFixEmptyFiles() {
 }
 
 async function main() {
-  console.log('🔧 Fixing broken pages...\n');
-  
+  console.log("🔧 Fixing broken pages...\n");
+
   await fixPoliceStationSlugPage();
   await checkAndFixEmptyFiles();
-  
-  console.log('\n✅ All broken pages fixed!');
+
+  console.log("\n✅ All broken pages fixed!");
 }
 
 if (require.main === module) {
@@ -205,4 +208,3 @@ if (require.main === module) {
 }
 
 module.exports = { fixPoliceStationSlugPage };
-

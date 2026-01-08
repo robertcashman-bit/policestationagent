@@ -1,12 +1,15 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
-const blogPostsPath = path.join(__dirname, '..', 'data', 'blog-posts-full.json');
-const posts = JSON.parse(fs.readFileSync(blogPostsPath, 'utf8'));
+const blogPostsPath = path.join(__dirname, "..", "data", "blog-posts-full.json");
+const posts = JSON.parse(fs.readFileSync(blogPostsPath, "utf8"));
 
 function getCharCount(html) {
   if (!html) return 0;
-  return html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().length;
+  return html
+    .replace(/<[^>]*>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim().length;
 }
 
 function getImageCount(html) {
@@ -16,7 +19,7 @@ function getImageCount(html) {
 
 // Comprehensive content for specific short posts
 const expandedContent = {
-  'arrested-or-have-a-policewarrant-in-kent-here-s-what-you-need-to-know0': {
+  "arrested-or-have-a-policewarrant-in-kent-here-s-what-you-need-to-know0": {
     content: `<h2>Understanding Police Warrants and Interviews in Kent</h2>
 <figure class="blog-image">
   <img src="/blog-images/blog-listing-5.png" alt="Understanding Police Warrants and Interviews in Kent" loading="lazy" width="800" height="400" />
@@ -47,10 +50,10 @@ const expandedContent = {
   <li>Police and Criminal Evidence Act 1984 (Codes of Practice) Order 2015, Code C, paragraph 5.1</li>
   <li>Police and Criminal Evidence Act 1984 (Codes of Practice) Order 2015, Code C, paragraph 3.21</li>
   <li>Legal Aid, Sentencing and Punishment of Offenders Act 2012, Schedule 1, Part 1</li>
-</ul>`
+</ul>`,
   },
-  
-  'what-happens-if-you-don-t-attend-a-voluntary-police-interview-inengland': {
+
+  "what-happens-if-you-don-t-attend-a-voluntary-police-interview-inengland": {
     content: `<h2>What Happens If You Don't Attend a Voluntary Police Interview in England?</h2>
 <figure class="blog-image">
   <img src="/blog-images/blog-listing-1.png" alt="What Happens If You Don't Attend a Voluntary Police Interview" loading="lazy" width="800" height="400" />
@@ -81,10 +84,10 @@ const expandedContent = {
   <li>Police and Criminal Evidence Act 1984 (Codes of Practice) Order 2015, Code C, paragraph 11.1A</li>
   <li>Magistrates' Courts Act 1980, section 1</li>
   <li>Legal Aid, Sentencing and Punishment of Offenders Act 2012, Schedule 1, Part 1</li>
-</ul>`
+</ul>`,
   },
-  
-  'whats-a-duty-solicitor': {
+
+  "whats-a-duty-solicitor": {
     content: `<h2>What is a Duty Solicitor?</h2>
 <figure class="blog-image">
   <img src="/blog-images/blog-listing-2.png" alt="What is a Duty Solicitor" loading="lazy" width="800" height="400" />
@@ -113,10 +116,10 @@ const expandedContent = {
   <li>Police and Criminal Evidence Act 1984 (Codes of Practice) Order 2015, Code C, paragraph 11.1A</li>
   <li>Legal Aid, Sentencing and Punishment of Offenders Act 2012, Schedule 1, Part 1</li>
   <li>Law Society Accreditation Scheme for Police Station Representatives</li>
-</ul>`
+</ul>`,
   },
-  
-  'is-legal-advice-free-at-the-police-station': {
+
+  "is-legal-advice-free-at-the-police-station": {
     content: `<h2>Can You Get Free Legal Advice at the Police Station?</h2>
 <figure class="blog-image">
   <img src="/blog-images/blog-listing-2.png" alt="Free Legal Advice at Police Station" loading="lazy" width="800" height="400" />
@@ -144,10 +147,10 @@ const expandedContent = {
   <li>Police and Criminal Evidence Act 1984 (Codes of Practice) Order 2015, Code C, paragraph 6.5</li>
   <li>Police and Criminal Evidence Act 1984 (Codes of Practice) Order 2015, Code C, paragraph 11.1A</li>
   <li>Legal Aid, Sentencing and Punishment of Offenders Act 2012, Schedule 1, Part 1</li>
-</ul>`
+</ul>`,
   },
-  
-  'nofurtheractionafterpoliceinterview': {
+
+  nofurtheractionafterpoliceinterview: {
     content: `<h2>No Further Action After Police Interview</h2>
 <figure class="blog-image">
   <img src="/blog-images/blog-listing-5.png" alt="No Further Action After Police Interview" loading="lazy" width="800" height="400" />
@@ -175,10 +178,10 @@ const expandedContent = {
   <li>Code for Crown Prosecutors</li>
   <li>Rehabilitation of Offenders Act 1974, section 1</li>
   <li>Legal Aid, Sentencing and Punishment of Offenders Act 2012, Schedule 1, Part 1</li>
-</ul>`
+</ul>`,
   },
-  
-  'voluntaryinterviewwithpolice': {
+
+  voluntaryinterviewwithpolice: {
     content: `<h2>Voluntary Interviews With Police</h2>
 <figure class="blog-image">
   <img src="/blog-images/blog-listing-1.png" alt="Voluntary Interviews With Police" loading="lazy" width="800" height="400" />
@@ -208,10 +211,10 @@ const expandedContent = {
   <li>Police and Criminal Evidence Act 1984 (Codes of Practice) Order 2015, Code C, paragraph 11.1A</li>
   <li>Police and Criminal Evidence Act 1984 (Codes of Practice) Order 2015, Code C, paragraph 11.4</li>
   <li>Legal Aid, Sentencing and Punishment of Offenders Act 2012, Schedule 1, Part 1</li>
-</ul>`
+</ul>`,
   },
-  
-  'what-happens-at-a-police-station-voluntary-interview-page-4': {
+
+  "what-happens-at-a-police-station-voluntary-interview-page-4": {
     content: `<h2>What Happens at a Police Station Voluntary Interview</h2>
 <figure class="blog-image">
   <img src="/blog-images/blog-listing-1.png" alt="What Happens at a Police Station Voluntary Interview" loading="lazy" width="800" height="400" />
@@ -244,10 +247,10 @@ const expandedContent = {
   <li>Police and Criminal Evidence Act 1984 (Codes of Practice) Order 2015, Code C, paragraph 11.1A</li>
   <li>Police and Criminal Evidence Act 1984 (Codes of Practice) Order 2015, Code C, paragraph 11.4</li>
   <li>Legal Aid, Sentencing and Punishment of Offenders Act 2012, Schedule 1, Part 1</li>
-</ul>`
+</ul>`,
   },
-  
-  'whats-happens-at-a-police-station-voluntary-interview-part-2': {
+
+  "whats-happens-at-a-police-station-voluntary-interview-part-2": {
     content: `<h2>Inside a Voluntary Police Interview: What to Expect, Part 2</h2>
 <figure class="blog-image">
   <img src="/blog-images/blog-listing-1.png" alt="Inside a Voluntary Police Interview Part 2" loading="lazy" width="800" height="400" />
@@ -279,10 +282,10 @@ const expandedContent = {
   <li>Police and Criminal Evidence Act 1984 (Codes of Practice) Order 2015, Code C, paragraph 11.4</li>
   <li>Police and Criminal Evidence Act 1984 (Codes of Practice) Order 2015, Code E</li>
   <li>Legal Aid, Sentencing and Punishment of Offenders Act 2012, Schedule 1, Part 1</li>
-</ul>`
+</ul>`,
   },
-  
-  'the-hidden-risks-of-voluntary-police-interviews-in-the-uk-you-need-to-know': {
+
+  "the-hidden-risks-of-voluntary-police-interviews-in-the-uk-you-need-to-know": {
     content: `<h2>The Hidden Risks of Voluntary Police Interviews in the UK</h2>
 <figure class="blog-image">
   <img src="/blog-images/blog-listing-1.png" alt="Hidden Risks of Voluntary Police Interviews" loading="lazy" width="800" height="400" />
@@ -317,21 +320,24 @@ const expandedContent = {
   <li>Police and Criminal Evidence Act 1984 (Codes of Practice) Order 2015, Code E</li>
   <li>Police and Criminal Evidence Act 1984 (Codes of Practice) Order 2015, Code G, paragraph 2.9(e)</li>
   <li>Legal Aid, Sentencing and Punishment of Offenders Act 2012, Schedule 1, Part 1</li>
-</ul>`
-  }
+</ul>`,
+  },
 };
 
 // Process posts
 let updated = 0;
 const enhancedPosts = posts.map((post) => {
   const currentChars = getCharCount(post.content);
-  
+
   // Check if we have comprehensive content for this post
   if (expandedContent[post.slug] && currentChars < 1500) {
     updated++;
-    return { ...post, content: `<div class="blog-content">${expandedContent[post.slug].content}</div>` };
+    return {
+      ...post,
+      content: `<div class="blog-content">${expandedContent[post.slug].content}</div>`,
+    };
   }
-  
+
   return post;
 });
 
@@ -344,14 +350,14 @@ const stats = {
   correctLength: 0,
   correctImages: 0,
   hasReferences: 0,
-  perfect: 0
+  perfect: 0,
 };
 
-enhancedPosts.forEach(post => {
+enhancedPosts.forEach((post) => {
   const chars = getCharCount(post.content);
   const images = getImageCount(post.content);
-  const hasRefs = post.content && post.content.includes('<h2>References</h2>');
-  
+  const hasRefs = post.content && post.content.includes("<h2>References</h2>");
+
   if (chars >= 1500 && chars <= 2500) stats.correctLength++;
   if (images === 1) stats.correctImages++;
   if (hasRefs) stats.hasReferences++;
@@ -359,25 +365,26 @@ enhancedPosts.forEach(post => {
 });
 
 console.log(`\n=== FINAL VERIFICATION ===`);
-console.log(`Posts with correct length (1500-2500 chars): ${stats.correctLength}/${enhancedPosts.length}`);
+console.log(
+  `Posts with correct length (1500-2500 chars): ${stats.correctLength}/${enhancedPosts.length}`
+);
 console.log(`Posts with exactly 1 image: ${stats.correctImages}/${enhancedPosts.length}`);
 console.log(`Posts with references: ${stats.hasReferences}/${enhancedPosts.length}`);
 console.log(`Perfect posts (all criteria): ${stats.perfect}/${enhancedPosts.length}`);
 
 if (stats.perfect < enhancedPosts.length) {
-  const needsWork = enhancedPosts.filter(p => {
+  const needsWork = enhancedPosts.filter((p) => {
     const chars = getCharCount(p.content);
     const images = getImageCount(p.content);
-    const hasRefs = p.content && p.content.includes('<h2>References</h2>');
+    const hasRefs = p.content && p.content.includes("<h2>References</h2>");
     return chars < 1500 || chars > 2500 || images !== 1 || !hasRefs;
   });
-  
+
   console.log(`\n=== REMAINING ISSUES: ${needsWork.length} ===`);
-  needsWork.forEach(p => {
+  needsWork.forEach((p) => {
     const chars = getCharCount(p.content);
     const images = getImageCount(p.content);
-    const hasRefs = p.content && p.content.includes('<h2>References</h2>');
+    const hasRefs = p.content && p.content.includes("<h2>References</h2>");
     console.log(`${p.slug}: ${chars} chars, ${images} images, refs: ${hasRefs}`);
   });
 }
-

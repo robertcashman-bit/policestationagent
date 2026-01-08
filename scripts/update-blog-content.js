@@ -1,13 +1,13 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 // Read the blog posts file
-const blogPostsPath = path.join(__dirname, '..', 'data', 'blog-posts-full.json');
-const posts = JSON.parse(fs.readFileSync(blogPostsPath, 'utf8'));
+const blogPostsPath = path.join(__dirname, "..", "data", "blog-posts-full.json");
+const posts = JSON.parse(fs.readFileSync(blogPostsPath, "utf8"));
 
 // Content templates for different topics - factual and accurate
 const contentTemplates = {
-  'police-bail': `<h2>What is Police Bail?</h2>
+  "police-bail": `<h2>What is Police Bail?</h2>
 <p>Police bail is a legal mechanism that allows the police to release a suspect from custody while an investigation continues. Under the Police and Criminal Evidence Act 1984 (PACE), police can release a person on bail with or without conditions.</p>
 
 <h2>When Can Police Impose Bail?</h2>
@@ -41,7 +41,7 @@ const contentTemplates = {
 <li>Police and Criminal Evidence Act 1984 (Codes of Practice) Order 2015</li>
 </ul>`,
 
-  'property-returned': `<h2>Getting Your Property Returned from the Police</h2>
+  "property-returned": `<h2>Getting Your Property Returned from the Police</h2>
 <p>When the police seize property during an investigation, you have rights regarding its return. Understanding these rights is essential for protecting your interests.</p>
 
 <h2>When Can Property Be Seized?</h2>
@@ -70,7 +70,7 @@ const contentTemplates = {
 <li>Police and Criminal Evidence Act 1984 (Codes of Practice) Order 2015</li>
 </ul>`,
 
-  'voluntary-interview': `<h2>What is a Voluntary Police Interview?</h2>
+  "voluntary-interview": `<h2>What is a Voluntary Police Interview?</h2>
 <p>A voluntary police interview (also called a "voluntary attendance" or "interview under caution") is a formal interview conducted by the police where you are not under arrest. Despite the name, these interviews are serious and anything you say can be used as evidence.</p>
 
 <h2>Your Rights</h2>
@@ -98,7 +98,7 @@ const contentTemplates = {
 <li>Police and Criminal Evidence Act 1984 (Codes of Practice) Order 2015</li>
 </ul>`,
 
-  'duty-solicitor': `<h2>What is a Duty Solicitor?</h2>
+  "duty-solicitor": `<h2>What is a Duty Solicitor?</h2>
 <p>A duty solicitor is a qualified criminal solicitor who provides free legal advice and representation at police stations and magistrates' courts. They are independent of the police and work to protect your rights.</p>
 
 <h2>Qualifications</h2>
@@ -126,23 +126,23 @@ const contentTemplates = {
 <li>Police and Criminal Evidence Act 1984 (PACE)</li>
 <li>Legal Aid, Sentencing and Punishment of Offenders Act 2012</li>
 <li>Law Society Accreditation Scheme</li>
-</ul>`
+</ul>`,
 };
 
 // Function to generate content based on title
 function generateContent(title, slug) {
   const titleLower = title.toLowerCase();
-  
-  if (titleLower.includes('bail')) {
-    return contentTemplates['police-bail'];
-  } else if (titleLower.includes('property') || titleLower.includes('returned')) {
-    return contentTemplates['property-returned'];
-  } else if (titleLower.includes('voluntary') || titleLower.includes('interview')) {
-    return contentTemplates['voluntary-interview'];
-  } else if (titleLower.includes('duty solicitor') || titleLower.includes('duty-solicitor')) {
-    return contentTemplates['duty-solicitor'];
+
+  if (titleLower.includes("bail")) {
+    return contentTemplates["police-bail"];
+  } else if (titleLower.includes("property") || titleLower.includes("returned")) {
+    return contentTemplates["property-returned"];
+  } else if (titleLower.includes("voluntary") || titleLower.includes("interview")) {
+    return contentTemplates["voluntary-interview"];
+  } else if (titleLower.includes("duty solicitor") || titleLower.includes("duty-solicitor")) {
+    return contentTemplates["duty-solicitor"];
   }
-  
+
   // Default content structure
   return `<h2>Introduction</h2>
 <p>This article provides information about ${title.toLowerCase()} in the context of police station representation and criminal law in England and Wales.</p>
@@ -159,25 +159,27 @@ function generateContent(title, slug) {
 
 // Update posts with minimal content
 let updated = 0;
-const updatedPosts = posts.map(post => {
-  const content = post.content || '';
-  const textOnly = content.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
-  const wordCount = textOnly.split(' ').filter(w => w.length > 0).length;
-  
+const updatedPosts = posts.map((post) => {
+  const content = post.content || "";
+  const textOnly = content
+    .replace(/<[^>]*>/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+  const wordCount = textOnly.split(" ").filter((w) => w.length > 0).length;
+
   // If content is too short (less than 200 words), add proper content
   if (wordCount < 200 || content.trim().length < 500) {
     const newContent = generateContent(post.title, post.slug);
     updated++;
     return {
       ...post,
-      content: `<div class="blog-content">${newContent}</div>`
+      content: `<div class="blog-content">${newContent}</div>`,
     };
   }
-  
+
   return post;
 });
 
 // Write updated posts back
 fs.writeFileSync(blogPostsPath, JSON.stringify(updatedPosts, null, 2));
 console.log(`Updated ${updated} blog posts with proper content.`);
-

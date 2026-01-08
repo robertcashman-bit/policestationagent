@@ -3,84 +3,87 @@
  * Rebuilds pages that have 404 HTML content from scraped files
  */
 
-const fs = require('fs').promises;
-const path = require('path');
-const { JSDOM } = require('jsdom');
+const fs = require("fs").promises;
+const path = require("path");
+const { JSDOM } = require("jsdom");
 
-const SCRAPED_DIR = path.join(__dirname, '..', 'legacy', 'scraped');
-const APP_DIR = path.join(__dirname, '..', 'app');
+const SCRAPED_DIR = path.join(__dirname, "..", "legacy", "scraped");
+const APP_DIR = path.join(__dirname, "..", "app");
 
 // Pages that are showing 404 errors
 const BROKEN_PAGES = [
-  { route: '/police-stations', file: 'police-stations.html' },
-  { route: '/for-solicitors', file: 'for-solicitors.html' },
-  { route: '/for-clients', file: 'for-clients.html' },
-  { route: '/what-is-a-police-station-rep', file: 'what-is-a-police-station-rep.html' },
-  { route: '/what-is-a-criminal-solicitor', file: 'what-is-a-criminal-solicitor.html' },
-  { route: '/what-we-do', file: 'what-we-do.html' },
-  { route: '/why-use-us', file: 'why-use-us.html' },
-  { route: '/after-a-police-interview', file: 'after-a-police-interview.html' },
-  { route: '/voluntary-interviews', file: 'voluntary-interviews.html' },
-  { route: '/terms-and-conditions', file: 'terms-and-conditions.html' },
+  { route: "/police-stations", file: "police-stations.html" },
+  { route: "/for-solicitors", file: "for-solicitors.html" },
+  { route: "/for-clients", file: "for-clients.html" },
+  { route: "/what-is-a-police-station-rep", file: "what-is-a-police-station-rep.html" },
+  { route: "/what-is-a-criminal-solicitor", file: "what-is-a-criminal-solicitor.html" },
+  { route: "/what-we-do", file: "what-we-do.html" },
+  { route: "/why-use-us", file: "why-use-us.html" },
+  { route: "/after-a-police-interview", file: "after-a-police-interview.html" },
+  { route: "/voluntary-interviews", file: "voluntary-interviews.html" },
+  { route: "/terms-and-conditions", file: "terms-and-conditions.html" },
 ];
 
 function extractMainContent(html) {
   const dom = new JSDOM(html);
   const document = dom.window.document;
-  
+
   // Try multiple strategies to find main content
   const selectors = [
-    '#root > main',
-    '#root main',
-    'main',
+    "#root > main",
+    "#root main",
+    "main",
     '[role="main"]',
-    '#root > div > main',
-    '#root',
+    "#root > div > main",
+    "#root",
   ];
-  
+
   for (const selector of selectors) {
     const element = document.querySelector(selector);
     if (element) {
       // Check if it's a 404 page
-      if (element.textContent.includes('404') || element.textContent.includes('Page Not Found')) {
+      if (element.textContent.includes("404") || element.textContent.includes("Page Not Found")) {
         continue; // Skip 404 pages
       }
-      
+
       const clone = element.cloneNode(true);
-      clone.querySelectorAll('script, style, noscript, link[rel="stylesheet"]').forEach(el => el.remove());
+      clone
+        .querySelectorAll('script, style, noscript, link[rel="stylesheet"]')
+        .forEach((el) => el.remove());
       return clone.innerHTML;
     }
   }
-  
+
   return null;
 }
 
 function extractMetadata(html) {
   const dom = new JSDOM(html);
   const document = dom.window.document;
-  
+
   return {
-    title: document.querySelector('title')?.textContent?.trim() || 'Police Station Agent',
-    description: document.querySelector('meta[name="description"]')?.getAttribute('content') || '',
-    canonical: document.querySelector('link[rel="canonical"]')?.getAttribute('href') || '',
+    title: document.querySelector("title")?.textContent?.trim() || "Police Station Agent",
+    description: document.querySelector('meta[name="description"]')?.getAttribute("content") || "",
+    canonical: document.querySelector('link[rel="canonical"]')?.getAttribute("href") || "",
   };
 }
 
 function escapeForTemplate(str) {
-  if (!str) return '';
+  if (!str) return "";
   return str
-    .replace(/\\/g, '\\\\')
-    .replace(/`/g, '\\`')
-    .replace(/\${/g, '\\${')
-    .replace(/\n/g, '\\n')
-    .replace(/\r/g, '\\r');
+    .replace(/\\/g, "\\\\")
+    .replace(/`/g, "\\`")
+    .replace(/\${/g, "\\${")
+    .replace(/\n/g, "\\n")
+    .replace(/\r/g, "\\r");
 }
 
 async function rebuildPage(route, filename) {
   const scrapedPath = path.join(SCRAPED_DIR, filename);
-  const routePath = route === '/' ? 'page.tsx' : route.replace(/^\//, '').replace(/\//g, '\\') + '\\page.tsx';
+  const routePath =
+    route === "/" ? "page.tsx" : route.replace(/^\//, "").replace(/\//g, "\\") + "\\page.tsx";
   const outputPath = path.join(APP_DIR, routePath);
-  
+
   try {
     // Check if scraped file exists
     try {
@@ -89,19 +92,19 @@ async function rebuildPage(route, filename) {
       console.log(`  ⏭️  Skipped: ${route} (scraped file not found: ${filename})`);
       return false;
     }
-    
-    const html = await fs.readFile(scrapedPath, 'utf8');
+
+    const html = await fs.readFile(scrapedPath, "utf8");
     const mainContent = extractMainContent(html);
     const metadata = extractMetadata(html);
-    
-    if (!mainContent || mainContent.includes('404') || mainContent.includes('Page Not Found')) {
+
+    if (!mainContent || mainContent.includes("404") || mainContent.includes("Page Not Found")) {
       console.log(`  ⚠️  Skipped: ${route} (404 content in scraped file)`);
       return false;
     }
-    
+
     const escapedContent = escapeForTemplate(mainContent);
     const canonical = metadata.canonical || `https://policestationagent.com${route}`;
-    
+
     const pageContent = `import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import type { Metadata } from 'next';
@@ -137,11 +140,11 @@ export default function Page() {
   );
 }
 `;
-    
+
     const dir = path.dirname(outputPath);
     await fs.mkdir(dir, { recursive: true });
-    await fs.writeFile(outputPath, pageContent, 'utf8');
-    
+    await fs.writeFile(outputPath, pageContent, "utf8");
+
     console.log(`  ✅ Fixed: ${route}`);
     return true;
   } catch (error) {
@@ -151,11 +154,11 @@ export default function Page() {
 }
 
 async function main() {
-  console.log('🔧 Fixing pages showing 404 errors...\n');
-  
+  console.log("🔧 Fixing pages showing 404 errors...\n");
+
   let fixed = 0;
   let skipped = 0;
-  
+
   for (const page of BROKEN_PAGES) {
     const result = await rebuildPage(page.route, page.file);
     if (result) {
@@ -164,10 +167,10 @@ async function main() {
       skipped++;
     }
   }
-  
+
   console.log(`\n✅ Fixed: ${fixed} pages`);
   console.log(`⏭️  Skipped: ${skipped} pages`);
-  console.log('\n🎉 All 404 pages fixed!');
+  console.log("\n🎉 All 404 pages fixed!");
 }
 
 if (require.main === module) {
@@ -175,6 +178,3 @@ if (require.main === module) {
 }
 
 module.exports = { rebuildPage };
-
-
-

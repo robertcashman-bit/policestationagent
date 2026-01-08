@@ -1,22 +1,27 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
-const blogPostsPath = path.join(__dirname, '..', 'data', 'blog-posts-full.json');
-const posts = JSON.parse(fs.readFileSync(blogPostsPath, 'utf8'));
+const blogPostsPath = path.join(__dirname, "..", "data", "blog-posts-full.json");
+const posts = JSON.parse(fs.readFileSync(blogPostsPath, "utf8"));
 
 // Function to extract text content length
 function getTextLength(html) {
   if (!html) return 0;
-  return html.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim().split(' ').filter(w => w.length > 0).length;
+  return html
+    .replace(/<[^>]*>/g, "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .split(" ")
+    .filter((w) => w.length > 0).length;
 }
 
 // Function to generate content based on title
 function generateContentForPost(post) {
   const title = post.title.toLowerCase();
   const slug = post.slug.toLowerCase();
-  
+
   // Police Bail content
-  if (title.includes('bail') || slug.includes('bail')) {
+  if (title.includes("bail") || slug.includes("bail")) {
     return `<h2>Understanding Police Bail</h2>
 <p>Police bail is a legal mechanism under the Police and Criminal Evidence Act 1984 (PACE) that allows the police to release a suspect from custody while an investigation continues. Understanding how bail works is crucial for anyone involved in the criminal justice system.</p>
 
@@ -53,9 +58,9 @@ function generateContentForPost(post) {
 <li>Criminal Procedure Rules 2020</li>
 </ul>`;
   }
-  
+
   // Property Return content
-  if (title.includes('property') && (title.includes('return') || title.includes('returned'))) {
+  if (title.includes("property") && (title.includes("return") || title.includes("returned"))) {
     return `<h2>Getting Your Property Returned from the Police</h2>
 <p>When the police seize property during an investigation, you have rights regarding its return. Understanding these rights is essential for protecting your interests.</p>
 
@@ -89,9 +94,9 @@ function generateContentForPost(post) {
 <li>Police (Property) Act 1897</li>
 </ul>`;
   }
-  
+
   // Voluntary Interview content
-  if (title.includes('voluntary') && title.includes('interview')) {
+  if (title.includes("voluntary") && title.includes("interview")) {
     return `<h2>What is a Voluntary Police Interview?</h2>
 <p>A voluntary police interview (also called a "voluntary attendance" or "interview under caution") is a formal interview conducted by the police where you are not under arrest. Despite the name "voluntary", these interviews are serious and anything you say can be used as evidence in court.</p>
 
@@ -135,9 +140,9 @@ function generateContentForPost(post) {
 <li>Legal Aid, Sentencing and Punishment of Offenders Act 2012</li>
 </ul>`;
   }
-  
+
   // Duty Solicitor content
-  if (title.includes('duty solicitor') || slug.includes('duty-solicitor')) {
+  if (title.includes("duty solicitor") || slug.includes("duty-solicitor")) {
     return `<h2>What is a Duty Solicitor?</h2>
 <p>A duty solicitor is a qualified criminal solicitor who provides free legal advice and representation at police stations and magistrates' courts. They are independent of the police and work solely to protect your rights.</p>
 
@@ -182,9 +187,9 @@ function generateContentForPost(post) {
 <li>PACE Code C - Code of Practice for the Detention, Treatment and Questioning of Persons</li>
 </ul>`;
   }
-  
+
   // Police Station Representation content
-  if (title.includes('police station representation') || title.includes('police station rep')) {
+  if (title.includes("police station representation") || title.includes("police station rep")) {
     return `<h2>Police Station Representation</h2>
 <p>Police station representation is a crucial service that ensures your rights are protected during police interviews and investigations. Under the Police and Criminal Evidence Act 1984 (PACE), everyone has the right to free legal advice when arrested or interviewed by the police.</p>
 
@@ -220,9 +225,9 @@ function generateContentForPost(post) {
 <li>Police and Criminal Evidence Act 1984 (Codes of Practice) Order 2015</li>
 </ul>`;
   }
-  
+
   // Police Cautions content
-  if (title.includes('caution') || slug.includes('caution')) {
+  if (title.includes("caution") || slug.includes("caution")) {
     return `<h2>Understanding Police Cautions</h2>
 <p>A police caution is a formal warning given by the police to someone who has admitted an offence. Understanding what a caution means and its implications is important for anyone dealing with the police.</p>
 
@@ -263,7 +268,7 @@ function generateContentForPost(post) {
 <li>Police and Criminal Evidence Act 1984 (Codes of Practice) Order 2015</li>
 </ul>`;
   }
-  
+
   // Default content structure
   return `<h2>Introduction</h2>
 <p>This article provides information about ${post.title} in the context of police station representation and criminal law in England and Wales.</p>
@@ -291,19 +296,19 @@ function generateContentForPost(post) {
 
 // Update posts
 let updated = 0;
-const updatedPosts = posts.map(post => {
+const updatedPosts = posts.map((post) => {
   const wordCount = getTextLength(post.content);
-  
+
   // If content is too short (less than 200 words), add proper content
   if (wordCount < 200) {
     const newContent = generateContentForPost(post);
     updated++;
     return {
       ...post,
-      content: `<div class="blog-content">${newContent}</div>`
+      content: `<div class="blog-content">${newContent}</div>`,
     };
   }
-  
+
   return post;
 });
 
@@ -311,4 +316,3 @@ const updatedPosts = posts.map(post => {
 fs.writeFileSync(blogPostsPath, JSON.stringify(updatedPosts, null, 2));
 console.log(`Updated ${updated} blog posts with proper content.`);
 console.log(`Total posts: ${posts.length}`);
-

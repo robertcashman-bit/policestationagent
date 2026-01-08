@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from "next/link";
 
 /**
  * Promotional block component for blog posts
@@ -13,9 +13,9 @@ export default function BlogPromotionalBlock() {
           Police Station Advice & Representation
         </h2>
         <p className="text-slate-700 mb-6 leading-relaxed">
-          Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795). and legal services 
-          across Kent and the UK. Our accredited duty solicitor, Robert Cashman, offers free legal 
-          advice under Legal Aid for police station interviews, voluntary attendances, and custody 
+          Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795). and legal services
+          across Kent and the UK. Our accredited duty solicitor, Robert Cashman, offers free legal
+          advice under Legal Aid for police station interviews, voluntary attendances, and custody
           matters. Available during extended hours for urgent legal assistance.
         </p>
         <div className="flex flex-col sm:flex-row gap-4">
@@ -26,7 +26,18 @@ export default function BlogPromotionalBlock() {
             className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 h-10 px-6 bg-blue-600 hover:bg-blue-700 text-white shadow-md"
           >
             Visit PoliceStationAgent.com
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-right w-4 h-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="lucide lucide-arrow-right w-4 h-4"
+            >
               <path d="M5 12h14"></path>
               <path d="m12 5 7 7-7 7"></path>
             </svg>
@@ -39,35 +50,12 @@ export default function BlogPromotionalBlock() {
           </Link>
         </div>
         <p className="text-xs text-slate-500 mt-4">
-          Police station legal advice is free and independent. If detained, you can ask custody staff to contact a solicitor or law firm. For Kent matters, you can request Tuckers Solicitors LLP and may request Robert Cashman as your named solicitor, subject to availability and conflicts.
+          Police station legal advice is free and independent. If detained, you can ask custody
+          staff to contact a solicitor or law firm. For Kent matters, you can request Tuckers
+          Solicitors LLP and may request Robert Cashman as your named solicitor, subject to
+          availability and conflicts.
         </p>
       </div>
     </div>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,31 +1,31 @@
-'use client';
+"use client";
 
 /**
  * COOKIE BANNER COMPONENT
- * 
+ *
  * Minimal, GDPR-compliant cookie consent banner.
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 export default function CookieBanner() {
   const [showBanner, setShowBanner] = useState(false);
 
   useEffect(() => {
     // Check if user has already consented
-    const consent = localStorage.getItem('cookie-consent');
+    const consent = localStorage.getItem("cookie-consent");
     if (!consent) {
       setShowBanner(true);
     }
   }, []);
 
   const handleAccept = () => {
-    localStorage.setItem('cookie-consent', 'accepted');
+    localStorage.setItem("cookie-consent", "accepted");
     setShowBanner(false);
   };
 
   const handleDecline = () => {
-    localStorage.setItem('cookie-consent', 'declined');
+    localStorage.setItem("cookie-consent", "declined");
     setShowBanner(false);
   };
 
@@ -35,7 +35,10 @@ export default function CookieBanner() {
     <div className="fixed bottom-0 left-0 right-0 bg-slate-900 p-2 md:p-3 shadow-2xl z-50 border-t-2 md:border-t-4 border-blue-600">
       <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 md:gap-3">
         <div className="flex-1">
-          <p className="text-[10px] md:text-xs leading-tight text-white" style={{ color: '#ffffff' }}>
+          <p
+            className="text-[10px] md:text-xs leading-tight text-white"
+            style={{ color: "#ffffff" }}
+          >
             We use cookies to improve your experience. By continuing, you accept our use of cookies.
           </p>
         </div>

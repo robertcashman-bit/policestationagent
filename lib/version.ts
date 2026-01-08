@@ -1,20 +1,20 @@
 /**
  * PRODUCTION VERSION UTILITY
- * 
+ *
  * Generates a deterministic version identifier for each production build.
  * Uses git commit hash (short) if available, otherwise falls back to build timestamp.
- * 
+ *
  * This version updates automatically on every production push.
  */
 
 /**
  * Get the production version identifier.
- * 
+ *
  * Priority:
  * 1. NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA (Vercel provides this)
  * 2. GIT_COMMIT_SHA (custom env var)
  * 3. Build timestamp (fallback)
- * 
+ *
  * @returns Version string (e.g., "a1b2c3d" or "build 2025.12.14")
  */
 export function getAppVersion(): string {
@@ -33,19 +33,19 @@ export function getAppVersion(): string {
   // Fallback: build timestamp (formatted as YYYY.MM.DD)
   const buildDate = new Date();
   const year = buildDate.getFullYear();
-  const month = String(buildDate.getMonth() + 1).padStart(2, '0');
-  const day = String(buildDate.getDate()).padStart(2, '0');
+  const month = String(buildDate.getMonth() + 1).padStart(2, "0");
+  const day = String(buildDate.getDate()).padStart(2, "0");
   return `build ${year}.${month}.${day}`;
 }
 
 /**
  * Format version for display in footer.
- * 
+ *
  * @returns Formatted version string (e.g., "v a1b2c3d" or "build 2025.12.14")
  */
 export function getFormattedVersion(): string {
   const version = getAppVersion();
-  if (version.startsWith('build ')) {
+  if (version.startsWith("build ")) {
     return version; // Already formatted
   }
   return `v ${version}`;
@@ -54,7 +54,7 @@ export function getFormattedVersion(): string {
 /**
  * Get the last update date and time.
  * Uses Vercel deployment timestamp if available, otherwise uses build time.
- * 
+ *
  * @returns Formatted date/time string (e.g., "14 Dec 2025, 15:30 GMT")
  */
 export function getLastUpdateDateTime(): string {
@@ -76,26 +76,34 @@ export function getLastUpdateDateTime(): string {
 
 /**
  * Format date and time for display.
- * 
+ *
  * @param date - Date object to format
  * @returns Formatted string (e.g., "14 Dec 2025, 15:30 GMT")
  */
 function formatDateTime(date: Date): string {
   const day = date.getDate();
-  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
   const month = monthNames[date.getMonth()];
   const year = date.getFullYear();
-  
-  const hours = String(date.getHours()).padStart(2, '0');
-  const minutes = String(date.getMinutes()).padStart(2, '0');
-  
+
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+
   // Get timezone abbreviation (simplified - shows GMT/UTC)
-  const timezone = date.getTimezoneOffset() === 0 ? 'GMT' : 'GMT';
-  
+  const timezone = date.getTimezoneOffset() === 0 ? "GMT" : "GMT";
+
   return `${day} ${month} ${year}, ${hours}:${minutes} ${timezone}`;
 }
-
-
-
-
-

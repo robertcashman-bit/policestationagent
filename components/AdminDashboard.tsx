@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
+import { useState, useEffect } from "react";
+import Link from "next/link";
 
 interface Post {
   id: number;
@@ -28,37 +28,39 @@ interface Service {
 }
 
 export default function AdminDashboard() {
-  const [activeTab, setActiveTab] = useState<'posts' | 'stations' | 'services' | 'import' | 'enhance' | 'seo' | 'links' | 'sitemap'>('posts');
+  const [activeTab, setActiveTab] = useState<
+    "posts" | "stations" | "services" | "import" | "enhance" | "seo" | "links" | "sitemap"
+  >("posts");
   const [posts, setPosts] = useState<Post[]>([]);
   const [stations, setStations] = useState<Station[]>([]);
   const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
-  const [enhanceContent, setEnhanceContent] = useState('');
+  const [enhanceContent, setEnhanceContent] = useState("");
   const [enhanceResult, setEnhanceResult] = useState<any>(null);
   const [enhanceLoading, setEnhanceLoading] = useState(false);
-  const [sitemapPreview, setSitemapPreview] = useState<string>('');
+  const [sitemapPreview, setSitemapPreview] = useState<string>("");
 
   useEffect(() => {
-    if (activeTab === 'posts') {
+    if (activeTab === "posts") {
       fetchPosts();
-    } else if (activeTab === 'stations') {
+    } else if (activeTab === "stations") {
       fetchStations();
-    } else if (activeTab === 'services') {
+    } else if (activeTab === "services") {
       fetchServices();
-    } else if (activeTab === 'sitemap') {
+    } else if (activeTab === "sitemap") {
       fetchSitemap();
     }
   }, [activeTab]);
 
   const fetchPosts = async () => {
     try {
-      const response = await fetch('/api/admin/posts');
+      const response = await fetch("/api/admin/posts");
       if (response.ok) {
         const data = await response.json();
         setPosts(data.posts || []);
       }
     } catch (error) {
-      console.error('Failed to fetch posts:', error);
+      console.error("Failed to fetch posts:", error);
     } finally {
       setLoading(false);
     }
@@ -66,13 +68,13 @@ export default function AdminDashboard() {
 
   const fetchStations = async () => {
     try {
-      const response = await fetch('/api/admin/police-stations');
+      const response = await fetch("/api/admin/police-stations");
       if (response.ok) {
         const data = await response.json();
         setStations(data.stations || []);
       }
     } catch (error) {
-      console.error('Failed to fetch stations:', error);
+      console.error("Failed to fetch stations:", error);
     } finally {
       setLoading(false);
     }
@@ -80,13 +82,13 @@ export default function AdminDashboard() {
 
   const fetchServices = async () => {
     try {
-      const response = await fetch('/api/admin/services');
+      const response = await fetch("/api/admin/services");
       if (response.ok) {
         const data = await response.json();
         setServices(data.services || []);
       }
     } catch (error) {
-      console.error('Failed to fetch services:', error);
+      console.error("Failed to fetch services:", error);
     } finally {
       setLoading(false);
     }
@@ -94,24 +96,24 @@ export default function AdminDashboard() {
 
   const fetchSitemap = async () => {
     try {
-      const response = await fetch('/sitemap.xml');
+      const response = await fetch("/sitemap.xml");
       if (response.ok) {
         const text = await response.text();
         setSitemapPreview(text);
       }
     } catch (error) {
-      console.error('Failed to fetch sitemap:', error);
+      console.error("Failed to fetch sitemap:", error);
     }
   };
 
   const handleEnhance = async () => {
     if (!enhanceContent.trim()) return;
-    
+
     setEnhanceLoading(true);
     try {
-      const response = await fetch('/api/admin/enhance', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/admin/enhance", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ content: enhanceContent }),
       });
       if (response.ok) {
@@ -119,27 +121,27 @@ export default function AdminDashboard() {
         setEnhanceResult(data);
       }
     } catch (error) {
-      console.error('Failed to enhance content:', error);
+      console.error("Failed to enhance content:", error);
     } finally {
       setEnhanceLoading(false);
     }
   };
 
   const handleDeletePost = async (id: number) => {
-    if (!confirm('Are you sure you want to delete this post?')) return;
+    if (!confirm("Are you sure you want to delete this post?")) return;
     try {
-      const response = await fetch(`/api/admin/posts/${id}`, { method: 'DELETE' });
+      const response = await fetch(`/api/admin/posts/${id}`, { method: "DELETE" });
       if (response.ok) {
         fetchPosts();
       }
     } catch (error) {
-      console.error('Failed to delete post:', error);
+      console.error("Failed to delete post:", error);
     }
   };
 
   const handleLogout = () => {
-    document.cookie = 'auth-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-    window.location.href = '/admin/login';
+    document.cookie = "auth-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    window.location.href = "/admin/login";
   };
 
   return (
@@ -168,22 +170,22 @@ export default function AdminDashboard() {
           <div className="border-b border-gray-200">
             <nav className="flex -mb-px overflow-x-auto">
               {[
-                { id: 'posts', label: 'Blog Posts' },
-                { id: 'stations', label: 'Police Stations' },
-                { id: 'services', label: 'Services' },
-                { id: 'import', label: 'WordPress Import' },
-                { id: 'enhance', label: 'Content Enhancer' },
-                { id: 'seo', label: 'SEO Inspector' },
-                { id: 'links', label: 'Link Checker' },
-                { id: 'sitemap', label: 'Sitemap Preview' },
+                { id: "posts", label: "Blog Posts" },
+                { id: "stations", label: "Police Stations" },
+                { id: "services", label: "Services" },
+                { id: "import", label: "WordPress Import" },
+                { id: "enhance", label: "Content Enhancer" },
+                { id: "seo", label: "SEO Inspector" },
+                { id: "links", label: "Link Checker" },
+                { id: "sitemap", label: "Sitemap Preview" },
               ].map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id as any)}
                   className={`px-6 py-3 border-b-2 font-medium text-sm whitespace-nowrap ${
                     activeTab === tab.id
-                      ? 'border-[#0A2342] text-[#0A2342]'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                      ? "border-[#0A2342] text-[#0A2342]"
+                      : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
                   }`}
                 >
                   {tab.label}
@@ -193,7 +195,7 @@ export default function AdminDashboard() {
           </div>
 
           <div className="p-6">
-            {activeTab === 'posts' && (
+            {activeTab === "posts" && (
               <div>
                 <div className="flex justify-between items-center mb-4">
                   <h2 className="text-xl font-semibold">Blog Posts</h2>
@@ -220,7 +222,8 @@ export default function AdminDashboard() {
                               ) : (
                                 <span className="text-gray-500">Draft</span>
                               )}
-                              {post.published_at && ` • ${new Date(post.published_at).toLocaleDateString()}`}
+                              {post.published_at &&
+                                ` • ${new Date(post.published_at).toLocaleDateString()}`}
                             </p>
                           </div>
                           <div className="flex space-x-2">
@@ -255,12 +258,12 @@ export default function AdminDashboard() {
               </div>
             )}
 
-            {activeTab === 'stations' && (
+            {activeTab === "stations" && (
               <div>
                 <div className="flex justify-between items-center mb-4">
                   <h2 className="text-xl font-semibold">Police Stations</h2>
                   <button
-                    onClick={() => alert('Add new station form coming soon. Use API for now.')}
+                    onClick={() => alert("Add new station form coming soon. Use API for now.")}
                     className="bg-[#0A2342] text-white px-4 py-2 rounded hover:bg-[#08192e]"
                   >
                     New Station
@@ -295,20 +298,18 @@ export default function AdminDashboard() {
                         </div>
                       </div>
                     ))}
-                    {stations.length === 0 && (
-                      <p className="text-gray-500">No stations yet.</p>
-                    )}
+                    {stations.length === 0 && <p className="text-gray-500">No stations yet.</p>}
                   </div>
                 )}
               </div>
             )}
 
-            {activeTab === 'services' && (
+            {activeTab === "services" && (
               <div>
                 <div className="flex justify-between items-center mb-4">
                   <h2 className="text-xl font-semibold">Services</h2>
                   <button
-                    onClick={() => alert('Add new service form coming soon. Use API for now.')}
+                    onClick={() => alert("Add new service form coming soon. Use API for now.")}
                     className="bg-[#0A2342] text-white px-4 py-2 rounded hover:bg-[#08192e]"
                   >
                     New Service
@@ -340,15 +341,13 @@ export default function AdminDashboard() {
                         </div>
                       </div>
                     ))}
-                    {services.length === 0 && (
-                      <p className="text-gray-500">No services yet.</p>
-                    )}
+                    {services.length === 0 && <p className="text-gray-500">No services yet.</p>}
                   </div>
                 )}
               </div>
             )}
 
-            {activeTab === 'import' && (
+            {activeTab === "import" && (
               <div>
                 <h2 className="text-xl font-semibold mb-4">WordPress Import</h2>
                 <p className="text-gray-600 mb-4">
@@ -382,11 +381,12 @@ export default function AdminDashboard() {
               </div>
             )}
 
-            {activeTab === 'enhance' && (
+            {activeTab === "enhance" && (
               <div>
                 <h2 className="text-xl font-semibold mb-4">Content Enhancer</h2>
                 <p className="text-gray-600 mb-4">
-                  Safely enhance your content with non-destructive improvements. This tool provides suggestions only.
+                  Safely enhance your content with non-destructive improvements. This tool provides
+                  suggestions only.
                 </p>
                 <div className="space-y-4">
                   <div>
@@ -406,7 +406,7 @@ export default function AdminDashboard() {
                     disabled={enhanceLoading || !enhanceContent.trim()}
                     className="bg-[#0A2342] text-white px-6 py-2 rounded hover:bg-[#08192e] disabled:opacity-50"
                   >
-                    {enhanceLoading ? 'Analyzing...' : 'Analyze Content'}
+                    {enhanceLoading ? "Analyzing..." : "Analyze Content"}
                   </button>
                   {enhanceResult && (
                     <div className="mt-6 border rounded-lg p-4 bg-gray-50">
@@ -414,7 +414,9 @@ export default function AdminDashboard() {
                       {enhanceResult.suggestions && enhanceResult.suggestions.length > 0 ? (
                         <ul className="list-disc pl-6 space-y-2">
                           {enhanceResult.suggestions.map((suggestion: string, idx: number) => (
-                            <li key={idx} className="text-sm text-gray-700">{suggestion}</li>
+                            <li key={idx} className="text-sm text-gray-700">
+                              {suggestion}
+                            </li>
                           ))}
                         </ul>
                       ) : (
@@ -434,7 +436,7 @@ export default function AdminDashboard() {
               </div>
             )}
 
-            {activeTab === 'seo' && (
+            {activeTab === "seo" && (
               <div>
                 <h2 className="text-xl font-semibold mb-4">SEO Inspector</h2>
                 <p className="text-gray-600 mb-4">
@@ -480,7 +482,7 @@ export default function AdminDashboard() {
               </div>
             )}
 
-            {activeTab === 'links' && (
+            {activeTab === "links" && (
               <div>
                 <h2 className="text-xl font-semibold mb-4">Link Checker</h2>
                 <p className="text-gray-600 mb-4">
@@ -517,12 +519,10 @@ export default function AdminDashboard() {
               </div>
             )}
 
-            {activeTab === 'sitemap' && (
+            {activeTab === "sitemap" && (
               <div>
                 <h2 className="text-xl font-semibold mb-4">Sitemap Preview</h2>
-                <p className="text-gray-600 mb-4">
-                  View your automatically generated sitemap.xml
-                </p>
+                <p className="text-gray-600 mb-4">View your automatically generated sitemap.xml</p>
                 <div className="bg-gray-50 p-4 rounded-lg">
                   <div className="flex justify-between items-center mb-2">
                     <span className="text-sm font-medium">sitemap.xml</span>
@@ -535,7 +535,7 @@ export default function AdminDashboard() {
                     </a>
                   </div>
                   <pre className="bg-white p-4 rounded border border-gray-200 overflow-x-auto text-xs">
-                    {sitemapPreview || 'Loading sitemap...'}
+                    {sitemapPreview || "Loading sitemap..."}
                   </pre>
                 </div>
               </div>

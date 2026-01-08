@@ -1,12 +1,12 @@
 /**
  * Safe Blog Post Ingestion Script
- * 
+ *
  * Imports blog posts from JSON files into the database.
  * NO external network calls - purely local file-based ingestion.
- * 
+ *
  * Usage:
  *   node scripts/ingest-blog-posts.js [path-to-json-file]
- * 
+ *
  * JSON Format:
  * {
  *   "slug-name": {
@@ -22,12 +22,12 @@
  * }
  */
 
-const Database = require('better-sqlite3');
-const fs = require('fs');
-const path = require('path');
+const Database = require("better-sqlite3");
+const fs = require("fs");
+const path = require("path");
 
 // Database path
-const dbPath = path.join(__dirname, '..', 'data', 'web44ai.db');
+const dbPath = path.join(__dirname, "..", "data", "web44ai.db");
 const dbDir = path.dirname(dbPath);
 
 // Ensure data directory exists
@@ -37,7 +37,7 @@ if (!fs.existsSync(dbDir)) {
 
 // Initialize database
 const db = new Database(dbPath);
-db.pragma('foreign_keys = ON');
+db.pragma("foreign_keys = ON");
 
 // Initialize tables if needed
 db.exec(`
@@ -70,9 +70,9 @@ function normalizeSlug(slug) {
   return slug
     .toLowerCase()
     .trim()
-    .replace(/[^a-z0-9-]/g, '-')
-    .replace(/-+/g, '-')
-    .replace(/^-|-$/g, '');
+    .replace(/[^a-z0-9-]/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
 }
 
 /**
@@ -84,9 +84,9 @@ function ingestBlogPosts(jsonFilePath) {
     process.exit(1);
   }
 
-  const jsonContent = fs.readFileSync(jsonFilePath, 'utf-8');
+  const jsonContent = fs.readFileSync(jsonFilePath, "utf-8");
   let posts;
-  
+
   try {
     posts = JSON.parse(jsonContent);
   } catch (error) {
@@ -113,7 +113,7 @@ function ingestBlogPosts(jsonFilePath) {
     imported: 0,
     updated: 0,
     skipped: 0,
-    errors: []
+    errors: [],
   };
 
   for (const [key, post] of Object.entries(posts)) {
@@ -122,7 +122,7 @@ function ingestBlogPosts(jsonFilePath) {
       if (!post.title || !post.slug) {
         results.errors.push({
           key,
-          error: 'Missing required fields: title and slug are required'
+          error: "Missing required fields: title and slug are required",
         });
         results.skipped++;
         continue;
@@ -130,13 +130,13 @@ function ingestBlogPosts(jsonFilePath) {
 
       // Normalize slug
       const slug = normalizeSlug(post.slug);
-      
+
       // Check if post exists
-      const existing = db.prepare('SELECT id FROM blog_posts WHERE slug = ?').get(slug);
+      const existing = db.prepare("SELECT id FROM blog_posts WHERE slug = ?").get(slug);
       const isUpdate = !!existing;
 
       // Prepare content - ensure it's valid HTML
-      const content = post.content || '';
+      const content = post.content || "";
       const excerpt = post.excerpt || null;
       const published = post.published === true || post.published === 1;
       const publishedAt = post.publishedAt || (published ? new Date().toISOString() : null);
@@ -165,7 +165,7 @@ function ingestBlogPosts(jsonFilePath) {
     } catch (error) {
       results.errors.push({
         key,
-        error: error.message
+        error: error.message,
       });
       results.skipped++;
       console.error(`✗ Error processing ${key}: ${error.message}`);
@@ -177,8 +177,8 @@ function ingestBlogPosts(jsonFilePath) {
 
 // Main execution
 if (require.main === module) {
-  const jsonFile = process.argv[2] || path.join(__dirname, '..', 'data', 'blog-posts.json');
-  
+  const jsonFile = process.argv[2] || path.join(__dirname, "..", "data", "blog-posts.json");
+
   console.log(`\n📝 Blog Post Ingestion Script`);
   console.log(`📂 Reading from: ${jsonFile}\n`);
 
@@ -188,7 +188,7 @@ if (require.main === module) {
   console.log(`   ✓ Imported: ${results.imported}`);
   console.log(`   ✓ Updated: ${results.updated}`);
   console.log(`   ⚠ Skipped: ${results.skipped}`);
-  
+
   if (results.errors.length > 0) {
     console.log(`\n❌ Errors:`);
     results.errors.forEach(({ key, error }) => {
@@ -197,34 +197,8 @@ if (require.main === module) {
   }
 
   console.log(`\n✅ Done!\n`);
-  
+
   db.close();
 }
 
 module.exports = { ingestBlogPosts, normalizeSlug };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,14 +1,14 @@
 /**
  * Blog Post Creation API
- * 
+ *
  * Saves posts to BOTH:
  * 1. SQLite database (immediate visibility in blog dropdown)
  * 2. GitHub (persistence across deployments) - optional
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { saveBlogPost, createBlogPost } from '@/lib/blog-persistence';
-import db from '@/lib/db';
+import { NextRequest, NextResponse } from "next/server";
+import { saveBlogPost, createBlogPost } from "@/lib/blog-persistence";
+import db from "@/lib/db";
 
 // =============================================================================
 // DATABASE SAVE
@@ -47,8 +47,8 @@ function saveToDatabase(post: DbPost): { success: boolean; id?: number; error?: 
 
     return { success: true, id: Number(result.lastInsertRowid) };
   } catch (error) {
-    console.error('[posts/route] Database error:', error);
-    return { success: false, error: error instanceof Error ? error.message : 'Database error' };
+    console.error("[posts/route] Database error:", error);
+    return { success: false, error: error instanceof Error ? error.message : "Database error" };
   }
 }
 
@@ -69,39 +69,43 @@ interface CreatePostRequest {
   imageFilename?: string;
 }
 
-function validateRequest(data: unknown): { valid: boolean; error?: string; request?: CreatePostRequest } {
-  if (!data || typeof data !== 'object') {
-    return { valid: false, error: 'Request body must be a JSON object' };
+function validateRequest(data: unknown): {
+  valid: boolean;
+  error?: string;
+  request?: CreatePostRequest;
+} {
+  if (!data || typeof data !== "object") {
+    return { valid: false, error: "Request body must be a JSON object" };
   }
 
   const req = data as Record<string, unknown>;
 
-  if (!req.title || typeof req.title !== 'string') {
-    return { valid: false, error: 'title is required' };
+  if (!req.title || typeof req.title !== "string") {
+    return { valid: false, error: "title is required" };
   }
-  if (!req.contentHtml || typeof req.contentHtml !== 'string') {
-    return { valid: false, error: 'contentHtml is required' };
+  if (!req.contentHtml || typeof req.contentHtml !== "string") {
+    return { valid: false, error: "contentHtml is required" };
   }
-  if (!req.metaTitle || typeof req.metaTitle !== 'string') {
-    return { valid: false, error: 'metaTitle is required' };
+  if (!req.metaTitle || typeof req.metaTitle !== "string") {
+    return { valid: false, error: "metaTitle is required" };
   }
-  if (!req.metaDescription || typeof req.metaDescription !== 'string') {
-    return { valid: false, error: 'metaDescription is required' };
+  if (!req.metaDescription || typeof req.metaDescription !== "string") {
+    return { valid: false, error: "metaDescription is required" };
   }
 
   return {
     valid: true,
     request: {
       title: req.title as string,
-      category: (req.category as string) || 'Police Station Advice',
-      primaryKeyword: (req.primaryKeyword as string) || '',
+      category: (req.category as string) || "Police Station Advice",
+      primaryKeyword: (req.primaryKeyword as string) || "",
       secondaryKeywords: Array.isArray(req.secondaryKeywords) ? req.secondaryKeywords : [],
-      location: (req.location as string) || 'Kent',
+      location: (req.location as string) || "Kent",
       metaTitle: req.metaTitle as string,
       metaDescription: req.metaDescription as string,
       contentHtml: req.contentHtml as string,
       faq: Array.isArray(req.faq) ? req.faq : [],
-      imageFilename: (req.imageFilename as string) || 'blog-listing-0.jpg',
+      imageFilename: (req.imageFilename as string) || "blog-listing-0.jpg",
     },
   };
 }
@@ -112,17 +116,17 @@ function validateRequest(data: unknown): { valid: boolean; error?: string; reque
 
 function generateExcerpt(html: string, maxLength: number = 160): string {
   const text = html
-    .replace(/<[^>]+>/g, '')
-    .replace(/&nbsp;/g, ' ')
-    .replace(/&[a-z]+;/gi, ' ')
-    .replace(/\s+/g, ' ')
+    .replace(/<[^>]+>/g, "")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&[a-z]+;/gi, " ")
+    .replace(/\s+/g, " ")
     .trim();
 
   if (text.length <= maxLength) return text;
-  
+
   const truncated = text.substring(0, maxLength);
-  const lastSpace = truncated.lastIndexOf(' ');
-  return (lastSpace > maxLength * 0.7 ? truncated.substring(0, lastSpace) : truncated) + '...';
+  const lastSpace = truncated.lastIndexOf(" ");
+  return (lastSpace > maxLength * 0.7 ? truncated.substring(0, lastSpace) : truncated) + "...";
 }
 
 // =============================================================================
@@ -135,7 +139,7 @@ export async function POST(request: NextRequest) {
   try {
     body = await request.json();
   } catch {
-    return NextResponse.json({ success: false, error: 'Invalid JSON' }, { status: 400 });
+    return NextResponse.json({ success: false, error: "Invalid JSON" }, { status: 400 });
   }
 
   const reqCheck = validateRequest(body);
@@ -151,7 +155,7 @@ export async function POST(request: NextRequest) {
     category: req.category,
     primaryKeyword: req.primaryKeyword,
     secondaryKeywords: req.secondaryKeywords || [],
-    location: req.location || 'Kent',
+    location: req.location || "Kent",
     metaTitle: req.metaTitle,
     metaDescription: req.metaDescription,
     contentHtml: req.contentHtml,
@@ -178,20 +182,20 @@ export async function POST(request: NextRequest) {
   }
 
   // 4. Try to save to GitHub (optional - for cross-deployment persistence)
-  let githubResult: { success: boolean; error?: string; filePath?: string } = { 
-    success: false, 
-    error: 'GitHub not configured', 
-    filePath: '' 
+  let githubResult: { success: boolean; error?: string; filePath?: string } = {
+    success: false,
+    error: "GitHub not configured",
+    filePath: "",
   };
-  
+
   if (process.env.GITHUB_TOKEN && process.env.GITHUB_REPO) {
     githubResult = await saveBlogPost(post);
     if (!githubResult.success) {
-      console.warn('[posts/route] GitHub save failed:', githubResult.error);
+      console.warn("[posts/route] GitHub save failed:", githubResult.error);
       // Don't fail - database save succeeded
     }
   } else {
-    console.log('[posts/route] GitHub not configured, skipping GitHub save');
+    console.log("[posts/route] GitHub not configured, skipping GitHub save");
   }
 
   // 5. Return success
@@ -206,8 +210,8 @@ export async function POST(request: NextRequest) {
       image: post.featuredImage,
     },
     database: { saved: true, id: dbResult.id },
-    github: { 
-      saved: githubResult.success, 
+    github: {
+      saved: githubResult.success,
       filePath: githubResult.filePath,
       error: githubResult.success ? undefined : githubResult.error,
     },
@@ -220,11 +224,11 @@ export async function POST(request: NextRequest) {
 
 export async function GET() {
   return NextResponse.json({
-    status: 'ok',
-    message: 'Blog posts API. Use POST to create a new post.',
+    status: "ok",
+    message: "Blog posts API. Use POST to create a new post.",
     github: {
       configured: !!(process.env.GITHUB_TOKEN && process.env.GITHUB_REPO),
-      repo: process.env.GITHUB_REPO || 'not set',
+      repo: process.env.GITHUB_REPO || "not set",
     },
   });
 }

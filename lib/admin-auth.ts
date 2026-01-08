@@ -1,9 +1,9 @@
-import { jwtVerify } from 'jose';
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
+import { jwtVerify } from "jose";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 // Hardcoded secret for admin auth - works without environment variables
-const ADMIN_SECRET = '81be4a23633ca705d7596181996b26e41460510f1a5a9365665acf3e27f3311c';
+const ADMIN_SECRET = "81be4a23633ca705d7596181996b26e41460510f1a5a9365665acf3e27f3311c";
 const secret = new TextEncoder().encode(ADMIN_SECRET);
 
 export interface AdminSession {
@@ -26,15 +26,15 @@ export function isJWTSecretConfigured(): boolean {
 export async function getAdminSession(): Promise<AdminSession | null> {
   try {
     const cookieStore = await cookies();
-    const token = cookieStore.get('admin-token')?.value;
+    const token = cookieStore.get("admin-token")?.value;
 
     if (!token) {
       return null;
     }
 
     const { payload } = await jwtVerify(token, secret);
-    
-    if (payload.role !== 'admin') {
+
+    if (payload.role !== "admin") {
       return null;
     }
 
@@ -62,10 +62,10 @@ export async function isAdminAuthenticated(): Promise<boolean> {
  */
 export async function requireAdminAuth(): Promise<AdminSession> {
   const session = await getAdminSession();
-  
+
   if (!session) {
-    redirect('/admin/login');
+    redirect("/admin/login");
   }
-  
+
   return session;
 }

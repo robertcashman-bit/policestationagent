@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useRouter, useParams } from 'next/navigation';
+import { useState, useEffect } from "react";
+import { useRouter, useParams } from "next/navigation";
 
 export default function EditPostPage() {
   const router = useRouter();
@@ -10,13 +10,13 @@ export default function EditPostPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [formData, setFormData] = useState({
-    title: '',
-    slug: '',
-    content: '',
-    excerpt: '',
+    title: "",
+    slug: "",
+    content: "",
+    excerpt: "",
     published: false,
-    meta_title: '',
-    meta_description: '',
+    meta_title: "",
+    meta_description: "",
   });
 
   useEffect(() => {
@@ -27,21 +27,21 @@ export default function EditPostPage() {
           const data = await response.json();
           const post = data.post;
           setFormData({
-            title: post.title || '',
-            slug: post.slug || '',
-            content: post.content || '',
-            excerpt: post.excerpt || '',
+            title: post.title || "",
+            slug: post.slug || "",
+            content: post.content || "",
+            excerpt: post.excerpt || "",
             published: post.published === 1,
-            meta_title: post.meta_title || '',
-            meta_description: post.meta_description || '',
+            meta_title: post.meta_title || "",
+            meta_description: post.meta_description || "",
           });
         } else {
-          alert('Failed to load post');
-          router.push('/admin');
+          alert("Failed to load post");
+          router.push("/admin");
         }
       } catch (error) {
-        alert('An error occurred');
-        router.push('/admin');
+        alert("An error occurred");
+        router.push("/admin");
       } finally {
         setLoading(false);
       }
@@ -56,41 +56,41 @@ export default function EditPostPage() {
 
     try {
       const response = await fetch(`/api/admin/posts/${postId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
       if (response.ok) {
-        router.push('/admin');
+        router.push("/admin");
       } else {
         const data = await response.json();
-        alert(data.error || 'Failed to update post');
+        alert(data.error || "Failed to update post");
       }
     } catch (error) {
-      alert('An error occurred');
+      alert("An error occurred");
     } finally {
       setSaving(false);
     }
   };
 
   const handleDelete = async () => {
-    if (!confirm('Are you sure you want to delete this post?')) {
+    if (!confirm("Are you sure you want to delete this post?")) {
       return;
     }
 
     try {
       const response = await fetch(`/api/admin/posts/${postId}`, {
-        method: 'DELETE',
+        method: "DELETE",
       });
 
       if (response.ok) {
-        router.push('/admin');
+        router.push("/admin");
       } else {
-        alert('Failed to delete post');
+        alert("Failed to delete post");
       }
     } catch (error) {
-      alert('An error occurred');
+      alert("An error occurred");
     }
   };
 
@@ -119,9 +119,7 @@ export default function EditPostPage() {
           </div>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Title *
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Title *</label>
               <input
                 type="text"
                 required
@@ -131,9 +129,7 @@ export default function EditPostPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Slug *
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Slug *</label>
               <input
                 type="text"
                 required
@@ -143,9 +139,7 @@ export default function EditPostPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Content *
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Content *</label>
               <textarea
                 required
                 rows={15}
@@ -155,9 +149,7 @@ export default function EditPostPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Excerpt
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Excerpt</label>
               <textarea
                 rows={3}
                 value={formData.excerpt}
@@ -166,9 +158,7 @@ export default function EditPostPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Meta Title
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Meta Title</label>
               <input
                 type="text"
                 value={formData.meta_title}
@@ -205,7 +195,7 @@ export default function EditPostPage() {
                 disabled={saving}
                 className="bg-[#0A2342] text-white px-6 py-2 rounded hover:bg-[#08192e] disabled:opacity-50"
               >
-                {saving ? 'Saving...' : 'Save Changes'}
+                {saving ? "Saving..." : "Save Changes"}
               </button>
               <button
                 type="button"
@@ -221,4 +211,3 @@ export default function EditPostPage() {
     </div>
   );
 }
-

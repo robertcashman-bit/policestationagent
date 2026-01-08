@@ -1,4 +1,4 @@
-import db from '@/lib/db';
+import db from "@/lib/db";
 
 const slug = "voluntary-police-interview-what-it-means-and-why-legal-advice-matters";
 
@@ -76,16 +76,19 @@ const content = `<p>A voluntary police interview is a formal process that many p
 <p><small>Free legal advice applies to police station attendances only, whether voluntary or following arrest.</small></p>`;
 
 // SEO fields
-const seoTitle = "Voluntary Police Interview: What It Means and Why Legal Advice Matters | Police Station Legal Advice";
-const metaDescription = "Understanding voluntary police interviews in England & Wales. Your right to free legal advice before attendance. Expert guidance on police interviews under caution.";
+const seoTitle =
+  "Voluntary Police Interview: What It Means and Why Legal Advice Matters | Police Station Legal Advice";
+const metaDescription =
+  "Understanding voluntary police interviews in England & Wales. Your right to free legal advice before attendance. Expert guidance on police interviews under caution.";
 
 // Updated excerpt
-const excerpt = "A voluntary police interview is conducted under caution and carries the same legal weight as an interview following arrest. You are entitled to free legal advice before attendance, which cannot be refused by the police.";
+const excerpt =
+  "A voluntary police interview is conducted under caution and carries the same legal weight as an interview following arrest. You are entitled to free legal advice before attendance, which cannot be refused by the police.";
 
 try {
   // Check if post exists
-  const existing = db.prepare('SELECT id FROM blog_posts WHERE slug = ?').get(slug);
-  
+  const existing = db.prepare("SELECT id FROM blog_posts WHERE slug = ?").get(slug);
+
   if (existing) {
     // Update existing post
     const updateStmt = db.prepare(`
@@ -100,9 +103,9 @@ try {
         updated_at = datetime('now')
       WHERE slug = ?
     `);
-    
+
     updateStmt.run(content, excerpt, seoTitle, metaDescription, slug);
-    console.log('Blog post updated and published successfully');
+    console.log("Blog post updated and published successfully");
   } else {
     // Create new post if it doesn't exist
     const title = "Voluntary Police Interview: What It Means and Why Legal Advice Matters";
@@ -112,7 +115,7 @@ try {
         image, schema_json, published, published_at, created_at
       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1, datetime('now'), datetime('now'))
     `);
-    
+
     insertStmt.run(
       title,
       slug,
@@ -120,13 +123,12 @@ try {
       excerpt,
       seoTitle,
       metaDescription,
-      'blog-listing-0.jpg',
+      "blog-listing-0.jpg",
       null
     );
-    console.log('Blog post created and published successfully');
+    console.log("Blog post created and published successfully");
   }
 } catch (error: any) {
-  console.error('Error updating blog post:', error);
+  console.error("Error updating blog post:", error);
   process.exit(1);
 }
-

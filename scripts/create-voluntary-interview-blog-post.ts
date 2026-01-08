@@ -1,4 +1,4 @@
-import db from '@/lib/db';
+import db from "@/lib/db";
 
 const title = "Voluntary Police Interview: What It Means and Why Legal Advice Matters";
 const slug = "voluntary-police-interview-what-it-means-and-why-legal-advice-matters";
@@ -49,10 +49,12 @@ const content = `<p>A voluntary police interview is a formal process that many p
 
 <p>If you have been invited to attend a voluntary police interview, <a href="/voluntary-police-interview">speaking to a solicitor before attendance</a> is essential. Early legal advice can protect your interests and ensure you are properly prepared for what lies ahead.</p>`;
 
-const excerpt = "A voluntary police interview is conducted under caution and carries the same legal weight as an interview following arrest. You are entitled to free legal advice before attendance, which cannot be refused by the police.";
+const excerpt =
+  "A voluntary police interview is conducted under caution and carries the same legal weight as an interview following arrest. You are entitled to free legal advice before attendance, which cannot be refused by the police.";
 
 const metaTitle = "Voluntary Police Interview: What It Means and Why Legal Advice Matters";
-const metaDescription = "Understanding voluntary police interviews and your right to free legal advice. Expert guidance on what to expect and why legal representation matters.";
+const metaDescription =
+  "Understanding voluntary police interviews and your right to free legal advice. Expert guidance on what to expect and why legal representation matters.";
 
 try {
   const stmt = db.prepare(`
@@ -69,26 +71,23 @@ try {
     excerpt,
     metaTitle,
     metaDescription,
-    'blog-listing-0.jpg',
+    "blog-listing-0.jpg",
     null
   );
 
   console.log(`Blog post created successfully with ID: ${result.lastInsertRowid}`);
 } catch (error: any) {
-  if (error.code === 'SQLITE_CONSTRAINT_UNIQUE') {
-    console.log('Blog post with this slug already exists. Updating instead...');
+  if (error.code === "SQLITE_CONSTRAINT_UNIQUE") {
+    console.log("Blog post with this slug already exists. Updating instead...");
     const updateStmt = db.prepare(`
       UPDATE blog_posts 
       SET title = ?, content = ?, excerpt = ?, meta_title = ?, meta_description = ?, updated_at = datetime('now')
       WHERE slug = ?
     `);
     updateStmt.run(title, content, excerpt, metaTitle, metaDescription, slug);
-    console.log('Blog post updated successfully');
+    console.log("Blog post updated successfully");
   } else {
-    console.error('Error creating blog post:', error);
+    console.error("Error creating blog post:", error);
     process.exit(1);
   }
 }
-
-
-

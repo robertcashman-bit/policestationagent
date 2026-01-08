@@ -6,35 +6,35 @@
  * Preserves original blog identity for future multi-domain resolution
  */
 
-const puppeteer = require('puppeteer');
-const fs = require('fs').promises;
-const path = require('path');
-const https = require('https');
-const http = require('http');
-const { URL } = require('url');
+const puppeteer = require("puppeteer");
+const fs = require("fs").promises;
+const path = require("path");
+const https = require("https");
+const http = require("http");
+const { URL } = require("url");
 
-const PSA_URL = 'https://policestationagent.com';
-const APP_DIR = path.join(__dirname, '..', 'app');
-const PUBLIC_DIR = path.join(__dirname, '..', 'public');
-const BLOG_IMAGES_DIR = path.join(PUBLIC_DIR, 'blog-images');
-const BLOG_DATA_FILE = path.join(__dirname, '..', 'data', 'blog-posts.json');
+const PSA_URL = "https://policestationagent.com";
+const APP_DIR = path.join(__dirname, "..", "app");
+const PUBLIC_DIR = path.join(__dirname, "..", "public");
+const BLOG_IMAGES_DIR = path.join(PUBLIC_DIR, "blog-images");
+const BLOG_DATA_FILE = path.join(__dirname, "..", "data", "blog-posts.json");
 
 // Ensure directories exist
 async function ensureDirs() {
   await fs.mkdir(BLOG_IMAGES_DIR, { recursive: true });
-  await fs.mkdir(path.join(APP_DIR, 'criminaldefencekent', 'blog'), { recursive: true });
-  await fs.mkdir(path.join(APP_DIR, 'criminaldefencekent', 'blog', '[slug]'), { recursive: true });
-  await fs.mkdir(path.join(__dirname, '..', 'data'), { recursive: true });
+  await fs.mkdir(path.join(APP_DIR, "criminaldefencekent", "blog"), { recursive: true });
+  await fs.mkdir(path.join(APP_DIR, "criminaldefencekent", "blog", "[slug]"), { recursive: true });
+  await fs.mkdir(path.join(__dirname, "..", "data"), { recursive: true });
 }
 
 // Download image and return local path
 async function downloadImage(imageUrl, slug, imageIndex = 0) {
   try {
     const url = new URL(imageUrl);
-    const ext = path.extname(url.pathname) || '.jpg';
+    const ext = path.extname(url.pathname) || ".jpg";
     const filename = `${slug}-${imageIndex}${ext}`;
     const filepath = path.join(BLOG_IMAGES_DIR, filename);
-    
+
     // Check if already downloaded
     try {
       await fs.access(filepath);
@@ -42,33 +42,37 @@ async function downloadImage(imageUrl, slug, imageIndex = 0) {
     } catch {
       // File doesn't exist, download it
     }
-    
+
     return new Promise((resolve, reject) => {
-      const client = url.protocol === 'https:' ? https : http;
-      const file = require('fs').createWriteStream(filepath);
-      
-      client.get(imageUrl, (response) => {
-        if (response.statusCode === 200) {
-          response.pipe(file);
-          file.on('finish', () => {
+      const client = url.protocol === "https:" ? https : http;
+      const file = require("fs").createWriteStream(filepath);
+
+      client
+        .get(imageUrl, (response) => {
+          if (response.statusCode === 200) {
+            response.pipe(file);
+            file.on("finish", () => {
+              file.close();
+              resolve(`/blog-images/${filename}`);
+            });
+          } else if (response.statusCode === 301 || response.statusCode === 302) {
+            // Handle redirects
             file.close();
-            resolve(`/blog-images/${filename}`);
-          });
-        } else if (response.statusCode === 301 || response.statusCode === 302) {
-          // Handle redirects
+            require("fs").unlinkSync(filepath);
+            downloadImage(response.headers.location, slug, imageIndex).then(resolve).catch(reject);
+          } else {
+            file.close();
+            require("fs").unlinkSync(filepath);
+            reject(new Error(`Failed to download: ${response.statusCode}`));
+          }
+        })
+        .on("error", (err) => {
           file.close();
-          require('fs').unlinkSync(filepath);
-          downloadImage(response.headers.location, slug, imageIndex).then(resolve).catch(reject);
-        } else {
-          file.close();
-          require('fs').unlinkSync(filepath);
-          reject(new Error(`Failed to download: ${response.statusCode}`));
-        }
-      }).on('error', (err) => {
-        file.close();
-        require('fs').unlinkSync(filepath).catch(() => {});
-        reject(err);
-      });
+          require("fs")
+            .unlinkSync(filepath)
+            .catch(() => {});
+          reject(err);
+        });
     });
   } catch (error) {
     console.error(`    ⚠️  Image download failed: ${error.message}`);
@@ -80,92 +84,105 @@ async function downloadImage(imageUrl, slug, imageIndex = 0) {
 async function getAllBlogSlugs(browser) {
   const page = await browser.newPage();
   const slugs = new Set();
-  
+
   try {
     const url = `${PSA_URL}/blog`;
     console.log(`  📄 Fetching blog listing page...`);
-    
-    await page.goto(url, { waitUntil: 'networkidle0', timeout: 30000 });
-    await new Promise(r => setTimeout(r, 3000));
-    
+
+    await page.goto(url, { waitUntil: "networkidle0", timeout: 30000 });
+    await new Promise((r) => setTimeout(r, 3000));
+
     const pageSlugs = await page.evaluate(() => {
-      const links = Array.from(document.querySelectorAll('a[href*="/blog/"], a[href*="/post?slug="]'));
+      const links = Array.from(
+        document.querySelectorAll('a[href*="/blog/"], a[href*="/post?slug="]')
+      );
       const found = new Set();
-      
-      links.forEach(link => {
-        const href = link.getAttribute('href');
+
+      links.forEach((link) => {
+        const href = link.getAttribute("href");
         if (href) {
           // Handle /post?slug= format
-          if (href.includes('slug=')) {
+          if (href.includes("slug=")) {
             const match = href.match(/slug=([^&]+)/);
             if (match) {
               found.add(decodeURIComponent(match[1]));
             }
           }
           // Handle /blog/slug format
-          else if (href.includes('/blog/')) {
-            const slug = href.replace(/^.*\/blog\//, '').replace(/\/$/, '').split('?')[0].split('#')[0];
-            if (slug && slug !== 'blog' && !slug.includes('#')) {
+          else if (href.includes("/blog/")) {
+            const slug = href
+              .replace(/^.*\/blog\//, "")
+              .replace(/\/$/, "")
+              .split("?")[0]
+              .split("#")[0];
+            if (slug && slug !== "blog" && !slug.includes("#")) {
               found.add(slug);
             }
           }
         }
       });
-      
+
       return Array.from(found);
     });
-    
-    pageSlugs.forEach(slug => slugs.add(slug));
-    
+
+    pageSlugs.forEach((slug) => slugs.add(slug));
+
     // Check for pagination and get more pages
     let hasNext = await page.evaluate(() => {
-      const nextBtn = document.querySelector('button:not([disabled])');
-      return nextBtn && (nextBtn.textContent.includes('Next') || !nextBtn.disabled);
+      const nextBtn = document.querySelector("button:not([disabled])");
+      return nextBtn && (nextBtn.textContent.includes("Next") || !nextBtn.disabled);
     });
-    
+
     let pageNum = 2;
-    while (hasNext && pageNum <= 10) { // Limit to 10 pages
+    while (hasNext && pageNum <= 10) {
+      // Limit to 10 pages
       const nextUrl = `${PSA_URL}/blog?page=${pageNum}`;
-      await page.goto(nextUrl, { waitUntil: 'networkidle0', timeout: 30000 });
-      await new Promise(r => setTimeout(r, 2000));
-      
+      await page.goto(nextUrl, { waitUntil: "networkidle0", timeout: 30000 });
+      await new Promise((r) => setTimeout(r, 2000));
+
       const moreSlugs = await page.evaluate(() => {
-        const links = Array.from(document.querySelectorAll('a[href*="/blog/"], a[href*="/post?slug="]'));
+        const links = Array.from(
+          document.querySelectorAll('a[href*="/blog/"], a[href*="/post?slug="]')
+        );
         const found = new Set();
-        
-        links.forEach(link => {
-          const href = link.getAttribute('href');
+
+        links.forEach((link) => {
+          const href = link.getAttribute("href");
           if (href) {
-            if (href.includes('slug=')) {
+            if (href.includes("slug=")) {
               const match = href.match(/slug=([^&]+)/);
               if (match) {
                 found.add(decodeURIComponent(match[1]));
               }
-            } else if (href.includes('/blog/')) {
-              const slug = href.replace(/^.*\/blog\//, '').replace(/\/$/, '').split('?')[0].split('#')[0];
-              if (slug && slug !== 'blog' && !slug.includes('#')) {
+            } else if (href.includes("/blog/")) {
+              const slug = href
+                .replace(/^.*\/blog\//, "")
+                .replace(/\/$/, "")
+                .split("?")[0]
+                .split("#")[0];
+              if (slug && slug !== "blog" && !slug.includes("#")) {
                 found.add(slug);
               }
             }
           }
         });
-        
+
         return Array.from(found);
       });
-      
+
       if (moreSlugs.length === 0) {
         hasNext = false;
       } else {
-        moreSlugs.forEach(slug => slugs.add(slug));
+        moreSlugs.forEach((slug) => slugs.add(slug));
         pageNum++;
       }
-      
+
       hasNext = await page.evaluate(() => {
-        const nextBtn = document.querySelector('button:not([disabled])');
-        return nextBtn && (nextBtn.textContent.includes('Next') || !nextBtn.disabled);
+        const nextBtn = document.querySelector("button:not([disabled])");
+        return nextBtn && (nextBtn.textContent.includes("Next") || !nextBtn.disabled);
       });
     }
-    
+
     await page.close();
     return Array.from(slugs);
   } catch (error) {
@@ -177,53 +194,61 @@ async function getAllBlogSlugs(browser) {
 // Scrape individual blog post
 async function scrapeBlogPost(browser, slug) {
   const page = await browser.newPage();
-  
+
   try {
     // Try /blog/slug first, then /post?slug=slug
     let url = `${PSA_URL}/blog/${slug}`;
-    let response = await page.goto(url, { waitUntil: 'networkidle0', timeout: 30000 });
-    
+    let response = await page.goto(url, { waitUntil: "networkidle0", timeout: 30000 });
+
     if (response.status() === 404) {
       url = `${PSA_URL}/post?slug=${slug}`;
-      response = await page.goto(url, { waitUntil: 'networkidle0', timeout: 30000 });
+      response = await page.goto(url, { waitUntil: "networkidle0", timeout: 30000 });
     }
-    
-    await new Promise(r => setTimeout(r, 3000));
-    
+
+    await new Promise((r) => setTimeout(r, 3000));
+
     const data = await page.evaluate(() => {
-      const title = document.title || '';
+      const title = document.title || "";
       const metaDesc = document.querySelector('meta[name="description"]');
-      const description = metaDesc ? metaDesc.getAttribute('content') || '' : '';
-      
+      const description = metaDesc ? metaDesc.getAttribute("content") || "" : "";
+
       // Get main content - preserve exact structure
-      const main = document.querySelector('main') || 
-                   document.querySelector('article') ||
-                   document.querySelector('#content') ||
-                   document.querySelector('.content') ||
-                   document.body;
-      
-      let html = '';
+      const main =
+        document.querySelector("main") ||
+        document.querySelector("article") ||
+        document.querySelector("#content") ||
+        document.querySelector(".content") ||
+        document.body;
+
+      let html = "";
       if (main) {
         const clone = main.cloneNode(true);
         // Remove only navigation, headers, footers - preserve all content structure
-        clone.querySelectorAll('script, style, noscript, nav, header, footer, .header, .footer, .nav, .cookie-banner, [class*="cookie"], [id*="cookie"]').forEach(el => el.remove());
+        clone
+          .querySelectorAll(
+            'script, style, noscript, nav, header, footer, .header, .footer, .nav, .cookie-banner, [class*="cookie"], [id*="cookie"]'
+          )
+          .forEach((el) => el.remove());
         html = clone.innerHTML;
       }
-      
+
       // Extract images with full metadata
-      const images = Array.from(main?.querySelectorAll('img') || []);
-      const imageData = images.map(img => ({
-        src: img.src || img.getAttribute('src'),
-        alt: img.alt || '',
-        width: img.width || img.getAttribute('width') || '',
-        height: img.height || img.getAttribute('height') || '',
-        loading: img.getAttribute('loading') || 'lazy',
-        decoding: img.getAttribute('decoding') || 'async',
+      const images = Array.from(main?.querySelectorAll("img") || []);
+      const imageData = images.map((img) => ({
+        src: img.src || img.getAttribute("src"),
+        alt: img.alt || "",
+        width: img.width || img.getAttribute("width") || "",
+        height: img.height || img.getAttribute("height") || "",
+        loading: img.getAttribute("loading") || "lazy",
+        decoding: img.getAttribute("decoding") || "async",
       }));
-      
+
       // Extract published date
-      const dateText = document.querySelector('[class*="date"], [class*="published"], time, [datetime]')?.textContent || 
-                       document.querySelector('[datetime]')?.getAttribute('datetime') || '';
+      const dateText =
+        document.querySelector('[class*="date"], [class*="published"], time, [datetime]')
+          ?.textContent ||
+        document.querySelector("[datetime]")?.getAttribute("datetime") ||
+        "";
       let publishedAt = null;
       if (dateText) {
         const dateMatch = dateText.match(/(\d{1,2}\s+\w+\s+\d{4})|(\d{4}-\d{2}-\d{2})/);
@@ -233,20 +258,23 @@ async function scrapeBlogPost(browser, slug) {
           } catch {}
         }
       }
-      
+
       // Extract author
-      const authorEl = document.querySelector('[class*="author"], [class*="by"], [itemprop="author"]');
-      const author = authorEl?.textContent.replace(/by|author|:/gi, '').trim() || 'Police Station Agent';
-      
+      const authorEl = document.querySelector(
+        '[class*="author"], [class*="by"], [itemprop="author"]'
+      );
+      const author =
+        authorEl?.textContent.replace(/by|author|:/gi, "").trim() || "Police Station Agent";
+
       return { title, description, html, images: imageData, publishedAt, author };
     });
-    
+
     await page.close();
-    
+
     if (!data.html || data.html.length < 200) {
       return null;
     }
-    
+
     return data;
   } catch (error) {
     await page.close();
@@ -260,13 +288,18 @@ async function processImagesInHtml(html, slug) {
   let processedHtml = html;
   let imageIndex = 0;
   const replacements = [];
-  
+
   let match;
   while ((match = imageRegex.exec(html)) !== null) {
     const fullMatch = match[0];
     const imageUrl = match[1];
-    
-    if (imageUrl && !imageUrl.startsWith('/blog-images/') && !imageUrl.startsWith('data:') && !imageUrl.startsWith('#')) {
+
+    if (
+      imageUrl &&
+      !imageUrl.startsWith("/blog-images/") &&
+      !imageUrl.startsWith("data:") &&
+      !imageUrl.startsWith("#")
+    ) {
       try {
         const localPath = await downloadImage(imageUrl, slug, imageIndex);
         replacements.push({ original: imageUrl, local: localPath, fullMatch });
@@ -276,45 +309,50 @@ async function processImagesInHtml(html, slug) {
       }
     }
   }
-  
+
   // Apply replacements
   replacements.forEach(({ original, local, fullMatch }) => {
     processedHtml = processedHtml.replace(original, local);
   });
-  
+
   return processedHtml;
 }
 
 // Scrape blog listing page
 async function scrapeBlogListing(browser) {
   const page = await browser.newPage();
-  
+
   try {
     console.log(`  📥 Scraping blog listing page...`);
-    await page.goto(`${PSA_URL}/blog`, { waitUntil: 'networkidle0', timeout: 30000 });
-    await new Promise(r => setTimeout(r, 3000));
-    
+    await page.goto(`${PSA_URL}/blog`, { waitUntil: "networkidle0", timeout: 30000 });
+    await new Promise((r) => setTimeout(r, 3000));
+
     const data = await page.evaluate(() => {
-      const title = document.title || '';
+      const title = document.title || "";
       const metaDesc = document.querySelector('meta[name="description"]');
-      const description = metaDesc ? metaDesc.getAttribute('content') || '' : '';
-      
+      const description = metaDesc ? metaDesc.getAttribute("content") || "" : "";
+
       // Get main content - preserve exact structure
-      const main = document.querySelector('main') || 
-                   document.querySelector('#content') ||
-                   document.querySelector('.content') ||
-                   document.body;
-      
-      let html = '';
+      const main =
+        document.querySelector("main") ||
+        document.querySelector("#content") ||
+        document.querySelector(".content") ||
+        document.body;
+
+      let html = "";
       if (main) {
         const clone = main.cloneNode(true);
-        clone.querySelectorAll('script, style, noscript, nav, header, footer, .header, .footer, .nav, .cookie-banner, [class*="cookie"], [id*="cookie"]').forEach(el => el.remove());
+        clone
+          .querySelectorAll(
+            'script, style, noscript, nav, header, footer, .header, .footer, .nav, .cookie-banner, [class*="cookie"], [id*="cookie"]'
+          )
+          .forEach((el) => el.remove());
         html = clone.innerHTML;
       }
-      
+
       return { title, description, html };
     });
-    
+
     await page.close();
     return data;
   } catch (error) {
@@ -324,55 +362,55 @@ async function scrapeBlogListing(browser) {
 }
 
 async function main() {
-  console.log(`\n${'═'.repeat(70)}`);
+  console.log(`\n${"═".repeat(70)}`);
   console.log(`  EXACT BLOG CLONE - policestationagent.com/blog`);
   console.log(`  Target: /criminaldefencekent/blog`);
-  console.log(`${'═'.repeat(70)}\n`);
+  console.log(`${"═".repeat(70)}\n`);
 
   await ensureDirs();
-  
-  const browser = await puppeteer.launch({ 
+
+  const browser = await puppeteer.launch({
     headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
   });
 
   try {
     // Step 1: Scrape blog listing page
-    console.log('Step 1: Scraping blog listing page...\n');
+    console.log("Step 1: Scraping blog listing page...\n");
     const listingData = await scrapeBlogListing(browser);
-    
+
     // Process images in listing page
-    const processedListingHtml = await processImagesInHtml(listingData.html, 'blog-listing');
-    
+    const processedListingHtml = await processImagesInHtml(listingData.html, "blog-listing");
+
     // Step 2: Get all blog post slugs
-    console.log('\nStep 2: Discovering all blog posts...\n');
+    console.log("\nStep 2: Discovering all blog posts...\n");
     const slugs = await getAllBlogSlugs(browser);
     console.log(`  Found ${slugs.length} blog posts\n`);
-    
+
     // Step 3: Scrape each blog post
-    console.log('Step 3: Scraping individual blog posts...\n');
+    console.log("Step 3: Scraping individual blog posts...\n");
     const blogPosts = {};
     let success = 0;
     let failed = 0;
-    
+
     for (let i = 0; i < slugs.length; i++) {
       const slug = slugs[i];
       console.log(`[${i + 1}/${slugs.length}] Processing: ${slug}`);
-      
+
       try {
         const postData = await scrapeBlogPost(browser, slug);
-        
+
         if (postData) {
           // Process images in content
           const processedContent = await processImagesInHtml(postData.html, slug);
-          
+
           // Clean content - update internal links but preserve structure
           let cleanContent = processedContent
-            .replace(/policestationagent\.com\/blog\//gi, '/criminaldefencekent/blog/')
-            .replace(/policestationagent\.com\/post\?slug=/gi, '/criminaldefencekent/blog/')
+            .replace(/policestationagent\.com\/blog\//gi, "/criminaldefencekent/blog/")
+            .replace(/policestationagent\.com\/post\?slug=/gi, "/criminaldefencekent/blog/")
             .replace(/href=["']\/blog\//gi, 'href="/criminaldefencekent/blog/')
             .replace(/href=["']\/post\?slug=/gi, 'href="/criminaldefencekent/blog/');
-          
+
           blogPosts[slug] = {
             title: postData.title,
             slug: slug,
@@ -383,7 +421,7 @@ async function main() {
             metaTitle: postData.title,
             metaDescription: postData.description,
           };
-          
+
           success++;
         } else {
           console.log(`    ⚠️  No content found`);
@@ -393,23 +431,23 @@ async function main() {
         console.error(`    ❌ Error: ${error.message}`);
         failed++;
       }
-      
-      await new Promise(r => setTimeout(r, 1500)); // Rate limiting
+
+      await new Promise((r) => setTimeout(r, 1500)); // Rate limiting
     }
-    
+
     // Step 4: Save blog posts data
-    console.log('\nStep 4: Saving blog posts data...\n');
-    await fs.writeFile(BLOG_DATA_FILE, JSON.stringify(blogPosts, null, 2), 'utf-8');
+    console.log("\nStep 4: Saving blog posts data...\n");
+    await fs.writeFile(BLOG_DATA_FILE, JSON.stringify(blogPosts, null, 2), "utf-8");
     console.log(`  ✅ Saved ${Object.keys(blogPosts).length} blog posts to ${BLOG_DATA_FILE}`);
-    
+
     // Step 5: Create blog listing page
-    console.log('\nStep 5: Creating blog listing page...\n');
+    console.log("\nStep 5: Creating blog listing page...\n");
     let cleanListingContent = processedListingHtml
-      .replace(/policestationagent\.com\/blog\//gi, '/criminaldefencekent/blog/')
-      .replace(/policestationagent\.com\/post\?slug=/gi, '/criminaldefencekent/blog/')
+      .replace(/policestationagent\.com\/blog\//gi, "/criminaldefencekent/blog/")
+      .replace(/policestationagent\.com\/post\?slug=/gi, "/criminaldefencekent/blog/")
       .replace(/href=["']\/blog\//gi, 'href="/criminaldefencekent/blog/')
       .replace(/href=["']\/post\?slug=/gi, 'href="/criminaldefencekent/blog/');
-    
+
     const listingPageContent = `import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import type { Metadata } from 'next';
@@ -446,13 +484,13 @@ export default function BlogPage() {
   );
 }
 `;
-    
-    const listingFilePath = path.join(APP_DIR, 'criminaldefencekent', 'blog', 'page.tsx');
-    await fs.writeFile(listingFilePath, listingPageContent, 'utf-8');
+
+    const listingFilePath = path.join(APP_DIR, "criminaldefencekent", "blog", "page.tsx");
+    await fs.writeFile(listingFilePath, listingPageContent, "utf-8");
     console.log(`  ✅ Created blog listing page`);
-    
+
     // Step 6: Create dynamic blog post page
-    console.log('\nStep 6: Creating dynamic blog post page...\n');
+    console.log("\nStep 6: Creating dynamic blog post page...\n");
     const dynamicPageContent = `import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import type { Metadata } from 'next';
@@ -526,26 +564,25 @@ export default function BlogPostPage({ params }: PageProps) {
   );
 }
 `;
-    
-    const dynamicPagePath = path.join(APP_DIR, 'criminaldefencekent', 'blog', '[slug]', 'page.tsx');
-    await fs.writeFile(dynamicPagePath, dynamicPageContent, 'utf-8');
+
+    const dynamicPagePath = path.join(APP_DIR, "criminaldefencekent", "blog", "[slug]", "page.tsx");
+    await fs.writeFile(dynamicPagePath, dynamicPageContent, "utf-8");
     console.log(`  ✅ Created dynamic blog post page`);
-    
-    console.log(`\n${'═'.repeat(70)}`);
+
+    console.log(`\n${"═".repeat(70)}`);
     console.log(`  RESULTS`);
-    console.log(`${'═'.repeat(70)}`);
+    console.log(`${"═".repeat(70)}`);
     console.log(`  ✅ Successfully cloned: ${success} posts`);
     console.log(`  ❌ Failed: ${failed} posts`);
     console.log(`  📄 Blog listing page: Created`);
     console.log(`  📄 Dynamic post page: Created`);
     console.log(`  📦 Blog data file: ${BLOG_DATA_FILE}`);
-    console.log(`${'═'.repeat(70)}\n`);
-    
-    console.log('✅ Blog clone complete!');
-    console.log('   Blog available at: /criminaldefencekent/blog');
-    console.log('   Original identity preserved: policestationagent/blog');
-    console.log('   All images downloaded to: /public/blog-images/\n');
-    
+    console.log(`${"═".repeat(70)}\n`);
+
+    console.log("✅ Blog clone complete!");
+    console.log("   Blog available at: /criminaldefencekent/blog");
+    console.log("   Original identity preserved: policestationagent/blog");
+    console.log("   All images downloaded to: /public/blog-images/\n");
   } catch (error) {
     console.error(`\n❌ Fatal error: ${error.message}`);
     console.error(error.stack);
@@ -555,45 +592,3 @@ export default function BlogPostPage({ params }: PageProps) {
 }
 
 main().catch(console.error);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

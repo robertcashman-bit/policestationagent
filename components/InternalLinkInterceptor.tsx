@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { useRouter } from 'next/navigation';
-import type { MouseEvent, ReactNode } from 'react';
+import { useRouter } from "next/navigation";
+import type { MouseEvent, ReactNode } from "react";
 
 function findAnchor(start: HTMLElement | null): HTMLAnchorElement | null {
   let el: HTMLElement | null = start;
   while (el) {
-    if (el.tagName === 'A') return el as HTMLAnchorElement;
+    if (el.tagName === "A") return el as HTMLAnchorElement;
     el = el.parentElement;
   }
   return null;
@@ -28,22 +28,22 @@ export default function InternalLinkInterceptor({ children }: { children: ReactN
     const anchor = findAnchor(target);
     if (!anchor) return;
 
-    const hrefAttr = anchor.getAttribute('href');
+    const hrefAttr = anchor.getAttribute("href");
     if (!hrefAttr) return;
 
     // Let the browser handle in-page anchors.
-    if (hrefAttr.startsWith('#')) return;
+    if (hrefAttr.startsWith("#")) return;
 
     // Let the browser handle downloads and explicit new-tab links.
-    if (anchor.hasAttribute('download')) return;
-    const targetAttr = anchor.getAttribute('target');
-    if (targetAttr && targetAttr !== '_self') return;
+    if (anchor.hasAttribute("download")) return;
+    const targetAttr = anchor.getAttribute("target");
+    if (targetAttr && targetAttr !== "_self") return;
 
     // Let the browser handle special protocols.
     if (
-      hrefAttr.startsWith('mailto:') ||
-      hrefAttr.startsWith('tel:') ||
-      hrefAttr.startsWith('sms:')
+      hrefAttr.startsWith("mailto:") ||
+      hrefAttr.startsWith("tel:") ||
+      hrefAttr.startsWith("sms:")
     ) {
       return;
     }
@@ -65,4 +65,3 @@ export default function InternalLinkInterceptor({ children }: { children: ReactN
 
   return <div onClickCapture={onClickCapture}>{children}</div>;
 }
-

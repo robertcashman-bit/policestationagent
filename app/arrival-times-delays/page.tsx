@@ -1,19 +1,22 @@
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import type { Metadata } from 'next';
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'Duty Solicitor Arrival Times Kent | Police Station Representation Solicitor | Expected Times',
-  description: 'Expected arrival times for duty solicitor representation at Kent police stations. Understanding delays and your rights under PACE 1984 when waiting for a solicitor. Accredited Duty Solicitor Kent.',
+  title:
+    "Duty Solicitor Arrival Times Kent | Police Station Representation Solicitor | Expected Times",
+  description:
+    "Expected arrival times for duty solicitor representation at Kent police stations. Understanding delays and your rights under PACE 1984 when waiting for a solicitor. Accredited Duty Solicitor Kent.",
   alternates: {
-    canonical: 'https://criminaldefencekent.co.uk/arrival-times-delays',
+    canonical: "https://criminaldefencekent.co.uk/arrival-times-delays",
   },
   openGraph: {
-    title: 'Duty Solicitor Arrival Times Kent | Police Station Representation Solicitor',
-    description: 'Expected arrival times for duty solicitor representation at Kent police stations. Understanding delays and your rights under PACE 1984 when waiting for a solicitor.',
-    url: 'https://criminaldefencekent.co.uk/arrival-times-delays',
-    siteName: 'Criminal Defence Kent',
-    type: 'website',
+    title: "Duty Solicitor Arrival Times Kent | Police Station Representation Solicitor",
+    description:
+      "Expected arrival times for duty solicitor representation at Kent police stations. Understanding delays and your rights under PACE 1984 when waiting for a solicitor.",
+    url: "https://criminaldefencekent.co.uk/arrival-times-delays",
+    siteName: "Criminal Defence Kent",
+    type: "website",
   },
 };
 
@@ -24,35 +27,53 @@ export default function Page() {
       <main className="flex-grow relative" id="main-content" role="main" aria-live="polite">
         <div className="bg-slate-50 min-h-screen">
           <div className="prose prose-lg max-w-6xl mx-auto px-4 py-16">
-            <h1 className="text-4xl font-bold mb-6">Arrival Times & Delays for Police Station Representation</h1>
-            
+            <h1 className="text-4xl font-bold mb-6">
+              Arrival Times & Delays for Police Station Representation
+            </h1>
+
             <p className="lead text-xl text-slate-700 mb-8">
-              Understanding expected arrival times and your rights regarding delays when waiting for legal representation at the police station.
+              Understanding expected arrival times and your rights regarding delays when waiting for
+              legal representation at the police station.
             </p>
 
             <section className="mb-8">
               <h2 className="text-3xl font-semibold mb-4">Expected Arrival Times</h2>
               <p className="mb-4">
-                Under PACE Code C, the police must allow you to consult with a solicitor as soon as practicable.<sup>1</sup> Typical arrival times vary depending on:
+                Under PACE Code C, the police must allow you to consult with a solicitor as soon as
+                practicable.<sup>1</sup> Typical arrival times vary depending on:
               </p>
               <ul className="list-disc pl-6 mb-4 space-y-2">
-                <li><strong>Location:</strong> Urban areas typically 30-60 minutes, rural areas may take longer</li>
-                <li><strong>Time of day:</strong> Peak times may have longer delays</li>
-                <li><strong>Traffic conditions:</strong> Can significantly impact arrival times</li>
-                <li><strong>Availability:</strong> Solicitor availability at the time of request</li>
+                <li>
+                  <strong>Location:</strong> Urban areas typically 30-60 minutes, rural areas may
+                  take longer
+                </li>
+                <li>
+                  <strong>Time of day:</strong> Peak times may have longer delays
+                </li>
+                <li>
+                  <strong>Traffic conditions:</strong> Can significantly impact arrival times
+                </li>
+                <li>
+                  <strong>Availability:</strong> Solicitor availability at the time of request
+                </li>
               </ul>
               <p className="mb-4">
-                We aim to arrive within 30-60 minutes for most Kent police stations, though this can vary depending on circumstances.
+                We aim to arrive within 30-60 minutes for most Kent police stations, though this can
+                vary depending on circumstances.
               </p>
             </section>
 
             <section className="mb-8">
               <h2 className="text-3xl font-semibold mb-4">Your Rights During Delays</h2>
               <p className="mb-4">
-                If there is a delay in the solicitor's arrival, you have important rights:<sup>2</sup>
+                If there is a delay in the solicitor's arrival, you have important rights:
+                <sup>2</sup>
               </p>
               <ul className="list-disc pl-6 mb-4 space-y-2">
-                <li>You should not be interviewed until your solicitor arrives (unless you waive this right)</li>
+                <li>
+                  You should not be interviewed until your solicitor arrives (unless you waive this
+                  right)
+                </li>
                 <li>You can request updates on the solicitor's estimated arrival time</li>
                 <li>You can speak to the solicitor on the phone while waiting</li>
                 <li>The police should not put pressure on you to proceed without a solicitor</li>
@@ -60,9 +81,12 @@ export default function Page() {
             </section>
 
             <section className="mb-8">
-              <h2 className="text-3xl font-semibold mb-4">When Can the Police Proceed Without Waiting?</h2>
+              <h2 className="text-3xl font-semibold mb-4">
+                When Can the Police Proceed Without Waiting?
+              </h2>
               <p className="mb-4">
-                The police can only proceed with an interview without waiting for a solicitor in very limited circumstances:<sup>3</sup>
+                The police can only proceed with an interview without waiting for a solicitor in
+                very limited circumstances:<sup>3</sup>
               </p>
               <ul className="list-disc pl-6 mb-4 space-y-2">
                 <li>If waiting would cause unreasonable delay to the investigation</li>
@@ -72,14 +96,16 @@ export default function Page() {
                 <li>If the solicitor cannot be contacted or refuses to attend</li>
               </ul>
               <p className="mb-4">
-                Even in these circumstances, you should still be allowed to speak to a solicitor on the phone before the interview.
+                Even in these circumstances, you should still be allowed to speak to a solicitor on
+                the phone before the interview.
               </p>
             </section>
 
             <section className="mb-8">
               <h2 className="text-3xl font-semibold mb-4">Telephone Advice While Waiting</h2>
               <p className="mb-4">
-                While waiting for your solicitor to arrive, you can receive advice over the telephone.<sup>4</sup> This allows you to:
+                While waiting for your solicitor to arrive, you can receive advice over the
+                telephone.<sup>4</sup> This allows you to:
               </p>
               <ul className="list-disc pl-6 mb-4 space-y-2">
                 <li>Get immediate advice on your rights</li>
@@ -104,10 +130,22 @@ export default function Page() {
             <section className="mb-8 bg-blue-50 p-6 rounded-lg border border-blue-200">
               <h2 className="text-2xl font-semibold mb-4">Extended Hours Service</h2>
               <p className="mb-4">
-                We provide extended hours police station representation across Kent including evenings, weekends and bank holidays. When you request our services, we will attend as quickly as possible. In most cases, we can provide telephone advice immediately while travelling to the station.
+                We provide extended hours police station representation across Kent including
+                evenings, weekends and bank holidays. When you request our services, we will attend
+                as quickly as possible. In most cases, we can provide telephone advice immediately
+                while travelling to the station.
               </p>
               <p className="mb-4">
-                <strong>Call us on <a href="tel:01732247427" className="text-blue-600 hover:text-blue-800 font-semibold">01732 247427</a></strong> for immediate advice and representation by an Accredited Duty Solicitor.
+                <strong>
+                  Call us on{" "}
+                  <a
+                    href="tel:01732247427"
+                    className="text-blue-600 hover:text-blue-800 font-semibold"
+                  >
+                    01732 247427
+                  </a>
+                </strong>{" "}
+                for immediate advice and representation by an Accredited Duty Solicitor.
               </p>
             </section>
 

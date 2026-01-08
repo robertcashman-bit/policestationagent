@@ -1,4 +1,4 @@
-import Script from 'next/script';
+import Script from "next/script";
 
 interface BreadcrumbItem {
   name: string;
@@ -13,11 +13,11 @@ export function BreadcrumbList({ items }: BreadcrumbListProps) {
   const schema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
-    "itemListElement": items.map((item, index) => ({
+    itemListElement: items.map((item, index) => ({
       "@type": "ListItem",
-      "position": index + 1,
-      "name": item.name,
-      "item": item.url,
+      position: index + 1,
+      name: item.name,
+      item: item.url,
     })),
   };
 
@@ -45,12 +45,12 @@ export function FAQPage({ items }: FAQPageProps) {
   const schema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    "mainEntity": items.map((item) => ({
+    mainEntity: items.map((item) => ({
       "@type": "Question",
-      "name": item.question,
-      "acceptedAnswer": {
+      name: item.question,
+      acceptedAnswer: {
         "@type": "Answer",
-        "text": item.answer,
+        text: item.answer,
       },
     })),
   };
@@ -65,32 +65,3 @@ export function FAQPage({ items }: FAQPageProps) {
     />
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

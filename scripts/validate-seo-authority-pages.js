@@ -11,32 +11,32 @@
  * - FAQ structured data (FAQPage JSON-LD via JsonLd component)
  */
 
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
-const ROOT = path.join(__dirname, '..');
+const ROOT = path.join(__dirname, "..");
 
 const PAGES = [
-  'app/custody-time-limits/page.tsx',
-  'app/no-comment-interview/page.tsx',
-  'app/prepared-statements/page.tsx',
-  'app/released-under-investigation/page.tsx',
-  'app/adverse-inference/page.tsx',
-  'app/police-bail-explained/page.tsx',
-  'app/pace-code-c/page.tsx',
-  'app/youth-custody-rights/page.tsx',
-  'app/appropriate-adult/page.tsx',
-  'app/can-police-take-my-phone/page.tsx',
-  'app/dna-fingerprints-police-station/page.tsx',
+  "app/custody-time-limits/page.tsx",
+  "app/no-comment-interview/page.tsx",
+  "app/prepared-statements/page.tsx",
+  "app/released-under-investigation/page.tsx",
+  "app/adverse-inference/page.tsx",
+  "app/police-bail-explained/page.tsx",
+  "app/pace-code-c/page.tsx",
+  "app/youth-custody-rights/page.tsx",
+  "app/appropriate-adult/page.tsx",
+  "app/can-police-take-my-phone/page.tsx",
+  "app/dna-fingerprints-police-station/page.tsx",
 ];
 
 function checkFile(relPath) {
   const abs = path.join(ROOT, relPath);
-  const text = fs.readFileSync(abs, 'utf8');
+  const text = fs.readFileSync(abs, "utf8");
 
   const issues = [];
   if (!/alternates:\s*\{\s*canonical:\s*['"`]https:\/\/policestationagent\.com\//.test(text)) {
-    issues.push('missing/invalid canonical (expected https://policestationagent.com/...)');
+    issues.push("missing/invalid canonical (expected https://policestationagent.com/...)");
   }
   if (!/Quick Answer:/i.test(text)) {
     issues.push('missing "Quick Answer" snippet box');
@@ -45,10 +45,10 @@ function checkFile(relPath) {
     issues.push('missing E‑E‑A‑T marker ("In my experience")');
   }
   if (!/['"`]@type['"`]\s*:\s*['"`]FAQPage['"`]/.test(text)) {
-    issues.push('missing FAQPage schema');
+    issues.push("missing FAQPage schema");
   }
   if (!/JsonLd\s+data=\{faqSchema\}/.test(text)) {
-    issues.push('missing JsonLd injection for FAQ schema');
+    issues.push("missing JsonLd injection for FAQ schema");
   }
 
   return issues;
@@ -67,7 +67,7 @@ function main() {
     return;
   }
 
-  console.error('SEO authority validation FAILED:\n');
+  console.error("SEO authority validation FAILED:\n");
   for (const f of failures) {
     console.error(`- ${f.page}`);
     for (const issue of f.issues) console.error(`  - ${issue}`);
@@ -78,4 +78,3 @@ function main() {
 if (require.main === module) {
   main();
 }
-

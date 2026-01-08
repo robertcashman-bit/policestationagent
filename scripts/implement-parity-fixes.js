@@ -1,30 +1,30 @@
-const fs = require('fs').promises;
-const path = require('path');
-const puppeteer = require('puppeteer');
+const fs = require("fs").promises;
+const path = require("path");
+const puppeteer = require("puppeteer");
 
-const REPORT_PATH = path.join(__dirname, '..', 'CONTENT_PARITY_REPORT.json');
-const APP_DIR = path.join(__dirname, '..', 'app');
+const REPORT_PATH = path.join(__dirname, "..", "CONTENT_PARITY_REPORT.json");
+const APP_DIR = path.join(__dirname, "..", "app");
 
 async function scrapePageContent(url) {
   const browser = await puppeteer.launch({ headless: true });
   try {
     const page = await browser.newPage();
-    await page.goto(url, { waitUntil: 'networkidle2', timeout: 30000 });
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
+    await page.goto(url, { waitUntil: "networkidle2", timeout: 30000 });
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
     const content = await page.evaluate(() => {
       // Extract main content
-      const main = document.querySelector('main') || document.body;
+      const main = document.querySelector("main") || document.body;
       return {
-        title: document.querySelector('title')?.textContent?.trim() || '',
-        h1: document.querySelector('h1')?.textContent?.trim() || '',
-        metaDescription: document.querySelector('meta[name="description"]')?.content || '',
-        canonical: document.querySelector('link[rel="canonical"]')?.href || '',
+        title: document.querySelector("title")?.textContent?.trim() || "",
+        h1: document.querySelector("h1")?.textContent?.trim() || "",
+        metaDescription: document.querySelector('meta[name="description"]')?.content || "",
+        canonical: document.querySelector('link[rel="canonical"]')?.href || "",
         html: main.innerHTML,
-        text: main.textContent?.replace(/\s+/g, ' ').trim() || '',
+        text: main.textContent?.replace(/\s+/g, " ").trim() || "",
       };
     });
-    
+
     await browser.close();
     return content;
   } catch (error) {
@@ -34,20 +34,20 @@ async function scrapePageContent(url) {
 }
 
 function pathToRoute(pathStr) {
-  return pathStr.replace(/^\//, '').replace(/\/$/, '') || 'page';
+  return pathStr.replace(/^\//, "").replace(/\/$/, "") || "page";
 }
 
 function createNextPage(route, content, sourceUrl) {
-  const routeParts = route.split('/').filter(Boolean);
-  const fileName = routeParts.length > 0 ? routeParts[routeParts.length - 1] : 'page';
+  const routeParts = route.split("/").filter(Boolean);
+  const fileName = routeParts.length > 0 ? routeParts[routeParts.length - 1] : "page";
   const dirPath = path.join(APP_DIR, ...routeParts.slice(0, -1));
-  const filePath = path.join(APP_DIR, ...routeParts, 'page.tsx');
-  
+  const filePath = path.join(APP_DIR, ...routeParts, "page.tsx");
+
   // Extract structured content
   const title = content.title || content.h1 || fileName;
   const description = content.metaDescription || content.text.substring(0, 160);
   const canonical = `https://criminaldefencekent.co.uk/${route}`;
-  
+
   const pageContent = `import type { Metadata } from 'next';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -76,7 +76,7 @@ export default function Page() {
           <h1 className="text-4xl font-bold text-slate-900 mb-6">${content.h1 || title}</h1>
           <div 
             className="prose prose-lg max-w-none"
-            dangerouslySetInnerHTML={{ __html: \`${content.html.replace(/`/g, '\\`').replace(/\$/g, '\\$')}\` }}
+            dangerouslySetInnerHTML={{ __html: \`${content.html.replace(/`/g, "\\`").replace(/\$/g, "\\$")}\` }}
           />
         </div>
       </main>
@@ -90,14 +90,14 @@ export default function Page() {
 }
 
 async function implementMissingPages() {
-  console.log('📋 Reading content parity report...');
-  
+  console.log("📋 Reading content parity report...");
+
   let report;
   try {
-    const reportData = await fs.readFile(REPORT_PATH, 'utf8');
+    const reportData = await fs.readFile(REPORT_PATH, "utf8");
     report = JSON.parse(reportData);
   } catch (error) {
-    console.error('❌ Could not read report. Run deep-crawl-parity.js first.');
+    console.error("❌ Could not read report. Run deep-crawl-parity.js first.");
     return;
   }
 
@@ -108,10 +108,10 @@ async function implementMissingPages() {
   console.log(`  Parity issues: ${report.summary.parityIssues}\n`);
 
   // Find missing pages
-  const missingPages = report.routeMatrix.filter(m => m.targetUrl === 'MISSING');
-  
+  const missingPages = report.routeMatrix.filter((m) => m.targetUrl === "MISSING");
+
   if (missingPages.length === 0) {
-    console.log('✅ No missing pages found!');
+    console.log("✅ No missing pages found!");
     return;
   }
 
@@ -121,28 +121,29 @@ async function implementMissingPages() {
   let created = 0;
   let errors = 0;
 
-  for (const missing of missingPages.slice(0, 20)) { // Limit to 20 for now
+  for (const missing of missingPages.slice(0, 20)) {
+    // Limit to 20 for now
     try {
       console.log(`  Creating: ${missing.sourcePath}`);
-      
+
       // Scrape source page
       const sourceContent = await scrapePageContent(missing.sourceUrl);
-      
+
       // Create Next.js page
       const route = pathToRoute(missing.sourcePath);
       const { filePath, content } = createNextPage(route, sourceContent, missing.sourceUrl);
-      
+
       // Ensure directory exists
       await fs.mkdir(path.dirname(filePath), { recursive: true });
-      
+
       // Write file
-      await fs.writeFile(filePath, content, 'utf8');
-      
+      await fs.writeFile(filePath, content, "utf8");
+
       created++;
       console.log(`    ✅ Created: ${filePath}`);
-      
+
       // Rate limiting
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 2000));
     } catch (error) {
       errors++;
       console.error(`    ❌ Error creating ${missing.sourcePath}:`, error.message);
@@ -162,4 +163,3 @@ if (require.main === module) {
 }
 
 module.exports = { implementMissingPages, scrapePageContent, createNextPage };
-

@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { useState } from 'react';
-import { getFormattedVersion, getLastUpdateDateTime } from '@/lib/version';
+import Link from "next/link";
+import { useState } from "react";
+import { getFormattedVersion, getLastUpdateDateTime } from "@/lib/version";
 
 // Link data organized by category
 const serviceLinks = [
@@ -42,7 +42,10 @@ const helpLinks = [
   { href: "/can-police-take-my-phone", label: "Can Police Take My Phone?" },
   { href: "/dna-fingerprints-police-station", label: "DNA & Fingerprints" },
   { href: "/blog", label: "Legal Advice Blog", priority: true },
-  { href: "/what-to-do-if-a-loved-one-is-arrested", label: "What to Do if a Loved One is Arrested" },
+  {
+    href: "/what-to-do-if-a-loved-one-is-arrested",
+    label: "What to Do if a Loved One is Arrested",
+  },
   { href: "/arrested-what-to-do", label: "Arrested - What to Do" },
   { href: "/article-loved-one-arrested-kent", label: "Loved One Arrested in Kent" },
   { href: "/arrival-times-delays", label: "Arrival Times & Delays" },
@@ -50,21 +53,36 @@ const helpLinks = [
   { href: "/importance-of-early-legal-advice", label: "Importance of Early Legal Advice" },
   { href: "/preparing-for-police-interview", label: "Preparing for Police Interview" },
   { href: "/voluntary-police-interview-risks", label: "Voluntary Interview Risks" },
-  { href: "/what-happens-if-ignore-police-interview", label: "What Happens if You Ignore Interview" },
+  {
+    href: "/what-happens-if-ignore-police-interview",
+    label: "What Happens if You Ignore Interview",
+  },
   { href: "/vulnerable-adults-in-custody", label: "Vulnerable Adults in Custody" },
-  { href: "/police-station-interviews-kent-rights", label: "Police Station Interviews Kent Rights" },
+  {
+    href: "/police-station-interviews-kent-rights",
+    label: "Police Station Interviews Kent Rights",
+  },
   { href: "/policeinterviewhelp", label: "Police Interview Help" },
   { href: "/refusingpoliceinterview", label: "Refusing Police Interview" },
   { href: "/afterapoliceinterview", label: "After Police Interview (Alt)" },
-  { href: "/nofurtheractionafterpoliceinterview", label: "No Further Action After Interview (Alt)" },
+  {
+    href: "/nofurtheractionafterpoliceinterview",
+    label: "No Further Action After Interview (Alt)",
+  },
   { href: "/after-a-police-interview", label: "After a Police Interview" },
   { href: "/arrested-at-police-station", label: "Arrested at Police Station" },
   { href: "/article-interview-under-caution", label: "Interview Under Caution Guide" },
   { href: "/article-police-caution-before-interview", label: "Police Caution Before Interview" },
-  { href: "/article-rights-kent-police-station-2025", label: "Your Rights at Kent Police Stations 2025" },
+  {
+    href: "/article-rights-kent-police-station-2025",
+    label: "Your Rights at Kent Police Stations 2025",
+  },
   { href: "/what-is-a-criminal-solicitor", label: "What is a Criminal Solicitor?" },
   { href: "/what-is-a-police-station-rep", label: "What is a Police Station Rep?" },
-  { href: "/what-to-expect-at-a-police-interview-in-kent", label: "What to Expect at Police Interview" },
+  {
+    href: "/what-to-expect-at-a-police-interview-in-kent",
+    label: "What to Expect at Police Interview",
+  },
   { href: "/your-rights-in-custody", label: "Your Rights in Custody" },
 ];
 
@@ -204,7 +222,7 @@ export default function Footer() {
   const appVersion = getFormattedVersion();
   const lastUpdate = getLastUpdateDateTime();
   const [isExpanded, setIsExpanded] = useState(false);
-  
+
   return (
     <footer className="bg-slate-900 text-white relative z-10">
       {/* Minimal Primary Footer */}
@@ -213,77 +231,182 @@ export default function Footer() {
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-4">
           {/* Brand */}
           <div className="flex items-center gap-4">
-            <Link href="/" className="font-bold text-lg text-white hover:text-blue-300 transition-colors">
+            <Link
+              href="/"
+              className="font-bold text-lg text-white hover:text-blue-300 transition-colors"
+            >
               Police Station Agent
             </Link>
             <span className="hidden sm:inline text-slate-500">|</span>
             <span className="hidden sm:inline text-sm text-slate-400">Kent Criminal Defence</span>
           </div>
-          
+
           {/* Contact */}
           <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-sm">
-            <a href="tel:01732247427" className="flex items-center gap-1.5 text-white hover:text-blue-300 transition-colors font-medium">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+            <a
+              href="tel:01732247427"
+              className="flex items-center gap-1.5 text-white hover:text-blue-300 transition-colors font-medium"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="w-4 h-4"
+              >
                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
               </svg>
               01732 247427
             </a>
             <span className="text-slate-600">|</span>
-            <a href="sms:07535494446?body=I%20need%20police%20station%20representation" className="flex items-center gap-1.5 text-slate-300 hover:text-blue-300 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+            <a
+              href="sms:07535494446?body=I%20need%20police%20station%20representation"
+              className="flex items-center gap-1.5 text-slate-300 hover:text-blue-300 transition-colors"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="w-4 h-4"
+              >
                 <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path>
               </svg>
               Text Us
             </a>
             <span className="text-slate-600">|</span>
-            <a href="mailto:robertcashman@defencelegalservices.co.uk" className="text-slate-300 hover:text-blue-300 transition-colors">
+            <a
+              href="mailto:robertcashman@defencelegalservices.co.uk"
+              className="text-slate-300 hover:text-blue-300 transition-colors"
+            >
               Email
             </a>
           </div>
-          
+
           {/* Social Links */}
           <div className="flex items-center gap-3">
-            <a href="https://www.facebook.com/policestationagent" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-blue-500 transition-colors" aria-label="Facebook">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <a
+              href="https://www.facebook.com/policestationagent"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-slate-400 hover:text-blue-500 transition-colors"
+              aria-label="Facebook"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
               </svg>
             </a>
-            <a href="https://www.linkedin.com/company/police-station-agent" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-blue-500 transition-colors" aria-label="LinkedIn">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <a
+              href="https://www.linkedin.com/company/police-station-agent"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-slate-400 hover:text-blue-500 transition-colors"
+              aria-label="LinkedIn"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
                 <rect width="4" height="12" x="2" y="9"></rect>
                 <circle cx="4" cy="4" r="2"></circle>
               </svg>
             </a>
-            <a href="https://twitter.com/policestation" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors" aria-label="Twitter/X">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <a
+              href="https://twitter.com/policestation"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-slate-400 hover:text-white transition-colors"
+              aria-label="Twitter/X"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="M18 6 6 18"></path>
                 <path d="m6 6 12 12"></path>
               </svg>
             </a>
           </div>
         </div>
-        
+
         {/* Essential Links Row */}
         <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-slate-400 border-t border-slate-800 pt-4">
-          <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
+          <Link href="/privacy" className="hover:text-white transition-colors">
+            Privacy
+          </Link>
           <span className="text-slate-700">|</span>
-          <Link href="/terms-and-conditions" className="hover:text-white transition-colors">Terms</Link>
+          <Link href="/terms-and-conditions" className="hover:text-white transition-colors">
+            Terms
+          </Link>
           <span className="text-slate-700">|</span>
-          <Link href="/cookies" className="hover:text-white transition-colors">Cookies</Link>
+          <Link href="/cookies" className="hover:text-white transition-colors">
+            Cookies
+          </Link>
           <span className="text-slate-700">|</span>
-          <Link href="/complaints" className="hover:text-white transition-colors">Complaints</Link>
+          <Link href="/complaints" className="hover:text-white transition-colors">
+            Complaints
+          </Link>
           <span className="text-slate-700">|</span>
-          <Link href="/contact" className="hover:text-white transition-colors">Contact</Link>
+          <Link href="/contact" className="hover:text-white transition-colors">
+            Contact
+          </Link>
           <span className="text-slate-700">|</span>
-          <Link href="/admin" className="hover:text-amber-400 transition-colors flex items-center gap-1">
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <Link
+            href="/admin"
+            className="hover:text-amber-400 transition-colors flex items-center gap-1"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path>
             </svg>
             Admin
           </Link>
         </div>
-        
+
         {/* Expand/Collapse Button */}
         <div className="flex justify-center mt-4">
           <button
@@ -292,38 +415,39 @@ export default function Footer() {
             aria-expanded={isExpanded}
             aria-controls="full-sitemap"
           >
-            {isExpanded ? 'Hide Sitemap' : 'View All Pages & Resources'}
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              width="14" 
-              height="14" 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke="currentColor" 
-              strokeWidth="2" 
-              strokeLinecap="round" 
+            {isExpanded ? "Hide Sitemap" : "View All Pages & Resources"}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
               strokeLinejoin="round"
-              className={`transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}
+              className={`transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`}
             >
-              <path d="m6 9 6 6 6-6"/>
+              <path d="m6 9 6 6 6-6" />
             </svg>
           </button>
         </div>
-        
+
         {/* Expandable Full Sitemap */}
-        <div 
+        <div
           id="full-sitemap"
-          className={`overflow-hidden transition-all duration-300 ease-in-out ${isExpanded ? 'max-h-[2000px] opacity-100 mt-6' : 'max-h-0 opacity-0'}`}
+          className={`overflow-hidden transition-all duration-300 ease-in-out ${isExpanded ? "max-h-[2000px] opacity-100 mt-6" : "max-h-0 opacity-0"}`}
         >
           <div className="border-t border-slate-800 pt-6">
             {/* Kent Towns Banner */}
             <div className="mb-6 p-3 bg-amber-500/10 rounded-lg border border-amber-500/20 text-center">
               <p className="text-xs text-amber-200 font-semibold mb-1">Serving All Kent Towns:</p>
               <p className="text-xs text-white/90">
-                Medway, Maidstone, Canterbury, Gravesend, Tonbridge, Folkestone, Ashford, Dartford, Sittingbourne, Sevenoaks, Tunbridge Wells, Margate, Dover, Swanley, Bluewater
+                Medway, Maidstone, Canterbury, Gravesend, Tonbridge, Folkestone, Ashford, Dartford,
+                Sittingbourne, Sevenoaks, Tunbridge Wells, Margate, Dover, Swanley, Bluewater
               </p>
             </div>
-            
+
             {/* Full Link Grid */}
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 text-xs">
               {/* Services */}
@@ -332,63 +456,78 @@ export default function Footer() {
                 <ul className="space-y-1.5">
                   {serviceLinks.map((link) => (
                     <li key={link.href}>
-                      <Link href={link.href} className={`text-slate-400 hover:text-white transition-colors ${link.priority ? 'font-medium text-slate-300' : ''}`}>
+                      <Link
+                        href={link.href}
+                        className={`text-slate-400 hover:text-white transition-colors ${link.priority ? "font-medium text-slate-300" : ""}`}
+                      >
                         {link.label}
                       </Link>
                     </li>
                   ))}
                 </ul>
               </div>
-              
+
               {/* Help & Advice */}
               <div>
                 <h3 className="font-semibold text-white mb-3 text-sm">Help & Advice</h3>
                 <ul className="space-y-1.5">
                   {helpLinks.map((link) => (
                     <li key={link.href}>
-                      <Link href={link.href} className={`text-slate-400 hover:text-white transition-colors ${link.priority ? 'font-medium text-slate-300' : ''}`}>
+                      <Link
+                        href={link.href}
+                        className={`text-slate-400 hover:text-white transition-colors ${link.priority ? "font-medium text-slate-300" : ""}`}
+                      >
                         {link.label}
                       </Link>
                     </li>
                   ))}
                 </ul>
               </div>
-              
+
               {/* Kent Locations */}
               <div className="col-span-2 md:col-span-1 lg:col-span-1">
                 <h3 className="font-semibold text-white mb-3 text-sm">Kent Locations</h3>
                 <ul className="space-y-1.5 columns-2 md:columns-1 lg:columns-1 gap-4">
                   {locationLinks.map((link) => (
                     <li key={link.href} className="break-inside-avoid">
-                      <Link href={link.href} className={`text-slate-400 hover:text-white transition-colors ${link.priority ? 'font-medium text-slate-300' : ''}`}>
+                      <Link
+                        href={link.href}
+                        className={`text-slate-400 hover:text-white transition-colors ${link.priority ? "font-medium text-slate-300" : ""}`}
+                      >
                         {link.label}
                       </Link>
                     </li>
                   ))}
                 </ul>
               </div>
-              
+
               {/* Resources */}
               <div>
                 <h3 className="font-semibold text-white mb-3 text-sm">Resources</h3>
                 <ul className="space-y-1.5">
                   {resourceLinks.map((link) => (
                     <li key={link.href}>
-                      <Link href={link.href} className={`text-slate-400 hover:text-white transition-colors ${link.priority ? 'font-medium text-slate-300' : ''}`}>
+                      <Link
+                        href={link.href}
+                        className={`text-slate-400 hover:text-white transition-colors ${link.priority ? "font-medium text-slate-300" : ""}`}
+                      >
                         {link.label}
                       </Link>
                     </li>
                   ))}
                 </ul>
               </div>
-              
+
               {/* Legal */}
               <div>
                 <h3 className="font-semibold text-white mb-3 text-sm">Legal & Compliance</h3>
                 <ul className="space-y-1.5">
                   {legalLinks.map((link) => (
                     <li key={link.href}>
-                      <Link href={link.href} className="text-slate-400 hover:text-white transition-colors">
+                      <Link
+                        href={link.href}
+                        className="text-slate-400 hover:text-white transition-colors"
+                      >
                         {link.label}
                       </Link>
                     </li>
@@ -398,46 +537,66 @@ export default function Footer() {
             </div>
           </div>
         </div>
-        
+
         {/* Bottom Section - Always Visible */}
         <div className="border-t border-slate-800 mt-6 pt-4 text-center">
           {/* Regulatory Disclaimer */}
           <div className="mb-4 max-w-3xl mx-auto p-3 bg-white/5 rounded-lg text-xs text-slate-400">
             <p className="mb-1">
-              <span className="font-semibold text-slate-300">Robert Cashman</span> is a criminal defence solicitor. All legal services provided through <span className="font-semibold text-slate-300">Tuckers Solicitors</span> (SRA ID: 127795).
+              <span className="font-semibold text-slate-300">Robert Cashman</span> is a criminal
+              defence solicitor. All legal services provided through{" "}
+              <span className="font-semibold text-slate-300">Tuckers Solicitors</span> (SRA ID:
+              127795).
             </p>
             <p className="text-slate-500">
-              We act in relation to active police investigations and interviews. We do not provide general criminal law advice or hypothetical consultations.
+              We act in relation to active police investigations and interviews. We do not provide
+              general criminal law advice or hypothetical consultations.
             </p>
           </div>
-          
+
           {/* Copyright */}
           <p className="text-xs text-slate-500 mb-2">
-            © {currentYear} Defence Legal Services Limited T/A Police Station Agent. Company No. 09900871
+            © {currentYear} Defence Legal Services Limited T/A Police Station Agent. Company No.
+            09900871
           </p>
           <p className="text-xs text-slate-600 mb-3">
             Registered Office: Greenacre, London Road, West Kingsdown, Sevenoaks, Kent, TN15 6ER
           </p>
-          
+
           {/* Version Info */}
           <div className="text-xs text-slate-600 flex items-center justify-center gap-3">
             <span>v{appVersion}</span>
             <span>•</span>
             <span>Updated: {lastUpdate}</span>
           </div>
-          
+
           {/* Partners */}
           <div className="mt-4 pt-3 border-t border-slate-800 flex flex-wrap justify-center gap-3 text-xs text-slate-500">
             <span>Partners:</span>
-            <a href="https://policestationrepukdirectory.com/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition-colors">
+            <a
+              href="https://policestationrepukdirectory.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-blue-400 transition-colors"
+            >
               Find a Police Station Rep
             </a>
             <span>•</span>
-            <a href="https://policestationrepuk.com/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition-colors">
+            <a
+              href="https://policestationrepuk.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-blue-400 transition-colors"
+            >
               Police Station Rep UK
             </a>
             <span>•</span>
-            <a href="https://policestationrepuk.com/StationsDirectory" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition-colors">
+            <a
+              href="https://policestationrepuk.com/StationsDirectory"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-blue-400 transition-colors"
+            >
               UK Custody Suites
             </a>
           </div>

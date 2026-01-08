@@ -1,21 +1,21 @@
 /**
  * Create or update admin user
- * 
+ *
  * USAGE:
  *   node scripts/create-admin.js <username> <password>
- * 
+ *
  * EXAMPLES:
  *   node scripts/create-admin.js admin MySecurePassword123!
  *   node scripts/create-admin.js Cashman100 MySecurePassword123!
- * 
+ *
  * For interactive mode with prompts, use: node scripts/init-admin.js
  */
-const bcrypt = require('bcryptjs');
-const Database = require('better-sqlite3');
-const path = require('path');
-const fs = require('fs');
+const bcrypt = require("bcryptjs");
+const Database = require("better-sqlite3");
+const path = require("path");
+const fs = require("fs");
 
-const dbPath = path.join(process.cwd(), 'data', 'web44ai.db');
+const dbPath = path.join(process.cwd(), "data", "web44ai.db");
 const dbDir = path.dirname(dbPath);
 
 if (!fs.existsSync(dbDir)) {
@@ -37,32 +37,32 @@ db.exec(`
 async function createAdmin() {
   const username = process.argv[2];
   const password = process.argv[3];
-  
+
   if (!username || !password) {
-    console.error('Error: Username and password are required.');
-    console.log('Usage: node scripts/create-admin.js <username> <password>');
-    console.log('Example: node scripts/create-admin.js admin MySecurePassword123!');
+    console.error("Error: Username and password are required.");
+    console.log("Usage: node scripts/create-admin.js <username> <password>");
+    console.log("Example: node scripts/create-admin.js admin MySecurePassword123!");
     process.exit(1);
   }
 
   if (password.length < 8) {
-    console.error('Error: Password must be at least 8 characters.');
+    console.error("Error: Password must be at least 8 characters.");
     process.exit(1);
   }
-  
+
   try {
     const passwordHash = await bcrypt.hash(password, 10);
-    const stmt = db.prepare('INSERT INTO users (username, password_hash) VALUES (?, ?)');
+    const stmt = db.prepare("INSERT INTO users (username, password_hash) VALUES (?, ?)");
     stmt.run(username, passwordHash);
     console.log(`✓ Admin user "${username}" created successfully!`);
   } catch (error) {
-    if (error.code === 'SQLITE_CONSTRAINT_UNIQUE') {
+    if (error.code === "SQLITE_CONSTRAINT_UNIQUE") {
       const passwordHash = await bcrypt.hash(password, 10);
-      const stmt = db.prepare('UPDATE users SET password_hash = ? WHERE username = ?');
+      const stmt = db.prepare("UPDATE users SET password_hash = ? WHERE username = ?");
       stmt.run(passwordHash, username);
       console.log(`✓ Admin user "${username}" password updated successfully!`);
     } else {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   } finally {
     db.close();
@@ -70,4 +70,3 @@ async function createAdmin() {
 }
 
 createAdmin();
-

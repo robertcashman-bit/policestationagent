@@ -4,21 +4,21 @@
  * and imports them into the Next.js database
  */
 
-const https = require('https');
-const http = require('http');
-const { URL } = require('url');
-const db = require('../lib/db');
+const https = require("https");
+const http = require("http");
+const { URL } = require("url");
+const db = require("../lib/db");
 
 // Known blog post URLs from the archive
 const KNOWN_POSTS = [
-  'understanding-police-cautions-in-england-a-comprehensive-guide-to-their-meaning-and-consequences',
-  'understanding-community-resolutions-and-their-impact-on-dbs-checks-and-employment',
-  'the-hidden-risks-of-voluntary-police-interviews-in-the-uk-you-need-to-know',
-  'the-role-of-higher-court-advocates-in-the-uk',
+  "understanding-police-cautions-in-england-a-comprehensive-guide-to-their-meaning-and-consequences",
+  "understanding-community-resolutions-and-their-impact-on-dbs-checks-and-employment",
+  "the-hidden-risks-of-voluntary-police-interviews-in-the-uk-you-need-to-know",
+  "the-role-of-higher-court-advocates-in-the-uk",
   // We'll discover more from the archive pages
 ];
 
-const BASE_URL = 'https://robertdcashman.wixsite.com/website';
+const BASE_URL = "https://robertdcashman.wixsite.com/website";
 
 /**
  * Fetch HTML from a URL
@@ -26,30 +26,30 @@ const BASE_URL = 'https://robertdcashman.wixsite.com/website';
 function fetchHTML(url) {
   return new Promise((resolve, reject) => {
     const parsedUrl = new URL(url);
-    const client = parsedUrl.protocol === 'https:' ? https : http;
-    
+    const client = parsedUrl.protocol === "https:" ? https : http;
+
     const options = {
       hostname: parsedUrl.hostname,
-      port: parsedUrl.port || (parsedUrl.protocol === 'https:' ? 443 : 80),
+      port: parsedUrl.port || (parsedUrl.protocol === "https:" ? 443 : 80),
       path: parsedUrl.pathname + parsedUrl.search,
-      method: 'GET',
+      method: "GET",
       headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
       },
     };
 
     const req = client.request(options, (res) => {
-      let data = '';
-      res.on('data', (chunk) => {
+      let data = "";
+      res.on("data", (chunk) => {
         data += chunk;
       });
-      res.on('end', () => {
+      res.on("end", () => {
         resolve(data);
       });
     });
 
-    req.on('error', (error) => {
+    req.on("error", (error) => {
       reject(error);
     });
 
@@ -62,17 +62,17 @@ function fetchHTML(url) {
  */
 function extractPostData(html, url) {
   const post = {
-    title: '',
-    content: '',
-    excerpt: '',
+    title: "",
+    content: "",
+    excerpt: "",
     published_at: null,
-    slug: '',
+    slug: "",
     images: [],
   };
 
   // Extract title from <h1> or <title>
-  const titleMatch = html.match(/<h1[^>]*>([^<]+)<\/h1>/i) || 
-                     html.match(/<title>([^<]+)<\/title>/i);
+  const titleMatch =
+    html.match(/<h1[^>]*>([^<]+)<\/h1>/i) || html.match(/<title>([^<]+)<\/title>/i);
   if (titleMatch) {
     post.title = titleMatch[1].trim();
   }
@@ -84,9 +84,10 @@ function extractPostData(html, url) {
   }
 
   // Extract date from meta tags or content
-  const dateMatch = html.match(/<time[^>]*>([^<]+)<\/time>/i) ||
-                    html.match(/Updated:\s*([^<]+)/i) ||
-                    html.match(/Published:\s*([^<]+)/i);
+  const dateMatch =
+    html.match(/<time[^>]*>([^<]+)<\/time>/i) ||
+    html.match(/Updated:\s*([^<]+)/i) ||
+    html.match(/Published:\s*([^<]+)/i);
   if (dateMatch) {
     try {
       post.published_at = new Date(dateMatch[1].trim()).toISOString();
@@ -94,7 +95,7 @@ function extractPostData(html, url) {
       // Try to parse common date formats
       const dateStr = dateMatch[1].trim();
       if (dateStr.match(/\d{1,2}\/\d{1,2}\/\d{4}/)) {
-        const [day, month, year] = dateStr.split('/');
+        const [day, month, year] = dateStr.split("/");
         post.published_at = new Date(year, month - 1, day).toISOString();
       }
     }
@@ -106,8 +107,9 @@ function extractPostData(html, url) {
     post.content = articleMatch[1];
   } else {
     // Fallback: extract content between common markers
-    const contentMatch = html.match(/<main[^>]*>([\s\S]*?)<\/main>/i) ||
-                         html.match(/<div[^>]*class="[^"]*post[^"]*"[^>]*>([\s\S]*?)<\/div>/i);
+    const contentMatch =
+      html.match(/<main[^>]*>([\s\S]*?)<\/main>/i) ||
+      html.match(/<div[^>]*class="[^"]*post[^"]*"[^>]*>([\s\S]*?)<\/div>/i);
     if (contentMatch) {
       post.content = contentMatch[1];
     }
@@ -123,7 +125,7 @@ function extractPostData(html, url) {
   const imgMatches = html.matchAll(/<img[^>]+src="([^"]+)"[^>]*>/gi);
   for (const match of imgMatches) {
     const src = match[1];
-    if (src && !src.includes('data:image') && !src.includes('placeholder')) {
+    if (src && !src.includes("data:image") && !src.includes("placeholder")) {
       post.images.push(src);
     }
   }
@@ -136,13 +138,13 @@ function extractPostData(html, url) {
  */
 function sanitizeHTML(html) {
   // Remove script tags
-  html = html.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '');
+  html = html.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, "");
   // Remove style tags
-  html = html.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '');
+  html = html.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, "");
   // Remove Wix-specific elements
-  html = html.replace(/<wix-[^>]*>[\s\S]*?<\/wix-[^>]*>/gi, '');
+  html = html.replace(/<wix-[^>]*>[\s\S]*?<\/wix-[^>]*>/gi, "");
   // Clean up extra whitespace
-  html = html.replace(/\s+/g, ' ');
+  html = html.replace(/\s+/g, " ");
   return html.trim();
 }
 
@@ -152,8 +154,8 @@ function sanitizeHTML(html) {
 function generateSlug(title) {
   return title
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
     .substring(0, 100);
 }
 
@@ -180,7 +182,7 @@ async function importPost(postUrl) {
     post.content = sanitizeHTML(post.content);
 
     // Check if post already exists
-    const existing = db.prepare('SELECT id FROM blog_posts WHERE slug = ?').get(post.slug);
+    const existing = db.prepare("SELECT id FROM blog_posts WHERE slug = ?").get(post.slug);
     if (existing) {
       console.log(`Post already exists: ${post.slug}`);
       return { slug: post.slug, exists: true };
@@ -193,7 +195,7 @@ async function importPost(postUrl) {
       VALUES (?, ?, ?, ?, 1, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
     `);
 
-    const metaDescription = post.excerpt || post.content.substring(0, 160).replace(/<[^>]+>/g, '');
+    const metaDescription = post.excerpt || post.content.substring(0, 160).replace(/<[^>]+>/g, "");
 
     stmt.run(
       post.title,
@@ -217,7 +219,7 @@ async function importPost(postUrl) {
  * Main import function
  */
 async function main() {
-  console.log('Starting Wix blog import...\n');
+  console.log("Starting Wix blog import...\n");
 
   const imported = [];
   const errors = [];
@@ -233,24 +235,24 @@ async function main() {
         imported.push(result);
       }
     } else {
-      errors.push({ slug: postSlug, error: 'Import failed' });
+      errors.push({ slug: postSlug, error: "Import failed" });
     }
     // Be respectful - add delay between requests
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
   }
 
   console.log(`\n✓ Import complete!`);
   console.log(`  Imported: ${imported.length}`);
   console.log(`  Errors: ${errors.length}`);
-  
+
   if (imported.length > 0) {
     console.log(`\nImported posts:`);
-    imported.forEach(p => console.log(`  - ${p.title} (/${p.slug})`));
+    imported.forEach((p) => console.log(`  - ${p.title} (/${p.slug})`));
   }
 
   if (errors.length > 0) {
     console.log(`\nErrors:`);
-    errors.forEach(e => console.log(`  - ${e.slug}: ${e.error}`));
+    errors.forEach((e) => console.log(`  - ${e.slug}: ${e.error}`));
   }
 }
 
@@ -260,32 +262,3 @@ if (require.main === module) {
 }
 
 module.exports = { importPost, extractPostData, generateSlug };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

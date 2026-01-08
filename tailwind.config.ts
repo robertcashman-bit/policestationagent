@@ -41,4 +41,3 @@ const config: Config = {
   important: true, // Ensure Tailwind styles override any conflicting styles
 };
 export default config;
-
