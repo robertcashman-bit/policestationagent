@@ -5,18 +5,23 @@ import { JsonLd } from "@/components/JsonLd";
 import { SITE_DOMAIN } from "@/config/site";
 import Link from "next/link";
 import { LegalReferences, Ref, type LegalSource } from "@/components/LegalReferences";
+import { ComprehensiveLegalServiceSchema } from "@/components/schema/ComprehensiveLegalServiceSchema";
+import { PersonSchema } from "@/components/schema/PersonSchema";
+import { AuthorBio } from "@/components/E-E-A-T/AuthorBio";
+import { RegulatoryReferences } from "@/components/E-E-A-T/RegulatoryReferences";
+import { InternalLinkHub } from "@/components/InternalLinkHub";
 
 export const metadata: Metadata = {
-  title: "Police Station Interviews in Kent: Your Rights and What to Expect | Police Station Agent",
+  title: "Solicitor for Police Interview Kent | FREE Legal Advice | Your Rights Under PACE",
   description:
-    "Complete guide to police station interviews in Kent. Understand your rights under PACE 1984, what happens during interview, and why legal advice is essential. FREE legal aid available during extended hours.",
+    "Solicitor for police interview in Kent. FREE legal advice under Legal Aid and PACE 1984. Expert representation at all Kent police stations. Understand your rights, what happens during interview, and why legal advice is essential. Call 01732 247427.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/police-station-interviews-kent-rights`,
   },
   openGraph: {
-    title: "Police Station Interviews in Kent: Your Rights and What to Expect",
+    title: "Solicitor for Police Interview Kent | FREE Legal Advice | PACE Rights",
     description:
-      "Complete guide to police station interviews in Kent. Understand your rights under PACE 1984, what happens during interview, and why legal advice is essential.",
+      "Expert solicitor for police interviews in Kent. FREE legal advice under Legal Aid and PACE 1984. Complete guide to your rights and what to expect during interview.",
     url: `https://${SITE_DOMAIN}/police-station-interviews-kent-rights`,
     siteName: "Police Station Agent",
     type: "article",
@@ -104,6 +109,14 @@ export default function Page() {
     return (
       <>
         <JsonLd data={faqSchema} />
+        <ComprehensiveLegalServiceSchema
+          serviceName="Solicitor for Police Interview"
+          serviceDescription="A solicitor for police interview is a qualified legal professional who represents you during police interviews under PACE 1984. This service provides FREE legal advice, expert interview representation, and protection of your rights throughout the interview process in England & Wales."
+          serviceType="Police Station Representation"
+          areaServed="Kent"
+          jurisdiction="England & Wales"
+        />
+        <PersonSchema />
         <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
           <Header />
           <main className="flex-grow">
@@ -117,7 +130,7 @@ export default function Page() {
                   <span>Police station interviews</span>
                 </nav>
                 <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                  Police station interviews: rights and basics
+                  Solicitor for Police Interview Kent | Your Rights Under PACE
                 </h1>
                 <p className="text-xl text-blue-100">A sourced overview (England &amp; Wales).</p>
               </div>
@@ -178,6 +191,25 @@ export default function Page() {
               </div>
 
               <LegalReferences sources={sources} />
+
+              {/* Internal Linking Hub */}
+              <InternalLinkHub
+                title="Related Services and Information"
+                links={[
+                  { href: "/services/police-station-representation", text: "Police Station Representation", description: "Main service page" },
+                  { href: "/voluntary-interviews", text: "Legal Advice at Police Station", description: "Voluntary interview guidance" },
+                  { href: "/services/pre-charge-advice", text: "Police Interview Advice Solicitor", description: "Pre-charge advice" },
+                  { href: "/police-interview-rights", text: "Police Interview Rights", description: "Detailed rights guide" },
+                  { href: "/prepared-statements", text: "Prepared Statements", description: "Interview strategy" },
+                  { href: "/no-comment-interview", text: "No Comment Interviews", description: "When to exercise silence" },
+                  { href: "/kent-police-stations", text: "Duty Solicitor Kent", description: "All Kent police stations" },
+                  { href: "/faq", text: "Frequently Asked Questions", description: "Common questions" },
+                ]}
+              />
+
+              {/* E-E-A-T Signals */}
+              <AuthorBio showFull={true} className="mb-8" />
+              <RegulatoryReferences className="mb-8" />
             </article>
           </main>
           <Footer />

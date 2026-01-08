@@ -3,16 +3,16 @@ import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Kent Police Stations Guide 2025 | All Custody Suites & Your Rights",
+  title: "Duty Solicitor Kent | All Police Stations | FREE Legal Advice | Extended Hours",
   description:
-    "Complete guide to all Kent police custody suites. Addresses, opening hours, areas covered. Know your rights when detained. FREE legal advice available during extended hours. Call 01732 247427.",
+    "Duty solicitor Kent covering all police stations. Complete guide to Kent custody suites with addresses, opening hours, and your rights. FREE legal advice under Legal Aid during extended hours. Call 01732 247427.",
   alternates: {
     canonical: "https://policestationagent.com/kent-police-stations",
   },
   openGraph: {
-    title: "Kent Police Stations Guide 2025 | All Custody Suites & Your Rights",
+    title: "Duty Solicitor Kent | All Police Stations | FREE Legal Advice",
     description:
-      "Complete guide to all Kent police custody suites. Addresses, opening hours, areas covered. Know your rights when detained. FREE legal advice available during extended hours. Call 01732 247427.",
+      "Expert duty solicitor covering all Kent police stations. Complete guide to custody suites, addresses, opening hours, and your rights. FREE legal advice under Legal Aid.",
     url: "https://policestationagent.com/kent-police-stations",
     siteName: "Police Station Agent",
     type: "website",

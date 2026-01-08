@@ -2,20 +2,26 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 import { SITE_DOMAIN, SITE_URL } from "@/config/site";
-import Script from "next/script";
 import { FAQPage } from "@/components/StructuredData";
+import { ComprehensiveLegalServiceSchema } from "@/components/schema/ComprehensiveLegalServiceSchema";
+import { PersonSchema } from "@/components/schema/PersonSchema";
+import { AuthorBio } from "@/components/E-E-A-T/AuthorBio";
+import { RegulatoryReferences } from "@/components/E-E-A-T/RegulatoryReferences";
+import { ServiceDisclaimer } from "@/components/E-E-A-T/ServiceDisclaimer";
+import { InternalLinkHub } from "@/components/InternalLinkHub";
+import { LLMContentBlock } from "@/components/LLMContentBlock";
 
 export const metadata: Metadata = {
-  title: "Pre‑Charge Advice Kent | Duty Solicitor Support Before Charge",
+  title: "Police Interview Advice Solicitor Kent | Pre-Charge Advice | FREE Legal Aid",
   description:
-    "Pre‑charge advice in Kent from a qualified duty solicitor. Strategic representations to police/CPS before a charging decision. Call 01732 247427.",
+    "Police interview advice solicitor in Kent. Expert pre-charge advice and strategic representations to police/CPS before charging decisions. FREE under Legal Aid. Qualified duty solicitor. Call 01732 247427.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/services/pre-charge-advice`,
   },
   openGraph: {
-    title: "Pre‑Charge Advice Kent | Duty Solicitor Support Before Charge",
+    title: "Police Interview Advice Solicitor Kent | Pre-Charge Advice | FREE",
     description:
-      "Strategic pre‑charge advice and representations before police/CPS charging decisions. Speak to a qualified duty solicitor in Kent.",
+      "Expert police interview advice from qualified solicitor in Kent. Strategic pre-charge representations to prevent or narrow charges. FREE under Legal Aid.",
     url: `https://${SITE_DOMAIN}/services/pre-charge-advice`,
     siteName: "Police Station Agent",
     type: "website",
@@ -51,44 +57,31 @@ export default function PreChargeAdvicePage() {
     },
   ];
 
-  const serviceSchema = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    name: "Pre‑Charge Advice (Kent)",
-    description:
-      "Pre‑charge advice and representations before charging decisions. Interview strategy, evidence review, and submissions to police/CPS where appropriate.",
-    provider: {
-      "@type": "LegalService",
-      name: "Police Station Agent",
-      url: SITE_URL,
-    },
-    areaServed: {
-      "@type": "State",
-      name: "Kent",
-    },
-    serviceType: "Pre‑Charge Advice",
-    availableChannel: {
-      "@type": "ServiceChannel",
-      serviceType: "Telephone",
-      servicePhone: "+441732247427",
-      availableLanguage: "English",
-    },
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
       <FAQPage items={faqItems} />
-      <Script
-        id="service-schema-pre-charge"
-        type="application/ld+json"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      <ComprehensiveLegalServiceSchema
+        serviceName="Police Interview Advice Solicitor"
+        serviceDescription="Police interview advice solicitor provides expert pre-charge advice and strategic representations to police/CPS before charging decisions. This service includes interview strategy, evidence review, and written representations to prevent or narrow charges. FREE under Legal Aid in England & Wales."
+        serviceType="Pre-Charge Advice"
+        areaServed="Kent"
+        jurisdiction="England & Wales"
       />
+      <PersonSchema />
       <Header />
       <main className="flex-grow relative" id="main-content" role="main" aria-live="polite">
         <div className="bg-slate-50 min-h-screen">
           <div className="prose prose-lg max-w-6xl mx-auto px-4 py-16">
-            <h1 className="text-4xl font-bold mb-6">Pre‑Charge Advice (Kent)</h1>
+            <h1 className="text-4xl font-bold mb-6">Police Interview Advice Solicitor Kent | Pre-Charge Advice | FREE Legal Aid</h1>
+            
+            <LLMContentBlock
+              serviceName="Police Interview Advice Solicitor"
+              serviceDefinition="Police interview advice solicitor provides expert pre-charge advice and strategic representations to police/CPS before charging decisions. This service includes interview strategy, evidence review, and written representations to prevent or narrow charges. FREE under Legal Aid in England & Wales."
+              whoFor="This service is for anyone facing a police interview, whether under arrest or attending voluntarily, or anyone told a charging decision is pending. It is suitable for all individuals and is free under Legal Aid regardless of financial circumstances."
+              whenToUse="You should use this service as early as possible—ideally before interview and again after interview while the case is being considered for charge. Do not attend an interview without advice. Call 01732 247427 for immediate assistance."
+              jurisdiction="England & Wales"
+            />
+
             <p className="lead text-xl text-slate-700 mb-8">
               Pre‑charge work is often where a case is won or lost. If you have been arrested,
               invited to a voluntary interview, or told a charging decision is pending, early advice
@@ -156,6 +149,24 @@ export default function PreChargeAdvicePage() {
                 advice is free under Legal Aid.
               </p>
             </div>
+
+            {/* Internal Linking Hub */}
+            <InternalLinkHub
+              title="Related Services and Information"
+              links={[
+                { href: "/services/police-station-representation", text: "Police Station Representation", description: "Main service page" },
+                { href: "/police-station-interviews-kent-rights", text: "Solicitor for Police Interview", description: "Your rights and what to expect" },
+                { href: "/voluntary-interviews", text: "Legal Advice at Police Station", description: "Voluntary interview guidance" },
+                { href: "/services/bail-applications", text: "Duty Solicitor Police Station", description: "Bail applications and advice" },
+                { href: "/prepared-statements", text: "Prepared Statements", description: "Interview strategy guide" },
+                { href: "/no-comment-interview", text: "No Comment Interviews", description: "When to exercise silence" },
+              ]}
+            />
+
+            {/* E-E-A-T Signals */}
+            <AuthorBio showFull={true} className="mb-8" />
+            <RegulatoryReferences className="mb-8" />
+            <ServiceDisclaimer />
           </div>
         </div>
       </main>

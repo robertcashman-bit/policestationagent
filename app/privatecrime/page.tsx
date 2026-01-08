@@ -3,14 +3,16 @@ import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Police Station Agent",
-  description: "",
+  title: "Private Client Criminal Defence Kent | Director-Level Representation | Tuckers Solicitors LLP",
+  description:
+    "Private client criminal defence in Kent with director-level representation by Robert Cashman. Enhanced service from police station through Crown Court. Fixed-fee packages available. SRA-regulated. Call 01732 247427.",
   alternates: {
     canonical: "https://policestationagent.com/privatecrime",
   },
   openGraph: {
-    title: "Police Station Agent",
-    description: "",
+    title: "Private Client Criminal Defence Kent | Director-Level Representation",
+    description:
+      "Enhanced private client criminal defence services in Kent. Director-level representation with direct access to Robert Cashman from police station through Crown Court.",
     url: "https://policestationagent.com/privatecrime",
     siteName: "Police Station Agent",
     type: "website",

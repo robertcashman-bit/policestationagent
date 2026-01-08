@@ -2,20 +2,26 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 import { SITE_DOMAIN, SITE_URL } from "@/config/site";
-import Script from "next/script";
 import { FAQPage } from "@/components/StructuredData";
+import { ComprehensiveLegalServiceSchema } from "@/components/schema/ComprehensiveLegalServiceSchema";
+import { PersonSchema } from "@/components/schema/PersonSchema";
+import { AuthorBio } from "@/components/E-E-A-T/AuthorBio";
+import { RegulatoryReferences } from "@/components/E-E-A-T/RegulatoryReferences";
+import { ServiceDisclaimer } from "@/components/E-E-A-T/ServiceDisclaimer";
+import { InternalLinkHub } from "@/components/InternalLinkHub";
+import { LLMContentBlock } from "@/components/LLMContentBlock";
 
 export const metadata: Metadata = {
-  title: "Bail Applications Kent | Police Bail, Court Bail & Variations",
+  title: "Duty Solicitor Police Station Kent | Bail Applications | FREE Legal Aid",
   description:
-    "Bail applications in Kent: advice on police bail, court bail, conditions, and variations. Speak to a qualified duty solicitor. Call 01732 247427.",
+    "Duty solicitor police station services in Kent. Expert bail applications, police bail advice, court bail, and bail condition variations. FREE under Legal Aid. Qualified duty solicitor. Call 01732 247427.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/services/bail-applications`,
   },
   openGraph: {
-    title: "Bail Applications Kent | Police Bail, Court Bail & Variations",
+    title: "Duty Solicitor Police Station Kent | Bail Applications | FREE",
     description:
-      "Advice and representation for bail applications and bail conditions across Kent custody suites and courts.",
+      "Expert duty solicitor services for bail applications in Kent. FREE legal advice under Legal Aid for police bail, court bail, and bail condition variations.",
     url: `https://${SITE_DOMAIN}/services/bail-applications`,
     siteName: "Police Station Agent",
     type: "website",
@@ -51,44 +57,31 @@ export default function BailApplicationsPage() {
     },
   ];
 
-  const serviceSchema = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    name: "Bail Applications (Kent)",
-    description:
-      "Advice and representation for police bail, court bail applications, bail conditions, and variations across Kent.",
-    provider: {
-      "@type": "LegalService",
-      name: "Police Station Agent",
-      url: SITE_URL,
-    },
-    areaServed: {
-      "@type": "State",
-      name: "Kent",
-    },
-    serviceType: "Bail Applications",
-    availableChannel: {
-      "@type": "ServiceChannel",
-      serviceType: "Telephone",
-      servicePhone: "+441732247427",
-      availableLanguage: "English",
-    },
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
       <FAQPage items={faqItems} />
-      <Script
-        id="service-schema-bail"
-        type="application/ld+json"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      <ComprehensiveLegalServiceSchema
+        serviceName="Duty Solicitor Police Station"
+        serviceDescription="Duty solicitor police station services provide expert bail applications, police bail advice, court bail, and bail condition variations. This service helps protect your position and challenge unreasonable restrictions. FREE under Legal Aid in England & Wales."
+        serviceType="Bail Applications"
+        areaServed="Kent"
+        jurisdiction="England & Wales"
       />
+      <PersonSchema />
       <Header />
       <main className="flex-grow relative" id="main-content" role="main" aria-live="polite">
         <div className="bg-slate-50 min-h-screen">
           <div className="prose prose-lg max-w-6xl mx-auto px-4 py-16">
-            <h1 className="text-4xl font-bold mb-6">Bail Applications (Kent)</h1>
+            <h1 className="text-4xl font-bold mb-6">Duty Solicitor Police Station Kent | Bail Applications | FREE Legal Aid</h1>
+            
+            <LLMContentBlock
+              serviceName="Duty Solicitor Police Station"
+              serviceDefinition="Duty solicitor police station services provide expert bail applications, police bail advice, court bail, and bail condition variations. This service helps protect your position and challenge unreasonable restrictions. FREE under Legal Aid in England & Wales."
+              whoFor="This service is for anyone who has been bailed, given a return date, or is unsure about bail conditions. It is suitable for all individuals and is free under Legal Aid regardless of financial circumstances."
+              whenToUse="You should use this service immediately if you have been bailed, given conditions, or need advice about bail variations. Do not breach bail conditions without legal advice. Call 01732 247427 for immediate assistance."
+              jurisdiction="England & Wales"
+            />
+
             <p className="lead text-xl text-slate-700 mb-8">
               Bail decisions and bail conditions can have an immediate impact on your life—where you
               can go, who you can contact, and what you must do next. We provide clear advice and
@@ -150,6 +143,24 @@ export default function BailApplicationsPage() {
                 under Legal Aid.
               </p>
             </div>
+
+            {/* Internal Linking Hub */}
+            <InternalLinkHub
+              title="Related Services and Information"
+              links={[
+                { href: "/services/police-station-representation", text: "Police Station Representation", description: "Main service page" },
+                { href: "/police-station-interviews-kent-rights", text: "Solicitor for Police Interview", description: "Your rights and what to expect" },
+                { href: "/services/pre-charge-advice", text: "Police Interview Advice Solicitor", description: "Pre-charge advice" },
+                { href: "/police-bail-explained", text: "Police Bail Explained", description: "Understanding bail" },
+                { href: "/released-under-investigation", text: "Released Under Investigation", description: "RUI guidance" },
+                { href: "/kent-police-stations", text: "Duty Solicitor Kent", description: "All Kent police stations" },
+              ]}
+            />
+
+            {/* E-E-A-T Signals */}
+            <AuthorBio showFull={true} className="mb-8" />
+            <RegulatoryReferences className="mb-8" />
+            <ServiceDisclaimer />
           </div>
         </div>
       </main>

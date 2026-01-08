@@ -4,6 +4,13 @@ import type { Metadata } from "next";
 import { SITE_DOMAIN, SITE_URL } from "@/config/site";
 import Script from "next/script";
 import { FAQPage } from "@/components/StructuredData";
+import { ComprehensiveLegalServiceSchema } from "@/components/schema/ComprehensiveLegalServiceSchema";
+import { PersonSchema } from "@/components/schema/PersonSchema";
+import { AuthorBio } from "@/components/E-E-A-T/AuthorBio";
+import { RegulatoryReferences } from "@/components/E-E-A-T/RegulatoryReferences";
+import { ServiceDisclaimer } from "@/components/E-E-A-T/ServiceDisclaimer";
+import { InternalLinkHub } from "@/components/InternalLinkHub";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title:
@@ -23,39 +30,7 @@ export const metadata: Metadata = {
   },
 };
 
-// Service schema for Police Station Representation
-const serviceSchema = {
-  "@context": "https://schema.org",
-  "@type": "Service",
-  name: "Police Station Representation",
-  description:
-    "Police Station Duty Solicitor Kent - FREE police station representation by qualified solicitor across all Kent custody suites. Accredited Duty Solicitor available for police interviews, voluntary interviews, and custody matters.",
-  provider: {
-    "@type": "LegalService",
-    name: "Criminal Defence Kent",
-    url: SITE_URL,
-  },
-  areaServed: {
-    "@type": "State",
-    name: "Kent",
-  },
-  serviceType: "Police Station Representation",
-  category: "Legal Services",
-  offers: {
-    "@type": "Offer",
-    price: "0",
-    priceCurrency: "GBP",
-    description: "FREE under Legal Aid",
-    availability: "https://schema.org/InStock",
-    validFrom: "2025-01-01",
-  },
-  availableChannel: {
-    "@type": "ServiceChannel",
-    serviceType: "Telephone",
-    servicePhone: "+441732247427",
-    availableLanguage: "English",
-  },
-};
+// Schema is now handled by components (ComprehensiveLegalServiceSchema, PersonSchema)
 
 export default function PoliceStationRepresentationPage() {
   const faqItems = [
@@ -89,19 +64,37 @@ export default function PoliceStationRepresentationPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
       <FAQPage items={faqItems} />
-      <Script
-        id="service-schema"
-        type="application/ld+json"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(serviceSchema),
-        }}
+      <ComprehensiveLegalServiceSchema
+        serviceName="Police Station Representation"
+        serviceDescription="Police station representation is a legal service provided by qualified solicitors at police custody suites in England & Wales. This service provides FREE legal advice under Legal Aid, expert representation during police interviews, and protection of your rights under PACE 1984."
+        serviceType="Police Station Representation"
+        areaServed="Kent"
+        jurisdiction="England & Wales"
       />
+      <PersonSchema />
       <Header />
       <main className="flex-grow relative" id="main-content" role="main" aria-live="polite">
         <div className="bg-slate-50 min-h-screen">
           <div className="prose prose-lg max-w-6xl mx-auto px-4 py-16">
-            <h1 className="text-4xl font-bold mb-6">Independent Police Station Solicitor Kent</h1>
+            <h1 className="text-4xl font-bold mb-6">Police Station Representation | FREE Legal Advice Kent | Accredited Duty Solicitor</h1>
+            <div className="bg-blue-50 border-l-4 border-blue-600 p-6 mb-8 rounded-r-lg">
+              <h2 className="text-xl font-bold text-slate-900 mb-3">What This Service Is</h2>
+              <p className="text-slate-700 mb-4">
+                Police station representation is a legal service provided by qualified solicitors at police custody suites in England & Wales. This service provides FREE legal advice under Legal Aid, expert representation during police interviews, and protection of your rights under PACE 1984 (Police and Criminal Evidence Act 1984).
+              </p>
+              <h2 className="text-xl font-bold text-slate-900 mb-3">Who It Is For</h2>
+              <p className="text-slate-700 mb-4">
+                This service is for anyone arrested or invited for a voluntary interview at a police station in Kent. It is suitable for all individuals regardless of income, financial circumstances, or the nature of the allegation. Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795).
+              </p>
+              <h2 className="text-xl font-bold text-slate-900 mb-3">When You Should Use It</h2>
+              <p className="text-slate-700 mb-4">
+                You should use this service immediately upon arrest or when contacted by police for a voluntary interview. Do not answer police questions without legal advice. Call 01732 247427 during extended hours for immediate assistance. This service operates in England & Wales under PACE 1984, PACE Code C, and Legal Aid Agency regulations.
+              </p>
+              <h2 className="text-xl font-bold text-slate-900 mb-3">Professional Status</h2>
+              <p className="text-slate-700">
+                Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795). Robert Cashman is a qualified solicitor and accredited duty solicitor with 35+ years experience, 21,000+ cases, and Higher Court Advocate status. He is regulated by the Solicitors Regulation Authority (SRA) and operates under SRA standards.
+              </p>
+            </div>
             <p className="lead text-xl text-slate-700 mb-8">
               Expert police station representation by qualified solicitor. FREE legal advice under
               Legal Aid at all Kent custody suites. Independent Defence Solicitor & Higher Court
@@ -113,6 +106,30 @@ export default function PoliceStationRepresentationPage() {
                 works for YOU — not the police, not the CPS. Everything you discuss is confidential.
               </p>
             </div>
+
+            {/* Internal Linking Hub */}
+            <InternalLinkHub
+              title="Related Services and Information"
+              links={[
+                { href: "/police-station-interviews-kent-rights", text: "Solicitor for Police Interview", description: "Your rights and what to expect" },
+                { href: "/voluntary-interviews", text: "Legal Advice at Police Station", description: "Voluntary interview guidance" },
+                { href: "/services/pre-charge-advice", text: "Police Interview Advice Solicitor", description: "Pre-charge advice and representations" },
+                { href: "/services/bail-applications", text: "Duty Solicitor Police Station", description: "Bail applications and advice" },
+                { href: "/kent-police-stations", text: "Duty Solicitor Kent", description: "All Kent police stations" },
+                { href: "/police-custody-rights", text: "Your Rights in Custody", description: "PACE Code C rights guide" },
+                { href: "/police-interview-rights", text: "Police Interview Rights", description: "Interview procedure and rights" },
+                { href: "/faq", text: "Frequently Asked Questions", description: "Common questions answered" },
+              ]}
+            />
+
+            {/* E-E-A-T Signals */}
+            <AuthorBio showFull={true} className="mb-8" />
+            <RegulatoryReferences className="mb-8" />
+            <ServiceDisclaimer
+              whoNotFor={[
+                "One-off court representation (we focus exclusively on police station work)",
+              ]}
+            />
           </div>
         </div>
       </main>

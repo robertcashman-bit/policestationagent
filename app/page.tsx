@@ -8,9 +8,9 @@ import { SITE_DOMAIN, SITE_URL } from "@/config/site";
 import { FAQPage } from "@/components/StructuredData";
 
 export const metadata: Metadata = {
-  title: "Police Station Duty Solicitor Kent | FREE Legal Advice | Accredited Duty Solicitor",
+  title: "Police Station Representation Kent | FREE Legal Advice | Accredited Duty Solicitor",
   description:
-    "Police Station Duty Solicitor Kent - Expert police station representation by qualified solicitor. FREE legal advice under Legal Aid at all Kent custody suites. Accredited Duty Solicitor & Higher Court Advocate Robert Cashman - 35+ years experience, 21,000+ cases. Medway, Maidstone, Canterbury, Gravesend. Call 01732 247427.",
+    "Police station representation Kent - Expert service by qualified solicitor. FREE legal advice under Legal Aid at all Kent custody suites. Accredited Duty Solicitor & Higher Court Advocate Robert Cashman - 35+ years experience, 21,000+ cases. Medway, Maidstone, Canterbury, Gravesend. Call 01732 247427.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/`,
   },
