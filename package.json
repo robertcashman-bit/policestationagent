@@ -32,7 +32,8 @@
     "compliance:http": "node scripts/compliance-http-scan.mjs",
     "build:verified": "npm run compliance:fix && npm run compliance:scan && npm run compliance:http",
     "verify:deployment": "node scripts/verify-deployment-target.js",
-    "prebuild": "npm run verify:deployment"
+    "vercel:lock": "node scripts/vercel-project-lock.mjs",
+    "prebuild": "npm run vercel:lock && npm run verify:deployment"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

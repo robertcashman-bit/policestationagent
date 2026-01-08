@@ -53,7 +53,7 @@ export default function FAQContent() {
         },
         {
           question: 'Do you cover Legal Aid and private work?',
-          answer: 'Yes, we provide both Legal Aid representation (which is free at the police station) and private client services. Legal Aid is available to everyone at the police station regardless of income. For those who prefer enhanced service and guaranteed representation by Robert Cashman, we also offer private client services with fixed-fee packages.'
+          answer: 'Yes, we provide both Legal Aid representation (which is free at the police station) and private client services. Legal Aid is available to everyone at the police station regardless of income. For those who prefer enhanced service and Where possible, you may be represented by Robert Cashman, subject to availability and conflicts. If Robert cannot attend, Tuckers Solicitors LLP will arrange an alternative suitably qualified representative. by Robert Cashman, we also offer private client services with fixed-fee packages.'
         },
         {
           question: 'Which police stations do you cover?',

@@ -4,7 +4,7 @@
 
 ### STEP 1: Site-wide Strapline Replacement ✅
 **Status:** COMPLETE
-- ✅ Header.tsx: Replaced "Free police station representation across Kent" with "Kent police station legal advice (Legal Aid) — via Tuckers Solicitors LLP"
+- ✅ Header.tsx: Replaced "Kent police station legal advice (Legal Aid) — via Tuckers Solicitors LLP" with "Kent police station legal advice (Legal Aid) — via Tuckers Solicitors LLP"
 - ✅ prepared-statements/page.tsx: Fixed strapline reference
 
 ### STEP 3: "45 minutes" and "24/7" Claims ✅
@@ -12,8 +12,8 @@
 - ✅ app/page.tsx (Home page): Fixed 2 instances in HTML string
 - ✅ app/faq/FAQContent.tsx: Fixed "45 minutes" claim  
 - ✅ app/services/police-station-representation/page.tsx: Fixed "45 minutes" claim
-- ✅ app/police-station-interviews-kent-rights/page.tsx: Fixed "within 45 minutes to an hour"
-- ✅ app/what-to-expect-at-a-police-interview-in-kent/page.tsx: Fixed 2 instances of "within 45 minutes"
+- ✅ app/police-station-interviews-kent-rights/page.tsx: Fixed "We aim to respond promptly. Attendance times depend on location, custody demand and solicitor availability. to an hour"
+- ✅ app/what-to-expect-at-a-police-interview-in-kent/page.tsx: Fixed 2 instances of "We aim to respond promptly. Attendance times depend on location, custody demand and solicitor availability."
 
 **Replacement text used:** "We aim to respond promptly. Attendance times depend on location, custody demand and solicitor availability."
 
@@ -23,11 +23,11 @@
 **Status:** COMPLETE (from previous work)
 - ✅ All high-risk phrases fixed
 - ✅ Attribution to Tuckers Solicitors LLP added
-- ✅ "we provide urgent attendance", "guaranteed representation" language fixed
+- ✅ "If you request Tuckers Solicitors LLP, arrangements for attendance will be made in accordance with scheme requirements and solicitor availability.", "Where possible, you may be represented by Robert Cashman, subject to availability and conflicts. If Robert cannot attend, Tuckers Solicitors LLP will arrange an alternative suitably qualified representative." language fixed
 
 ### STEP 5: Fees Page Fixes ✅
 **Status:** COMPLETE (from previous work)
-- ✅ "our advice and representation" language removed
+- ✅ "Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795)." language removed
 - ✅ Payment chain language fixed
 - ✅ "Guaranteed" claims softened to "Where possible..."
 - ✅ Top-of-page disclaimer added
@@ -62,7 +62,7 @@
 ### STEP 9: Blog Template Fixes
 **Status:** PENDING
 - Add standard disclaimer block to blog template
-- Review blog posts for risky phrases ("immediate representation", "24/7 representation", "we provide representation")
+- Review blog posts for risky phrases ("immediate representation", "We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor.", "Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795).")
 
 ### STEP 10: Final QA Checklist
 **Status:** PENDING
@@ -92,4 +92,6 @@ The site is now in a much more compliant state. The critical issues identified h
 5. WhoProvidesLegalService component available (added to Contact page)
 
 The remaining work (blog template, Footer verification, adding component to HTML-string pages) can be done incrementally but is not blocking compliance.
+
+
 

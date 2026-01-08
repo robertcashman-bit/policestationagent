@@ -3,15 +3,15 @@
 ## ✅ Completed Fixes
 
 ### STEP 1: Site-wide Strapline Replacement
-- ✅ Header.tsx: "Free police station representation across Kent" → "Kent police station legal advice (Legal Aid) — via Tuckers Solicitors LLP"
+- ✅ Header.tsx: "Kent police station legal advice (Legal Aid) — via Tuckers Solicitors LLP" → "Kent police station legal advice (Legal Aid) — via Tuckers Solicitors LLP"
 - ✅ prepared-statements/page.tsx: Fixed strapline reference
 
 ### STEP 3: "45 minutes" Claims Fixed
 - ✅ app/page.tsx (Home): Fixed 2 instances in HTML string
 - ✅ app/faq/FAQContent.tsx: Fixed "45 minutes" claim
 - ✅ app/services/police-station-representation/page.tsx: Fixed "45 minutes" claim
-- ✅ app/police-station-interviews-kent-rights/page.tsx: Fixed "within 45 minutes to an hour"
-- ✅ app/what-to-expect-at-a-police-interview-in-kent/page.tsx: Fixed 2 instances of "within 45 minutes"
+- ✅ app/police-station-interviews-kent-rights/page.tsx: Fixed "We aim to respond promptly. Attendance times depend on location, custody demand and solicitor availability. to an hour"
+- ✅ app/what-to-expect-at-a-police-interview-in-kent/page.tsx: Fixed 2 instances of "We aim to respond promptly. Attendance times depend on location, custody demand and solicitor availability."
 
 **Replacement text used:** "We aim to respond promptly. Attendance times depend on location, custody demand and solicitor availability."
 
@@ -19,7 +19,7 @@
 - ✅ All high-risk phrases fixed, attribution to Tuckers Solicitors LLP added
 
 ### STEP 5: Fees Page Fixes
-- ✅ "our advice and representation" language removed
+- ✅ "Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795)." language removed
 - ✅ Payment chain language fixed
 - ✅ "Guaranteed" claims softened
 
@@ -78,4 +78,6 @@ Pages that need the component (but use dangerouslySetInnerHTML, making it comple
 4. Consider adding WhoProvidesLegalService to pages with dangerouslySetInnerHTML (complex)
 5. Blog template disclaimer
 6. Final QA
+
+
 

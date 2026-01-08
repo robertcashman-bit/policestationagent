@@ -44,7 +44,7 @@ const enhancedContent = {
 <p>If you are arrested or invited for a voluntary interview at any Kent police station, you have the right to free legal representation under the Police and Criminal Evidence Act 1984 (PACE). This guide explains your rights and how to access expert legal advice.</p>
 
 <h3>Kent Police Stations Covered</h3>
-<p>We provide 24/7 legal representation at all Kent and Medway Police custody suites, including:</p>
+<p>We provide We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor. at all Kent and Medway Police custody suites, including:</p>
 <ul>
 <li>Medway Police Station (Gillingham)</li>
 <li>Maidstone Police Station</li>

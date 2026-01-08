@@ -323,7 +323,7 @@ const services = [
     slug: 'police-station-representation',
     description: 'Expert legal representation when you need it most. Available 24/7 for urgent matters.',
     content: `<h2>Police Station Representation</h2>
-    <p>If you've been arrested or are being questioned at a police station, having expert legal representation is crucial. Our experienced solicitors are available 24/7 to provide immediate assistance.</p>
+    <p>If you've been arrested or are being questioned at a police station, having expert legal representation is crucial. Our experienced solicitors are We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor. assistance.</p>
     
     <h3>Why You Need Legal Representation</h3>
     <p>Being questioned at a police station can be stressful and confusing. Having a solicitor present ensures:</p>

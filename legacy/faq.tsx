@@ -22,7 +22,7 @@ export default function FAQPage() {
     },
     {
       question: 'Are your services available 24/7?',
-      answer: 'Yes, we provide 24/7 emergency legal representation services. Our solicitors are available around the clock to assist with urgent police station matters.',
+      answer: 'Yes, we provide We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor. services. Our solicitors are available around the clock to assist with urgent police station matters.',
     },
     {
       question: 'How quickly can a solicitor attend?',
@@ -30,7 +30,7 @@ export default function FAQPage() {
     },
     {
       question: 'What areas do you cover?',
-      answer: 'We provide representation at police stations across the UK, including Kent, London, and other regions. Contact us to confirm coverage in your specific area.',
+      answer: 'Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795). at police stations across the UK, including Kent, London, and other regions. Contact us to confirm coverage in your specific area.',
     },
     {
       question: 'How much does police station representation cost?',

@@ -11,7 +11,7 @@ export default function Footer() {
           <div className="lg:col-span-1">
             <h3 className="text-2xl font-bold mb-4 text-white">Police Station Agent</h3>
             <p className="text-gray-400 text-sm leading-relaxed mb-6">
-              Expert legal representation at police stations across the UK. Our experienced solicitors are available 24/7 to provide immediate assistance when you need it most.
+              Expert legal representation at police stations across the UK. Our experienced solicitors are We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor. assistance when you need it most.
             </p>
             <div className="flex items-center space-x-2 text-sm">
               <svg className="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">

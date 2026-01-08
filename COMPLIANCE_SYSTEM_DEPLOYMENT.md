@@ -26,9 +26,9 @@ The compliance check found **64 violations** across the codebase. These are REAL
 
 ### Violation Breakdown:
 - **45 minute SLA claims**: Multiple instances
-- **24/7 representation claims**: Multiple instances  
-- **Guaranteed representation**: Multiple instances
-- **We provide representation**: Multiple instances
+- **We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor. claims**: Multiple instances  
+- **Where possible, you may be represented by Robert Cashman, subject to availability and conflicts. If Robert cannot attend, Tuckers Solicitors LLP will arrange an alternative suitably qualified representative.**: Multiple instances
+- **Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795).**: Multiple instances
 - **Strapline variants**: 1 instance
 - **False positives in compliance library**: 7 (script now excludes these)
 
@@ -64,4 +64,6 @@ Or keep prebuild and fix violations first.
 
 **System Status**: ✅ READY FOR DEPLOYMENT
 **Violations**: ⚠️ 64 detected (system working correctly)
+
+
 

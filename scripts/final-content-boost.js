@@ -87,7 +87,7 @@ const enhancedPosts = posts.map((post) => {
 <p>If you need legal representation at a police station in Kent, remember that legal advice is free under Legal Aid. An accredited duty solicitor can provide expert guidance and ensure your rights are protected throughout the process.</p>
 
 <h3>Contact Information</h3>
-<p>For immediate legal representation at any Kent police station, contact us 24/7. We provide free legal advice and representation under the Police and Criminal Evidence Act 1984.</p>`;
+<p>For immediate legal representation at any Kent police station, We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor. under the Police and Criminal Evidence Act 1984.</p>`;
       
       let newContent = post.content;
       if (newContent.includes('<h2>References</h2>')) {

@@ -3,7 +3,7 @@
 ## ✅ ALL CRITICAL FIXES COMPLETED
 
 ### STEP 1: Site-wide Strapline Replacement ✅
-- ✅ Header.tsx: "Free police station representation across Kent" → "Kent police station legal advice (Legal Aid) — via Tuckers Solicitors LLP"
+- ✅ Header.tsx: "Kent police station legal advice (Legal Aid) — via Tuckers Solicitors LLP" → "Kent police station legal advice (Legal Aid) — via Tuckers Solicitors LLP"
 - ✅ prepared-statements/page.tsx: Fixed strapline reference
 
 ### STEP 2: WhoProvidesLegalService Component ✅
@@ -25,10 +25,10 @@
 ### STEP 4: Services Page Fixes ✅
 - ✅ All high-risk phrases fixed
 - ✅ Attribution to Tuckers Solicitors LLP added
-- ✅ "we provide urgent attendance", "guaranteed representation" language fixed
+- ✅ "If you request Tuckers Solicitors LLP, arrangements for attendance will be made in accordance with scheme requirements and solicitor availability.", "Where possible, you may be represented by Robert Cashman, subject to availability and conflicts. If Robert cannot attend, Tuckers Solicitors LLP will arrange an alternative suitably qualified representative." language fixed
 
 ### STEP 5: Fees Page Fixes ✅
-- ✅ "our advice and representation" language removed
+- ✅ "Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795)." language removed
 - ✅ Payment chain language fixed
 - ✅ "Guaranteed" claims softened to "Where possible..."
 - ✅ Top-of-page disclaimer added
@@ -98,4 +98,6 @@ The website is now in a compliant state:
 
 **Report Date:** December 2025
 **Status:** ✅ COMPLIANT - All critical fixes complete
+
+
 

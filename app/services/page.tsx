@@ -4,14 +4,14 @@ import type { Metadata } from 'next';
 import { SITE_DOMAIN } from '@/config/site';
 
 export const metadata: Metadata = {
-  title: "Police Station Representation Services Kent | Free Legal Aid | 24/7",
-  description: "Expert police station representation across Kent. Free legal aid advice for suspects, reliable agent cover for solicitors. Available 24/7 including weekends.",
+  title: "Police Station Representation Services Kent | Free Legal Aid",
+  description: "Expert police station representation across Kent. Free legal aid advice for suspects, reliable agent cover for solicitors.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/services`,
   },
   openGraph: {
-    title: "Police Station Representation Services Kent | Free Legal Aid | 24/7",
-    description: "Expert police station representation across Kent. Free legal aid advice for suspects, reliable agent cover for solicitors. Available 24/7 including weekends.",
+    title: "Police Station Representation Services Kent | Free Legal Aid",
+    description: "Expert police station representation across Kent. Free legal aid advice for suspects, reliable agent cover for solicitors.",
     url: "https://policestationagent.com/services",
     siteName: 'Police Station Agent',
     type: 'website',

@@ -165,3 +165,5 @@ export function containsBannedPatterns(input: string): boolean {
   return BANNED_PATTERNS.some(({ pattern }) => pattern.test(input));
 }
 
+
+

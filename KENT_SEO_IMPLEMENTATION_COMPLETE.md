@@ -99,7 +99,7 @@ Updated meta descriptions on key pages to include "police station rep" keywords:
 - **Homepage:** "Kent's #1 police station rep service. Accredited duty solicitor Robert Cashman - 35+ years experience, 6000+ cases. FREE legal advice 24/7 at all Kent custody suites."
 - **Service Page:** "Expert police station rep service across Kent. FREE legal advice 24/7 at all Kent custody suites. Accredited duty solicitor Robert Cashman."
 - **Contact Page:** "Contact Kent's leading police station rep service. FREE legal advice 24/7 across all Kent custody suites."
-- **Coverage Page:** "Police station rep coverage across all Kent towns. FREE 24/7 representation at all Kent custody suites."
+- **Coverage Page:** "Police station rep coverage across all Kent towns. FREE We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor. at all Kent custody suites."
 - **About Page:** Already optimized (from previous work)
 - **What Is A Police Station Rep:** "Learn about police station rep (police station representative) services in Kent."
 - **For Solicitors:** "Professional police station rep agent services for criminal solicitor firms in Kent."
@@ -134,7 +134,7 @@ Updated anchor text across site to include "police station rep" terminology:
 **Status:** ✅ COMPLETE
 
 **Added Kent Coverage Emphasis:**
-- Updated description: "Kent's leading police station rep service. Accredited duty solicitor providing FREE 24/7 representation at all Kent custody suites."
+- Updated description: "Kent's leading police station rep service. Accredited duty solicitor providing FREE We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor. at all Kent custody suites."
 - Added highlighted section: "Serving All Kent Towns" with list of 15 towns
 - Optimized all footer link anchor text
 

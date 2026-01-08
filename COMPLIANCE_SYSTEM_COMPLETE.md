@@ -54,31 +54,31 @@ Comprehensive compliance system implemented to prevent non-compliant marketing l
 **Banned Patterns** (10 patterns):
 
 1. **Strapline Variants**
-   - Pattern: "Free police station representation across Kent"
+   - Pattern: "Kent police station legal advice (Legal Aid) — via Tuckers Solicitors LLP"
    - Replacement: "Kent police station legal advice (Legal Aid) — via Tuckers Solicitors LLP"
 
 2. **45 Minute SLA**
-   - Pattern: "within 45 minutes" / "available within 45 minutes"
+   - Pattern: "We aim to respond promptly. Attendance times depend on location, custody demand and solicitor availability." / "We aim to respond promptly. Attendance times depend on location, custody demand and solicitor availability."
    - Replacement: "We aim to respond promptly. Attendance times depend on location, custody demand and solicitor availability."
 
-3. **24/7 Immediate Representation**
-   - Pattern: "24/7" + "representation"/"legal services"/"immediate"
+3. **We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor.**
+   - Pattern: "We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor."/"legal services"/"immediate"
    - Replacement: "We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor."
 
-4. **Guaranteed Representation**
-   - Pattern: "Guaranteed" / "guaranteed to be represented by"
+4. **Where possible, you may be represented by Robert Cashman, subject to availability and conflicts. If Robert cannot attend, Tuckers Solicitors LLP will arrange an alternative suitably qualified representative.**
+   - Pattern: "Guaranteed" / "Where possible, you may be represented by Robert Cashman, subject to availability and conflicts. If Robert cannot attend, Tuckers Solicitors LLP will arrange an alternative suitably qualified representative. by"
    - Replacement: "Where possible, you may be represented by Robert Cashman, subject to availability and conflicts. If Robert cannot attend, Tuckers will arrange an alternative suitably qualified representative."
 
-5. **We Provide Urgent Attendance**
-   - Pattern: "we provide urgent attendance"
+5. **If you request Tuckers Solicitors LLP, arrangements for attendance will be made in accordance with scheme requirements and solicitor availability.**
+   - Pattern: "If you request Tuckers Solicitors LLP, arrangements for attendance will be made in accordance with scheme requirements and solicitor availability."
    - Replacement: "If you request Tuckers Solicitors LLP, arrangements for attendance will be made in accordance with scheme requirements and solicitor availability."
 
-6. **We Provide Representation**
-   - Pattern: "we provide representation"
+6. **Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795).**
+   - Pattern: "Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795)."
    - Replacement: "Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795)."
 
-7. **Our Advice and Representation**
-   - Pattern: "our advice and representation"
+7. **Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795).**
+   - Pattern: "Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795)."
    - Replacement: "Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795)."
 
 8. **Subject to Eligibility**
@@ -86,11 +86,11 @@ Comprehensive compliance system implemented to prevent non-compliant marketing l
    - Replacement: "Police station legal advice is free and independent. You can ask custody staff to contact a solicitor or law firm. For Kent matters, you can request Tuckers Solicitors LLP and may request Robert Cashman as your named solicitor, subject to availability and conflicts."
 
 9. **Website Operator Provides Services**
-   - Pattern: "policestationagent.com provides... legal services... across Kent and the UK"
+   - Pattern: "Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795).... across Kent and the UK"
    - Replacement: "Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795). This website is operated by Defence Legal Services Ltd t/a Police Station Agent and provides general information; it does not itself provide legal services."
 
 10. **Ask for Police Station Agent**
-    - Pattern: "ask for Police Station Agent to represent"
+    - Pattern: "Tell custody staff you want Tuckers Solicitors LLP. You may request Robert Cashman as your named solicitor, subject to availability and conflicts."
     - Replacement: "Tell custody staff you want Tuckers Solicitors LLP. You may request Robert Cashman as your named solicitor, subject to availability and conflicts."
 
 ---
@@ -206,4 +206,6 @@ npm run build
 ---
 
 **COMPLIANCE SYSTEM STATUS: ✅ COMPLETE AND READY FOR DEPLOYMENT**
+
+
 

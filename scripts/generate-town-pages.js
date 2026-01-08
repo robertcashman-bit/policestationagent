@@ -20,7 +20,7 @@ const towns = [
     address: 'Old Dover Road, Canterbury',
     areaServed: ['Canterbury', 'East Kent', 'Dover', 'Margate', 'Ramsgate'],
     stationLink: '/canterbury-police-station',
-    description: 'Expert police station rep in Canterbury, Kent. FREE 24/7 representation at Canterbury custody suite. Serving East Kent.'
+    description: 'Expert police station rep in Canterbury, Kent. FREE We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor. at Canterbury custody suite. Serving East Kent.'
   },
   {
     slug: 'gravesend',
@@ -40,7 +40,7 @@ const towns = [
     address: '1 Pembury Road, Tonbridge TN9 2HS',
     areaServed: ['Tonbridge', 'West Kent'],
     stationLink: '/tonbridge-police-station',
-    description: 'Expert police station rep in Tonbridge, Kent. FREE 24/7 representation at Tonbridge custody suite. Serving West Kent.'
+    description: 'Expert police station rep in Tonbridge, Kent. FREE We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor. at Tonbridge custody suite. Serving West Kent.'
   },
   {
     slug: 'folkestone',
@@ -50,7 +50,7 @@ const towns = [
     address: 'Bouverie House, Folkestone',
     areaServed: ['Folkestone', 'East Kent'],
     stationLink: '/folkestone-police-station',
-    description: 'Expert police station rep in Folkestone, Kent. FREE 24/7 representation at Folkestone custody suite. Serving East Kent.'
+    description: 'Expert police station rep in Folkestone, Kent. FREE We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor. at Folkestone custody suite. Serving East Kent.'
   },
   {
     slug: 'ashford',
@@ -110,7 +110,7 @@ const towns = [
     address: 'Fort Hill, Margate',
     areaServed: ['Margate', 'East Kent', 'Thanet'],
     stationLink: '/margate-police-station',
-    description: 'Expert police station rep in Margate, Kent. FREE 24/7 representation at Margate custody suite. Serving East Kent and Thanet.'
+    description: 'Expert police station rep in Margate, Kent. FREE We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor. at Margate custody suite. Serving East Kent and Thanet.'
   },
   {
     slug: 'dover',
@@ -170,7 +170,7 @@ const localBusinessSchema = {
   "@type": "LocalBusiness",
   "@id": \`\${SITE_URL}/police-station-rep-${town.slug}#business\`,
   "name": "Police Station Representative - ${town.displayName}, Kent",
-  "description": "Expert police station rep service in ${town.displayName}, Kent. FREE 24/7 representation${town.type === 'Custody Suite' ? ' at ' + town.displayName + ' custody suite' : ' for ' + town.type.toLowerCase()}' for police interviews and custody matters.",
+  "description": "Expert police station rep service in ${town.displayName}, Kent. FREE We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor.${town.type === 'Custody Suite' ? ' at ' + town.displayName + ' custody suite' : ' for ' + town.type.toLowerCase()}' for police interviews and custody matters.",
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "${town.displayName}",
@@ -215,7 +215,7 @@ export default function Page() {
             <div className="max-w-4xl mx-auto px-4 text-center">
               <h1 className="text-3xl md:text-4xl font-bold mb-4">Police Station Representative in ${town.displayName}, Kent</h1>
               <p className="mt-4 text-lg text-blue-200 max-w-3xl mx-auto">
-                Expert police station rep service covering ${town.displayName}${town.type === 'Custody Suite' ? ' custody suite' : ' ' + town.type.toLowerCase()}. FREE 24/7 representation by accredited duty solicitor Robert Cashman.
+                Expert police station rep service covering ${town.displayName}${town.type === 'Custody Suite' ? ' custody suite' : ' ' + town.type.toLowerCase()}. FREE We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor. by accredited duty solicitor Robert Cashman.
               </p>
             </div>
           </section>
@@ -308,7 +308,7 @@ export default function Page() {
               <aside className="space-y-6">
                 <div className="rounded-xl border bg-red-600 text-white shadow-lg p-6 text-center">
                   <h3 className="text-xl font-bold mb-4">Need a Police Station Rep in ${town.displayName}?</h3>
-                  <p className="mb-4 text-red-100">Call now for FREE 24/7 representation</p>
+                  <p className="mb-4 text-red-100">Call now for FREE We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor.</p>
                   <a href="tel:01732247427" className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors h-10 px-6 w-full bg-white text-red-600 hover:bg-red-50 font-bold mb-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-phone w-5 h-5">
                       <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>

@@ -198,7 +198,7 @@ const WHAT_WE_DO_CONTENT = `<div class="bg-gradient-to-br from-slate-50 to-blue-
 
     <div class="text-center">
       <h2 class="text-3xl font-bold text-slate-900 mb-4">Need Help Now?</h2>
-      <p class="text-xl text-slate-600 mb-8">We're available 24/7 to provide expert legal representation</p>
+      <p class="text-xl text-slate-600 mb-8">We're We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor.</p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
         <a href="tel:03330497036" class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 text-white shadow h-12 rounded-md px-8 bg-red-600 hover:bg-red-700 font-bold">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone w-5 h-5">

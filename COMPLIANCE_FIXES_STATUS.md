@@ -3,18 +3,18 @@
 ## Completed ✅
 
 ### STEP 1: Site-wide Strapline Replacement
-- ✅ Header.tsx: Replaced "Free police station representation across Kent" with "Kent police station legal advice (Legal Aid) — via Tuckers Solicitors LLP"
+- ✅ Header.tsx: Replaced "Kent police station legal advice (Legal Aid) — via Tuckers Solicitors LLP" with "Kent police station legal advice (Legal Aid) — via Tuckers Solicitors LLP"
 - ✅ prepared-statements/page.tsx: Fixed strapline reference
 
 ### STEP 4: Services Page Fixes
-- ✅ Services page: Fixed "we provide urgent attendance", "guaranteed representation", and other high-risk phrases
+- ✅ Services page: Fixed "If you request Tuckers Solicitors LLP, arrangements for attendance will be made in accordance with scheme requirements and solicitor availability.", "Where possible, you may be represented by Robert Cashman, subject to availability and conflicts. If Robert cannot attend, Tuckers Solicitors LLP will arrange an alternative suitably qualified representative.", and other high-risk phrases
 - ✅ All service-related claims now attribute to Tuckers Solicitors LLP
 
 ### STEP 5: Fees Page Fixes
-- ✅ Removed "our advice and representation" language
+- ✅ Removed "Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795)." language
 - ✅ Fixed payment chain language
 - ✅ Added top-of-page disclaimer
-- ✅ Changed "Guaranteed Senior Solicitor" to "Where possible..."
+- ✅ Changed "Where possible, you may be represented by Robert Cashman, subject to availability and conflicts. If Robert cannot attend, Tuckers Solicitors LLP will arrange an alternative suitably qualified representative." to "Where possible..."
 
 ### STEP 6: Complaints Page Fixes
 - ✅ Fixed "Website Operator Commitment" section
@@ -37,7 +37,7 @@
 ### STEP 3: "45 minutes" and "24/7" Claims
 Files still needing fixes:
 1. app/page.tsx - Home page (embedded HTML string)
-2. app/police-station-interviews-kent-rights/page.tsx - "within 45 minutes to an hour"
+2. app/police-station-interviews-kent-rights/page.tsx - "We aim to respond promptly. Attendance times depend on location, custody demand and solicitor availability. to an hour"
 3. app/what-to-expect-at-a-police-interview-in-kent/page.tsx
 4. app/police-station-agent-canterbury/page.tsx
 5. app/kent-police-stations/page.tsx
@@ -56,7 +56,7 @@ Replacement text: "We aim to respond promptly. Attendance times depend on locati
 
 ### STEP 9: Blog Template Fixes
 - ⚠️ PENDING: Add standard disclaimer block to blog template
-- ⚠️ PENDING: Review and fix blog posts for "immediate representation", "24/7 representation", "we provide representation"
+- ⚠️ PENDING: Review and fix blog posts for "immediate representation", "We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor.", "Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795)."
 
 ### STEP 10: Final QA Checklist
 - ⚠️ PENDING: Verify all fixes on key pages

@@ -30,7 +30,7 @@ export default function FAQAccordion() {
       question: "Why should I pay privately if police station advice is free?",
       answer: `<p>While Legal Aid provides excellent free representation, private funding offers several advantages:</p>
 <ul>
-<li><strong>Guaranteed senior solicitor:</strong> You are guaranteed to be represented by Robert Cashman, a solicitor with 35+ years of experience, rather than whoever is on the duty rota</li>
+<li><strong>Where possible, you may be represented by Robert Cashman, subject to availability and conflicts. If Robert cannot attend, Tuckers Solicitors LLP will arrange an alternative suitably qualified representative.:</strong> Where possible, you may be represented by Robert Cashman, subject to availability and conflicts. If Robert cannot attend, Tuckers Solicitors LLP will arrange an alternative suitably qualified representative. Robert Cashman, a solicitor with 35+ years of experience, rather than whoever is on the duty rota</li>
 <li><strong>Continuity:</strong> The same solicitor will handle your case from police station through to court if needed</li>
 <li><strong>Proactive approach:</strong> More time can be spent on pre-charge engagement and case preparation</li>
 <li><strong>Flexibility:</strong> Greater flexibility in communication and meeting arrangements</li>
@@ -76,7 +76,7 @@ export default function FAQAccordion() {
 <h4 class="font-bold mb-2 text-slate-900">Private Service:</h4>
 <ul class="list-disc pl-5 space-y-1 text-slate-600">
 <li>Fixed fee agreed upfront</li>
-<li>Guaranteed representation by Robert Cashman</li>
+<li>Where possible, you may be represented by Robert Cashman, subject to availability and conflicts. If Robert cannot attend, Tuckers Solicitors LLP will arrange an alternative suitably qualified representative. by Robert Cashman</li>
 <li>Continuity from police station through to court</li>
 <li>Proactive defence strategy from the outset</li>
 <li>Greater time dedicated to pre-charge engagement</li>

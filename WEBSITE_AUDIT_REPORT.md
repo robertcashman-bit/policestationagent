@@ -101,7 +101,7 @@ The following pages exist and contain meaningful content but are **not linked** 
 
 5. **`/emergency-police-station-representation`**
    - Title: "Emergency Police Station Representation Kent"
-   - Content: Emergency 24/7 representation information
+   - Content: Emergency We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor. information
    - **Action Required**: Should this be linked prominently (possibly homepage CTA or Emergency section)?
 
 6. **`/guided-assistant`**

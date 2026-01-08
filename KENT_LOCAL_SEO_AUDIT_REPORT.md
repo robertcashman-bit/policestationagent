@@ -183,7 +183,7 @@ This audit identifies critical gaps preventing dominance for "police station rep
 #### 3. `/police-station-rep-canterbury`
 **Title:** "Police Station Rep Canterbury | FREE 24/7 | East Kent Coverage"  
 **H1:** "Police Station Representative in Canterbury, Kent"  
-**Meta Description:** "Expert police station rep in Canterbury, Kent. FREE 24/7 representation at Canterbury custody suite. Serving East Kent. Call 01732 247427."  
+**Meta Description:** "Expert police station rep in Canterbury, Kent. FREE We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor. at Canterbury custody suite. Serving East Kent. Call 01732 247427."  
 **Content Focus:**
 - Canterbury custody suite
 - East Kent coverage (Dover, Margate, Ramsgate)
@@ -201,7 +201,7 @@ This audit identifies critical gaps preventing dominance for "police station rep
 #### 5. `/police-station-rep-tonbridge`
 **Title:** "Police Station Rep Tonbridge | FREE 24/7 | West Kent"  
 **H1:** "Police Station Representative in Tonbridge, Kent"  
-**Meta Description:** "Expert police station rep in Tonbridge, Kent. FREE 24/7 representation at Tonbridge custody suite. Serving West Kent. Call 01732 247427."  
+**Meta Description:** "Expert police station rep in Tonbridge, Kent. FREE We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor. at Tonbridge custody suite. Serving West Kent. Call 01732 247427."  
 **Content Focus:**
 - Tonbridge custody suite
 - West Kent coverage
@@ -286,7 +286,7 @@ This audit identifies critical gaps preventing dominance for "police station rep
   "alternateName": "Defence Legal Services",
   "url": "https://www.policestationagent.com",
   "logo": "https://www.policestationagent.com/logo.png",
-  "description": "Kent's leading police station representative service. Accredited duty solicitor providing FREE 24/7 police station representation across all Kent custody suites.",
+  "description": "Kent's leading police station representative service. Accredited duty solicitor providing FREE We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor. across all Kent custody suites.",
   "telephone": "+441732247427",
   "email": "robertcashman@defencelegalservices.co.uk",
   "address": {
@@ -484,7 +484,7 @@ This audit identifies critical gaps preventing dominance for "police station rep
   "@type": "LocalBusiness",
   "@id": "https://www.policestationagent.com/medway-police-station#business",
   "name": "Police Station Representative - Medway Custody Suite",
-  "description": "Expert police station rep service at Medway custody suite. FREE 24/7 representation for police interviews and custody matters.",
+  "description": "Expert police station rep service at Medway custody suite. FREE We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor. for police interviews and custody matters.",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "Purser Way",
@@ -583,7 +583,7 @@ This audit identifies critical gaps preventing dominance for "police station rep
 
 **Current Subheading:** "FREE legal representation at all Kent police stations..."
 
-**Optimized Subheading:** "Kent's #1 police station rep service. Accredited duty solicitor Robert Cashman provides FREE 24/7 representation at all 13 Kent custody suites. Not a call centre - direct access to qualified solicitor with 35+ years experience and 6000+ cases."
+**Optimized Subheading:** "Kent's #1 police station rep service. Accredited duty solicitor Robert Cashman provides FREE We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor. at all 13 Kent custody suites. Not a call centre - direct access to qualified solicitor with 35+ years experience and 6000+ cases."
 
 ### Add New Section: "Why Choose Kent's Leading Police Station Rep?"
 

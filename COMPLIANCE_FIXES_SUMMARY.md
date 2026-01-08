@@ -6,17 +6,17 @@
 ## COMPLETED FIXES
 
 ### STEP 1: Site-wide Strapline Replacement ✅
-- **Header.tsx**: Replaced "Free police station representation across Kent" with "Kent police station legal advice (Legal Aid) — via Tuckers Solicitors LLP"
+- **Header.tsx**: Replaced "Kent police station legal advice (Legal Aid) — via Tuckers Solicitors LLP" with "Kent police station legal advice (Legal Aid) — via Tuckers Solicitors LLP"
 - **prepared-statements/page.tsx**: Fixed similar strapline instance
 
 ### STEP 4: Services Page Fixes ✅
 - Replaced "We can provide this service free of charge" with compliant Tuckers attribution
-- Replaced "guaranteed representation by a senior solicitor" with "Where possible, a senior solicitor will deal with your matter"
-- Replaced "We provide urgent attendance to protect your rights" with compliant wording
+- Replaced "Where possible, you may be represented by Robert Cashman, subject to availability and conflicts. If Robert cannot attend, Tuckers Solicitors LLP will arrange an alternative suitably qualified representative. by a senior solicitor" with "Where possible, a senior solicitor will deal with your matter"
+- Replaced "If you request Tuckers Solicitors LLP, arrangements for attendance will be made in accordance with scheme requirements and solicitor availability. to protect your rights" with compliant wording
 - Replaced "Do not speak to them until you have spoken to us" with compliant Tuckers instruction
 
 ### STEP 5: Fees Page Fixes ✅
-- Replaced "There is no charge for our advice and representation" with compliant wording
+- Replaced "There is no charge for Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795)." with compliant wording
 - Replaced "The police pay the Legal Aid Agency, who then pay us" with neutral statement
 - Replaced instruction mentioning "Police Station Agent" with "Tuckers Solicitors LLP"
 
@@ -80,4 +80,6 @@
 - Script files (in `/scripts`) may contain references but are not part of live site
 - JSON blog post files contain content that may need updating
 - Private client FAQ pages may contain "guaranteed" language that is acceptable for private services
+
+
 
