@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ContactForm from "@/components/ContactForm";
 import WhoProvidesLegalService from "@/components/WhoProvidesLegalService";
+import { InternalLinkHub } from "@/components/InternalLinkHub";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -189,6 +190,20 @@ export default function Page() {
                 </div>
               </div>
             </section>
+
+            {/* Internal Linking Hub */}
+            <div className="max-w-4xl mx-auto px-4 pb-8">
+              <InternalLinkHub
+                title="Related Services and Information"
+                links={[
+                  { href: "/offences-we-deal-with", text: "Offences We Deal With", description: "Types of offences we handle" },
+                  { href: "/services/police-station-representation", text: "Police Station Representation", description: "Main service page" },
+                  { href: "/voluntary-police-interview", text: "Voluntary Police Interview", description: "Advice before attendance" },
+                  { href: "/your-rights-in-custody", text: "Your Rights in Custody", description: "PACE Code C rights" },
+                  { href: "/faq", text: "Frequently Asked Questions", description: "Common questions" },
+                ]}
+              />
+            </div>
           </div>
         </div>
       </main>

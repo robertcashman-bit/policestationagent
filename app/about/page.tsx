@@ -42,10 +42,12 @@ export default function Page() {
           <InternalLinkHub
             title="Services and Information"
             links={[
+              { href: "/offences-we-deal-with", text: "Offences We Deal With", description: "Types of offences we handle" },
               { href: "/services/police-station-representation", text: "Police Station Representation", description: "Main service page" },
               { href: "/for-solicitors", text: "Police Station Rep for Solicitors", description: "Agent cover services" },
               { href: "/kent-police-stations", text: "Duty Solicitor Kent", description: "All Kent police stations" },
               { href: "/services", text: "All Services", description: "Complete service list" },
+              { href: "/voluntary-police-interview", text: "Voluntary Police Interview", description: "Advice before attendance" },
             ]}
           />
 

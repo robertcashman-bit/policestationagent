@@ -49,6 +49,7 @@ export default function Page() {
           <InternalLinkHub
             title="Related Services and Information"
             links={[
+              { href: "/offences-we-deal-with", text: "Offences We Deal With", description: "Types of offences we handle" },
               { href: "/services/police-station-representation", text: "Police Station Representation", description: "Main service page" },
               { href: "/coverage", text: "Coverage Areas", description: "Areas we cover" },
               { href: "/kent-police-stations", text: "Kent Police Stations", description: "All custody suites" },

@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { InternalLinkHub } from "@/components/InternalLinkHub";
 import type { Metadata } from "next";
 import { SITE_DOMAIN, SITE_URL } from "@/config/site";
 
@@ -564,6 +565,21 @@ export default function Page() {
               </div>
             </div>
           </section>
+
+          {/* Internal Linking Hub */}
+          <div className="max-w-6xl mx-auto px-4 pb-16">
+            <InternalLinkHub
+              title="Related Services and Information"
+              links={[
+                { href: "/offences-we-deal-with", text: "Offences We Deal With", description: "Types of offences we handle" },
+                { href: "/services/police-station-representation", text: "Police Station Representation", description: "Main service page" },
+                { href: "/voluntary-police-interview", text: "Voluntary Police Interview", description: "Advice before attendance" },
+                { href: "/for-solicitors", text: "Agent Cover for Solicitors", description: "B2B services" },
+                { href: "/kent-police-stations", text: "Kent Police Stations", description: "All custody suites" },
+                { href: "/faq", text: "Frequently Asked Questions", description: "Common questions" },
+              ]}
+            />
+          </div>
         </div>
       </main>
       <Footer />
