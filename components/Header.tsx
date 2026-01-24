@@ -222,6 +222,16 @@ export default function Header() {
                     </li>
                     <li role="none">
                       <Link
+                        href="/start/solicitors-agent-cover"
+                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        Solicitors / Agent Cover
+                      </Link>
+                    </li>
+                    <li role="none">
+                      <Link
                         href="/privatecrime"
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
@@ -877,6 +887,18 @@ export default function Header() {
                       }}
                     >
                       Agent Cover for Law Firms
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/start/solicitors-agent-cover"
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
+                    >
+                      Solicitors / Agent Cover
                     </Link>
                   </li>
                   <li>

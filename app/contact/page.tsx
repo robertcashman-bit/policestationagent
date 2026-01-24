@@ -67,6 +67,34 @@ export default function Page() {
             {/* Who Provides Legal Service */}
             <WhoProvidesLegalService />
 
+            {/* Before You Submit Guidance */}
+            <section className="bg-blue-50 border-2 border-blue-200 rounded-xl shadow-lg p-6 md:p-8 mb-8">
+              <h2 className="text-xl md:text-2xl font-black text-slate-900 mb-4">
+                Before You Submit
+              </h2>
+              <p className="text-slate-700 mb-3">
+                To help us respond quickly, please include the following information if available:
+              </p>
+              <ul className="space-y-2 text-slate-700">
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-600 font-bold mt-1">•</span>
+                  <span>Station/custody suite</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-600 font-bold mt-1">•</span>
+                  <span>Interview time</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-600 font-bold mt-1">•</span>
+                  <span>Allegation</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-600 font-bold mt-1">•</span>
+                  <span>Call-back number</span>
+                </li>
+              </ul>
+            </section>
+
             {/* Contact Form */}
             <ContactForm />
 
