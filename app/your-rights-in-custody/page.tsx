@@ -101,6 +101,11 @@ export default function Page() {
                 <h2>Next: the most relevant detailed guides</h2>
                 <ul>
                   <li>
+                    <Link href="/offences-we-deal-with">
+                      Offences we deal with (types of offences)
+                    </Link>
+                  </li>
+                  <li>
                     <Link href="/police-custody-rights">
                       Police custody rights (detailed guide)
                     </Link>

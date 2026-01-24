@@ -111,6 +111,7 @@ export default function PoliceStationRepresentationPage() {
             <InternalLinkHub
               title="Related Services and Information"
               links={[
+                { href: "/offences-we-deal-with", text: "Offences We Deal With", description: "Types of offences we handle" },
                 { href: "/police-station-interviews-kent-rights", text: "Solicitor for Police Interview", description: "Your rights and what to expect" },
                 { href: "/voluntary-interviews", text: "Legal Advice at Police Station", description: "Voluntary interview guidance" },
                 { href: "/services/pre-charge-advice", text: "Police Interview Advice Solicitor", description: "Pre-charge advice and representations" },

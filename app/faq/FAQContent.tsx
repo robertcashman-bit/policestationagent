@@ -38,7 +38,7 @@ export default function FAQContent() {
         {
           question: "What types of offences do you cover?",
           answer:
-            "We cover all types of criminal offences, including: assault, theft, fraud, drug offences, sexual offences, motoring offences, public order offences, and any other criminal matter. Our expertise covers the full spectrum of criminal law, from summary-only offences to indictable-only matters.",
+            "We cover all types of criminal offences, including: assault, theft, fraud, drug offences, sexual offences, motoring offences, public order offences, and any other criminal matter. Our expertise covers the full spectrum of criminal law, from summary-only offences to indictable-only matters. For detailed information about specific offence types, see our <a href='/offences-we-deal-with' class='text-blue-600 hover:underline font-semibold'>Offences We Deal With</a> page.",
         },
         {
           question: "Do you cover voluntary police interviews?",

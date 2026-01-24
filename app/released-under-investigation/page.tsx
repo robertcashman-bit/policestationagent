@@ -321,6 +321,12 @@ export default function ReleasedUnderInvestigationPage() {
             <h3 className="text-lg font-bold text-slate-900 mb-4">Related Topics</h3>
             <div className="grid md:grid-cols-2 gap-4">
               <Link
+                href="/offences-we-deal-with"
+                className="p-4 bg-white rounded-lg border hover:border-blue-300"
+              >
+                <span className="font-medium text-blue-600">Offences We Deal With →</span>
+              </Link>
+              <Link
                 href="/custody-time-limits"
                 className="p-4 bg-white rounded-lg border hover:border-blue-300"
               >

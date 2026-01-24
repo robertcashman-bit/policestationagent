@@ -50,6 +50,7 @@ export default function Page() {
             title="All Services"
             links={[
               { href: "/services/police-station-representation", text: "Police Station Representation", description: "Main service - FREE under Legal Aid" },
+              { href: "/offences-we-deal-with", text: "Offences We Deal With", description: "Types of offences we handle" },
               { href: "/services/pre-charge-advice", text: "Police Interview Advice Solicitor", description: "Pre-charge advice and representations" },
               { href: "/services/bail-applications", text: "Duty Solicitor Police Station", description: "Bail applications and advice" },
               { href: "/for-solicitors", text: "Police Station Rep for Solicitors", description: "Agent cover for law firms" },

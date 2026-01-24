@@ -196,6 +196,7 @@ export default function Page() {
               <InternalLinkHub
                 title="Related Services and Information"
                 links={[
+                  { href: "/offences-we-deal-with", text: "Offences We Deal With", description: "Types of offences we handle" },
                   { href: "/services/police-station-representation", text: "Police Station Representation", description: "Main service page" },
                   { href: "/voluntary-interviews", text: "Legal Advice at Police Station", description: "Voluntary interview guidance" },
                   { href: "/services/pre-charge-advice", text: "Police Interview Advice Solicitor", description: "Pre-charge advice" },

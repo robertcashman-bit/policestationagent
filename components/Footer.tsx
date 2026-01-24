@@ -8,6 +8,7 @@ import { getFormattedVersion, getLastUpdateDateTime } from "@/lib/version";
 const serviceLinks = [
   { href: "/services", label: "Police Station Rep Services Kent", priority: true },
   { href: "/services/police-station-representation", label: "Police Station Representation" },
+  { href: "/offences-we-deal-with", label: "Offences We Deal With", priority: true },
   { href: "/voluntary-interviews", label: "Voluntary Interviews" },
   { href: "/courtrepresentation", label: "Court Representation" },
   { href: "/for-solicitors", label: "Agent Cover for Law Firms" },
@@ -28,6 +29,7 @@ const serviceLinks = [
 
 const helpLinks = [
   { href: "/faq", label: "Frequently Asked Questions", priority: true },
+  { href: "/offences-we-deal-with", label: "Offences We Deal With", priority: true },
   { href: "/police-custody-rights", label: "Police Custody Rights", priority: true },
   { href: "/police-interview-rights", label: "Police Interview Rights", priority: true },
   { href: "/custody-time-limits", label: "Custody Time Limits" },

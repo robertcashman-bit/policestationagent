@@ -359,15 +359,30 @@ export default function FraudTheftPage() {
 
             <section className="bg-slate-50 rounded-xl border border-slate-200 shadow-lg p-6 md:p-8">
               <h2 className="text-xl md:text-2xl font-black text-slate-900 mb-4">Related Pages</h2>
-              <ul className="space-y-2 text-slate-700">
-                <li><Link href="/offences-we-deal-with" className="text-blue-600 hover:underline">Offences We Deal With</Link></li>
-                <li><Link href="/voluntary-police-interview" className="text-blue-600 hover:underline">Voluntary Police Interview</Link></li>
-                <li><Link href="/police-bail-explained" className="text-blue-600 hover:underline">Police Bail Explained</Link></li>
-                <li><Link href="/released-under-investigation" className="text-blue-600 hover:underline">Released Under Investigation</Link></li>
-                <li><Link href="/your-rights-in-custody" className="text-blue-600 hover:underline">Your Rights in Custody</Link></li>
-                <li><Link href="/fees" className="text-blue-600 hover:underline">Fees</Link></li>
-                <li><Link href="/contact" className="text-blue-600 hover:underline">Contact</Link></li>
-              </ul>
+              <div className="grid md:grid-cols-2 gap-4">
+                <div>
+                  <h3 className="font-semibold text-slate-900 mb-2 text-sm">Other Offences</h3>
+                  <ul className="space-y-2 text-slate-700">
+                    <li><Link href="/offences-we-deal-with" className="text-blue-600 hover:underline">Offences We Deal With</Link></li>
+                    <li><Link href="/offences/domestic-abuse-allegations" className="text-blue-600 hover:underline">Domestic Abuse Allegations</Link></li>
+                    <li><Link href="/offences/sexual-offences" className="text-blue-600 hover:underline">Sexual Offences</Link></li>
+                    <li><Link href="/offences/assault-abh-gbh" className="text-blue-600 hover:underline">Assault / ABH / GBH</Link></li>
+                    <li><Link href="/offences/harassment-stalking" className="text-blue-600 hover:underline">Harassment / Stalking</Link></li>
+                    <li><Link href="/offences/drug-offences" className="text-blue-600 hover:underline">Drug Offences</Link></li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-slate-900 mb-2 text-sm">Legal Advice & Rights</h3>
+                  <ul className="space-y-2 text-slate-700">
+                    <li><Link href="/voluntary-police-interview" className="text-blue-600 hover:underline">Voluntary Police Interview</Link></li>
+                    <li><Link href="/police-bail-explained" className="text-blue-600 hover:underline">Police Bail Explained</Link></li>
+                    <li><Link href="/released-under-investigation" className="text-blue-600 hover:underline">Released Under Investigation</Link></li>
+                    <li><Link href="/your-rights-in-custody" className="text-blue-600 hover:underline">Your Rights in Custody</Link></li>
+                    <li><Link href="/fees" className="text-blue-600 hover:underline">Fees</Link></li>
+                    <li><Link href="/contact" className="text-blue-600 hover:underline">Contact</Link></li>
+                  </ul>
+                </div>
+              </div>
             </section>
           </div>
         </div>

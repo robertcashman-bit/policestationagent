@@ -148,6 +148,7 @@ export default function BailApplicationsPage() {
             <InternalLinkHub
               title="Related Services and Information"
               links={[
+                { href: "/offences-we-deal-with", text: "Offences We Deal With", description: "Types of offences we handle" },
                 { href: "/services/police-station-representation", text: "Police Station Representation", description: "Main service page" },
                 { href: "/police-station-interviews-kent-rights", text: "Solicitor for Police Interview", description: "Your rights and what to expect" },
                 { href: "/services/pre-charge-advice", text: "Police Interview Advice Solicitor", description: "Pre-charge advice" },

@@ -192,6 +192,16 @@ export default function Header() {
                     </li>
                     <li role="none">
                       <Link
+                        href="/offences-we-deal-with"
+                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        role="menuitem"
+                        onClick={closeDropdowns}
+                      >
+                        Offences We Deal With
+                      </Link>
+                    </li>
+                    <li role="none">
+                      <Link
                         href="/voluntary-interviews"
                         className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
@@ -851,6 +861,18 @@ export default function Header() {
                       }}
                     >
                       Police Station Representation
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/offences-we-deal-with"
+                      className="block px-4 min-h-[44px] flex items-center text-slate-600 hover:bg-slate-50 rounded-md"
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        closeDropdowns();
+                      }}
+                    >
+                      Offences We Deal With
                     </Link>
                   </li>
                   <li>
