@@ -49,7 +49,7 @@ export default function Page() {
           <InternalLinkHub
             title="All Services"
             links={[
-              { href: "/services/police-station-representation", text: "Police Station Representation", description: "Main service - FREE under Legal Aid" },
+              { href: "/services/police-station-representation", text: "Police Station Representation", description: "Main service (police station Legal Aid is free)" },
               { href: "/offences-we-deal-with", text: "Offences We Deal With", description: "Types of offences we handle" },
               { href: "/services/pre-charge-advice", text: "Police Interview Advice Solicitor", description: "Pre-charge advice and representations" },
               { href: "/services/bail-applications", text: "Duty Solicitor Police Station", description: "Bail applications and advice" },
