@@ -5,6 +5,7 @@ import { SITE_DOMAIN } from "@/config/site";
 import { ComprehensiveLegalServiceSchema } from "@/components/schema/ComprehensiveLegalServiceSchema";
 import { PersonSchema } from "@/components/schema/PersonSchema";
 import { InternalLinkHub } from "@/components/InternalLinkHub";
+import { FAQPage } from "@/components/StructuredData";
 
 export const metadata: Metadata = {
   title: "Police Station Solicitor in Kent | Police Station Representation Services",
@@ -24,8 +25,37 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
+  const faqItems = [
+    {
+      question: "Is legal advice at the police station free?",
+      answer:
+        "Legal aid is usually available at the police station, so legal advice and representation for interviews under caution is normally free of charge. This is not means-tested for police station interviews.",
+    },
+    {
+      question: "Can I have a solicitor for a voluntary police interview?",
+      answer:
+        "Yes. A voluntary interview is still conducted under caution and you are entitled to legal advice and representation. It is sensible to get advice before you attend.",
+    },
+    {
+      question: "Who can instruct a solicitor at the police station?",
+      answer:
+        "Instructions are often given by the person being interviewed, but they can also be arranged by a family member, authorised representative, or a solicitor acting on the client’s behalf (subject to verification and any conflicts).",
+    },
+    {
+      question: "What happens after the police interview?",
+      answer:
+        "After interview you may be released without charge, bailed to return, released under investigation (RUI), or charged. The right next steps depend on the allegation, evidence and any conditions.",
+    },
+    {
+      question: "Which areas do you cover?",
+      answer:
+        "We cover Kent police stations and custody suites, and can advise on voluntary interview arrangements across the county, subject to availability and conflicts.",
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
+      <FAQPage items={faqItems} />
       <ComprehensiveLegalServiceSchema
         serviceName="Police Station Representation Services"
         serviceDescription="Police station representation services provide expert legal advice and representation at police custody suites in England & Wales. This service includes FREE legal advice under Legal Aid, expert interview representation, bail applications, and pre-charge advice. Available across all Kent police stations."

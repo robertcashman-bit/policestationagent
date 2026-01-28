@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 import { SITE_DOMAIN } from "@/config/site";
 import { InternalLinkHub } from "@/components/InternalLinkHub";
+import { FAQPage } from "@/components/StructuredData";
 
 export const metadata: Metadata = {
   title: "Voluntary Police Interview Solicitor | Legal Advice Before Attendance (Kent)",
@@ -34,8 +35,37 @@ export const metadata: Metadata = {
 };
 
 export default function VoluntaryPoliceInterviewPage() {
+  const faqItems = [
+    {
+      question: "Is a voluntary police interview under caution?",
+      answer:
+        "Yes. Even when an interview is arranged by appointment, it is usually conducted under caution and recorded, and what is said can be used as evidence.",
+    },
+    {
+      question: "Is legal advice free at a voluntary police interview?",
+      answer:
+        "Legal aid is usually available at the police station, so advice and representation for an interview under caution is normally free of charge.",
+    },
+    {
+      question: "Can the police refuse me a solicitor at interview?",
+      answer:
+        "In most cases, no. You have a right to legal advice and the police should not proceed with a PACE interview until you have had the opportunity to speak to a solicitor (subject to limited exceptions).",
+    },
+    {
+      question: "What is the difference between a voluntary interview and arrest?",
+      answer:
+        "A voluntary interview is arranged by appointment and you attend without being detained. Arrest involves detention in custody. Both interviews are under caution and both require careful legal advice.",
+    },
+    {
+      question: "What should I do when the police contact me about an interview?",
+      answer:
+        "Do not discuss the allegation on the phone. Ask for the officer’s details, confirm the station/time proposed, and arrange legal advice before you attend.",
+    },
+  ];
+
   return (
     <>
+      <FAQPage items={faqItems} />
       <Header />
       <main
         className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50"
@@ -92,6 +122,18 @@ export default function VoluntaryPoliceInterviewPage() {
               ]}
             />
           </div>
+
+          <section className="not-prose mt-12 rounded-2xl border border-slate-200 bg-white shadow-sm p-6 md:p-8">
+            <h2 className="text-2xl font-black text-slate-900 mb-6">Frequently asked questions</h2>
+            <div className="space-y-6">
+              {faqItems.map((item) => (
+                <div key={item.question} className="border-b border-slate-100 pb-6 last:border-b-0 last:pb-0">
+                  <h3 className="font-bold text-slate-900 mb-2">{item.question}</h3>
+                  <p className="text-slate-700">{item.answer}</p>
+                </div>
+              ))}
+            </div>
+          </section>
         </div>
       </main>
       <Footer />
