@@ -2,13 +2,22 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { SITE_DOMAIN } from "@/config/site";
 
 export const metadata: Metadata = {
-  title: "Offences We Deal With | Police Station Representation Kent | Legal Aid",
+  title: "Offences We Deal With | Police Station Representation in Kent",
   description:
-    "Expert police station representation for domestic abuse, sexual offences, assault, harassment, drug offences, and fraud allegations across Kent. Free legal advice under Legal Aid. Call 01732 247427.",
+    "Offence types we regularly deal with at the police station, and how early legal advice works before interview. Kent police station representation. Call 01732 247427.",
   alternates: {
-    canonical: "https://policestationagent.com/offences-we-deal-with",
+    canonical: `https://${SITE_DOMAIN}/offences-we-deal-with`,
+  },
+  openGraph: {
+    title: "Offences We Deal With | Police Station Representation in Kent",
+    description:
+      "Offence types we regularly deal with at the police station, plus guidance on interviews, bail and RUI. Kent coverage.",
+    url: `https://${SITE_DOMAIN}/offences-we-deal-with`,
+    siteName: "Police Station Agent",
+    type: "website",
   },
 };
 

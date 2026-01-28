@@ -1,8 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import type { Metadata } from "next";
-import { SITE_DOMAIN, SITE_URL } from "@/config/site";
-import Script from "next/script";
+import { SITE_DOMAIN } from "@/config/site";
 import { FAQPage } from "@/components/StructuredData";
 import { ComprehensiveLegalServiceSchema } from "@/components/schema/ComprehensiveLegalServiceSchema";
 import { PersonSchema } from "@/components/schema/PersonSchema";
@@ -10,22 +9,21 @@ import { AuthorBio } from "@/components/E-E-A-T/AuthorBio";
 import { RegulatoryReferences } from "@/components/E-E-A-T/RegulatoryReferences";
 import { ServiceDisclaimer } from "@/components/E-E-A-T/ServiceDisclaimer";
 import { InternalLinkHub } from "@/components/InternalLinkHub";
-import Link from "next/link";
 
 export const metadata: Metadata = {
   title:
-    "Police Station Duty Solicitor Kent | Police Station Representation Solicitor | FREE Legal Advice",
+    "Police Station Solicitor in Kent | Police Station Representation (Legal Aid)",
   description:
-    "Police Station Duty Solicitor Kent - Expert police station representation by qualified solicitor. FREE legal advice under Legal Aid at all Kent custody suites. Accredited Duty Solicitor & Higher Court Advocate Robert Cashman. Medway, Maidstone, Canterbury, Gravesend. Call 01732 247427.",
+    "Police station representation in Kent: free legal advice at the police station under Legal Aid, interview representation, and guidance on bail and next steps. Call 01732 247427.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/services/police-station-representation`,
   },
   openGraph: {
-    title: "Police Station Duty Solicitor Kent | Duty Solicitor Representation Kent | FREE Advice",
+    title: "Police Station Solicitor in Kent | Police Station Representation",
     description:
-      "Police Station Duty Solicitor Kent - Expert representation by qualified solicitor Robert Cashman. Accredited Duty Solicitor & Higher Court Advocate. FREE legal advice under Legal Aid at Medway, Canterbury, Maidstone, Gravesend custody suites.",
+      "Police station representation in Kent: free legal advice under Legal Aid, interview representation, and early advice before voluntary attendance.",
     url: `https://${SITE_DOMAIN}/services/police-station-representation`,
-    siteName: "Criminal Defence Kent",
+    siteName: "Police Station Agent",
     type: "website",
   },
 };

@@ -7,17 +7,17 @@ import { PersonSchema } from "@/components/schema/PersonSchema";
 import { InternalLinkHub } from "@/components/InternalLinkHub";
 
 export const metadata: Metadata = {
-  title: "Police Station Representation Services Kent | Free Legal Aid",
+  title: "Police Station Solicitor in Kent | Police Station Representation Services",
   description:
-    "Expert police station representation across Kent. Free legal aid advice for suspects, reliable agent cover for solicitors.",
+    "Police station representation across Kent: free legal advice at the police station, voluntary interview representation, and support for solicitors needing attendance cover. Call 01732 247427.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/services`,
   },
   openGraph: {
-    title: "Police Station Representation Services Kent | Free Legal Aid",
+    title: "Police Station Solicitor in Kent | Police Station Representation Services",
     description:
-      "Expert police station representation across Kent. Free legal aid advice for suspects, reliable agent cover for solicitors.",
-    url: "https://policestationagent.com/services",
+      "Police station representation across Kent, including voluntary interviews and bail advice. Free legal advice at the police station under Legal Aid.",
+    url: `https://${SITE_DOMAIN}/services`,
     siteName: "Police Station Agent",
     type: "website",
   },

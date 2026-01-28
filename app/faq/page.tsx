@@ -2,20 +2,21 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FAQContent from "@/app/faq/FAQContent";
 import type { Metadata } from "next";
+import { SITE_DOMAIN } from "@/config/site";
 
 export const metadata: Metadata = {
   title: "FAQ - Frequently Asked Questions | Police Station Agent",
   description:
     "Comprehensive answers about police station representation in Kent. What we do and don't do, legal aid information, and how to get urgent help. Available during extended hours.",
   alternates: {
-    canonical: "https://policestationagent.com/faq",
+    canonical: `https://${SITE_DOMAIN}/faq`,
   },
   openGraph: {
     title: "FAQ - Frequently Asked Questions | Police Station Agent",
     description:
       "Comprehensive answers about police station representation in Kent. What we do and don't do, legal aid information, and how to get urgent help. Available during extended hours.",
     type: "website",
-    url: "https://policestationagent.com/faq",
+    url: `https://${SITE_DOMAIN}/faq`,
   },
 };
 

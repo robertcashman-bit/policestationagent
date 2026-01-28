@@ -4,16 +4,16 @@ import type { Metadata } from "next";
 import { SITE_DOMAIN } from "@/config/site";
 
 export const metadata: Metadata = {
-  title: "Voluntary Police Interview – Legal Advice Before Attendance",
+  title: "Voluntary Police Interview Solicitor | Legal Advice Before Attendance (Kent)",
   description:
-    "Expert legal advice before attending a voluntary police interview. Free legal representation under Legal Aid. Call 01732 247427.",
+    "Voluntary police interview (caution) legal advice before attendance. Free legal advice at the police station under Legal Aid. Kent coverage. Call 01732 247427.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/voluntary-police-interview`,
   },
   openGraph: {
-    title: "Voluntary Police Interview – Legal Advice Before Attendance",
+    title: "Voluntary Police Interview Solicitor | Legal Advice Before Attendance (Kent)",
     description:
-      "Expert legal advice before attending a voluntary police interview. Free legal representation under Legal Aid.",
+      "Advice and representation for voluntary police interviews (under caution) across Kent. Free police station legal advice under Legal Aid.",
     url: `https://${SITE_DOMAIN}/voluntary-police-interview`,
     siteName: "Police Station Agent",
     type: "website",

@@ -4,19 +4,20 @@ import ContactForm from "@/components/ContactForm";
 import WhoProvidesLegalService from "@/components/WhoProvidesLegalService";
 import { InternalLinkHub } from "@/components/InternalLinkHub";
 import type { Metadata } from "next";
+import { SITE_DOMAIN } from "@/config/site";
 
 export const metadata: Metadata = {
   title: "Contact | Police Station Advice in Kent | Call 01732 247427",
   description:
     "Contact Police Station Agent for police station advice and representation in Kent. Free legal advice at the police station under Legal Aid. Call 01732 247427 or text 07535 494446.",
   alternates: {
-    canonical: "https://policestationagent.com/contact",
+    canonical: `https://${SITE_DOMAIN}/contact`,
   },
   openGraph: {
     title: "Contact Police Station Agent | Police Station Advice Kent | Call 01732 247427",
     description:
       "Contact Police Station Agent for police station representation in Kent. Extended hours availability. Call 01732 247427, text 07535 494446 or email for advice.",
-    url: "https://policestationagent.com/contact",
+    url: `https://${SITE_DOMAIN}/contact`,
     siteName: "Police Station Agent",
     type: "website",
   },

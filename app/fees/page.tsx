@@ -1,17 +1,20 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import type { Metadata } from "next";
+import { SITE_DOMAIN } from "@/config/site";
 
 export const metadata: Metadata = {
-  title: "Police Station Agent",
-  description: "",
+  title: "Legal Aid at the Police Station & Fees | Kent Police Station Solicitor",
+  description:
+    "Plain-English guidance on free legal advice at the police station (Legal Aid) and when private fees may apply. Kent police station representation. Call 01732 247427.",
   alternates: {
-    canonical: "https://policestationagent.com/fees",
+    canonical: `https://${SITE_DOMAIN}/fees`,
   },
   openGraph: {
-    title: "Police Station Agent",
-    description: "",
-    url: "https://policestationagent.com/fees",
+    title: "Legal Aid at the Police Station & Fees | Kent Police Station Solicitor",
+    description:
+      "Guidance on free police station legal advice under Legal Aid and when private fees may apply. Kent coverage.",
+    url: `https://${SITE_DOMAIN}/fees`,
     siteName: "Police Station Agent",
     type: "website",
   },
