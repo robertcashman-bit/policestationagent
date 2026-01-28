@@ -34,9 +34,9 @@ export default function StartHere() {
               </div>
               <div className="flex-1">
                 <h3 className="font-bold text-slate-900 mb-1 group-hover:text-red-700 transition-colors">
-                  I've been arrested / I'm at a police station now
+                  Has someone you know been arrested and taken to a police station?
                 </h3>
-                <p className="text-sm text-slate-600">Urgent legal advice for those in custody</p>
+                <p className="text-sm text-slate-600">Arrange representation on their behalf</p>
               </div>
             </div>
           </Link>
