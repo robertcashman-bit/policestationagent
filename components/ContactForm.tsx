@@ -3,8 +3,9 @@
 /**
  * CONTACT FORM COMPONENT
  *
- * Comprehensive contact form for police station representation requests.
- * Collects all essential details for case briefing.
+ * Non-urgent police station attendance request form.
+ * For scheduled voluntary interviews, pre-booked interviews, and solicitor instructions only.
+ * Urgent custody matters must be dealt with by telephone.
  * GDPR compliant with consent checkbox.
  */
 
@@ -14,17 +15,16 @@ interface FormData {
   name: string;
   contactNumber: string;
   email: string;
-  requestType: "self" | "client";
+  role: "family" | "solicitor" | "representative";
   clientName: string;
   clientDOB: string;
   policeStation: string;
   interviewDate: string;
   interviewTime: string;
-  attendanceType: "arrested" | "voluntary";
-  offenceSummary: string;
-  contactWindow: "now" | "specify";
-  contactWindowTime: string;
+  attendanceType: "scheduled-voluntary" | "pre-booked" | "solicitor-instruction";
+  briefDetails: string;
   supportNeeds: string;
+  nonUrgentConfirmation: boolean;
   consent: boolean;
 }
 
@@ -33,17 +33,16 @@ export default function ContactForm() {
     name: "",
     contactNumber: "",
     email: "",
-    requestType: "self",
+    role: "family",
     clientName: "",
     clientDOB: "",
     policeStation: "",
     interviewDate: "",
     interviewTime: "",
-    attendanceType: "voluntary",
-    offenceSummary: "",
-    contactWindow: "now",
-    contactWindowTime: "",
+    attendanceType: "scheduled-voluntary",
+    briefDetails: "",
     supportNeeds: "",
+    nonUrgentConfirmation: false,
     consent: false,
   });
 
@@ -56,25 +55,27 @@ export default function ContactForm() {
 
     if (!formData.name.trim()) newErrors.name = "Name is required";
     if (!formData.contactNumber.trim()) newErrors.contactNumber = "Contact number is required";
-    if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+    if (formData.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = "Please enter a valid email address";
     }
-    if (formData.requestType === "client" && !formData.clientName.trim()) {
-      newErrors.clientName = "Client name is required when requesting for a client";
+    if (!formData.role) newErrors.role = "Please select your role";
+    if ((formData.role === "solicitor" || formData.role === "representative") && !formData.clientName.trim()) {
+      newErrors.clientName = "Client name is required";
     }
-    if (formData.requestType === "client" && !formData.clientDOB.trim()) {
+    if ((formData.role === "solicitor" || formData.role === "representative") && !formData.clientDOB.trim()) {
       newErrors.clientDOB = "Client date of birth is required";
     }
     if (!formData.policeStation.trim()) newErrors.policeStation = "Police station is required";
     if (!formData.interviewDate.trim()) newErrors.interviewDate = "Interview date is required";
     if (!formData.interviewTime.trim()) newErrors.interviewTime = "Interview time is required";
-    if (!formData.attendanceType)
-      newErrors.attendanceType = "Please select whether this is an arrest or voluntary attendance";
-    if (!formData.offenceSummary.trim()) newErrors.offenceSummary = "Brief summary is required";
-    if (formData.contactWindow === "specify" && !formData.contactWindowTime.trim()) {
-      newErrors.contactWindowTime = "Please specify a contact time";
+    if (!formData.attendanceType) newErrors.attendanceType = "Please select the type of attendance request";
+    if (!formData.briefDetails.trim()) {
+      newErrors.briefDetails = "Brief details are required";
+    } else if (formData.briefDetails.length > 300) {
+      newErrors.briefDetails = "Brief details must not exceed 300 characters";
+    }
+    if (!formData.nonUrgentConfirmation) {
+      newErrors.nonUrgentConfirmation = "You must confirm this is a non-urgent request";
     }
     if (!formData.consent) {
       newErrors.consent = "You must consent to data storage and email communication";
@@ -110,17 +111,16 @@ export default function ContactForm() {
           name: "",
           contactNumber: "",
           email: "",
-          requestType: "self",
+          role: "family",
           clientName: "",
           clientDOB: "",
           policeStation: "",
           interviewDate: "",
           interviewTime: "",
-          attendanceType: "voluntary",
-          offenceSummary: "",
-          contactWindow: "now",
-          contactWindowTime: "",
+          attendanceType: "scheduled-voluntary",
+          briefDetails: "",
           supportNeeds: "",
+          nonUrgentConfirmation: false,
           consent: false,
         });
       } else {
@@ -137,6 +137,21 @@ export default function ContactForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="bg-white rounded-xl border border-slate-200 shadow-lg p-6 md:p-8">
+        {/* Introductory Notice */}
+        <div className="bg-blue-50 border-l-4 border-blue-600 p-4 mb-6">
+          <h3 className="text-lg font-semibold text-slate-900 mb-2">
+            Non-urgent police station attendance requests only
+          </h3>
+          <p className="text-slate-700 mb-2">
+            This form is for non-urgent police station matters only, such as pre-booked voluntary
+            interviews or scheduled attendance.
+          </p>
+          <p className="text-slate-700 font-medium">
+            This form must not be used for urgent arrests or custody matters. Urgent cases must be
+            dealt with by telephone: <a href="tel:01732247427" className="text-blue-600 hover:underline font-semibold">01732 247427</a>.
+          </p>
+        </div>
+
         <h2 className="text-2xl font-bold text-slate-900 mb-6">
           Request Police Station Solicitor Attendance
         </h2>
@@ -182,6 +197,7 @@ export default function ContactForm() {
               placeholder="01732 247427"
               required
             />
+            <p className="text-xs text-slate-500 mt-1">Primary contact method</p>
             {errors.contactNumber && (
               <p className="text-red-600 text-sm mt-1">{errors.contactNumber}</p>
             )}
@@ -189,7 +205,7 @@ export default function ContactForm() {
 
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-1">
-              Email Address <span className="text-red-600">*</span>
+              Email Address <span className="text-slate-500 text-xs">(Optional)</span>
             </label>
             <input
               type="email"
@@ -200,48 +216,36 @@ export default function ContactForm() {
                 errors.email ? "border-red-500" : "border-slate-300"
               }`}
               placeholder="your.email@example.com"
-              required
             />
+            <p className="text-xs text-slate-500 mt-1">For follow-up only</p>
             {errors.email && <p className="text-red-600 text-sm mt-1">{errors.email}</p>}
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">
-              Is this for <span className="text-red-600">*</span>
+            <label htmlFor="role" className="block text-sm font-medium text-slate-700 mb-1">
+              Role of person making this request <span className="text-red-600">*</span>
             </label>
-            <div className="space-y-2">
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="requestType"
-                  value="self"
-                  checked={formData.requestType === "self"}
-                  onChange={(e) =>
-                    setFormData({ ...formData, requestType: e.target.value as "self" | "client" })
-                  }
-                  className="mr-2"
-                />
-                <span>You</span>
-              </label>
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="requestType"
-                  value="client"
-                  checked={formData.requestType === "client"}
-                  onChange={(e) =>
-                    setFormData({ ...formData, requestType: e.target.value as "self" | "client" })
-                  }
-                  className="mr-2"
-                />
-                <span>Your client (if solicitor contacting on behalf)</span>
-              </label>
-            </div>
+            <select
+              id="role"
+              value={formData.role}
+              onChange={(e) =>
+                setFormData({ ...formData, role: e.target.value as "family" | "solicitor" | "representative" })
+              }
+              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                errors.role ? "border-red-500" : "border-slate-300"
+              }`}
+              required
+            >
+              <option value="family">Family member or friend</option>
+              <option value="solicitor">Solicitor or law firm</option>
+              <option value="representative">Other authorised representative</option>
+            </select>
+            {errors.role && <p className="text-red-600 text-sm mt-1">{errors.role}</p>}
           </div>
         </div>
 
-        {/* Client Information (if applicable) */}
-        {formData.requestType === "client" && (
+        {/* Client Information (if solicitor or representative) */}
+        {(formData.role === "solicitor" || formData.role === "representative") && (
           <div className="space-y-6 mb-8 border-t border-slate-200 pt-6">
             <h3 className="text-lg font-semibold text-slate-900 border-b border-slate-200 pb-2">
               Client Information
@@ -259,7 +263,7 @@ export default function ContactForm() {
                 className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                   errors.clientName ? "border-red-500" : "border-slate-300"
                 }`}
-                required={formData.requestType === "client"}
+                required
               />
               {errors.clientName && (
                 <p className="text-red-600 text-sm mt-1">{errors.clientName}</p>
@@ -278,7 +282,7 @@ export default function ContactForm() {
                 className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                   errors.clientDOB ? "border-red-500" : "border-slate-300"
                 }`}
-                required={formData.requestType === "client"}
+                required
               />
               {errors.clientDOB && <p className="text-red-600 text-sm mt-1">{errors.clientDOB}</p>}
             </div>
@@ -361,129 +365,63 @@ export default function ContactForm() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">
-              Arrested or Voluntary Attendance <span className="text-red-600">*</span>
+            <label htmlFor="attendanceType" className="block text-sm font-medium text-slate-700 mb-1">
+              Type of attendance request <span className="text-red-600">*</span>
             </label>
-            <div className="space-y-2">
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="attendanceType"
-                  value="arrested"
-                  checked={formData.attendanceType === "arrested"}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      attendanceType: e.target.value as "arrested" | "voluntary",
-                    })
-                  }
-                  className="mr-2"
-                />
-                <span>Arrested</span>
-              </label>
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="attendanceType"
-                  value="voluntary"
-                  checked={formData.attendanceType === "voluntary"}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      attendanceType: e.target.value as "arrested" | "voluntary",
-                    })
-                  }
-                  className="mr-2"
-                />
-                <span>Voluntary Attendance</span>
-              </label>
-            </div>
+            <select
+              id="attendanceType"
+              value={formData.attendanceType}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  attendanceType: e.target.value as "scheduled-voluntary" | "pre-booked" | "solicitor-instruction",
+                })
+              }
+              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                errors.attendanceType ? "border-red-500" : "border-slate-300"
+              }`}
+              required
+            >
+              <option value="scheduled-voluntary">Scheduled voluntary interview</option>
+              <option value="pre-booked">Pre-booked police interview</option>
+              <option value="solicitor-instruction">Solicitor or firm instruction for police station attendance</option>
+            </select>
             {errors.attendanceType && (
               <p className="text-red-600 text-sm mt-1">{errors.attendanceType}</p>
             )}
           </div>
 
           <div>
-            <label
-              htmlFor="offenceSummary"
-              className="block text-sm font-medium text-slate-700 mb-1"
-            >
-              Brief Summary of Alleged Offence or Police Request{" "}
+            <label htmlFor="briefDetails" className="block text-sm font-medium text-slate-700 mb-1">
+              Brief details (e.g. interview type or police request){" "}
               <span className="text-red-600">*</span>
             </label>
             <textarea
-              id="offenceSummary"
-              value={formData.offenceSummary}
-              onChange={(e) => setFormData({ ...formData, offenceSummary: e.target.value })}
-              rows={4}
+              id="briefDetails"
+              value={formData.briefDetails}
+              onChange={(e) => setFormData({ ...formData, briefDetails: e.target.value })}
+              rows={3}
+              maxLength={300}
               className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                errors.offenceSummary ? "border-red-500" : "border-slate-300"
+                errors.briefDetails ? "border-red-500" : "border-slate-300"
               }`}
-              placeholder="Brief description of the matter..."
+              placeholder="Brief description (maximum 300 characters)..."
               required
             />
-            {errors.offenceSummary && (
-              <p className="text-red-600 text-sm mt-1">{errors.offenceSummary}</p>
+            <p className="text-xs text-slate-500 mt-1">
+              {formData.briefDetails.length}/300 characters
+            </p>
+            {errors.briefDetails && (
+              <p className="text-red-600 text-sm mt-1">{errors.briefDetails}</p>
             )}
           </div>
         </div>
 
-        {/* Contact Preferences */}
+        {/* Support Requirements */}
         <div className="space-y-6 mb-8 border-t border-slate-200 pt-6">
           <h3 className="text-lg font-semibold text-slate-900 border-b border-slate-200 pb-2">
-            Contact Preferences
+            Support Requirements
           </h3>
-
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">
-              Best Contact Window <span className="text-red-600">*</span>
-            </label>
-            <div className="space-y-2">
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="contactWindow"
-                  value="now"
-                  checked={formData.contactWindow === "now"}
-                  onChange={(e) =>
-                    setFormData({ ...formData, contactWindow: e.target.value as "now" | "specify" })
-                  }
-                  className="mr-2"
-                />
-                <span>Now / As soon as possible</span>
-              </label>
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="contactWindow"
-                  value="specify"
-                  checked={formData.contactWindow === "specify"}
-                  onChange={(e) =>
-                    setFormData({ ...formData, contactWindow: e.target.value as "now" | "specify" })
-                  }
-                  className="mr-2"
-                />
-                <span>Specify time</span>
-              </label>
-            </div>
-            {formData.contactWindow === "specify" && (
-              <div className="mt-3">
-                <input
-                  type="time"
-                  id="contactWindowTime"
-                  value={formData.contactWindowTime}
-                  onChange={(e) => setFormData({ ...formData, contactWindowTime: e.target.value })}
-                  className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                    errors.contactWindowTime ? "border-red-500" : "border-slate-300"
-                  }`}
-                  required={formData.contactWindow === "specify"}
-                />
-                {errors.contactWindowTime && (
-                  <p className="text-red-600 text-sm mt-1">{errors.contactWindowTime}</p>
-                )}
-              </div>
-            )}
-          </div>
 
           <div>
             <label htmlFor="supportNeeds" className="block text-sm font-medium text-slate-700 mb-1">
@@ -504,26 +442,59 @@ export default function ContactForm() {
           </div>
         </div>
 
-        {/* Consent */}
-        <div className="border-t border-slate-200 pt-6">
-          <p className="text-xs text-slate-600 mb-3">
-            By contacting us you consent to your details being used to respond and, where
-            appropriate, shared with Tuckers Solicitors LLP for that purpose.
+        {/* Confirmations */}
+        <div className="border-t border-slate-200 pt-6 space-y-4">
+          <div>
+            <label className="flex items-start">
+              <input
+                type="checkbox"
+                checked={formData.nonUrgentConfirmation}
+                onChange={(e) => setFormData({ ...formData, nonUrgentConfirmation: e.target.checked })}
+                className="mt-1 mr-3"
+                required
+              />
+              <span className="text-sm text-slate-700">
+                I confirm this request relates to a non-urgent police station attendance and not an
+                urgent custody arrest. <span className="text-red-600">*</span>
+              </span>
+            </label>
+            {errors.nonUrgentConfirmation && (
+              <p className="text-red-600 text-sm mt-1">{errors.nonUrgentConfirmation}</p>
+            )}
+          </div>
+
+          <div>
+            <p className="text-xs text-slate-600 mb-3">
+              By contacting us you consent to your details being used to respond and, where
+              appropriate, shared with Tuckers Solicitors LLP for that purpose.
+            </p>
+            <label className="flex items-start">
+              <input
+                type="checkbox"
+                checked={formData.consent}
+                onChange={(e) => setFormData({ ...formData, consent: e.target.checked })}
+                className="mt-1 mr-3"
+                required
+              />
+              <span className="text-sm text-slate-700">
+                I consent to the storage and secure email communication of the information provided
+                above. <span className="text-red-600">*</span>
+              </span>
+            </label>
+            {errors.consent && <p className="text-red-600 text-sm mt-1">{errors.consent}</p>}
+          </div>
+        </div>
+
+        {/* Form Submission Disclaimer */}
+        <div className="mt-6 p-4 bg-amber-50 border-l-4 border-amber-500">
+          <p className="text-sm text-slate-800 font-medium">
+            Submitting this form does not replace the need to telephone for urgent matters. If
+            someone has been arrested or is currently in police custody, please telephone{" "}
+            <a href="tel:01732247427" className="text-amber-700 hover:underline font-semibold">
+              01732 247427
+            </a>{" "}
+            immediately.
           </p>
-          <label className="flex items-start">
-            <input
-              type="checkbox"
-              checked={formData.consent}
-              onChange={(e) => setFormData({ ...formData, consent: e.target.checked })}
-              className="mt-1 mr-3"
-              required
-            />
-            <span className="text-sm text-slate-700">
-              I consent to the storage and secure email communication of the information provided
-              above. <span className="text-red-600">*</span>
-            </span>
-          </label>
-          {errors.consent && <p className="text-red-600 text-sm mt-1">{errors.consent}</p>}
         </div>
 
         {/* Submit Button */}
