@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getPostBySlug, formatBlogDate, generateExcerpt } from "@/lib/blog-reader";
+import { convertH1ToH2 } from "@/lib/html-sanitizer";
 import { SITE_URL } from "@/config/site";
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
@@ -84,7 +85,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default function BlogPostPage({ params }: PageProps) {
+export default function BlogPostPage({ params }: Readonly<PageProps>) {
   const post = getPostBySlug(params.slug);
 
   if (!post) {
@@ -92,6 +93,7 @@ export default function BlogPostPage({ params }: PageProps) {
   }
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_URL;
+  const sanitizedContentHtml = convertH1ToH2(post.contentHtml);
 
   // Build structured data
   const blogPostingSchema = {
@@ -292,7 +294,7 @@ export default function BlogPostPage({ params }: PageProps) {
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <article className="prose prose-lg max-w-none">
               <div
-                dangerouslySetInnerHTML={{ __html: post.contentHtml }}
+                dangerouslySetInnerHTML={{ __html: sanitizedContentHtml }}
                 className="prose prose-lg max-w-none [&_img]:max-w-full [&_img]:h-auto [&_img]:my-6 [&_img]:mx-auto [&_img]:block [&_img]:rounded-lg [&_img]:shadow-md [&_img]:filter-none [&_img]:backdrop-filter-none"
               />
             </article>
@@ -302,8 +304,8 @@ export default function BlogPostPage({ params }: PageProps) {
               <div className="mt-12 border-t pt-8">
                 <h2 className="text-2xl font-bold mb-6">Frequently Asked Questions</h2>
                 <div className="space-y-6">
-                  {post.faq.map((faq, index) => (
-                    <div key={index} className="bg-white p-6 rounded-lg shadow">
+                  {post.faq.map((faq) => (
+                    <div key={faq.q} className="bg-white p-6 rounded-lg shadow">
                       <h3 className="font-semibold text-lg text-blue-900 mb-2">{faq.q}</h3>
                       <p className="text-gray-700">{faq.a}</p>
                     </div>
