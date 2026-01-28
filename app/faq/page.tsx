@@ -33,7 +33,7 @@ export default function Page() {
                   Frequently Asked Questions
                 </div>
                 <h1 className="text-4xl md:text-5xl font-black mb-6">
-                  Everything You Need to Know
+                  Police Station Representation FAQ (Kent)
                 </h1>
                 <p className="text-xl text-blue-100 mb-8">
                   Comprehensive answers about our police station representation services across Kent
