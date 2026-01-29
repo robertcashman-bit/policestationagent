@@ -7,6 +7,7 @@
  */
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 export default function CookieBanner() {
   const [showBanner, setShowBanner] = useState(false);
@@ -39,7 +40,10 @@ export default function CookieBanner() {
             className="text-[10px] md:text-xs leading-tight text-white"
             style={{ color: "#ffffff" }}
           >
-            We use cookies to improve your experience. By continuing, you accept our use of cookies.
+            We use cookies to improve your experience. By continuing, you accept our use of cookies.{" "}
+            <Link href="/privacy" className="underline hover:text-blue-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-slate-900 rounded">
+              Privacy policy
+            </Link>
           </p>
         </div>
         <div className="flex gap-1.5 md:gap-2 flex-shrink-0">

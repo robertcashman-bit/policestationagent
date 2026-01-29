@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 import { SITE_DOMAIN } from "@/config/site";
 import { InternalLinkHub } from "@/components/InternalLinkHub";
+import { BreadcrumbList } from "@/components/StructuredData";
 
 export const metadata: Metadata = {
   title: "Legal Aid at the Police Station & Fees | Kent Police Station Solicitor",
@@ -21,9 +22,17 @@ export const metadata: Metadata = {
   },
 };
 
+const baseUrl = `https://${SITE_DOMAIN}`;
+
 export default function Page() {
+  const breadcrumbItems = [
+    { name: "Home", url: baseUrl },
+    { name: "Legal Aid & Fees", url: `${baseUrl}/fees` },
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
+      <BreadcrumbList items={breadcrumbItems} />
       <Header />
       <main className="flex-grow relative" id="main-content" role="main" aria-live="polite">
         <div className="bg-slate-50 min-h-screen">

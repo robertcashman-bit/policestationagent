@@ -5,7 +5,7 @@ import { SITE_DOMAIN } from "@/config/site";
 import { ComprehensiveLegalServiceSchema } from "@/components/schema/ComprehensiveLegalServiceSchema";
 import { PersonSchema } from "@/components/schema/PersonSchema";
 import { InternalLinkHub } from "@/components/InternalLinkHub";
-import { FAQPage } from "@/components/StructuredData";
+import { FAQPage, BreadcrumbList } from "@/components/StructuredData";
 
 export const metadata: Metadata = {
   title: "Police Station Solicitor in Kent | Police Station Representation Services",
@@ -24,7 +24,14 @@ export const metadata: Metadata = {
   },
 };
 
+const baseUrl = `https://${SITE_DOMAIN}`;
+
 export default function Page() {
+  const breadcrumbItems = [
+    { name: "Home", url: baseUrl },
+    { name: "Services", url: `${baseUrl}/services` },
+  ];
+
   const faqItems = [
     {
       question: "Is legal advice at the police station free?",
@@ -55,6 +62,7 @@ export default function Page() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
+      <BreadcrumbList items={breadcrumbItems} />
       <FAQPage items={faqItems} />
       <ComprehensiveLegalServiceSchema
         serviceName="Police Station Representation Services"

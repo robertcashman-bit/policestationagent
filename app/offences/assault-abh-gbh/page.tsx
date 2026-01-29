@@ -2,6 +2,10 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { SITE_DOMAIN } from "@/config/site";
+import { BreadcrumbList } from "@/components/StructuredData";
+
+const baseUrl = `https://${SITE_DOMAIN}`;
 
 export const metadata: Metadata = {
   title: "Assault ABH GBH | Police Station Representation Kent | Legal Aid",
@@ -13,8 +17,15 @@ export const metadata: Metadata = {
 };
 
 export default function AssaultABHGBHPage() {
+  const breadcrumbItems = [
+    { name: "Home", url: baseUrl },
+    { name: "Offences We Deal With", url: `${baseUrl}/offences-we-deal-with` },
+    { name: "Assault / ABH / GBH", url: `${baseUrl}/offences/assault-abh-gbh` },
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
+      <BreadcrumbList items={breadcrumbItems} />
       <Header />
       <main className="flex-grow relative" id="main-content" role="main" aria-live="polite">
         <div className="bg-slate-50 min-h-screen">
