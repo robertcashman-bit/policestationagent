@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import db from "@/lib/db";
+import { sendContactFormNotification } from "@/lib/email";
 
 function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -144,6 +145,32 @@ export async function POST(request: NextRequest) {
       user_agent: userAgent,
       ip_address: ipAddress,
     });
+
+    // Notify site owner by email if Resend is configured (do not fail request on email failure)
+    try {
+      console.log("[Contact API] Attempting to send notification email");
+      const emailResult = await sendContactFormNotification({
+        name,
+        contactNumber,
+        email,
+        requestType,
+        clientName: clientName || null,
+        clientDOB: clientDOB || null,
+        policeStation,
+        interviewDate,
+        interviewTime,
+        attendanceType,
+        offenceSummary,
+        supportNeeds: supportNeeds || null,
+      });
+      if (emailResult.success) {
+        console.log("[Contact API] Notification email sent successfully");
+      } else {
+        console.warn("[Contact API] Notification email skipped or failed:", emailResult.error);
+      }
+    } catch (emailErr) {
+      console.warn("[Contact API] Notification email error:", emailErr);
+    }
 
     return NextResponse.json({ success: true });
   } catch (error) {
