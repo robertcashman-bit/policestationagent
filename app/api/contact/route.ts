@@ -19,16 +19,28 @@ export async function POST(request: NextRequest) {
 
     const name = String(body?.name ?? "").trim();
     const contactNumber = String(body?.contactNumber ?? "").trim();
-    const email = String(body?.email ?? "").trim();
-    const requestType = String(body?.requestType ?? "").trim(); // 'self' | 'client'
+    const emailRaw = String(body?.email ?? "").trim();
+    const email = emailRaw === "" ? null : emailRaw;
+    const role = String(body?.role ?? "").trim();
+    const requestTypeLegacy = String(body?.requestType ?? "").trim();
+    const requestType =
+      requestTypeLegacy === "self" || requestTypeLegacy === "client"
+        ? requestTypeLegacy
+        : role === "solicitor" || role === "representative"
+          ? "client"
+          : role === "family"
+            ? "self"
+            : requestTypeLegacy || "self";
     const clientName = String(body?.clientName ?? "").trim();
     const clientDOB = String(body?.clientDOB ?? "").trim();
     const policeStation = String(body?.policeStation ?? "").trim();
     const interviewDate = String(body?.interviewDate ?? "").trim();
     const interviewTime = String(body?.interviewTime ?? "").trim();
-    const attendanceType = String(body?.attendanceType ?? "").trim(); // 'arrested' | 'voluntary'
-    const offenceSummary = String(body?.offenceSummary ?? "").trim();
-    const contactWindow = String(body?.contactWindow ?? "").trim(); // 'now' | 'specify'
+    const attendanceType = String(body?.attendanceType ?? "").trim();
+    const briefDetails = String(body?.briefDetails ?? "").trim();
+    const offenceSummaryLegacy = String(body?.offenceSummary ?? "").trim();
+    const offenceSummary = briefDetails || offenceSummaryLegacy;
+    const contactWindow = String(body?.contactWindow ?? "").trim();
     const contactWindowTime = String(body?.contactWindowTime ?? "").trim();
     const supportNeeds = String(body?.supportNeeds ?? "").trim();
     const consent = Boolean(body?.consent);
@@ -39,8 +51,8 @@ export async function POST(request: NextRequest) {
     if (!contactNumber) {
       return NextResponse.json({ error: "Contact number is required" }, { status: 400 });
     }
-    if (!email || !isValidEmail(email)) {
-      return NextResponse.json({ error: "Valid email is required" }, { status: 400 });
+    if (email !== null && !isValidEmail(email)) {
+      return NextResponse.json({ error: "Please enter a valid email address" }, { status: 400 });
     }
     if (!policeStation) {
       return NextResponse.json({ error: "Police station is required" }, { status: 400 });
@@ -55,7 +67,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Attendance type is required" }, { status: 400 });
     }
     if (!offenceSummary) {
-      return NextResponse.json({ error: "Offence summary is required" }, { status: 400 });
+      return NextResponse.json({ error: "Brief details are required" }, { status: 400 });
     }
     if (requestType === "client" && (!clientName || !clientDOB)) {
       return NextResponse.json(
@@ -116,7 +128,7 @@ export async function POST(request: NextRequest) {
     ).run({
       name,
       contact_number: contactNumber,
-      email,
+      email: email ?? null,
       request_type: requestType,
       client_name: clientName || null,
       client_dob: clientDOB || null,
