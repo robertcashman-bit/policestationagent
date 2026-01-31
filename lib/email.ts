@@ -56,40 +56,42 @@ function buildEmailBody(payload: ContactFormNotificationPayload): string {
 export async function sendContactFormNotification(
   payload: ContactFormNotificationPayload
 ): Promise<{ success: boolean; error?: string }> {
-  const apiKey = process.env.RESEND_API_KEY;
+  const apiKey = process.env.RESEND_API_KEY?.trim();
   const toEmail = process.env.CONTACT_FORM_TO_EMAIL?.trim();
 
-  if (!apiKey || !toEmail) {
-    const reason = !apiKey ? "RESEND_API_KEY not set" : "CONTACT_FORM_TO_EMAIL not set";
-    console.warn("[Contact email] Skipping send:", reason);
-    return { success: false, error: reason };
-  }
+  // NOTE: next.config.js removes console.log in production; warn/error remain.
 
-  const fromEmail =
-    process.env.CONTACT_FROM_EMAIL?.trim() || "Police Station Agent <onboarding@resend.dev>";
+  if (apiKey && toEmail) {
+    const fromEmail =
+      process.env.CONTACT_FROM_EMAIL?.trim() || "Police Station Agent <onboarding@resend.dev>";
 
-  try {
-    console.log("[Contact email] Sending notification to:", toEmail, "from:", fromEmail);
-    const resend = new Resend(apiKey);
-    const body = buildEmailBody(payload);
+    try {
+      const resend = new Resend(apiKey);
+      const body = buildEmailBody(payload);
 
-    const { data, error } = await resend.emails.send({
-      from: fromEmail,
-      to: [toEmail],
-      subject: `Contact form: ${payload.name} – ${payload.policeStation} ${payload.interviewDate}`,
-      text: body,
-    });
+      const { data, error } = await resend.emails.send({
+        from: fromEmail,
+        to: [toEmail],
+        subject: `Contact form: ${payload.name} – ${payload.policeStation} ${payload.interviewDate}`,
+        text: body,
+      });
 
-    if (error) {
-      console.error("[Contact email] Resend API error:", error.message, error);
-      return { success: false, error: error.message };
+      if (error) {
+        console.error("[Contact email] Resend API error:", error.message, error);
+        return { success: false, error: error.message };
+      }
+
+      const id = data?.id;
+      if (id) return { success: true };
+      return { success: false, error: "Email provider returned no id" };
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
+      console.error("[Contact email] Send failed:", message);
+      return { success: false, error: message };
     }
-
-    console.log("[Contact email] Sent successfully. Resend id:", data?.id ?? "(no id)");
-    return { success: true };
-  } catch (err) {
-    const message = err instanceof Error ? err.message : String(err);
-    console.error("[Contact email] Send failed:", message);
-    return { success: false, error: message };
   }
+
+  const reason = apiKey ? "CONTACT_FORM_TO_EMAIL not set" : "RESEND_API_KEY not set";
+  console.warn("[Contact email] Skipping send:", reason);
+  return { success: false, error: reason };
 }

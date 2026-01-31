@@ -37,6 +37,12 @@ interface BlogPost {
 interface BlogCarouselProps {
   maxPosts?: number;
   autoRotateInterval?: number;
+  /**
+   * When true, auto-rotation pauses while the user's pointer is over the carousel.
+   * Defaults to false to avoid appearing "stuck" when users scroll and their cursor
+   * happens to be over the section.
+   */
+  pauseOnHover?: boolean;
   showNavigation?: boolean;
   className?: string;
 }
@@ -44,15 +50,16 @@ interface BlogCarouselProps {
 export default function BlogCarousel({
   maxPosts = 50,
   autoRotateInterval = 5000,
+  pauseOnHover = false,
   showNavigation = true,
   className = "",
-}: BlogCarouselProps) {
+}: Readonly<BlogCarouselProps>) {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isPaused, setIsPaused] = useState(false);
-  const carouselRef = useRef<HTMLDivElement>(null);
+  const carouselRef = useRef<HTMLElement>(null);
   const touchStartX = useRef<number | null>(null);
   const touchEndX = useRef<number | null>(null);
 
@@ -153,8 +160,8 @@ export default function BlogCarousel({
       }
     };
 
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    globalThis.addEventListener("keydown", handleKeyDown);
+    return () => globalThis.removeEventListener("keydown", handleKeyDown);
   }, [goToNext, goToPrev]);
 
   const formatDate = (dateString: string | null): string | null => {
@@ -210,8 +217,8 @@ export default function BlogCarousel({
     <section
       ref={carouselRef}
       className={`py-16 bg-gradient-to-br from-slate-50 to-blue-50 ${className}`}
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
+      onMouseEnter={pauseOnHover ? () => setIsPaused(true) : undefined}
+      onMouseLeave={pauseOnHover ? () => setIsPaused(false) : undefined}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}

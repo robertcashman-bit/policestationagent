@@ -9,6 +9,17 @@ interface Testimonial {
   rating?: number;
 }
 
+interface TestimonialCarouselProps {
+  /**
+   * When true, auto-rotation pauses while the user's pointer is over the carousel.
+   * Defaults to false to avoid appearing "stuck" when users scroll and their cursor
+   * happens to be over the section.
+   */
+  pauseOnHover?: boolean;
+  /** Auto-rotate interval in milliseconds. */
+  autoRotateInterval?: number;
+}
+
 const testimonials: Testimonial[] = [
   {
     quote:
@@ -53,7 +64,10 @@ const testimonials: Testimonial[] = [
   },
 ];
 
-export default function TestimonialCarousel() {
+export default function TestimonialCarousel({
+  pauseOnHover = false,
+  autoRotateInterval = 5000,
+}: Readonly<TestimonialCarouselProps>) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
@@ -75,18 +89,26 @@ export default function TestimonialCarousel() {
 
     const interval = setInterval(() => {
       goToNext();
-    }, 5000);
+    }, autoRotateInterval);
 
     return () => clearInterval(interval);
-  }, [isPaused, goToNext]);
+  }, [isPaused, goToNext, autoRotateInterval]);
 
   const currentTestimonial = testimonials[currentIndex];
 
   return (
     <section
       className="py-20 bg-gradient-to-br from-blue-900 via-indigo-800 to-purple-900 relative overflow-hidden"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
+      onMouseEnter={pauseOnHover ? () => setIsPaused(true) : undefined}
+      onMouseLeave={pauseOnHover ? () => setIsPaused(false) : undefined}
+      // Pause when keyboard users focus controls; resume when focus leaves section.
+      onFocusCapture={() => setIsPaused(true)}
+      onBlurCapture={(e) => {
+        const nextFocused = e.relatedTarget as Node | null;
+        if (!nextFocused || !e.currentTarget.contains(nextFocused)) {
+          setIsPaused(false);
+        }
+      }}
     >
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.2),transparent_70%)]"></div>
@@ -94,9 +116,9 @@ export default function TestimonialCarousel() {
       <div className="max-w-6xl mx-auto px-4 relative z-10">
         <div className="text-center mb-12">
           <div className="inline-flex items-center justify-center gap-1 mb-4">
-            {[...Array(5)].map((_, i) => (
+            {["1", "2", "3", "4", "5"].map((k) => (
               <svg
-                key={i}
+                key={`header-star-${k}`}
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
                 height="24"
@@ -144,9 +166,10 @@ export default function TestimonialCarousel() {
                 <div className="mb-6">
                   {/* Star Rating */}
                   <div className="flex items-center mb-4">
-                    {[...Array(currentTestimonial.rating || 5)].map((_, i) => (
+                    {Array.from({ length: currentTestimonial.rating ?? 5 }, (_, i) => i + 1).map(
+                      (starNumber) => (
                       <svg
-                        key={i}
+                        key={`rating-star-${starNumber}`}
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
                         height="24"
@@ -160,7 +183,8 @@ export default function TestimonialCarousel() {
                       >
                         <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path>
                       </svg>
-                    ))}
+                      ),
+                    )}
                   </div>
 
                   {/* Quote */}
@@ -226,9 +250,9 @@ export default function TestimonialCarousel() {
 
           {/* Dots Indicator */}
           <div className="flex justify-center gap-2 mt-8">
-            {testimonials.map((_, index) => (
+            {testimonials.map((t, index) => (
               <button
-                key={index}
+                key={`${t.author}-${t.location}-${index}`}
                 onClick={() => goToSlide(index)}
                 className={`h-2 rounded-full transition-all duration-300 ${
                   index === currentIndex ? "bg-amber-400 w-8" : "bg-white/20 hover:bg-white/40 w-2"

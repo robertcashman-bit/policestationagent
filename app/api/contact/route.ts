@@ -1,17 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import db from "@/lib/db";
 import { sendContactFormNotification } from "@/lib/email";
 
 function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
-
-function getClientIp(request: NextRequest): string | null {
-  // Vercel / proxies commonly set one of these.
-  const forwardedFor = request.headers.get("x-forwarded-for");
-  if (forwardedFor) return forwardedFor.split(",")[0]?.trim() || null;
-  const realIp = request.headers.get("x-real-ip");
-  return realIp?.trim() || null;
 }
 
 export async function POST(request: NextRequest) {
@@ -44,6 +35,7 @@ export async function POST(request: NextRequest) {
     const contactWindow = String(body?.contactWindow ?? "").trim();
     const contactWindowTime = String(body?.contactWindowTime ?? "").trim();
     const supportNeeds = String(body?.supportNeeds ?? "").trim();
+    const nonUrgentConfirmation = Boolean(body?.nonUrgentConfirmation);
     const consent = Boolean(body?.consent);
 
     if (!name) {
@@ -79,77 +71,18 @@ export async function POST(request: NextRequest) {
     if (contactWindow === "specify" && !contactWindowTime) {
       return NextResponse.json({ error: "Please specify a contact time" }, { status: 400 });
     }
+    if (!nonUrgentConfirmation) {
+      return NextResponse.json({ error: "Non-urgent confirmation is required" }, { status: 400 });
+    }
     if (!consent) {
       return NextResponse.json({ error: "Consent is required" }, { status: 400 });
     }
 
-    const userAgent = request.headers.get("user-agent");
-    const ipAddress = getClientIp(request);
-
-    db.prepare(
-      `
-        INSERT INTO contact_messages (
-          name,
-          contact_number,
-          email,
-          request_type,
-          client_name,
-          client_dob,
-          police_station,
-          interview_date,
-          interview_time,
-          attendance_type,
-          offence_summary,
-          contact_window,
-          contact_window_time,
-          support_needs,
-          consent,
-          user_agent,
-          ip_address
-        ) VALUES (
-          @name,
-          @contact_number,
-          @email,
-          @request_type,
-          @client_name,
-          @client_dob,
-          @police_station,
-          @interview_date,
-          @interview_time,
-          @attendance_type,
-          @offence_summary,
-          @contact_window,
-          @contact_window_time,
-          @support_needs,
-          @consent,
-          @user_agent,
-          @ip_address
-        )
-      `
-    ).run({
-      name,
-      contact_number: contactNumber,
-      email: email ?? null,
-      request_type: requestType,
-      client_name: clientName || null,
-      client_dob: clientDOB || null,
-      police_station: policeStation,
-      interview_date: interviewDate,
-      interview_time: interviewTime,
-      attendance_type: attendanceType,
-      offence_summary: offenceSummary,
-      contact_window: contactWindow,
-      contact_window_time: contactWindowTime || null,
-      support_needs: supportNeeds || null,
-      consent: consent ? 1 : 0,
-      user_agent: userAgent,
-      ip_address: ipAddress,
-    });
-
     // Notify site owner by email if Resend is configured (do not fail request on email failure)
+    let emailResult: { success: boolean; error?: string } | null = null;
     try {
       console.log("[Contact API] Attempting to send notification email");
-      const emailResult = await sendContactFormNotification({
+      emailResult = await sendContactFormNotification({
         name,
         contactNumber,
         email,
@@ -168,11 +101,16 @@ export async function POST(request: NextRequest) {
       } else {
         console.warn("[Contact API] Notification email skipped or failed:", emailResult.error);
       }
-    } catch (emailErr) {
-      console.warn("[Contact API] Notification email error:", emailErr);
+    } catch (error_) {
+      console.warn("[Contact API] Notification email error:", error_);
     }
 
-    return NextResponse.json({ success: true });
+    // Do not fail the request if email notifications are not configured or fail.
+    // The form should remain usable even if RESEND_API_KEY / CONTACT_FORM_TO_EMAIL are missing/invalid.
+    return NextResponse.json({
+      success: true,
+      email: emailResult ?? { success: false, error: "Email result unavailable" },
+    });
   } catch (error) {
     console.error("Contact submission error:", error);
     return NextResponse.json({ error: "Failed to submit contact request" }, { status: 500 });

@@ -1,7 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import type { MouseEvent, ReactNode } from "react";
+import { useEffect } from "react";
+import type { ReactNode } from "react";
 
 function findAnchor(start: HTMLElement | null): HTMLAnchorElement | null {
   let el: HTMLElement | null = start;
@@ -19,49 +20,55 @@ function isModifiedEvent(e: MouseEvent): boolean {
 export default function InternalLinkInterceptor({ children }: { children: ReactNode }) {
   const router = useRouter();
 
-  const onClickCapture = (e: MouseEvent<HTMLDivElement>) => {
-    // Only left-click.
-    if (e.button !== 0) return;
-    if (isModifiedEvent(e)) return;
+  useEffect(() => {
+    const onDocumentClick = (e: globalThis.MouseEvent) => {
+      // Only left-click.
+      if (e.button !== 0) return;
+      if (isModifiedEvent(e)) return;
 
-    const target = e.target as HTMLElement | null;
-    const anchor = findAnchor(target);
-    if (!anchor) return;
+      const target = e.target as HTMLElement | null;
+      const anchor = findAnchor(target);
+      if (!anchor) return;
 
-    const hrefAttr = anchor.getAttribute("href");
-    if (!hrefAttr) return;
+      const hrefAttr = anchor.getAttribute("href");
+      if (!hrefAttr) return;
 
-    // Let the browser handle in-page anchors.
-    if (hrefAttr.startsWith("#")) return;
+      // Let the browser handle in-page anchors.
+      if (hrefAttr.startsWith("#")) return;
 
-    // Let the browser handle downloads and explicit new-tab links.
-    if (anchor.hasAttribute("download")) return;
-    const targetAttr = anchor.getAttribute("target");
-    if (targetAttr && targetAttr !== "_self") return;
+      // Let the browser handle downloads and explicit new-tab links.
+      if (anchor.hasAttribute("download")) return;
+      const targetAttr = anchor.getAttribute("target");
+      if (targetAttr && targetAttr !== "_self") return;
 
-    // Let the browser handle special protocols.
-    if (
-      hrefAttr.startsWith("mailto:") ||
-      hrefAttr.startsWith("tel:") ||
-      hrefAttr.startsWith("sms:")
-    ) {
-      return;
-    }
+      // Let the browser handle special protocols.
+      if (
+        hrefAttr.startsWith("mailto:") ||
+        hrefAttr.startsWith("tel:") ||
+        hrefAttr.startsWith("sms:")
+      ) {
+        return;
+      }
 
-    // Resolve relative/absolute hrefs to decide if same-origin.
-    let url: URL;
-    try {
-      url = new URL(hrefAttr, window.location.origin);
-    } catch {
-      return;
-    }
+      // Resolve relative/absolute hrefs to decide if same-origin.
+      let url: URL;
+      try {
+        url = new URL(hrefAttr, window.location.origin);
+      } catch {
+        return;
+      }
 
-    if (url.origin !== window.location.origin) return;
+      if (url.origin !== window.location.origin) return;
 
-    // Prevent full page reload and route client-side.
-    e.preventDefault();
-    router.push(`${url.pathname}${url.search}${url.hash}`);
-  };
+      // Prevent full page reload and route client-side.
+      e.preventDefault();
+      router.push(`${url.pathname}${url.search}${url.hash}`);
+    };
 
-  return <div onClickCapture={onClickCapture}>{children}</div>;
+    // Capture phase so we run before Next's default handlers.
+    document.addEventListener("click", onDocumentClick, true);
+    return () => document.removeEventListener("click", onDocumentClick, true);
+  }, [router]);
+
+  return <>{children}</>;
 }

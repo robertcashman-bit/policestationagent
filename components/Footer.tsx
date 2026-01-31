@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getFormattedVersion, getLastUpdateDateTime } from "@/lib/version";
 
 // Link data organized by category
@@ -220,10 +220,14 @@ const legalLinks = [
 ];
 
 export default function Footer() {
+  // Prevent hydration mismatches by skipping SSR + initial client render.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return null;
+
   const currentYear = new Date().getFullYear();
   const appVersion = getFormattedVersion();
   const lastUpdate = getLastUpdateDateTime();
-  const [isExpanded, setIsExpanded] = useState(false);
 
   return (
     <footer className="bg-slate-900 text-white relative z-10">
@@ -409,37 +413,34 @@ export default function Footer() {
           </Link>
         </div>
 
-        {/* Expand/Collapse Button */}
-        <div className="flex justify-center mt-4">
-          <button
-            onClick={() => setIsExpanded(!isExpanded)}
-            className="flex items-center gap-2 px-4 py-2 text-xs text-white hover:text-blue-300 border border-slate-600 hover:border-slate-400 rounded-full transition-all duration-200"
-            aria-expanded={isExpanded}
-            aria-controls="full-sitemap"
-          >
-            {isExpanded ? "Hide Sitemap" : "View All Pages & Resources"}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className={`transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`}
-            >
-              <path d="m6 9 6 6 6-6" />
-            </svg>
-          </button>
-        </div>
+        {/* Expandable Full Sitemap (no client state; avoids hydration issues) */}
+        <details className="group mt-4">
+          <summary className="list-none cursor-pointer flex justify-center">
+            <span className="flex items-center gap-2 px-4 py-2 text-xs text-white hover:text-blue-300 border border-slate-600 hover:border-slate-400 rounded-full transition-all duration-200">
+              <span className="group-open:hidden">View All Pages & Resources</span>
+              <span className="hidden group-open:inline">Hide Sitemap</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="transition-transform duration-200 group-open:rotate-180"
+                aria-hidden="true"
+              >
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </span>
+          </summary>
 
-        {/* Expandable Full Sitemap */}
-        <div
-          id="full-sitemap"
-          className={`overflow-hidden transition-all duration-300 ease-in-out ${isExpanded ? "max-h-[2000px] opacity-100 mt-6" : "max-h-0 opacity-0"}`}
-        >
+          <div
+            id="full-sitemap"
+            className="overflow-hidden transition-all duration-300 ease-in-out max-h-0 opacity-0 group-open:max-h-[2000px] group-open:opacity-100 group-open:mt-6"
+          >
           <div className="border-t border-slate-800 pt-6">
             {/* Kent Towns Banner */}
             <div className="mb-6 p-3 bg-amber-500/10 rounded-lg border border-amber-500/20 text-center">
@@ -457,7 +458,7 @@ export default function Footer() {
                 <h3 className="font-semibold text-white mb-3 text-sm">Services</h3>
                 <ul className="space-y-1.5">
                   {serviceLinks.map((link) => (
-                    <li key={link.href}>
+                    <li key={`${link.href}::${link.label}`}>
                       <Link
                         href={link.href}
                         className={`text-slate-400 hover:text-white transition-colors ${link.priority ? "font-medium text-slate-300" : ""}`}
@@ -474,7 +475,7 @@ export default function Footer() {
                 <h3 className="font-semibold text-white mb-3 text-sm">Help & Advice</h3>
                 <ul className="space-y-1.5">
                   {helpLinks.map((link) => (
-                    <li key={link.href}>
+                    <li key={`${link.href}::${link.label}`}>
                       <Link
                         href={link.href}
                         className={`text-slate-400 hover:text-white transition-colors ${link.priority ? "font-medium text-slate-300" : ""}`}
@@ -491,7 +492,7 @@ export default function Footer() {
                 <h3 className="font-semibold text-white mb-3 text-sm">Kent Locations</h3>
                 <ul className="space-y-1.5 columns-2 md:columns-1 lg:columns-1 gap-4">
                   {locationLinks.map((link) => (
-                    <li key={link.href} className="break-inside-avoid">
+                    <li key={`${link.href}::${link.label}`} className="break-inside-avoid">
                       <Link
                         href={link.href}
                         className={`text-slate-400 hover:text-white transition-colors ${link.priority ? "font-medium text-slate-300" : ""}`}
@@ -508,7 +509,7 @@ export default function Footer() {
                 <h3 className="font-semibold text-white mb-3 text-sm">Resources</h3>
                 <ul className="space-y-1.5">
                   {resourceLinks.map((link) => (
-                    <li key={link.href}>
+                    <li key={`${link.href}::${link.label}`}>
                       <Link
                         href={link.href}
                         className={`text-slate-400 hover:text-white transition-colors ${link.priority ? "font-medium text-slate-300" : ""}`}
@@ -525,7 +526,7 @@ export default function Footer() {
                 <h3 className="font-semibold text-white mb-3 text-sm">Legal & Compliance</h3>
                 <ul className="space-y-1.5">
                   {legalLinks.map((link) => (
-                    <li key={link.href}>
+                    <li key={`${link.href}::${link.label}`}>
                       <Link
                         href={link.href}
                         className="text-slate-400 hover:text-white transition-colors"
@@ -538,7 +539,8 @@ export default function Footer() {
               </div>
             </div>
           </div>
-        </div>
+          </div>
+        </details>
 
         {/* Bottom Section - Always Visible */}
         <div className="border-t border-slate-800 mt-6 pt-4 text-center">
@@ -567,7 +569,7 @@ export default function Footer() {
 
           {/* Version Info */}
           <div className="text-xs text-slate-600 flex items-center justify-center gap-3">
-            <span>v{appVersion}</span>
+            <span>{appVersion}</span>
             <span>•</span>
             <span>Updated: {lastUpdate}</span>
           </div>
