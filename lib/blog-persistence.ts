@@ -25,6 +25,7 @@ export interface BlogPost {
   metaTitle: string;
   metaDescription: string;
   featuredImage: string;
+  featuredImageAlt?: string;
   contentHtml: string;
   faq: Array<{ q: string; a: string }>;
   author: string;

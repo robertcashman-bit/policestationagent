@@ -229,7 +229,7 @@ export default function BlogPostPage({ params }: Readonly<PageProps>) {
                 <div className="mt-6 mb-4 relative w-full max-w-3xl mx-auto aspect-video rounded-lg shadow-2xl overflow-hidden">
                   <Image
                     src={post.featuredImage}
-                    alt={"featuredImageAlt" in post && post.featuredImageAlt ? post.featuredImageAlt : post.title}
+                    alt={post.featuredImageAlt ?? post.title}
                     fill
                     className="object-cover"
                     priority
