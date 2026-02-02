@@ -37,12 +37,16 @@ export default function BlogAdvertBlock() {
           Email for Police Station Representation
         </a>
         <a
-          href="sms:07535494446?body=I need a duty solicitor"
+          href="sms:07535494446?body=Police%20station%20attendance%20request%20(in%20advance%20only%20-%20not%20court)%3A%20Station%3D%20%20Date%2FTime%3D%20%20Name%3D%20"
           className="inline-flex items-center justify-center px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 font-semibold transition-colors"
         >
-          Send SMS to Request a Duty Solicitor
+          Text About Police Station Attendance
         </a>
       </div>
+
+      <p className="text-sm text-slate-600 mt-3">
+        <strong>SMS is for police station attendance in advance only</strong> (not court hearings).
+      </p>
 
       <p className="text-sm text-slate-600 mt-4">
         <strong>Call 01732 247427</strong> - Available from 9am to late, including evenings,
