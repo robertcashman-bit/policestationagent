@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { inter } from "./fonts";
 import { SITE_URL, SITE_DOMAIN } from "@/config/site";
@@ -21,7 +21,7 @@ function getSafeSiteUrl(): string {
     process.env.NEXT_PUBLIC_VERCEL_URL ||
     SITE_URL;
 
-  const noWhitespace = String(raw).trim().replace(/\s+/g, "");
+  const noWhitespace = String(raw).trim().replaceAll(/\s+/g, "");
   if (!noWhitespace) return SITE_URL;
 
   const withProtocol =
@@ -31,7 +31,7 @@ function getSafeSiteUrl(): string {
 
   try {
     // Normalize and remove trailing slash for consistency across metadata/schema.
-    return new URL(withProtocol).toString().replace(/\/$/, "");
+    return new URL(withProtocol).toString().replaceAll(/\/$/g, "");
   } catch {
     // Fallback to canonical config to avoid a hard crash in RootLayout/metadataBase.
     return SITE_URL || `https://${SITE_DOMAIN}`;
@@ -40,23 +40,40 @@ function getSafeSiteUrl(): string {
 
 const siteUrl = getSafeSiteUrl();
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#1e40af" },
+    { media: "(prefers-color-scheme: dark)", color: "#1e3a8a" },
+  ],
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
+  formatDetection: {
+    telephone: true,
+    email: true,
+    address: true,
+    date: false,
+    url: true,
+  },
   title: {
-    default: "Police Station Agent - Expert Legal Representation",
+    default: "Police Station Solicitor Kent | Free Legal Advice 24/7",
     template: "%s | Police Station Agent",
   },
   description:
-    "Professional police station representation and legal services across Kent and the UK. Extended hours availability for urgent legal assistance. Free legal advice under Legal Aid.",
+    "Kent police station solicitor. Free legal advice under Legal Aid. Duty solicitor & representation at all Kent custody suites. 24/7. Maidstone, Medway, Canterbury, Ashford.",
   keywords: [
-    "police station agent",
-    "legal representation",
-    "solicitor",
-    "criminal defense",
-    "duty solicitor",
-    "Kent",
+    "police station solicitor Kent",
+    "duty solicitor Kent",
     "police station representation",
-    "legal aid",
+    "legal aid solicitor",
+    "police interview solicitor",
+    "criminal defence Kent",
+    "police station agent",
+    "free legal advice",
   ],
   authors: [{ name: "Robert Cashman", url: siteUrl }],
   creator: "Robert Cashman",
@@ -69,9 +86,9 @@ export const metadata: Metadata = {
     locale: "en_GB",
     url: siteUrl,
     siteName: "Police Station Agent",
-    title: "Police Station Agent - Expert Legal Representation",
+    title: "Police Station Solicitor Kent | Free Legal Advice 24/7",
     description:
-      "Professional police station representation and legal services across Kent and the UK. Extended hours availability for urgent legal assistance.",
+      "Kent police station solicitor. Free legal advice under Legal Aid. Duty solicitor at all Kent custody suites. 24/7. Maidstone, Medway, Canterbury, Ashford.",
     images: [
       {
         url: `${siteUrl}/og-image.jpg`, // Default OG image - can be customized per page
@@ -83,15 +100,22 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Police Station Agent - Expert Legal Representation",
+    title: "Police Station Solicitor Kent | Free Legal Advice 24/7",
     description:
-      "Professional police station representation and legal services across Kent and the UK.",
+      "Kent police station solicitor. Free Legal Aid. Duty solicitor at all Kent custody suites. 24/7.",
     images: [`${siteUrl}/og-image.jpg`],
   },
   robots: {
     index: true,
     follow: true,
     googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+    bingBot: {
       index: true,
       follow: true,
       "max-video-preview": -1,
@@ -373,6 +397,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <head>
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="mobile-web-app-capable" content="yes" />
         <link
           rel="alternate"
           type="application/rss+xml"

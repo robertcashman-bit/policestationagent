@@ -4,7 +4,8 @@ import { SITE_DOMAIN } from "@/config/site";
 const INDEXNOW_KEY = "655b1cdbce5c462b9fe51c4e19f92678";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || `https://${SITE_DOMAIN}`;
 
-// Important pages to submit for indexing
+// Important pages to submit for fast indexing (Google, Bing, DuckDuckGo via IndexNow/Bing)
+// More URLs = faster discovery; IndexNow accepts up to 10,000 per request
 const PRIORITY_URLS = [
   "/",
   "/about",
@@ -19,19 +20,33 @@ const PRIORITY_URLS = [
   "/for-clients",
   "/fees",
   "/testimonials",
+  "/what-we-do",
+  "/why-use-us",
   "/police-custody-rights",
   "/police-interview-rights",
+  "/your-rights-in-custody",
   "/pace-code-c",
   "/no-comment-interview",
   "/custody-time-limits",
   "/police-bail-explained",
   "/released-under-investigation",
+  "/offences-we-deal-with",
+  "/start/in-custody",
+  "/start/voluntary-interview",
+  "/emergency-police-station-representation",
   "/medway-police-station",
   "/maidstone-police-station",
   "/canterbury-police-station",
   "/tonbridge-police-station",
   "/folkestone-police-station",
   "/north-kent-gravesend-police-station",
+  "/ashford-police-station",
+  "/dover-police-station",
+  "/sevenoaks-police-station",
+  "/sittingbourne-police-station",
+  "/tunbridge-wells-police-station",
+  "/gravesend-police-station",
+  "/bluewater-police-station",
 ];
 
 /**
@@ -82,7 +97,7 @@ async function pingGoogle(): Promise<{ success: boolean; message: string }> {
 }
 
 /**
- * Ping Bing with sitemap URL
+ * Ping Bing with sitemap URL (Bing index feeds DuckDuckGo)
  */
 async function pingBing(): Promise<{ success: boolean; message: string }> {
   try {
@@ -96,6 +111,24 @@ async function pingBing(): Promise<{ success: boolean; message: string }> {
     }
   } catch (error) {
     return { success: false, message: `Bing ping error: ${error}` };
+  }
+}
+
+/**
+ * Ping Yandex with sitemap URL (faster indexing, some DDG/other engines use multiple sources)
+ */
+async function pingYandex(): Promise<{ success: boolean; message: string }> {
+  try {
+    const sitemapUrl = encodeURIComponent(`${SITE_URL}/sitemap.xml`);
+    const response = await fetch(`https://webmaster.yandex.com/ping?sitemap=${sitemapUrl}`);
+
+    if (response.ok) {
+      return { success: true, message: "Yandex: Sitemap ping successful" };
+    } else {
+      return { success: false, message: `Yandex ping error: ${response.status}` };
+    }
+  } catch (error) {
+    return { success: false, message: `Yandex ping error: ${error}` };
   }
 }
 
@@ -130,7 +163,12 @@ export async function POST(request: Request) {
     // No body or invalid JSON - use default URLs
   }
 
-  const results = await Promise.all([submitToIndexNow(urlsToSubmit), pingGoogle(), pingBing()]);
+  const results = await Promise.all([
+    submitToIndexNow(urlsToSubmit),
+    pingGoogle(),
+    pingBing(),
+    pingYandex(),
+  ]);
 
   const allSuccess = results.every((r) => r.success);
 

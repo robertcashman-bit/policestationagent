@@ -12,10 +12,10 @@
  * Can also be called via Vercel deploy hook or GitHub Actions.
  */
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://policestationagent.com";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.policestationagent.com";
 const INDEXNOW_KEY = "655b1cdbce5c462b9fe51c4e19f92678";
 
-// Priority URLs to submit
+// Priority URLs for fast indexing (Google, Bing, DuckDuckGo via Bing/IndexNow)
 const PRIORITY_URLS = [
   "/",
   "/about",
@@ -30,26 +30,36 @@ const PRIORITY_URLS = [
   "/for-clients",
   "/fees",
   "/testimonials",
+  "/what-we-do",
+  "/why-use-us",
   "/police-custody-rights",
   "/police-interview-rights",
+  "/your-rights-in-custody",
   "/pace-code-c",
   "/no-comment-interview",
   "/custody-time-limits",
   "/police-bail-explained",
   "/released-under-investigation",
+  "/offences-we-deal-with",
+  "/start/in-custody",
+  "/start/voluntary-interview",
+  "/emergency-police-station-representation",
   "/medway-police-station",
   "/maidstone-police-station",
   "/canterbury-police-station",
+  "/ashford-police-station",
   "/tonbridge-police-station",
   "/folkestone-police-station",
+  "/sevenoaks-police-station",
+  "/gravesend-police-station",
   "/north-kent-gravesend-police-station",
 ];
 
 async function pingGoogle() {
   console.log("📍 Pinging Google...");
   try {
-    const sitemapUrl = encodeURIComponent(`${SITE_URL}/sitemap.xml`);
-    const response = await fetch(`https://www.google.com/ping?sitemap=${sitemapUrl}`);
+    const sitemapFull = `${SITE_URL}/sitemap.xml`;
+    const response = await fetch(`https://www.google.com/ping?sitemap=${encodeURIComponent(sitemapFull)}`);
     if (response.ok) {
       console.log("✅ Google: Sitemap ping successful");
       return true;
@@ -64,10 +74,10 @@ async function pingGoogle() {
 }
 
 async function pingBing() {
-  console.log("📍 Pinging Bing...");
+  console.log("📍 Pinging Bing (helps DuckDuckGo)...");
   try {
-    const sitemapUrl = encodeURIComponent(`${SITE_URL}/sitemap.xml`);
-    const response = await fetch(`https://www.bing.com/ping?sitemap=${sitemapUrl}`);
+    const sitemapFull = `${SITE_URL}/sitemap.xml`;
+    const response = await fetch(`https://www.bing.com/ping?sitemap=${encodeURIComponent(sitemapFull)}`);
     if (response.ok) {
       console.log("✅ Bing: Sitemap ping successful");
       return true;
@@ -77,6 +87,24 @@ async function pingBing() {
     }
   } catch (error) {
     console.log(`❌ Bing ping error: ${error.message}`);
+    return false;
+  }
+}
+
+async function pingYandex() {
+  console.log("📍 Pinging Yandex...");
+  try {
+    const sitemapFull = `${SITE_URL}/sitemap.xml`;
+    const response = await fetch(`https://webmaster.yandex.com/ping?sitemap=${encodeURIComponent(sitemapFull)}`);
+    if (response.ok) {
+      console.log("✅ Yandex: Sitemap ping successful");
+      return true;
+    } else {
+      console.log(`⚠️ Yandex ping returned: ${response.status}`);
+      return false;
+    }
+  } catch (error) {
+    console.log(`❌ Yandex ping error: ${error.message}`);
     return false;
   }
 }
@@ -121,7 +149,7 @@ async function main() {
   console.log(`URLs to submit: ${PRIORITY_URLS.length}`);
   console.log("");
 
-  const results = await Promise.all([pingGoogle(), pingBing(), submitToIndexNow()]);
+  const results = await Promise.all([pingGoogle(), pingBing(), pingYandex(), submitToIndexNow()]);
 
   console.log("");
   console.log("==========================================");

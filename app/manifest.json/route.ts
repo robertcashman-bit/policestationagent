@@ -2,24 +2,29 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   const manifest = {
-    name: "Police Station Agent - Police Station Agent",
+    name: "Police Station Agent - Kent Duty Solicitor",
     short_name: "Police Station Agent",
     description:
       "Expert police station representation and legal services across Kent. Available during extended hours for urgent legal assistance.",
     start_url: "/",
+    scope: "/",
     display: "standalone",
+    orientation: "portrait-primary",
     background_color: "#ffffff",
     theme_color: "#1e40af",
+    categories: ["legal", "business"],
     icons: [
       {
         src: "/icon-192.png",
         sizes: "192x192",
         type: "image/png",
+        purpose: "any",
       },
       {
         src: "/icon-512.png",
         sizes: "512x512",
         type: "image/png",
+        purpose: "any",
       },
     ],
   };
