@@ -1,10 +1,28 @@
 import { NextResponse } from "next/server";
-import { getPublishedBlogPosts } from "@/lib/blog";
+import { getAllPosts } from "@/lib/blog-reader";
 import { SITE_URL } from "@/config/site";
-import { blogPosts, categoryOrder } from "@/data/blogIndex";
+import { categoryOrder } from "@/data/blogIndex";
 
 // Force dynamic rendering - database not available during build
 export const dynamic = "force-dynamic";
+
+function escapeXml(str: string | null | undefined): string {
+  if (!str) return "";
+  return str
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&apos;");
+}
+
+function toAbsoluteUrl(url: string | null | undefined): string | null {
+  if (!url) return null;
+  if (url.startsWith("http://") || url.startsWith("https://")) return url;
+  if (url.startsWith("//")) return `https:${url}`;
+  if (url.startsWith("/")) return `${SITE_URL}${url}`;
+  return `${SITE_URL}/${url}`;
+}
 
 /**
  * Category RSS Feeds
@@ -33,22 +51,13 @@ export async function GET(request: Request, { params }: { params: { category: st
       return new NextResponse("Category not found", { status: 404 });
     }
 
-    // Get all published posts
-    const allPosts = getPublishedBlogPosts();
+    // Get all published posts (new-format + legacy), then filter by category
+    const allPosts = getAllPosts();
+    const categoryPosts = allPosts.filter((post) => post.category === categoryName);
 
-    // Filter posts by category using the blogIndex
-    const categoryPosts = allPosts.filter((post) => {
-      const indexEntry = blogPosts.find(
-        (bp) => bp.slug === post.slug || bp.slug === `/${post.slug}`
-      );
-      return indexEntry?.category === categoryName;
-    });
-
-    // Sort by published_at (newest first)
-    const sortedPosts = categoryPosts.sort((a, b) => {
-      const dateA = a.published_at ? new Date(a.published_at).getTime() : 0;
-      const dateB = b.published_at ? new Date(b.published_at).getTime() : 0;
-      return dateB - dateA;
+    // Sort by date (newest first)
+    const sortedPosts = categoryPosts.slice().sort((a, b) => {
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
     });
 
     // Limit to 20 most recent posts
@@ -59,26 +68,13 @@ export async function GET(request: Request, { params }: { params: { category: st
     const rssItems = recentPosts
       .map((post) => {
         const postUrl = `${SITE_URL}/blog/${post.slug}`;
-        const pubDate = post.published_at
-          ? new Date(post.published_at).toUTCString()
-          : new Date(post.created_at).toUTCString();
-
-        // Escape XML special characters
-        const escapeXml = (str: string | null): string => {
-          if (!str) return "";
-          return str
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&apos;");
-        };
+        const pubDate = new Date(post.date).toUTCString();
 
         const title = escapeXml(post.title);
-        const desc = escapeXml(post.excerpt || "");
+        const desc = escapeXml(post.metaDescription || "");
 
         // Get image if available
-        const imageUrl = post.image;
+        const imageUrl = toAbsoluteUrl(post.featuredImage);
         const imageTag = imageUrl
           ? `\n      <enclosure url="${escapeXml(imageUrl)}" type="image/jpeg" />`
           : "";

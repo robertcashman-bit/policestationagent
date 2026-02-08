@@ -1,9 +1,27 @@
 import { NextResponse } from "next/server";
-import { getPublishedBlogPosts } from "@/lib/blog";
+import { getAllPosts } from "@/lib/blog-reader";
 import { SITE_URL } from "@/config/site";
 
 // Force dynamic rendering - database not available during build
 export const dynamic = "force-dynamic";
+
+function escapeXml(str: string | null | undefined): string {
+  if (!str) return "";
+  return str
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&apos;");
+}
+
+function toAbsoluteUrl(url: string | null | undefined): string | null {
+  if (!url) return null;
+  if (url.startsWith("http://") || url.startsWith("https://")) return url;
+  if (url.startsWith("//")) return `https:${url}`;
+  if (url.startsWith("/")) return `${SITE_URL}${url}`;
+  return `${SITE_URL}/${url}`;
+}
 
 /**
  * Recent Posts RSS Feed - Last 10 Posts
@@ -11,13 +29,11 @@ export const dynamic = "force-dynamic";
  */
 export async function GET() {
   try {
-    const posts = getPublishedBlogPosts();
+    const posts = getAllPosts();
 
-    // Sort by published_at (newest first)
-    const sortedPosts = posts.sort((a, b) => {
-      const dateA = a.published_at ? new Date(a.published_at).getTime() : 0;
-      const dateB = b.published_at ? new Date(b.published_at).getTime() : 0;
-      return dateB - dateA;
+    // Sort by date (newest first)
+    const sortedPosts = posts.slice().sort((a, b) => {
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
     });
 
     // Limit to 10 most recent posts
@@ -28,26 +44,13 @@ export async function GET() {
     const rssItems = recentPosts
       .map((post) => {
         const postUrl = `${SITE_URL}/blog/${post.slug}`;
-        const pubDate = post.published_at
-          ? new Date(post.published_at).toUTCString()
-          : new Date(post.created_at).toUTCString();
-
-        // Escape XML special characters
-        const escapeXml = (str: string | null): string => {
-          if (!str) return "";
-          return str
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&apos;");
-        };
+        const pubDate = new Date(post.date).toUTCString();
 
         const title = escapeXml(post.title);
-        const desc = escapeXml(post.excerpt || "");
+        const desc = escapeXml(post.metaDescription || "");
 
         // Get image if available - RSS 2.0 requires url, type, and length attributes
-        const imageUrl = post.image;
+        const imageUrl = toAbsoluteUrl(post.featuredImage);
         // Use default length of 50000 bytes for images (RSS 2.0 requirement)
         const imageLength = 50000;
         // Use both enclosure (RSS 2.0) and media:content (Media RSS) for maximum compatibility
@@ -63,7 +66,7 @@ export async function GET() {
       <guid isPermaLink="true">${postUrl}</guid>
       <description>${desc}</description>
       <pubDate>${pubDate}</pubDate>
-      <dc:creator>Robert Cashman</dc:creator>${imageTag}
+      <dc:creator>${escapeXml(post.author || "Robert Cashman")}</dc:creator>${imageTag}
     </item>`;
       })
       .join("\n");
