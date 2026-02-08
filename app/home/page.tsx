@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import ReplaceTextOnMount from "@/components/ReplaceTextOnMount";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -23,6 +24,7 @@ export default function Page() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
       <Header />
       <main className="flex-grow relative" id="main-content" role="main" aria-live="polite">
+        <ReplaceTextOnMount from="Park Place, Dover" to="Ladywell, Dover CT16 1DJ" />
         <div className="bg-slate-50 min-h-screen">
           <div
             className="prose prose-lg max-w-6xl mx-auto px-4 py-16"
