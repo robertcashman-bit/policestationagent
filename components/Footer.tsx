@@ -243,8 +243,8 @@ export default function Footer() {
             >
               Police Station Agent
             </Link>
-            <span className="hidden sm:inline text-white/40">|</span>
-            <span className="hidden sm:inline text-sm text-white/75">Kent Criminal Defence</span>
+            <span className="hidden sm:inline text-sky-400">|</span>
+            <span className="hidden sm:inline text-sm text-sky-300">Kent Criminal Defence</span>
           </div>
 
           {/* Contact */}
@@ -269,10 +269,10 @@ export default function Footer() {
               </svg>
               01732 247427
             </a>
-            <span className="text-white/40">|</span>
+            <span className="text-sky-400">|</span>
             <a
               href="sms:07535494446?body=I%20need%20police%20station%20representation"
-              className="flex items-center gap-1.5 text-white/85 hover:text-blue-300 transition-colors"
+              className="flex items-center gap-1.5 text-sky-300 hover:text-sky-200 transition-colors"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -290,10 +290,10 @@ export default function Footer() {
               </svg>
               Text Us
             </a>
-            <span className="text-white/40">|</span>
+            <span className="text-sky-400">|</span>
             <a
               href="mailto:robertcashman@defencelegalservices.co.uk"
-              className="text-white/85 hover:text-blue-300 transition-colors"
+              className="text-sky-300 hover:text-sky-200 transition-colors"
             >
               Email
             </a>
@@ -305,7 +305,7 @@ export default function Footer() {
               href="https://www.facebook.com/policestationagent"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white/70 hover:text-blue-300 transition-colors"
+              className="text-sky-300 hover:text-sky-200 transition-colors"
               aria-label="Facebook"
             >
               <svg
@@ -326,7 +326,7 @@ export default function Footer() {
               href="https://www.linkedin.com/company/police-station-agent"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white/70 hover:text-blue-300 transition-colors"
+              className="text-sky-300 hover:text-sky-200 transition-colors"
               aria-label="LinkedIn"
             >
               <svg
@@ -349,7 +349,7 @@ export default function Footer() {
               href="https://twitter.com/policestation"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white/70 hover:text-white transition-colors"
+              className="text-sky-300 hover:text-white transition-colors"
               aria-label="Twitter/X"
             >
               <svg
@@ -371,27 +371,27 @@ export default function Footer() {
         </div>
 
         {/* Essential Links Row */}
-        <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-white/75 border-t border-slate-800 pt-4">
+        <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-sky-300 border-t border-slate-800 pt-4">
           <Link href="/privacy" className="hover:text-white transition-colors">
             Privacy
           </Link>
-          <span className="text-white/30">|</span>
+          <span className="text-sky-400">|</span>
           <Link href="/terms-and-conditions" className="hover:text-white transition-colors">
             Terms
           </Link>
-          <span className="text-white/30">|</span>
+          <span className="text-sky-400">|</span>
           <Link href="/cookies" className="hover:text-white transition-colors">
             Cookies
           </Link>
-          <span className="text-white/30">|</span>
+          <span className="text-sky-400">|</span>
           <Link href="/complaints" className="hover:text-white transition-colors">
             Complaints
           </Link>
-          <span className="text-white/30">|</span>
+          <span className="text-sky-400">|</span>
           <Link href="/contact" className="hover:text-white transition-colors">
             Contact
           </Link>
-          <span className="text-white/30">|</span>
+          <span className="text-sky-400">|</span>
           <Link
             href="/admin"
             className="hover:text-amber-400 transition-colors flex items-center gap-1"
@@ -416,7 +416,7 @@ export default function Footer() {
         {/* Expandable Full Sitemap (no client state; avoids hydration issues) */}
         <details className="group mt-4">
           <summary className="list-none cursor-pointer flex justify-center">
-            <span className="flex items-center gap-2 px-4 py-2 text-xs text-white hover:text-blue-300 border border-slate-600 hover:border-slate-400 rounded-full transition-all duration-200">
+            <span className="flex items-center gap-2 px-4 py-2 text-xs text-sky-300 hover:text-white border border-sky-700 hover:border-sky-400 rounded-full transition-all duration-200">
               <span className="group-open:hidden">View All Pages & Resources</span>
               <span className="hidden group-open:inline">Hide Sitemap</span>
               <svg
@@ -461,7 +461,7 @@ export default function Footer() {
                     <li key={`${link.href}::${link.label}`}>
                       <Link
                         href={link.href}
-                        className={`text-white/75 hover:text-white transition-colors ${link.priority ? "font-medium text-white/90" : ""}`}
+                        className={`text-sky-300 hover:text-white transition-colors ${link.priority ? "font-semibold text-sky-200" : ""}`}
                       >
                         {link.label}
                       </Link>
@@ -478,7 +478,7 @@ export default function Footer() {
                     <li key={`${link.href}::${link.label}`}>
                       <Link
                         href={link.href}
-                        className={`text-white/75 hover:text-white transition-colors ${link.priority ? "font-medium text-white/90" : ""}`}
+                        className={`text-sky-300 hover:text-white transition-colors ${link.priority ? "font-semibold text-sky-200" : ""}`}
                       >
                         {link.label}
                       </Link>
@@ -495,7 +495,7 @@ export default function Footer() {
                     <li key={`${link.href}::${link.label}`} className="break-inside-avoid">
                       <Link
                         href={link.href}
-                        className={`text-white/75 hover:text-white transition-colors ${link.priority ? "font-medium text-white/90" : ""}`}
+                        className={`text-sky-300 hover:text-white transition-colors ${link.priority ? "font-semibold text-sky-200" : ""}`}
                       >
                         {link.label}
                       </Link>
@@ -512,7 +512,7 @@ export default function Footer() {
                     <li key={`${link.href}::${link.label}`}>
                       <Link
                         href={link.href}
-                        className={`text-white/75 hover:text-white transition-colors ${link.priority ? "font-medium text-white/90" : ""}`}
+                        className={`text-sky-300 hover:text-white transition-colors ${link.priority ? "font-semibold text-sky-200" : ""}`}
                       >
                         {link.label}
                       </Link>
@@ -529,7 +529,7 @@ export default function Footer() {
                     <li key={`${link.href}::${link.label}`}>
                       <Link
                         href={link.href}
-                        className="text-white/75 hover:text-white transition-colors"
+                        className="text-sky-300 hover:text-white transition-colors"
                       >
                         {link.label}
                       </Link>
@@ -545,61 +545,61 @@ export default function Footer() {
         {/* Bottom Section - Always Visible */}
         <div className="border-t border-slate-800 mt-6 pt-4 text-center">
           {/* Regulatory Disclaimer */}
-          <div className="mb-4 max-w-3xl mx-auto p-3 bg-white/5 rounded-lg text-xs text-white/80">
-            <p className="mb-1">
+          <div className="mb-4 max-w-3xl mx-auto p-3 bg-white/5 rounded-lg text-xs text-sky-200">
+            <div className="mb-1">
               <span className="font-semibold text-white">Robert Cashman</span> is a criminal
               defence solicitor. All legal services provided through{" "}
               <span className="font-semibold text-white">Tuckers Solicitors</span> (SRA ID:
               127795).
-            </p>
-            <p className="text-white/70">
+            </div>
+            <div className="text-sky-300">
               We act in relation to active police investigations and interviews. We do not provide
               general criminal law advice or hypothetical consultations.
-            </p>
+            </div>
           </div>
 
           {/* Copyright */}
-          <p className="text-xs text-white/70 mb-2">
+          <div className="text-xs text-sky-300 mb-2">
             © {currentYear} Defence Legal Services Limited T/A Police Station Agent. Company No.
             09900871
-          </p>
-          <p className="text-xs text-white/60 mb-3">
+          </div>
+          <div className="text-xs text-sky-300 mb-3">
             Registered Office: Greenacre, London Road, West Kingsdown, Sevenoaks, Kent, TN15 6ER
-          </p>
+          </div>
 
           {/* Version Info */}
-          <div className="text-xs text-white/60 flex items-center justify-center gap-3">
-            <span className="text-white/70">{appVersion}</span>
-            <span className="text-white/40">•</span>
-            <span className="text-white/70">Updated: {lastUpdate}</span>
+          <div className="text-xs text-sky-400 flex items-center justify-center gap-3">
+            <span className="text-sky-300">{appVersion}</span>
+            <span className="text-sky-400">•</span>
+            <span className="text-sky-300">Updated: {lastUpdate}</span>
           </div>
 
           {/* Partners */}
-          <div className="mt-4 pt-3 border-t border-slate-800 flex flex-wrap justify-center gap-3 text-xs text-white/60">
-            <span>Partners:</span>
+          <div className="mt-4 pt-3 border-t border-slate-800 flex flex-wrap justify-center gap-3 text-xs text-sky-300">
+            <span className="text-sky-200">Partners:</span>
             <a
               href="https://policestationrepukdirectory.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white/75 hover:text-blue-300 transition-colors"
+              className="text-sky-300 hover:text-white transition-colors"
             >
               Find a Police Station Rep
             </a>
-            <span className="text-white/40">•</span>
+            <span className="text-sky-400">•</span>
             <a
               href="https://policestationrepuk.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white/75 hover:text-blue-300 transition-colors"
+              className="text-sky-300 hover:text-white transition-colors"
             >
               Police Station Rep UK
             </a>
-            <span className="text-white/40">•</span>
+            <span className="text-sky-400">•</span>
             <a
               href="https://policestationrepuk.com/StationsDirectory"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white/75 hover:text-blue-300 transition-colors"
+              className="text-sky-300 hover:text-white transition-colors"
             >
               UK Custody Suites
             </a>
