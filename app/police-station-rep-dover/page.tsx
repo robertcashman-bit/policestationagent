@@ -194,7 +194,7 @@ export default function Page() {
                       Dover Police Station Coverage
                     </h2>
                     <p className="text-slate-700 leading-relaxed mb-4">
-                      Dover police station is located at Park Place, Dover. We provide expert{" "}
+                      Dover Police Station is located at Ladywell, Dover CT16 1DJ. We provide expert{" "}
                       <a
                         href="/dover-police-station"
                         className="text-blue-600 hover:underline font-semibold"
@@ -304,7 +304,7 @@ export default function Page() {
                 <div className="rounded-xl border bg-card text-card-foreground shadow-md">
                   <div className="p-6">
                     <h3 className="font-semibold text-slate-900 mb-4">Dover Police Station</h3>
-                    <p className="text-slate-600 text-sm mb-2">Park Place, Dover</p>
+                    <p className="text-slate-600 text-sm mb-2">Ladywell, Dover CT16 1DJ</p>
                     <a
                       href="/dover-police-station"
                       className="text-blue-600 hover:underline text-sm font-medium"

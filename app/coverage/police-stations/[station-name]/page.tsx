@@ -64,7 +64,7 @@ const STATIONS: Record<string, {
   },
   'dover': {
     name: 'Dover',
-    address: 'Park Place, Dover',
+    address: 'Ladywell, Dover CT16 1DJ',
     custodyType: 'Voluntary Interviews Only',
     areaCovered: 'East Kent',
     notes: 'Voluntary interview station'

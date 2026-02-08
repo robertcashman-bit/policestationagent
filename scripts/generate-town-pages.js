@@ -128,7 +128,7 @@ const towns = [
     name: "Dover",
     displayName: "Dover",
     type: "Voluntary Interviews",
-    address: "Park Place, Dover",
+    address: "Ladywell, Dover CT16 1DJ",
     areaServed: ["Dover", "East Kent"],
     stationLink: "/dover-police-station",
     description:

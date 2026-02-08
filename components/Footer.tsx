@@ -243,8 +243,8 @@ export default function Footer() {
             >
               Police Station Agent
             </Link>
-            <span className="hidden sm:inline text-slate-500">|</span>
-            <span className="hidden sm:inline text-sm text-slate-400">Kent Criminal Defence</span>
+            <span className="hidden sm:inline text-white/40">|</span>
+            <span className="hidden sm:inline text-sm text-white/75">Kent Criminal Defence</span>
           </div>
 
           {/* Contact */}
@@ -269,10 +269,10 @@ export default function Footer() {
               </svg>
               01732 247427
             </a>
-            <span className="text-slate-600">|</span>
+            <span className="text-white/40">|</span>
             <a
               href="sms:07535494446?body=I%20need%20police%20station%20representation"
-              className="flex items-center gap-1.5 text-slate-300 hover:text-blue-300 transition-colors"
+              className="flex items-center gap-1.5 text-white/85 hover:text-blue-300 transition-colors"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -290,10 +290,10 @@ export default function Footer() {
               </svg>
               Text Us
             </a>
-            <span className="text-slate-600">|</span>
+            <span className="text-white/40">|</span>
             <a
               href="mailto:robertcashman@defencelegalservices.co.uk"
-              className="text-slate-300 hover:text-blue-300 transition-colors"
+              className="text-white/85 hover:text-blue-300 transition-colors"
             >
               Email
             </a>
@@ -305,7 +305,7 @@ export default function Footer() {
               href="https://www.facebook.com/policestationagent"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-slate-400 hover:text-blue-500 transition-colors"
+              className="text-white/70 hover:text-blue-300 transition-colors"
               aria-label="Facebook"
             >
               <svg
@@ -326,7 +326,7 @@ export default function Footer() {
               href="https://www.linkedin.com/company/police-station-agent"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-slate-400 hover:text-blue-500 transition-colors"
+              className="text-white/70 hover:text-blue-300 transition-colors"
               aria-label="LinkedIn"
             >
               <svg
@@ -349,7 +349,7 @@ export default function Footer() {
               href="https://twitter.com/policestation"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-slate-400 hover:text-white transition-colors"
+              className="text-white/70 hover:text-white transition-colors"
               aria-label="Twitter/X"
             >
               <svg
@@ -371,27 +371,27 @@ export default function Footer() {
         </div>
 
         {/* Essential Links Row */}
-        <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-slate-400 border-t border-slate-800 pt-4">
+        <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-white/75 border-t border-slate-800 pt-4">
           <Link href="/privacy" className="hover:text-white transition-colors">
             Privacy
           </Link>
-          <span className="text-slate-700">|</span>
+          <span className="text-white/30">|</span>
           <Link href="/terms-and-conditions" className="hover:text-white transition-colors">
             Terms
           </Link>
-          <span className="text-slate-700">|</span>
+          <span className="text-white/30">|</span>
           <Link href="/cookies" className="hover:text-white transition-colors">
             Cookies
           </Link>
-          <span className="text-slate-700">|</span>
+          <span className="text-white/30">|</span>
           <Link href="/complaints" className="hover:text-white transition-colors">
             Complaints
           </Link>
-          <span className="text-slate-700">|</span>
+          <span className="text-white/30">|</span>
           <Link href="/contact" className="hover:text-white transition-colors">
             Contact
           </Link>
-          <span className="text-slate-700">|</span>
+          <span className="text-white/30">|</span>
           <Link
             href="/admin"
             className="hover:text-amber-400 transition-colors flex items-center gap-1"
@@ -461,7 +461,7 @@ export default function Footer() {
                     <li key={`${link.href}::${link.label}`}>
                       <Link
                         href={link.href}
-                        className={`text-slate-400 hover:text-white transition-colors ${link.priority ? "font-medium text-slate-300" : ""}`}
+                        className={`text-white/75 hover:text-white transition-colors ${link.priority ? "font-medium text-white/90" : ""}`}
                       >
                         {link.label}
                       </Link>
@@ -478,7 +478,7 @@ export default function Footer() {
                     <li key={`${link.href}::${link.label}`}>
                       <Link
                         href={link.href}
-                        className={`text-slate-400 hover:text-white transition-colors ${link.priority ? "font-medium text-slate-300" : ""}`}
+                        className={`text-white/75 hover:text-white transition-colors ${link.priority ? "font-medium text-white/90" : ""}`}
                       >
                         {link.label}
                       </Link>
@@ -495,7 +495,7 @@ export default function Footer() {
                     <li key={`${link.href}::${link.label}`} className="break-inside-avoid">
                       <Link
                         href={link.href}
-                        className={`text-slate-400 hover:text-white transition-colors ${link.priority ? "font-medium text-slate-300" : ""}`}
+                        className={`text-white/75 hover:text-white transition-colors ${link.priority ? "font-medium text-white/90" : ""}`}
                       >
                         {link.label}
                       </Link>
@@ -512,7 +512,7 @@ export default function Footer() {
                     <li key={`${link.href}::${link.label}`}>
                       <Link
                         href={link.href}
-                        className={`text-slate-400 hover:text-white transition-colors ${link.priority ? "font-medium text-slate-300" : ""}`}
+                        className={`text-white/75 hover:text-white transition-colors ${link.priority ? "font-medium text-white/90" : ""}`}
                       >
                         {link.label}
                       </Link>
@@ -529,7 +529,7 @@ export default function Footer() {
                     <li key={`${link.href}::${link.label}`}>
                       <Link
                         href={link.href}
-                        className="text-slate-400 hover:text-white transition-colors"
+                        className="text-white/75 hover:text-white transition-colors"
                       >
                         {link.label}
                       </Link>
@@ -545,61 +545,61 @@ export default function Footer() {
         {/* Bottom Section - Always Visible */}
         <div className="border-t border-slate-800 mt-6 pt-4 text-center">
           {/* Regulatory Disclaimer */}
-          <div className="mb-4 max-w-3xl mx-auto p-3 bg-white/5 rounded-lg text-xs text-slate-400">
+          <div className="mb-4 max-w-3xl mx-auto p-3 bg-white/5 rounded-lg text-xs text-white/80">
             <p className="mb-1">
-              <span className="font-semibold text-slate-300">Robert Cashman</span> is a criminal
+              <span className="font-semibold text-white">Robert Cashman</span> is a criminal
               defence solicitor. All legal services provided through{" "}
-              <span className="font-semibold text-slate-300">Tuckers Solicitors</span> (SRA ID:
+              <span className="font-semibold text-white">Tuckers Solicitors</span> (SRA ID:
               127795).
             </p>
-            <p className="text-slate-500">
+            <p className="text-white/70">
               We act in relation to active police investigations and interviews. We do not provide
               general criminal law advice or hypothetical consultations.
             </p>
           </div>
 
           {/* Copyright */}
-          <p className="text-xs text-slate-500 mb-2">
+          <p className="text-xs text-white/70 mb-2">
             © {currentYear} Defence Legal Services Limited T/A Police Station Agent. Company No.
             09900871
           </p>
-          <p className="text-xs text-slate-600 mb-3">
+          <p className="text-xs text-white/60 mb-3">
             Registered Office: Greenacre, London Road, West Kingsdown, Sevenoaks, Kent, TN15 6ER
           </p>
 
           {/* Version Info */}
-          <div className="text-xs text-slate-600 flex items-center justify-center gap-3">
-            <span>{appVersion}</span>
-            <span>•</span>
-            <span>Updated: {lastUpdate}</span>
+          <div className="text-xs text-white/60 flex items-center justify-center gap-3">
+            <span className="text-white/70">{appVersion}</span>
+            <span className="text-white/40">•</span>
+            <span className="text-white/70">Updated: {lastUpdate}</span>
           </div>
 
           {/* Partners */}
-          <div className="mt-4 pt-3 border-t border-slate-800 flex flex-wrap justify-center gap-3 text-xs text-slate-500">
+          <div className="mt-4 pt-3 border-t border-slate-800 flex flex-wrap justify-center gap-3 text-xs text-white/60">
             <span>Partners:</span>
             <a
               href="https://policestationrepukdirectory.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-blue-400 transition-colors"
+              className="text-white/75 hover:text-blue-300 transition-colors"
             >
               Find a Police Station Rep
             </a>
-            <span>•</span>
+            <span className="text-white/40">•</span>
             <a
               href="https://policestationrepuk.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-blue-400 transition-colors"
+              className="text-white/75 hover:text-blue-300 transition-colors"
             >
               Police Station Rep UK
             </a>
-            <span>•</span>
+            <span className="text-white/40">•</span>
             <a
               href="https://policestationrepuk.com/StationsDirectory"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-blue-400 transition-colors"
+              className="text-white/75 hover:text-blue-300 transition-colors"
             >
               UK Custody Suites
             </a>
