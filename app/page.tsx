@@ -106,6 +106,38 @@ export default function Page() {
               )),
             }}
           />
+          {/* Prominent Phone Number Banner */}
+          <section className="bg-gradient-to-r from-red-600 via-red-700 to-red-600 py-5 -mt-1 relative z-10 shadow-lg">
+            <div className="max-w-5xl mx-auto px-4 text-center">
+              <p className="text-white text-sm sm:text-base font-medium mb-2">
+                Need legal advice before a police interview? Call now — it&apos;s <span className="font-black text-amber-300">FREE</span> under Legal Aid
+              </p>
+              <a
+                href="tel:01732247427"
+                className="inline-flex items-center gap-3 bg-white hover:bg-amber-50 text-red-700 font-black text-2xl sm:text-3xl md:text-4xl px-6 sm:px-10 py-3 sm:py-4 rounded-2xl shadow-xl hover:shadow-2xl transition-all hover:scale-105 tracking-wide"
+                aria-label="Call 01732 247427 for free legal advice"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="28"
+                  height="28"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="text-red-600 animate-pulse flex-shrink-0"
+                >
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                </svg>
+                01732 247427
+              </a>
+              <p className="text-red-100 text-xs sm:text-sm mt-2">
+                Available extended hours — Ask for Robert Cashman, Tuckers Duty Solicitor
+              </p>
+            </div>
+          </section>
           {/* Start Here Section - Split Funnel Entry */}
           <StartHere />
           <section className="max-w-6xl mx-auto px-4 -mt-8 md:-mt-14 pb-10">
