@@ -2,8 +2,13 @@ import { jwtVerify } from "jose";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-// Hardcoded secret for admin auth - works without environment variables
-const ADMIN_SECRET = "81be4a23633ca705d7596181996b26e41460510f1a5a9365665acf3e27f3311c";
+// SECURITY: Use ADMIN_SECRET from environment. Fallback only for local dev.
+const ADMIN_SECRET =
+  process.env.ADMIN_SECRET ||
+  process.env.JWT_SECRET ||
+  (process.env.NODE_ENV === "production"
+    ? ""
+    : "dev-only-fallback-secret-change-in-production");
 const secret = new TextEncoder().encode(ADMIN_SECRET);
 
 export interface AdminSession {
@@ -12,11 +17,13 @@ export interface AdminSession {
 }
 
 /**
- * Check if JWT_SECRET is properly configured
- * TEMPORARILY DISABLED - always returns true to allow admin access
+ * Check if admin auth is properly configured (ADMIN_SECRET or JWT_SECRET set in production)
  */
 export function isJWTSecretConfigured(): boolean {
-  return true;
+  if (process.env.NODE_ENV !== "production") return true;
+  return !!(
+    process.env.ADMIN_SECRET?.length >= 32 || process.env.JWT_SECRET?.length >= 32
+  );
 }
 
 /**
@@ -25,6 +32,10 @@ export function isJWTSecretConfigured(): boolean {
  */
 export async function getAdminSession(): Promise<AdminSession | null> {
   try {
+    if (process.env.NODE_ENV === "production" && !ADMIN_SECRET) {
+      return null;
+    }
+
     const cookieStore = await cookies();
     const token = cookieStore.get("admin-token")?.value;
 

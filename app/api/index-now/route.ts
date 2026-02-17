@@ -143,12 +143,15 @@ async function pingYandex(): Promise<{ success: boolean; message: string }> {
  * - ?secret=YOUR_SECRET - Optional secret for protection
  */
 export async function POST(request: Request) {
-  // Optional: Add secret protection
+  // SECURITY: Require secret in production to prevent abuse
   const { searchParams } = new URL(request.url);
   const secret = searchParams.get("secret");
 
-  // If INDEXNOW_SECRET is set in env, require it
-  if (process.env.INDEXNOW_SECRET && secret !== process.env.INDEXNOW_SECRET) {
+  if (process.env.NODE_ENV === "production") {
+    if (!process.env.INDEXNOW_SECRET || secret !== process.env.INDEXNOW_SECRET) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+  } else if (process.env.INDEXNOW_SECRET && secret !== process.env.INDEXNOW_SECRET) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

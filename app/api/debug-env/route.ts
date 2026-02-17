@@ -1,6 +1,11 @@
 import { NextResponse } from "next/server";
 
 export async function GET() {
+  // SECURITY: Disable in production - leaks env metadata
+  if (process.env.NODE_ENV === "production") {
+    return NextResponse.json({ error: "Not available in production" }, { status: 404 });
+  }
+
   const jwtSecret = process.env.JWT_SECRET;
 
   // Get list of all env var names (not values) that contain certain keywords

@@ -2,25 +2,42 @@ import { NextRequest, NextResponse } from "next/server";
 import { SignJWT } from "jose";
 import { cookies } from "next/headers";
 
-// Hardcoded secret for admin auth - works without environment variables
-const ADMIN_SECRET = "81be4a23633ca705d7596181996b26e41460510f1a5a9365665acf3e27f3311c";
+// SECURITY: Use environment variables for secret and credentials
+const ADMIN_SECRET =
+  process.env.ADMIN_SECRET ||
+  process.env.JWT_SECRET ||
+  (process.env.NODE_ENV === "production" ? "" : "dev-only-fallback");
 const secret = new TextEncoder().encode(ADMIN_SECRET);
 
-// Hardcoded admin credentials
-const ADMIN_USER = {
-  username: "admin",
-  password: "Secure123!",
-  id: 1,
-};
+// SECURITY: Admin credentials from env - required in production
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME || (process.env.NODE_ENV === "production" ? "" : "admin");
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || (process.env.NODE_ENV === "production" ? "" : "Secure123!");
 
 export async function POST(request: NextRequest) {
   try {
+    // Block login if not configured in production
+    if (process.env.NODE_ENV === "production") {
+      if (!ADMIN_USERNAME || !ADMIN_PASSWORD || ADMIN_PASSWORD.length < 12) {
+        return NextResponse.json(
+          { error: "Admin login not configured. Set ADMIN_USERNAME and ADMIN_PASSWORD (min 12 chars)." },
+          { status: 503 }
+        );
+      }
+      if (!ADMIN_SECRET || ADMIN_SECRET.length < 32) {
+        return NextResponse.json(
+          { error: "Admin auth not configured. Set ADMIN_SECRET (min 32 chars)." },
+          { status: 503 }
+        );
+      }
+    }
+
     const { username, password } = await request.json();
 
-    // Simple hardcoded auth check
     const isValidAdmin =
-      (username === ADMIN_USER.username || username === "admin") &&
-      password === ADMIN_USER.password;
+      typeof username === "string" &&
+      typeof password === "string" &&
+      username === ADMIN_USERNAME &&
+      password === ADMIN_PASSWORD;
 
     if (!isValidAdmin) {
       // Add small delay to prevent timing attacks
@@ -28,7 +45,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Invalid username or password" }, { status: 401 });
     }
 
-    const user = { id: ADMIN_USER.id, username: ADMIN_USER.username };
+    const user = { id: 1, username: ADMIN_USERNAME };
 
     // Create JWT token
     const token = await new SignJWT({

@@ -9,6 +9,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { saveBlogPost, createBlogPost } from "@/lib/blog-persistence";
 import db from "@/lib/db";
+import { getAdminSession } from "@/lib/admin-auth";
 
 // =============================================================================
 // DATABASE SAVE
@@ -134,6 +135,11 @@ function generateExcerpt(html: string, maxLength: number = 160): string {
 // =============================================================================
 
 export async function POST(request: NextRequest) {
+  const session = await getAdminSession();
+  if (!session) {
+    return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
+  }
+
   // 1. Parse and validate request
   let body: unknown;
   try {
@@ -222,7 +228,12 @@ export async function POST(request: NextRequest) {
 // GET HANDLER
 // =============================================================================
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const session = await getAdminSession();
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   return NextResponse.json({
     status: "ok",
     message: "Blog posts API. Use POST to create a new post.",

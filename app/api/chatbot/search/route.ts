@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 import { processQuery, calculateSearchScore } from "@/lib/chatbot-utils";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
@@ -257,6 +258,15 @@ function crawlAllPages() {
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limit: 20 requests per IP per minute (chatbot uses OpenAI credits)
+    const rate = checkRateLimit(request, 20, 60_000);
+    if (!rate.allowed) {
+      return NextResponse.json(
+        { error: "Too many requests. Please try again in a moment." },
+        { status: 429 }
+      );
+    }
+
     const { query, conversationHistory } = await request.json();
 
     if (!query || typeof query !== "string") {

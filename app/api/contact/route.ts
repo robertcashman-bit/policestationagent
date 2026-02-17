@@ -1,12 +1,27 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sendContactFormNotification } from "@/lib/email";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
+const MAX_FIELD_LENGTH = 2000;
+
 export async function POST(request: NextRequest) {
   try {
+    // Rate limit: 5 submissions per IP per minute
+    const rate = checkRateLimit(request, 5, 60_000);
+    if (!rate.allowed) {
+      return NextResponse.json(
+        {
+          error: "Too many requests. Please try again later.",
+          retryAfter: rate.retryAfter,
+        },
+        { status: 429, headers: rate.retryAfter ? { "Retry-After": String(rate.retryAfter) } : {} }
+      );
+    }
+
     const body = await request.json();
 
     const name = String(body?.name ?? "").trim();
@@ -37,6 +52,15 @@ export async function POST(request: NextRequest) {
     const supportNeeds = String(body?.supportNeeds ?? "").trim();
     const nonUrgentConfirmation = Boolean(body?.nonUrgentConfirmation);
     const consent = Boolean(body?.consent);
+
+    // Input length limits to prevent abuse
+    const fields = [
+      name, contactNumber, emailRaw, clientName, clientDOB, policeStation,
+      interviewDate, interviewTime, attendanceType, offenceSummary, supportNeeds, contactWindowTime,
+    ];
+    if (fields.some((f) => f && f.length > MAX_FIELD_LENGTH)) {
+      return NextResponse.json({ error: "One or more fields exceed maximum length" }, { status: 400 });
+    }
 
     if (!name) {
       return NextResponse.json({ error: "Name is required" }, { status: 400 });
