@@ -11,7 +11,7 @@ import { FAQPage } from "@/components/StructuredData";
 import { SEO_NOT_POLICE, SERVICE_SCOPE, PHONE_DISPLAY } from "@/config/contact";
 
 export const metadata: Metadata = {
-  title: "Independent Duty Solicitor Kent | Custody & Voluntary Interviews",
+  title: "Independent Duty Solicitor Kent | NOT the Police | Custody & VAI",
   description:
     `${SEO_NOT_POLICE} ${SERVICE_SCOPE} Free Legal Aid at Kent custody suites. Accredited duty solicitor Robert Cashman via Tuckers Solicitors LLP. Telephone ${PHONE_DISPLAY} for custody or a booked interview only.`,
   alternates: {
