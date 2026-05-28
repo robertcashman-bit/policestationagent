@@ -5,18 +5,26 @@ import WhoProvidesLegalService from "@/components/WhoProvidesLegalService";
 import { InternalLinkHub } from "@/components/InternalLinkHub";
 import type { Metadata } from "next";
 import { SITE_DOMAIN } from "@/config/site";
+import {
+  PHONE_DISPLAY,
+  SEO_NOT_POLICE,
+  SERVICE_SCOPE,
+  SMS_DISPLAY,
+  SMS_TEL,
+  WHATSAPP_TEXT_ONLY_NOTE,
+} from "@/config/contact";
 
 export const metadata: Metadata = {
-  title: "Contact | Police Station Advice in Kent | Call 01732 247427",
+  title: "Contact | Custody & Scheduled Interviews | NOT the Police",
   description:
-    "Contact Police Station Agent for police station advice and representation in Kent. Free legal advice at the police station under Legal Aid. Call 01732 247427 or text 07535 494446.",
+    `${SEO_NOT_POLICE} ${SERVICE_SCOPE} Telephone ${PHONE_DISPLAY} for custody or a booked voluntary interview. Text ${SMS_DISPLAY} if unable to call.`,
   alternates: {
     canonical: `https://${SITE_DOMAIN}/contact`,
   },
   openGraph: {
-    title: "Contact Police Station Agent | Police Station Advice Kent | Call 01732 247427",
+    title: "Contact | Independent Duty Solicitor | NOT Kent Police",
     description:
-      "Contact Police Station Agent for police station representation in Kent. Extended hours availability. Call 01732 247427, text 07535 494446 or email for advice.",
+      `${SEO_NOT_POLICE} Telephone for custody or scheduled voluntary interviews. Text ${SMS_DISPLAY} if unable to call.`,
     url: `https://${SITE_DOMAIN}/contact`,
     siteName: "Police Station Agent",
     type: "website",
@@ -37,20 +45,27 @@ export default function Page() {
             >
               <div className="max-w-3xl mx-auto px-4">
                 <h1 id="page-title" className="text-4xl md:text-5xl font-bold mb-6 text-white">
-                  Urgent police station representation – please telephone
+                  Custody or scheduled interview — telephone only
                 </h1>
-                <p className="text-xl text-red-100 mb-6">
-                  For arrests, custody matters, or imminent police interviews, telephone contact is
-                  essential. Email and contact forms are not suitable for urgent police station
-                  attendance.
+                <p className="text-xl text-red-100 mb-4">
+                  <strong className="text-white">We are NOT the police.</strong> This line is for
+                  arranging representation when someone is in{" "}
+                  <strong className="text-white">police custody</strong> or for a{" "}
+                  <strong className="text-white">scheduled voluntary (VAI) interview</strong> at a
+                  Kent police station.
                 </p>
                 <p className="text-lg text-red-100 mb-6">
-                  Instructions are usually given by a family member, representative, or solicitor
-                  acting on behalf of the detained person. Once instructed, I will liaise directly
-                  with the police station.
+                  We do <strong className="text-white">not</strong> provide general legal advice by
+                  phone. Email and contact forms are not suitable for urgent custody attendance.
                 </p>
-                <p className="text-2xl font-bold text-white mb-2">Telephone: 01732 247427</p>
-                <p className="text-red-100 mb-2">Text (if unable to call): 07535 494446</p>
+                <p className="text-2xl font-bold text-white mb-2">Telephone: {PHONE_DISPLAY}</p>
+                <p className="text-red-100 mb-1">
+                  Text only (if unable to call):{" "}
+                  <a href={`sms:${SMS_TEL}`} className="underline font-semibold text-white">
+                    {SMS_DISPLAY}
+                  </a>
+                </p>
+                <p className="text-red-200 text-sm mt-2">{WHATSAPP_TEXT_ONLY_NOTE}</p>
                 <p className="text-amber-300 font-bold mt-4">
                   Ask for Robert Cashman, Tuckers Duty Solicitor — The DSCC have our details
                 </p>

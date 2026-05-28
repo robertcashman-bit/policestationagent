@@ -1,11 +1,12 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import type { Metadata } from "next";
+import { SEO_NOT_POLICE, SERVICE_SCOPE, PHONE_DISPLAY } from "@/config/contact";
 
 export const metadata: Metadata = {
-  title: "Someone You Know Arrested? | Arrange Police Station Representation Kent",
+  title: "Someone in Custody? | NOT the Police | Arrange Representation Kent",
   description:
-    "Arrange legal representation for a friend, family member or client in custody at a Kent police station. Free independent legal advice. Call 01732 247427.",
+    `${SEO_NOT_POLICE} ${SERVICE_SCOPE} Telephone ${PHONE_DISPLAY} to instruct representation for someone in Kent police custody.`,
   alternates: {
     canonical: "https://policestationagent.com/start/in-custody",
   },
@@ -36,6 +37,11 @@ export default function InCustodyPage() {
                   instructed, I will contact the custody suite directly and ensure that the detainee
                   receives appropriate legal advice before interview.
                 </p>
+                <p className="text-lg text-red-100 mb-4">
+                  <strong className="text-white">We are NOT the police.</strong> Telephone this line
+                  only to instruct representation for someone currently in custody — not for general
+                  legal questions.
+                </p>
                 <p className="text-lg text-red-100">
                   I provide prompt and experienced police station representation across Kent and
                   surrounding areas. Where appropriate, I also accept instructions from other
@@ -64,7 +70,7 @@ export default function InCustodyPage() {
                 >
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
                 </svg>
-                Call now to arrange police station representation
+                Call to instruct custody representation
               </a>
               <p className="text-slate-600 mt-4 text-lg font-semibold">Telephone: 01732 247427</p>
               <p className="text-slate-500 mt-2 text-sm">

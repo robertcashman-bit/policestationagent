@@ -8,7 +8,8 @@ export default function StartHere() {
           Start Here
         </h2>
         <p className="text-slate-600 mb-6 text-sm md:text-base">
-          Kent police stations only. Attendance subject to availability, conflicts, and custody suite location.
+          Kent police stations only. <strong>NOT the police</strong> — independent duty solicitor.
+          Custody and scheduled voluntary (VAI) interviews only; not general legal advice by phone.
         </p>
         <div className="grid md:grid-cols-3 gap-4">
           <Link

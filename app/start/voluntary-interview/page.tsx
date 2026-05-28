@@ -2,11 +2,12 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { SEO_NOT_POLICE, SERVICE_SCOPE, PHONE_DISPLAY } from "@/config/contact";
 
 export const metadata: Metadata = {
-  title: "Voluntary Interview (Caution + 3) | Do Not Attend Unrepresented | Kent",
+  title: "Scheduled Voluntary Interview (VAI) | NOT the Police | Kent",
   description:
-    "Get legal advice before your voluntary police interview. Do not attend unrepresented. Contact us for free advice and representation. Call 01732 247427.",
+    `${SEO_NOT_POLICE} Legal advice before a scheduled voluntary interview at a Kent police station. ${SERVICE_SCOPE} Telephone ${PHONE_DISPLAY} or use the contact form.`,
   alternates: {
     canonical: "https://policestationagent.com/start/voluntary-interview",
   },
@@ -136,16 +137,22 @@ export default function VoluntaryInterviewPage() {
 
             {/* CTA Section */}
             <section className="text-center space-y-4">
+              <p className="text-slate-700 max-w-2xl mx-auto text-sm">
+                <strong>NOT the police.</strong> For a <strong>scheduled</strong> voluntary
+                interview (date/time already agreed or proposed) — use the form or telephone. We do
+                not provide general legal advice by phone.
+              </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
                   href="/contact"
                   className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-lg font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full shadow-xl"
                 >
-                  Request a Call Back
+                  Contact form (scheduled VAI)
                 </Link>
                 <a
                   href="tel:01732247427"
                   className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-lg font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-4 rounded-full shadow-xl"
+                  title="Scheduled voluntary interview or custody only"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -161,10 +168,10 @@ export default function VoluntaryInterviewPage() {
                   >
                     <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
                   </svg>
-                  Call Now
+                  Telephone — custody / scheduled VAI
                 </a>
               </div>
-              <p className="text-slate-600 mt-4 text-lg font-semibold">01732 247427</p>
+              <p className="text-slate-600 mt-4 text-lg font-semibold">{PHONE_DISPLAY}</p>
             </section>
           </div>
         </div>

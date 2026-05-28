@@ -10,6 +10,7 @@
  */
 
 import { useState, FormEvent } from "react";
+import { PHONE_DISPLAY, PHONE_TEL, SEO_NOT_POLICE, SERVICE_SCOPE_SHORT } from "@/config/contact";
 
 interface FormData {
   name: string;
@@ -140,15 +141,20 @@ export default function ContactForm() {
         {/* Introductory Notice */}
         <div className="bg-blue-50 border-l-4 border-blue-600 p-4 mb-6">
           <h3 className="text-lg font-semibold text-slate-900 mb-2">
-            Non-urgent police station attendance requests only
+            Scheduled voluntary interviews &amp; solicitor instructions only
           </h3>
+          <p className="text-red-800 font-semibold text-sm mb-2">{SEO_NOT_POLICE}</p>
+          <p className="text-slate-700 mb-2">{SERVICE_SCOPE_SHORT}</p>
           <p className="text-slate-700 mb-2">
-            This form is for non-urgent police station matters only, such as pre-booked voluntary
-            interviews or scheduled attendance.
+            This form is for <strong>scheduled</strong> voluntary (VAI) interviews or solicitor
+            attendance instructions — not general legal advice.
           </p>
           <p className="text-slate-700 font-medium">
-            This form must not be used for urgent arrests or custody matters. Urgent cases must be
-            dealt with by telephone: <a href="tel:01732247427" className="text-blue-600 hover:underline font-semibold">01732 247427</a>.
+            Someone in custody now? Telephone only:{" "}
+            <a href={`tel:${PHONE_TEL}`} className="text-blue-600 hover:underline font-semibold">
+              {PHONE_DISPLAY}
+            </a>
+            . Do not use this form for urgent custody.
           </p>
         </div>
 

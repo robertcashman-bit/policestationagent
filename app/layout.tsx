@@ -12,6 +12,9 @@ const Chatbot = dynamic(() => import("@/components/Chatbot"), {
 import CookieBanner from "@/components/CookieBanner";
 import InternalLinkInterceptor from "@/components/InternalLinkInterceptor";
 import ComplianceStrip from "@/components/compliance/ComplianceStrip";
+import NotPoliceScopeBanner from "@/components/compliance/NotPoliceScopeBanner";
+import ContactLinkGuard from "@/components/compliance/ContactLinkGuard";
+import { SEO_NOT_POLICE, SERVICE_SCOPE_SHORT } from "@/config/contact";
 
 function getSafeSiteUrl(): string {
   const raw =
@@ -60,11 +63,11 @@ export const metadata: Metadata = {
     url: true,
   },
   title: {
-    default: "Police Station Solicitor Kent | Free Legal Advice 24/7",
+    default: "Independent Duty Solicitor Kent | NOT the Police | Custody & VAI Interviews",
     template: "%s | Police Station Agent",
   },
   description:
-    "Kent police station solicitor. Free legal advice under Legal Aid. Duty solicitor & representation at all Kent custody suites. 24/7. Maidstone, Medway, Canterbury, Ashford.",
+    `${SEO_NOT_POLICE} ${SERVICE_SCOPE_SHORT} Free Legal Aid representation at Kent custody suites and scheduled voluntary interviews. Tuckers Solicitors LLP.`,
   keywords: [
     "police station solicitor Kent",
     "duty solicitor Kent",
@@ -86,9 +89,9 @@ export const metadata: Metadata = {
     locale: "en_GB",
     url: siteUrl,
     siteName: "Police Station Agent",
-    title: "Police Station Solicitor Kent | Free Legal Advice 24/7",
+    title: "Independent Duty Solicitor Kent | NOT the Police",
     description:
-      "Kent police station solicitor. Free legal advice under Legal Aid. Duty solicitor at all Kent custody suites. 24/7. Maidstone, Medway, Canterbury, Ashford.",
+      `${SEO_NOT_POLICE} ${SERVICE_SCOPE_SHORT} Kent custody suites and scheduled voluntary interviews via Tuckers Solicitors LLP.`,
     images: [
       {
         url: `${siteUrl}/og-image.jpg`, // Default OG image - can be customized per page
@@ -100,9 +103,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Police Station Solicitor Kent | Free Legal Advice 24/7",
-    description:
-      "Kent police station solicitor. Free Legal Aid. Duty solicitor at all Kent custody suites. 24/7.",
+    title: "Independent Duty Solicitor Kent | NOT the Police",
+    description: `${SEO_NOT_POLICE} ${SERVICE_SCOPE_SHORT}`,
     images: [`${siteUrl}/og-image.jpg`],
   },
   robots: {
@@ -158,7 +160,7 @@ const organizationSchema = {
       url: siteUrl,
       logo: `${siteUrl}/logo.png`,
       description:
-        "Qualified Police Station Duty Solicitor and Higher Court Advocate serving Kent since 2001. Accredited duty solicitor providing expert police station representation, pre-charge advice, and bail representation at all Kent custody suites. FREE legal advice under Legal Aid.",
+        "Qualified Police Station Duty Solicitor serving Kent since 2001. Independent of the police — NOT a police service. Representation at custody and scheduled voluntary interviews under Legal Aid via Tuckers Solicitors LLP.",
       telephone: "+441732247427",
       email: "robertcashman@defencelegalservices.co.uk",
       address: {
@@ -440,6 +442,8 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <ComplianceStrip />
+        <NotPoliceScopeBanner />
+        <ContactLinkGuard />
         {/* Skip to content link for accessibility */}
         <a
           href="#main-content"

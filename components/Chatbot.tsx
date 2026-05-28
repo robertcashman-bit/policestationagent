@@ -19,7 +19,7 @@ interface ChatMessage {
 }
 
 const LEGAL_DISCLAIMER =
-  "This chatbot provides general information only and does not constitute legal advice. For specific legal advice, please contact us directly on 01732 247427.";
+  "This chatbot provides general information only — not legal advice. We are NOT the police. We represent people in custody and at scheduled voluntary interviews only. For custody or a booked interview, telephone 01732 247427.";
 
 const SUGGESTED_QUESTIONS = [
   "What is a voluntary police interview?",
@@ -120,7 +120,7 @@ export default function Chatbot() {
     if (option === "police-station") {
       userMessage = "I need police station representation";
       botResponse =
-        "**Please call 01732 247427 immediately** for police station representation. We provide FREE legal advice under Legal Aid at all Kent police stations. If you are at a police station, tell the custody officer you want Robert Cashman from Tuckers Solicitors.";
+        "**We are NOT the police.** If someone is **in custody now** at a Kent police station, telephone **01732 247427** to arrange representation (free under Legal Aid). Tell custody staff you want **Tuckers Solicitors LLP** and may request Robert Cashman. We do not give general legal advice by phone — custody or a **scheduled voluntary interview** only.";
     } else if (option === "law-firm") {
       userMessage = "I'm a law firm needing agent cover";
       botResponse =

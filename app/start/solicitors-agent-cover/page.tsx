@@ -2,6 +2,11 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
 import type { Metadata } from "next";
+import {
+  PHONE_DISPLAY,
+  WHATSAPP_TEXT_ONLY_NOTE,
+  whatsAppTextUrl,
+} from "@/config/contact";
 
 export const metadata: Metadata = {
   title: "Solicitors: Police Station Attendance Cover Across Kent | Agent Services",
@@ -154,12 +159,15 @@ export default function SolicitorsAgentCoverPage() {
 
             {/* CTA Section */}
             <section className="text-center space-y-4">
+              <p className="text-slate-600 text-sm max-w-xl mx-auto">{WHATSAPP_TEXT_ONLY_NOTE}</p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a
-                  href="https://wa.me/447490126251?text=I need police station attendance cover for a client"
+                  href={whatsAppTextUrl("I need police station attendance cover for a client")}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-lg font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-full shadow-xl"
+                  title={WHATSAPP_TEXT_ONLY_NOTE}
+                  aria-label={`WhatsApp text message — ${WHATSAPP_TEXT_ONLY_NOTE}`}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -175,7 +183,7 @@ export default function SolicitorsAgentCoverPage() {
                   >
                     <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path>
                   </svg>
-                  WhatsApp Attendance Request
+                  WhatsApp text message (attendance request)
                 </a>
                 <a
                   href="tel:01732247427"

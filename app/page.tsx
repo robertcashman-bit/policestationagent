@@ -8,17 +8,19 @@ import type { Metadata } from "next";
 import { SITE_DOMAIN, SITE_URL } from "@/config/site";
 import { FAQPage } from "@/components/StructuredData";
 
+import { SEO_NOT_POLICE, SERVICE_SCOPE, PHONE_DISPLAY } from "@/config/contact";
+
 export const metadata: Metadata = {
-  title: "Police Station Representation Kent | FREE Legal Advice | Accredited Duty Solicitor",
+  title: "Independent Duty Solicitor Kent | Custody & Voluntary Interviews",
   description:
-    "Police station representation Kent - Expert service by qualified solicitor. FREE legal advice under Legal Aid at all Kent custody suites. Accredited Duty Solicitor & Higher Court Advocate Robert Cashman - 35+ years experience, 21,000+ cases. Medway, Maidstone, Canterbury, Gravesend. Call 01732 247427.",
+    `${SEO_NOT_POLICE} ${SERVICE_SCOPE} Free Legal Aid at Kent custody suites. Accredited duty solicitor Robert Cashman via Tuckers Solicitors LLP. Telephone ${PHONE_DISPLAY} for custody or a booked interview only.`,
   alternates: {
     canonical: `https://${SITE_DOMAIN}/`,
   },
   openGraph: {
-    title: "Police Station Duty Solicitor Kent | Duty Solicitor Representation Kent | FREE Advice",
+    title: "Independent Duty Solicitor Kent | NOT the Police | Custody & VAI",
     description:
-      "Police Station Duty Solicitor Kent - Expert representation by qualified solicitor Robert Cashman. Accredited Duty Solicitor & Higher Court Advocate. FREE legal advice under Legal Aid at Medway, Canterbury, Maidstone, Gravesend custody suites. 35 years experience, 21,000+ cases.",
+      `${SEO_NOT_POLICE} Representation at Kent custody suites and scheduled voluntary interviews. Tuckers Solicitors LLP.`,
     url: `https://${SITE_DOMAIN}/`,
     siteName: "Police Station Agent",
     type: "website",
@@ -109,13 +111,16 @@ export default function Page() {
           {/* Prominent Phone Number Banner */}
           <section className="bg-gradient-to-r from-red-600 via-red-700 to-red-600 py-5 -mt-1 relative z-10 shadow-lg">
             <div className="max-w-5xl mx-auto px-4 text-center">
-              <p className="text-white text-sm sm:text-base font-medium mb-2">
-                Need legal advice before a police interview? Call now — it&apos;s <span className="font-black text-amber-300">FREE</span> under Legal Aid
+              <p className="text-white text-sm sm:text-base font-medium mb-1">
+                <strong>NOT the police.</strong> Telephone line for{" "}
+                <span className="font-black text-amber-300">custody</span> or a{" "}
+                <span className="font-black text-amber-300">scheduled voluntary interview</span>{" "}
+                only — not general legal advice
               </p>
               <a
                 href="tel:01732247427"
-                className="inline-flex items-center gap-3 bg-white hover:bg-amber-50 text-red-700 font-black text-2xl sm:text-3xl md:text-4xl px-6 sm:px-10 py-3 sm:py-4 rounded-2xl shadow-xl hover:shadow-2xl transition-all hover:scale-105 tracking-wide"
-                aria-label="Call 01732 247427 for free legal advice"
+                className="inline-flex items-center gap-3 bg-white hover:bg-amber-50 text-red-700 font-black text-2xl sm:text-3xl md:text-4xl px-6 sm:px-10 py-3 sm:py-4 rounded-2xl shadow-xl hover:shadow-2xl transition-all hover:scale-105 tracking-wide mt-2"
+                aria-label="Telephone for custody or scheduled voluntary interview"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -134,7 +139,8 @@ export default function Page() {
                 01732 247427
               </a>
               <p className="text-red-100 text-xs sm:text-sm mt-2">
-                Available extended hours — Ask for Robert Cashman, Tuckers Duty Solicitor
+                If detained, ask custody staff to contact a solicitor — request Tuckers Solicitors LLP
+                (Robert Cashman). Text {PHONE_DISPLAY.replace(" ", "")} only if you cannot call.
               </p>
             </div>
           </section>

@@ -21,8 +21,9 @@ export interface AdminSession {
  */
 export function isJWTSecretConfigured(): boolean {
   if (process.env.NODE_ENV !== "production") return true;
-  return !!(
-    process.env.ADMIN_SECRET?.length >= 32 || process.env.JWT_SECRET?.length >= 32
+  return (
+    (process.env.ADMIN_SECRET?.length ?? 0) >= 32 ||
+    (process.env.JWT_SECRET?.length ?? 0) >= 32
   );
 }
 

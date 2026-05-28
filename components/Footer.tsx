@@ -3,6 +3,13 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getFormattedVersion, getLastUpdateDateTime } from "@/lib/version";
+import {
+  PHONE_DISPLAY,
+  PHONE_TEL,
+  SERVICE_SCOPE_SHORT,
+  SMS_DISPLAY,
+  SMS_TEL,
+} from "@/config/contact";
 
 // Link data organized by category
 const serviceLinks = [
@@ -244,14 +251,17 @@ export default function Footer() {
               Police Station Agent
             </Link>
             <span className="hidden sm:inline text-sky-400">|</span>
-            <span className="hidden sm:inline text-sm text-sky-300">Kent Criminal Defence</span>
+            <span className="hidden sm:inline text-sm text-sky-300">Independent duty solicitor — NOT the police</span>
           </div>
+
+          <p className="text-xs text-sky-400/90 mb-3 lg:hidden">{SERVICE_SCOPE_SHORT}</p>
 
           {/* Contact */}
           <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-sm">
             <a
-              href="tel:01732247427"
+              href={`tel:${PHONE_TEL}`}
               className="flex items-center gap-1.5 text-white hover:text-blue-300 transition-colors font-medium"
+              title="Custody or scheduled voluntary interview only"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -267,12 +277,13 @@ export default function Footer() {
               >
                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
               </svg>
-              01732 247427
+              {PHONE_DISPLAY}
             </a>
             <span className="text-sky-400">|</span>
             <a
-              href="sms:07535494446?body=I%20need%20police%20station%20representation"
+              href={`sms:${SMS_TEL}?body=I%20need%20custody%20or%20scheduled%20interview%20representation`}
               className="flex items-center gap-1.5 text-sky-300 hover:text-sky-200 transition-colors"
+              title="Text message only"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -288,7 +299,7 @@ export default function Footer() {
               >
                 <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path>
               </svg>
-              Text Us
+              Text only ({SMS_DISPLAY})
             </a>
             <span className="text-sky-400">|</span>
             <a
