@@ -1,13 +1,16 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import type { Metadata } from "next";
+import { SITE_URL } from "@/config/site";
+
+const pageUrl = `${SITE_URL}/emergency-police-station-representation`;
 
 export const metadata: Metadata = {
   title: "Emergency Police Station Duty Solicitor Kent | FREE Legal Advice | PACE s.58",
   description:
     "Emergency police station duty solicitor representation across Kent. FREE legal advice under Section 58 PACE 1984 at all Kent custody suites. Accredited Duty Solicitor Robert Cashman. Medway, Canterbury, Folkestone, Gravesend. Call 01732 247427.",
   alternates: {
-    canonical: "https://criminaldefencekent.co.uk/emergency-police-station-representation",
+    canonical: pageUrl,
   },
   openGraph: {
     title:
@@ -15,7 +18,7 @@ export const metadata: Metadata = {
     description:
       "Emergency police station duty solicitor representation across Kent. FREE legal advice under Section 58 PACE 1984. Accredited Duty Solicitor Robert Cashman at Medway, Canterbury, Folkestone, Gravesend custody suites.",
     type: "website",
-    url: "https://criminaldefencekent.co.uk/emergency-police-station-representation",
+    url: pageUrl,
   },
 };
 

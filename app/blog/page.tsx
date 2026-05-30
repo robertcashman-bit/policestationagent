@@ -5,6 +5,7 @@ import Image from "next/image";
 import { getAllPosts, formatBlogDate, generateExcerpt } from "@/lib/blog-reader";
 import { SITE_URL } from "@/config/site";
 import type { Metadata } from "next";
+import { JsonLd } from "@/components/JsonLd";
 
 // Use ISR for blog listing - revalidate every hour
 export const revalidate = 3600; // 1 hour
@@ -48,8 +49,40 @@ export default function BlogPage() {
   // Get ALL published blog posts
   const posts = getAllPosts();
 
+  const blogSchema = {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "@id": `${SITE_URL}/blog#blog`,
+    url: `${SITE_URL}/blog`,
+    name: "Police Station Agent Blog",
+    description:
+      "Expert legal insights on police station representation, criminal defence procedures, and your rights in custody.",
+    inLanguage: "en-GB",
+    publisher: { "@id": `${SITE_URL}#legalservice` },
+    blogPost: posts.slice(0, 50).map((post) => ({
+      "@type": "BlogPosting",
+      headline: post.title,
+      url: `${SITE_URL}/blog/${post.slug}`,
+      datePublished: post.date,
+      author: { "@type": "Person", name: post.author },
+    })),
+  };
+
+  const itemListSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: posts.slice(0, 50).map((post, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      url: `${SITE_URL}/blog/${post.slug}`,
+      name: post.title,
+    })),
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
+      <JsonLd data={blogSchema} />
+      <JsonLd data={itemListSchema} />
       <Header />
       <main className="flex-grow relative" id="main-content" role="main">
         <div className="bg-slate-50 min-h-screen">
