@@ -18,20 +18,20 @@ How the site gets **fast indexing** and how to improve **ranking** on Google, Bi
 1. **Sitemap**  
    - `/sitemap.xml` – all important pages with `lastmod`, `priority`, `changefreq`.
 
-2. **Pings after deploy**  
-   - **Google**: `https://www.google.com/ping?sitemap=<encoded sitemap URL>`
-   - **Bing**: `https://www.bing.com/ping?sitemap=<encoded sitemap URL>`
+2. **Notifications after deploy**  
+   - **IndexNow**: submits priority pages and all blog post URLs to IndexNow (Bing and other participating engines).
    - **Yandex**: `https://webmaster.yandex.com/ping?sitemap=<encoded sitemap URL>`
+   - **Google**: submit `/sitemap.xml` and `/blog-sitemap.xml` in Google Search Console. Google no longer provides a public sitemap ping endpoint.
 
 3. **IndexNow**  
-   - After deploy, a list of priority URLs is sent to IndexNow (used by Bing, Yandex, etc.).
+   - After deploy, a list of priority URLs plus all blog posts is sent to IndexNow (used by Bing, Yandex, etc.).
    - Key file must be live: `https://<your-domain>/655b1cdbce5c462b9fe51c4e19f92678.txt` (see `public/`).
 
 4. **GitHub Action**  
    - `.github/workflows/notify-search-engines.yml` runs on push to `main`/`master` (after a short delay for Vercel). It:
-     - Pings Google, Bing, Yandex with the sitemap URL (encoded).
-     - Submits the priority URL list to IndexNow.
-     - Calls your site’s `POST /api/index-now` (which also pings Google, Bing, Yandex and IndexNow).
+     - Submits the priority URL list and blog URLs to IndexNow.
+     - Pings Yandex with the sitemap URL.
+     - Optionally calls your site’s protected `POST /api/index-now` if `INDEXNOW_SECRET` is configured in GitHub Secrets and Vercel.
 
 5. **Metadata & bots**  
    - Root layout: keyword-focused title/description, Open Graph, Twitter, `robots` (including `googleBot` and `bingBot`).
@@ -46,6 +46,7 @@ How the site gets **fast indexing** and how to improve **ranking** on Google, Bi
 - **Google Search Console**  
   - Add property: `https://www.policestationagent.com` (or your canonical domain).  
   - Submit sitemap: `https://www.policestationagent.com/sitemap.xml`.  
+  - Submit blog sitemap: `https://www.policestationagent.com/blog-sitemap.xml`.  
   - Use “URL Inspection” for critical pages if you want to request indexing.
 
 - **Bing Webmaster Tools**  

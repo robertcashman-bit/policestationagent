@@ -12,6 +12,9 @@
  * Can also be called via Vercel deploy hook or GitHub Actions.
  */
 
+const fs = require("fs");
+const path = require("path");
+
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.policestationagent.com";
 const INDEXNOW_KEY = "655b1cdbce5c462b9fe51c4e19f92678";
 
@@ -55,40 +58,61 @@ const PRIORITY_URLS = [
   "/north-kent-gravesend-police-station",
 ];
 
-async function pingGoogle() {
-  console.log("📍 Pinging Google...");
-  try {
-    const sitemapFull = `${SITE_URL}/sitemap.xml`;
-    const response = await fetch(`https://www.google.com/ping?sitemap=${encodeURIComponent(sitemapFull)}`);
-    if (response.ok) {
-      console.log("✅ Google: Sitemap ping successful");
-      return true;
-    } else {
-      console.log(`⚠️ Google ping returned: ${response.status}`);
-      return false;
-    }
-  } catch (error) {
-    console.log(`❌ Google ping error: ${error.message}`);
-    return false;
-  }
+function normalizeSlug(input) {
+  if (!input || typeof input !== "string") return "";
+
+  return input
+    .toLowerCase()
+    .trim()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/['']/g, "")
+    .replace(/[^\w\s-]/g, "")
+    .replace(/[\s_]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-+|-+$/g, "");
 }
 
-async function pingBing() {
-  console.log("📍 Pinging Bing (helps DuckDuckGo)...");
-  try {
-    const sitemapFull = `${SITE_URL}/sitemap.xml`;
-    const response = await fetch(`https://www.bing.com/ping?sitemap=${encodeURIComponent(sitemapFull)}`);
-    if (response.ok) {
-      console.log("✅ Bing: Sitemap ping successful");
-      return true;
-    } else {
-      console.log(`⚠️ Bing ping returned: ${response.status}`);
-      return false;
+function getPublishedBlogSlugs() {
+  const root = process.cwd();
+  const slugs = new Set();
+  const postsDir = path.join(root, "data", "blog-posts");
+  const legacyPath = path.join(root, "data", "blog-posts-full.json");
+
+  if (fs.existsSync(postsDir)) {
+    for (const file of fs.readdirSync(postsDir)) {
+      if (!file.endsWith(".json")) continue;
+      try {
+        const post = JSON.parse(fs.readFileSync(path.join(postsDir, file), "utf8"));
+        if (post.status === "published" && post.slug) {
+          slugs.add(normalizeSlug(post.slug));
+        }
+      } catch (error) {
+        console.log(`⚠️ Could not read blog post ${file}: ${error.message}`);
+      }
     }
-  } catch (error) {
-    console.log(`❌ Bing ping error: ${error.message}`);
-    return false;
   }
+
+  if (fs.existsSync(legacyPath)) {
+    try {
+      const legacyPosts = JSON.parse(fs.readFileSync(legacyPath, "utf8"));
+      for (const post of legacyPosts) {
+        if (post.published === 1) {
+          const slug = normalizeSlug(post.slug || post.title);
+          if (slug) slugs.add(slug);
+        }
+      }
+    } catch (error) {
+      console.log(`⚠️ Could not read legacy blog posts: ${error.message}`);
+    }
+  }
+
+  return Array.from(slugs).sort();
+}
+
+function getIndexNowUrls() {
+  const blogUrls = getPublishedBlogSlugs().map((slug) => `/blog/${slug}`);
+  return Array.from(new Set([...PRIORITY_URLS, ...blogUrls]));
 }
 
 async function pingYandex() {
@@ -113,6 +137,7 @@ async function submitToIndexNow() {
   console.log("📍 Submitting to IndexNow...");
   try {
     const host = new URL(SITE_URL).hostname;
+    const urls = getIndexNowUrls();
     const response = await fetch("https://api.indexnow.org/indexnow", {
       method: "POST",
       headers: {
@@ -122,12 +147,12 @@ async function submitToIndexNow() {
         host: host,
         key: INDEXNOW_KEY,
         keyLocation: `${SITE_URL}/${INDEXNOW_KEY}.txt`,
-        urlList: PRIORITY_URLS.map((url) => `${SITE_URL}${url}`),
+        urlList: urls.map((url) => `${SITE_URL}${url}`),
       }),
     });
 
     if (response.ok || response.status === 200 || response.status === 202) {
-      console.log(`✅ IndexNow: Submitted ${PRIORITY_URLS.length} URLs`);
+      console.log(`✅ IndexNow: Submitted ${urls.length} URLs`);
       return true;
     } else {
       const text = await response.text();
@@ -146,17 +171,21 @@ async function main() {
   console.log("==========================================");
   console.log(`Site URL: ${SITE_URL}`);
   console.log(`Sitemap: ${SITE_URL}/sitemap.xml`);
-  console.log(`URLs to submit: ${PRIORITY_URLS.length}`);
+  console.log(`Blog sitemap: ${SITE_URL}/blog-sitemap.xml`);
+  console.log(`LLMs file: ${SITE_URL}/llms.txt`);
+  console.log(`URLs to submit: ${getIndexNowUrls().length}`);
+  console.log("Google: submit sitemap.xml and blog-sitemap.xml in Search Console (no public ping API).");
+  console.log("Bing: IndexNow submission covers Bing and helps DuckDuckGo discovery.");
   console.log("");
 
-  const results = await Promise.all([pingGoogle(), pingBing(), pingYandex(), submitToIndexNow()]);
+  const results = await Promise.all([pingYandex(), submitToIndexNow()]);
 
   console.log("");
   console.log("==========================================");
 
   const successCount = results.filter(Boolean).length;
   if (successCount === results.length) {
-    console.log("✅ All search engines notified successfully!");
+    console.log("✅ IndexNow/Yandex notifications completed successfully!");
   } else {
     console.log(`⚠️ ${successCount}/${results.length} notifications succeeded`);
   }

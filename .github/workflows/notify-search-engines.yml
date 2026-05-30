@@ -1,4 +1,5 @@
-# Notify Google, Bing, Yandex and IndexNow after deploy for fast indexing.
+# Notify Yandex and IndexNow after deploy for fast indexing.
+# Google discovery is handled by Search Console sitemap submission.
 # DuckDuckGo uses Bing (and other sources) — Bing + IndexNow improves DDG visibility.
 name: Notify Search Engines
 
@@ -12,86 +13,38 @@ on:
 env:
   SITE_URL: "https://www.policestationagent.com"
   SITEMAP_URL: "https://www.policestationagent.com/sitemap.xml"
+  NEXT_PUBLIC_SITE_URL: "https://www.policestationagent.com"
 
 jobs:
   notify:
     name: Notify Search Engines
     runs-on: ubuntu-latest
     steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
       - name: Wait for Vercel deployment
         run: sleep 120
 
-      - name: Ping Google with Sitemap
-        run: |
-          echo "Pinging Google..."
-          ENCODED=$(python3 -c "import urllib.parse; print(urllib.parse.quote('${{ env.SITEMAP_URL }}', safe=''))")
-          curl -s "https://www.google.com/ping?sitemap=${ENCODED}" || true
-          echo "Done"
+      - name: Notify sitemap and IndexNow
+        run: node scripts/notify-search-engines.js
 
-      - name: Ping Bing with Sitemap
-        run: |
-          echo "Pinging Bing (feeds DuckDuckGo)..."
-          ENCODED=$(python3 -c "import urllib.parse; print(urllib.parse.quote('${{ env.SITEMAP_URL }}', safe=''))")
-          curl -s "https://www.bing.com/ping?sitemap=${ENCODED}" || true
-          echo "Done"
-
-      - name: Ping Yandex with Sitemap
-        run: |
-          echo "Pinging Yandex..."
-          ENCODED=$(python3 -c "import urllib.parse; print(urllib.parse.quote('${{ env.SITEMAP_URL }}', safe=''))")
-          curl -s "https://webmaster.yandex.com/ping?sitemap=${ENCODED}" || true
-          echo "Done"
-
-      - name: Submit to IndexNow (Bing, Yandex, etc.)
-        run: |
-          echo "Submitting to IndexNow..."
-          curl -s -X POST "https://api.indexnow.org/indexnow" \
-            -H "Content-Type: application/json" \
-            -d '{
-              "host": "www.policestationagent.com",
-              "key": "655b1cdbce5c462b9fe51c4e19f92678",
-              "keyLocation": "https://www.policestationagent.com/655b1cdbce5c462b9fe51c4e19f92678.txt",
-              "urlList": [
-                "https://www.policestationagent.com/",
-                "https://www.policestationagent.com/about",
-                "https://www.policestationagent.com/services",
-                "https://www.policestationagent.com/contact",
-                "https://www.policestationagent.com/blog",
-                "https://www.policestationagent.com/faq",
-                "https://www.policestationagent.com/police-stations",
-                "https://www.policestationagent.com/coverage",
-                "https://www.policestationagent.com/voluntary-interviews",
-                "https://www.policestationagent.com/what-we-do",
-                "https://www.policestationagent.com/why-use-us",
-                "https://www.policestationagent.com/police-custody-rights",
-                "https://www.policestationagent.com/police-interview-rights",
-                "https://www.policestationagent.com/your-rights-in-custody",
-                "https://www.policestationagent.com/pace-code-c",
-                "https://www.policestationagent.com/offences-we-deal-with",
-                "https://www.policestationagent.com/start/in-custody",
-                "https://www.policestationagent.com/start/voluntary-interview",
-                "https://www.policestationagent.com/emergency-police-station-representation",
-                "https://www.policestationagent.com/medway-police-station",
-                "https://www.policestationagent.com/maidstone-police-station",
-                "https://www.policestationagent.com/canterbury-police-station",
-                "https://www.policestationagent.com/ashford-police-station",
-                "https://www.policestationagent.com/tonbridge-police-station",
-                "https://www.policestationagent.com/folkestone-police-station",
-                "https://www.policestationagent.com/sevenoaks-police-station",
-                "https://www.policestationagent.com/gravesend-police-station"
-              ]
-            }' || true
-          echo "Done"
-
-      - name: Call site IndexNow API (pings Google, Bing, Yandex + IndexNow)
+      - name: Call site IndexNow API
+        env:
+          INDEXNOW_SECRET: ${{ secrets.INDEXNOW_SECRET }}
         run: |
           echo "Calling site /api/index-now..."
-          curl -s -X POST "${{ env.SITE_URL }}/api/index-now" || true
+          if [ -n "$INDEXNOW_SECRET" ]; then
+            curl -s -X POST "${{ env.SITE_URL }}/api/index-now?secret=${INDEXNOW_SECRET}" || true
+          else
+            echo "Skipping protected API call because INDEXNOW_SECRET is not set in GitHub Secrets."
+          fi
           echo "Done"
 
       - name: Summary
         run: |
           echo "✅ Search engine notifications complete!"
-          echo "- Google, Bing, Yandex: sitemap ping sent"
           echo "- IndexNow: URL list submitted (Bing/DuckDuckGo benefit)"
+          echo "- Yandex: sitemap ping sent"
+          echo "- Google: submit sitemap.xml and blog-sitemap.xml in Search Console"
           echo "- DuckDuckGo: no direct ping; indexing via Bing index"

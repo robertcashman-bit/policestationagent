@@ -4,7 +4,7 @@ import BlogAdvertBlock from "@/components/BlogAdvertBlock";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { getPostBySlug, formatBlogDate, generateExcerpt } from "@/lib/blog-reader";
+import { getAllSlugs, getPostBySlug, formatBlogDate, generateExcerpt } from "@/lib/blog-reader";
 import { convertH1ToH2 } from "@/lib/html-sanitizer";
 import { SITE_URL } from "@/config/site";
 import type { Metadata } from "next";
@@ -18,6 +18,10 @@ interface PageProps {
   params: {
     slug: string;
   };
+}
+
+export function generateStaticParams() {
+  return getAllSlugs().map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {

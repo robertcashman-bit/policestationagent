@@ -1,33 +1,23 @@
 /**
  * CANONICAL DOMAIN MIDDLEWARE
  *
- * ROOT CAUSE FIX: Apex domain (policestationagent.com) is pointed to Vercel via A record.
- * Middleware was redirecting apex to www, causing conflicts. Fixed to allow apex domain.
- *
  * Handles:
- * - Legacy domains → policestationagent.com (canonical apex)
- * - www subdomain → policestationagent.com (apex is canonical)
+ * - Apex and legacy domains → configured canonical domain
  * - Preserves full paths and query strings
  * - Uses 301 (permanent) redirects for SEO
- *
- * Canonical domain: https://policestationagent.com (apex, not www)
  */
 
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { LEGACY_DOMAINS, SITE_DOMAIN } from "@/config/site";
 
-// Canonical domain is the apex (policestationagent.com) - matches DNS A record configuration
-const CANONICAL_DOMAIN = "policestationagent.com";
-
-// Domains that should redirect to canonical apex domain
-const REDIRECT_DOMAINS = [
-  "www.policestationagent.com", // www → apex
+// Extra legacy domains not listed in config/site.ts.
+const REDIRECT_DOMAINS = new Set([
+  ...LEGACY_DOMAINS,
   "policestationagent.net",
   "policestationagent.org",
   "policestationrepkent.co.uk",
-  "criminaldefencekent.co.uk",
-  "www.criminaldefencekent.co.uk",
-];
+]);
 
 export function middleware(request: NextRequest) {
   const hostname = request.headers.get("host") || "";
@@ -42,8 +32,8 @@ export function middleware(request: NextRequest) {
   // Remove port if present (e.g., "localhost:3000" → "localhost")
   const host = hostname.split(":")[0].toLowerCase();
 
-  // Skip redirect if already on canonical apex domain
-  if (host === CANONICAL_DOMAIN) {
+  // Skip redirect if already on the configured canonical domain
+  if (host === SITE_DOMAIN) {
     return NextResponse.next();
   }
 
@@ -62,20 +52,11 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Redirect logic for legacy domains to canonical domain
-  // Note: Redirects are conditionally enabled based on domain configuration.
-  // If redirect loops occur, check DNS configuration at domain registrar.
-
-  // For now, allow all requests through to prevent redirect loops
-  // Only redirect legacy domains that are NOT managed by Wix
-  const shouldRedirect =
-    REDIRECT_DOMAINS.includes(host) && !host.includes("policestationagent.com"); // Don't redirect policestationagent.com variants during DNS setup
-
-  if (shouldRedirect) {
+  if (REDIRECT_DOMAINS.has(host)) {
     // Get the full path including query string
     const url = request.nextUrl.clone();
-    url.host = CANONICAL_DOMAIN;
-    // Preserve original protocol (http/https) to allow Vercel SSL verification
+    url.protocol = "https:";
+    url.host = SITE_DOMAIN;
 
     // Preserve path and query string
     const redirectUrl = url.toString();

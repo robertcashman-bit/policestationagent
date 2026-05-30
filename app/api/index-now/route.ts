@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { SITE_DOMAIN } from "@/config/site";
+import { getAllPosts } from "@/lib/blog-reader";
 
 const INDEXNOW_KEY = "655b1cdbce5c462b9fe51c4e19f92678";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || `https://${SITE_DOMAIN}`;
@@ -49,6 +50,11 @@ const PRIORITY_URLS = [
   "/bluewater-police-station",
 ];
 
+function getDefaultIndexNowUrls(): string[] {
+  const blogUrls = getAllPosts().map((post) => `/blog/${post.slug}`);
+  return Array.from(new Set([...PRIORITY_URLS, ...blogUrls]));
+}
+
 /**
  * Submit URLs to IndexNow (Bing, Yandex, Seznam, Naver)
  */
@@ -75,42 +81,6 @@ async function submitToIndexNow(urls: string[]): Promise<{ success: boolean; mes
     }
   } catch (error) {
     return { success: false, message: `IndexNow error: ${error}` };
-  }
-}
-
-/**
- * Ping Google with sitemap URL
- */
-async function pingGoogle(): Promise<{ success: boolean; message: string }> {
-  try {
-    const sitemapUrl = encodeURIComponent(`${SITE_URL}/sitemap.xml`);
-    const response = await fetch(`https://www.google.com/ping?sitemap=${sitemapUrl}`);
-
-    if (response.ok) {
-      return { success: true, message: "Google: Sitemap ping successful" };
-    } else {
-      return { success: false, message: `Google ping error: ${response.status}` };
-    }
-  } catch (error) {
-    return { success: false, message: `Google ping error: ${error}` };
-  }
-}
-
-/**
- * Ping Bing with sitemap URL (Bing index feeds DuckDuckGo)
- */
-async function pingBing(): Promise<{ success: boolean; message: string }> {
-  try {
-    const sitemapUrl = encodeURIComponent(`${SITE_URL}/sitemap.xml`);
-    const response = await fetch(`https://www.bing.com/ping?sitemap=${sitemapUrl}`);
-
-    if (response.ok) {
-      return { success: true, message: "Bing: Sitemap ping successful" };
-    } else {
-      return { success: false, message: `Bing ping error: ${response.status}` };
-    }
-  } catch (error) {
-    return { success: false, message: `Bing ping error: ${error}` };
   }
 }
 
@@ -155,7 +125,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  let urlsToSubmit = PRIORITY_URLS;
+  let urlsToSubmit = getDefaultIndexNowUrls();
 
   try {
     const body = await request.json();
@@ -166,12 +136,7 @@ export async function POST(request: Request) {
     // No body or invalid JSON - use default URLs
   }
 
-  const results = await Promise.all([
-    submitToIndexNow(urlsToSubmit),
-    pingGoogle(),
-    pingBing(),
-    pingYandex(),
-  ]);
+  const results = await Promise.all([submitToIndexNow(urlsToSubmit), pingYandex()]);
 
   const allSuccess = results.every((r) => r.success);
 
@@ -180,6 +145,9 @@ export async function POST(request: Request) {
       success: allSuccess,
       timestamp: new Date().toISOString(),
       urlsSubmitted: urlsToSubmit.length,
+      google:
+        "Submit /sitemap.xml and /blog-sitemap.xml in Google Search Console; Google no longer provides a public sitemap ping endpoint.",
+      bing: "IndexNow submission covers Bing and improves DuckDuckGo discovery.",
       results: results.map((r) => r.message),
     },
     { status: allSuccess ? 200 : 207 }
@@ -196,7 +164,10 @@ export async function GET() {
     indexNowKey: INDEXNOW_KEY,
     keyUrl: `${SITE_URL}/${INDEXNOW_KEY}.txt`,
     sitemapUrl: `${SITE_URL}/sitemap.xml`,
-    instructions: "POST to this endpoint to submit URLs to search engines",
-    priorityUrlCount: PRIORITY_URLS.length,
+    blogSitemapUrl: `${SITE_URL}/blog-sitemap.xml`,
+    llmsUrl: `${SITE_URL}/llms.txt`,
+    instructions:
+      "POST to this endpoint to submit URLs to IndexNow. Submit sitemaps directly in Google Search Console.",
+    defaultUrlCount: getDefaultIndexNowUrls().length,
   });
 }

@@ -1,26 +1,6 @@
 import { MetadataRoute } from "next";
 import { SITE_DOMAIN } from "@/config/site";
-import { getPublishedBlogPosts, type BlogPostSummary } from "@/lib/blog";
-
-/**
- * Get blog posts for sitemap.
- * Uses the authoritative blog query from lib/blog.ts
- * Falls back to empty array during build time if database is unavailable.
- */
-function getBlogPostsForSitemap(): BlogPostSummary[] {
-  // Skip during build time to avoid database issues
-  if (process.env.NEXT_PHASE === "phase-production-build") {
-    console.warn("[sitemap] Skipping blog posts during build time");
-    return [];
-  }
-
-  try {
-    return getPublishedBlogPosts();
-  } catch (error) {
-    console.error("[sitemap] Error loading blog posts:", error);
-    return [];
-  }
-}
+import { getAllPosts } from "@/lib/blog-reader";
 
 // Lazy import to avoid build-time database initialization issues on Vercel
 function getDb() {
@@ -780,13 +760,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     console.warn("Skipping dynamic services in sitemap (build time)");
   }
 
-  // Blog posts from database (authoritative source)
-  const blogPosts = getBlogPostsForSitemap();
-  const blogPages: MetadataRoute.Sitemap = blogPosts.map((post) => ({
+  // Blog posts from the same build-safe reader used by /blog and /blog/[slug].
+  const blogPages: MetadataRoute.Sitemap = getAllPosts().map((post) => ({
     url: `${baseUrl}/blog/${post.slug}`,
-    lastModified: post.published_at ? new Date(post.published_at) : new Date(),
+    lastModified: post.date ? new Date(post.date) : new Date(),
     changeFrequency: "weekly" as const,
-    priority: 0.7,
+    priority: 0.75,
   }));
 
   return [
