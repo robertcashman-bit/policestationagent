@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BlogCarousel from "@/components/BlogCarousel";
 import Link from "next/link";
+import { CUSTODY_PHONE_CTA, PHONE_TEL } from "@/config/contact";
 
 export default function NotFound() {
   return (
@@ -82,8 +83,9 @@ export default function NotFound() {
                   Contact Us
                 </Link>
                 <a
-                  href="tel:01732247427"
+                  href={`tel:${PHONE_TEL}`}
                   className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-lg transition-colors"
+                  aria-label={`${CUSTODY_PHONE_CTA} — ${PHONE_TEL}`}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -98,7 +100,7 @@ export default function NotFound() {
                   >
                     <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
                   </svg>
-                  Call Now
+                  Custody / VAI line
                 </a>
               </div>
             </div>

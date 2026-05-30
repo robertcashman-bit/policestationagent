@@ -3,6 +3,13 @@ import Footer from "@/components/Footer";
 import FAQContent from "@/app/faq/FAQContent";
 import type { Metadata } from "next";
 import { SITE_DOMAIN } from "@/config/site";
+import {
+  CUSTODY_PHONE_CTA,
+  PHONE_DISPLAY,
+  PHONE_TEL,
+  SMS_DISPLAY,
+  smsUrl,
+} from "@/config/contact";
 
 export const metadata: Metadata = {
   title: "FAQ - Frequently Asked Questions | Police Station Agent",
@@ -40,8 +47,9 @@ export default function Page() {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <a
-                    href="tel:01732247427"
+                    href={`tel:${PHONE_TEL}`}
                     className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 shadow h-10 rounded-md px-8 bg-red-600 hover:bg-red-700 font-bold flex items-center gap-2 text-white"
+                    aria-label={`${CUSTODY_PHONE_CTA} — ${PHONE_DISPLAY}`}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -57,7 +65,7 @@ export default function Page() {
                     >
                       <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
                     </svg>
-                    Emergency: 01732 247 427
+                    Emergency: {PHONE_DISPLAY}
                   </a>
                   <a
                     className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border bg-white shadow-sm h-10 rounded-md px-8 border-white text-blue-900 hover:bg-white hover:text-blue-900"
@@ -79,13 +87,13 @@ export default function Page() {
                   Still Have Questions?
                 </h2>
                 <p className="text-xl text-red-100 mb-12">
-                  Get immediate answers and expert advice - available during extended hours across
-                  Kent
+                  Custody or scheduled voluntary interview enquiries only — not general legal advice
                 </p>
                 <div className="grid md:grid-cols-3 gap-4">
                   <a
-                    href="tel:01732247427"
+                    href={`tel:${PHONE_TEL}`}
                     className="bg-white/95 hover:bg-white p-8 rounded-3xl shadow-2xl transition-all duration-300 transform hover:scale-105"
+                    aria-label={`${CUSTODY_PHONE_CTA} — ${PHONE_DISPLAY}`}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -101,11 +109,11 @@ export default function Page() {
                     >
                       <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
                     </svg>
-                    <div className="text-slate-900 font-bold text-lg mb-2">Call Now</div>
-                    <div className="text-slate-700 text-2xl font-black">01732 247 427</div>
+                    <div className="text-slate-900 font-bold text-lg mb-2">{CUSTODY_PHONE_CTA}</div>
+                    <div className="text-slate-700 text-2xl font-black">{PHONE_DISPLAY}</div>
                   </a>
                   <a
-                    href="sms:07535494446?body=I have a question about police station representation"
+                    href={smsUrl("I have a question about police station representation")}
                     className="bg-white/95 hover:bg-white p-8 rounded-3xl shadow-2xl transition-all duration-300 transform hover:scale-105"
                   >
                     <svg
@@ -123,7 +131,7 @@ export default function Page() {
                       <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path>
                     </svg>
                     <div className="text-slate-900 font-bold text-lg mb-2">Text Us</div>
-                    <div className="text-slate-700 text-2xl font-black">07535 494446</div>
+                    <div className="text-slate-700 text-2xl font-black">{SMS_DISPLAY}</div>
                   </a>
                   <a
                     href="mailto:robertcashman@defencelegalservices.co.uk"

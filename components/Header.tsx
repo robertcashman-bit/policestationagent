@@ -71,7 +71,7 @@ export default function Header() {
                 Police Station Agent
               </div>
               <div className="text-[10px] sm:text-xs font-normal text-slate-600 leading-tight mt-0.5 block">
-                Police Station Legal Advice & Representation
+                NOT the police — custody &amp; scheduled interviews
               </div>
             </Link>
           </div>

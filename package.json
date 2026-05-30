@@ -15,6 +15,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "test": "tsx --test __tests__/**/*.test.ts",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lighthouse": "node scripts/lighthouse.js",
