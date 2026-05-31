@@ -1,8 +1,36 @@
 "use client";
 
 import FAQAccordion from "@/components/FAQAccordion";
+import { SCOPE_FAQ_ITEMS, SCOPE_SECTION_ID } from "@/config/scope-faqs";
 
 export default function FAQContent() {
+  const scopeSection = {
+    title: "Immediate custody only — who can call",
+    id: SCOPE_SECTION_ID,
+    icon: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+      </svg>
+    ),
+    iconBg: "bg-indigo-100",
+    iconColor: "text-indigo-600",
+    items: SCOPE_FAQ_ITEMS.map((item) => ({
+      question: item.question,
+      answer: item.answer,
+    })),
+  };
+
   const sections = [
     {
       title: "What We Do",
@@ -28,7 +56,7 @@ export default function FAQContent() {
         {
           question: "What services do you provide as a Police Station Duty Solicitor?",
           answer:
-            "We provide expert police station representation by qualified solicitor at all Kent custody suites. Our services include: FREE legal advice under Legal Aid, representation during police interviews (both in custody and voluntary), advice on your legal rights under PACE 1984, strategic guidance on whether to answer questions or exercise your right to silence, and support for family members who need to instruct a solicitor on behalf of someone who has been arrested.",
+            "We provide expert police station representation by qualified solicitor at all Kent custody suites. Our services include: FREE legal advice under Legal Aid, representation during police interviews (both in custody and voluntary), advice on your legal rights under PACE 1984, strategic guidance on whether to answer questions or exercise your right to silence, and support for immediate family who need to instruct a solicitor on behalf of someone currently in custody.",
         },
         {
           question: "Who do you represent?",
@@ -82,8 +110,9 @@ export default function FAQContent() {
         },
       ],
     },
+    scopeSection,
     {
-      title: "What We Don't Do",
+      title: "When a different service may be better",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -96,13 +125,29 @@ export default function FAQContent() {
           strokeLinecap="round"
           strokeLinejoin="round"
         >
-          <path d="M18 6 6 18"></path>
-          <path d="m6 6 12 12"></path>
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 16v-4"></path>
+          <path d="M12 8h.01"></path>
         </svg>
       ),
-      iconBg: "bg-red-100",
-      iconColor: "text-red-600",
+      iconBg: "bg-amber-100",
+      iconColor: "text-amber-700",
       items: [
+        {
+          question: "Do you deal with arrests from yesterday or general case updates?",
+          answer:
+            "No. We handle immediate matters only — someone currently in custody or a booked voluntary interview. We cannot attend for past arrests, provide updates after release, or answer general enquiries about what happened days ago. See the section above on immediate custody.",
+        },
+        {
+          question: "Can a friend instruct you on my behalf?",
+          answer:
+            "No. Only immediate family (such as a parent, spouse or partner, child, or sibling) may instruct us on someone else's behalf — and the detainee must confirm they want us to act when we contact the station. Friends and other acquaintances cannot instruct us.",
+        },
+        {
+          question: "Can you help find someone who has disappeared or trace what happened to them?",
+          answer:
+            "No. We are not a tracing or missing-person service. We cannot locate someone, confirm whether they are in custody, or investigate what happened to them. If an immediate family member is in custody right now, you may call to instruct representation.",
+        },
         {
           question: "Do you handle non-criminal matters?",
           answer:
@@ -121,7 +166,7 @@ export default function FAQContent() {
         {
           question: "Do you provide legal advice for general queries?",
           answer:
-            "We provide legal advice specifically related to police station representation and criminal defence. We do not provide general legal advice on other matters. If you have been arrested, invited for interview, or need urgent police station representation, we are here to help extended hours.",
+            "We provide legal advice specifically related to police station representation for current custody or scheduled interviews. We do not provide general legal advice by phone or email. If you need immediate police station representation in Kent, call 01732 247427.",
         },
         {
           question: "Can you represent me at a police station outside Kent?",
@@ -250,7 +295,7 @@ export default function FAQContent() {
         {
           question: "How do I get help if I've been arrested?",
           answer:
-            'If you have been arrested, tell the custody officer that you want legal representation and ask for "Robert Cashman" or "Tuckers Solicitors LLP - Robert Cashman". They must contact us. You can also call us directly on 01732 247427. If your phone has been taken, a family member or friend can call us on your behalf. We will attend the police station to represent you - this is completely free under Legal Aid.',
+            'If you have been arrested, tell the custody officer that you want legal representation and ask for "Robert Cashman" or "Tuckers Solicitors LLP - Robert Cashman". They must contact us. You can also call us directly on 01732 247427. If your phone has been taken, an immediate family member can call us on your behalf. We will attend the police station to represent you - this is completely free under Legal Aid.',
         },
         {
           question: "What if I'm asked to attend a voluntary interview?",
@@ -270,12 +315,12 @@ export default function FAQContent() {
         {
           question: "Can my family contact you on my behalf?",
           answer:
-            "Yes, absolutely. If someone you know has been arrested, you can contact us on their behalf. Under PACE Code C, if a solicitor is contacted by a third party (friend or relative) on the detainee's behalf, the police must inform the detainee. We will then contact the police station to arrange representation. This is a common and important way to ensure someone gets legal help when they cannot call themselves.",
+            "Yes — immediate family only (such as a parent, spouse or partner, child, or sibling). Friends cannot instruct us. The person must be in current police custody at a Kent station. Under PACE Code C, if a solicitor is contacted by immediate family, the police must inform the detainee. The detainee must confirm they want us to represent them when we contact the station. See the section on immediate custody above for full details.",
         },
         {
           question: "Can you get me information about someone who has been arrested by the police?",
           answer:
-            "We cannot provide information about someone else who has been arrested due to strict confidentiality and data protection laws. All communications between a solicitor and their client are protected by Legal Professional Privilege and are strictly confidential. We can only discuss a case with the person we represent, or with someone they have explicitly authorised us to speak with. If you are concerned about someone who has been arrested, you can contact us to arrange representation for them. However, we cannot disclose any details of their case without their express permission.",
+            "See the section \"Immediate custody only — who can call\" above. In brief: we cannot provide status updates or case information about someone else. Immediate family may instruct representation for current custody only — not for past arrests or general enquiries.",
         },
         {
           question: "Can you report matters on my behalf to the police?",
@@ -285,7 +330,7 @@ export default function FAQContent() {
         {
           question: "Can you find out what happened in my case?",
           answer:
-            "If we represented you at the police station, we can provide you with information about your case and what happened during the interview. We maintain records of all cases where we provided representation and can discuss the outcome and next steps. However, if you were represented by another solicitor at the police station, we will be unable to find out about your case as we do not have access to those records due to confidentiality. If you have been released under investigation or on bail and need ongoing representation, we can liaise with the police on your behalf if you instruct us. Please contact us on 01732 247427 to discuss how we can help.",
+            "If we represented you at the police station and you contact us directly, we can discuss your case. We cannot provide updates about past arrests to third parties, or cases where another solicitor represented you. For immediate custody only, immediate family may instruct us — see the section above. General enquiries about what happened days ago are outside our scope.",
         },
       ],
     },

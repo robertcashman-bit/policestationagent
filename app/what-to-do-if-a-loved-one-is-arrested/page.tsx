@@ -146,14 +146,25 @@ export default function Page() {
             <section className="mb-8">
               <h2 className="text-3xl font-semibold mb-4">Can You Visit?</h2>
               <p className="mb-4">
-                Generally, you cannot visit someone in police custody. However, you can:
+                Generally, you cannot visit someone in police custody. If you are immediate family
+                (parent, spouse or partner, child, or sibling) and believe your loved one is in
+                custody <strong>right now</strong>, you can:
               </p>
               <ul className="list-disc pl-6 mb-4 space-y-2">
-                <li>Call the police station to check on their welfare</li>
-                <li>Ensure they have requested legal advice</li>
-                <li>Provide information to their solicitor if helpful</li>
+                <li>Instruct a solicitor on their behalf — they must confirm they want representation when the solicitor arrives</li>
+                <li>Ensure they have requested legal advice at the station</li>
+                <li>Provide helpful information to their solicitor (station, vulnerabilities)</li>
                 <li>Be available to collect them if they are released</li>
               </ul>
+              <p className="mb-4 text-slate-700">
+                Police stations generally do not give case details to callers. Friends cannot instruct
+                a solicitor. We cannot help with arrests from yesterday or earlier, missing-person
+                enquiries, or general status updates.{" "}
+                <a href="/faq#immediate-custody-only" className="text-blue-600 hover:underline font-semibold">
+                  Read our FAQ on immediate custody
+                </a>
+                .
+              </p>
             </section>
 
             <section className="mb-8">

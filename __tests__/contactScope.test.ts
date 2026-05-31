@@ -11,7 +11,8 @@ test("contact config includes not-police and scope disclaimers", () => {
   assert.match(SEO_NOT_POLICE, /NOT.*Police/i);
   assert.match(SERVICE_SCOPE, /custody/i);
   assert.match(SERVICE_SCOPE, /voluntary/i);
-  assert.match(SERVICE_SCOPE, /not general legal advice/i);
+  assert.match(SERVICE_SCOPE, /immediate family/i);
+  assert.match(SERVICE_SCOPE, /general legal advice/i);
 });
 
 test("WhatsApp URLs open text chat with encoded message", () => {

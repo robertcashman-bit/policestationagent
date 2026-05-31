@@ -3,6 +3,7 @@ import fs from "fs";
 import path from "path";
 import { processQuery, calculateSearchScore } from "@/lib/chatbot-utils";
 import { checkRateLimit } from "@/lib/rate-limit";
+import { isOutOfScopeEnquiry, SCOPE_FAQ_ITEMS } from "@/config/scope-faqs";
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
@@ -378,6 +379,59 @@ export async function POST(request: NextRequest) {
     });
     const topResults = results.slice(0, 7);
 
+    /** Deterministic answers for out-of-scope enquiries (past arrest, friends, missing person, status checks) */
+    function scopeFaqResponse(queryText: string) {
+      const q = queryText.toLowerCase();
+
+      const pick = (match: (question: string) => boolean) => {
+        const item = SCOPE_FAQ_ITEMS.find((faq) => match(faq.question.toLowerCase()));
+        if (!item) return null;
+        return {
+          answer: item.answer,
+          title: item.question,
+        };
+      };
+
+      if (
+        /\b(yesterday|last week|few days|2 days|two days|days ago|already released|was arrested|got arrested)\b/.test(
+          q
+        ) &&
+        !/\b(right now|currently|today|in custody now)\b/.test(q)
+      ) {
+        return pick((question) => question.includes("yesterday"));
+      }
+
+      if (/\b(disappeared|missing|where are they|what happened to them|find them|trace them)\b/.test(q)) {
+        return pick((question) => question.includes("disappeared"));
+      }
+
+      if (
+        /\b(friend|mate|colleague|neighbour|neighbor|acquaintance)\b/.test(q) &&
+        /\b(instruct|represent|arrested|custody|help)\b/.test(q)
+      ) {
+        return pick((question) => question.includes("instruct you on someone"));
+      }
+
+      if (isOutOfScopeEnquiry(queryText)) {
+        return (
+          pick((question) => question.includes("welfare")) ||
+          pick((question) => question.includes("disappeared")) ||
+          pick((question) => question.includes("yesterday"))
+        );
+      }
+
+      return null;
+    }
+
+    const scopeAnswer = scopeFaqResponse(query);
+    if (scopeAnswer) {
+      return NextResponse.json({
+        answer: scopeAnswer.answer,
+        sources: [{ type: "faq", title: scopeAnswer.title, url: "/faq#immediate-custody-only" }],
+        usedAI: false,
+      });
+    }
+
     // Special handling for "find out about someone in custody"
     const queryLower = query.toLowerCase();
     if (
@@ -395,12 +449,12 @@ export async function POST(request: NextRequest) {
 
       if (confidentialityFAQ) {
         return NextResponse.json({
-          answer: `I understand you want to find out about someone in custody. ${stripHTML(confidentialityFAQ.content)}`,
+          answer: `We specialise in attending when someone is in custody right now — we cannot provide status updates or confirm whether someone is detained. ${stripHTML(confidentialityFAQ.content)} See our [FAQ](/faq#immediate-custody-only) for immediate family instructions.`,
           sources: [
             {
               type: confidentialityFAQ.type,
               title: confidentialityFAQ.title,
-              url: confidentialityFAQ.url,
+              url: "/faq#immediate-custody-only",
             },
           ],
           usedAI: false,

@@ -197,8 +197,9 @@ const resourceLinks = [
   { href: "/testimonials", label: "Client Testimonials" },
   { href: "/contact", label: "Contact Us", priority: true },
   { href: "/privateclientfaq", label: "Private Client FAQ" },
-  { href: "/can-we-help", label: "Can We Help" },
-  { href: "/canwehelp", label: "Can We Help (Alt)" },
+  { href: "/resources", label: "Free resources (link-friendly)", priority: true },
+  { href: "/kent-police-custody-resources", label: "Kent custody resources", priority: true },
+  { href: "/canwehelp", label: "Can we help you?" },
   { href: "/whatisapolicestationrep", label: "What is a Police Station Rep (Alt)" },
   { href: "/hours", label: "Hours" },
   { href: "/extendedhours", label: "Extended Hours" },
@@ -589,7 +590,7 @@ export default function Footer() {
           <div className="mt-4 pt-3 border-t border-slate-800 flex flex-wrap justify-center gap-3 text-xs text-sky-300">
             <span className="text-sky-200">Partners:</span>
             <a
-              href="https://policestationrepukdirectory.com/"
+              href="https://policestationrepuk.org/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-sky-300 hover:text-white transition-colors"
@@ -598,21 +599,21 @@ export default function Footer() {
             </a>
             <span className="text-sky-400">•</span>
             <a
-              href="https://policestationrepuk.com/"
+              href="https://policestationrepuk.org/rep/robert-cashman"
               target="_blank"
               rel="noopener noreferrer"
               className="text-sky-300 hover:text-white transition-colors"
             >
-              Police Station Rep UK
+              Robert Cashman (RepUK)
             </a>
             <span className="text-sky-400">•</span>
             <a
-              href="https://policestationrepuk.com/StationsDirectory"
+              href="https://policestationrepuk.org/directory/kent"
               target="_blank"
               rel="noopener noreferrer"
               className="text-sky-300 hover:text-white transition-colors"
             >
-              UK Custody Suites
+              Kent Rep Directory
             </a>
           </div>
         </div>

@@ -15,6 +15,7 @@ import ComplianceStrip from "@/components/compliance/ComplianceStrip";
 import NotPoliceScopeBanner from "@/components/compliance/NotPoliceScopeBanner";
 import ContactLinkGuard from "@/components/compliance/ContactLinkGuard";
 import { SEO_NOT_POLICE, SERVICE_SCOPE_SHORT } from "@/config/contact";
+import { SAME_AS_URLS } from "@/config/link-authority";
 
 function getSafeSiteUrl(): string {
   const raw =
@@ -314,11 +315,7 @@ const organizationSchema = {
           closes: "23:00",
         },
       ],
-      sameAs: [
-        "https://www.facebook.com/policestationagent",
-        "https://www.linkedin.com/company/police-station-agent",
-        "https://twitter.com/policestation",
-      ],
+      sameAs: [...SAME_AS_URLS],
     },
     {
       "@type": "LocalBusiness",

@@ -83,7 +83,7 @@ export default function Page() {
               <p className="text-slate-700 mb-3">
                 To help us respond quickly, please include the following information if available:
               </p>
-              <ul className="space-y-2 text-slate-700">
+              <ul className="space-y-2 text-slate-700 mb-6">
                 <li className="flex items-start gap-2">
                   <span className="text-blue-600 font-bold mt-1">•</span>
                   <span>Station/custody suite</span>
@@ -101,6 +101,36 @@ export default function Page() {
                   <span>Call-back number</span>
                 </li>
               </ul>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">This form is not for:</h3>
+              <ul className="space-y-2 text-slate-700 mb-4">
+                <li className="flex items-start gap-2">
+                  <span className="text-amber-600 font-bold mt-1">•</span>
+                  <span>Arrests from yesterday, days ago, or after someone has been released</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-amber-600 font-bold mt-1">•</span>
+                  <span>Friends or non-family calling on someone&apos;s behalf</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-amber-600 font-bold mt-1">•</span>
+                  <span>Missing-person enquiries — where are they? what happened to them?</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-amber-600 font-bold mt-1">•</span>
+                  <span>General legal advice, welfare checks, or status updates</span>
+                </li>
+              </ul>
+              <p className="text-slate-600 text-sm">
+                See our{" "}
+                <a href="/faq#immediate-custody-only" className="text-blue-600 hover:underline font-semibold">
+                  FAQ on immediate custody
+                </a>{" "}
+                or{" "}
+                <a href="/canwehelp" className="text-blue-600 hover:underline font-semibold">
+                  interactive guide
+                </a>
+                .
+              </p>
             </section>
 
             {/* Contact Form – Instruction Notice */}

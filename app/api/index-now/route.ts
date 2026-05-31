@@ -35,6 +35,7 @@ const PRIORITY_URLS = [
   "/start/in-custody",
   "/start/voluntary-interview",
   "/emergency-police-station-representation",
+  "/bluewater-police-station",
   "/medway-police-station",
   "/maidstone-police-station",
   "/canterbury-police-station",
@@ -47,7 +48,12 @@ const PRIORITY_URLS = [
   "/sittingbourne-police-station",
   "/tunbridge-wells-police-station",
   "/gravesend-police-station",
-  "/bluewater-police-station",
+  "/canwehelp",
+  "/kent-police-custody-resources",
+  "/resources",
+  "/resources/pace-rights-guide",
+  "/link-to-us",
+  "/press",
 ];
 
 function getDefaultIndexNowUrls(): string[] {

@@ -14,6 +14,10 @@ const corePages = [
   ["/police-interview-rights", "Rights during a police interview"],
   ["/blog", "Legal articles and police station guidance"],
   ["/contact", "Contact details and service scope"],
+  ["/kent-police-custody-resources", "Kent police custody and interview resource hub — link-friendly"],
+  ["/resources", "Free resources index"],
+  ["/link-to-us", "Link to our Kent custody resources"],
+  ["/press", "Press and media enquiries"],
 ];
 
 export function GET() {

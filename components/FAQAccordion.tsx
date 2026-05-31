@@ -9,6 +9,7 @@ interface FAQItem {
 
 interface FAQSection {
   title: string;
+  id?: string;
   icon: React.ReactNode;
   iconBg: string;
   iconColor: string;
@@ -36,7 +37,7 @@ export default function FAQAccordion({ sections }: FAQAccordionProps) {
   return (
     <div className="space-y-16">
       {sections.map((section, sectionIndex) => (
-        <div key={sectionIndex} className="mb-16">
+        <div key={sectionIndex} id={section.id} className="mb-16 scroll-mt-24">
           <div className="flex items-center gap-3 mb-8">
             <div
               className={`w-12 h-12 rounded-2xl flex items-center justify-center ${section.iconBg}`}

@@ -10,26 +10,49 @@ import {
   SMS_DISPLAY,
   smsUrl,
 } from "@/config/contact";
+import {
+  SCOPE_CALLOUT_CAN,
+  SCOPE_CALLOUT_CANNOT,
+  SCOPE_FAQ_ITEMS,
+  SCOPE_STATUS_ENQUIRY_HEADLINE,
+} from "@/config/scope-faqs";
 
 export const metadata: Metadata = {
   title: "FAQ - Frequently Asked Questions | Police Station Agent",
   description:
-    "Comprehensive answers about police station representation in Kent. What we do and don't do, legal aid information, and how to get urgent help. Available during extended hours.",
+    "Police station representation FAQ for Kent. Immediate custody only, who can instruct, confidentiality, legal aid, and when we can help — not past arrests or general enquiries.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/faq`,
   },
   openGraph: {
     title: "FAQ - Frequently Asked Questions | Police Station Agent",
     description:
-      "Comprehensive answers about police station representation in Kent. What we do and don't do, legal aid information, and how to get urgent help. Available during extended hours.",
+      "Police station representation FAQ for Kent. Immediate custody only, who can instruct, confidentiality, legal aid, and when we can help — not past arrests or general enquiries.",
     type: "website",
     url: `https://${SITE_DOMAIN}/faq`,
   },
 };
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: SCOPE_FAQ_ITEMS.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.answer.replace(/\s+/g, " ").trim(),
+    },
+  })),
+};
+
 export default function Page() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <Header />
       <main className="flex-grow relative" id="main-content" role="main">
         <div className="bg-slate-50 min-h-screen">
@@ -45,6 +68,34 @@ export default function Page() {
                 <p className="text-xl text-blue-100 mb-8">
                   Comprehensive answers about our police station representation services across Kent
                 </p>
+                <div className="bg-white/10 border border-white/20 rounded-xl p-6 text-left max-w-2xl mx-auto mb-8">
+                  <h2 className="text-lg font-bold text-amber-300 mb-3">
+                    {SCOPE_STATUS_ENQUIRY_HEADLINE}
+                  </h2>
+                  <div className="grid sm:grid-cols-2 gap-4 text-sm text-blue-100">
+                    <div>
+                      <p className="font-semibold text-white mb-2">We can help when:</p>
+                      <ul className="space-y-1 list-disc list-inside">
+                        {SCOPE_CALLOUT_CAN.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div>
+                      <p className="font-semibold text-white mb-2">We cannot help with:</p>
+                      <ul className="space-y-1 list-disc list-inside">
+                        {SCOPE_CALLOUT_CANNOT.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                  <p className="mt-4 text-sm">
+                    <a href="/canwehelp" className="text-amber-300 hover:text-amber-200 underline font-semibold">
+                      Use our interactive guide → Can we help you?
+                    </a>
+                  </p>
+                </div>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <a
                     href={`tel:${PHONE_TEL}`}

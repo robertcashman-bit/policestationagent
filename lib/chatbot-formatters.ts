@@ -2,6 +2,8 @@
  * Chatbot Message Formatting Utilities
  */
 
+import { isOutOfScopeEnquiry } from "@/config/scope-faqs";
+
 /**
  * Simple markdown-like formatting parser
  */
@@ -32,6 +34,10 @@ export function formatMessage(content: string): string {
  * Detect if message contains urgent keywords
  */
 export function isUrgentQuery(query: string): boolean {
+  if (isOutOfScopeEnquiry(query)) {
+    return false;
+  }
+
   const urgentKeywords = [
     "arrested",
     "arrest",
@@ -90,6 +96,16 @@ export function generateFollowUpQuestions(
 
   if (lowerMessage.includes("right") || lowerMessage.includes("entitle")) {
     followUps.push("What are my rights if arrested?");
+  }
+
+  if (
+    lowerMessage.includes("family") ||
+    lowerMessage.includes("custody") ||
+    lowerMessage.includes("yesterday") ||
+    lowerMessage.includes("friend")
+  ) {
+    followUps.push("Can immediate family instruct a solicitor?");
+    followUps.push("Do you help with arrests from yesterday?");
   }
 
   return followUps.slice(0, 2);

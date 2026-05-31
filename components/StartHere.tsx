@@ -7,9 +7,15 @@ export default function StartHere() {
         <h2 id="start-here-heading" className="text-2xl md:text-3xl font-black text-slate-900 mb-3">
           Start Here
         </h2>
-        <p className="text-slate-600 mb-6 text-sm md:text-base">
+        <p className="text-slate-600 mb-4 text-sm md:text-base">
           Kent police stations only. <strong>NOT the police</strong> — independent duty solicitor.
-          Custody and scheduled voluntary (VAI) interviews only; not general legal advice by phone.
+          Immediate custody and scheduled voluntary (VAI) interviews only; immediate family may
+          instruct. Not past arrests, friends, missing-person enquiries, or general legal advice.
+        </p>
+        <p className="text-slate-600 mb-6 text-sm">
+          <a href="/faq#immediate-custody-only" className="text-blue-600 hover:underline font-semibold">
+            Who can call and when →
+          </a>
         </p>
         <div className="grid md:grid-cols-3 gap-4">
           <Link
@@ -37,7 +43,7 @@ export default function StartHere() {
                 <h3 className="font-bold text-slate-900 mb-1 group-hover:text-red-700 transition-colors">
                   Has someone you know been arrested and taken to a police station?
                 </h3>
-                <p className="text-sm text-slate-600">Arrange representation on their behalf</p>
+                <p className="text-sm text-slate-600">Immediate family — instruct while they are in custody now</p>
               </div>
             </div>
           </Link>

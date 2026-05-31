@@ -24,13 +24,13 @@ export const SEO_NOT_POLICE =
 
 /** What the practice accepts instructions for */
 export const SERVICE_SCOPE =
-  "We accept instructions for people in police custody and scheduled voluntary (VAI) interviews at Kent police stations only — not general legal advice by phone.";
+  "Immediate matters only: current police custody or a scheduled voluntary (VAI) interview at a Kent station — instructed by the detainee or immediate family (detainee must confirm). Not past arrests, friends, missing-person enquiries, or general legal advice by phone.";
 
 export const SERVICE_SCOPE_SHORT =
-  "Custody & scheduled voluntary interviews only — not general legal advice.";
+  "Immediate custody & booked VAI only — immediate family may instruct; not past arrests or general advice.";
 
 export const CUSTODY_PHONE_CTA =
-  "Telephone for custody or a booked voluntary interview";
+  "Telephone for current custody or a booked voluntary interview";
 
 export const HEADER_STRAPLINE =
-  "Independent duty solicitor (NOT the police) — custody & scheduled interviews, Kent";
+  "Independent duty solicitor (NOT the police) — immediate custody & booked interviews, Kent";

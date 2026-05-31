@@ -1,11 +1,14 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import type { Metadata } from "next";
+import { SITE_DOMAIN } from "@/config/site";
+import { REGULATORY_LINKS, REPUK_PROFILE_URL } from "@/config/link-authority";
 
 export const metadata: Metadata = {
   title: "Regulatory Information | Police Station Agent",
   description:
     "Regulatory information about Defence Legal Services Ltd t/a Police Station Agent and Tuckers Solicitors LLP.",
+  alternates: { canonical: `https://${SITE_DOMAIN}/regulatory-information` },
 };
 
 export default function RegulatoryInformationPage() {
@@ -37,14 +40,53 @@ export default function RegulatoryInformationPage() {
               <section className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 md:p-8">
                 <h2 className="text-2xl font-bold text-slate-900 mb-4">Legal Services Provider</h2>
                 <p className="text-slate-700 leading-relaxed mb-4">
-                  Legal services are provided by <strong>Tuckers Solicitors LLP</strong> (SRA ID:
-                  127795).
+                  Legal services are provided by{" "}
+                  <a
+                    href={REGULATORY_LINKS.tuckers}
+                    className="text-blue-600 hover:underline"
+                    rel="noopener noreferrer"
+                  >
+                    <strong>Tuckers Solicitors LLP</strong>
+                  </a>{" "}
+                  (SRA ID: 127795). Verify via the{" "}
+                  <a
+                    href={REGULATORY_LINKS.sraFindASolicitor}
+                    className="text-blue-600 hover:underline"
+                    rel="noopener noreferrer"
+                  >
+                    SRA register
+                  </a>
+                  .
                 </p>
                 <p className="text-slate-700 leading-relaxed">
                   Any Legal Aid or private retainer is with Tuckers Solicitors LLP. Robert Cashman
                   acts as a solicitor at Tuckers Solicitors LLP, subject to availability and
                   conflicts.
                 </p>
+              </section>
+
+              <section className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 md:p-8">
+                <h2 className="text-2xl font-bold text-slate-900 mb-4">Professional memberships</h2>
+                <ul className="space-y-2 text-slate-700">
+                  <li>
+                    <a
+                      href={REGULATORY_LINKS.clsa}
+                      className="text-blue-600 hover:underline"
+                      rel="noopener noreferrer"
+                    >
+                      Criminal Law Solicitors&apos; Association (CLSA)
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href={REPUK_PROFILE_URL}
+                      className="text-blue-600 hover:underline"
+                      rel="noopener noreferrer"
+                    >
+                      PoliceStationRepUK directory profile
+                    </a>
+                  </li>
+                </ul>
               </section>
 
               {/* Data Sharing */}

@@ -39,8 +39,10 @@ export default function InCustodyPage() {
                 </p>
                 <p className="text-lg text-red-100 mb-4">
                   <strong className="text-white">We are NOT the police.</strong> Telephone this line
-                  only to instruct representation for someone currently in custody — not for general
-                  legal questions.
+                  only to instruct representation for someone <strong className="text-white">currently in custody</strong> — not for past arrests, friends, missing-person enquiries, or general updates.
+                </p>
+                <p className="text-lg text-red-100 mb-4">
+                  Only <strong className="text-white">immediate family</strong> (parent, spouse or partner, child, or sibling) may instruct on someone else&apos;s behalf. The detainee must confirm they want us to represent them when we contact the station.
                 </p>
                 <p className="text-lg text-red-100">
                   I provide prompt and experienced police station representation across Kent and
@@ -75,6 +77,11 @@ export default function InCustodyPage() {
               <p className="text-slate-600 mt-4 text-lg font-semibold">Telephone: 01732 247427</p>
               <p className="text-slate-500 mt-2 text-sm">
                 Ask for Robert Cashman, Tuckers Duty Solicitor — The DSCC have our details
+              </p>
+              <p className="text-slate-500 mt-4 text-sm">
+                <a href="/faq#immediate-custody-only" className="text-blue-600 hover:underline">
+                  Read who can call and what we cannot help with
+                </a>
               </p>
             </section>
           </div>
