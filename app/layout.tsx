@@ -4,6 +4,7 @@ import { inter } from "./fonts";
 import { SITE_URL, SITE_DOMAIN } from "@/config/site";
 import Script from "next/script";
 import dynamic from "next/dynamic";
+import { Suspense } from "react";
 
 const Chatbot = dynamic(() => import("@/components/Chatbot"), {
   ssr: false,
@@ -451,7 +452,9 @@ export default function RootLayout({
         <InternalLinkInterceptor>{children}</InternalLinkInterceptor>
         {/* Cookie Consent Banner - Minimal, compliant */}
         <CookieBanner />
-        <GoogleAnalytics />
+        <Suspense fallback={null}>
+          <GoogleAnalytics />
+        </Suspense>
         {/* Chatbot Assistant */}
         <Chatbot />
       </body>
