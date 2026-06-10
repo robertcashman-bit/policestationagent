@@ -10,7 +10,7 @@ interface ChatbotMessageProps {
   sources?: Array<{ type: string; title: string; url?: string }>;
   feedback?: "positive" | "negative" | null;
   onFeedback?: (id: string, feedback: "positive" | "negative") => void;
-  onCopy?: (content: string) => void;
+  isStreaming?: boolean;
 }
 
 export default function ChatbotMessage({
@@ -21,7 +21,7 @@ export default function ChatbotMessage({
   sources,
   feedback,
   onFeedback,
-  onCopy,
+  isStreaming,
 }: ChatbotMessageProps) {
   const formatTime = (date: Date) => {
     return date.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
@@ -58,7 +58,7 @@ export default function ChatbotMessage({
         className={`flex flex-col gap-1 max-w-[85%] sm:max-w-[75%] ${type === "user" ? "items-end" : "items-start"}`}
       >
         <div
-          className={`rounded-xl px-2 py-1.5 sm:px-2.5 sm:py-2 text-[10px] sm:text-[10px] shadow-lg transition-all hover:shadow-xl break-words overflow-wrap-anywhere ${
+          className={`rounded-xl px-3 py-2 text-sm shadow-lg transition-all break-words overflow-wrap-anywhere ${
             type === "user"
               ? "bg-gradient-to-br from-blue-600 to-blue-700 text-white rounded-br-sm"
               : "bg-white text-slate-800 border border-slate-200 rounded-bl-sm"
@@ -80,7 +80,7 @@ export default function ChatbotMessage({
           ) : (
             <div
               className="whitespace-pre-wrap leading-relaxed break-words"
-              dangerouslySetInnerHTML={{ __html: formatMessage(content) }}
+              dangerouslySetInnerHTML={{ __html: formatMessage(content) + (isStreaming ? '<span class="inline-block w-1.5 h-4 ml-0.5 bg-blue-500 animate-pulse align-middle" aria-hidden="true"></span>' : '') }}
               style={{ wordBreak: "break-word", overflowWrap: "break-word" }}
             />
           )}
@@ -121,9 +121,10 @@ export default function ChatbotMessage({
               <a
                 key={idx}
                 href={source.url || "#"}
-                className="text-[9px] px-1.5 py-0.5 bg-blue-50 text-blue-700 rounded-full hover:bg-blue-100 transition-colors border border-blue-200"
-                target={source.url?.startsWith("http") ? "_blank" : undefined}
-                rel={source.url?.startsWith("http") ? "noopener noreferrer" : undefined}
+                className="text-xs px-2 py-0.5 bg-blue-50 text-blue-700 rounded-full hover:bg-blue-100 transition-colors border border-blue-200"
+                {...(source.url?.startsWith("http")
+                  ? { target: "_blank", rel: "noopener noreferrer" }
+                  : {})}
               >
                 {source.type === "faq" ? "📋" : "📝"}{" "}
                 {source.title.length > 20 ? source.title.substring(0, 20) + "..." : source.title}

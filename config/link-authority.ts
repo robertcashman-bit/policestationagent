@@ -13,6 +13,15 @@ export const AUTHORITY_NAP = {
 
 export const REPUK_PROFILE_URL = "https://policestationrepuk.org/rep/robert-cashman";
 
+/** Owned sibling sites — safe for footer cross-links */
+export const OWNED_NETWORK_SITES = [
+  { url: "https://custodynote.com", label: "Custody Note — digital custody records" },
+  { url: "https://psrtrain.com", label: "PSR Train — police station rep training" },
+] as const;
+
+/** RepUK paths that must not appear in client-facing footers (competing Kent listings) */
+export const REPUK_KENT_LISTING_BLOCKLIST = ["/directory/kent"] as const;
+
 export const RESOURCE_HUB_PATH = "/kent-police-custody-resources";
 export const RESOURCE_HUB_URL = `${SITE_URL}${RESOURCE_HUB_PATH}`;
 
