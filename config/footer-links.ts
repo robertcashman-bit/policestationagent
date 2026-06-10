@@ -1,3 +1,6 @@
+import { REPUK_DIRECTORY_HREF } from "@/lib/policestationrepuk-promo";
+import { CUSTODYNOTE_TRIAL_HREF } from "@/lib/custodynote-promo";
+import { PSRTRAIN_HOME_HREF } from "@/lib/psrtrain-promo";
 import { REPUK_PROFILE_URL } from "@/config/link-authority";
 
 export const FOOTER_BLOG_LIMIT = 30;
@@ -39,6 +42,8 @@ export const FOOTER_ADVICE_PAGES: FooterLink[] = [
   { href: "/vulnerable-adults-in-custody", label: "Vulnerable Adults in Custody" },
   { href: "/appropriate-adult", label: "Appropriate Adults" },
   { href: "/can-police-take-my-phone", label: "Can Police Take My Phone?" },
+  { href: "/free-police-station-advice-kent", label: "Free Police Station Advice (Kent)" },
+  { href: "/police-station-solicitor", label: "Police Station Solicitor" },
 ];
 
 export const FOOTER_STATION_HUBS: FooterLink[] = [
@@ -74,22 +79,22 @@ export const FOOTER_LEGAL: FooterLink[] = [
 
 export const FOOTER_NETWORK_LINKS: FooterLink[] = [
   {
-    href: "https://policestationrepuk.org/?utm_source=psafooter",
+    href: REPUK_DIRECTORY_HREF,
     label: "Police Station Rep UK — professional network",
     external: true,
   },
   {
-    href: `${REPUK_PROFILE_URL}?utm_source=psafooter`,
+    href: `${REPUK_PROFILE_URL}?utm_source=policestationagent&utm_medium=web&utm_campaign=footer`,
     label: "Robert Cashman — RepUK profile",
     external: true,
   },
   {
-    href: "https://custodynote.com?utm_source=psafooter",
+    href: CUSTODYNOTE_TRIAL_HREF,
     label: "Custody Note — digital custody records",
     external: true,
   },
   {
-    href: "https://psrtrain.com?utm_source=psafooter",
+    href: PSRTRAIN_HOME_HREF,
     label: "PSR Train — police station rep training",
     external: true,
   },

@@ -1,66 +1,73 @@
-"use client";
+'use client';
 
-/**
- * COOKIE BANNER COMPONENT
- *
- * Minimal, GDPR-compliant cookie consent banner.
- */
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
+const COOKIE_ACCEPTED_KEY = 'cookies-accepted';
 
-export default function CookieBanner() {
-  const [showBanner, setShowBanner] = useState(false);
+export function CookieBanner() {
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    // Check if user has already consented
-    const consent = localStorage.getItem("cookie-consent");
-    if (!consent) {
-      setShowBanner(true);
-    }
+    const accepted = localStorage.getItem(COOKIE_ACCEPTED_KEY);
+    if (!accepted) setVisible(true);
   }, []);
 
-  const handleAccept = () => {
-    localStorage.setItem("cookie-consent", "accepted");
-    setShowBanner(false);
+  useEffect(() => {
+    if (!visible) {
+      document.body.classList.remove('cookie-bar-visible');
+      return;
+    }
+    document.body.classList.add('cookie-bar-visible');
+    return () => document.body.classList.remove('cookie-bar-visible');
+  }, [visible]);
+
+  const accept = () => {
+    localStorage.setItem(COOKIE_ACCEPTED_KEY, 'true');
+    setVisible(false);
+    document.body.classList.remove('cookie-bar-visible');
+    const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim();
+    if (gaId && typeof window.gtag === 'function') {
+      window.gtag('config', gaId, { anonymize_ip: true });
+    }
   };
 
-  const handleDecline = () => {
-    localStorage.setItem("cookie-consent", "declined");
-    setShowBanner(false);
-  };
-
-  if (!showBanner) return null;
+  if (!visible) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-slate-900 p-2 md:p-3 shadow-2xl z-50 border-t-2 md:border-t-4 border-blue-600">
-      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 md:gap-3">
-        <div className="flex-1">
-          <p
-            className="text-[10px] md:text-xs leading-tight text-white"
-            style={{ color: "#ffffff" }}
+    <div
+      data-hook="cookie-banner"
+      className="cookie-bar-compact psr-cookie-bar fixed bottom-0 left-0 right-0 z-50 border-t border-[var(--border)] bg-white shadow-md"
+      style={{ paddingBottom: 'max(0.5rem, var(--safe-area-bottom))' }}
+      role="dialog"
+      aria-label="Cookie consent"
+    >
+      <div className="mx-auto flex max-w-[var(--container-max)] flex-wrap items-center justify-between gap-2 px-[var(--container-gutter)] py-2 sm:flex-nowrap sm:px-6 lg:px-8">
+        <p className="min-w-0 text-xs leading-snug text-[var(--muted)] sm:text-sm">
+          <span className="font-bold text-[var(--navy)]">Cookies.</span> Essential cookies only — see our{' '}
+          <Link href="/Cookies" className="font-semibold !text-[var(--navy)] no-underline hover:!text-[var(--gold-link)]">
+            cookie policy
+          </Link>
+          .
+        </p>
+        <div className="flex w-full shrink-0 items-center gap-2 sm:w-auto">
+          <Link
+            href="/Cookies"
+            className="inline-flex h-9 flex-1 items-center justify-center rounded-md border border-[var(--border)] px-3 text-xs font-semibold text-[var(--navy)] no-underline transition-colors hover:border-[var(--gold)] sm:flex-none sm:text-sm"
           >
-            We use cookies to improve your experience. By continuing, you accept our use of cookies.{" "}
-            <Link href="/privacy" className="underline hover:text-blue-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-slate-900 rounded">
-              Privacy policy
-            </Link>
-          </p>
-        </div>
-        <div className="flex gap-1.5 md:gap-2 flex-shrink-0">
+            Manage
+          </Link>
           <button
-            onClick={handleAccept}
-            className="inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 shadow rounded-md bg-blue-600 hover:bg-blue-700 text-white font-medium text-xs h-7 px-3 md:h-9 md:px-4"
+            type="button"
+            onClick={accept}
+            className="inline-flex h-9 flex-1 items-center justify-center rounded-md bg-[var(--navy)] px-4 text-xs font-semibold text-white transition-colors hover:bg-[var(--navy-light)] sm:flex-none sm:text-sm"
           >
             Accept
-          </button>
-          <button
-            onClick={handleDecline}
-            className="inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 shadow rounded-md bg-slate-700 hover:bg-slate-600 text-white font-medium text-xs h-7 px-3 md:h-9 md:px-4"
-          >
-            Decline
           </button>
         </div>
       </div>
     </div>
   );
 }
+
+export default CookieBanner;

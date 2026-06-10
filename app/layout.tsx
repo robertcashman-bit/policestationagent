@@ -10,6 +10,7 @@ const Chatbot = dynamic(() => import("@/components/Chatbot"), {
   loading: () => null,
 });
 import CookieBanner from "@/components/CookieBanner";
+import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import InternalLinkInterceptor from "@/components/InternalLinkInterceptor";
 import ComplianceStrip from "@/components/compliance/ComplianceStrip";
 import NotPoliceScopeBanner from "@/components/compliance/NotPoliceScopeBanner";
@@ -450,6 +451,7 @@ export default function RootLayout({
         <InternalLinkInterceptor>{children}</InternalLinkInterceptor>
         {/* Cookie Consent Banner - Minimal, compliant */}
         <CookieBanner />
+        <GoogleAnalytics />
         {/* Chatbot Assistant */}
         <Chatbot />
       </body>
