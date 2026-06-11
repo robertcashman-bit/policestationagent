@@ -139,8 +139,12 @@ export default function AdminDashboard() {
     }
   };
 
-  const handleLogout = () => {
-    document.cookie = "auth-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/admin/logout", { method: "POST" });
+    } catch {
+      // Still redirect even if the request fails
+    }
     window.location.href = "/admin/login";
   };
 
@@ -151,6 +155,12 @@ export default function AdminDashboard() {
           <div className="flex justify-between items-center h-16">
             <h1 className="text-2xl font-bold text-[#0A2342]">Admin Dashboard</h1>
             <div className="flex items-center space-x-4">
+              <Link
+                href="/admin/firm-outreach"
+                className="text-[#0A2342] font-medium hover:underline"
+              >
+                Firm outreach
+              </Link>
               <Link href="/" className="text-gray-700 hover:text-[#0A2342]">
                 View Site
               </Link>

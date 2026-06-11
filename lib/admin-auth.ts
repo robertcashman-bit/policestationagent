@@ -81,3 +81,16 @@ export async function requireAdminAuth(): Promise<AdminSession> {
 
   return session;
 }
+
+export type AdminApiCheckResult =
+  | { ok: true; session: AdminSession }
+  | { ok: false; status: 401 | 403; error: string };
+
+/** Require admin authentication for API routes — returns JSON-friendly result. */
+export async function requireAdminApi(): Promise<AdminApiCheckResult> {
+  const session = await getAdminSession();
+  if (!session) {
+    return { ok: false, status: 401, error: "Not authenticated" };
+  }
+  return { ok: true, session };
+}

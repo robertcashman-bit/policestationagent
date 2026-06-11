@@ -1,0 +1,36 @@
+import { getKV } from '@/lib/kv';
+
+function localDateInTimezone(date: Date, timeZone: string): string {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).formatToParts(date);
+  const y = parts.find((p) => p.type === 'year')?.value ?? '1970';
+  const m = parts.find((p) => p.type === 'month')?.value ?? '01';
+  const d = parts.find((p) => p.type === 'day')?.value ?? '01';
+  return `${y}-${m}-${d}`;
+}
+
+const DEDUP_PREFIX = 'firmoutreach:digest:sent:';
+const NOTIFY_TIMEZONE =
+  process.env.FIRM_OUTREACH_DIGEST_TIMEZONE?.trim() || 'Europe/London';
+
+export function outreachDigestDate(now = new Date()): string {
+  return localDateInTimezone(now, NOTIFY_TIMEZONE);
+}
+
+export async function wasOutreachDigestSent(date: string): Promise<boolean> {
+  const kv = getKV();
+  if (!kv) return false;
+  return Boolean(await kv.get(`${DEDUP_PREFIX}${date}`));
+}
+
+export async function markOutreachDigestSent(date: string): Promise<void> {
+  const kv = getKV();
+  if (!kv) return;
+  await kv.set(`${DEDUP_PREFIX}${date}`, new Date().toISOString(), {
+    ex: 60 * 60 * 24 * 14,
+  });
+}
