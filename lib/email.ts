@@ -95,3 +95,60 @@ export async function sendContactFormNotification(
   console.warn("[Contact email] Skipping send:", reason);
   return { success: false, error: reason };
 }
+
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function getResendClient(): Resend | null {
+  const apiKey = process.env.RESEND_API_KEY?.trim();
+  if (!apiKey) return null;
+  return new Resend(apiKey);
+}
+
+function magicCodeFromEmail(): string {
+  return (
+    process.env.CONTACT_FROM_EMAIL?.trim() ||
+    process.env.FIRM_OUTREACH_FROM_EMAIL?.trim() ||
+    "Police Station Agent <onboarding@resend.dev>"
+  );
+}
+
+/** Admin magic-code login email (6-digit OTP). */
+export async function sendMagicCode(email: string, code: string): Promise<boolean> {
+  const client = getResendClient();
+  if (!client) {
+    console.info("[Magic code — no RESEND_API_KEY]", { email });
+    return false;
+  }
+
+  try {
+    await client.emails.send({
+      from: magicCodeFromEmail(),
+      to: email,
+      subject: `Your Police Station Agent admin code: ${code}`,
+      html: `
+        <div style="font-family:sans-serif;max-width:480px;margin:0 auto;padding:20px">
+          <h2 style="color:#0A2342;margin-bottom:8px">Your admin login code</h2>
+          <p style="color:#475569;font-size:14px;margin-bottom:20px">
+            Use this code to sign in to the Police Station Agent admin area. It expires in 10 minutes.
+          </p>
+          <div style="background:#f8fafc;border:2px solid #e2e8f0;border-radius:8px;padding:24px;text-align:center;margin-bottom:20px">
+            <span style="font-family:monospace;font-size:32px;letter-spacing:0.3em;font-weight:bold;color:#0A2342">${escapeHtml(code)}</span>
+          </div>
+          <p style="color:#94a3b8;font-size:12px">
+            If you didn&rsquo;t request this code, you can safely ignore this email.
+          </p>
+        </div>
+      `,
+    });
+    return true;
+  } catch (err) {
+    console.error("[Magic code email failed]", err);
+    return false;
+  }
+}

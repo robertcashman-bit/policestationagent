@@ -1,27 +1,29 @@
-import { redirect } from "next/navigation";
-import { getAdminSession } from "@/lib/admin-auth";
-import BlogGeneratorClient from "@/components/BlogGeneratorClient";
+import { AdminGate } from '@/components/admin/AdminGate';
+import { AdminShell } from '@/components/admin/AdminShell';
+import BlogGeneratorClient from '@/components/BlogGeneratorClient';
+import type { Metadata } from 'next';
 
-export const metadata = {
-  title: "Blog Generator | Admin",
-  robots: {
-    index: false,
-    follow: false,
-  },
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
+export const metadata: Metadata = {
+  title: 'Blog Generator | Admin',
+  robots: { index: false, follow: false },
 };
 
-export default async function BlogGeneratorPage() {
-  // Check simple password-based session
-  const session = await getAdminSession();
-
-  if (!session) {
-    // Redirect to simple login page
-    redirect("/admin/login");
-  }
-
+export default function BlogGeneratorPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <BlogGeneratorClient />
-    </div>
+    <AdminGate>
+      {({ email }) => (
+        <AdminShell
+          active="blog-generator"
+          adminEmail={email}
+          title="Blog generator"
+          description="Create SEO-optimised blog posts for Police Station Agent."
+        >
+          <BlogGeneratorClient embedded />
+        </AdminShell>
+      )}
+    </AdminGate>
   );
 }

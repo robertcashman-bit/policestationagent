@@ -1,6 +1,11 @@
 # Firm outreach — operations (Kent)
 
-Automated agent-cover invitation emails to qualified criminal defence firms in Kent. Admin dashboard: `/admin/firm-outreach`.
+Automated agent-cover invitation emails to qualified criminal defence firms in Kent.
+
+**Admin URL:** https://www.policestationagent.com/admin  
+**Sign in:** Enter `robertdavidcashman@gmail.com` → receive 6-digit code by email → verify.
+
+Requires **Upstash Redis** (sessions + prospect data) and **RESEND_API_KEY** (login codes + outreach emails) on Vercel.
 
 ## Cron schedule (UTC)
 
@@ -58,8 +63,7 @@ npm run test:firm-outreach
 
 ## Rollout
 
-1. Provision Upstash on Vercel; set env vars.
-2. Deploy with `FIRM_OUTREACH_SEND_ENABLED=false`.
-3. Run discovery + enrich; review `/admin/firm-outreach`.
-4. Dry-run: `FIRM_OUTREACH_DRY_RUN=true`.
-5. Enable sends at `FIRM_OUTREACH_DAILY_CAP=25`.
+1. Add Upstash Redis + `RESEND_API_KEY` on Vercel (also enables admin magic-code login).
+2. Deploy — outreach sends run automatically via cron (no manual toggles unless you set `FIRM_OUTREACH_SEND_ENABLED=false`).
+3. Sign in at `/admin` to review queue and stats on the Overview and Firm outreach tabs.
+4. Optional: set `FIRM_OUTREACH_DRY_RUN=true` only while testing sends without delivery.

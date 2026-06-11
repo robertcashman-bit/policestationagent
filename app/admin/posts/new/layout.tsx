@@ -1,24 +1,21 @@
-import { requireAdminAuth, isJWTSecretConfigured } from "@/lib/admin-auth";
-import { redirect } from "next/navigation";
-import type { Metadata } from "next";
+import { AdminGate } from '@/components/admin/AdminGate';
+import { AdminShell } from '@/components/admin/AdminShell';
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "New Post | Admin | Police Station Agent",
-  description: "Create a new blog post",
-  robots: {
-    index: false,
-    follow: false,
-  },
+  title: 'New Post | Admin | Police Station Agent',
+  description: 'Create a new blog post',
+  robots: { index: false, follow: false },
 };
 
-export default async function NewPostLayout({ children }: { children: React.ReactNode }) {
-  // Validate JWT_SECRET
-  if (!isJWTSecretConfigured()) {
-    redirect("/admin/login");
-  }
-
-  // Require authentication - redirects to login if not authenticated
-  await requireAdminAuth();
-
-  return <>{children}</>;
+export default function NewPostLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <AdminGate>
+      {({ email }) => (
+        <AdminShell active="content" adminEmail={email} title="New post" description="Create a blog post.">
+          {children}
+        </AdminShell>
+      )}
+    </AdminGate>
+  );
 }

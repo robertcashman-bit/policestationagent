@@ -2,70 +2,92 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import type { ReactNode } from 'react';
 
-interface AdminShellProps {
-  title: string;
-  description?: string;
-  children: React.ReactNode;
+export type AdminSection = 'overview' | 'firm-outreach' | 'content' | 'blog-generator';
+
+const NAV: { id: AdminSection; href: string; label: string }[] = [
+  { id: 'overview', href: '/admin', label: 'Overview' },
+  { id: 'firm-outreach', href: '/admin/firm-outreach', label: 'Firm outreach' },
+  { id: 'content', href: '/admin/content', label: 'Content' },
+  { id: 'blog-generator', href: '/admin/blog-generator', label: 'Blog generator' },
+];
+
+function isActive(pathname: string, href: string): boolean {
+  if (href === '/admin') return pathname === '/admin';
+  return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-export function AdminShell({ title, description, children }: AdminShellProps) {
-  const pathname = usePathname();
+interface AdminShellProps {
+  active: AdminSection;
+  adminEmail: string;
+  title: string;
+  description?: string;
+  children: ReactNode;
+}
+
+export function AdminShell({ active, adminEmail, title, description, children }: AdminShellProps) {
+  const pathname = usePathname() ?? '';
 
   async function handleLogout() {
     try {
       await fetch('/api/admin/logout', { method: 'POST' });
     } catch {
-      // Still redirect even if the request fails
+      // Still redirect
     }
-    window.location.href = '/admin/login';
+    window.location.href = '/admin';
   }
-
-  const navLink = (href: string, label: string) => {
-    const active = pathname === href || pathname?.startsWith(`${href}/`);
-    return (
-      <Link
-        href={href}
-        className={`font-medium hover:underline ${
-          active ? 'text-[#0A2342] underline' : 'text-gray-700 hover:text-[#0A2342]'
-        }`}
-      >
-        {label}
-      </Link>
-    );
-  };
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap justify-between items-center gap-3 h-16">
-            <h1 className="text-xl sm:text-2xl font-bold text-[#0A2342]">Admin</h1>
-            <div className="flex flex-wrap items-center gap-4 text-sm">
-              {navLink('/admin', 'Dashboard')}
-              {navLink('/admin/firm-outreach', 'Firm outreach')}
-              {navLink('/admin/blog-generator', 'Blog generator')}
-              <Link href="/" className="text-gray-700 hover:text-[#0A2342] font-medium">
-                View site
-              </Link>
-              <button
-                type="button"
-                onClick={handleLogout}
-                className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 text-sm font-semibold"
-              >
-                Logout
-              </button>
-            </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-widest text-amber-600">Admin</p>
+            <h1 className="text-2xl font-bold text-[#0A2342]">{title}</h1>
+            {description ? <p className="mt-2 max-w-3xl text-sm text-gray-600">{description}</p> : null}
+          </div>
+          <div className="flex flex-wrap items-center gap-3 text-sm">
+            <p className="text-gray-600">
+              Signed in as <strong className="text-[#0A2342]">{adminEmail}</strong>
+            </p>
+            <Link href="/" className="font-medium text-gray-700 hover:text-[#0A2342] hover:underline">
+              View site
+            </Link>
+            <button
+              type="button"
+              onClick={handleLogout}
+              className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700"
+            >
+              Logout
+            </button>
           </div>
         </div>
-      </nav>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold text-gray-900">{title}</h2>
-          {description ? <p className="mt-1 text-sm text-gray-600">{description}</p> : null}
-        </div>
-        {children}
+        <nav
+          className="mt-6 flex flex-wrap gap-2 border-b border-gray-200 pb-4"
+          aria-label="Admin sections"
+        >
+          {NAV.map((item) => {
+            const activeNav = item.id === active || isActive(pathname, item.href);
+            return (
+              <Link
+                key={item.id}
+                href={item.href}
+                className={`rounded-lg px-4 py-2 text-sm font-semibold no-underline transition-colors ${
+                  activeNav
+                    ? 'bg-[#0A2342] text-white'
+                    : 'border border-gray-200 bg-white text-[#0A2342] hover:border-[#0A2342]/40'
+                }`}
+                aria-current={activeNav ? 'page' : undefined}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+        </nav>
+
+        <div className="mt-8">{children}</div>
       </div>
     </div>
   );

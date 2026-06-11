@@ -27,7 +27,7 @@ interface Service {
   description: string | null;
 }
 
-export default function AdminDashboard() {
+export default function AdminDashboard({ embedded = false }: { embedded?: boolean }) {
   const [activeTab, setActiveTab] = useState<
     "posts" | "stations" | "services" | "import" | "enhance" | "seo" | "links" | "sitemap"
   >("posts");
@@ -145,66 +145,40 @@ export default function AdminDashboard() {
     } catch {
       // Still redirect even if the request fails
     }
-    window.location.href = "/admin/login";
+    window.location.href = "/admin";
   };
 
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <h1 className="text-2xl font-bold text-[#0A2342]">Admin Dashboard</h1>
-            <div className="flex items-center space-x-4">
-              <Link
-                href="/admin/firm-outreach"
-                className="text-[#0A2342] font-medium hover:underline"
-              >
-                Firm outreach
-              </Link>
-              <Link href="/" className="text-gray-700 hover:text-[#0A2342]">
-                View Site
-              </Link>
-              <button
-                onClick={handleLogout}
-                className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
-              >
-                Logout
-              </button>
-            </div>
-          </div>
-        </div>
+  const tabNav = (
+    <div className="border-b border-gray-200">
+      <nav className="flex -mb-px overflow-x-auto">
+        {[
+          { id: "posts", label: "Blog Posts" },
+          { id: "stations", label: "Police Stations" },
+          { id: "services", label: "Services" },
+          { id: "import", label: "WordPress Import" },
+          { id: "enhance", label: "Content Enhancer" },
+          { id: "seo", label: "SEO Inspector" },
+          { id: "links", label: "Link Checker" },
+          { id: "sitemap", label: "Sitemap Preview" },
+        ].map((tab) => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id as any)}
+            className={`px-6 py-3 border-b-2 font-medium text-sm whitespace-nowrap ${
+              activeTab === tab.id
+                ? "border-[#0A2342] text-[#0A2342]"
+                : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+            }`}
+          >
+            {tab.label}
+          </button>
+        ))}
       </nav>
+    </div>
+  );
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white rounded-lg shadow">
-          <div className="border-b border-gray-200">
-            <nav className="flex -mb-px overflow-x-auto">
-              {[
-                { id: "posts", label: "Blog Posts" },
-                { id: "stations", label: "Police Stations" },
-                { id: "services", label: "Services" },
-                { id: "import", label: "WordPress Import" },
-                { id: "enhance", label: "Content Enhancer" },
-                { id: "seo", label: "SEO Inspector" },
-                { id: "links", label: "Link Checker" },
-                { id: "sitemap", label: "Sitemap Preview" },
-              ].map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id as any)}
-                  className={`px-6 py-3 border-b-2 font-medium text-sm whitespace-nowrap ${
-                    activeTab === tab.id
-                      ? "border-[#0A2342] text-[#0A2342]"
-                      : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </nav>
-          </div>
-
-          <div className="p-6">
+  const tabContent = (
+    <div className="p-6">
             {activeTab === "posts" && (
               <div>
                 <div className="flex justify-between items-center mb-4">
@@ -551,6 +525,48 @@ export default function AdminDashboard() {
               </div>
             )}
           </div>
+  );
+
+  if (embedded) {
+    return (
+      <div className="bg-white rounded-lg shadow">
+        {tabNav}
+        {tabContent}
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <nav className="bg-white shadow-sm border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <h1 className="text-2xl font-bold text-[#0A2342]">Admin Dashboard</h1>
+            <div className="flex items-center space-x-4">
+              <Link
+                href="/admin/firm-outreach"
+                className="text-[#0A2342] font-medium hover:underline"
+              >
+                Firm outreach
+              </Link>
+              <Link href="/" className="text-gray-700 hover:text-[#0A2342]">
+                View Site
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="bg-white rounded-lg shadow">
+          {tabNav}
+          {tabContent}
         </div>
       </div>
     </div>

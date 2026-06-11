@@ -1,28 +1,28 @@
 import { AdminGate } from '@/components/admin/AdminGate';
-import { AdminOverview } from '@/components/admin/AdminOverview';
 import { AdminShell } from '@/components/admin/AdminShell';
+import AdminDashboard from '@/components/AdminDashboard';
 import type { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: 'Admin | Police Station Agent',
-  description: 'Admin overview — firm outreach, content, and blog tools.',
+  title: 'Content | Admin',
+  description: 'Manage blog posts, police stations, and site content.',
   robots: { index: false, follow: false },
 };
 
-export default function AdminPage() {
+export default function AdminContentPage() {
   return (
     <AdminGate>
       {({ email }) => (
         <AdminShell
-          active="overview"
+          active="content"
           adminEmail={email}
-          title="Overview"
-          description="System health, outreach snapshot, and quick links to all admin tools."
+          title="Content"
+          description="Blog posts, police stations, services, imports, and SEO tools."
         >
-          <AdminOverview />
+          <AdminDashboard embedded />
         </AdminShell>
       )}
     </AdminGate>
