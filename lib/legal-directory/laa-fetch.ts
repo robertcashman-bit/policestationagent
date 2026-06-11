@@ -174,8 +174,16 @@ export async function fetchLaaCrimeProviders(opts?: {
   const wb = await downloadLaaWorkbook({ url: opts?.url, localFile: opts?.localFile });
   const records = parseLaaCrimeRecords(wb, opts?.limit ?? 0);
 
-  mkdirSync(dirname(writePath), { recursive: true });
-  writeFileSync(writePath, JSON.stringify(records, null, 2));
+  try {
+    mkdirSync(dirname(writePath), { recursive: true });
+    writeFileSync(writePath, JSON.stringify(records, null, 2));
+  } catch (err) {
+    // Vercel serverless has a read-only filesystem — use in-memory records only.
+    console.warn(
+      '[laa-fetch] Cache write skipped:',
+      err instanceof Error ? err.message : err,
+    );
+  }
 
   return { records, refreshed: true, source: 'govuk' };
 }
