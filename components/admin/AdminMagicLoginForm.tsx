@@ -6,7 +6,7 @@ const DEFAULT_ADMIN_EMAIL = 'robertdavidcashman@gmail.com';
 
 type Stage = 'email' | 'otp' | 'checking';
 
-export function AdminMagicLoginForm() {
+export function AdminMagicLoginForm({ kvConfigured = true }: { kvConfigured?: boolean }) {
   const [stage, setStage] = useState<Stage>('email');
   const [email, setEmail] = useState(DEFAULT_ADMIN_EMAIL);
   const [otp, setOtp] = useState('');
@@ -80,6 +80,11 @@ export function AdminMagicLoginForm() {
         <p className="mt-2 text-sm text-gray-600">
           Enter your admin email and we&rsquo;ll send a one-time login code.
         </p>
+        {!kvConfigured && (
+          <p className="mt-3 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900">
+            Admin login is not configured in this environment (Upstash Redis required).
+          </p>
+        )}
 
         {stage === 'email' && (
           <form onSubmit={handleSendOtp} className="mt-6 space-y-4">

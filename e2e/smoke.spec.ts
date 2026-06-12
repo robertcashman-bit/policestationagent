@@ -45,9 +45,7 @@ test.describe('Site smoke tests', () => {
 
   test('admin page redirects unauthenticated users', async ({ page }) => {
     await page.goto('/admin/content');
-    await page.waitForLoadState('networkidle');
-    const url = page.url();
-    expect(url).toMatch(/\/admin/);
     await expect(page.getByRole('heading', { name: /sign in to admin/i })).toBeVisible();
+    expect(page.url()).toMatch(/\/admin/);
   });
 });

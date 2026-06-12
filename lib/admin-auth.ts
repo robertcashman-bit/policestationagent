@@ -54,12 +54,13 @@ export async function isAdminAuthenticated(): Promise<boolean> {
 }
 
 export async function requireAdmin(): Promise<AdminCheckResult> {
+  const email = await getSessionEmail();
+  if (!email) return { ok: false, status: 401, error: 'Not authenticated' };
+
   if (process.env.NODE_ENV === 'production' && !getKV()) {
     return { ok: false, status: 403, error: 'Admin login not configured (Upstash Redis required)' };
   }
 
-  const email = await getSessionEmail();
-  if (!email) return { ok: false, status: 401, error: 'Not authenticated' };
   if (!isAdminEmail(email)) {
     return { ok: false, status: 403, error: 'Not authorised' };
   }

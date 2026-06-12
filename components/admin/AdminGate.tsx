@@ -9,28 +9,10 @@ export async function AdminGate({
 }: {
   children: (auth: { email: string }) => ReactNode;
 }) {
-  if (process.env.NODE_ENV === 'production' && !getKV()) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-        <div className="max-w-md rounded-lg bg-white p-8 shadow-md">
-          <h1 className="text-2xl font-bold text-red-600 mb-4">Configuration required</h1>
-          <p className="text-gray-700 mb-2">
-            Admin login needs Upstash Redis. Add it from the Vercel dashboard (Storage → Upstash).
-          </p>
-          <p className="text-sm text-gray-500">
-            Set <code className="text-xs">UPSTASH_REDIS_REST_URL</code> and{' '}
-            <code className="text-xs">UPSTASH_REDIS_REST_TOKEN</code>, plus{' '}
-            <code className="text-xs">RESEND_API_KEY</code> for login codes.
-          </p>
-        </div>
-      </div>
-    );
-  }
-
   const auth = await requireAdmin();
 
   if (!auth.ok && auth.status === 401) {
-    return <AdminMagicLoginForm />;
+    return <AdminMagicLoginForm kvConfigured={Boolean(getKV())} />;
   }
 
   if (!auth.ok) {
