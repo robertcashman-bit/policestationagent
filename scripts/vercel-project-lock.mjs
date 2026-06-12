@@ -29,20 +29,20 @@ function main() {
 
   // Validate environment variables are set
   if (!ALLOWED_PROJECT_IDS.length) {
-    console.warn("⚠️  VERCEL PROJECT LOCK: Environment variable not set");
-    console.warn("");
-    console.warn("ALLOWED_VERCEL_PROJECT_IDS environment variable is not set.");
-    console.warn("Deployment will proceed, but project lock is not active.");
-    console.warn("");
-    console.warn("To enable project lock:");
-    console.warn("1. Go to Vercel Project Settings → Environment Variables");
-    console.warn("2. Add: ALLOWED_VERCEL_PROJECT_IDS = <your-project-id>");
-    console.warn("3. Find your Project ID: Vercel Dashboard → Project Settings → General");
-    console.warn("");
-    console.warn("Current Project ID:", CURRENT_PROJECT_ID || "not available");
-    console.warn("");
-    // Don't fail - just warn
-    return 0;
+    console.error("❌ VERCEL PROJECT LOCK FAILED");
+    console.error("");
+    console.error("ALLOWED_VERCEL_PROJECT_IDS environment variable is not set.");
+    console.error("This repository must only build on the authorized web44ai project.");
+    console.error("");
+    console.error("If you see this on a duplicate Vercel project (e.g. policestationagent):");
+    console.error("  → Disconnect this Git repo from that project in Vercel Settings → Git");
+    console.error("");
+    console.error("On the correct project (web44ai), set:");
+    console.error("  ALLOWED_VERCEL_PROJECT_IDS = prj_XvBhew2OZV8JYpI2dNHDTD6P05Ai");
+    console.error("");
+    console.error("Current Project ID:", CURRENT_PROJECT_ID || "not available");
+    console.error("");
+    process.exit(1);
   }
 
   if (!CURRENT_PROJECT_ID) {

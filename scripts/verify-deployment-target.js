@@ -113,8 +113,14 @@ if (workspacePath.includes("pstrain rebuild")) {
   console.log(`📁 Working directory: ${workspacePath} ✅`);
 }
 
-// Check 6: Required production secrets (Vercel production builds only)
-if (process.env.VERCEL === '1' && process.env.VERCEL_ENV === 'production') {
+// Check 6: Required production secrets (authorized Vercel project only)
+const isAuthorizedProject =
+  process.env.VERCEL === "1" &&
+  process.env.ALLOWED_VERCEL_PROJECT_IDS?.split(",").some((id) =>
+    id.trim() === (process.env.VERCEL_PROJECT_ID || "").trim(),
+  );
+
+if (isAuthorizedProject && process.env.VERCEL_ENV === "production") {
   const requiredSecrets = [
     { name: 'CRON_SECRET', value: process.env.CRON_SECRET },
     { name: 'RESEND_WEBHOOK_SECRET', value: process.env.RESEND_WEBHOOK_SECRET },
@@ -134,13 +140,15 @@ if (process.env.VERCEL === '1' && process.env.VERCEL_ENV === 'production') {
 
 console.log("\n" + "=".repeat(60));
 if (hasError) {
-  console.error("\n❌ DEPLOYMENT TARGET VERIFICATION FAILED");
-  console.error("\nThis build would deploy to the WRONG project!");
-  console.error("\nCorrect deployment target:");
-  console.error(`  - Vercel URL: ${CORRECT_VERCEL_URL}`);
+  console.error("\n❌ DEPLOYMENT VERIFICATION FAILED");
+  console.error("\nReview the errors above. Common fixes:");
+  console.error("  - Missing secrets: add them in Vercel → Settings → Environment Variables");
+  console.error("  - Wrong Vercel project: disconnect Git from duplicate projects");
+  console.error("    (only web44ai should deploy this repo; see ALLOWED_VERCEL_PROJECT_IDS)");
+  console.error("\nCorrect production target:");
+  console.error(`  - Vercel project: web44ai`);
+  console.error(`  - URL: ${CORRECT_VERCEL_URL}`);
   console.error(`  - Git Repo: ${CORRECT_GIT_REPO}`);
-  console.error("\nDo NOT deploy from this location/configuration.");
-  console.error("Ensure you are in the correct workspace and Vercel project is linked correctly.");
   process.exit(1);
 } else {
   console.log("\n✅ DEPLOYMENT TARGET VERIFICATION PASSED");
