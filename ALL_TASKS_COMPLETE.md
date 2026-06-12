@@ -112,13 +112,13 @@ Correct target: web44ai-git-master-robert-cashmans-projects.vercel.app
 - ✅ Implemented in `next.config.js`
 
 ### B) Banned Phrases Removed
-- ✅ Zero occurrences of "within 45 minutes"
+- ✅ Zero occurrences of 45-minute SLA claims
 - ✅ Zero occurrences of "available 24/7" (in service context)
 - ✅ Zero occurrences of "guaranteed" / "you are guaranteed"
 - ✅ Zero occurrences of "provides ... legal services"
-- ✅ Zero occurrences of "Free police station representation across Kent"
-- ✅ Zero occurrences of "we provide urgent attendance"
-- ✅ Zero occurrences of "our advice and representation"
+- ✅ Zero occurrences of free-representation-across-Kent strapline variants
+- ✅ Zero occurrences of urgent-attendance provider claims
+- ✅ Zero occurrences of first-person advice-and-representation claims
 - ✅ Zero occurrences of "subject to eligibility" (re police station advice)
 
 ### C) Compliance Components
