@@ -10,6 +10,9 @@ import {
   KENT_CUSTODY_STATIONS,
 } from "@/lib/kent-custody-stations";
 import LinkToUsPanel from "@/components/LinkToUsPanel";
+import { InternalLinkHub } from "@/components/InternalLinkHub";
+import { RIGHTS_HUB, INTERVIEW_HUB } from "@/config/internal-link-hubs";
+import { PHONE_DISPLAY, PHONE_TEL } from "@/config/contact";
 
 const LAST_UPDATED = "2026-05-30";
 
@@ -122,10 +125,15 @@ export default function KentPoliceCustodyResourcesPage() {
               </Link>
               .
             </p>
-            <a href="tel:01732247427" className="font-bold text-blue-800">
-              01732 247427
+            <a href={`tel:${PHONE_TEL}`} className="font-bold text-blue-800">
+              {PHONE_DISPLAY}
             </a>
           </section>
+
+          <div className="mt-10 space-y-8">
+            <InternalLinkHub title={RIGHTS_HUB.title} links={RIGHTS_HUB.links} />
+            <InternalLinkHub title={INTERVIEW_HUB.title} links={INTERVIEW_HUB.links} />
+          </div>
         </div>
       </main>
       <Footer />

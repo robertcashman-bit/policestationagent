@@ -353,7 +353,7 @@ ${
 </p>
 
 <p>
-  <strong>Call 01732 247427</strong> for immediate assistance.
+  <strong>Call 01732 247427</strong> for prompt assistance.
 </p>
 ` + generateAdvertBlock();
 

@@ -32,14 +32,14 @@ const WHAT_WE_DO_CONTENT = `<div class="bg-gradient-to-br from-slate-50 to-blue-
         </div>
         <h2 class="text-2xl font-bold text-slate-900 mb-4">Police Station Representation</h2>
         <p class="text-slate-600 leading-relaxed mb-4">
-          We provide expert legal representation at police stations across Kent, available 24/7. Whether you've been arrested or invited for a voluntary interview, we're here to protect your rights and provide expert legal advice.
+          We provide expert legal representation at police stations across Kent, available under Legal Aid. Whether you've been arrested or invited for a voluntary interview, we're here to protect your rights and provide expert legal advice.
         </p>
         <ul class="space-y-2 text-slate-600">
           <li class="flex items-start gap-2">
             <svg class="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
             </svg>
-            <span>Available 24/7 across all Kent police stations</span>
+            <span>available under Legal Aid across all Kent police stations</span>
           </li>
           <li class="flex items-start gap-2">
             <svg class="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -100,7 +100,7 @@ const WHAT_WE_DO_CONTENT = `<div class="bg-gradient-to-br from-slate-50 to-blue-
         </div>
         <h2 class="text-2xl font-bold text-slate-900 mb-4">Legal Aid & Private Representation</h2>
         <p class="text-slate-600 leading-relaxed mb-4">
-          We provide both Legal Aid (free) and private representation services. Legal Aid is available to everyone at the police station, while private representation offers guaranteed continuity and enhanced service.
+          We provide both Legal Aid (free) and private representation services. Legal Aid is available to everyone at the police station, while private representation offers Where possible, you may be represented by Robert Cashman, subject to availability and conflicts. If Robert cannot attend, Tuckers Solicitors LLP will arrange an alternative suitably qualified representative. and enhanced service.
         </p>
         <ul class="space-y-2 text-slate-600">
           <li class="flex items-start gap-2">
@@ -113,7 +113,7 @@ const WHAT_WE_DO_CONTENT = `<div class="bg-gradient-to-br from-slate-50 to-blue-
             <svg class="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
             </svg>
-            <span>Private representation with guaranteed solicitor</span>
+            <span>Private representation with Where possible, you may be represented by Robert Cashman, subject to availability and conflicts. If Robert cannot attend, Tuckers Solicitors LLP will arrange an alternative suitably qualified representative.</span>
           </li>
           <li class="flex items-start gap-2">
             <svg class="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -132,14 +132,14 @@ const WHAT_WE_DO_CONTENT = `<div class="bg-gradient-to-br from-slate-50 to-blue-
         </div>
         <h2 class="text-2xl font-bold text-slate-900 mb-4">24/7 Emergency Service</h2>
         <p class="text-slate-600 leading-relaxed mb-4">
-          We understand that arrests and police interviews can happen at any time. That's why we provide round-the-clock emergency legal representation across all Kent police stations.
+          We understand that arrests and police interviews can happen at any time. That's why we provide extended hours legal advice — if detained, ask custody staff to contact a solicitor across all Kent police stations.
         </p>
         <ul class="space-y-2 text-slate-600">
           <li class="flex items-start gap-2">
             <svg class="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
             </svg>
-            <span>Available 24 hours a day, 7 days a week</span>
+            <span>Extended hours service across Kent</span>
           </li>
           <li class="flex items-start gap-2">
             <svg class="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -269,7 +269,7 @@ async function main() {
     "/what-we-do",
     WHAT_WE_DO_CONTENT,
     "What We Do | Criminal Defence Kent | Police Station Representation",
-    "Expert police station representation and criminal defence services across Kent. Available 24/7 for arrests, voluntary interviews, and legal advice."
+    "Expert police station representation and criminal defence services across Kent. available under Legal Aid for arrests, voluntary interviews, and legal advice."
   );
 
   console.log("\n✅ Done!");

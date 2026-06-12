@@ -14,19 +14,19 @@ function generateSEODescription(title, content) {
     "voluntary interview":
       "Complete guide to voluntary police interviews in the UK. Understand your rights, what to expect, and why you need a solicitor. Free legal advice under Legal Aid.",
     "duty solicitor":
-      "What is a duty solicitor? Learn about free legal representation at police stations and courts in Kent. Accredited solicitors available 24/7 under Legal Aid.",
+      "What is a duty solicitor? Learn about free legal representation at police stations and courts in Kent. Accredited solicitors available under Legal Aid under Legal Aid.",
     "property return":
       "How to get your property returned from the police in the UK. Understand your rights under PACE 1984. Free legal advice from accredited police station representatives.",
     caution:
       "Understanding police cautions in England and Wales. Learn about the implications, types of cautions, and your rights. Free legal advice available.",
     "police station representation":
-      "Expert police station representation across Kent. Free legal advice under Legal Aid. Accredited duty solicitors available 24/7 at all Kent custody suites.",
+      "Expert police station representation across Kent. Free legal advice under Legal Aid. Accredited duty solicitors available under Legal Aid at all Kent custody suites.",
     disclosure:
       "Why police station disclosure matters. Learn how a solicitor can obtain crucial information about your case before interview. Free legal advice available.",
     "police contacted":
       "The police have contacted you? Know your rights and what to do. Free legal advice from accredited police station representatives in Kent.",
     arrest:
-      "What to do if you are arrested in Kent. Know your rights under PACE 1984. Free legal advice from accredited duty solicitors available 24/7.",
+      "What to do if you are arrested in Kent. Know your rights under PACE 1984. Free legal advice from accredited duty solicitors available under Legal Aid.",
     "common assault":
       "Understanding common assault in English law. Learn about the definition, penalties, and your legal rights. Free legal advice available.",
     "no further action":
@@ -51,7 +51,7 @@ function generateSEODescription(title, content) {
 
   // Create SEO-friendly description
   const keywords = titleLower.split(" ").slice(0, 4).join(" ");
-  return `Expert legal advice on ${keywords} in Kent, UK. Free police station representation under Legal Aid. Accredited duty solicitors available 24/7.`;
+  return `Expert legal advice on ${keywords} in Kent, UK. Free police station representation under Legal Aid. Accredited duty solicitors available under Legal Aid.`;
 }
 
 // Function to ensure content has proper SEO structure

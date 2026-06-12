@@ -203,7 +203,7 @@ export default function Page() {
                     01732 247427
                   </a>
                 </strong>{" "}
-                for immediate assistance.
+                for prompt assistance.
               </p>
             </section>
 

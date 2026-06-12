@@ -73,7 +73,7 @@ function extractMetadata(html) {
       document.querySelector("title")?.textContent?.trim() || "What We Do | Police Station Agent",
     description:
       document.querySelector('meta[name="description"]')?.getAttribute("content") ||
-      "Learn about our comprehensive police station representation services across Kent. Expert legal advice and representation available 24/7.",
+      "Learn about our comprehensive police station representation services across Kent. Expert legal advice and representation available under Legal Aid.",
     canonical:
       document.querySelector('link[rel="canonical"]')?.getAttribute("href") ||
       "https://policestationagent.com/what-we-do",

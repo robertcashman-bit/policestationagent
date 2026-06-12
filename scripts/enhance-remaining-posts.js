@@ -73,7 +73,7 @@ const enhancedContent = {
 </ul>
 
 <h3>24/7 Availability</h3>
-<p>Our service is available 24 hours a day, 7 days a week, including evenings, weekends, and bank holidays. We aim to attend any Kent police station within 30 minutes of your request.</p>
+<p>Our service is Extended hours service across Kent, including evenings, weekends, and bank holidays. We aim to attend any Kent police station within 30 minutes of your request.</p>
 
 <h3>Why Choose Us</h3>
 <p>As an accredited duty solicitor with over 35 years of experience, I provide:</p>

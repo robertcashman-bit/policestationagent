@@ -138,7 +138,7 @@ async function processFile(filePath) {
       : "What We Do | Criminal Defence Kent | Police Station Representation";
     const pageDescription = metadata.description
       ? metadata.description.replace(/Police Station Agent/gi, "Criminal Defence Kent")
-      : "Expert police station representation and criminal defence services across Kent. Available 24/7 for arrests, voluntary interviews, and legal advice.";
+      : "Expert police station representation and criminal defence services across Kent. available under Legal Aid for arrests, voluntary interviews, and legal advice.";
     const canonical = `https://criminaldefencekent.co.uk/what-we-do`;
 
     // Create new page content

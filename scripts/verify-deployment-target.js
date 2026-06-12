@@ -113,6 +113,25 @@ if (workspacePath.includes("pstrain rebuild")) {
   console.log(`📁 Working directory: ${workspacePath} ✅`);
 }
 
+// Check 6: Required production secrets (Vercel production builds only)
+if (process.env.VERCEL === '1' && process.env.VERCEL_ENV === 'production') {
+  const requiredSecrets = [
+    { name: 'CRON_SECRET', value: process.env.CRON_SECRET },
+    { name: 'RESEND_WEBHOOK_SECRET', value: process.env.RESEND_WEBHOOK_SECRET },
+    { name: 'UPSTASH_REDIS_REST_URL', value: process.env.UPSTASH_REDIS_REST_URL ?? process.env.KV_REST_API_URL },
+    { name: 'UPSTASH_REDIS_REST_TOKEN', value: process.env.UPSTASH_REDIS_REST_TOKEN ?? process.env.KV_REST_API_TOKEN },
+  ];
+
+  for (const { name, value } of requiredSecrets) {
+    if (!value?.trim()) {
+      console.error(`❌ ERROR: ${name} is required in production but is not set.`);
+      hasError = true;
+    } else {
+      console.log(`🔐 ${name}: set ✅`);
+    }
+  }
+}
+
 console.log("\n" + "=".repeat(60));
 if (hasError) {
   console.error("\n❌ DEPLOYMENT TARGET VERIFICATION FAILED");

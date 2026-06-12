@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import { normalizeScrapedHtml } from "@/lib/scraped-html";
 import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 import { SITE_DOMAIN, SITE_URL } from "@/config/site";
@@ -165,7 +166,7 @@ export default function Page() {
                           <polyline points="22 4 12 14.01 9 11.01"></polyline>
                         </svg>
                         <p className="text-slate-700">
-                          45-minute response time to Tonbridge custody suite
+                          We aim to respond promptly. Attendance times depend on location, custody demand and solicitor availability.
                         </p>
                       </div>
                       <div className="flex items-start gap-3">
@@ -210,7 +211,7 @@ export default function Page() {
                     </p>
                     <p className="text-slate-700 leading-relaxed mb-4">
                       We cover all custody matters at Tonbridge police stations. Whether you're in
-                      Tonbridge or West Kent, we can provide immediate representation.
+                      Tonbridge or West Kent, we can If you request Tuckers Solicitors LLP, arrangements for attendance will be made in accordance with scheme requirements and solicitor availability..
                     </p>
                   </div>
                 </div>

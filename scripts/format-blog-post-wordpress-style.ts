@@ -69,7 +69,7 @@ const content = `<p>A voluntary police interview is a formal process that many p
 
 <p>Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795). for people who have been contacted by the police and invited to attend interviews under caution.</p>
 
-<p>Our accredited duty solicitor, Robert Cashman, offers free and independent legal advice under Legal Aid for police station interviews, including voluntary attendances and custody matters across Kent and England & Wales. Legal advice cannot be refused by the police and is available 24/7.</p>
+<p>Our accredited duty solicitor, Robert Cashman, offers free and independent legal advice under Legal Aid for police station interviews, including voluntary attendances and custody matters across Kent and England & Wales. Legal advice cannot be refused by the police and is available under Legal Aid.</p>
 
 <p><a href="https://www.policestationagent.com">Arrange Police Station Legal Advice</a></p>
 

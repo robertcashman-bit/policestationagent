@@ -1,12 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { verifyAuth } from "@/lib/middleware";
+import { requireAdminApi } from "@/lib/admin-auth";
 
-// Safe content enhancer - improves content without destructive changes
 export async function POST(request: NextRequest) {
-  const auth = await verifyAuth(request);
-
-  if (!auth) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const auth = await requireAdminApi();
+  if (!auth.ok) {
+    return NextResponse.json({ error: auth.error }, { status: auth.status });
   }
 
   try {

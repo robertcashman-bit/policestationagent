@@ -27,7 +27,7 @@ Three core services have been added with detailed content:
 
 ### 1. Police Station Representation
 - **Slug:** `/services/police-station-representation`
-- **Description:** Expert legal representation when you need it most. Available 24/7 for urgent matters.
+- **Description:** Expert legal representation when you need it most. available under Legal Aid for urgent matters.
 - **Content:** Comprehensive information about police station representation services
 
 ### 2. Criminal Defense

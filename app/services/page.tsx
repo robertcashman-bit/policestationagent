@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import { normalizeScrapedHtml } from "@/lib/scraped-html";
 import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 import { SITE_DOMAIN } from "@/config/site";

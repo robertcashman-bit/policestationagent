@@ -165,13 +165,13 @@ import { SITE_DOMAIN, SITE_URL } from '@/config/site';
 import Script from 'next/script';
 
 export const metadata: Metadata = {
-  title: "Police Station Rep ${town.displayName} | FREE 24/7 | Accredited Duty Solicitor",
+  title: "Police Station Rep ${town.displayName} | Extended Hours | Accredited Duty Solicitor",
   description: "${town.description} Call 01732 247427.",
   alternates: {
     canonical: \`https://\${SITE_DOMAIN}/police-station-rep-${town.slug}\`,
   },
   openGraph: {
-    title: "Police Station Rep ${town.displayName} | FREE 24/7 | Accredited Duty Solicitor",
+    title: "Police Station Rep ${town.displayName} | Extended Hours | Accredited Duty Solicitor",
     description: "${town.description}",
     url: \`https://\${SITE_DOMAIN}/police-station-rep-${town.slug}\`,
     siteName: 'Police Station Agent',
@@ -263,14 +263,14 @@ export default function Page() {
                           <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                           <polyline points="22 4 12 14.01 9 11.01"></polyline>
                         </svg>
-                        <p className="text-slate-700">Available 24/7 including weekends and bank holidays</p>
+                        <p className="text-slate-700">available under Legal Aid including weekends and bank holidays</p>
                       </div>
                       <div className="flex items-start gap-3">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-check-circle text-green-600 w-5 h-5 mt-0.5 flex-shrink-0">
                           <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                           <polyline points="22 4 12 14.01 9 11.01"></polyline>
                         </svg>
-                        <p className="text-slate-700">45-minute response time to ${town.displayName}${town.type === "Custody Suite" ? " custody suite" : ""}</p>
+                        <p className="text-slate-700">We aim to respond promptly. Attendance times depend on location, custody demand and solicitor availability."Custody Suite" ? " custody suite" : ""}</p>
                       </div>
                       <div className="flex items-start gap-3">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-check-circle text-green-600 w-5 h-5 mt-0.5 flex-shrink-0">
@@ -290,7 +290,7 @@ export default function Page() {
                       ${town.type === "Custody Suite" ? town.displayName + " custody suite" : town.displayName + " police station"}${town.address ? " is located at " + town.address + "." : "."} We provide expert <a href="${town.stationLink}" className="text-blue-600 hover:underline font-semibold">police station rep at ${town.displayName}${town.type === "Custody Suite" ? " custody suite" : ""}</a> for all arrests and voluntary interviews in the ${town.displayName} area.
                     </p>
                     <p className="text-slate-700 leading-relaxed mb-4">
-                      We cover ${town.type === "Custody Suite" ? "all custody matters" : "voluntary interviews"} at ${town.displayName} police stations. Whether you're in ${town.areaServed.slice(0, 2).join(" or ")}, we can provide immediate representation.
+                      We cover ${town.type === "Custody Suite" ? "all custody matters" : "voluntary interviews"} at ${town.displayName} police stations. Whether you're in ${town.areaServed.slice(0, 2).join(" or ")}, we can If you request Tuckers Solicitors LLP, arrangements for attendance will be made in accordance with scheme requirements and solicitor availability..
                     </p>
                   </div>
                 </div>

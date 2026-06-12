@@ -51,14 +51,14 @@ function fixFile(filePath) {
   let content = fs.readFileSync(filePath, "utf8");
   let modified = false;
 
-  // Fix "15 minutes away" claims
+  // Fix "We aim to respond promptly. Attendance times depend on location, custody demand and solicitor availability." claims
   const timePatterns = [
-    /We're 15 minutes away/g,
-    /15 minutes away/g,
-    /15 Min Response/g,
+    /We're We aim to respond promptly. Attendance times depend on location, custody demand and solicitor availability./g,
+    /We aim to respond promptly. Attendance times depend on location, custody demand and solicitor availability./g,
+    /Extended hours service/g,
     /15 minute response/gi,
     /⚡ 15 minutes response/g,
-    /solicitor 15 minutes away/gi,
+    /solicitor We aim to respond promptly. Attendance times depend on location, custody demand and solicitor availability./gi,
   ];
 
   for (const pattern of timePatterns) {
@@ -70,9 +70,9 @@ function fixFile(filePath) {
           : `We're ${stationData.time} away`;
 
       // Handle different replacement based on pattern type
-      if (pattern.toString().includes("15 Min Response")) {
+      if (pattern.toString().includes("Extended hours service")) {
         content = content.replace(pattern, `${stationData.time} Response`);
-      } else if (pattern.toString().includes("15 minutes away")) {
+      } else if (pattern.toString().includes("We aim to respond promptly. Attendance times depend on location, custody demand and solicitor availability.")) {
         content = content.replace(pattern, `${stationData.time} away`);
       } else if (pattern.toString().includes("15 minute response")) {
         content = content.replace(pattern, `${stationData.time} response`);

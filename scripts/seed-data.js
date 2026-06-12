@@ -47,7 +47,7 @@ const policeStations = [
     slug: "maidstone",
     address: "Palace Avenue, Maidstone, Kent ME15 6NF",
     phone: null,
-    content: `<p>We provide expert legal representation at Maidstone Police Station. Our experienced solicitors are available 24/7 to assist with urgent police station matters.</p>
+    content: `<p>We provide expert legal representation at Maidstone Police Station. Our experienced solicitors are available under Legal Aid to assist with urgent police station matters.</p>
     <p>If you or someone you know has been arrested or is being questioned at Maidstone Police Station, it's crucial to have professional legal representation. We understand the stress and uncertainty that comes with police station attendance, and we're here to protect your rights and provide expert guidance.</p>
     <h2>Why Choose Us for Maidstone Police Station Representation?</h2>
     <ul>
@@ -88,7 +88,7 @@ const policeStations = [
       <li>Immediate response to police station calls</li>
       <li>Expert legal advice during interviews</li>
       <li>Protection of your legal rights</li>
-      <li>Available 24/7 for urgent matters</li>
+      <li>available under Legal Aid for urgent matters</li>
       <li>Professional and confidential service</li>
     </ul>
     <p>Don't face police questioning alone. Contact us for expert legal representation at Canterbury Police Station.</p>`,
@@ -98,7 +98,7 @@ const policeStations = [
     slug: "gravesend",
     address: "Gravesend Police Station, Kent",
     phone: null,
-    content: `<p>We provide expert legal representation at Gravesend Police Station. Our experienced solicitors are available 24/7 to assist with urgent police station matters.</p>
+    content: `<p>We provide expert legal representation at Gravesend Police Station. Our experienced solicitors are available under Legal Aid to assist with urgent police station matters.</p>
     <p>If you or someone you know has been arrested or is being questioned at Gravesend Police Station, it's crucial to have professional legal representation. We understand the stress and uncertainty that comes with police station attendance.</p>
     <h2>Why Choose Us for Gravesend Police Station Representation?</h2>
     <ul>
@@ -123,7 +123,7 @@ const policeStations = [
       <li>Expert legal advice during interviews</li>
       <li>Protection of your legal rights</li>
       <li>Experienced criminal defense solicitors</li>
-      <li>Available 24/7 for urgent matters</li>
+      <li>available under Legal Aid for urgent matters</li>
     </ul>
     <p>Don't face police questioning alone. Contact us for expert legal representation at Tonbridge Police Station.</p>`,
   },
@@ -149,7 +149,7 @@ const policeStations = [
     slug: "swanley",
     address: "Swanley Police Station, Kent",
     phone: null,
-    content: `<p>We provide expert legal representation at Swanley Police Station. Our experienced solicitors are available 24/7 to assist with urgent police station matters.</p>
+    content: `<p>We provide expert legal representation at Swanley Police Station. Our experienced solicitors are available under Legal Aid to assist with urgent police station matters.</p>
     <p>If you or someone you know has been arrested or is being questioned at Swanley Police Station, it's crucial to have professional legal representation. We're here to protect your rights and provide expert guidance.</p>
     <h2>Why Choose Us for Swanley Police Station Representation?</h2>
     <ul>
@@ -190,7 +190,7 @@ const policeStations = [
       <li>Immediate response to police station calls</li>
       <li>Expert legal advice during interviews</li>
       <li>Protection of your legal rights</li>
-      <li>Available 24/7 for urgent matters</li>
+      <li>available under Legal Aid for urgent matters</li>
       <li>Professional and confidential service</li>
     </ul>
     <p>Don't face police questioning alone. Contact us for expert legal representation at Folkestone Police Station.</p>`,
@@ -200,7 +200,7 @@ const policeStations = [
     slug: "dover",
     address: "Dover Police Station, Kent",
     phone: null,
-    content: `<p>We provide expert legal representation at Dover Police Station. Our experienced solicitors are available 24/7 to assist with urgent police station matters.</p>
+    content: `<p>We provide expert legal representation at Dover Police Station. Our experienced solicitors are available under Legal Aid to assist with urgent police station matters.</p>
     <p>If you or someone you know has been arrested or is being questioned at Dover Police Station, it's crucial to have professional legal representation. We understand the stress and uncertainty that comes with police station attendance.</p>
     <h2>Why Choose Us for Dover Police Station Representation?</h2>
     <ul>
@@ -241,7 +241,7 @@ const policeStations = [
       <li>Immediate response to police station calls</li>
       <li>Expert legal advice during interviews</li>
       <li>Protection of your legal rights</li>
-      <li>Available 24/7 for urgent matters</li>
+      <li>available under Legal Aid for urgent matters</li>
       <li>Professional and confidential service</li>
     </ul>
     <p>Don't face police questioning alone. Contact us for expert legal representation at Sevenoaks Police Station.</p>`,
@@ -251,7 +251,7 @@ const policeStations = [
     slug: "tunbridge-wells",
     address: "Tunbridge Wells Police Station, Kent",
     phone: null,
-    content: `<p>We provide expert legal representation at Tunbridge Wells Police Station. Our experienced solicitors are available 24/7 to assist with urgent police station matters.</p>
+    content: `<p>We provide expert legal representation at Tunbridge Wells Police Station. Our experienced solicitors are available under Legal Aid to assist with urgent police station matters.</p>
     <p>If you or someone you know has been arrested or is being questioned at Tunbridge Wells Police Station, it's crucial to have professional legal representation. We're here to protect your rights and provide expert guidance.</p>
     <h2>Why Choose Us for Tunbridge Wells Police Station Representation?</h2>
     <ul>
@@ -292,7 +292,7 @@ const policeStations = [
       <li>Immediate response to police station calls</li>
       <li>Expert legal advice during interviews</li>
       <li>Protection of your legal rights</li>
-      <li>Available 24/7 for urgent matters</li>
+      <li>available under Legal Aid for urgent matters</li>
       <li>Professional and confidential service</li>
     </ul>
     <p>Don't face police questioning alone. Contact us for expert legal representation at Margate Police Station.</p>`,
@@ -322,7 +322,7 @@ const services = [
     title: "Police Station Representation",
     slug: "police-station-representation",
     description:
-      "Expert legal representation when you need it most. Available 24/7 for urgent matters.",
+      "Expert legal representation when you need it most. available under Legal Aid for urgent matters.",
     content: `<h2>Police Station Representation</h2>
     <p>If you've been arrested or are being questioned at a police station, having expert legal representation is crucial. Our experienced solicitors are We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor. assistance.</p>
     

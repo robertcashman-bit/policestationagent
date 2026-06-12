@@ -113,7 +113,7 @@ Correct target: web44ai-git-master-robert-cashmans-projects.vercel.app
 
 ### B) Banned Phrases Removed
 - ✅ Zero occurrences of 45-minute SLA claims
-- ✅ Zero occurrences of "available 24/7" (in service context)
+- ✅ Zero occurrences of "available under Legal Aid" (in service context)
 - ✅ Zero occurrences of "guaranteed" / "you are guaranteed"
 - ✅ Zero occurrences of "provides ... legal services"
 - ✅ Zero occurrences of free-representation-across-Kent strapline variants

@@ -5,7 +5,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://policestationagent.
 
 export const metadata: Metadata = {
   title: "Police Station Agent - Expert Legal Representation",
-  description: "Professional police station representation and legal services across the UK. Available 24/7 for urgent legal assistance.",
+  description: "Professional police station representation and legal services across the UK. available under Legal Aid for urgent legal assistance.",
   keywords: "police station agent, legal representation, solicitor, criminal defense, UK",
   authors: [{ name: "Police Station Agent" }],
   alternates: {

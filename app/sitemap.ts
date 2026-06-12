@@ -15,6 +15,62 @@ function getDb() {
   }
 }
 
+function locationSitemapEntries(
+  baseUrl: string,
+  paths: string[],
+  priority = 0.85
+): MetadataRoute.Sitemap {
+  return paths.map((path) => ({
+    url: `${baseUrl}${path}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority,
+  }));
+}
+
+const SOLICITOR_LOCATION_PATHS = [
+  "/ashford-solicitor",
+  "/bluewater-solicitor",
+  "/bromley-solicitor",
+  "/canterbury-solicitor",
+  "/chatham-solicitor",
+  "/dartford-solicitor",
+  "/deal-solicitor",
+  "/dover-solicitor",
+  "/faversham-solicitor",
+  "/folkestone-solicitor",
+  "/gillingham-solicitor",
+  "/gravesend-solicitor",
+  "/herne-bay-solicitor",
+  "/maidstone-solicitor",
+  "/margate-solicitor",
+  "/medway-solicitor",
+  "/police-station-solicitor",
+  "/ramsgate-solicitor",
+  "/rochester-solicitor",
+  "/sandwich-solicitor",
+  "/sevenoaks-solicitor",
+  "/sittingbourne-solicitor",
+  "/swanley-solicitor",
+  "/tonbridge-solicitor",
+  "/tunbridge-wells-solicitor",
+  "/whitstable-solicitor",
+];
+
+const POLICE_STATION_AGENT_PATHS = [
+  "/police-station-agent-kent",
+  "/police-station-agent-ashford",
+  "/police-station-agent-canterbury",
+  "/police-station-agent-dartford",
+  "/police-station-agent-folkestone",
+  "/police-station-agent-gravesend",
+  "/police-station-agent-maidstone",
+  "/police-station-agent-medway",
+  "/police-station-agent-sevenoaks",
+  "/police-station-agent-sittingbourne",
+  "/police-station-agent-tonbridge",
+];
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || `https://${SITE_DOMAIN}`;
 
@@ -788,6 +844,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     ...staticPages,
+    ...locationSitemapEntries(baseUrl, SOLICITOR_LOCATION_PATHS, 0.85),
+    ...locationSitemapEntries(baseUrl, POLICE_STATION_AGENT_PATHS, 0.88),
     ...stationPages,
     ...servicePages,
     ...blogPages,

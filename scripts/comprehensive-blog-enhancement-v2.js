@@ -633,7 +633,7 @@ ${referencesHtml}
       "voluntary-interview":
         "Understand your rights in voluntary police interviews. Free legal advice available. Learn when to answer questions and when to remain silent under PACE.",
       "duty-solicitor":
-        "What is a duty solicitor? Free legal representation at police stations and courts. Accredited solicitors available 24/7 across Kent under Legal Aid.",
+        "What is a duty solicitor? Free legal representation at police stations and courts. Accredited solicitors available under Legal Aid across Kent under Legal Aid.",
       bail: "Understanding police bail conditions, time limits, and your rights. Expert advice on bail breaches and how to challenge unreasonable conditions.",
       arrest:
         "Know your rights when arrested. Free legal advice under PACE section 58. Understanding detention time limits and police powers of arrest.",
@@ -642,7 +642,7 @@ ${referencesHtml}
       caution:
         "Understanding the police caution and your right to silence. When to give no comment interviews. Expert legal advice on adverse inferences.",
       rights:
-        "Your fundamental rights in police custody. Free legal advice, right to silence, and fair treatment. Accredited duty solicitors available 24/7.",
+        "Your fundamental rights in police custody. Free legal advice, right to silence, and fair treatment. Accredited duty solicitors available under Legal Aid.",
       interview:
         "What happens in a police interview? Your rights to legal representation and silence. How to prepare with your solicitor for police questioning.",
       "legal-aid":

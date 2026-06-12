@@ -1,27 +1,47 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo/page-metadata";
+import { FAQPage } from "@/components/StructuredData";
+import { InternalLinkHub } from "@/components/InternalLinkHub";
+import { RIGHTS_HUB } from "@/config/internal-link-hubs";
+import { PHONE_DISPLAY, PHONE_TEL } from "@/config/contact";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Booking In Procedure in Kent | What Happens at the Police Station",
+  path: "/booking-in-procedure-in-kent",
   description:
     "Understanding the booking in procedure at Kent police stations. Learn what happens when you arrive, your rights, and what to expect during the custody process.",
-  alternates: {
-    canonical: "https://policestationagent.com/booking-in-procedure-in-kent",
+});
+
+const BOOKING_IN_FAQ = [
+  {
+    question: "What is the booking-in procedure at a Kent police station?",
+    answer:
+      "Booking-in is the process when you arrive at custody. The custody officer records your detention, explains your rights, and authorises detention if necessary under PACE Code C.",
   },
-  openGraph: {
-    title: "Booking In Procedure in Kent | What Happens at the Police Station",
-    description:
-      "Understanding the booking in procedure at Kent police stations. Learn what happens when you arrive and your rights.",
-    url: "https://policestationagent.com/booking-in-procedure-in-kent",
-    siteName: "Police Station Agent",
-    type: "website",
+  {
+    question: "What rights must the custody officer explain during booking-in?",
+    answer:
+      "You must be told your right to free legal advice, to have someone informed of your arrest, and to consult the PACE Codes of Practice. Medical attention must be arranged if needed.",
   },
-};
+  {
+    question: "Can I request a solicitor during booking-in?",
+    answer:
+      "Yes. Request legal advice as soon as possible. The custody officer must allow you to consult a solicitor in private and should not interview you about the offence until you have had that opportunity unless you waive the right.",
+  },
+  {
+    question: "What happens to my property during booking-in?",
+    answer:
+      "Your belongings are searched and logged. Items that could be used to harm yourself or others are removed for safekeeping and recorded on the custody record.",
+  },
+];
 
 export default function Page() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
+    <>
+      <FAQPage items={BOOKING_IN_FAQ} />
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
       <Header />
       <main className="flex-grow relative" id="main-content" role="main" aria-live="polite">
         <div className="bg-slate-50 min-h-screen">
@@ -149,10 +169,10 @@ export default function Page() {
                 <strong>
                   Call us immediately on{" "}
                   <a
-                    href="tel:01732247427"
+                    href={`tel:${PHONE_TEL}`}
                     className="text-blue-600 hover:text-blue-800 font-semibold"
                   >
-                    01732 247427
+                    {PHONE_DISPLAY}
                   </a>
                 </strong>{" "}
                 to arrange representation.
@@ -171,10 +191,15 @@ export default function Page() {
                 <li>Police and Criminal Evidence Act 1984, Code C, paragraph 3.15</li>
               </ol>
             </section>
+
+            <div className="max-w-6xl mx-auto px-4 pb-12">
+              <InternalLinkHub title={RIGHTS_HUB.title} links={RIGHTS_HUB.links} />
+            </div>
           </div>
         </div>
       </main>
       <Footer />
-    </div>
+      </div>
+    </>
   );
 }

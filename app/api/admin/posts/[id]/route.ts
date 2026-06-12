@@ -1,12 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import db from "@/lib/db";
-import { verifyAuth } from "@/lib/middleware";
+import { requireAdminApi } from "@/lib/admin-auth";
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
-  const auth = await verifyAuth(request);
-
-  if (!auth) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const auth = await requireAdminApi();
+  if (!auth.ok) {
+    return NextResponse.json({ error: auth.error }, { status: auth.status });
   }
 
   const post = db.prepare("SELECT * FROM blog_posts WHERE id = ?").get(Number(params.id));
@@ -19,10 +18,9 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 }
 
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
-  const auth = await verifyAuth(request);
-
-  if (!auth) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const auth = await requireAdminApi();
+  if (!auth.ok) {
+    return NextResponse.json({ error: auth.error }, { status: auth.status });
   }
 
   try {
@@ -42,8 +40,6 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
           meta_title = ?, meta_description = ?, updated_at = CURRENT_TIMESTAMP
       WHERE id = ?
     `);
-
-    const publishedAt = published ? new Date().toISOString() : null;
 
     stmt.run(
       title,
@@ -67,10 +63,9 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 }
 
 export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
-  const auth = await verifyAuth(request);
-
-  if (!auth) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const auth = await requireAdminApi();
+  if (!auth.ok) {
+    return NextResponse.json({ error: auth.error }, { status: auth.status });
   }
 
   const stmt = db.prepare("DELETE FROM blog_posts WHERE id = ?");

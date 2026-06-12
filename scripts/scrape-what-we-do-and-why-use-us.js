@@ -118,7 +118,7 @@ async function main() {
       "why-use-us",
       whyUseUsContent,
       "Why Use Us | Police Station Agent",
-      "Discover why Police Station Agent is the trusted choice for police station representation across Kent. Expert solicitors available 24/7."
+      "Discover why Police Station Agent is the trusted choice for police station representation across Kent. Expert solicitors available under Legal Aid."
     );
   } else {
     console.error("❌ Failed to scrape /why-use-us");

@@ -1,14 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import { verifyAuth } from "@/lib/middleware";
+import { requireAdminApi } from "@/lib/admin-auth";
 import db from "@/lib/db";
 import { parseStringPromise } from "xml2js";
 
+const MAX_IMPORT_BYTES = 10 * 1024 * 1024;
+
 // WordPress import functionality
 export async function POST(request: NextRequest) {
-  const auth = await verifyAuth(request);
-
-  if (!auth) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const auth = await requireAdminApi();
+  if (!auth.ok) {
+    return NextResponse.json({ error: auth.error }, { status: auth.status });
   }
 
   try {
@@ -17,6 +18,10 @@ export async function POST(request: NextRequest) {
 
     if (!file) {
       return NextResponse.json({ error: "WordPress export file is required" }, { status: 400 });
+    }
+
+    if (file.size > MAX_IMPORT_BYTES) {
+      return NextResponse.json({ error: "File too large (max 10MB)" }, { status: 400 });
     }
 
     const text = await file.text();
@@ -64,7 +69,7 @@ export async function POST(request: NextRequest) {
           content,
           published ? 1 : 0,
           publishedAt,
-          auth.userId,
+          null,
           pubDate ? new Date(pubDate).toISOString() : new Date().toISOString()
         );
 

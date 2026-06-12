@@ -78,7 +78,7 @@ export default function PreChargeAdvicePage() {
               serviceName="Police Interview Advice Solicitor"
               serviceDefinition="Police interview advice solicitor provides expert pre-charge advice and strategic representations to police/CPS before charging decisions. This service includes interview strategy, evidence review, and written representations to prevent or narrow charges. FREE under Legal Aid in England & Wales."
               whoFor="This service is for anyone facing a police interview, whether under arrest or attending voluntarily, or anyone told a charging decision is pending. It is suitable for all individuals and is free under Legal Aid regardless of financial circumstances."
-              whenToUse="You should use this service as early as possible—ideally before interview and again after interview while the case is being considered for charge. Do not attend an interview without advice. Call 01732 247427 for immediate assistance."
+              whenToUse="You should use this service as early as possible—ideally before interview and again after interview while the case is being considered for charge. Do not attend an interview without advice. Call 01732 247427 for prompt assistance."
               jurisdiction="England & Wales"
             />
 

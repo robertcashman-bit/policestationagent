@@ -1,11 +1,12 @@
 import Header from "@/components/Header";
+import { normalizeScrapedHtml } from "@/lib/scraped-html";
 import Footer from "@/components/Footer";
 import BlogAdvertBlock from "@/components/BlogAdvertBlock";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getAllSlugs, getPostBySlug, formatBlogDate, generateExcerpt } from "@/lib/blog-reader";
-import { convertH1ToH2 } from "@/lib/html-sanitizer";
+import { convertH1ToH2, sanitizeBlogHtml } from "@/lib/html-sanitizer";
 import { SITE_URL } from "@/config/site";
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
@@ -97,7 +98,7 @@ export default function BlogPostPage({ params }: Readonly<PageProps>) {
   }
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_URL;
-  const sanitizedContentHtml = convertH1ToH2(post.contentHtml);
+  const sanitizedContentHtml = sanitizeBlogHtml(post.contentHtml);
 
   // Build structured data
   const blogPostingSchema = {

@@ -16,7 +16,7 @@ const WHY_USE_US_CONTENT = `<div class="bg-gradient-to-br from-slate-50 to-blue-
       Why Choose Us
     </div>
     <h1 class="text-4xl md:text-5xl font-black mb-6">Why Use Us As Your Police Station Agent In Kent?</h1>
-    <p class="text-xl text-blue-100 mb-8">Expert representation when you need it most - available 24/7 across all Kent police stations</p>
+    <p class="text-xl text-blue-100 mb-8">Expert representation when you need it most - available under Legal Aid across all Kent police stations</p>
   </div>
 </section>
 
@@ -56,7 +56,7 @@ const WHY_USE_US_CONTENT = `<div class="bg-gradient-to-br from-slate-50 to-blue-
             <polyline points="12 6 12 12 16 14"></polyline>
           </svg>
         </div>
-        <h2 class="text-2xl font-bold text-slate-900 mb-4">Available 24/7</h2>
+        <h2 class="text-2xl font-bold text-slate-900 mb-4">available under Legal Aid</h2>
         <p class="text-slate-600 leading-relaxed">
           We understand that arrests and police interviews don't happen on a schedule. That's why we provide round-the-clock coverage including evenings, weekends, and bank holidays across all Kent police stations.
         </p>
@@ -131,7 +131,7 @@ const WHY_USE_US_CONTENT = `<div class="bg-gradient-to-br from-slate-50 to-blue-
               <svg class="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
               </svg>
-              <span>Available 24/7 across all Kent stations</span>
+              <span>available under Legal Aid across all Kent stations</span>
             </li>
           </ul>
         </div>
@@ -234,7 +234,7 @@ async function main() {
     "/why-use-us",
     WHY_USE_US_CONTENT,
     "Why Use Us As Your Police Station Agent In Kent? | Criminal Defence Kent",
-    "Expert police station representation in Kent. 35+ years experience, available 24/7, free Legal Aid, and complete Kent coverage. Professional association with Tuckers Solicitors LLP."
+    "Expert police station representation in Kent. 35+ years experience, available under Legal Aid, free Legal Aid, and complete Kent coverage. Professional association with Tuckers Solicitors LLP."
   );
 
   console.log("\n✅ Done!");

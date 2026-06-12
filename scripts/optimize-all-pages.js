@@ -31,7 +31,7 @@ const LLM_TEMPLATES = {
   "police station representation": {
     what: "Police station representation is a legal service provided by qualified solicitors at police custody suites in England & Wales. This service provides FREE legal advice under Legal Aid, expert representation during police interviews, and protection of your rights under PACE 1984.",
     who: "This service is for anyone arrested or invited for a voluntary interview at a police station in Kent. It is suitable for all individuals regardless of income, financial circumstances, or the nature of the allegation.",
-    when: "You should use this service immediately upon arrest or when contacted by police for a voluntary interview. Do not answer police questions without legal advice. Call 01732 247427 during extended hours for immediate assistance.",
+    when: "You should use this service immediately upon arrest or when contacted by police for a voluntary interview. Do not answer police questions without legal advice. Call 01732 247427 during extended hours for prompt assistance.",
   },
   "police station rep for solicitors": {
     what: "Police station rep for solicitors is a professional agency service providing expert police station representation for criminal solicitor firms. This service provides qualified solicitor attendance, detailed attendance notes, and comprehensive coverage across Kent police stations.",

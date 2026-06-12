@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BlogCarousel from "@/components/BlogCarousel";
 import Link from "next/link";
-import { CUSTODY_PHONE_CTA, PHONE_TEL } from "@/config/contact";
+import { CUSTODY_PHONE_CTA, PHONE_DISPLAY, PHONE_TEL } from "@/config/contact";
 
 export default function NotFound() {
   return (
@@ -58,6 +58,16 @@ export default function NotFound() {
                     <polyline points="9 22 9 12 15 12 15 22" />
                   </svg>
                   Go to Homepage
+                </Link>
+              </div>
+
+              {/* Custody urgency CTA */}
+              <div className="mb-8">
+                <Link
+                  href="/start/in-custody"
+                  className="inline-flex items-center gap-3 px-8 py-4 bg-red-600 hover:bg-red-700 text-white text-lg font-bold rounded-xl transition-all shadow-lg"
+                >
+                  Someone in custody now?
                 </Link>
               </div>
 
@@ -193,6 +203,30 @@ export default function NotFound() {
                 <span className="font-medium text-slate-800">Police Stations</span>
               </Link>
               <Link
+                href="/kent-police-stations"
+                className="flex flex-col items-center p-4 bg-slate-50 rounded-lg hover:bg-blue-50 transition-colors text-center"
+              >
+                <span className="font-medium text-slate-800">Kent Police Stations</span>
+              </Link>
+              <Link
+                href="/police-custody-rights"
+                className="flex flex-col items-center p-4 bg-slate-50 rounded-lg hover:bg-blue-50 transition-colors text-center"
+              >
+                <span className="font-medium text-slate-800">Custody Rights</span>
+              </Link>
+              <Link
+                href="/start/in-custody"
+                className="flex flex-col items-center p-4 bg-slate-50 rounded-lg hover:bg-blue-50 transition-colors text-center"
+              >
+                <span className="font-medium text-slate-800">In Custody Help</span>
+              </Link>
+              <Link
+                href="/sitemap.xml"
+                className="flex flex-col items-center p-4 bg-slate-50 rounded-lg hover:bg-blue-50 transition-colors text-center"
+              >
+                <span className="font-medium text-slate-800">Sitemap</span>
+              </Link>
+              <Link
                 href="/faq"
                 className="flex flex-col items-center p-4 bg-slate-50 rounded-lg hover:bg-blue-50 transition-colors text-center"
               >
@@ -250,11 +284,11 @@ export default function NotFound() {
             </h2>
             <p className="text-lg text-slate-300 max-w-2xl mx-auto mb-8">
               If you&apos;ve been arrested or need police station representation, contact us for
-              immediate assistance.
+              prompt assistance.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <a
-                href="tel:01732247427"
+                href={`tel:${PHONE_TEL}`}
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold rounded-lg transition-colors"
               >
                 <svg
@@ -270,7 +304,7 @@ export default function NotFound() {
                 >
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
                 </svg>
-                Call 01732 247427
+                Call {PHONE_DISPLAY}
               </a>
               <Link
                 href="/contact"

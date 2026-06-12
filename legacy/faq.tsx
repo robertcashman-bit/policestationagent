@@ -21,7 +21,7 @@ export default function FAQPage() {
       answer: 'You should have a solicitor present if you are being questioned, have been arrested, are attending a voluntary interview, or need legal advice about any police matter.',
     },
     {
-      question: 'Are your services available 24/7?',
+      question: 'Are your services available under Legal Aid?',
       answer: 'Yes, we provide We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor. services. Our solicitors are available around the clock to assist with urgent police station matters.',
     },
     {
@@ -74,7 +74,7 @@ export default function FAQPage() {
               <div className="bg-[#0A2342] text-white p-6 rounded-lg mt-12">
                 <h3 className="text-xl font-semibold mb-4">Still Have Questions?</h3>
                 <p className="text-gray-200 mb-4">
-                  If you have additional questions or need immediate legal assistance, please contact us. We're available 24/7.
+                  If you have additional questions or need immediate legal assistance, please contact us. We're available under Legal Aid.
                 </p>
                 <a
                   href="/contact"

@@ -72,7 +72,7 @@ function extractMetadata(html) {
       "Why Use Us As Your Police Station Agent In Kent | Police Station Agent",
     description:
       document.querySelector('meta[name="description"]')?.getAttribute("content") ||
-      "Discover why Police Station Agent is the trusted choice for expert police station representation in Kent. Available 24/7.",
+      "Discover why Police Station Agent is the trusted choice for expert police station representation in Kent. available under Legal Aid.",
     canonical:
       document.querySelector('link[rel="canonical"]')?.getAttribute("href") ||
       "https://policestationagent.com/why-use-us",

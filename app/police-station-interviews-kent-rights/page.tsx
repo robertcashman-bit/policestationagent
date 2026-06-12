@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import { normalizeScrapedHtml } from "@/lib/scraped-html";
 import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
@@ -229,7 +230,7 @@ export default function Page() {
             <div
               className="prose prose-lg max-w-6xl mx-auto px-4 py-16"
               dangerouslySetInnerHTML={{
-                __html: `
+                __html: normalizeScrapedHtml(`
                 <div class="fixed right-3 top-4 z-40 text-[10px] text-slate-400 select-none pointer-events-none bg-white/80 backdrop-blur-sm px-2 py-1 rounded border border-slate-200/50" aria-hidden="true">v5.1.0 — ${currentDate}</div>
                 <div class="bg-slate-50">
                   <div class="max-w-6xl mx-auto px-4 py-16">
@@ -542,7 +543,7 @@ export default function Page() {
                       <div class="rounded-xl bg-gradient-to-r from-red-600 to-red-800 text-white shadow-2xl border-0">
                         <div class="p-8 md:p-12 text-center">
                           <h3 class="text-3xl md:text-4xl font-black text-white mb-4">Need Legal Advice at a Kent Police Station?</h3>
-                          <p class="text-xl text-red-100 mb-8 max-w-2xl mx-auto">FREE legal advice available during extended hours at all Kent police stations. Call now for immediate assistance.</p>
+                          <p class="text-xl text-red-100 mb-8 max-w-2xl mx-auto">FREE legal advice available during extended hours at all Kent police stations. Call now for prompt assistance.</p>
                           <div class="flex flex-col sm:flex-row justify-center gap-4">
                             <a href="tel:01732247427" class="inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-10 rounded-md px-8 bg-white text-red-600 hover:bg-red-50 font-black text-lg shadow-xl flex items-center gap-2">
                               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone w-6 h-6"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> Call: 01732 247427
@@ -568,8 +569,9 @@ export default function Page() {
                     </div>
                   </div>
                 </div>
-              `,
+              `),
               }}
+
             />
           </div>
         </main>

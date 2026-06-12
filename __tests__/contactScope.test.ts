@@ -29,7 +29,7 @@ test("layout includes sitewide not-police banner and contact guard", () => {
 });
 
 test("header uses custody-scoped phone CTA not generic legal advice", () => {
-  const header = fs.readFileSync(path.join(root, "components/Header.tsx"), "utf8");
-  assert.ok(header.includes("HEADER_STRAPLINE"));
-  assert.doesNotMatch(header, /Call Now for legal advice/i);
+  const topStrip = fs.readFileSync(path.join(root, "components/header/HeaderTopStrip.tsx"), "utf8");
+  assert.ok(topStrip.includes("HEADER_STRAPLINE"));
+  assert.doesNotMatch(topStrip, /Call Now for legal advice/i);
 });

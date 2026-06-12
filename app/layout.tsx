@@ -5,8 +5,9 @@ import { SITE_URL, SITE_DOMAIN } from "@/config/site";
 import Script from "next/script";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
-const Chatbot = dynamic(() => import("@/components/Chatbot"), {
+const LazyChatbot = dynamic(() => import("@/components/LazyChatbot"), {
   ssr: false,
   loading: () => null,
 });
@@ -455,8 +456,9 @@ export default function RootLayout({
         <Suspense fallback={null}>
           <GoogleAnalytics />
         </Suspense>
-        {/* Chatbot Assistant */}
-        <Chatbot />
+        {/* Chatbot Assistant — deferred until interaction or idle */}
+        <LazyChatbot />
+        <SpeedInsights />
       </body>
     </html>
   );

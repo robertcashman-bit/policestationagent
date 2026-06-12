@@ -130,7 +130,7 @@ export default function PoliceStationPage({ params }: PageProps) {
                 <div className="bg-gray-50 p-8 rounded-xl mb-12 border-l-4 border-[#0A2342]">
                   <h2 className="text-2xl font-semibold mb-4">Expert Representation Available</h2>
                   <p className="text-gray-700 leading-relaxed">
-                    We provide professional legal representation at {station.name}. Our experienced solicitors are available 24/7 for urgent matters.
+                    We provide professional legal representation at {station.name}. Our experienced solicitors are available under Legal Aid for urgent matters.
                   </p>
                 </div>
               )}

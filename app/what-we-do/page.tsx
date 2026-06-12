@@ -240,7 +240,7 @@ export default function Page() {
                   <p className="text-slate-600 leading-relaxed mb-4">
                     We provide both Legal Aid (free) and private representation services. Legal Aid
                     is available to everyone at the police station, while private representation
-                    offers guaranteed continuity and enhanced service.
+                    offers Where possible, you may be represented by Robert Cashman, subject to availability and conflicts. If Robert cannot attend, Tuckers Solicitors LLP will arrange an alternative suitably qualified representative. and enhanced service.
                   </p>
                   <ul className="space-y-2 text-slate-600">
                     <li className="flex items-start gap-2">
@@ -273,7 +273,7 @@ export default function Page() {
                           d="M5 13l4 4L19 7"
                         ></path>
                       </svg>
-                      <span>Private representation with guaranteed solicitor</span>
+                      <span>Private representation with Where possible, you may be represented by Robert Cashman, subject to availability and conflicts. If Robert cannot attend, Tuckers Solicitors LLP will arrange an alternative suitably qualified representative.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <svg
@@ -316,7 +316,7 @@ export default function Page() {
                   </h2>
                   <p className="text-slate-600 leading-relaxed mb-4">
                     We understand that arrests and police interviews can happen at any time. That's
-                    why we provide round-the-clock emergency legal representation across all Kent
+                    why we provide extended hours legal advice — if detained, ask custody staff to contact a solicitor across all Kent
                     police stations.
                   </p>
                   <ul className="space-y-2 text-slate-600">
@@ -334,7 +334,7 @@ export default function Page() {
                           d="M5 13l4 4L19 7"
                         ></path>
                       </svg>
-                      <span>Available 24 hours a day, 7 days a week</span>
+                      <span>Extended hours service across Kent</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <svg

@@ -78,7 +78,7 @@ export default function BailApplicationsPage() {
               serviceName="Duty Solicitor Police Station"
               serviceDefinition="Duty solicitor police station services provide expert bail applications, police bail advice, court bail, and bail condition variations. This service helps protect your position and challenge unreasonable restrictions. FREE under Legal Aid in England & Wales."
               whoFor="This service is for anyone who has been bailed, given a return date, or is unsure about bail conditions. It is suitable for all individuals and is free under Legal Aid regardless of financial circumstances."
-              whenToUse="You should use this service immediately if you have been bailed, given conditions, or need advice about bail variations. Do not breach bail conditions without legal advice. Call 01732 247427 for immediate assistance."
+              whenToUse="You should use this service immediately if you have been bailed, given conditions, or need advice about bail variations. Do not breach bail conditions without legal advice. Call 01732 247427 for prompt assistance."
               jurisdiction="England & Wales"
             />
 

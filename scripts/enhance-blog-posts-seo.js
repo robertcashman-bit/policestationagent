@@ -42,7 +42,7 @@ function generateMetaDescription(title, content) {
   } else if (titleLower.includes("voluntary") && titleLower.includes("interview")) {
     return `Complete guide to voluntary police interviews in the UK. Understand your rights, what to expect, and why you need a solicitor. Free legal advice.`;
   } else if (titleLower.includes("duty solicitor")) {
-    return `What is a duty solicitor? Learn about free legal representation at police stations and courts. Accredited solicitors available 24/7.`;
+    return `What is a duty solicitor? Learn about free legal representation at police stations and courts. Accredited solicitors available under Legal Aid.`;
   } else if (titleLower.includes("property") && titleLower.includes("return")) {
     return `How to get your property returned from the police. Understand your rights under PACE 1984. Free legal advice available.`;
   } else if (titleLower.includes("caution")) {
@@ -51,7 +51,7 @@ function generateMetaDescription(title, content) {
     titleLower.includes("police station representation") ||
     titleLower.includes("police station rep")
   ) {
-    return `Expert police station representation across Kent. Free legal advice under Legal Aid. Accredited duty solicitors available 24/7.`;
+    return `Expert police station representation across Kent. Free legal advice under Legal Aid. Accredited duty solicitors available under Legal Aid.`;
   } else if (titleLower.includes("disclosure")) {
     return `Why police station disclosure matters. Learn how a solicitor can obtain crucial information about your case before interview. Free legal advice.`;
   } else if (titleLower.includes("arrest") || titleLower.includes("contacted")) {
@@ -60,7 +60,7 @@ function generateMetaDescription(title, content) {
 
   // Default SEO description
   const keywords = titleLower.split(" ").slice(0, 5).join(" ");
-  return `Expert legal advice on ${keywords} in Kent, UK. Free police station representation under Legal Aid. Accredited duty solicitors available 24/7.`;
+  return `Expert legal advice on ${keywords} in Kent, UK. Free police station representation under Legal Aid. Accredited duty solicitors available under Legal Aid.`;
 }
 
 // Function to enhance content with images and better structure

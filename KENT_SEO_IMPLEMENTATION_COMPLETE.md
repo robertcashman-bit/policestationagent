@@ -52,7 +52,7 @@ Created 15 dedicated "police station rep" landing pages for major Kent towns:
 - Added "Kent's #1 police station rep service"
 - Emphasized "Not a call centre - direct access to qualified solicitor"
 - Added "35+ years experience and 6000+ cases"
-- Updated meta title: "Kent's Leading Police Station Rep | FREE 24/7 | Accredited Duty Solicitor"
+- Updated meta title: "Kent's Leading Police Station Rep | Extended Hours | Accredited Duty Solicitor"
 - Updated meta description with Kent dominance messaging
 
 **Internal Link Anchor Text Optimized:**
@@ -154,7 +154,7 @@ Added all 15 new town-level pages to sitemap:
 **Status:** ✅ COMPLETE
 
 **Meta Descriptions Updated:**
-- Format: "Police Station Rep at [Station Name] | FREE 24/7 | Kent"
+- Format: "Police Station Rep at [Station Name] | Extended Hours | Kent"
 - Includes "police station rep" keyword
 - Emphasizes FREE and 24/7 availability
 

@@ -85,7 +85,7 @@ export default function FAQAccordion() {
 </ul>
 </div>
 </div>
-<p>Both services provide expert representation. The choice depends on your priorities: cost (Legal Aid) or guaranteed continuity and enhanced service (private).</p>`,
+<p>Both services provide expert representation. The choice depends on your priorities: cost (Legal Aid) or Where possible, you may be represented by Robert Cashman, subject to availability and conflicts. If Robert cannot attend, Tuckers Solicitors LLP will arrange an alternative suitably qualified representative. and enhanced service (private).</p>`,
     },
   ];
 

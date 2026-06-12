@@ -13,7 +13,7 @@ export default function HomePage() {
     name: 'Police Station Agent',
     url: siteUrl,
     logo: `${siteUrl}/logo.png`,
-    description: 'Expert legal representation at police stations across the UK. Available 24/7.',
+    description: 'Expert legal representation at police stations across the UK. available under Legal Aid.',
     address: {
       '@type': 'PostalAddress',
       addressCountry: 'GB',
@@ -52,7 +52,7 @@ export default function HomePage() {
                 Expert Police Station Representation
               </h1>
               <p className="text-xl md:text-2xl mb-8 text-gray-200">
-                Professional legal services available 24/7 across the UK
+                Professional legal services available under Legal Aid across the UK
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
@@ -177,7 +177,7 @@ export default function HomePage() {
           <div className="container-custom text-center">
             <h2 className="text-3xl font-bold mb-4">Need Legal Assistance?</h2>
             <p className="text-xl mb-8 text-gray-200">
-              We're available 24/7 for urgent police station matters
+              We're available under Legal Aid for urgent police station matters
             </p>
             <Link
               href="/contact"

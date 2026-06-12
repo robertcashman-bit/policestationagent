@@ -5,10 +5,17 @@ import {
   createSession,
   verifyMagicCode,
 } from '@/lib/admin-session';
+import { getClientIp, rateLimitOk } from '@/lib/contact-guards';
 
 export const dynamic = 'force-dynamic';
 
 export async function POST(request: Request) {
+  const ip = getClientIp(request);
+  const limit = await rateLimitOk({ ip, scope: 'admin-verify-code', max: 20 });
+  if (!limit.ok) {
+    return NextResponse.json({ error: 'Too many attempts. Please try again later.' }, { status: 429 });
+  }
+
   let body: { email?: string; code?: string };
   try {
     body = await request.json();

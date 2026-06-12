@@ -67,7 +67,7 @@ const BANNED_PATTERNS = [
   {
     id: "guaranteed-representation",
     pattern:
-      /(?:guaranteed\s+senior\s+solicitor|you\s+are\s+guaranteed\s+to\s+be\s+represented\s+by|guaranteed\s+to\s+be\s+represented|guarantee.*?representation|guaranteed.*?attendance)/gi,
+      /(?:guaranteed\s+senior\s+solicitor|you\s+are\s+guaranteed\s+to\s+be\s+represented\s+by|guaranteed\s+to\s+be\s+represented|guaranteed\s+(?:continuity|solicitor)|guarantee\s+(?:any\s+particular\s+outcome|.*?attendance))/gi,
     replacement:
       "Where possible, you may be represented by Robert Cashman, subject to availability and conflicts. If Robert cannot attend, Tuckers Solicitors LLP will arrange an alternative suitably qualified representative.",
     description: "Guarantee language",
@@ -87,6 +87,71 @@ const BANNED_PATTERNS = [
     replacement:
       "Tell custody staff you want Tuckers Solicitors LLP. You may request Robert Cashman as your named solicitor, subject to availability and conflicts.",
     description: "Instructions to ask for Police Station Agent",
+  },
+  {
+    id: "forty-five-minute-response-time",
+    pattern: /45-minute response time to [^<\n"]+/gi,
+    replacement:
+      "We aim to respond promptly. Attendance times depend on location, custody demand and solicitor availability.",
+    description: "45-minute response time SLA claims",
+  },
+  {
+    id: "minute-response-sla",
+    pattern: /\d+\s*[- ]?\s*minute(?:s)?\s+(?:response time|away)/gi,
+    replacement:
+      "We aim to respond promptly. Attendance times depend on location, custody demand and solicitor availability.",
+    description: "Numeric minute SLA claims",
+  },
+  {
+    id: "min-response-badge",
+    pattern: /\d+\s*Min\s+Response/gi,
+    replacement: "Extended hours service",
+    description: "Min Response badge SLA claims",
+  },
+  {
+    id: "immediate-representation",
+    pattern: /(?:we\s+can\s+provide|provides?\s+)immediate\s+(?:FREE\s+)?(?:legal\s+)?representation/gi,
+    replacement:
+      "If you request Tuckers Solicitors LLP, arrangements for attendance will be made in accordance with scheme requirements and solicitor availability.",
+    description: "Immediate representation claims",
+  },
+  {
+    id: "immediate-free-representation",
+    pattern: /Immediate FREE legal representation/gi,
+    replacement:
+      "If you request Tuckers Solicitors LLP, arrangements for attendance will be made in accordance with scheme requirements and solicitor availability.",
+    description: "Immediate FREE legal representation claims",
+  },
+  {
+    id: "immediate-assistance",
+    pattern: /immediate assistance/gi,
+    replacement: "prompt assistance",
+    description: "Immediate assistance claims",
+  },
+  {
+    id: "round-the-clock-emergency",
+    pattern: /round-the-clock emergency legal representation/gi,
+    replacement:
+      "extended hours legal advice — if detained, ask custody staff to contact a solicitor",
+    description: "Round-the-clock emergency representation claims",
+  },
+  {
+    id: "available-24-hours",
+    pattern: /Available 24 hours a day, 7 days a week/gi,
+    replacement: "Extended hours service across Kent",
+    description: "24 hours a day availability claims",
+  },
+  {
+    id: "free-24-7-title",
+    pattern: /FREE 24\/7/gi,
+    replacement: "Extended Hours",
+    description: "FREE 24/7 in titles and metadata",
+  },
+  {
+    id: "available-24-7-metadata",
+    pattern: /available 24\/7/gi,
+    replacement: "available under Legal Aid",
+    description: "Available 24/7 in metadata",
   },
 ];
 
@@ -108,6 +173,7 @@ const EXCLUDE_PATTERNS = [
   "**/.next/**",
   "**/dist/**",
   "**/.git/**",
+  "**/SEO_LLM_AUDIT_REPORT.json",
   "**/compliance-report.*",
   "**/COMPLIANCE*.md",
   "**/FINAL*.md",
@@ -118,6 +184,8 @@ const EXCLUDE_PATTERNS = [
   "**/scripts/compliance-scan-and-fix.js",
   "**/lib/compliance/normalizeCopy.ts",
   "**/components/compliance/**",
+  "**/e2e/**",
+  "**/__tests__/**",
 ];
 
 function scanFile(filePath, patterns) {

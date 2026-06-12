@@ -48,7 +48,7 @@ This audit identifies critical gaps preventing dominance for "police station rep
 - `/police-station-rep-bluewater`
 
 **Template Structure:**
-- Title: "Police Station Rep [Town] | FREE 24/7 | Accredited Duty Solicitor"
+- Title: "Police Station Rep [Town] | Extended Hours | Accredited Duty Solicitor"
 - H1: "Police Station Representative in [Town], Kent"
 - Content: Town-specific coverage, nearest custody suites, response times
 - Internal links: Link to relevant police station pages with exact-match anchor text
@@ -162,7 +162,7 @@ This audit identifies critical gaps preventing dominance for "police station rep
 ### New Pages Required (Priority Order)
 
 #### 1. `/police-station-rep-medway`
-**Title:** "Police Station Rep Medway | FREE 24/7 | Accredited Duty Solicitor"  
+**Title:** "Police Station Rep Medway | Extended Hours | Accredited Duty Solicitor"  
 **H1:** "Police Station Representative in Medway, Kent"  
 **Meta Description:** "Expert police station rep in Medway, Kent. FREE legal advice 24/7 at Medway custody suite. Accredited duty solicitor Robert Cashman. Call 01732 247427."  
 **Content Focus:**
@@ -172,7 +172,7 @@ This audit identifies critical gaps preventing dominance for "police station rep
 - Link to `/medway-police-station` with anchor "police station rep at Medway custody suite"
 
 #### 2. `/police-station-rep-maidstone`
-**Title:** "Police Station Rep Maidstone | FREE 24/7 | Voluntary Interviews"  
+**Title:** "Police Station Rep Maidstone | Extended Hours | Voluntary Interviews"  
 **H1:** "Police Station Representative in Maidstone, Kent"  
 **Meta Description:** "Police station rep for Maidstone voluntary interviews. FREE legal advice 24/7. Accredited duty solicitor covering Maidstone and mid-Kent. Call 01732 247427."  
 **Content Focus:**
@@ -181,7 +181,7 @@ This audit identifies critical gaps preventing dominance for "police station rep
 - Link to `/maidstone-police-station` with anchor "police station rep Maidstone"
 
 #### 3. `/police-station-rep-canterbury`
-**Title:** "Police Station Rep Canterbury | FREE 24/7 | East Kent Coverage"  
+**Title:** "Police Station Rep Canterbury | Extended Hours | East Kent Coverage"  
 **H1:** "Police Station Representative in Canterbury, Kent"  
 **Meta Description:** "Expert police station rep in Canterbury, Kent. FREE We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor. at Canterbury custody suite. Serving East Kent. Call 01732 247427."  
 **Content Focus:**
@@ -190,7 +190,7 @@ This audit identifies critical gaps preventing dominance for "police station rep
 - Link to `/canterbury-police-station` with anchor "police station rep Canterbury"
 
 #### 4. `/police-station-rep-gravesend`
-**Title:** "Police Station Rep Gravesend | FREE 24/7 | North Kent"  
+**Title:** "Police Station Rep Gravesend | Extended Hours | North Kent"  
 **H1:** "Police Station Representative in Gravesend, Kent"  
 **Meta Description:** "Police station rep in Gravesend, Kent. FREE legal advice 24/7 at North Kent custody suite. Serving Gravesend, Dartford, and North Kent. Call 01732 247427."  
 **Content Focus:**
@@ -199,7 +199,7 @@ This audit identifies critical gaps preventing dominance for "police station rep
 - Link to `/north-kent-gravesend-police-station` with anchor "police station rep Gravesend"
 
 #### 5. `/police-station-rep-tonbridge`
-**Title:** "Police Station Rep Tonbridge | FREE 24/7 | West Kent"  
+**Title:** "Police Station Rep Tonbridge | Extended Hours | West Kent"  
 **H1:** "Police Station Representative in Tonbridge, Kent"  
 **Meta Description:** "Expert police station rep in Tonbridge, Kent. FREE We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor. at Tonbridge custody suite. Serving West Kent. Call 01732 247427."  
 **Content Focus:**
@@ -443,7 +443,7 @@ This audit identifies critical gaps preventing dominance for "police station rep
   "@context": "https://schema.org",
   "@type": "Service",
   "name": "Police Station Representation",
-  "description": "FREE police station representative service across all Kent custody suites. Accredited duty solicitor available 24/7 for police interviews, voluntary interviews, and custody matters.",
+  "description": "FREE police station representative service across all Kent custody suites. Accredited duty solicitor available under Legal Aid for police interviews, voluntary interviews, and custody matters.",
   "provider": {
     "@type": "LegalService",
     "name": "Police Station Agent",
@@ -579,7 +579,7 @@ This audit identifies critical gaps preventing dominance for "police station rep
 
 **Current H1:** "FREE Police Station Solicitor<br><span>Interviews Under Caution in Kent</span>"
 
-**Optimized H1:** "Kent's Leading Police Station Representative<br><span>FREE 24/7 Across All Kent Custody Suites</span>"
+**Optimized H1:** "Kent's Leading Police Station Representative<br><span>Extended Hours Across All Kent Custody Suites</span>"
 
 **Current Subheading:** "FREE legal representation at all Kent police stations..."
 
@@ -592,7 +592,7 @@ This audit identifies critical gaps preventing dominance for "police station rep
 - "35+ years experience, 6000+ cases"
 - "Practice Director and Higher Court Advocate"
 - "Serving all Kent towns: Medway, Maidstone, Canterbury, Gravesend, Tonbridge, Folkestone, Ashford, Dartford, Sittingbourne, Sevenoaks, Tunbridge Wells, Margate, Dover, and more"
-- "45-minute response time to any Kent custody suite"
+- "We aim to respond promptly. Attendance times depend on location, custody demand and solicitor availability."
 - "Accredited duty solicitor on Legal Aid rota"
 
 ### Add Trust Signal Section

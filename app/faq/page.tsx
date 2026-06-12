@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import { normalizeScrapedHtml } from "@/lib/scraped-html";
 import Footer from "@/components/Footer";
 import FAQContent from "@/app/faq/FAQContent";
 import type { Metadata } from "next";
@@ -16,6 +17,8 @@ import {
   SCOPE_FAQ_ITEMS,
   SCOPE_STATUS_ENQUIRY_HEADLINE,
 } from "@/config/scope-faqs";
+import { InternalLinkHub } from "@/components/InternalLinkHub";
+import { RIGHTS_HUB, STATIONS_HUB } from "@/config/internal-link-hubs";
 
 export const metadata: Metadata = {
   title: "FAQ - Frequently Asked Questions | Police Station Agent",
@@ -213,6 +216,11 @@ export default function Page() {
                 </div>
               </div>
             </section>
+
+            <div className="max-w-6xl mx-auto px-4 pb-12 space-y-8">
+              <InternalLinkHub title={RIGHTS_HUB.title} links={RIGHTS_HUB.links} />
+              <InternalLinkHub title={STATIONS_HUB.title} links={STATIONS_HUB.links} />
+            </div>
           </div>
         </div>
       </main>

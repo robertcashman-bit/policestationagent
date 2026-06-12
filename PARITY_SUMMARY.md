@@ -37,19 +37,19 @@ Generated: 12/12/2025, 19:46:26
    - URL: https://policestationagent.com/forsolicitors
    - H1: Police Station Agent Services for Solicitors
 
-7. **Medway Police Station Solicitor | Robert Cashman | FREE 24/7**
+7. **Medway Police Station Solicitor | Robert Cashman | Extended Hours**
    - URL: https://policestationagent.com/medway-police-station
    - H1: Police Station Rep Medway Custody – Police Station Agent
 
-8. **Gravesend Police Station Solicitor | Robert Cashman | FREE 24/7**
+8. **Gravesend Police Station Solicitor | Robert Cashman | Extended Hours**
    - URL: https://policestationagent.com/north-kent-gravesend-police-station
    - H1: Police Station Rep Gravesend Custody – Police Station Agent
 
-9. **Canterbury Police Station Solicitor | Robert Cashman | FREE 24/7**
+9. **Canterbury Police Station Solicitor | Robert Cashman | Extended Hours**
    - URL: https://policestationagent.com/canterbury-police-station
    - H1: Police Station Rep Canterbury Custody – Police Station Agent
 
-10. **Folkestone Police Station Solicitor | Robert Cashman | FREE 24/7**
+10. **Folkestone Police Station Solicitor | Robert Cashman | Extended Hours**
    - URL: https://policestationagent.com/folkestone-police-station
    - H1: Police Station Rep Folkestone Custody – Police Station Agent
 
@@ -57,7 +57,7 @@ Generated: 12/12/2025, 19:46:26
    - URL: https://policestationagent.com/maidstone-police-station
    - H1: Police Station Rep for Maidstone Voluntary Interviews – Police Station Agent
 
-12. **Tonbridge Police Station Solicitor | Robert Cashman | FREE 24/7**
+12. **Tonbridge Police Station Solicitor | Robert Cashman | Extended Hours**
    - URL: https://policestationagent.com/tonbridge-police-station
    - H1: Police Station Rep Tonbridge Custody – Police Station Agent
 
@@ -69,7 +69,7 @@ Generated: 12/12/2025, 19:46:26
    - URL: https://policestationagent.com/dover-police-station
    - H1: Police Station Rep for Dover Voluntary Interviews – Police Station Agent
 
-15. **Margate Police Station Solicitor | Robert Cashman | FREE 24/7**
+15. **Margate Police Station Solicitor | Robert Cashman | Extended Hours**
    - URL: https://policestationagent.com/margate-police-station
    - H1: Police Station Rep Margate Custody – Police Station Agent
 
@@ -244,22 +244,22 @@ H1: Police Station Agent S...
 
 7. **ENTIRE PAGE** on https://policestationagent.com/medway-police-station
    - Action: CREATE PAGE
-   - Source Evidence: Title: Medway Police Station Solicitor | Robert Cashman | FREE 24/7
+   - Source Evidence: Title: Medway Police Station Solicitor | Robert Cashman | Extended Hours
 H1: Police Station Rep Medway Cu...
 
 8. **ENTIRE PAGE** on https://policestationagent.com/north-kent-gravesend-police-station
    - Action: CREATE PAGE
-   - Source Evidence: Title: Gravesend Police Station Solicitor | Robert Cashman | FREE 24/7
+   - Source Evidence: Title: Gravesend Police Station Solicitor | Robert Cashman | Extended Hours
 H1: Police Station Rep Graves...
 
 9. **ENTIRE PAGE** on https://policestationagent.com/canterbury-police-station
    - Action: CREATE PAGE
-   - Source Evidence: Title: Canterbury Police Station Solicitor | Robert Cashman | FREE 24/7
+   - Source Evidence: Title: Canterbury Police Station Solicitor | Robert Cashman | Extended Hours
 H1: Police Station Rep Cante...
 
 10. **ENTIRE PAGE** on https://policestationagent.com/folkestone-police-station
    - Action: CREATE PAGE
-   - Source Evidence: Title: Folkestone Police Station Solicitor | Robert Cashman | FREE 24/7
+   - Source Evidence: Title: Folkestone Police Station Solicitor | Robert Cashman | Extended Hours
 H1: Police Station Rep Folke...
 
 11. **ENTIRE PAGE** on https://policestationagent.com/maidstone-police-station
@@ -269,7 +269,7 @@ H1: Police Station Rep for ...
 
 12. **ENTIRE PAGE** on https://policestationagent.com/tonbridge-police-station
    - Action: CREATE PAGE
-   - Source Evidence: Title: Tonbridge Police Station Solicitor | Robert Cashman | FREE 24/7
+   - Source Evidence: Title: Tonbridge Police Station Solicitor | Robert Cashman | Extended Hours
 H1: Police Station Rep Tonbri...
 
 13. **ENTIRE PAGE** on https://policestationagent.com/ashford-police-station
@@ -284,7 +284,7 @@ H1: Police Station Rep for Dove...
 
 15. **ENTIRE PAGE** on https://policestationagent.com/margate-police-station
    - Action: CREATE PAGE
-   - Source Evidence: Title: Margate Police Station Solicitor | Robert Cashman | FREE 24/7
+   - Source Evidence: Title: Margate Police Station Solicitor | Robert Cashman | Extended Hours
 H1: Police Station Rep Margate ...
 
 16. **ENTIRE PAGE** on https://policestationagent.com/psastations

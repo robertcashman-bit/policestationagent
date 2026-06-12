@@ -17,7 +17,7 @@ export default function ServicesPage() {
       id: 1,
       title: 'Police Station Representation',
       slug: 'police-station-representation',
-      description: 'Expert legal representation when you need it most. Available 24/7 for urgent matters.',
+      description: 'Expert legal representation when you need it most. available under Legal Aid for urgent matters.',
     },
     {
       id: 2,

@@ -2,7 +2,9 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
 import { Metadata } from "next";
-import { JsonLd } from "@/components/JsonLd";
+import { FAQPage } from "@/components/StructuredData";
+import { InternalLinkHub } from "@/components/InternalLinkHub";
+import { RIGHTS_HUB } from "@/config/internal-link-hubs";
 import { LegalReferences, Ref, type LegalSource } from "@/components/LegalReferences";
 import { SITE_DOMAIN } from "@/config/site";
 
@@ -45,56 +47,38 @@ export default function CustodyTimeLimitsPage() {
     },
   ];
 
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: [
-      {
-        "@type": "Question",
-        name: "How long can police hold me without charge in the UK?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Under PACE, police detention without charge is generally limited to 24 hours (calculated from “relevant time”). In indictable cases, a superintendent can authorise detention up to 36 hours. With a magistrates’ court warrant, detention can be extended up to a maximum of 96 hours after relevant time.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "What happens after 24 hours in police custody?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "After 24 hours, the police must either charge you, release you, or apply for an extension. Extensions require authorisation from a superintendent (up to 36 hours) or a magistrate (up to 96 hours) and are only granted for serious offences.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "Can police extend my detention beyond 24 hours?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Yes. Under PACE, a superintendent can authorise detention up to 36 hours in indictable cases if the statutory conditions are met. Beyond that, police must apply to a magistrates’ court for a warrant of further detention; extensions are subject to statutory limits, including the 96-hour maximum after relevant time.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "How often must detention be reviewed?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "PACE provides that the first review must be not later than six hours after detention was first authorised, the second not later than nine hours after the first, and subsequent reviews at intervals of not more than nine hours.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "What are my rights if police want to extend my detention?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "You have the right to legal representation at any extension hearing. Your solicitor can make representations on your behalf. You should be told the reasons for the extension and have the opportunity to challenge it.",
-        },
-      },
-    ],
-  };
+  const faqItems = [
+    {
+      question: "How long can police hold me without charge in the UK?",
+      answer:
+        "Under PACE, police detention without charge is generally limited to 24 hours (calculated from “relevant time”). In indictable cases, a superintendent can authorise detention up to 36 hours. With a magistrates’ court warrant, detention can be extended up to a maximum of 96 hours after relevant time.",
+    },
+    {
+      question: "What happens after 24 hours in police custody?",
+      answer:
+        "After 24 hours, the police must either charge you, release you, or apply for an extension. Extensions require authorisation from a superintendent (up to 36 hours) or a magistrate (up to 96 hours) and are only granted for serious offences.",
+    },
+    {
+      question: "Can police extend my detention beyond 24 hours?",
+      answer:
+        "Yes. Under PACE, a superintendent can authorise detention up to 36 hours in indictable cases if the statutory conditions are met. Beyond that, police must apply to a magistrates’ court for a warrant of further detention; extensions are subject to statutory limits, including the 96-hour maximum after relevant time.",
+    },
+    {
+      question: "How often must detention be reviewed?",
+      answer:
+        "PACE provides that the first review must be not later than six hours after detention was first authorised, the second not later than nine hours after the first, and subsequent reviews at intervals of not more than nine hours.",
+    },
+    {
+      question: "What are my rights if police want to extend my detention?",
+      answer:
+        "You have the right to legal representation at any extension hearing. Your solicitor can make representations on your behalf. You should be told the reasons for the extension and have the opportunity to challenge it.",
+    },
+  ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex flex-col">
-      <JsonLd data={faqSchema} />
+    <>
+      <FAQPage items={faqItems} />
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex flex-col">
       <Header />
 
       <main className="flex-grow">
@@ -428,10 +412,13 @@ export default function CustodyTimeLimitsPage() {
           </div>
 
           <LegalReferences sources={sources} />
+
+          <InternalLinkHub title={RIGHTS_HUB.title} links={RIGHTS_HUB.links} />
         </article>
       </main>
 
       <Footer />
-    </div>
+      </div>
+    </>
   );
 }

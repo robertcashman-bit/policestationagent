@@ -12,7 +12,7 @@ export default function ContactPage() {
           <div className="container-custom text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Contact Us</h1>
             <p className="text-xl text-gray-200">
-              Available 24/7 for urgent legal assistance
+              available under Legal Aid for urgent legal assistance
             </p>
           </div>
         </section>
@@ -75,7 +75,7 @@ export default function ContactPage() {
                       <div>
                         <h3 className="text-xl font-semibold mb-2">How to Reach Us</h3>
                         <p className="text-gray-200 leading-relaxed mb-4">
-                          For immediate assistance, please use your preferred method of contact. Our experienced solicitors are ready to help protect your rights and provide expert legal guidance.
+                          For prompt assistance, please use your preferred method of contact. Our experienced solicitors are ready to help protect your rights and provide expert legal guidance.
                         </p>
                         <p className="text-gray-300 text-sm">
                           Contact information and emergency hotline details will be available through our main channels. We respond to all inquiries promptly, especially urgent matters.

@@ -21,4 +21,12 @@ export default defineConfig({
     },
   ],
   outputDir: "./playwright-results",
+  webServer: process.env.CI
+    ? {
+        command: "npm run start",
+        url: "http://localhost:3000",
+        reuseExistingServer: false,
+        timeout: 120000,
+      }
+    : undefined,
 });

@@ -109,7 +109,7 @@ export default function Footer() {
             <div className="space-y-4 text-sm text-gray-400">
               <div>
                 <p className="font-medium text-white mb-1">Emergency Legal Assistance</p>
-                <p>Available 24 hours a day, 7 days a week</p>
+                <p>Extended hours service across Kent</p>
               </div>
               <div>
                 <p className="font-medium text-white mb-1">Coverage Area</p>
