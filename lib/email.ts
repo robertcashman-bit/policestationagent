@@ -168,21 +168,6 @@ export async function sendMagicCode(
     };
   }
 
-  try {
-    const { error: keyError } = await client.domains.list();
-    if (keyError) {
-      console.warn("[Magic code — Resend API key rejected]", keyError.message);
-      return {
-        success: false,
-        error: `Resend API key rejected: ${keyError.message}`,
-      };
-    }
-  } catch (err) {
-    const msg = err instanceof Error ? err.message : String(err);
-    console.warn("[Magic code — Resend API key check failed]", msg);
-    return { success: false, error: `Resend API key check failed: ${msg}` };
-  }
-
   const subject = `Your Police Station Agent admin code: ${code}`;
   const html = buildMagicCodeHtml(code);
   const fromCandidates = magicCodeFromCandidates();

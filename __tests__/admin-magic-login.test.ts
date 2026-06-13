@@ -123,12 +123,10 @@ describe('sendMagicCode', () => {
     process.env.CONTACT_FROM_EMAIL = 'Police Station Agent <noreply@policestationagent.com>';
 
     const send = vi.fn().mockResolvedValue({ data: { id: 'msg_123' }, error: null });
-    const listDomains = vi.fn().mockResolvedValue({ data: [], error: null });
 
     vi.doMock('resend', () => ({
       Resend: class MockResend {
         emails = { send };
-        domains = { list: listDomains };
         constructor(_key: string) {}
       },
     }));
@@ -154,12 +152,9 @@ describe('sendMagicCode', () => {
         error: { message: 'You can only send testing emails to your own email address' },
       })
       .mockResolvedValueOnce({ data: { id: 'msg_123' }, error: null });
-    const listDomains = vi.fn().mockResolvedValue({ data: [], error: null });
-
     vi.doMock('resend', () => ({
       Resend: class MockResend {
         emails = { send };
-        domains = { list: listDomains };
         constructor(_key: string) {}
       },
     }));
@@ -187,12 +182,9 @@ describe('sendMagicCode', () => {
         error: { message: 'API key is invalid' },
       })
       .mockResolvedValueOnce({ data: { id: 'msg_123' }, error: null });
-    const listDomains = vi.fn().mockResolvedValue({ data: [], error: null });
-
     vi.doMock('resend', () => ({
       Resend: class MockResend {
         emails = { send };
-        domains = { list: listDomains };
         constructor(_key: string) {}
       },
     }));
