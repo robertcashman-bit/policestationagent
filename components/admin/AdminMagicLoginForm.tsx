@@ -13,8 +13,8 @@ export function AdminMagicLoginForm({ kvConfigured = true }: { kvConfigured?: bo
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
 
-  async function handleSendOtp(e: React.FormEvent) {
-    e.preventDefault();
+  async function handleSendOtp(e?: React.FormEvent) {
+    e?.preventDefault();
     setError('');
     const trimmed = email.trim().toLowerCase();
     if (!trimmed || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
@@ -32,6 +32,7 @@ export function AdminMagicLoginForm({ kvConfigured = true }: { kvConfigured?: bo
       if (!res.ok) {
         setError(data.error || 'Something went wrong. Please try again.');
       } else {
+        setOtp('');
         setStage('otp');
       }
     } catch {
@@ -39,6 +40,10 @@ export function AdminMagicLoginForm({ kvConfigured = true }: { kvConfigured?: bo
     } finally {
       setBusy(false);
     }
+  }
+
+  async function handleResendCode() {
+    await handleSendOtp();
   }
 
   async function handleVerifyOtp(e: React.FormEvent) {
@@ -118,7 +123,7 @@ export function AdminMagicLoginForm({ kvConfigured = true }: { kvConfigured?: bo
             <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3">
               <p className="text-sm font-medium text-emerald-800">Check your email for a login code.</p>
               <p className="mt-1 text-xs text-emerald-700">
-                We sent a 6-digit code to <strong>{email.trim()}</strong>.
+                We sent a 6-digit code to <strong>{email.trim()}</strong>. It expires in 10 minutes.
               </p>
             </div>
             <div>
@@ -148,12 +153,21 @@ export function AdminMagicLoginForm({ kvConfigured = true }: { kvConfigured?: bo
             </button>
             <button
               type="button"
+              onClick={handleResendCode}
+              disabled={busy}
+              className="w-full rounded-lg border border-[#0A2342] bg-white py-3 text-sm font-semibold text-[#0A2342] hover:bg-slate-50 disabled:opacity-60"
+            >
+              {busy ? 'Sending…' : 'Send a new code'}
+            </button>
+            <button
+              type="button"
               onClick={() => {
                 setStage('email');
                 setOtp('');
                 setError('');
               }}
-              className="w-full text-center text-sm font-medium text-[#0A2342] hover:underline"
+              disabled={busy}
+              className="w-full text-center text-sm font-medium text-[#0A2342] hover:underline disabled:opacity-60"
             >
               Use a different email
             </button>
