@@ -40,8 +40,18 @@ export async function POST(request: Request) {
   }
 
   const code = String(Math.floor(100000 + Math.random() * 900000));
-  await storeMagicCode(email, code);
-  await sendMagicCode(email, code);
+  const sent = await sendMagicCode(email, code);
+  if (!sent.success) {
+    console.error('[send-code] Magic code email failed:', sent.error);
+    return NextResponse.json(
+      {
+        error:
+          'Could not send your login code by email. Check spam, try again shortly, or verify Resend is configured on Vercel.',
+      },
+      { status: 503 },
+    );
+  }
 
+  await storeMagicCode(email, code);
   return NextResponse.json({ ok: true });
 }

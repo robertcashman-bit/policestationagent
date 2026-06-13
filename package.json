@@ -15,7 +15,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "tsx --test __tests__/contactScope.test.ts __tests__/scopeFaqs.test.ts && npm run test:firm-outreach",
+    "test": "tsx --test __tests__/contactScope.test.ts __tests__/scopeFaqs.test.ts && npm run test:firm-outreach && vitest run __tests__/admin-magic-login.test.ts",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lighthouse": "node scripts/lighthouse.js",

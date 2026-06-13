@@ -110,28 +110,29 @@ function getResendClient(): Resend | null {
   return new Resend(apiKey);
 }
 
-function magicCodeFromEmail(): string {
+const RESEND_ONBOARDING_FROM = "Police Station Agent <onboarding@resend.dev>";
+
+function magicCodeFromCandidates(): string[] {
+  const candidates = [
+    process.env.ADMIN_MAGIC_FROM_EMAIL?.trim(),
+    process.env.CONTACT_FROM_EMAIL?.trim(),
+    RESEND_ONBOARDING_FROM,
+  ].filter(Boolean) as string[];
+  return [...new Set(candidates)];
+}
+
+function isLikelyFromAddressError(message: string): boolean {
+  const lower = message.toLowerCase();
   return (
-    process.env.CONTACT_FROM_EMAIL?.trim() ||
-    process.env.FIRM_OUTREACH_FROM_EMAIL?.trim() ||
-    "Police Station Agent <onboarding@resend.dev>"
+    lower.includes("domain") ||
+    lower.includes("not verified") ||
+    lower.includes("from address") ||
+    lower.includes("sender")
   );
 }
 
-/** Admin magic-code login email (6-digit OTP). */
-export async function sendMagicCode(email: string, code: string): Promise<boolean> {
-  const client = getResendClient();
-  if (!client) {
-    console.info("[Magic code — no RESEND_API_KEY]", { email });
-    return false;
-  }
-
-  try {
-    await client.emails.send({
-      from: magicCodeFromEmail(),
-      to: email,
-      subject: `Your Police Station Agent admin code: ${code}`,
-      html: `
+function buildMagicCodeHtml(code: string): string {
+  return `
         <div style="font-family:sans-serif;max-width:480px;margin:0 auto;padding:20px">
           <h2 style="color:#0A2342;margin-bottom:8px">Your admin login code</h2>
           <p style="color:#475569;font-size:14px;margin-bottom:20px">
@@ -144,11 +145,55 @@ export async function sendMagicCode(email: string, code: string): Promise<boolea
             If you didn&rsquo;t request this code, you can safely ignore this email.
           </p>
         </div>
-      `,
-    });
-    return true;
-  } catch (err) {
-    console.error("[Magic code email failed]", err);
-    return false;
+      `;
+}
+
+/** Admin magic-code login email (6-digit OTP). */
+export async function sendMagicCode(
+  email: string,
+  code: string,
+): Promise<{ success: boolean; error?: string }> {
+  const client = getResendClient();
+  if (!client) {
+    console.warn("[Magic code — no RESEND_API_KEY]", { email });
+    return { success: false, error: "RESEND_API_KEY not set" };
   }
+
+  const subject = `Your Police Station Agent admin code: ${code}`;
+  const html = buildMagicCodeHtml(code);
+  const fromCandidates = magicCodeFromCandidates();
+  let lastError = "Email send failed";
+
+  for (const from of fromCandidates) {
+    try {
+      const { data, error } = await client.emails.send({
+        from,
+        to: email,
+        subject,
+        html,
+      });
+
+      if (error) {
+        lastError = error.message;
+        console.warn("[Magic code email] Resend error:", from, error.message);
+        if (from !== RESEND_ONBOARDING_FROM && isLikelyFromAddressError(error.message)) {
+          continue;
+        }
+        return { success: false, error: lastError };
+      }
+
+      if (data?.id) return { success: true };
+      lastError = "Email provider returned no id";
+    } catch (err) {
+      lastError = err instanceof Error ? err.message : String(err);
+      console.error("[Magic code email failed]", from, lastError);
+      if (from !== RESEND_ONBOARDING_FROM && isLikelyFromAddressError(lastError)) {
+        continue;
+      }
+      return { success: false, error: lastError };
+    }
+  }
+
+  console.error("[Magic code email failed] all senders exhausted:", lastError);
+  return { success: false, error: lastError };
 }
