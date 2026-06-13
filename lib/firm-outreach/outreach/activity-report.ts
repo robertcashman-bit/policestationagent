@@ -1,5 +1,6 @@
 import {
   countProspectsByStatus,
+  getDailySendCount,
   getProspectsByIds,
   getSuppressionsByEmails,
   listAllSends,
@@ -79,6 +80,102 @@ function emptySummary(prospectCounts: Record<string, number>): OutreachActivityS
   };
 }
 
+function aggregateSendMetrics(sends: Array<{ email: string; status: string; sentAt?: string }>): {
+  bySendStatus: Record<string, number>;
+  uniqueRecipients: number;
+  sentLast7Days: number;
+} {
+  const bySendStatus: Record<string, number> = {};
+  const uniqueEmails = new Set<string>();
+  for (const send of sends) {
+    uniqueEmails.add(send.email.toLowerCase());
+    bySendStatus[send.status] = (bySendStatus[send.status] ?? 0) + 1;
+  }
+  const windowCounts = computeSendWindowCounts(sends);
+  return {
+    bySendStatus,
+    uniqueRecipients: uniqueEmails.size,
+    sentLast7Days: windowCounts.sentLast7Days,
+  };
+}
+
+function computeFollowUpMetrics(
+  sentProspects: Array<{
+    waLinkClickedAt?: string;
+    joinedWhatsAppAt?: string;
+    lastEmailAt?: string;
+    sequenceStep: number;
+  }>,
+): { pendingFollowUp1: number; pendingFollowUp2: number; waClicks: number } {
+  let pendingFollowUp1 = 0;
+  let pendingFollowUp2 = 0;
+  let waClicks = 0;
+
+  for (const p of sentProspects) {
+    if (p.waLinkClickedAt) waClicks++;
+    if (p.waLinkClickedAt || p.joinedWhatsAppAt) continue;
+    const days = daysSince(p.lastEmailAt);
+    if (p.sequenceStep === 0 && days >= 7 && days < 21) pendingFollowUp1++;
+    if (p.sequenceStep === 1 && days >= 14) pendingFollowUp2++;
+  }
+
+  return { pendingFollowUp1, pendingFollowUp2, waClicks };
+}
+
+function buildSummaryFromParts(
+  prospectCounts: Record<string, number>,
+  sends: Array<{ email: string; status: string; sentAt?: string }>,
+  sentToday: number,
+  followUp: { pendingFollowUp1: number; pendingFollowUp2: number; waClicks: number },
+): OutreachActivitySummary {
+  const { bySendStatus, uniqueRecipients, sentLast7Days } = aggregateSendMetrics(sends);
+  return {
+    totalSends: sends.length,
+    sentToday,
+    sentLast7Days,
+    uniqueRecipients,
+    bySendStatus,
+    waClicks: followUp.waClicks,
+    joinedWhatsApp: prospectCounts.joined_whatsapp ?? 0,
+    bounced: (prospectCounts.bounced ?? 0) + (bySendStatus.bounced ?? 0),
+    complained: bySendStatus.complained ?? 0,
+    unsubscribed: prospectCounts.unsubscribed ?? 0,
+    pendingFollowUp1: followUp.pendingFollowUp1,
+    pendingFollowUp2: followUp.pendingFollowUp2,
+    readyToSend: prospectCounts.ready_to_send ?? 0,
+    discovered: prospectCounts.discovered ?? 0,
+    noEmail: prospectCounts.no_email ?? 0,
+    excluded: prospectCounts.excluded ?? 0,
+  };
+}
+
+/** Fast path for admin stat boxes — skips send rows and queue tables. */
+export async function buildOutreachDashboardSummary(): Promise<OutreachActivityReportResult> {
+  const today = new Date().toISOString().slice(0, 10);
+  const [sends, prospectCounts, sentToday, sentIds] = await Promise.all([
+    listAllSends(),
+    countProspectsByStatus(),
+    getDailySendCount(today),
+    listProspectIdsByStatus('sent').then((ids) => ids.slice(0, SENT_PROSPECTS_FOLLOWUP_LIMIT)),
+  ]);
+
+  const sentProspectsMap = await getProspectsByIds(sentIds);
+  const followUp = computeFollowUpMetrics([...sentProspectsMap.values()]);
+  const summary = buildSummaryFromParts(prospectCounts, sends, sentToday, followUp);
+
+  return {
+    prospectCounts,
+    report: {
+      generatedAt: new Date().toISOString(),
+      summary,
+      sends: [],
+      readyToSendProspects: [],
+      excludedProspects: [],
+      suppressions: [],
+    },
+  };
+}
+
 export async function buildOutreachActivityReport(): Promise<OutreachActivityReportResult> {
   const [sends, suppressions, prospectCounts] = await Promise.all([
     listAllSends(),
@@ -149,38 +246,14 @@ export async function buildOutreachActivityReport(): Promise<OutreachActivityRep
     queueRowsForProspects(readyProspects),
   ]);
 
-  let pendingFollowUp1 = 0;
-  let pendingFollowUp2 = 0;
-  let waClicks = 0;
-
-  for (const p of sentProspects) {
-    if (p.waLinkClickedAt) waClicks++;
-    if (p.waLinkClickedAt || p.joinedWhatsAppAt) continue;
-    const days = daysSince(p.lastEmailAt);
-    if (p.sequenceStep === 0 && days >= 7 && days < 21) pendingFollowUp1++;
-    if (p.sequenceStep === 1 && days >= 14) pendingFollowUp2++;
-  }
-
+  const followUp = computeFollowUpMetrics(sentProspects);
   const windowCounts = computeSendWindowCounts(sends);
-
-  const summary: OutreachActivitySummary = {
-    totalSends: sends.length,
-    sentToday: windowCounts.sentToday,
-    sentLast7Days: windowCounts.sentLast7Days,
-    uniqueRecipients: uniqueEmails.size,
-    bySendStatus,
-    waClicks,
-    joinedWhatsApp: prospectCounts.joined_whatsapp ?? 0,
-    bounced: (prospectCounts.bounced ?? 0) + (bySendStatus.bounced ?? 0),
-    complained: bySendStatus.complained ?? 0,
-    unsubscribed: prospectCounts.unsubscribed ?? 0,
-    pendingFollowUp1,
-    pendingFollowUp2,
-    readyToSend: prospectCounts.ready_to_send ?? 0,
-    discovered: prospectCounts.discovered ?? 0,
-    noEmail: prospectCounts.no_email ?? 0,
-    excluded: prospectCounts.excluded ?? 0,
-  };
+  const summary = buildSummaryFromParts(
+    prospectCounts,
+    sends,
+    windowCounts.sentToday,
+    followUp,
+  );
 
   return {
     prospectCounts,

@@ -53,7 +53,7 @@ export function AdminOverview() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch('/api/admin/firm-outreach', { cache: 'no-store' })
+    fetch('/api/admin/firm-outreach?scope=summary', { cache: 'no-store' })
       .then(async (res) => {
         const json = (await res.json()) as StatusPayload & { error?: string };
         if (!res.ok) throw new Error(json.error || `HTTP ${res.status}`);

@@ -163,7 +163,8 @@ function statusBadge(status: string): string {
   return map[status] ?? 'bg-slate-50 text-slate-600';
 }
 
-const FETCH_TIMEOUT_MS = 25_000;
+const SUMMARY_TIMEOUT_MS = 8_000;
+const FULL_TIMEOUT_MS = 25_000;
 
 const BTN_PRIMARY =
   'inline-flex items-center justify-center rounded-lg bg-[#0A2342] px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#0d2d54] disabled:opacity-50';
@@ -175,7 +176,9 @@ const BTN_DANGER =
 export function FirmOutreachDashboard() {
   const [data, setData] = useState<OutreachStats | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [fullError, setFullError] = useState<string | null>(null);
+  const [loadingSummary, setLoadingSummary] = useState(true);
+  const [loadingFull, setLoadingFull] = useState(true);
   const [tab, setTab] = useState<TabId>('ready');
   const [markingId, setMarkingId] = useState<string | null>(null);
   const [actionId, setActionId] = useState<string | null>(null);
@@ -188,13 +191,15 @@ export function FirmOutreachDashboard() {
   const [pipelineResult, setPipelineResult] = useState<string | null>(null);
   const [pauseBusy, setPauseBusy] = useState(false);
 
-  const load = useCallback(() => {
-    setLoading(true);
-    setError(null);
+  const loadSummary = useCallback((background = false) => {
+    if (!background) {
+      setLoadingSummary(true);
+      setError(null);
+    }
     const controller = new AbortController();
-    const timeoutId = window.setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+    const timeoutId = window.setTimeout(() => controller.abort(), SUMMARY_TIMEOUT_MS);
 
-    fetch('/api/admin/firm-outreach', { signal: controller.signal })
+    fetch('/api/admin/firm-outreach?scope=summary', { signal: controller.signal })
       .then(async (res) => {
         const json = (await res.json()) as OutreachStats & { ok?: boolean; error?: string; warning?: string };
         if (!res.ok) {
@@ -205,17 +210,30 @@ export function FirmOutreachDashboard() {
         }
         return json;
       })
-      .then((json) => setData(json))
+      .then((json) => {
+        setData((prev) => ({
+          ...json,
+          report: {
+            ...json.report,
+            sends: prev?.report.sends ?? [],
+            readyToSendProspects: prev?.report.readyToSendProspects ?? [],
+            excludedProspects: prev?.report.excludedProspects ?? [],
+            suppressions: prev?.report.suppressions ?? [],
+          },
+        }));
+      })
       .catch((e) => {
-        if (e instanceof Error && e.name === 'AbortError') {
-          setError('Report timed out — the server may be busy. Please retry.');
-        } else {
-          setError(e instanceof Error ? e.message : 'Error loading outreach report');
+        if (!background) {
+          if (e instanceof Error && e.name === 'AbortError') {
+            setError('Summary timed out — the server may be busy. Please retry.');
+          } else {
+            setError(e instanceof Error ? e.message : 'Error loading outreach summary');
+          }
         }
       })
       .finally(() => {
         window.clearTimeout(timeoutId);
-        setLoading(false);
+        setLoadingSummary(false);
       });
 
     return () => {
@@ -224,8 +242,73 @@ export function FirmOutreachDashboard() {
     };
   }, []);
 
+  const loadFull = useCallback((background = false) => {
+    if (!background) {
+      setLoadingFull(true);
+      setFullError(null);
+    }
+    const controller = new AbortController();
+    const timeoutId = window.setTimeout(() => controller.abort(), FULL_TIMEOUT_MS);
+
+    fetch('/api/admin/firm-outreach?scope=full', { signal: controller.signal })
+      .then(async (res) => {
+        const json = (await res.json()) as OutreachStats & { ok?: boolean; error?: string; warning?: string };
+        if (!res.ok) {
+          throw new Error(json.error ?? `Failed to load report (${res.status})`);
+        }
+        return json;
+      })
+      .then((json) => {
+        setFullError(null);
+        setData((prev) => {
+          if (!prev) return json;
+          return {
+            ...json,
+            report: {
+              ...json.report,
+              summary: prev.report.summary,
+            },
+          };
+        });
+      })
+      .catch((e) => {
+        const msg =
+          e instanceof Error && e.name === 'AbortError'
+            ? 'Tables timed out — the server may be busy. Please retry.'
+            : e instanceof Error
+              ? e.message
+              : 'Error loading outreach tables';
+        if (background) {
+          setFullError(msg);
+        } else {
+          setFullError(msg);
+        }
+      })
+      .finally(() => {
+        window.clearTimeout(timeoutId);
+        setLoadingFull(false);
+      });
+
+    return () => {
+      window.clearTimeout(timeoutId);
+      controller.abort();
+    };
+  }, []);
+
+  const load = useCallback(
+    (background = false) => {
+      const cleanupSummary = loadSummary(background);
+      const cleanupFull = loadFull(background);
+      return () => {
+        cleanupSummary();
+        cleanupFull();
+      };
+    },
+    [loadSummary, loadFull],
+  );
+
   useEffect(() => {
-    return load();
+    return load(false);
   }, [load]);
 
   const filteredSends = useMemo(() => {
@@ -300,7 +383,7 @@ export function FirmOutreachDashboard() {
         body: JSON.stringify({ action: 'mark_joined', prospectId }),
       });
       if (!res.ok) throw new Error('Failed to mark replied');
-      load();
+      load(true);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Error');
     } finally {
@@ -323,7 +406,7 @@ export function FirmOutreachDashboard() {
       });
       const json = (await res.json()) as { error?: string };
       if (!res.ok) throw new Error(json.error ?? 'Failed to restore prospect');
-      load();
+      load(true);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Error');
     } finally {
@@ -345,7 +428,7 @@ export function FirmOutreachDashboard() {
       });
       const json = (await res.json()) as { error?: string };
       if (!res.ok) throw new Error(json.error ?? 'Failed to exclude prospect');
-      load();
+      load(true);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Error');
     } finally {
@@ -375,7 +458,7 @@ export function FirmOutreachDashboard() {
       if (dryRun && json.send?.subject) {
         window.alert(`Dry run OK — would send: ${json.send.subject}`);
       }
-      if (!dryRun) load();
+      if (!dryRun) load(true);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Error');
     } finally {
@@ -443,7 +526,7 @@ export function FirmOutreachDashboard() {
         window.alert(`Dry run OK — would send to ${json.bulk?.sent ?? 0} prospect(s).`);
       } else {
         setSelectedIds(new Set());
-        load();
+        load(true);
       }
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Error');
@@ -513,7 +596,7 @@ export function FirmOutreachDashboard() {
       } else {
         setPipelineResult(`${label} completed`);
       }
-      load();
+      load(true);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Pipeline error');
     } finally {
@@ -541,7 +624,7 @@ export function FirmOutreachDashboard() {
       });
       const json = (await res.json()) as { error?: string };
       if (!res.ok) throw new Error(json.error ?? 'Failed to update pause state');
-      load();
+      load(true);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Error');
     } finally {
@@ -564,7 +647,7 @@ export function FirmOutreachDashboard() {
       const json = (await res.json()) as { error?: string };
       if (!res.ok) throw new Error(json.error ?? 'Bulk exclude failed');
       setSelectedIds(new Set());
-      load();
+      load(true);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Error');
     } finally {
@@ -573,19 +656,23 @@ export function FirmOutreachDashboard() {
     }
   }
 
-  if (error) {
+  if (error && !data) {
     return (
       <div className="space-y-3">
         <p className="text-sm text-red-700">{error}</p>
-        <button type="button" onClick={load} className={`${BTN_OUTLINE} !text-sm`}>
+        <button type="button" onClick={() => load(false)} className={`${BTN_OUTLINE} !text-sm`}>
           Retry
         </button>
       </div>
     );
   }
 
-  if (loading || !data) {
-    return <p className="text-sm text-gray-500">Loading outreach report…</p>;
+  if (loadingSummary && !data) {
+    return <p className="text-sm text-gray-500">Loading outreach summary…</p>;
+  }
+
+  if (!data) {
+    return null;
   }
 
   const s = data.report.summary;
@@ -759,6 +846,21 @@ export function FirmOutreachDashboard() {
         </div>
       ) : null}
 
+      {fullError ? (
+        <div className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 flex flex-wrap items-center justify-between gap-2">
+          <p className="text-sm text-amber-900">{fullError}</p>
+          <button type="button" onClick={() => loadFull(false)} className={`${BTN_OUTLINE} !text-sm`}>
+            Retry tables
+          </button>
+        </div>
+      ) : null}
+
+      {loadingFull ? (
+        <p className="text-sm text-gray-500">Loading send log and queues…</p>
+      ) : null}
+
+      {!loadingFull && !fullError ? (
+      <>
       <nav className="flex flex-wrap gap-2 border-b border-gray-200 pb-3">
         {TABS.map((t) => (
           <button
@@ -1135,6 +1237,9 @@ export function FirmOutreachDashboard() {
           </table>
         </div>
       )}
+
+      </>
+      ) : null}
 
       <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
         <h2 className="text-lg font-bold text-[#0A2342]">Pipeline queue</h2>

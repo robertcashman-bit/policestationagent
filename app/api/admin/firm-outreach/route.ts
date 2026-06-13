@@ -6,6 +6,7 @@ import { getOutreachConfigStatus } from '@/lib/firm-outreach/config-status';
 import {
   activityReportToCsv,
   buildOutreachActivityReport,
+  buildOutreachDashboardSummary,
   emptyOutreachActivityReport,
 } from '@/lib/firm-outreach/outreach/activity-report';
 import {
@@ -24,7 +25,7 @@ import {
 export const dynamic = 'force-dynamic';
 export const maxDuration = 120;
 
-async function buildStatusPayload() {
+async function buildStatusPayload(scope: 'summary' | 'full') {
   const config = await getOutreachConfigStatus();
   const pause = await getOutreachPauseSummary();
 
@@ -40,10 +41,14 @@ async function buildStatusPayload() {
       config,
       counts: empty.prospectCounts,
       report: empty.report,
+      scope,
     };
   }
 
-  const { report, prospectCounts } = await buildOutreachActivityReport();
+  const { report, prospectCounts } =
+    scope === 'full'
+      ? await buildOutreachActivityReport()
+      : await buildOutreachDashboardSummary();
   return {
     ok: true as const,
     kvConfigured: true,
@@ -53,6 +58,7 @@ async function buildStatusPayload() {
     config,
     counts: prospectCounts,
     report,
+    scope,
   };
 }
 
@@ -63,7 +69,10 @@ export async function GET(request: Request) {
   try {
     const url = new URL(request.url);
     const format = url.searchParams.get('format');
-    const payload = await buildStatusPayload();
+    const scopeParam = url.searchParams.get('scope');
+    const scope: 'summary' | 'full' =
+      format === 'csv' || scopeParam === 'full' ? 'full' : 'summary';
+    const payload = await buildStatusPayload(scope);
 
     if (format === 'csv') {
       const csv = activityReportToCsv(payload.report);

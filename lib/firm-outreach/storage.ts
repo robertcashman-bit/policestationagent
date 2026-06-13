@@ -212,21 +212,35 @@ export async function getSend(id: string): Promise<FirmOutreachSend | null> {
   return (await kv.get<FirmOutreachSend>(sendKey(id))) ?? null;
 }
 
+/** Batch-fetch sends by id (Upstash mget, chunked). Preserves input order. */
+export async function getSendsByIds(ids: string[]): Promise<FirmOutreachSend[]> {
+  const kv = getKV();
+  if (!kv || ids.length === 0) return [];
+
+  const out: FirmOutreachSend[] = [];
+  for (let i = 0; i < ids.length; i += MGET_CHUNK) {
+    const chunk = ids.slice(i, i + MGET_CHUNK);
+    const keys = chunk.map((id) => sendKey(id));
+    const values = await kv.mget<(FirmOutreachSend | null)[]>(...keys);
+    for (const send of values) {
+      if (send) out.push(send);
+    }
+  }
+  return out;
+}
+
 export async function listRecentSends(limit = 50): Promise<FirmOutreachSend[]> {
-  const all = await listAllSends();
-  return all.slice(0, limit);
+  const kv = getKV();
+  if (!kv) return [];
+  const ids = [...(await readStringList(SEND_INDEX))].reverse().slice(0, limit);
+  return getSendsByIds(ids);
 }
 
 export async function listAllSends(): Promise<FirmOutreachSend[]> {
   const kv = getKV();
   if (!kv) return [];
   const ids = [...(await readStringList(SEND_INDEX))].reverse();
-  const out: FirmOutreachSend[] = [];
-  for (const id of ids) {
-    const s = await getSend(id);
-    if (s) out.push(s);
-  }
-  return out;
+  return getSendsByIds(ids);
 }
 
 export async function findSendByResendMessageId(
@@ -248,11 +262,8 @@ export async function listSendsForProspect(prospectId: string): Promise<FirmOutr
 export async function listSendsForEmail(email: string): Promise<FirmOutreachSend[]> {
   const normalized = normalizeEmail(email);
   const ids = await readStringList(SEND_EMAIL_INDEX + emailHash(normalized));
-  const out: FirmOutreachSend[] = [];
-  for (const id of ids) {
-    const s = await getSend(id);
-    if (s && normalizeEmail(s.email) === normalized) out.push(s);
-  }
+  const sends = await getSendsByIds(ids);
+  const out = sends.filter((s) => normalizeEmail(s.email) === normalized);
   if (out.length > 0) {
     return out.sort((a, b) =>
       (b.sentAt ?? b.createdAt).localeCompare(a.sentAt ?? a.createdAt),
@@ -509,9 +520,10 @@ export async function countProspectsByStatus(): Promise<Record<string, number>> 
     'excluded',
     'no_email',
   ];
+  const lists = await Promise.all(statuses.map((s) => listProspectIdsByStatus(s)));
   const out: Record<string, number> = {};
-  for (const s of statuses) {
-    out[s] = (await listProspectIdsByStatus(s)).length;
-  }
+  statuses.forEach((s, i) => {
+    out[s] = lists[i].length;
+  });
   return out;
 }
