@@ -45,8 +45,10 @@
     "firm-outreach:pipeline": "tsx scripts/firm-outreach-pipeline.ts",
     "firm-outreach:admin-smoke": "tsx scripts/firm-outreach-admin-smoke.ts",
     "firm-outreach:requalify": "tsx scripts/firm-outreach-requalify.ts",
+    "verify:firm-outreach": "tsx scripts/verify-firm-outreach.ts",
     "test:firm-outreach": "vitest run __tests__/firm-outreach*.test.ts",
-    "test:e2e:smoke": "playwright test e2e/smoke.spec.ts"
+    "test:e2e:smoke": "playwright test e2e/smoke.spec.ts",
+    "test:e2e:firm-outreach": "playwright test e2e/firm-outreach.spec.ts"
   },
   "dependencies": {
     "@upstash/redis": "^1.38.0",

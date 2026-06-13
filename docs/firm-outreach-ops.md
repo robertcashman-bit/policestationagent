@@ -47,6 +47,8 @@ Output: `public/outreach/police-station-agent-kent-brochure.pdf`
 ## Manual commands
 
 ```bash
+npm run verify:firm-outreach
+FIRM_OUTREACH_VERIFY_URL=https://www.policestationagent.com npm run verify:firm-outreach
 npm run firm-outreach:admin-smoke
 npm run firm-outreach:discovery
 npm run firm-outreach:enrich
