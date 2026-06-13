@@ -22,6 +22,7 @@ describe('POST /api/auth/send-code', () => {
   it('returns 503 when magic code email fails to send', async () => {
     vi.doMock('@/lib/email', () => ({
       sendMagicCode: vi.fn(async () => ({ success: false, error: 'domain not verified' })),
+      magicCodeSendErrorMessage: (err?: string) => err ?? 'send failed',
     }));
     vi.doMock('@/lib/admin-session', () => ({
       storeMagicCode: vi.fn(),
@@ -38,7 +39,7 @@ describe('POST /api/auth/send-code', () => {
 
     expect(res.status).toBe(503);
     const body = await res.json();
-    expect(body.error).toMatch(/could not send/i);
+    expect(body.error).toMatch(/domain not verified/i);
   });
 
   it('stores code only after email sends successfully', async () => {
@@ -106,7 +107,15 @@ describe('sendMagicCode', () => {
     const { sendMagicCode } = await import('@/lib/email');
     const result = await sendMagicCode('admin@example.com', '123456');
     expect(result.success).toBe(false);
-    expect(result.error).toMatch(/invalid format/i);
+    expect(result.error).toMatch(/starting with re_/i);
+  });
+
+  it('maps send errors to user-facing messages', async () => {
+    const { magicCodeSendErrorMessage } = await import('@/lib/email');
+    expect(magicCodeSendErrorMessage('RESEND_API_KEY not set')).toMatch(/not configured/i);
+    expect(magicCodeSendErrorMessage('Resend API key rejected: Invalid API key')).toMatch(
+      /rejected the API key/i,
+    );
   });
 
   it('sends via onboarding@resend.dev first by default', async () => {
@@ -114,10 +123,12 @@ describe('sendMagicCode', () => {
     process.env.CONTACT_FROM_EMAIL = 'Police Station Agent <noreply@policestationagent.com>';
 
     const send = vi.fn().mockResolvedValue({ data: { id: 'msg_123' }, error: null });
+    const listDomains = vi.fn().mockResolvedValue({ data: [], error: null });
 
     vi.doMock('resend', () => ({
       Resend: class MockResend {
         emails = { send };
+        domains = { list: listDomains };
         constructor(_key: string) {}
       },
     }));
@@ -143,10 +154,12 @@ describe('sendMagicCode', () => {
         error: { message: 'You can only send testing emails to your own email address' },
       })
       .mockResolvedValueOnce({ data: { id: 'msg_123' }, error: null });
+    const listDomains = vi.fn().mockResolvedValue({ data: [], error: null });
 
     vi.doMock('resend', () => ({
       Resend: class MockResend {
         emails = { send };
+        domains = { list: listDomains };
         constructor(_key: string) {}
       },
     }));
@@ -174,10 +187,12 @@ describe('sendMagicCode', () => {
         error: { message: 'API key is invalid' },
       })
       .mockResolvedValueOnce({ data: { id: 'msg_123' }, error: null });
+    const listDomains = vi.fn().mockResolvedValue({ data: [], error: null });
 
     vi.doMock('resend', () => ({
       Resend: class MockResend {
         emails = { send };
+        domains = { list: listDomains };
         constructor(_key: string) {}
       },
     }));

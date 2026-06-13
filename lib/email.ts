@@ -157,8 +157,30 @@ export async function sendMagicCode(
 
   const apiKey = process.env.RESEND_API_KEY?.trim() ?? "";
   if (!apiKey.startsWith("re_")) {
-    console.warn("[Magic code — RESEND_API_KEY does not look valid]", { prefix: apiKey.slice(0, 3) });
-    return { success: false, error: "RESEND_API_KEY invalid format" };
+    console.warn("[Magic code — RESEND_API_KEY invalid format]", {
+      prefix: apiKey.slice(0, 6),
+      length: apiKey.length,
+    });
+    return {
+      success: false,
+      error:
+        "RESEND_API_KEY on Vercel must be a Resend API key starting with re_ (see resend.com/api-keys)",
+    };
+  }
+
+  try {
+    const { error: keyError } = await client.domains.list();
+    if (keyError) {
+      console.warn("[Magic code — Resend API key rejected]", keyError.message);
+      return {
+        success: false,
+        error: `Resend API key rejected: ${keyError.message}`,
+      };
+    }
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.warn("[Magic code — Resend API key check failed]", msg);
+    return { success: false, error: `Resend API key check failed: ${msg}` };
   }
 
   const subject = `Your Police Station Agent admin code: ${code}`;
@@ -172,7 +194,7 @@ export async function sendMagicCode(
     try {
       const { data, error } = await client.emails.send({
         from,
-        to: email,
+        to: [email],
         subject,
         html,
       });
@@ -202,4 +224,23 @@ export async function sendMagicCode(
 
   console.error("[Magic code email failed] all senders exhausted:", lastError);
   return { success: false, error: lastError };
+}
+
+export function magicCodeSendErrorMessage(error?: string): string {
+  if (!error) {
+    return 'Could not send your login code by email. Try again shortly or contact support.';
+  }
+  if (error.includes('RESEND_API_KEY not set')) {
+    return 'Admin login email is not configured. Add RESEND_API_KEY on the Vercel web44ai project.';
+  }
+  if (error.includes('starting with re_') || error.includes('invalid format')) {
+    return 'Resend API key on Vercel is invalid. Set RESEND_API_KEY to a key from resend.com/api-keys (starts with re_).';
+  }
+  if (/api key|unauthorized|invalid.*key/i.test(error)) {
+    return 'Resend rejected the API key on Vercel. Create a new key at resend.com/api-keys and update RESEND_API_KEY on web44ai.';
+  }
+  if (/only send testing emails|your own email/i.test(error)) {
+    return 'Could not send the login code yet. Use robertdavidcashman@gmail.com or verify policestationagent.com in Resend.';
+  }
+  return 'Could not send your login code by email. Check spam, try again shortly, or verify Resend is configured on Vercel.';
 }

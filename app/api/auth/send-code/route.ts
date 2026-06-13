@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { isAdminEmail } from '@/lib/admin-auth';
 import { storeMagicCode } from '@/lib/admin-session';
 import { getClientIp, rateLimitOk } from '@/lib/contact-guards';
-import { sendMagicCode } from '@/lib/email';
+import { magicCodeSendErrorMessage, sendMagicCode } from '@/lib/email';
 import { getKV } from '@/lib/kv';
 
 export const dynamic = 'force-dynamic';
@@ -44,10 +44,7 @@ export async function POST(request: Request) {
   if (!sent.success) {
     console.error('[send-code] Magic code email failed:', sent.error);
     return NextResponse.json(
-      {
-        error:
-          'Could not send your login code by email. Check spam, try again shortly, or verify Resend is configured on Vercel.',
-      },
+      { error: magicCodeSendErrorMessage(sent.error) },
       { status: 503 },
     );
   }
