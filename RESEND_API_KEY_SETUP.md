@@ -9,7 +9,7 @@ The chatbot email functionality requires a Resend API key to send emails when us
 Add the following environment variable in your Vercel dashboard:
 
 **Variable Name:** `RESEND_API_KEY`  
-**Value:** `98765445`  
+**Value:** Your key from https://resend.com/api-keys (starts with `re_`)  
 **Environments:** Production, Preview, and Development
 
 ### Steps to Add in Vercel:
@@ -19,7 +19,7 @@ Add the following environment variable in your Vercel dashboard:
 3. Click **Add New**
 4. Enter:
    - **Key:** `RESEND_API_KEY`
-   - **Value:** `98765445`
+   - **Value:** Your Resend API key (`re_...`)
    - **Environments:** Select all (Production, Preview, Development)
 5. Click **Save**
 6. **Redeploy** your project for the changes to take effect

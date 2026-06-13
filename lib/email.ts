@@ -112,23 +112,19 @@ function getResendClient(): Resend | null {
 
 const RESEND_ONBOARDING_FROM = "Police Station Agent <onboarding@resend.dev>";
 
+/** Onboarding first so login works before custom domain is verified in Resend. */
 function magicCodeFromCandidates(): string[] {
-  const candidates = [
+  const custom = [
     process.env.ADMIN_MAGIC_FROM_EMAIL?.trim(),
     process.env.CONTACT_FROM_EMAIL?.trim(),
-    RESEND_ONBOARDING_FROM,
   ].filter(Boolean) as string[];
-  return [...new Set(candidates)];
-}
 
-function isLikelyFromAddressError(message: string): boolean {
-  const lower = message.toLowerCase();
-  return (
-    lower.includes("domain") ||
-    lower.includes("not verified") ||
-    lower.includes("from address") ||
-    lower.includes("sender")
-  );
+  const preferCustom = process.env.RESEND_MAGIC_PREFER_CUSTOM === "true";
+  const ordered = preferCustom
+    ? [...custom, RESEND_ONBOARDING_FROM]
+    : [RESEND_ONBOARDING_FROM, ...custom];
+
+  return [...new Set(ordered)];
 }
 
 function buildMagicCodeHtml(code: string): string {
@@ -159,12 +155,20 @@ export async function sendMagicCode(
     return { success: false, error: "RESEND_API_KEY not set" };
   }
 
+  const apiKey = process.env.RESEND_API_KEY?.trim() ?? "";
+  if (!apiKey.startsWith("re_")) {
+    console.warn("[Magic code — RESEND_API_KEY does not look valid]", { prefix: apiKey.slice(0, 3) });
+    return { success: false, error: "RESEND_API_KEY invalid format" };
+  }
+
   const subject = `Your Police Station Agent admin code: ${code}`;
   const html = buildMagicCodeHtml(code);
   const fromCandidates = magicCodeFromCandidates();
   let lastError = "Email send failed";
 
-  for (const from of fromCandidates) {
+  for (let i = 0; i < fromCandidates.length; i++) {
+    const from = fromCandidates[i];
+    const isLast = i === fromCandidates.length - 1;
     try {
       const { data, error } = await client.emails.send({
         from,
@@ -176,20 +180,22 @@ export async function sendMagicCode(
       if (error) {
         lastError = error.message;
         console.warn("[Magic code email] Resend error:", from, error.message);
-        if (from !== RESEND_ONBOARDING_FROM && isLikelyFromAddressError(error.message)) {
-          continue;
-        }
+        if (!isLast) continue;
         return { success: false, error: lastError };
       }
 
-      if (data?.id) return { success: true };
+      if (data?.id) {
+        if (i > 0) {
+          console.info("[Magic code email] sent via fallback sender:", from);
+        }
+        return { success: true };
+      }
       lastError = "Email provider returned no id";
+      if (!isLast) continue;
     } catch (err) {
       lastError = err instanceof Error ? err.message : String(err);
       console.error("[Magic code email failed]", from, lastError);
-      if (from !== RESEND_ONBOARDING_FROM && isLikelyFromAddressError(lastError)) {
-        continue;
-      }
+      if (!isLast) continue;
       return { success: false, error: lastError };
     }
   }

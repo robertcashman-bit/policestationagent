@@ -90,6 +90,7 @@ describe('sendMagicCode', () => {
     delete process.env.RESEND_API_KEY;
     delete process.env.CONTACT_FROM_EMAIL;
     delete process.env.ADMIN_MAGIC_FROM_EMAIL;
+    delete process.env.RESEND_MAGIC_PREFER_CUSTOM;
   });
 
   it('returns error when RESEND_API_KEY is missing', async () => {
@@ -100,7 +101,38 @@ describe('sendMagicCode', () => {
     expect(result.error).toMatch(/RESEND_API_KEY/i);
   });
 
-  it('retries with onboarding sender when custom from fails domain verification', async () => {
+  it('returns error when RESEND_API_KEY has invalid format', async () => {
+    process.env.RESEND_API_KEY = '98765445';
+    const { sendMagicCode } = await import('@/lib/email');
+    const result = await sendMagicCode('admin@example.com', '123456');
+    expect(result.success).toBe(false);
+    expect(result.error).toMatch(/invalid format/i);
+  });
+
+  it('sends via onboarding@resend.dev first by default', async () => {
+    process.env.RESEND_API_KEY = 're_test';
+    process.env.CONTACT_FROM_EMAIL = 'Police Station Agent <noreply@policestationagent.com>';
+
+    const send = vi.fn().mockResolvedValue({ data: { id: 'msg_123' }, error: null });
+
+    vi.doMock('resend', () => ({
+      Resend: class MockResend {
+        emails = { send };
+        constructor(_key: string) {}
+      },
+    }));
+
+    const { sendMagicCode } = await import('@/lib/email');
+    const result = await sendMagicCode('robertdavidcashman@gmail.com', '654321');
+
+    expect(result.success).toBe(true);
+    expect(send).toHaveBeenCalledTimes(1);
+    expect(send.mock.calls[0][0].from).toContain('onboarding@resend.dev');
+
+    vi.doUnmock('resend');
+  });
+
+  it('retries custom sender when onboarding fails', async () => {
     process.env.RESEND_API_KEY = 're_test';
     process.env.CONTACT_FROM_EMAIL = 'Police Station Agent <noreply@policestationagent.com>';
 
@@ -108,7 +140,38 @@ describe('sendMagicCode', () => {
       .fn()
       .mockResolvedValueOnce({
         data: null,
-        error: { message: 'The policestationagent.com domain is not verified' },
+        error: { message: 'You can only send testing emails to your own email address' },
+      })
+      .mockResolvedValueOnce({ data: { id: 'msg_123' }, error: null });
+
+    vi.doMock('resend', () => ({
+      Resend: class MockResend {
+        emails = { send };
+        constructor(_key: string) {}
+      },
+    }));
+
+    const { sendMagicCode } = await import('@/lib/email');
+    const result = await sendMagicCode('robertdavidcashman@gmail.com', '654321');
+
+    expect(result.success).toBe(true);
+    expect(send).toHaveBeenCalledTimes(2);
+    expect(send.mock.calls[0][0].from).toContain('onboarding@resend.dev');
+    expect(send.mock.calls[1][0].from).toContain('policestationagent.com');
+
+    vi.doUnmock('resend');
+  });
+
+  it('retries onboarding when custom sender fails with non-domain error', async () => {
+    process.env.RESEND_API_KEY = 're_test';
+    process.env.RESEND_MAGIC_PREFER_CUSTOM = 'true';
+    process.env.CONTACT_FROM_EMAIL = 'Police Station Agent <noreply@policestationagent.com>';
+
+    const send = vi
+      .fn()
+      .mockResolvedValueOnce({
+        data: null,
+        error: { message: 'API key is invalid' },
       })
       .mockResolvedValueOnce({ data: { id: 'msg_123' }, error: null });
 
@@ -127,5 +190,6 @@ describe('sendMagicCode', () => {
     expect(send.mock.calls[1][0].from).toContain('onboarding@resend.dev');
 
     vi.doUnmock('resend');
+    delete process.env.RESEND_MAGIC_PREFER_CUSTOM;
   });
 });
