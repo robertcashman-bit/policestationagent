@@ -9,11 +9,9 @@ import * as path from 'path';
  * LOGIN → AI GENERATION → DATABASE INSERT → PUBLIC URL → SCREENSHOT
  */
 
-// Test configuration
-const TEST_CREDENTIALS = {
-  username: process.env.ADMIN_USERNAME || 'Cashman100',
-  password: process.env.ADMIN_PASSWORD || 'TestAdmin2025!',
-};
+// Test configuration — magic-code admin login
+const ADMIN_EMAIL = process.env.TEST_ADMIN_EMAIL || 'robertdavidcashman@gmail.com';
+const ADMIN_MAGIC_CODE = process.env.TEST_ADMIN_MAGIC_CODE || '';
 
 const TEST_BLOG_CONFIG = {
   topic: 'E2E Test: Understanding Your Rights During Police Interviews',
@@ -45,26 +43,24 @@ test.describe('Blog Generator E2E Pipeline', () => {
     console.log('STEP 1: AUTHENTICATION');
     console.log('════════════════════════════════════════\n');
 
-    await page.goto('/admin/login');
-    await expect(page.locator('h1')).toContainText('Admin Access');
+    await page.goto('/admin');
+    await expect(page.getByRole('heading', { name: /sign in to admin/i })).toBeVisible();
 
-    // Check if password is configured
-    if (!TEST_CREDENTIALS.password) {
-      logResult('Authentication', 'FAIL', 'ADMIN_PASSWORD environment variable not set');
-      throw new Error('ADMIN_PASSWORD environment variable is required. Set it before running tests.');
+    if (!ADMIN_MAGIC_CODE) {
+      logResult('Authentication', 'SKIP', 'TEST_ADMIN_MAGIC_CODE not set — magic login page verified');
+      test.skip();
+      return;
     }
 
-    // Fill login form
-    await page.fill('input[id="username"]', TEST_CREDENTIALS.username);
-    await page.fill('input[id="password"]', TEST_CREDENTIALS.password);
-    await page.click('button[type="submit"]');
+    await page.fill('#admin-email', ADMIN_EMAIL);
+    await page.getByRole('button', { name: /send login code/i }).click();
+    await page.fill('#admin-otp', ADMIN_MAGIC_CODE);
+    await page.getByRole('button', { name: /verify code/i }).click();
+    await page.waitForURL('**/admin', { timeout: 15000 });
 
-    // Wait for redirect to blog generator
-    await page.waitForURL('**/admin/blog-generator', { timeout: 10000 });
-    
-    // Verify we're logged in by checking for the Blog Generator heading
-    await expect(page.locator('h1')).toContainText('Blog Generator');
-    logResult('Authentication', 'PASS', 'Successfully logged in and redirected to Blog Generator');
+    await page.goto('/admin/blog-generator');
+    await expect(page.getByRole('heading', { name: /blog generator/i })).toBeVisible();
+    logResult('Authentication', 'PASS', 'Successfully signed in with magic code');
 
     // ═══════════════════════════════════════════════════════════════
     // STEP 2: BLOG GENERATOR UI FLOW

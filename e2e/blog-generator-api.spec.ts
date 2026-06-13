@@ -25,20 +25,21 @@ test.describe("Blog Generator API E2E", () => {
     console.log("STEP 1: AUTHENTICATION");
     console.log("═══════════════════════════════════════════");
 
-    const password = process.env.TEST_ADMIN_PASSWORD;
-    if (!password) {
-      console.log("⚠️ TEST_ADMIN_PASSWORD not set - skipping authenticated tests");
-      console.log("   Set environment variable to run full E2E test");
+    const magicCode = process.env.TEST_ADMIN_MAGIC_CODE;
+    if (!magicCode) {
+      console.log("⚠️ TEST_ADMIN_MAGIC_CODE not set - skipping authenticated tests");
       test.skip();
       return;
     }
 
-    await page.goto("/admin/login");
-    await page.fill("input#username", "Cashman100");
-    await page.fill("input#password", password);
-    await page.click('button[type="submit"]');
-
-    await page.waitForURL("**/admin/blog-generator", { timeout: 15000 });
+    const adminEmail = process.env.TEST_ADMIN_EMAIL || 'robertdavidcashman@gmail.com';
+    await page.goto("/admin");
+    await page.fill("#admin-email", adminEmail);
+    await page.getByRole("button", { name: /send login code/i }).click();
+    await page.fill("#admin-otp", magicCode);
+    await page.getByRole("button", { name: /verify code/i }).click();
+    await page.waitForURL("**/admin", { timeout: 15000 });
+    await page.goto("/admin/blog-generator");
 
     const cookies = await context.cookies();
     const tokenCookie = cookies.find((c) => c.name === "admin-token");

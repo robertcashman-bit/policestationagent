@@ -70,7 +70,8 @@ test.describe("Production Screenshots", () => {
   test("Capture production admin login page", async ({ page }) => {
     console.log("📸 Capturing production admin login page...");
 
-    await page.goto(`${PRODUCTION_URL}/admin/login`);
+    await page.goto(`${PRODUCTION_URL}/admin`);
+    await expect(page.getByRole('heading', { name: /sign in to admin/i })).toBeVisible();
     await page.waitForLoadState("networkidle");
 
     await page.screenshot({

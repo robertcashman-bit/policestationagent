@@ -9,11 +9,22 @@ import * as path from "path";
  * LOGIN → AI GENERATION → DATABASE INSERT → PUBLIC ROUTE → RENDER
  */
 
-// Test configuration
-const TEST_CREDENTIALS = {
-  username: process.env.TEST_ADMIN_USERNAME || "Cashman100",
-  password: process.env.TEST_ADMIN_PASSWORD || "",
-};
+const ADMIN_EMAIL = process.env.TEST_ADMIN_EMAIL || 'robertdavidcashman@gmail.com';
+const ADMIN_MAGIC_CODE = process.env.TEST_ADMIN_MAGIC_CODE || '';
+
+async function adminMagicLogin(page: Page) {
+  if (!ADMIN_MAGIC_CODE) {
+    test.skip();
+    return;
+  }
+  await page.goto('/admin');
+  await page.fill('#admin-email', ADMIN_EMAIL);
+  await page.getByRole('button', { name: /send login code/i }).click();
+  await page.fill('#admin-otp', ADMIN_MAGIC_CODE);
+  await page.getByRole('button', { name: /verify code/i }).click();
+  await page.waitForURL('**/admin', { timeout: 15000 });
+  await page.goto('/admin/blog-generator');
+}
 
 const TEST_BLOG_CONFIG = {
   topic: "E2E Test: Understanding Your Rights During Police Detention",
@@ -61,43 +72,22 @@ test.describe("Blog Generator E2E Pipeline", () => {
     console.log("STEP 1: AUTHENTICATION");
     console.log("═══════════════════════════════════════════");
 
-    // Check if password is provided
-    if (!TEST_CREDENTIALS.password) {
-      // Try to get password from environment or use a test approach
-      console.log("⚠️ No password provided, attempting direct cookie injection...");
+    await page.goto('/admin');
+    await expect(page.getByRole('heading', { name: /sign in to admin/i })).toBeVisible();
 
-      // Navigate to login page first
-      await page.goto("/admin/login");
-      await expect(page.locator("h1")).toContainText("Admin Access");
-
-      results.login.passed = false;
-      results.login.error = "TEST_ADMIN_PASSWORD environment variable not set";
-
-      // For testing without password, we'll use API-based auth simulation
-      // This requires creating a valid JWT token
-      console.log("❌ Cannot proceed without valid credentials");
-      console.log("Set TEST_ADMIN_PASSWORD environment variable to run this test");
-
+    if (!ADMIN_MAGIC_CODE) {
+      console.log("⚠️ TEST_ADMIN_MAGIC_CODE not set — skipping authenticated pipeline");
       test.skip();
       return;
     }
 
-    // Navigate to login page
-    await page.goto("/admin/login");
-    await expect(page.locator("h1")).toContainText("Admin Access");
-    console.log("✓ Login page loaded");
-
-    // Fill credentials
-    await page.fill('input[name="username"], input#username', TEST_CREDENTIALS.username);
-    await page.fill('input[name="password"], input#password', TEST_CREDENTIALS.password);
-    console.log("✓ Credentials entered");
-
-    // Submit login
-    await page.click('button[type="submit"]');
-
-    // Wait for redirect to blog generator
-    await page.waitForURL("**/admin/blog-generator", { timeout: 10000 });
-    console.log("✓ Redirected to blog generator");
+    await page.fill('#admin-email', ADMIN_EMAIL);
+    await page.getByRole('button', { name: /send login code/i }).click();
+    await page.fill('#admin-otp', ADMIN_MAGIC_CODE);
+    await page.getByRole('button', { name: /verify code/i }).click();
+    await page.waitForURL('**/admin', { timeout: 15000 });
+    await page.goto("/admin/blog-generator");
+    console.log("✓ Signed in via magic code");
 
     // Verify we're authenticated
     const pageTitle = await page.title();
@@ -119,16 +109,7 @@ test.describe("Blog Generator E2E Pipeline", () => {
     console.log("═══════════════════════════════════════════");
 
     // First, authenticate
-    if (!TEST_CREDENTIALS.password) {
-      test.skip();
-      return;
-    }
-
-    await page.goto("/admin/login");
-    await page.fill('input[name="username"], input#username', TEST_CREDENTIALS.username);
-    await page.fill('input[name="password"], input#password', TEST_CREDENTIALS.password);
-    await page.click('button[type="submit"]');
-    await page.waitForURL("**/admin/blog-generator", { timeout: 10000 });
+    await adminMagicLogin(page);
 
     // Fill blog form
     await page.fill('input[name="topic"]', TEST_BLOG_CONFIG.topic);
@@ -183,17 +164,7 @@ test.describe("Blog Generator E2E Pipeline", () => {
     console.log("STEP 3: AI TEXT GENERATION");
     console.log("═══════════════════════════════════════════");
 
-    if (!TEST_CREDENTIALS.password) {
-      test.skip();
-      return;
-    }
-
-    // Re-authenticate and generate
-    await page.goto("/admin/login");
-    await page.fill('input[name="username"], input#username', TEST_CREDENTIALS.username);
-    await page.fill('input[name="password"], input#password', TEST_CREDENTIALS.password);
-    await page.click('button[type="submit"]');
-    await page.waitForURL("**/admin/blog-generator", { timeout: 10000 });
+    await adminMagicLogin(page);
 
     // Fill form
     await page.fill('input[name="topic"]', TEST_BLOG_CONFIG.topic);
@@ -256,17 +227,7 @@ test.describe("Blog Generator E2E Pipeline", () => {
     console.log("STEP 4: IMAGE VERIFICATION");
     console.log("═══════════════════════════════════════════");
 
-    if (!TEST_CREDENTIALS.password) {
-      test.skip();
-      return;
-    }
-
-    // Re-authenticate and generate
-    await page.goto("/admin/login");
-    await page.fill('input[name="username"], input#username', TEST_CREDENTIALS.username);
-    await page.fill('input[name="password"], input#password', TEST_CREDENTIALS.password);
-    await page.click('button[type="submit"]');
-    await page.waitForURL("**/admin/blog-generator", { timeout: 10000 });
+    await adminMagicLogin(page);
 
     // Fill form with image
     await page.fill('input[name="topic"]', TEST_BLOG_CONFIG.topic);
@@ -312,17 +273,7 @@ test.describe("Blog Generator E2E Pipeline", () => {
     console.log("STEP 5: PUBLISH BLOG POST");
     console.log("═══════════════════════════════════════════");
 
-    if (!TEST_CREDENTIALS.password) {
-      test.skip();
-      return;
-    }
-
-    // Re-authenticate and generate
-    await page.goto("/admin/login");
-    await page.fill('input[name="username"], input#username', TEST_CREDENTIALS.username);
-    await page.fill('input[name="password"], input#password', TEST_CREDENTIALS.password);
-    await page.click('button[type="submit"]');
-    await page.waitForURL("**/admin/blog-generator", { timeout: 10000 });
+    await adminMagicLogin(page);
 
     // Fill form
     await page.fill('input[name="topic"]', TEST_BLOG_CONFIG.topic);

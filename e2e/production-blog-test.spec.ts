@@ -12,10 +12,22 @@ import { test, expect } from "@playwright/test";
  */
 
 const PRODUCTION_URL = "https://policestationagent.com";
-const TEST_CREDENTIALS = {
-  username: process.env.TEST_ADMIN_USERNAME || "Cashman100",
-  password: process.env.TEST_ADMIN_PASSWORD || "",
-};
+const ADMIN_EMAIL = process.env.TEST_ADMIN_EMAIL || "robertdavidcashman@gmail.com";
+const ADMIN_MAGIC_CODE = process.env.TEST_ADMIN_MAGIC_CODE || "";
+
+async function adminMagicLogin(page: import("@playwright/test").Page, baseUrl = "") {
+  if (!ADMIN_MAGIC_CODE) {
+    test.skip();
+    return;
+  }
+  await page.goto(`${baseUrl}/admin`);
+  await page.fill("#admin-email", ADMIN_EMAIL);
+  await page.getByRole("button", { name: /send login code/i }).click();
+  await page.fill("#admin-otp", ADMIN_MAGIC_CODE);
+  await page.getByRole("button", { name: /verify code/i }).click();
+  await page.waitForURL("**/admin", { timeout: 15000 });
+  await page.goto(`${baseUrl}/admin/blog-generator`);
+}
 
 const TEST_BLOG_CONFIG = {
   topic: "E2E Production Test: Understanding Your Rights During Police Interviews",
@@ -35,24 +47,23 @@ test.describe("Production Blog Generator E2E", () => {
     console.log("STEP 1: PRODUCTION LOGIN");
     console.log("═══════════════════════════════════════════");
 
-    if (!TEST_CREDENTIALS.password) {
-      console.log("⚠️ TEST_ADMIN_PASSWORD not set - skipping authenticated tests");
+    if (!ADMIN_MAGIC_CODE) {
+      console.log("⚠️ TEST_ADMIN_MAGIC_CODE not set - skipping authenticated tests");
       test.skip();
       return;
     }
 
-    await page.goto(`${PRODUCTION_URL}/admin/login`);
+    await page.goto(`${PRODUCTION_URL}/admin`);
     await page.waitForLoadState("networkidle");
 
-    // Take screenshot of login page
     await page.screenshot({ path: "./playwright-results/prod-login-page.png", fullPage: true });
 
-    await page.fill("input#username", TEST_CREDENTIALS.username);
-    await page.fill("input#password", TEST_CREDENTIALS.password);
-    await page.click('button[type="submit"]');
-
-    // Wait for redirect
-    await page.waitForURL("**/admin/blog-generator", { timeout: 15000 });
+    await page.fill("#admin-email", ADMIN_EMAIL);
+    await page.getByRole("button", { name: /send login code/i }).click();
+    await page.fill("#admin-otp", ADMIN_MAGIC_CODE);
+    await page.getByRole("button", { name: /verify code/i }).click();
+    await page.waitForURL("**/admin", { timeout: 15000 });
+    await page.goto(`${PRODUCTION_URL}/admin/blog-generator`);
     await page.waitForLoadState("networkidle");
 
     // Verify we're logged in
@@ -70,17 +81,7 @@ test.describe("Production Blog Generator E2E", () => {
     console.log("STEP 2: GENERATE BLOG POST");
     console.log("═══════════════════════════════════════════");
 
-    if (!TEST_CREDENTIALS.password) {
-      test.skip();
-      return;
-    }
-
-    // Re-login if needed
-    await page.goto(`${PRODUCTION_URL}/admin/login`);
-    await page.fill("input#username", TEST_CREDENTIALS.username);
-    await page.fill("input#password", TEST_CREDENTIALS.password);
-    await page.click('button[type="submit"]');
-    await page.waitForURL("**/admin/blog-generator", { timeout: 15000 });
+    await adminMagicLogin(page, PRODUCTION_URL);
     await page.waitForLoadState("networkidle");
 
     // Fill form
@@ -132,17 +133,7 @@ test.describe("Production Blog Generator E2E", () => {
     console.log("STEP 3: PUBLISH TO PRODUCTION");
     console.log("═══════════════════════════════════════════");
 
-    if (!TEST_CREDENTIALS.password) {
-      test.skip();
-      return;
-    }
-
-    // Re-login and generate if needed
-    await page.goto(`${PRODUCTION_URL}/admin/login`);
-    await page.fill("input#username", TEST_CREDENTIALS.username);
-    await page.fill("input#password", TEST_CREDENTIALS.password);
-    await page.click('button[type="submit"]');
-    await page.waitForURL("**/admin/blog-generator", { timeout: 15000 });
+    await adminMagicLogin(page, PRODUCTION_URL);
     await page.waitForLoadState("networkidle");
 
     // Fill and generate

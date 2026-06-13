@@ -31,7 +31,14 @@ test.describe('Site smoke tests', () => {
     }
   });
 
-  test('legacy login endpoint is disabled', async ({ request }) => {
+  test('legacy admin login endpoint is disabled', async ({ request }) => {
+    const response = await request.post('/api/admin/login', {
+      data: { username: 'admin', password: 'Secure123!' },
+    });
+    expect(response.status()).toBe(410);
+  });
+
+  test('legacy auth login endpoint is disabled', async ({ request }) => {
     const response = await request.post('/api/auth/login', {
       data: { username: 'admin', password: 'Secure123!' },
     });

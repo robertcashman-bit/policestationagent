@@ -11,9 +11,9 @@ Requires **Upstash Redis** (sessions + prospect data) and **RESEND_API_KEY** (lo
 
 | Time | Route | What runs |
 |------|-------|-----------|
-| `03:00` | `/api/cron/firm-outreach-pipeline/maintain` | LAA + DSCC + discovery + requalify + enrich (25 firms, max ~240s) |
-| `06:00` | `/api/cron/firm-outreach-enrich` | Enrich only (25 firms) |
-| `08:00` | `/api/cron/firm-outreach-enrich` | Enrich only (25 firms) |
+| `03:00` | `/api/cron/firm-outreach-pipeline/maintain` | LAA + DSCC + discovery + requalify (no enrich) |
+| `06:00` | `/api/cron/firm-outreach-enrich` | Enrich only (10 firms, ~90s max) |
+| `08:00` | `/api/cron/firm-outreach-enrich` | Enrich only (10 firms, ~90s max) |
 | `09:30` | `/api/cron/firm-outreach-pipeline/full` | Send from ready queue + daily digest |
 | `17:00` | `/api/cron/firm-outreach-digest` | Digest backup if morning run did not send one |
 
@@ -29,7 +29,7 @@ All cron routes require `Authorization: Bearer $CRON_SECRET` (Vercel adds this a
 | `FIRM_OUTREACH_COUNTY_ALLOWLIST` | `kent` | County filter for discovery |
 | `FIRM_OUTREACH_DAILY_CAP` | `50` | Max outreach sends per UTC day |
 | `FIRM_OUTREACH_DIGEST_EMAIL` | `CONTACT_FORM_TO_EMAIL` | Daily digest recipient |
-| `FIRM_OUTREACH_CRON_ENRICH_BATCH` | `25` | Firms per cron enrich tick |
+| `FIRM_OUTREACH_CRON_ENRICH_BATCH` | `10` | Firms per cron enrich tick |
 | `FIRM_OUTREACH_SEND_ENABLED` | enabled | Set `false` to disable automated sends |
 | `FIRM_OUTREACH_PAUSED` | off | Set `true` to pause all sends |
 | `FIRM_OUTREACH_DRY_RUN` | off | Set `true` to log sends without delivering |
