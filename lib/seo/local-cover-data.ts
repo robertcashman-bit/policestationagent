@@ -19,14 +19,14 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
   kent: {
     slug: "kent-police-station-reps",
     town: "Kent",
-    title: "Police Station Representatives Kent | North Kent & Tonbridge",
+    title: "Police Station Representatives Kent | All Custody Suites",
     metaDescription:
-      "Police station representatives at North Kent (Gravesend) and Tonbridge custody suites and voluntary interviews across Kent. Firm instructions and client advice. NOT Kent Police.",
+      "Police station representatives across all Kent custody suites and voluntary interviews — with regular attendance at North Kent (Gravesend) and Tonbridge. Firm instructions and client advice. NOT Kent Police.",
     h1: "Police Station Representatives Across Kent",
     answerFirst:
-      "In brief: this hub covers police station representation and solicitor agent cover across Kent — with priority attendance at North Kent (Gravesend) and Tonbridge custody suites, plus voluntary interviews at Maidstone, Sevenoaks, Tunbridge Wells and Swanley.",
+      "In brief: this hub covers police station representation and solicitor agent cover across Kent — with regular attendance at North Kent (Gravesend) and Tonbridge custody suites, plus voluntary interviews at Maidstone, Sevenoaks, Tunbridge Wells, Swanley and other Kent stations.",
     intro:
-      "Robert Cashman provides police station agency and representation with extended-hours cover at North Kent (Gravesend) and Tonbridge custody suites. Criminal defence firms can instruct cover; clients in custody or booked for interview can request advice through Tuckers Solicitors LLP.",
+      "Robert Cashman provides police station agency and representation across Kent — with regular extended-hours attendance at North Kent (Gravesend) and Tonbridge custody suites among others. Criminal defence firms can instruct cover; clients in custody or booked for interview can request advice through Tuckers Solicitors LLP.",
     areas: [
       "Gravesend",
       "Northfleet",

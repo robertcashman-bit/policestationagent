@@ -15,16 +15,17 @@ export function HomeHeroCover() {
           Kent — NOT the police
         </p>
         <h1 id="home-hero-heading" className="text-3xl md:text-5xl font-black mb-4 leading-tight text-white">
-          Police Station Cover — North Kent &amp; Tonbridge
+          Police Station Cover Across Kent
         </h1>
         <p className="text-lg md:text-xl text-white mb-8 max-w-3xl mx-auto">
-          Custody attendance and voluntary interview representation for criminal defence firms — and
-          free legal advice for clients in custody or booked for interview.
+          Custody attendance and voluntary interview representation at all Kent police stations — for
+          criminal defence firms and free legal advice for clients in custody or booked for interview.
         </p>
 
         <div className="rounded-xl bg-white p-5 md:p-6 shadow-lg max-w-xl mx-auto text-left">
           <p className="text-slate-800 text-sm md:text-base mb-4">
-            Robert Cashman, solicitor at Tuckers Solicitors LLP. Extended-hours cover at{" "}
+            Robert Cashman, solicitor at Tuckers Solicitors LLP. Kent-wide extended-hours cover — with
+            regular attendance at{" "}
             <Link href="/police-station-rep-gravesend" className="font-semibold text-blue-700 hover:underline">
               North Kent (Gravesend) custody
             </Link>{" "}
@@ -32,7 +33,7 @@ export function HomeHeroCover() {
             <Link href="/police-station-rep-tonbridge" className="font-semibold text-blue-700 hover:underline">
               Tonbridge custody
             </Link>
-            .
+            , plus Medway, Maidstone, Canterbury and all other Kent stations.
           </p>
           <ConversionCTAGroup layout="stacked" />
           <p className="text-slate-700 text-sm mt-4">

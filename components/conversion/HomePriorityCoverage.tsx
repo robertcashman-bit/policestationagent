@@ -6,11 +6,12 @@ export function HomePriorityCoverage() {
     <section className="py-12 bg-white border-t border-slate-200" aria-labelledby="priority-coverage-heading">
       <div className="max-w-4xl mx-auto px-4">
         <h2 id="priority-coverage-heading" className="text-2xl md:text-3xl font-black text-slate-900 mb-3 text-center">
-          Priority police station cover
+          Kent police station cover
         </h2>
         <p className="text-slate-600 text-center mb-6 max-w-2xl mx-auto">
-          Extended-hours attendance at North Kent (Gravesend) and Tonbridge custody suites, plus
-          voluntary interviews across Kent.
+          We attend all Kent custody suites and voluntary interview locations. Regular extended-hours
+          cover at North Kent (Gravesend) and Tonbridge — two of the county&apos;s main 24-hour custody
+          facilities — alongside Medway, Maidstone, Canterbury and the rest of Kent.
         </p>
         <div className="grid sm:grid-cols-2 gap-4 mb-6">
           <Link

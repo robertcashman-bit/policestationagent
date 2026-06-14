@@ -90,7 +90,8 @@ export default function Footer() {
 
         {/* Priority links — always visible */}
         <nav aria-label="Priority pages" className="py-5 border-b border-slate-800">
-          <p className="text-xs uppercase tracking-wide text-sky-400 mb-3 font-semibold">Quick links</p>
+          <p className="text-xs uppercase tracking-wide text-sky-400 mb-1 font-semibold">Kent-wide cover</p>
+          <p className="text-xs text-sky-500/90 mb-3">All Kent stations — including regular attendance at Gravesend and Tonbridge</p>
           <ul className="flex flex-wrap gap-x-4 gap-y-2 text-sm">
             {FOOTER_PRIORITY_LINKS.map((link) => (
               <li key={link.href}>
