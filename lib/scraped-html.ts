@@ -64,5 +64,16 @@ export function normalizeScrapedHtml(html: string): string {
     });
   }
 
+  // Legacy scraped pages embed green WhatsApp buttons — convert to readable call/text CTAs.
+  out = out.replace(/href="https:\/\/wa\.me\/[^"]*"/gi, `href="sms:${SMS_TEL}"`);
+  out = out.replace(/href='https:\/\/wa\.me\/[^']*'/gi, `href='sms:${SMS_TEL}'`);
+  out = out.replace(/bg-green-600/gi, "bg-red-600");
+  out = out.replace(/bg-green-500/gi, "bg-red-600");
+  out = out.replace(/hover:bg-green-700/gi, "hover:bg-red-700");
+  out = out.replace(/hover:bg-green-600/gi, "hover:bg-red-700");
+  out = out.replace(/text-green-100/gi, "text-white");
+  out = out.replace(/WhatsApp text message only/gi, `Text ${SMS_DISPLAY}`);
+  out = out.replace(/>\s*WhatsApp\s*</gi, `>Text ${SMS_DISPLAY}<`);
+
   return out;
 }

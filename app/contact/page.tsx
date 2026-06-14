@@ -12,7 +12,6 @@ import {
   SERVICE_SCOPE,
   SMS_DISPLAY,
   SMS_TEL,
-  WHATSAPP_TEXT_ONLY_NOTE,
 } from "@/config/contact";
 
 export const metadata: Metadata = {
@@ -66,7 +65,6 @@ export default function Page() {
                     {SMS_DISPLAY}
                   </a>
                 </p>
-                <p className="text-red-200 text-sm mt-2">{WHATSAPP_TEXT_ONLY_NOTE}</p>
                 <p className="text-amber-300 font-bold mt-4">
                   Ask for Robert Cashman, Tuckers Duty Solicitor — The DSCC have our details
                 </p>

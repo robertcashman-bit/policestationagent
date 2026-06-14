@@ -168,7 +168,7 @@ export default function AreaPage({ params }: PageProps) {
         {
           question: 'Can solicitor firms instruct cover for Medway custody?',
           answer:
-            'Yes. Firms can instruct by telephone or WhatsApp with client details, station, custody record number and DSCC reference where available.',
+            'Yes. Firms can instruct by telephone or email with client details, station, custody record number and DSCC reference where available.',
         },
       ]
     : [];
@@ -217,10 +217,18 @@ export default function AreaPage({ params }: PageProps) {
               <p className="text-xl text-blue-100 mb-6">
                 {params["area-name"] === "medway"
                   ? "Chatham, Gillingham and Rochester — Medway custody suite and voluntary interviews"
-                  : `Police station representation and criminal defence services in ${area.displayName}`}
+                  : params["area-name"] === "north-kent"
+                    ? "Gravesend, Northfleet and Dartford — North Kent 24-hour custody suite"
+                    : params["area-name"] === "west-kent"
+                      ? "Tonbridge, Sevenoaks and Tunbridge Wells — Tonbridge custody and voluntary interviews"
+                      : `Police station representation and criminal defence services in ${area.displayName}`}
               </p>
-              {params["area-name"] === "medway" ? (
-                <ConversionCTAGroup layout="stacked" className="max-w-xl" />
+              {params["area-name"] === "medway" ||
+              params["area-name"] === "north-kent" ||
+              params["area-name"] === "west-kent" ? (
+                <div className="rounded-xl bg-white/95 p-4 shadow-lg max-w-xl">
+                  <ConversionCTAGroup layout="stacked" />
+                </div>
               ) : null}
             </div>
           </div>
@@ -234,14 +242,36 @@ export default function AreaPage({ params }: PageProps) {
               <p className="text-slate-700 leading-relaxed mb-4">
                 {params["area-name"] === "medway"
                   ? "Police station cover in Medway includes attendance at Medway custody suite (Gillingham) and voluntary interviews across Chatham, Gillingham and Rochester. Criminal defence firms can instruct cover; clients can request advice in custody or before interview."
-                  : details.description ||
-                    `Criminal defence representation is available across ${area.displayName} through the duty solicitor scheme and private representation.`}
+                  : params["area-name"] === "north-kent"
+                    ? "Police station cover in North Kent includes attendance at the North Kent (Gravesend) 24-hour custody suite and voluntary interviews across Gravesend, Dartford and Sittingbourne. Criminal defence firms can instruct cover; clients can request advice in custody or before interview."
+                    : params["area-name"] === "west-kent"
+                      ? "Police station cover in west Kent includes attendance at Tonbridge 24-hour custody and voluntary interviews across Tonbridge, Sevenoaks and Tunbridge Wells. Criminal defence firms can instruct cover; clients can request advice in custody or before interview."
+                      : details.description ||
+                        `Criminal defence representation is available across ${area.displayName} through the duty solicitor scheme and private representation.`}
               </p>
               {params["area-name"] === "medway" ? (
                 <p className="text-slate-700">
                   See dedicated page:{" "}
                   <Link href="/police-station-rep-medway" className="text-blue-700 font-semibold hover:underline">
                     Police station cover — Medway
+                  </Link>
+                  .
+                </p>
+              ) : null}
+              {params["area-name"] === "north-kent" ? (
+                <p className="text-slate-700">
+                  See dedicated page:{" "}
+                  <Link href="/police-station-rep-gravesend" className="text-blue-700 font-semibold hover:underline">
+                    Police station cover — Gravesend &amp; North Kent
+                  </Link>
+                  .
+                </p>
+              ) : null}
+              {params["area-name"] === "west-kent" ? (
+                <p className="text-slate-700">
+                  See dedicated page:{" "}
+                  <Link href="/police-station-rep-tonbridge" className="text-blue-700 font-semibold hover:underline">
+                    Police station cover — Tonbridge &amp; West Kent
                   </Link>
                   .
                 </p>

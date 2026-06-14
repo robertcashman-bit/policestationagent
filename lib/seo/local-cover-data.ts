@@ -63,7 +63,7 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
       {
         question: "Can solicitor firms instruct you for Kent cover?",
         answer:
-          "Yes. Firms can instruct by telephone or WhatsApp with client details, station, custody record number and DSCC reference where available.",
+          "Yes. Firms can instruct by telephone or email with client details, station, custody record number and DSCC reference where available.",
       },
       {
         question: "Is police station advice free in Kent?",
@@ -109,7 +109,7 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
       {
         question: "Can a solicitor firm instruct you for Medway cover?",
         answer:
-          "Yes. Firms can instruct by telephone or WhatsApp with client details, station, custody record number and DSCC reference where available.",
+          "Yes. Firms can instruct by telephone or email with client details, station, custody record number and DSCC reference where available.",
       },
       {
         question: "Is police station advice free in Medway?",
@@ -213,15 +213,15 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
   gravesend: {
     slug: "police-station-rep-gravesend",
     town: "Gravesend",
-    title: "Police Station Cover Gravesend | Kent Rep",
+    title: "Police Station Cover Gravesend & North Kent | Kent Rep",
     metaDescription:
-      "Police station cover at North Kent (Gravesend) custody and voluntary interviews. Solicitor instructions. NOT Kent Police.",
-    h1: "Police Station Cover in Gravesend, Kent",
+      "Police station cover at North Kent (Gravesend) 24-hour custody suite — Gravesend, Northfleet and north Kent. Solicitor instructions and client advice. NOT Kent Police.",
+    h1: "Police Station Cover in Gravesend & North Kent",
     answerFirst:
-      "In brief: police station cover in Gravesend includes North Kent custody suite attendance and voluntary interview representation across north Kent.",
+      "In brief: police station cover in Gravesend means attendance at the North Kent 24-hour custody suite (Thames Way, Northfleet) and voluntary interview representation across Gravesend, Dartford and north Kent.",
     intro:
-      "North Kent custody suite at Gravesend is a major 24-hour custody facility. Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795) for firms and clients.",
-    areas: ["Gravesend", "Northfleet", "North Kent"],
+      "North Kent custody suite at Gravesend is one of Kent's main 24-hour custody facilities. Robert Cashman provides police station agency and representation for criminal defence firms instructing cover, and legal advice for clients detained at North Kent or booked for interview in the area. Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795).",
+    areas: ["Gravesend", "Northfleet", "Dartford", "North Kent"],
     stations: [
       {
         name: "North Kent (Gravesend) custody",
@@ -229,16 +229,30 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
         note: "24-hour custody",
       },
     ],
-    audience: "Criminal defence firms and clients at North Kent custody.",
+    audience:
+      "Criminal defence firms needing north Kent custody cover, duty solicitors needing attendance support, and clients or family arranging representation at North Kent (Gravesend).",
     faqs: [
       {
-        question: "Do you cover North Kent custody suite?",
-        answer: "Yes. We attend North Kent (Gravesend) custody for interviews under caution.",
+        question: "Do you cover North Kent custody suite at Gravesend?",
+        answer:
+          "Yes. We attend North Kent (Gravesend) custody for interviews under caution, subject to availability.",
+      },
+      {
+        question: "Can solicitor firms instruct cover for North Kent custody?",
+        answer:
+          "Yes. Firms can instruct by telephone or email with client details, station, custody record number and DSCC reference where available.",
+      },
+      {
+        question: "Is police station advice free at North Kent custody?",
+        answer:
+          "Legal advice at the police station under the duty solicitor scheme is free for most detainees being interviewed. This is general information only.",
       },
     ],
     nearbyLinks: [
       { href: "/police-station-rep-dartford", label: "Dartford cover" },
       { href: "/police-station-rep-medway", label: "Medway cover" },
+      { href: "/coverage/areas/north-kent", label: "North Kent area hub" },
+      { href: "/for-solicitors", label: "Cover for solicitors" },
     ],
   },
   maidstone: {
@@ -276,27 +290,46 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
   tonbridge: {
     slug: "police-station-rep-tonbridge",
     town: "Tonbridge",
-    title: "Police Station Cover Tonbridge | Kent Rep",
+    title: "Police Station Cover Tonbridge & West Kent | Kent Rep",
     metaDescription:
-      "Police station cover in Tonbridge for voluntary interviews and Kent custody. Firm instructions welcome. NOT Kent Police.",
-    h1: "Police Station Cover in Tonbridge, Kent",
+      "Police station cover at Tonbridge 24-hour custody and voluntary interviews across west Kent. Solicitor instructions welcome. NOT Kent Police.",
+    h1: "Police Station Cover in Tonbridge & West Kent",
     answerFirst:
-      "In brief: Tonbridge police station hosts voluntary interviews; we provide police station cover for instructing firms and client advice.",
+      "In brief: Tonbridge police station operates a 24-hour custody suite and hosts voluntary interviews. We provide police station cover for instructing firms and client advice across Tonbridge, Sevenoaks and Tunbridge Wells.",
     intro:
-      "Tonbridge is a regular venue for voluntary interviews in west Kent. We attend by instruction from firms or for clients in custody elsewhere in Kent.",
-    areas: ["Tonbridge", "Tunbridge Wells", "West Kent"],
-    stations: [{ name: "Tonbridge police station", address: "1 Pembury Road, Tonbridge TN9 2HS" }],
-    audience: "Criminal defence firms and Tonbridge interview clients.",
+      "Tonbridge is west Kent's main 24-hour custody facility and a regular venue for voluntary interviews. Robert Cashman attends by instruction from criminal defence firms or for clients in custody or booked for interview. Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795).",
+    areas: ["Tonbridge", "Tunbridge Wells", "Sevenoaks", "West Kent"],
+    stations: [
+      {
+        name: "Tonbridge police station",
+        address: "1 Pembury Road, Tonbridge TN9 2HS",
+        note: "24-hour custody and voluntary interviews",
+      },
+    ],
+    audience:
+      "Criminal defence firms needing west Kent custody and voluntary interview cover, and clients or family arranging representation at Tonbridge.",
     faqs: [
+      {
+        question: "Do you cover Tonbridge custody suite?",
+        answer:
+          "Yes. We attend Tonbridge custody for interviews under caution, subject to availability.",
+      },
       {
         question: "Can I instruct cover for a Tonbridge voluntary interview?",
         answer:
-          "Yes. Provide client name, interview date/time, offence summary and your firm details.",
+          "Yes. Provide client name, interview date/time, offence summary and your firm details by telephone or email.",
+      },
+      {
+        question: "Can solicitor firms instruct cover for west Kent?",
+        answer:
+          "Yes. Firms can instruct by telephone or email with client details, station, custody record number and DSCC reference where available.",
       },
     ],
     nearbyLinks: [
       { href: "/police-station-rep-tunbridge-wells", label: "Tunbridge Wells cover" },
       { href: "/police-station-rep-sevenoaks", label: "Sevenoaks cover" },
+      { href: "/coverage/areas/west-kent", label: "West Kent area hub" },
+      { href: "/for-solicitors", label: "Cover for solicitors" },
     ],
   },
   "tunbridge-wells": {

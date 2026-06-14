@@ -11,24 +11,26 @@ export function HomeHeroCover() {
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(59,130,246,0.15),transparent_50%)]" aria-hidden="true" />
       <div className="max-w-5xl mx-auto px-4 relative z-10 text-center">
-        <p className="text-xs uppercase tracking-wide text-blue-200 mb-3">
+        <p className="text-xs uppercase tracking-wide text-slate-200 mb-3">
           Kent &amp; Medway — NOT the police
         </p>
         <h1 id="home-hero-heading" className="text-3xl md:text-5xl font-black mb-4 leading-tight">
           Police Station Cover in Kent &amp; Medway
         </h1>
-        <p className="text-lg md:text-xl text-blue-100 mb-3 max-w-3xl mx-auto">
+        <p className="text-lg md:text-xl text-slate-100 mb-3 max-w-3xl mx-auto">
           Custody attendance and voluntary interview representation for criminal defence firms — and
           free legal advice for clients in custody or booked for interview.
         </p>
-        <p className="text-sm text-blue-200 mb-8 max-w-2xl mx-auto">
+        <p className="text-sm text-slate-200 mb-8 max-w-2xl mx-auto">
           Robert Cashman, solicitor at Tuckers Solicitors LLP. Extended-hours cover across Kent
           custody suites including Medway and North Kent (Gravesend).
         </p>
         <div className="flex justify-center mb-6">
-          <ConversionCTAGroup layout="stacked" className="max-w-xl" />
+          <div className="rounded-xl bg-white/95 p-4 shadow-lg max-w-xl w-full">
+            <ConversionCTAGroup layout="stacked" />
+          </div>
         </div>
-        <p className="text-sm text-blue-200">
+        <p className="text-sm text-slate-200">
           Firms: see{" "}
           <Link href="/for-solicitors" className="text-amber-300 font-semibold hover:underline">
             police station cover for solicitors

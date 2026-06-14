@@ -1,24 +1,29 @@
 "use client";
 
 import { useEffect } from "react";
-import { WHATSAPP_TEXT_ONLY_NOTE } from "@/config/contact";
+import { PHONE_TEL, SMS_DISPLAY, SMS_TEL } from "@/config/contact";
 
 /**
- * Legacy HTML pages embed wa.me / vague WhatsApp labels. This patches links at runtime
- * so users see text-only guidance without editing every static HTML blob.
+ * Legacy HTML pages embed wa.me links. Replace with SMS/call so CTAs stay readable
+ * without editing every static HTML blob.
  */
 export default function ContactLinkGuard() {
   useEffect(() => {
     const patch = () => {
       document.querySelectorAll<HTMLAnchorElement>('a[href*="wa.me"]').forEach((a) => {
-        a.setAttribute("title", WHATSAPP_TEXT_ONLY_NOTE);
-        a.setAttribute("aria-label", `${a.textContent?.trim() || "WhatsApp"} — ${WHATSAPP_TEXT_ONLY_NOTE}`);
-        if (!/text message/i.test(a.textContent || "")) {
-          const label = a.textContent?.trim();
-          if (label && /whatsapp/i.test(label) && !/text/i.test(label)) {
-            a.textContent = label.replace(/WhatsApp/i, "WhatsApp text message");
-          }
+        const label = a.textContent?.trim() || "";
+        if (/call|telephone|01732/i.test(label)) {
+          a.href = `tel:${PHONE_TEL}`;
+          return;
         }
+        a.href = `sms:${SMS_TEL}`;
+        a.setAttribute("title", `Text ${SMS_DISPLAY} if unable to call`);
+        a.setAttribute("aria-label", `Text ${SMS_DISPLAY} if unable to call`);
+        if (/whatsapp/i.test(label)) {
+          a.textContent = `Text ${SMS_DISPLAY}`;
+        }
+        a.classList.remove("bg-green-600", "bg-green-500", "hover:bg-green-700", "hover:bg-green-600");
+        a.classList.add("bg-red-600", "hover:bg-red-700", "text-white");
       });
     };
 

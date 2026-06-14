@@ -1,6 +1,6 @@
 "use client";
 
-import { PHONE_TEL, whatsAppTextUrl } from "@/config/contact";
+import { PHONE_TEL } from "@/config/contact";
 
 const EMAIL = "robertdavidcashman@gmail.com";
 
@@ -11,22 +11,13 @@ export function MobileStickyContactBar() {
       style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
       aria-label="Quick contact"
     >
-      <div className="grid grid-cols-3 divide-x divide-slate-200">
+      <div className="grid grid-cols-2 divide-x divide-slate-200">
         <a
           href={`tel:${PHONE_TEL}`}
           data-event="call_click"
           className="flex flex-col items-center justify-center py-3 text-xs font-semibold text-red-700"
         >
           Call
-        </a>
-        <a
-          href={whatsAppTextUrl("Police station enquiry")}
-          data-event="whatsapp_click"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex flex-col items-center justify-center py-3 text-xs font-semibold text-green-700"
-        >
-          WhatsApp
         </a>
         <a
           href={`mailto:${EMAIL}`}

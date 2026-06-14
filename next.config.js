@@ -211,12 +211,37 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: "/north-kent-gravesend-police-station",
+        destination: "/police-station-rep-gravesend",
+        permanent: true,
+      },
+      {
+        source: "/gravesend-solicitor",
+        destination: "/police-station-rep-gravesend",
+        permanent: true,
+      },
+      {
+        source: "/police-station-agent-gravesend",
+        destination: "/police-station-rep-gravesend",
+        permanent: true,
+      },
+      {
         source: "/police-station-cover-maidstone",
         destination: "/police-station-rep-maidstone",
         permanent: true,
       },
       {
         source: "/police-station-cover-tonbridge",
+        destination: "/police-station-rep-tonbridge",
+        permanent: true,
+      },
+      {
+        source: "/tonbridge-police-station",
+        destination: "/police-station-rep-tonbridge",
+        permanent: true,
+      },
+      {
+        source: "/tonbridge-solicitor",
         destination: "/police-station-rep-tonbridge",
         permanent: true,
       },

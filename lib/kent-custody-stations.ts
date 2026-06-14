@@ -2,9 +2,9 @@
 export const KENT_CUSTODY_STATIONS = [
   { name: "Medway", href: "/medway-police-station" },
   { name: "Maidstone", href: "/maidstone-police-station" },
-  { name: "North Kent (Gravesend)", href: "/north-kent-gravesend-police-station" },
+  { name: "North Kent (Gravesend)", href: "/police-station-rep-gravesend" },
   { name: "Canterbury", href: "/canterbury-police-station" },
-  { name: "Tonbridge", href: "/tonbridge-police-station" },
+  { name: "Tonbridge", href: "/police-station-rep-tonbridge" },
   { name: "Folkestone", href: "/folkestone-police-station" },
   { name: "Ashford", href: "/ashford-police-station" },
   { name: "Sittingbourne", href: "/sittingbourne-police-station" },

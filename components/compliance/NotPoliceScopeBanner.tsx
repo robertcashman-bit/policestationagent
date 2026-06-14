@@ -1,8 +1,4 @@
-import {
-  SEO_NOT_POLICE,
-  SERVICE_SCOPE_SHORT,
-  WHATSAPP_TEXT_ONLY_NOTE,
-} from "@/config/contact";
+import { SEO_NOT_POLICE, SERVICE_SCOPE_SHORT } from "@/config/contact";
 
 /**
  * Sitewide scope + not-police disclaimer. Reduces wrong callers (police, general advice).
@@ -19,7 +15,6 @@ export default function NotPoliceScopeBanner() {
           <strong className="font-bold text-red-800">{SEO_NOT_POLICE}</strong>{" "}
           <span className="text-slate-700">{SERVICE_SCOPE_SHORT}</span>
         </p>
-        <p className="mt-1 text-slate-600 hidden sm:block">{WHATSAPP_TEXT_ONLY_NOTE}</p>
       </div>
     </div>
   );
