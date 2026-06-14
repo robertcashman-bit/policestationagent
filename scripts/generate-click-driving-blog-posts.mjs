@@ -663,7 +663,7 @@ const posts = [
 <p>Police bail imposes conditions and a return date. NFA typically means no bail conditions are imposed. See <a href="/police-bail-explained">police bail explained</a>.</p>
 
 <h2>4) Can NFA be reversed?</h2>
-<p>Investigations can reopen if new evidence comes to light. NFA is not a guarantee that proceedings will never follow. Keep your solicitor's contact details and attendance notes. This is general information — not advice about any specific case.</p>
+<p>Investigations can reopen if new evidence comes to light. NFA does not mean proceedings can never follow in future. Keep your solicitor's contact details and attendance notes. This is general information — not advice about any specific case.</p>
 
 <h2>5) After NFA — practical steps</h2>
 <ul>
