@@ -14,6 +14,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const { REP_INDEXNOW_PATHS } = require("./rep-town-paths.cjs");
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.policestationagent.com";
 const INDEXNOW_KEY = "655b1cdbce5c462b9fe51c4e19f92678";
@@ -63,6 +64,7 @@ const PRIORITY_URLS = [
   "/sevenoaks-police-station",
   "/gravesend-police-station",
   "/north-kent-gravesend-police-station",
+  ...REP_INDEXNOW_PATHS,
 ];
 
 function normalizeSlug(input) {
