@@ -53,7 +53,7 @@ export const EXPANSIONS_EXTRA = {
 <p>PACE sets initial and extended detention limits with reviews by an inspector at prescribed intervals. Your solicitor can advise on whether detention remains lawful and whether your rights are being respected. See <a href="/custody-time-limits">custody time limits</a> and <a href="/blog/kent-custody-after-arrest-process">Kent custody after arrest</a>.</p>
 
 <h2>17) Coastal east Kent towns — Dover, Hythe, Romney Marsh</h2>
-<p>We attend Folkestone custody and voluntary interviews across coastal east Kent. Arrests in Dover, Hythe, and surrounding villages may route to Folkestone or Canterbury. Confirm the suite with custody staff when arranging a solicitor. See <a href="/police-station-rep-dover">Dover cover</a> and <a href="/police-station-rep-hythe">Hythe cover</a>.</p>
+<p>We attend Folkestone custody and voluntary interviews across coastal east Kent. Arrests in Dover, Hythe, and surrounding villages may route to Folkestone or Canterbury. Confirm the suite with custody staff when arranging a solicitor. See <a href="/police-station-rep-dover">Police station rep in Dover</a> and <a href="/police-station-rep-folkestone">Police station rep in Folkestone</a>.</p>
 
 <h2>18) No comment and prepared statements at Folkestone</h2>
 <p>Your solicitor may advise answering questions, making no comment, or reading a prepared statement depending on disclosure and the individual case. See <a href="/no-comment-interview">no comment interview</a>, <a href="/prepared-statement">prepared statements</a>, and <a href="/blog/qualified-duty-solicitor-vs-police-station-rep-kent">qualified duty solicitor vs rep</a>.</p>`,

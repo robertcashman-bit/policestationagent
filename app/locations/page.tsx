@@ -6,16 +6,16 @@ import Footer from "@/components/Footer";
 import { BreadcrumbList } from "@/components/StructuredData";
 
 export const metadata: Metadata = {
-  title: "Kent Locations & Coverage | Police Station Agent",
+  title: "Police Station Reps in Kent | All Towns",
   description:
-    "Browse police station coverage, solicitor-by-town pages, and Kent custody suite representation. Find the right page for your station or area.",
+    "Police station rep and police station reps across Kent — browse town rep pages, custody suites, and solicitor coverage by area.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/locations`,
   },
   openGraph: {
-    title: "Kent Locations & Coverage | Police Station Agent",
+    title: "Police Station Reps in Kent | All Towns",
     description:
-      "Browse police station coverage, solicitor-by-town pages, and Kent custody suite representation.",
+      "Police station rep and police station reps across Kent — browse town rep pages, custody suites, and solicitor coverage by area.",
     url: `https://${SITE_DOMAIN}/locations`,
     siteName: "Police Station Agent",
     type: "website",
@@ -129,10 +129,10 @@ export default function LocationsPage() {
       <main className="flex-grow relative" id="main-content" role="main" aria-live="polite">
         <div className="bg-slate-50 min-h-screen">
           <div className="prose prose-lg max-w-6xl mx-auto px-4 py-16">
-            <h1>Kent locations & coverage</h1>
+            <h1>Police Station Reps in Kent</h1>
             <p className="lead">
-              Use this page as a hub to find the right local page (police station, town solicitor
-              page, or coverage guide). This also helps Google and users discover your key location
+              Use this page as a hub to find the right local page (police station rep, town solicitor
+              page, or coverage guide). This also helps search engines and users discover your key location
               pages.
             </p>
 

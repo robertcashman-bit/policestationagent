@@ -115,7 +115,7 @@ export const EXPANSIONS = {
 <p>Interviews at Canterbury custody are recorded on audio and video. What you say can be played at court if the case proceeds. Your solicitor may advise answering questions, making no comment, or reading a prepared statement depending on the individual case.</p>
 
 <h2>9) Herne Bay, Whitstable and Faversham routing</h2>
-<p>East Kent towns including Herne Bay, Whitstable, and Faversham may route to Canterbury custody after arrest. Operational decisions can vary. Family calling to arrange a solicitor should confirm the exact suite with custody staff. See <a href="/police-station-rep-herne-bay">Herne Bay cover</a> and <a href="/police-station-rep-whitstable">Whitstable cover</a>.</p>
+<p>East Kent towns including Herne Bay, Whitstable, and Faversham may route to Canterbury custody after arrest. Operational decisions can vary. Family calling to arrange a solicitor should confirm the exact suite with custody staff. See <a href="/herne-bay-solicitor">Herne Bay solicitor page</a> and <a href="/whitstable-solicitor">Whitstable solicitor page</a>.</p>
 
 <h2>10) Common allegations and offence types</h2>
 <p>Canterbury custody handles a wide range of allegations — assault, theft, motoring matters, drug offences, and more serious cases. Regardless of offence type, the right to free legal advice applies to most detainees being interviewed. See <a href="/offences-we-deal-with">offences at police station stage</a>.</p>
@@ -179,7 +179,7 @@ export const EXPANSIONS = {
 <p>See <a href="/no-comment-interview">no comment interview advice</a> and <a href="/blog/police-station-attendance-notes">what your solicitor records</a>.</p>
 
 <h2>9) Dover, Hythe and coastal east Kent routing</h2>
-<p>Arrests in Dover, Hythe, Romney Marsh, and coastal villages may route to Folkestone or Canterbury depending on operational capacity. Confirm the holding suite with custody staff. See <a href="/police-station-rep-dover">Dover cover</a> and <a href="/police-station-rep-hythe">Hythe cover</a>.</p>
+<p>Arrests in Dover, Hythe, Romney Marsh, and coastal villages may route to Folkestone or Canterbury depending on operational capacity. Confirm the holding suite with custody staff. See <a href="/police-station-rep-dover">Police station rep in Dover</a> and <a href="/police-station-rep-folkestone">Police station rep in Folkestone</a>.</p>
 
 <h2>10) Common allegations at Folkestone custody</h2>
 <p>Folkestone custody handles a range of allegations — from public order and assault to theft, drugs, and motoring matters. The right to free legal advice applies to most detainees being interviewed regardless of offence type. See <a href="/offences-we-deal-with">offences at police station stage</a>.</p>

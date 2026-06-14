@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { SITE_DOMAIN } from "@/config/site";
 import { getAllPosts } from "@/lib/blog-reader";
+import { REP_INDEXNOW_PATHS } from "@/lib/seo/rep-town-paths";
 
 const INDEXNOW_KEY = "655b1cdbce5c462b9fe51c4e19f92678";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || `https://${SITE_DOMAIN}`;
@@ -54,6 +55,7 @@ const PRIORITY_URLS = [
   "/resources/pace-rights-guide",
   "/link-to-us",
   "/press",
+  ...REP_INDEXNOW_PATHS,
 ];
 
 function getDefaultIndexNowUrls(): string[] {

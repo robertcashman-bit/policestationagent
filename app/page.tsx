@@ -14,14 +14,14 @@ import { HomeHeroCover } from "@/components/conversion/HomeHeroCover";
 import { HomePriorityCoverage } from "@/components/conversion/HomePriorityCoverage";
 
 export const metadata: Metadata = {
-  title: "Independent Duty Solicitor Kent | NOT the Police | Custody & VAI",
+  title: "Independent Duty Solicitor Kent | Police Station Rep Kent | NOT the Police",
   description:
-    `${SEO_NOT_POLICE} ${SERVICE_SCOPE} Free Legal Aid at Kent custody suites. Accredited duty solicitor Robert Cashman via Tuckers Solicitors LLP. Call ${PHONE_DISPLAY} or text ${SMS_DISPLAY} for custody or a booked interview only.`,
+    `${SEO_NOT_POLICE} Police station rep across Kent. ${SERVICE_SCOPE} Free Legal Aid at Kent custody suites. Accredited duty solicitor Robert Cashman via Tuckers Solicitors LLP. Call ${PHONE_DISPLAY} or text ${SMS_DISPLAY} for custody or a booked interview only.`,
   alternates: {
     canonical: `https://${SITE_DOMAIN}/`,
   },
   openGraph: {
-    title: "Independent Duty Solicitor Kent | NOT the Police | Custody & VAI",
+    title: "Independent Duty Solicitor Kent | Police Station Rep Kent | NOT the Police",
     description:
       `${SEO_NOT_POLICE} Representation at Kent custody suites and scheduled voluntary interviews. Tuckers Solicitors LLP.`,
     url: `https://${SITE_DOMAIN}/`,

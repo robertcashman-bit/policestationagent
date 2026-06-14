@@ -232,6 +232,54 @@ const organizationSchema = {
           },
         },
         {
+          "@type": "City",
+          name: "Folkestone",
+          containedIn: {
+            "@type": "State",
+            name: "Kent",
+          },
+        },
+        {
+          "@type": "City",
+          name: "Sittingbourne",
+          containedIn: {
+            "@type": "State",
+            name: "Kent",
+          },
+        },
+        {
+          "@type": "City",
+          name: "Margate",
+          containedIn: {
+            "@type": "State",
+            name: "Kent",
+          },
+        },
+        {
+          "@type": "City",
+          name: "Dover",
+          containedIn: {
+            "@type": "State",
+            name: "Kent",
+          },
+        },
+        {
+          "@type": "City",
+          name: "Swanley",
+          containedIn: {
+            "@type": "State",
+            name: "Kent",
+          },
+        },
+        {
+          "@type": "City",
+          name: "Bluewater",
+          containedIn: {
+            "@type": "State",
+            name: "Kent",
+          },
+        },
+        {
           "@type": "State",
           name: "Kent",
         },

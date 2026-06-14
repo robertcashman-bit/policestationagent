@@ -15,7 +15,7 @@ export function HomeHeroCover() {
           Kent — NOT the police
         </p>
         <h1 id="home-hero-heading" className="text-3xl md:text-5xl font-black mb-4 leading-tight text-white">
-          Police Station Cover Across Kent
+          Police Station Rep Across Kent
         </h1>
         <p className="text-lg md:text-xl text-white mb-8 max-w-3xl mx-auto">
           Custody attendance and voluntary interview representation at all Kent police stations — for
@@ -27,11 +27,11 @@ export function HomeHeroCover() {
             Robert Cashman, solicitor at Tuckers Solicitors LLP. Kent-wide extended-hours cover — with
             regular attendance at{" "}
             <Link href="/police-station-rep-gravesend" className="font-semibold text-blue-700 hover:underline">
-              North Kent (Gravesend) custody
+              police station rep in Gravesend
             </Link>{" "}
             and{" "}
             <Link href="/police-station-rep-tonbridge" className="font-semibold text-blue-700 hover:underline">
-              Tonbridge custody
+              police station rep in Tonbridge
             </Link>
             , plus Medway, Maidstone, Canterbury and all other Kent stations.
           </p>

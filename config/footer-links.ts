@@ -6,8 +6,9 @@ import { REPUK_PROFILE_URL } from "@/config/link-authority";
 export const FOOTER_BLOG_LIMIT = 6;
 
 export const FOOTER_PRIORITY_LINKS: FooterLink[] = [
-  { href: "/police-station-rep-gravesend", label: "North Kent (Gravesend) cover" },
-  { href: "/police-station-rep-tonbridge", label: "Tonbridge cover" },
+  { href: "/police-station-rep-gravesend", label: "Police station rep in Gravesend" },
+  { href: "/police-station-rep-tonbridge", label: "Police station rep in Tonbridge" },
+  { href: "/kent-police-station-reps", label: "Police station reps in Kent" },
   { href: "/for-solicitors", label: "Cover for solicitors" },
   { href: "/contact", label: "Contact" },
   { href: "/locations", label: "All locations" },
@@ -55,8 +56,10 @@ export const FOOTER_ADVICE_PAGES: FooterLink[] = [
 ];
 
 export const FOOTER_STATION_HUBS: FooterLink[] = [
-  { href: "/police-station-rep-gravesend", label: "North Kent (Gravesend) cover" },
-  { href: "/police-station-rep-tonbridge", label: "Tonbridge cover" },
+  { href: "/police-station-rep-gravesend", label: "Police station rep in Gravesend" },
+  { href: "/police-station-rep-tonbridge", label: "Police station rep in Tonbridge" },
+  { href: "/kent-police-station-reps", label: "Police station reps in Kent" },
+  { href: "/locations", label: "All rep town pages" },
   { href: "/police-stations", label: "All Kent Police Stations" },
   { href: "/coverage", label: "Service Coverage" },
   { href: "/kent-police-custody-resources", label: "Kent Custody Resources Hub" },

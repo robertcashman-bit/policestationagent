@@ -59,39 +59,89 @@ export const STATIONS_HUB: HubDefinition = {
   title: "Kent Police Stations & Local Representation",
   links: [
     {
-      href: "/kent-police-stations",
-      text: "All Kent Police Stations",
-      description: "Complete guide to custody suites",
+      href: "/kent-police-station-reps",
+      text: "Police Station Reps in Kent",
+      description: "All Kent custody suites",
     },
     {
-      href: "/police-stations",
-      text: "Police Station Coverage",
-      description: "Areas we attend across Kent",
+      href: "/locations",
+      text: "All Kent rep town pages",
+      description: "Police station rep by town",
     },
     {
       href: "/police-station-rep-medway",
-      text: "Medway Police Station Rep",
+      text: "Police station rep in Medway",
       description: "Gillingham custody suite",
     },
     {
       href: "/police-station-rep-maidstone",
-      text: "Maidstone Police Station Rep",
+      text: "Police station rep in Maidstone",
       description: "Mid-Kent voluntary interviews",
     },
     {
       href: "/police-station-rep-canterbury",
-      text: "Canterbury Police Station Rep",
+      text: "Police station rep in Canterbury",
       description: "East Kent custody suite",
     },
     {
+      href: "/police-station-rep-ashford",
+      text: "Police station rep in Ashford",
+      description: "Mid-Kent voluntary interviews",
+    },
+    {
+      href: "/police-station-rep-folkestone",
+      text: "Police station rep in Folkestone",
+      description: "Coastal east Kent custody",
+    },
+    {
+      href: "/police-station-rep-dover",
+      text: "Police station rep in Dover",
+      description: "East Kent voluntary interviews",
+    },
+    {
       href: "/police-station-rep-gravesend",
-      text: "Gravesend Police Station Rep",
+      text: "Police station rep in Gravesend",
       description: "North Kent custody suite",
     },
     {
       href: "/police-station-rep-tonbridge",
-      text: "Tonbridge Police Station Rep",
+      text: "Police station rep in Tonbridge",
       description: "West Kent custody suite",
+    },
+    {
+      href: "/police-station-rep-tunbridge-wells",
+      text: "Police station rep in Tunbridge Wells",
+      description: "West Kent voluntary interviews",
+    },
+    {
+      href: "/police-station-rep-sevenoaks",
+      text: "Police station rep in Sevenoaks",
+      description: "West Kent voluntary interviews",
+    },
+    {
+      href: "/police-station-rep-sittingbourne",
+      text: "Police station rep in Sittingbourne",
+      description: "Swale voluntary interviews",
+    },
+    {
+      href: "/police-station-rep-swanley",
+      text: "Police station rep in Swanley",
+      description: "North-west Kent voluntary interviews",
+    },
+    {
+      href: "/police-station-rep-margate",
+      text: "Police station rep in Margate",
+      description: "Thanet custody suite",
+    },
+    {
+      href: "/police-station-rep-dartford",
+      text: "Police station rep in Dartford",
+      description: "North Kent voluntary interviews",
+    },
+    {
+      href: "/police-station-rep-bluewater",
+      text: "Police station rep in Bluewater",
+      description: "North Kent voluntary interviews",
     },
   ],
 };
