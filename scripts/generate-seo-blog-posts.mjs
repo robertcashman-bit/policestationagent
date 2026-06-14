@@ -1,107 +1,115 @@
 #!/usr/bin/env node
+/**
+ * Generate SEO blog post templates — public-facing voice for Police Station Agent.
+ * Note: does not overwrite existing files. Use apply-public-facing-blog-updates.mjs for full content.
+ */
 import fs from "fs";
 import path from "path";
 
+if (process.env.FORCE_REGEN !== "1") {
+  console.log("Skipping generate-seo-blog-posts (set FORCE_REGEN=1 to overwrite).");
+  process.exit(0);
+}
+
 const OUT = path.join(process.cwd(), "data", "blog-posts");
+
+const NOT_KENT =
+  "<p>Police Station Agent is a private defence website operated by Robert Cashman — <strong>NOT Kent Police</strong>. Legal services are delivered through Tuckers Solicitors LLP (SRA ID: 127795).</p>";
 
 const posts = [
   {
     file: "2026-06-12-instructing-a-police-station-representative.json",
-    slug: "instructing-a-police-station-representative",
-    title: "What to Send When Instructing a Police Station Representative",
-    metaTitle: "Instructing a Police Station Representative | Kent",
+    slug: "arrange-solicitor-someone-in-custody",
+    title: "How to Arrange a Solicitor When Someone Is in Custody",
+    metaTitle: "How to Arrange a Solicitor When Someone Is in Custody",
     metaDescription:
-      "What criminal defence firms should send when instructing police station cover: client details, custody record, DSCC reference, and interview information.",
-    primaryKeyword: "instructing police station representative",
-    content: `<div class="blog-content"><h2>In brief</h2><p>When instructing a police station representative, send client identity, station, custody record number, DSCC reference if available, interview time, allegation summary, and your firm contact details. Complete instructions help attendance be arranged promptly.</p><h2>Why clear instructions matter</h2><p>Criminal defence firms often need freelance police station cover at short notice. A representative must identify the correct client, locate the detention or interview, obtain disclosure, advise the client, and report back with attendance notes. Missing information causes delay.</p><h2>Essential details</h2><ul><li><strong>Client name and date of birth</strong></li><li><strong>Police station</strong> and whether custody or voluntary interview</li><li><strong>Custody record number</strong> if in detention</li><li><strong>DSCC reference</strong> where allocated</li><li><strong>Interview date and time</strong> for voluntary attendances</li><li><strong>Allegation summary</strong> and offence type if known</li><li><strong>Officer details</strong> if available</li><li><strong>Bail or RUI status</strong> if relevant</li><li><strong>Firm name and callback number</strong></li></ul><h2>Urgent custody</h2><p>For someone currently in custody, telephone instruction is preferred. Email is not suitable for immediate attendance. See our <a href="/contact">contact page</a> and <a href="/dscc-and-custody-record-support">DSCC and custody record guide</a>.</p><h2>Kent coverage</h2><p>We cover Kent custody suites including Medway, Gravesend, Canterbury and Folkestone, and voluntary interviews across Kent stations. See <a href="/for-solicitors">police station cover for solicitors</a>.</p><p><em>General information only. Not legal advice on a specific case.</em></p></div>`,
+      "How immediate family and detainees can arrange a police station solicitor in Kent — custody record numbers, DSCC references, and urgent contact.",
+    primaryKeyword: "arrange solicitor someone in custody Kent",
+    content: `<div class="blog-content"><h2>Introduction</h2><p>When someone is detained at a Kent police station, arranging a solicitor quickly can help protect their rights before interview.</p>${NOT_KENT}<h2>Asking from inside custody</h2><p>A detainee can tell the custody officer they want legal advice at any time. They may request <strong>Robert Cashman, Tuckers Duty Solicitor</strong>.</p><h2>Help from immediate family</h2><p>Parents, spouses, civil partners, children, and siblings may contact us when someone is in <strong>current</strong> custody. See <a href="/start/in-custody">someone in custody now</a>.</p><h2>Information that helps</h2><ul><li>Full name and date of birth</li><li>Police station and custody suite</li><li>Custody record number</li><li>DSCC reference if available</li></ul><p>Call <strong>01732 247427</strong> for urgent custody.</p><p><em>General information only.</em></p></div>`,
     faq: [
       {
-        q: "Can I instruct by WhatsApp?",
-        a: "Firms often send initial details by WhatsApp text, but urgent custody should be confirmed by telephone.",
-      },
-      {
-        q: "What if I do not have the custody record number yet?",
-        a: "Provide as much as you have; the representative can confirm details on arrival at the custody suite.",
+        q: "Can friends arrange a solicitor for someone in custody?",
+        a: "No. Only immediate family may help arrange a solicitor, and the detainee must confirm they want legal advice.",
       },
     ],
   },
   {
     file: "2026-06-12-custody-record-number-dscc-reference.json",
     slug: "custody-record-number-dscc-reference",
-    title: "Custody Record Numbers and DSCC References Explained",
-    metaTitle: "Custody Record Number and DSCC Reference",
+    title: "Custody Record Numbers and DSCC References Explained for Families",
+    metaTitle: "Custody Record Numbers Explained for Families",
     metaDescription:
-      "Plain English explanation of custody record numbers and DSCC references when arranging police station representation in Kent.",
-    primaryKeyword: "custody record number DSCC",
-    content: `<div class="blog-content"><h2>In brief</h2><p>A custody record number identifies a person's detention on the custody suite system. A DSCC reference links a duty solicitor instruction to the Defence Solicitor Call Centre process. Both help arrange the correct police station attendance.</p><h2>Custody record</h2><p>When someone is booked into police custody, the custody officer creates a custody record. This records the detention, rights, reviews, and contacts with legal representatives. The reference number is used on the custody suite system.</p><h2>DSCC reference</h2><p>The Defence Solicitor Call Centre (DSCC) handles many duty solicitor contacts. When a reference is allocated, it helps match the instruction to the attendance. Firms instructing cover should include this where available.</p><h2>Practical tips for firms</h2><p>Ask your client, the custody suite, or the DSCC for references as early as possible. Include them in instructions to your police station agent. Read our page on <a href="/dscc-and-custody-record-support">DSCC and custody record support</a>.</p><p><em>General information only.</em></p></div>`,
+      "Plain English explanation of custody record numbers and DSCC references for detainees and families in Kent.",
+    primaryKeyword: "custody record number DSCC families",
+    content: `<div class="blog-content"><h2>Introduction</h2><p>Custody record numbers and DSCC references help arrange the correct police station attendance.</p>${NOT_KENT}<h2>Custody record</h2><p>When someone is booked into police custody, the custody officer creates a custody record with a unique reference number.</p><h2>DSCC reference</h2><p>The Defence Solicitor Call Centre allocates references when duty solicitor advice is requested. You may ask for Robert Cashman, Tuckers Duty Solicitor.</p><p>See <a href="/dscc-and-custody-record-support">DSCC and custody record support</a>.</p><p><em>General information only.</em></p></div>`,
     faq: [
       {
         q: "Is the DSCC reference the same as the custody record number?",
-        a: "No. They are separate references used for different purposes in the instruction and custody process.",
+        a: "No. They are separate references used for different purposes.",
       },
     ],
   },
   {
     file: "2026-06-12-when-to-instruct-police-station-agent.json",
-    slug: "when-to-instruct-police-station-agent",
-    title: "When Should a Solicitor Instruct a Police Station Agent?",
-    metaTitle: "When to Instruct a Police Station Agent",
+    slug: "when-to-ask-for-solicitor-kent-police-station",
+    title: "When to Ask for a Solicitor at a Kent Police Station",
+    metaTitle: "When to Ask for a Solicitor at a Kent Police Station",
     metaDescription:
-      "When criminal defence firms should instruct a freelance police station agent: custody, voluntary interviews, conflicts, and out-of-hours cover in Kent.",
-    primaryKeyword: "when to instruct police station agent",
-    content: `<div class="blog-content"><h2>In brief</h2><p>Instruct a police station agent when your firm needs attendance at a Kent custody suite or voluntary interview and no suitable in-house representative is available — including out of hours, for conflicts, or when volume exceeds capacity.</p><h2>Common scenarios</h2><ul><li><strong>Out-of-hours custody</strong> when your duty team is unavailable</li><li><strong>Voluntary interviews</strong> at stations across Kent</li><li><strong>Conflict of interest</strong> where your firm cannot act</li><li><strong>Capacity</strong> when multiple attendances clash</li><li><strong>Geographic coverage</strong> for stations your firm does not regularly attend</li></ul><h2>What to expect</h2><p>A qualified representative attends, advises the client, conducts the interview, and provides attendance notes for your file. See <a href="/for-solicitors">police station cover for solicitors</a>.</p><p><em>General information only.</em></p></div>`,
+      "When to request free legal advice at a Kent police station — after arrest, voluntary interviews, and out-of-hours custody.",
+    primaryKeyword: "when to ask for solicitor police station Kent",
+    content: `<div class="blog-content"><h2>Introduction</h2><p>You are entitled to free legal advice at most Kent police station interviews.</p>${NOT_KENT}<h2>After arrest</h2><p>Ask for a solicitor as soon as you are arrested or told you will be interviewed under caution.</p><h2>Voluntary interviews</h2><p>Voluntary interviews carry the same legal risks as custody interviews. Free legal advice is available.</p><p>See <a href="/voluntary-police-interview">voluntary interview advice</a> and <a href="/start/in-custody">someone in custody now</a>.</p><p><em>General information only.</em></p></div>`,
     faq: [
       {
-        q: "Can agents attend on Legal Aid matters?",
-        a: "Yes. Firms commonly instruct agents for Legal Aid police station attendance subject to scheme requirements.",
+        q: "Is legal advice at the police station free?",
+        a: "Yes — legal advice under the duty solicitor scheme is free for most people being interviewed.",
       },
     ],
   },
   {
     file: "2026-06-12-police-station-attendance-notes.json",
     slug: "police-station-attendance-notes",
-    title: "Police Station Attendance Notes: Why They Matter for Firms",
-    metaTitle: "Police Station Attendance Notes for Solicitors",
+    title: "What Your Solicitor Records After a Police Station Visit",
+    metaTitle: "Police Station Attendance Notes Explained",
     metaDescription:
-      "Why detailed police station attendance notes matter for criminal defence firms instructing freelance cover in Kent.",
-    primaryKeyword: "police station attendance notes",
-    content: `<div class="blog-content"><h2>In brief</h2><p>Attendance notes record disclosure, advice given, the interview, and outcome at the police station. They allow the instructing firm to take over the case with an accurate picture of what occurred.</p><h2>What good notes include</h2><ul><li>Client details and stage of investigation</li><li>Disclosure received and advice on interview strategy</li><li>Interview summary and significant answers</li><li>Outcome: charge, bail, RUI, NFA</li><li>Next steps and bail conditions if applicable</li></ul><h2>For instructing firms</h2><p>When instructing cover, confirm your firm's note format and deadline. See <a href="/start/solicitors-agent-cover">send police station instructions</a>.</p><p><em>General information only.</em></p></div>`,
+      "What solicitors record after a police station attendance — disclosure, advice, interview, and outcome explained for the public.",
+    primaryKeyword: "police station attendance notes explained",
+    content: `<div class="blog-content"><h2>Introduction</h2><p>After a police station attendance, your solicitor prepares written notes of what happened.</p>${NOT_KENT}<h2>What notes include</h2><ul><li>Disclosure received</li><li>Advice given in private consultation</li><li>Interview summary</li><li>Outcome and next steps</li></ul><p>See <a href="/released-under-investigation">RUI explained</a>.</p><p><em>General information only.</em></p></div>`,
     faq: [
       {
-        q: "How quickly should notes be sent?",
-        a: "This depends on firm requirements; agree expectations when establishing a cover relationship.",
+        q: "Are attendance notes shared with the police?",
+        a: "No. Attendance notes are confidential between you and your solicitor.",
       },
     ],
   },
   {
     file: "2026-06-12-freelance-police-station-agents-for-solicitors.json",
-    slug: "freelance-police-station-agents-for-solicitors",
-    title: "Why Criminal Defence Firms Use Freelance Police Station Agents",
-    metaTitle: "Freelance Police Station Agents for Solicitors",
+    slug: "who-attends-police-station-legal-advice",
+    title: "Who Attends When You Ask for Legal Advice at the Police Station",
+    metaTitle: "Who Attends Police Station Legal Advice",
     metaDescription:
-      "Why Kent criminal defence firms use freelance police station agents for custody and voluntary interview cover.",
-    primaryKeyword: "freelance police station agents",
-    content: `<div class="blog-content"><h2>In brief</h2><p>Firms use freelance police station agents to provide reliable attendance when in-house staff are unavailable, to manage peak demand, and to cover stations across Kent without maintaining a full-time rota.</p><h2>Benefits for firms</h2><ul><li>Extended hours coverage without overnight staffing costs</li><li>Qualified solicitor attendance on complex matters</li><li>Flexibility for single instructions or ongoing arrangements</li><li>Detailed attendance notes for seamless handover</li></ul><h2>Kent focus</h2><p>Local knowledge of Kent custody suites and interview practices can reduce delay and improve client experience. See <a href="/police-station-rep-medway">Medway cover</a> and <a href="/for-solicitors">firm instructions</a>.</p><p><em>General information only.</em></p></div>`,
+      "Duty solicitors and accredited representatives explained — who attends when you request legal advice at a Kent police station.",
+    primaryKeyword: "who attends police station legal advice",
+    content: `<div class="blog-content"><h2>Introduction</h2><p>When you ask for legal advice at a Kent police station, a duty solicitor or accredited representative attends on your behalf.</p>${NOT_KENT}<h2>Independence</h2><p>Your solicitor is independent of the police and bound by confidentiality.</p><p>See <a href="/your-rights-in-custody">your rights in custody</a>.</p><p><em>General information only.</em></p></div>`,
     faq: [
       {
-        q: "Are freelance agents qualified solicitors?",
-        a: "Cover may be provided by accredited representatives or qualified solicitors depending on availability and the instruction.",
+        q: "Is the duty solicitor free?",
+        a: "Yes — legal advice at the police station is free for most people being interviewed.",
       },
     ],
   },
   {
     file: "2026-06-12-police-station-cover-firms-kent-medway.json",
-    slug: "police-station-cover-criminal-defence-firms-kent-medway",
-    title: "Police Station Cover for Criminal Defence Firms in Kent and Medway",
-    metaTitle: "Police Station Cover Kent and Medway Firms",
+    slug: "legal-advice-medway-custody-kent",
+    title: "Legal Advice at Medway Custody in Kent",
+    metaTitle: "Legal Advice at Medway Custody",
     metaDescription:
-      "Police station agent cover for criminal defence firms across Kent and Medway — custody, voluntary interviews, and attendance notes.",
-    primaryKeyword: "police station cover Kent Medway firms",
-    content: `<div class="blog-content"><h2>In brief</h2><p>Criminal defence firms in Kent and Medway instruct police station agents for custody attendance at suites such as Medway and North Kent (Gravesend), and for voluntary interviews across the county.</p><h2>Medway and north Kent</h2><p>Medway custody suite serves Gillingham, Chatham and Rochester. North Kent custody at Gravesend covers Dartford and north Kent arrests. See <a href="/police-station-rep-medway">Medway cover</a> and <a href="/coverage/areas/medway">Medway area hub</a>.</p><h2>West and mid Kent</h2><p>Voluntary interviews are common at Sevenoaks, Tonbridge, Tunbridge Wells, Maidstone and Swanley. We provide cover by instruction. See local pages for <a href="/police-station-rep-sevenoaks">Sevenoaks</a> and <a href="/police-station-rep-maidstone">Maidstone</a>.</p><h2>Instructing cover</h2><p>Telephone for urgent custody. Include client details, station, custody record and DSCC reference. <a href="/for-solicitors">Police station cover for solicitors</a>.</p><p><em>General information only.</em></p></div>`,
+      "Free legal advice at Medway custody suite for arrests in Gillingham, Chatham and Rochester.",
+    primaryKeyword: "legal advice Medway custody Kent",
+    content: `<div class="blog-content"><h2>Introduction</h2><p>If you are detained at Medway custody suite, you are entitled to free legal advice at the police station.</p>${NOT_KENT}<h2>Medway custody</h2><p>Medway custody serves Gillingham, Chatham, Rochester and surrounding areas. See <a href="/police-station-rep-medway">Medway cover</a>.</p><p>Call <strong>01732 247427</strong> for urgent custody.</p><p><em>General information only.</em></p></div>`,
     faq: [
       {
-        q: "Do you cover both Legal Aid and private clients?",
-        a: "Firms instruct for both; confirm billing and scheme requirements when instructing.",
+        q: "Is legal advice free at Medway custody?",
+        a: "Yes — legal advice under the duty solicitor scheme is free for most detainees being interviewed.",
       },
     ],
   },
@@ -115,17 +123,19 @@ for (const p of posts) {
     date: "2026-06-12",
     category: "Police Station Advice",
     primaryKeyword: p.primaryKeyword,
-    secondaryKeywords: ["Kent", "police station", "solicitors"],
+    secondaryKeywords: ["Kent", "police station", "legal advice"],
     location: "Kent",
     metaTitle: p.metaTitle,
     metaDescription: p.metaDescription,
-    featuredImage: "/blog-images/domestic-allegations-police-stage-featured.jpg",
-    featuredImageAlt: "Police station legal advice Kent",
+    featuredImage: "/blog-images/blog-listing-3.png",
+    featuredImageAlt: p.title,
     contentHtml: p.content,
     faq: p.faq,
     author: "Robert Cashman",
     status: "published",
   };
   fs.writeFileSync(path.join(OUT, p.file), JSON.stringify(doc, null, 2) + "\n");
-  console.log("Wrote", p.file);
+  console.log(`Template reference: ${p.file}`);
 }
+
+console.log("Public-facing SEO blog templates updated.");

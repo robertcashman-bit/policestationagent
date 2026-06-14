@@ -24,10 +24,10 @@ function takeaways(items) {
 
 function cta() {
   return `<div class="advert-cta" style="background-color: #fef2f2; border: 2px solid #dc2626; border-radius: 12px; padding: 1.5rem; margin: 2rem 0;">
-  <h2 style="margin-top: 0; color: #991b1b; font-size: 1.25rem;">Need police station cover in Kent?</h2>
+  <h2 style="margin-top: 0; color: #991b1b; font-size: 1.25rem;">Need legal advice at a Kent police station?</h2>
   <p style="margin: 0.75rem 0;">Call <strong>01732 247427</strong> for current custody or a booked voluntary interview. If you cannot call, text <strong>07535 494446</strong>.</p>
   <p style="margin: 0.75rem 0;">Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong> — the DSCC have our details. Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795).</p>
-  <p style="margin: 0.75rem 0 0;"><a href="/contact">Contact Police Station Agent</a> · <a href="/for-solicitors">Cover for solicitors</a></p>
+  <p style="margin: 0.75rem 0 0;"><a href="/contact">Contact Police Station Agent</a> · <a href="/start/in-custody">Someone in custody now</a> · <a href="/free-police-station-advice-kent">Free police station advice in Kent</a></p>
 </div>`;
 }
 
@@ -92,10 +92,8 @@ const NOT_KENT_POLICE =
 const KENT_WIDE =
   "<p>Robert Cashman attends custody suites and voluntary interviews across Kent — Medway, Maidstone, Canterbury, Folkestone, Dover and others — subject to availability. North Kent (Gravesend) and Tonbridge are among the county's main 24-hour custody facilities and are areas of regular attendance.</p>";
 
-const FIRM_EXPAND = `<h2>Further guidance for instructing firms</h2>
-<p>Criminal defence firms operating across Kent face recurring demand for police station attendance at unpredictable times. Whether your firm is based in Medway, Dartford, Maidstone, Canterbury or elsewhere, the instruction process is the same: complete client details, correct station, custody record number, and DSCC reference where available. Telephone for urgent custody; email may suffice for scheduled voluntary interviews.</p>
-<p>Robert Cashman attends through Tuckers Solicitors LLP (SRA ID: 127795). The instructing firm retains conduct throughout. After attendance, detailed notes are returned for the firm file. Attendance is subject to availability — not guaranteed within any fixed timeframe.</p>
-<p>See <a href="/for-solicitors">police station cover for solicitors</a>, <a href="/blog/instructing-a-police-station-representative">instruction checklist</a>, and <a href="/blog/police-station-attendance-notes">attendance notes guide</a> for related guidance.</p>`;
+// Firm-facing expand block removed — public blog uses CUSTODY_EXPAND only.
+const FIRM_EXPAND = CUSTODY_EXPAND;
 
 const CUSTODY_EXPAND = `<h2>Further information for detainees and family</h2>
 <p>If you or someone you know faces police station attendance in Kent, remember that legal advice at the police station is free for most people being interviewed. You do not have to answer police questions without advice. A solicitor is independent of the police and bound by confidentiality.</p>

@@ -11,7 +11,7 @@ export default function BlogAdvertBlock() {
   return (
     <div className="bg-blue-50 border-l-4 border-blue-600 p-6 my-8 rounded-r-lg">
       <h3 className="text-xl font-bold text-slate-900 mb-4">
-        Police Station Agent — Kent police station cover
+        Free legal advice at Kent police stations
       </h3>
 
       <p className="text-slate-700 mb-4">
@@ -22,9 +22,10 @@ export default function BlogAdvertBlock() {
       </p>
 
       <p className="text-slate-700 mb-4">
-        Extended-hours attendance across Kent custody suites and voluntary interviews — including
-        regular cover at North Kent (Gravesend) and Tonbridge, plus Medway, Maidstone, Canterbury
-        and other Kent stations, subject to availability.
+        If you or someone you know faces arrest, custody, or a voluntary interview under caution at
+        a Kent police station, you may be entitled to free legal advice. Robert Cashman attends
+        custody suites and voluntary interviews across Kent — including North Kent (Gravesend),
+        Tonbridge, Medway, Maidstone, Canterbury and other stations — subject to availability.
       </p>
 
       <div className="flex flex-col sm:flex-row gap-4 mt-6">

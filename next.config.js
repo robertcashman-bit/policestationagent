@@ -300,6 +300,88 @@ const nextConfig = {
         destination: "/start/solicitors-agent-cover",
         permanent: true,
       },
+      // Public-facing blog review — firm posts → public canonicals
+      {
+        source: "/blog/instructing-cover-north-kent-gravesend-custody",
+        destination: "/blog/north-kent-gravesend-custody-legal-advice",
+        permanent: true,
+      },
+      {
+        source: "/blog/police-station-cover-west-kent-tonbridge-firms",
+        destination: "/blog/tonbridge-police-station-custody-and-interviews",
+        permanent: true,
+      },
+      {
+        source: "/blog/when-to-instruct-police-station-agent",
+        destination: "/blog/when-to-ask-for-solicitor-kent-police-station",
+        permanent: true,
+      },
+      {
+        source: "/blog/freelance-police-station-agents-for-solicitors",
+        destination: "/blog/who-attends-police-station-legal-advice",
+        permanent: true,
+      },
+      {
+        source: "/blog/instructing-a-police-station-representative",
+        destination: "/blog/arrange-solicitor-someone-in-custody",
+        permanent: true,
+      },
+      {
+        source: "/blog/police-station-cover-criminal-defence-firms-kent-medway",
+        destination: "/blog/legal-advice-medway-custody-kent",
+        permanent: true,
+      },
+      // RepUK-style orphan blog slugs → blog index
+      {
+        source: "/blog/how-to-become-a-police-station-representative",
+        destination: "/blog",
+        permanent: true,
+      },
+      {
+        source: "/blog/police-station-representative-directory-i-want-to-become-a-police-station-rep",
+        destination: "/blog",
+        permanent: true,
+      },
+      {
+        source: "/blog/get-paid-as-a-police-station-representative",
+        destination: "/blog",
+        permanent: true,
+      },
+      {
+        source: "/blog/find-a-police-station-rep-now",
+        destination: "/blog",
+        permanent: true,
+      },
+      {
+        source: "/blog/register-as-a-police-station-representative",
+        destination: "/blog",
+        permanent: true,
+      },
+      {
+        source: "/blog/police-station-rep-our-top-10-tips",
+        destination: "/blog",
+        permanent: true,
+      },
+      {
+        source: "/blog/police-station-rep-registration",
+        destination: "/blog",
+        permanent: true,
+      },
+      {
+        source: "/blog/getting-paid-as-a-police-station-rep",
+        destination: "/blog",
+        permanent: true,
+      },
+      {
+        source: "/blog/what-does-a-police-station-representative-do",
+        destination: "/services/police-station-representation",
+        permanent: true,
+      },
+      {
+        source: "/blog/understanding-the-role-of-police-station-representatives",
+        destination: "/services/police-station-representation",
+        permanent: true,
+      },
     ];
   },
   // Headers for cache control, security, and performance
