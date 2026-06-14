@@ -26,4 +26,10 @@ Posts promote **6 new blog articles** (2 posts each) and **3 cornerstone pages**
 
 ```bash
 node scripts/generate-buffer-calendar.mjs
+node scripts/verify-buffer-posts.mjs   # after deploy — checks 200 + images
+node scripts/schedule-buffer-posts.mjs # requires BUFFER_ACCESS_TOKEN
 ```
+
+## June 2026 click-driving batch
+
+23 entries (10 blog posts × 2 + 3 cornerstone pages) with UTM tags and image URLs for OG previews. Verified against production 2026-06-14.
