@@ -17,6 +17,17 @@ Deduplication rule applied: **10 new posts published** (6 original programme + 4
 | `tonbridge-police-station-custody-and-interviews` | Tonbridge Police Station: Custody and Voluntary Interview Advice | 2026-06-12 |
 | `police-station-cover-west-kent-tonbridge-firms` | Police Station Cover for Firms at Tonbridge and West Kent | 2026-06-12 |
 
+## June 2026 content refresh
+
+All 10 posts above were expanded to comprehensive articles (~1,200–1,500 words each) with:
+
+- Police Station Agent / Robert Cashman / Tuckers voice (Kent-wide cover; regular Gravesend & Tonbridge attendance)
+- Unique featured images and inline `<figure class="blog-image">` per post
+- Verified **Sources** section at the bottom of each article (GOV.UK, legislation.gov.uk, SRA register search, internal guides)
+- 3–5 FAQs per post; BlogAdvertBlock rebranded to Police Station Agent
+
+Rewrite script: `scripts/rewrite-june-2026-blog-posts.mjs`
+
 ## Skipped (existing canonical URL)
 
 | Requested slug | Action | Canonical URL | Improvements |

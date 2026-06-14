@@ -26,7 +26,7 @@ export const RESOURCE_HUB_PATH = "/kent-police-custody-resources";
 export const RESOURCE_HUB_URL = `${SITE_URL}${RESOURCE_HUB_PATH}`;
 
 export const REGULATORY_LINKS = {
-  sraFindASolicitor: "https://www.sra.org.uk/consumers/register/organisation/?sraNumber=127795",
+  sraFindASolicitor: "https://www.sra.org.uk/consumers/register/",
   tuckers: "https://www.tuckers.co.uk/",
   clsa: "https://www.clsa.co.uk/",
 } as const;
