@@ -28,6 +28,25 @@ All 10 posts above were expanded to comprehensive articles (~1,200–1,500 words
 
 Rewrite script: `scripts/rewrite-june-2026-blog-posts.mjs`
 
+## June 2026 SEO click-driving batch (10 posts)
+
+Published 2026-06-14 via `scripts/generate-click-driving-blog-posts.mjs`. All include topic-relevant JPG/PNG `featuredImage` + inline `<figure>` for Buffer OG previews.
+
+| Slug | Title | Image |
+|------|-------|-------|
+| `voluntary-interview-letter-kent-what-to-do` | Voluntary Police Interview Letter in Kent | blog-listing-1.png |
+| `is-police-station-legal-advice-free-kent` | Is Police Station Legal Advice Really Free in Kent? | blog-listing-0.jpg |
+| `police-station-rep-near-me-kent` | Police Station Rep Near Me in Kent | types-of-offences-police-station-featured.jpg |
+| `maidstone-voluntary-interview-mid-kent-legal-advice` | Maidstone Voluntary Interviews (custody closed) | blog-listing-5.png |
+| `canterbury-custody-legal-advice-kent` | Canterbury Custody Legal Advice | domestic-allegations-police-stage-featured.jpg |
+| `sevenoaks-voluntary-interview-legal-advice-kent` | Sevenoaks Voluntary Interview Advice | blog-listing-4.png |
+| `folkestone-custody-legal-advice-kent` | Folkestone Custody Legal Advice | drug-allegations-police-stage-featured.jpg |
+| `qualified-duty-solicitor-vs-police-station-rep-kent` | Qualified Duty Solicitor vs Police Station Rep | blog-listing-7.png |
+| `police-warrant-arrest-kent-what-to-do` | Police Warrant or Arrest in Kent | violence-public-order-featured.jpg |
+| `no-further-action-after-police-interview-kent` | No Further Action After Police Interview | blog-listing-2.png |
+
+Buffer calendar: `scripts/generate-buffer-calendar.mjs` (23 social entries).
+
 ## Skipped (existing canonical URL)
 
 | Requested slug | Action | Canonical URL | Improvements |
