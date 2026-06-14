@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import { normalizeScrapedHtml } from "@/lib/scraped-html";
 import Footer from "@/components/Footer";
 import BlogAdvertBlock from "@/components/BlogAdvertBlock";
+import { AuthorBox } from "@/components/blog/AuthorBox";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -318,6 +319,8 @@ export default function BlogPostPage({ params }: Readonly<PageProps>) {
                 </div>
               </div>
             )}
+
+            <AuthorBox />
 
             {/* Legal Disclaimer */}
             <div className="mt-12 pt-8 border-t border-slate-200">

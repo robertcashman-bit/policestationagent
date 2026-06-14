@@ -9,6 +9,7 @@ import { AuthorBio } from "@/components/E-E-A-T/AuthorBio";
 import { RegulatoryReferences } from "@/components/E-E-A-T/RegulatoryReferences";
 import { ServiceDisclaimer } from "@/components/E-E-A-T/ServiceDisclaimer";
 import { InternalLinkHub } from "@/components/InternalLinkHub";
+import { ConversionCTAGroup } from "@/components/conversion/ConversionCTAGroup";
 
 export const metadata: Metadata = {
   title:
@@ -75,6 +76,7 @@ export default function PoliceStationRepresentationPage() {
         <div className="bg-slate-50 min-h-screen">
           <div className="prose prose-lg max-w-6xl mx-auto px-4 py-16">
             <h1 className="text-4xl font-bold mb-6">Police Station Representation in Kent (Legal Aid)</h1>
+            <ConversionCTAGroup className="mb-8" />
             <div className="bg-blue-50 border-l-4 border-blue-600 p-6 mb-8 rounded-r-lg">
               <h2 className="text-xl font-bold text-slate-900 mb-3">What This Service Is</h2>
               <p className="text-slate-700 mb-4">

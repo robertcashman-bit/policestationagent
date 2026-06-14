@@ -28,6 +28,16 @@ export function trackEvent(
 }
 
 export const AnalyticsEvents = {
+  callClick: (placement: string) => trackEvent('call_click', { placement }),
+  whatsAppClick: (placement: string) => trackEvent('whatsapp_click', { placement }),
+  emailClick: (placement: string) => trackEvent('email_click', { placement }),
+  formSubmit: (form: string) => trackEvent('form_submit', { form }),
+  solicitorInstruction: (placement: string) =>
+    trackEvent('solicitor_instruction', { placement }),
+  policeStationCoverRequest: (placement: string) =>
+    trackEvent('police_station_cover_request', { placement }),
+  blogCtaClick: (placement: string) => trackEvent('blog_cta_click', { placement }),
+  contactPageSubmit: () => trackEvent('contact_page_submit', { form: 'contact' }),
   outboundPartnerClick: (partner: string, placement: string) =>
     trackEvent('outbound_partner_click', { partner, placement }),
 } as const;

@@ -13,6 +13,8 @@ const LazyChatbot = dynamic(() => import("@/components/LazyChatbot"), {
 });
 import CookieBanner from "@/components/CookieBanner";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
+import { MobileStickyContactBar } from "@/components/conversion/MobileStickyContactBar";
+import { ConversionEventListener } from "@/components/conversion/ConversionEventListener";
 import InternalLinkInterceptor from "@/components/InternalLinkInterceptor";
 import ComplianceStrip from "@/components/compliance/ComplianceStrip";
 import NotPoliceScopeBanner from "@/components/compliance/NotPoliceScopeBanner";
@@ -439,7 +441,7 @@ export default function RootLayout({
         <link rel="preload" as="image" href={`${siteUrl}/og-image.jpg`} />
         {/* Note: Font preloading is handled automatically by next/font/google - no manual link needed */}
       </head>
-      <body className={inter.className}>
+      <body className={`${inter.className} pb-16 lg:pb-0`}>
         <ComplianceStrip />
         <NotPoliceScopeBanner />
         <ContactLinkGuard />
@@ -458,6 +460,8 @@ export default function RootLayout({
         </Suspense>
         {/* Chatbot Assistant — deferred until interaction or idle */}
         <LazyChatbot />
+        <MobileStickyContactBar />
+        <ConversionEventListener />
         <SpeedInsights />
       </body>
     </html>

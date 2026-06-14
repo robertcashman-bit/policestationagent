@@ -30,6 +30,7 @@
     "verify:blog-routes": "node scripts/verify-blog-routes.js",
     "notify:search-engines": "node scripts/notify-search-engines.js",
     "indexnow": "node scripts/notify-search-engines.js",
+    "seo-growth-audit": "node scripts/seo-growth-audit.mjs",
     "compliance:check": "node scripts/compliance-check.js",
     "compliance:scan": "node scripts/compliance-scan-and-fix.js --check",
     "compliance:fix": "node scripts/compliance-scan-and-fix.js --fix",

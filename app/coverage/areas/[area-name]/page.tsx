@@ -1,6 +1,8 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import Link from 'next/link';
+import { ConversionCTAGroup } from "@/components/conversion/ConversionCTAGroup";
+import { JsonLd } from "@/components/JsonLd";
+import Link from "next/link";
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { BreadcrumbList } from '@/components/StructuredData';
@@ -155,6 +157,33 @@ export default function AreaPage({ params }: PageProps) {
   }
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://policestationagent.com';
+  const isMedway = params['area-name'] === 'medway';
+  const medwayFaqs = isMedway
+    ? [
+        {
+          question: 'Do you cover Chatham, Gillingham and Rochester?',
+          answer:
+            'Yes. Medway police station cover includes the Medway towns and Medway custody suite at Gillingham.',
+        },
+        {
+          question: 'Can solicitor firms instruct cover for Medway custody?',
+          answer:
+            'Yes. Firms can instruct by telephone or WhatsApp with client details, station, custody record number and DSCC reference where available.',
+        },
+      ]
+    : [];
+  const faqSchema =
+    medwayFaqs.length > 0
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: medwayFaqs.map((f) => ({
+            '@type': 'Question',
+            name: f.question,
+            acceptedAnswer: { '@type': 'Answer', text: f.answer },
+          })),
+        }
+      : null;
   const breadcrumbItems = [
     { name: 'Home', url: siteUrl },
     { name: 'Coverage', url: `${siteUrl}/coverage` },
@@ -164,6 +193,7 @@ export default function AreaPage({ params }: PageProps) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
+      {faqSchema ? <JsonLd data={faqSchema} /> : null}
       <BreadcrumbList items={breadcrumbItems} />
       <Header />
       <main className="flex-grow relative" id="main-content" role="main" aria-live="polite">
@@ -181,10 +211,17 @@ export default function AreaPage({ params }: PageProps) {
                 </svg>
                 Back to Coverage
               </Link>
-              <h1 className="text-4xl md:text-5xl font-bold mb-4">Criminal Defence Representation in {area.displayName}</h1>
-              <p className="text-xl text-blue-100">
-                Information about police station representation and criminal defence services in {area.displayName}
+              <h1 className="text-4xl md:text-5xl font-bold mb-4">
+                Police Station Cover in {area.displayName}
+              </h1>
+              <p className="text-xl text-blue-100 mb-6">
+                {params["area-name"] === "medway"
+                  ? "Chatham, Gillingham and Rochester — Medway custody suite and voluntary interviews"
+                  : `Police station representation and criminal defence services in ${area.displayName}`}
               </p>
+              {params["area-name"] === "medway" ? (
+                <ConversionCTAGroup layout="stacked" className="max-w-xl" />
+              ) : null}
             </div>
           </div>
         </section>
@@ -193,10 +230,22 @@ export default function AreaPage({ params }: PageProps) {
         <section className="py-16 bg-gradient-to-br from-slate-50 via-blue-50 to-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="bg-white p-8 rounded-xl mb-8 border-l-4 border-blue-600 shadow-sm">
-              <h2 className="text-2xl font-bold mb-4 text-slate-800">Criminal Defence in {area.displayName}</h2>
+              <h2 className="text-2xl font-bold mb-4 text-slate-800">In brief</h2>
               <p className="text-slate-700 leading-relaxed mb-4">
-                {details.description || `Criminal defence representation is available across ${area.displayName} through the duty solicitor scheme and private representation.`}
+                {params["area-name"] === "medway"
+                  ? "Police station cover in Medway includes attendance at Medway custody suite (Gillingham) and voluntary interviews across Chatham, Gillingham and Rochester. Criminal defence firms can instruct cover; clients can request advice in custody or before interview."
+                  : details.description ||
+                    `Criminal defence representation is available across ${area.displayName} through the duty solicitor scheme and private representation.`}
               </p>
+              {params["area-name"] === "medway" ? (
+                <p className="text-slate-700">
+                  See dedicated page:{" "}
+                  <Link href="/police-station-rep-medway" className="text-blue-700 font-semibold hover:underline">
+                    Police station cover — Medway
+                  </Link>
+                  .
+                </p>
+              ) : null}
               
               {details.cities.length > 0 && (
                 <div className="mt-4">

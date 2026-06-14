@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { AnswerFirstBlock } from "@/components/conversion/AnswerFirstBlock";
 import Link from "next/link";
 import { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
@@ -103,17 +104,13 @@ export default function NoCommentInterviewPage() {
 
         {/* Main Content */}
         <article className="max-w-4xl mx-auto px-4 py-12">
-          {/* Direct Answer */}
-          <div className="bg-blue-50 border-l-4 border-blue-600 p-6 mb-8 rounded-r-lg">
-            <p className="text-lg font-medium text-slate-800">
-              <strong>Quick Answer:</strong> You have the right to answer "no comment" to any
-              question in a police interview. However, if you later rely on a fact in your defence
-              that you did not mention when questioned under caution, section 34 CJPOA 1994 may
-              allow the court or jury to draw inferences that appear proper (depending on what was
-              reasonable in the circumstances).
-              <Ref n={1} /> Always get legal advice before deciding.
-            </p>
-          </div>
+          <AnswerFirstBlock>
+            You have the right to answer &quot;no comment&quot; to any question in a police interview.
+            However, if you later rely on a fact in your defence that you did not mention when questioned
+            under caution, section 34 CJPOA 1994 may allow the court or jury to draw inferences that
+            appear proper (depending on what was reasonable in the circumstances). Always get legal advice
+            before deciding.
+          </AnswerFirstBlock>
 
           <div className="prose prose-lg max-w-none">
             <h2>What Does "No Comment" Mean?</h2>

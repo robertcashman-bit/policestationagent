@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { AnswerFirstBlock } from "@/components/conversion/AnswerFirstBlock";
 import Link from "next/link";
 import { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
@@ -107,16 +108,15 @@ export default function ReleasedUnderInvestigationPage() {
 
         {/* Main Content */}
         <article className="max-w-4xl mx-auto px-4 py-12">
-          {/* Direct Answer */}
-          <div className="bg-blue-50 border-l-4 border-blue-600 p-6 mb-8 rounded-r-lg">
-            <p className="text-lg font-medium text-slate-800">
-              <strong>Quick Answer:</strong> Released Under Investigation (RUI) means you have been
-              released from police custody while the investigation continues. People often use “RUI”
-              to describe being released without bail while the investigation continues. If you need
-              advice, ask for a solicitor (PACE s.58).
-              <Ref n={1} />
-            </p>
-          </div>
+          <AnswerFirstBlock>
+            Released Under Investigation (RUI) means you have been released from police custody while
+            the investigation continues — commonly without bail conditions. If you need advice, ask for
+            a solicitor (PACE s.58). See also our guide to{" "}
+            <Link href="/police-bail-explained" className="text-blue-700 font-semibold hover:underline">
+              police bail explained
+            </Link>
+            .
+          </AnswerFirstBlock>
 
           <div className="prose prose-lg max-w-none">
             <h2>What Is Released Under Investigation?</h2>

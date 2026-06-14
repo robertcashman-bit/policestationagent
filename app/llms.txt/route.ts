@@ -6,6 +6,11 @@ export const revalidate = 3600;
 
 const corePages = [
   ["/", "Independent duty solicitor and police station representation in Kent"],
+  ["/for-solicitors", "Police station cover for criminal defence firms"],
+  ["/dscc-and-custody-record-support", "DSCC and custody record instruction guide for firms"],
+  ["/free-police-station-advice-kent", "Police station legal advice for clients"],
+  ["/police-station-rep-medway", "Police station cover Medway"],
+  ["/police-station-rep-sevenoaks", "Police station cover Sevenoaks"],
   ["/start/in-custody", "Help arranging representation for someone in police custody"],
   ["/start/voluntary-interview", "Help for scheduled voluntary police interviews"],
   ["/start/solicitors-agent-cover", "Police station attendance cover for solicitors"],

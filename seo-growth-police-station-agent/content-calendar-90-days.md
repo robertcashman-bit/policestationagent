@@ -1,0 +1,21 @@
+# 90-day content calendar
+
+Generated 2026-06-14. Social posts promote new blog articles and cornerstone pages only (no duplicate content).
+
+| Date | Type | URL | Summary |
+|------|------|-----|---------|
+| 2026-06-16 | blog | https://policestationagent.com/blog/instructing-a-police-station-representative | Instructing a rep — practical guide for criminal defence firms instructing Kent … |
+| 2026-06-21 | blog | https://policestationagent.com/blog/instructing-a-police-station-representative | Instructing a rep — practical guide for criminal defence firms instructing Kent … |
+| 2026-06-26 | blog | https://policestationagent.com/blog/custody-record-number-dscc-reference | DSCC & custody record — practical guide for criminal defence firms instructing K… |
+| 2026-07-01 | blog | https://policestationagent.com/blog/custody-record-number-dscc-reference | DSCC & custody record — practical guide for criminal defence firms instructing K… |
+| 2026-07-06 | blog | https://policestationagent.com/blog/when-to-instruct-police-station-agent | When to instruct — practical guide for criminal defence firms instructing Kent p… |
+| 2026-07-11 | blog | https://policestationagent.com/blog/when-to-instruct-police-station-agent | When to instruct — practical guide for criminal defence firms instructing Kent p… |
+| 2026-07-16 | blog | https://policestationagent.com/blog/police-station-attendance-notes | Attendance notes — practical guide for criminal defence firms instructing Kent p… |
+| 2026-07-21 | blog | https://policestationagent.com/blog/police-station-attendance-notes | Attendance notes — practical guide for criminal defence firms instructing Kent p… |
+| 2026-07-26 | blog | https://policestationagent.com/blog/freelance-police-station-agents-for-solicitors | Freelance agents — practical guide for criminal defence firms instructing Kent p… |
+| 2026-07-31 | blog | https://policestationagent.com/blog/freelance-police-station-agents-for-solicitors | Freelance agents — practical guide for criminal defence firms instructing Kent p… |
+| 2026-08-05 | blog | https://policestationagent.com/blog/police-station-cover-criminal-defence-firms-kent-medway | Kent & Medway firm cover — practical guide for criminal defence firms instructin… |
+| 2026-08-10 | blog | https://policestationagent.com/blog/police-station-cover-criminal-defence-firms-kent-medway | Kent & Medway firm cover — practical guide for criminal defence firms instructin… |
+| 2026-08-15 | page | https://policestationagent.com/for-solicitors | Police station cover for solicitors — police station agent cover across Kent & M… |
+| 2026-08-22 | page | https://policestationagent.com/dscc-and-custody-record-support | DSCC guide — police station agent cover across Kent & Medway. NOT the police. ht… |
+| 2026-08-29 | page | https://policestationagent.com/kent-police-station-reps | Kent reps hub — police station agent cover across Kent & Medway. NOT the police.… |

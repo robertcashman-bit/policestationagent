@@ -179,6 +179,102 @@ const nextConfig = {
         destination: "/blog",
         permanent: true,
       },
+      // SEO growth programme — alias slugs to canonical pages
+      {
+        source: "/police-station-representative-kent",
+        destination: "/kent-police-station-reps",
+        permanent: true,
+      },
+      {
+        source: "/police-station-cover-medway",
+        destination: "/police-station-rep-medway",
+        permanent: true,
+      },
+      {
+        source: "/police-station-cover-sevenoaks",
+        destination: "/police-station-rep-sevenoaks",
+        permanent: true,
+      },
+      {
+        source: "/police-station-cover-swanley",
+        destination: "/police-station-rep-swanley",
+        permanent: true,
+      },
+      {
+        source: "/police-station-cover-dartford",
+        destination: "/police-station-rep-dartford",
+        permanent: true,
+      },
+      {
+        source: "/police-station-cover-gravesend",
+        destination: "/police-station-rep-gravesend",
+        permanent: true,
+      },
+      {
+        source: "/police-station-cover-maidstone",
+        destination: "/police-station-rep-maidstone",
+        permanent: true,
+      },
+      {
+        source: "/police-station-cover-tonbridge",
+        destination: "/police-station-rep-tonbridge",
+        permanent: true,
+      },
+      {
+        source: "/police-station-cover-tunbridge-wells",
+        destination: "/police-station-rep-tunbridge-wells",
+        permanent: true,
+      },
+      {
+        source: "/police-station-cover-chatham",
+        destination: "/coverage/areas/medway",
+        permanent: true,
+      },
+      {
+        source: "/police-station-cover-gillingham",
+        destination: "/coverage/areas/medway",
+        permanent: true,
+      },
+      {
+        source: "/police-station-cover-rochester",
+        destination: "/coverage/areas/medway",
+        permanent: true,
+      },
+      {
+        source: "/police-station-cover-for-solicitors",
+        destination: "/for-solicitors",
+        permanent: true,
+      },
+      {
+        source: "/police-station-representation",
+        destination: "/services/police-station-representation",
+        permanent: true,
+      },
+      {
+        source: "/police-station-legal-advice",
+        destination: "/free-police-station-advice-kent",
+        permanent: true,
+      },
+      {
+        source: "/voluntary-police-interview-solicitor",
+        destination: "/voluntary-police-interview",
+        permanent: true,
+      },
+      {
+        source: "/no-comment-police-interview-advice",
+        destination: "/no-comment-interview",
+        permanent: true,
+      },
+      {
+        source: "/police-bail-and-rui-advice",
+        destination: "/released-under-investigation",
+        permanent: true,
+      },
+      {
+        source: "/criminal-defence-firm-support",
+        destination: "/start/solicitors-agent-cover",
+        permanent: true,
+      },
     ];
   },
   // Headers for cache control, security, and performance

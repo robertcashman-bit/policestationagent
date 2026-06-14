@@ -1,5 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { AnswerFirstBlock } from "@/components/conversion/AnswerFirstBlock";
+import { ConversionCTAGroup } from "@/components/conversion/ConversionCTAGroup";
 import Link from "next/link";
 import { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
@@ -132,18 +134,16 @@ export default function PoliceBailExplainedPage() {
         </section>
 
         <article className="max-w-4xl mx-auto px-4 py-12">
-          <div className="bg-blue-50 border-l-4 border-blue-600 p-6 mb-8 rounded-r-lg">
-            <p className="text-lg font-medium text-slate-800">
-              <strong>Quick Answer:</strong> Police bail means you are released from custody with
-              <strong> conditions</strong> (such as not contacting witnesses) and a{" "}
-              <strong>return date</strong>
-              to come back to the station. Pre-charge bail has statutory time-limit rules under PACE
-              and can be extended in certain circumstances.
-              <Ref n={1} /> If police reasonably suspect you have broken bail conditions, they can
-              arrest you and take you back to a police station.
-              <Ref n={6} />
-            </p>
-          </div>
+          <AnswerFirstBlock>
+            Police bail means you are released from custody with conditions (such as not contacting
+            witnesses) and a return date to come back to the station. Pre-charge bail has statutory
+            time-limit rules under PACE and can be extended in certain circumstances. If you were
+            released without bail, see our guide to{" "}
+            <Link href="/released-under-investigation" className="text-blue-700 font-semibold hover:underline">
+              released under investigation (RUI)
+            </Link>
+            .
+          </AnswerFirstBlock>
 
           <div className="prose prose-lg max-w-none">
             <h2>What Is Police Bail?</h2>

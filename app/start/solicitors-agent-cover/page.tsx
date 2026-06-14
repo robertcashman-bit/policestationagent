@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { AnswerFirstBlock } from "@/components/conversion/AnswerFirstBlock";
 import Link from "next/link";
 import type { Metadata } from "next";
 import {
@@ -38,6 +39,16 @@ export default function SolicitorsAgentCoverPage() {
                 </p>
               </div>
             </section>
+
+            <AnswerFirstBlock>
+              In brief: criminal defence firms instruct Robert Cashman for police station attendance
+              cover across Kent custody suites and voluntary interviews. Send client name, station,
+              custody record number, DSCC reference, interview time and allegation summary. See our{" "}
+              <Link href="/dscc-and-custody-record-support" className="text-blue-700 font-semibold hover:underline">
+                DSCC and custody record guide
+              </Link>
+              .
+            </AnswerFirstBlock>
 
             {/* Services Section */}
             <section className="bg-white rounded-xl border border-slate-200 shadow-lg p-6 md:p-8 mb-8">

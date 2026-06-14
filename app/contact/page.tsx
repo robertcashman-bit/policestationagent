@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import ContactForm from "@/components/ContactForm";
 import WhoProvidesLegalService from "@/components/WhoProvidesLegalService";
 import { InternalLinkHub } from "@/components/InternalLinkHub";
+import { SolicitorInstructionChecklist } from "@/components/conversion/SolicitorInstructionChecklist";
 import type { Metadata } from "next";
 import { SITE_DOMAIN } from "@/config/site";
 import {
@@ -74,6 +75,10 @@ export default function Page() {
 
             {/* Who Provides Legal Service */}
             <WhoProvidesLegalService />
+
+            <div className="mb-8">
+              <SolicitorInstructionChecklist />
+            </div>
 
             {/* Before You Submit Guidance */}
             <section className="bg-blue-50 border-2 border-blue-200 rounded-xl shadow-lg p-6 md:p-8 mb-8">

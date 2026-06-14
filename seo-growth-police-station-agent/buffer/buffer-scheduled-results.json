@@ -1,0 +1,24 @@
+{
+  "organization": "My Organization",
+  "organizationId": "69d26bdf0f822245c9a723c4",
+  "channel": "Police Station Agent (LinkedIn)",
+  "channelId": "69d26c06031bfa423cd0c50d",
+  "scheduledAt": "2026-06-14T14:58:51.500Z",
+  "posts": [
+    { "id": "6a2ec19fcbbe21946a396902", "dueAt": "2026-06-16T08:30:00.000Z", "url": "https://policestationagent.com/blog/instructing-a-police-station-representative" },
+    { "id": "6a2ec1a0699f807eb3092bf9", "dueAt": "2026-06-21T08:30:00.000Z", "url": "https://policestationagent.com/blog/instructing-a-police-station-representative" },
+    { "id": "6a2ec1a0699f807eb3092c1d", "dueAt": "2026-06-26T08:30:00.000Z", "url": "https://policestationagent.com/blog/custody-record-number-dscc-reference" },
+    { "id": "6a2ec1a088e56947beb7bf05", "dueAt": "2026-07-01T08:30:00.000Z", "url": "https://policestationagent.com/dscc-and-custody-record-support" },
+    { "id": "6a2ec1a1173b697c8a92938d", "dueAt": "2026-07-06T08:30:00.000Z", "url": "https://policestationagent.com/blog/when-to-instruct-police-station-agent" },
+    { "id": "6a2ec1a388e56947beb7bf29", "dueAt": "2026-07-11T08:30:00.000Z", "url": "https://policestationagent.com/blog/when-to-instruct-police-station-agent" },
+    { "id": "6a2ec1a3699f807eb3092c44", "dueAt": "2026-07-16T08:30:00.000Z", "url": "https://policestationagent.com/blog/police-station-attendance-notes" },
+    { "id": "6a2ec1a4173b697c8a9293b1", "dueAt": "2026-07-21T08:30:00.000Z", "url": "https://policestationagent.com/blog/police-station-attendance-notes" },
+    { "id": "6a2ec1a4173b697c8a9293d5", "dueAt": "2026-07-26T08:30:00.000Z", "url": "https://policestationagent.com/blog/freelance-police-station-agents-for-solicitors" },
+    { "id": "6a2ec1a5caa57c9820225ad2", "dueAt": "2026-07-31T08:30:00.000Z", "url": "https://policestationagent.com/blog/freelance-police-station-agents-for-solicitors" },
+    { "id": "6a2ec1aa699f807eb3092c95", "dueAt": "2026-08-05T08:30:00.000Z", "url": "https://policestationagent.com/blog/police-station-cover-criminal-defence-firms-kent-medway" },
+    { "id": "6a2ec1aacbbe21946a396945", "dueAt": "2026-08-10T08:30:00.000Z", "url": "https://policestationagent.com/blog/police-station-cover-criminal-defence-firms-kent-medway" },
+    { "id": "6a2ec1aa173b697c8a9293fe", "dueAt": "2026-08-15T08:30:00.000Z", "url": "https://policestationagent.com/for-solicitors" },
+    { "id": "6a2ec1ab61b0aab8c16752f2", "dueAt": "2026-08-22T08:30:00.000Z", "url": "https://policestationagent.com/dscc-and-custody-record-support" },
+    { "id": "6a2ec1abcaa57c9820225af6", "dueAt": "2026-08-29T08:30:00.000Z", "url": "https://policestationagent.com/kent-police-station-reps" }
+  ]
+}
