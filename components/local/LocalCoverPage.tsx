@@ -62,10 +62,10 @@ export function LocalCoverPage({ config }: Props) {
 
       <section className="bg-gradient-to-br from-[#0A2342] via-blue-900 to-indigo-900 text-white py-14">
         <div className="max-w-4xl mx-auto px-4">
-          <p className="text-xs uppercase tracking-wide text-slate-200 mb-2">Kent police station cover</p>
-          <h1 className="text-3xl md:text-4xl font-bold mb-4">{config.h1}</h1>
-          <p className="text-slate-100 text-lg mb-6">{config.intro}</p>
-          <div className="rounded-xl bg-white/95 p-4 shadow-lg max-w-xl">
+          <p className="text-xs uppercase tracking-wide text-white mb-2 font-semibold">Kent police station cover</p>
+          <h1 className="text-3xl md:text-4xl font-bold mb-4 text-white">{config.h1}</h1>
+          <p className="text-white text-lg mb-6">{config.intro}</p>
+          <div className="rounded-xl bg-white p-4 shadow-lg max-w-xl">
             <ConversionCTAGroup />
           </div>
         </div>

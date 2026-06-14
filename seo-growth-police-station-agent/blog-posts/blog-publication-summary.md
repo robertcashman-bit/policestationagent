@@ -1,6 +1,6 @@
 # Blog publication summary
 
-Deduplication rule applied: **6 new posts published**, **14 topics skipped** (existing canonical page or blog covers the subject).
+Deduplication rule applied: **10 new posts published** (6 original programme + 4 North Kent/Tonbridge), **14 topics skipped** (existing canonical page or blog covers the subject).
 
 ## Published (new JSON in `data/blog-posts/`)
 
@@ -12,6 +12,10 @@ Deduplication rule applied: **6 new posts published**, **14 topics skipped** (ex
 | `police-station-attendance-notes` | Police Station Attendance Notes: Why They Matter for Firms | 2026-06-12 |
 | `freelance-police-station-agents-for-solicitors` | Why Criminal Defence Firms Use Freelance Police Station Agents | 2026-06-12 |
 | `police-station-cover-criminal-defence-firms-kent-medway` | Police Station Cover for Criminal Defence Firms in Kent and Medway | 2026-06-12 |
+| `north-kent-gravesend-custody-legal-advice` | Legal Advice at North Kent (Gravesend) Custody Suite | 2026-06-12 |
+| `instructing-cover-north-kent-gravesend-custody` | Instructing Police Station Cover at North Kent (Gravesend) Custody | 2026-06-12 |
+| `tonbridge-police-station-custody-and-interviews` | Tonbridge Police Station: Custody and Voluntary Interview Advice | 2026-06-12 |
+| `police-station-cover-west-kent-tonbridge-firms` | Police Station Cover for Firms at Tonbridge and West Kent | 2026-06-12 |
 
 ## Skipped (existing canonical URL)
 

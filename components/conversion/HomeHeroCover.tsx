@@ -11,36 +11,42 @@ export function HomeHeroCover() {
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(59,130,246,0.15),transparent_50%)]" aria-hidden="true" />
       <div className="max-w-5xl mx-auto px-4 relative z-10 text-center">
-        <p className="text-xs uppercase tracking-wide text-slate-200 mb-3">
-          Kent &amp; Medway — NOT the police
+        <p className="text-xs uppercase tracking-wide text-white mb-3 font-semibold">
+          Kent — NOT the police
         </p>
-        <h1 id="home-hero-heading" className="text-3xl md:text-5xl font-black mb-4 leading-tight">
-          Police Station Cover in Kent &amp; Medway
+        <h1 id="home-hero-heading" className="text-3xl md:text-5xl font-black mb-4 leading-tight text-white">
+          Police Station Cover — North Kent &amp; Tonbridge
         </h1>
-        <p className="text-lg md:text-xl text-slate-100 mb-3 max-w-3xl mx-auto">
+        <p className="text-lg md:text-xl text-white mb-8 max-w-3xl mx-auto">
           Custody attendance and voluntary interview representation for criminal defence firms — and
           free legal advice for clients in custody or booked for interview.
         </p>
-        <p className="text-sm text-slate-200 mb-8 max-w-2xl mx-auto">
-          Robert Cashman, solicitor at Tuckers Solicitors LLP. Extended-hours cover across Kent
-          custody suites including Medway and North Kent (Gravesend).
-        </p>
-        <div className="flex justify-center mb-6">
-          <div className="rounded-xl bg-white/95 p-4 shadow-lg max-w-xl w-full">
-            <ConversionCTAGroup layout="stacked" />
-          </div>
+
+        <div className="rounded-xl bg-white p-5 md:p-6 shadow-lg max-w-xl mx-auto text-left">
+          <p className="text-slate-800 text-sm md:text-base mb-4">
+            Robert Cashman, solicitor at Tuckers Solicitors LLP. Extended-hours cover at{" "}
+            <Link href="/police-station-rep-gravesend" className="font-semibold text-blue-700 hover:underline">
+              North Kent (Gravesend) custody
+            </Link>{" "}
+            and{" "}
+            <Link href="/police-station-rep-tonbridge" className="font-semibold text-blue-700 hover:underline">
+              Tonbridge custody
+            </Link>
+            .
+          </p>
+          <ConversionCTAGroup layout="stacked" />
+          <p className="text-slate-700 text-sm mt-4">
+            Firms: see{" "}
+            <Link href="/for-solicitors" className="font-semibold text-blue-700 hover:underline">
+              police station cover for solicitors
+            </Link>{" "}
+            or{" "}
+            <Link href="/dscc-and-custody-record-support" className="font-semibold text-blue-700 hover:underline">
+              DSCC &amp; custody record guide
+            </Link>
+            .
+          </p>
         </div>
-        <p className="text-sm text-slate-200">
-          Firms: see{" "}
-          <Link href="/for-solicitors" className="text-amber-300 font-semibold hover:underline">
-            police station cover for solicitors
-          </Link>{" "}
-          or{" "}
-          <Link href="/dscc-and-custody-record-support" className="text-amber-300 font-semibold hover:underline">
-            DSCC &amp; custody record guide
-          </Link>
-          .
-        </p>
       </div>
     </section>
   );

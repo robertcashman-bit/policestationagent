@@ -1,8 +1,6 @@
 "use client";
 
-import { PHONE_TEL } from "@/config/contact";
-
-const EMAIL = "robertdavidcashman@gmail.com";
+import { PHONE_TEL, SMS_TEL } from "@/config/contact";
 
 export function MobileStickyContactBar() {
   return (
@@ -20,11 +18,11 @@ export function MobileStickyContactBar() {
           Call
         </a>
         <a
-          href={`mailto:${EMAIL}`}
-          data-event="email_click"
+          href={`sms:${SMS_TEL}`}
+          data-event="sms_click"
           className="flex flex-col items-center justify-center py-3 text-xs font-semibold text-[#0A2342]"
         >
-          Email
+          Text
         </a>
       </div>
     </div>

@@ -13,10 +13,12 @@ import {
   FOOTER_BLOG_LIMIT,
   FOOTER_LEGAL,
   FOOTER_NETWORK_LINKS,
+  FOOTER_PRIORITY_LINKS,
   FOOTER_RIGHTS_GUIDES,
   FOOTER_SERVICES,
   FOOTER_STATION_HUBS,
 } from "@/config/footer-links";
+import { FooterCollapsibleSection } from "@/components/FooterCollapsibleSection";
 
 function FooterLinkList({
   links,
@@ -74,26 +76,35 @@ export default function Footer() {
               className="flex items-center gap-1.5 text-white hover:text-blue-300 font-medium"
               title="Custody or scheduled voluntary interview only"
             >
-              {PHONE_DISPLAY}
+              Call {PHONE_DISPLAY}
             </a>
             <span className="text-sky-600">|</span>
             <a
               href={`sms:${SMS_TEL}?body=I%20need%20custody%20or%20scheduled%20interview%20representation`}
-              className="text-sky-300 hover:text-sky-200"
+              className="text-sky-300 hover:text-sky-200 font-medium"
             >
-              Text ({SMS_DISPLAY})
-            </a>
-            <span className="text-sky-600">|</span>
-            <a href="mailto:robertcashman@defencelegalservices.co.uk" className="text-sky-300 hover:text-sky-200">
-              Email
+              Text {SMS_DISPLAY}
             </a>
           </div>
         </div>
 
-        {/* Open article hub — always visible */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 py-8 border-b border-slate-800 text-sm">
-          <div>
-            <h2 className="font-semibold text-white mb-3 text-base">Latest articles</h2>
+        {/* Priority links — always visible */}
+        <nav aria-label="Priority pages" className="py-5 border-b border-slate-800">
+          <p className="text-xs uppercase tracking-wide text-sky-400 mb-3 font-semibold">Quick links</p>
+          <ul className="flex flex-wrap gap-x-4 gap-y-2 text-sm">
+            {FOOTER_PRIORITY_LINKS.map((link) => (
+              <li key={link.href}>
+                <Link href={link.href} className="text-white font-medium hover:text-sky-200 transition-colors">
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        {/* Collapsible link sections */}
+        <div className="py-2 border-b border-slate-800 text-sm">
+          <FooterCollapsibleSection title="Latest articles">
             <FooterLinkList
               links={blogPosts.map((post) => ({
                 href: `/blog/${post.slug}`,
@@ -103,43 +114,24 @@ export default function Footer() {
             <Link href="/blog" className="inline-block mt-3 text-sky-200 font-medium hover:text-white text-xs">
               View all blog posts →
             </Link>
-          </div>
+          </FooterCollapsibleSection>
 
-          <div>
-            <h2 className="font-semibold text-white mb-3 text-base">Rights &amp; guides</h2>
+          <FooterCollapsibleSection title="Rights &amp; guides">
             <FooterLinkList links={FOOTER_RIGHTS_GUIDES} />
-          </div>
+          </FooterCollapsibleSection>
 
-          <div>
-            <h2 className="font-semibold text-white mb-3 text-base">Advice pages</h2>
+          <FooterCollapsibleSection title="Advice pages">
             <FooterLinkList links={FOOTER_ADVICE_PAGES} />
-          </div>
+          </FooterCollapsibleSection>
 
-          <div>
-            <h2 className="font-semibold text-white mb-3 text-base">Kent stations &amp; services</h2>
+          <FooterCollapsibleSection title="Kent stations &amp; services">
             <FooterLinkList links={[...FOOTER_STATION_HUBS, ...FOOTER_SERVICES.slice(0, 4)]} />
-          </div>
-        </div>
+          </FooterCollapsibleSection>
 
-        {/* Related sites — no Kent rep directory */}
-        <nav aria-label="Related sites" className="py-6 border-b border-slate-800">
-          <h2 className="font-semibold text-white mb-3 text-sm">Related sites</h2>
-          <ul className="flex flex-wrap gap-x-4 gap-y-2 text-xs text-sky-300">
-            {FOOTER_NETWORK_LINKS.map((link) => (
-              <li key={link.href}>
-                {link.external ? (
-                  <a href={link.href} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
-                    {link.label}
-                  </a>
-                ) : (
-                  <Link href={link.href} className="hover:text-white transition-colors">
-                    {link.label}
-                  </Link>
-                )}
-              </li>
-            ))}
-          </ul>
-        </nav>
+          <FooterCollapsibleSection title="Related sites">
+            <FooterLinkList links={FOOTER_NETWORK_LINKS} />
+          </FooterCollapsibleSection>
+        </div>
 
         {/* Legal row */}
         <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs text-sky-300 py-4 border-b border-slate-800">
@@ -148,9 +140,6 @@ export default function Footer() {
               {link.label}
             </Link>
           ))}
-          <Link href="/contact" className="hover:text-white transition-colors">
-            Contact
-          </Link>
         </div>
 
         {/* Bottom */}

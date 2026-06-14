@@ -3,7 +3,15 @@ import { CUSTODYNOTE_TRIAL_HREF } from "@/lib/custodynote-promo";
 import { PSRTRAIN_HOME_HREF } from "@/lib/psrtrain-promo";
 import { REPUK_PROFILE_URL } from "@/config/link-authority";
 
-export const FOOTER_BLOG_LIMIT = 30;
+export const FOOTER_BLOG_LIMIT = 6;
+
+export const FOOTER_PRIORITY_LINKS: FooterLink[] = [
+  { href: "/police-station-rep-gravesend", label: "North Kent (Gravesend) cover" },
+  { href: "/police-station-rep-tonbridge", label: "Tonbridge cover" },
+  { href: "/for-solicitors", label: "Cover for solicitors" },
+  { href: "/contact", label: "Contact" },
+  { href: "/locations", label: "All locations" },
+];
 
 /** Kent rep directory paths — do not link (competing listings) */
 export const REPUK_KENT_LISTING_BLOCKLIST = ["/directory/kent", "/directory/kent/"] as const;
@@ -47,14 +55,14 @@ export const FOOTER_ADVICE_PAGES: FooterLink[] = [
 ];
 
 export const FOOTER_STATION_HUBS: FooterLink[] = [
+  { href: "/police-station-rep-gravesend", label: "North Kent (Gravesend) cover" },
+  { href: "/police-station-rep-tonbridge", label: "Tonbridge cover" },
   { href: "/police-stations", label: "All Kent Police Stations" },
   { href: "/coverage", label: "Service Coverage" },
   { href: "/kent-police-custody-resources", label: "Kent Custody Resources Hub" },
-  { href: "/medway-police-station", label: "Medway Police Station" },
-  { href: "/maidstone-police-station", label: "Maidstone Police Station" },
+  { href: "/coverage/areas/north-kent", label: "North Kent area hub" },
+  { href: "/coverage/areas/west-kent", label: "West Kent area hub" },
   { href: "/canterbury-police-station", label: "Canterbury Police Station" },
-  { href: "/north-kent-gravesend-police-station", label: "Gravesend Police Station" },
-  { href: "/tonbridge-police-station", label: "Tonbridge Police Station" },
   { href: "/folkestone-police-station", label: "Folkestone Police Station" },
 ];
 

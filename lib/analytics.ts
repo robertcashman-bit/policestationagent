@@ -30,7 +30,7 @@ export function trackEvent(
 export const AnalyticsEvents = {
   callClick: (placement: string) => trackEvent('call_click', { placement }),
   whatsAppClick: (placement: string) => trackEvent('whatsapp_click', { placement }),
-  emailClick: (placement: string) => trackEvent('email_click', { placement }),
+  smsClick: (placement: string) => trackEvent('sms_click', { placement }),
   formSubmit: (form: string) => trackEvent('form_submit', { form }),
   solicitorInstruction: (placement: string) =>
     trackEvent('solicitor_instruction', { placement }),
