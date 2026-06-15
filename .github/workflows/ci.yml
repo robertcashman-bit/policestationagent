@@ -43,7 +43,9 @@ jobs:
       - name: E2E smoke tests
         run: npm run test:e2e:smoke
         env:
-          CI: 'true'      - name: E2E firm outreach tests
+          CI: 'true'
+
+      - name: E2E firm outreach tests
         run: npm run test:e2e:firm-outreach
         env:
           CI: 'true'
