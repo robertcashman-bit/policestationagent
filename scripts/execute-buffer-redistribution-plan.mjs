@@ -43,12 +43,14 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-function parseRetryAfterMs(errJson) {
+function parseRetryAfterMs(errJson, res) {
+  const header = res?.headers?.get?.("retry-after");
+  if (header) {
+    const secs = Number(header);
+    if (!Number.isNaN(secs) && secs > 0) return Math.min(secs, 900) * 1000;
+  }
   try {
     const parsed = JSON.parse(errJson);
-    const msg = parsed?.[0]?.message || "";
-    const match = msg.match(/Retry-After:\s*(\d+)/i);
-    if (match) return Number(match[1]) * 1000;
     if (parsed?.[0]?.extensions?.code === "RATE_LIMIT_EXCEEDED") return 60_000;
   } catch {
     /* ignore */
@@ -70,9 +72,7 @@ async function graphql(query, variables = {}) {
     });
     const data = await res.json();
     if (res.status === 429 || data.errors?.some((e) => e.extensions?.code === "RATE_LIMIT_EXCEEDED")) {
-      const waitMs = res.headers.get("retry-after")
-        ? Number(res.headers.get("retry-after")) * 1000
-        : parseRetryAfterMs(JSON.stringify(data.errors || data));
+      const waitMs = parseRetryAfterMs(JSON.stringify(data.errors || data), res);
       console.warn(`Rate limited — waiting ${Math.ceil(waitMs / 1000)}s (attempt ${attempt + 1}/${MAX_RETRIES + 1})`);
       await sleep(waitMs + 1000);
       lastErr = new Error(JSON.stringify(data.errors || data));
