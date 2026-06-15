@@ -2,6 +2,7 @@ import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
 
 describe('POST /api/auth/send-code', () => {
   beforeEach(() => {
+    process.env.ADMIN_EMAILS = 'robertdavidcashman@gmail.com';
     process.env.RESEND_API_KEY = 're_test';
     vi.doMock('@/lib/kv', () => ({
       getKV: () => ({ set: vi.fn(), get: vi.fn() }),
@@ -14,6 +15,7 @@ describe('POST /api/auth/send-code', () => {
 
   afterEach(() => {
     vi.resetModules();
+    delete process.env.ADMIN_EMAILS;
     vi.doUnmock('@/lib/kv');
     vi.doUnmock('@/lib/contact-guards');
     vi.doUnmock('@/lib/email');

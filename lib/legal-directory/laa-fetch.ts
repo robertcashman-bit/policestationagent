@@ -156,8 +156,8 @@ export async function downloadLaaWorkbook(opts?: {
   const url = await resolveLaaXlsxUrl(opts?.url);
   const res = await fetch(url, { headers: { 'User-Agent': LAA_FETCH_UA } });
   if (!res.ok) throw new Error(`Spreadsheet download returned ${res.status}`);
-  const buf = Buffer.from(await res.arrayBuffer());
-  await wb.xlsx.load(buf);
+  const arrayBuffer = await res.arrayBuffer();
+  await wb.xlsx.load(arrayBuffer);
   return wb;
 }
 
