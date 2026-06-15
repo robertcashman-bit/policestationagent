@@ -1,6 +1,6 @@
 import { getKV } from '@/lib/kv';
 
-function localDateInTimezone(date: Date, timeZone: string): string {
+export function localDateInTimezone(date: Date, timeZone: string): string {
   const parts = new Intl.DateTimeFormat('en-CA', {
     timeZone,
     year: 'numeric',

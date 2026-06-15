@@ -7,6 +7,7 @@ import {
   listAllSuppressions,
   listProspectIdsByStatus,
 } from '../storage';
+import { isActiveCampaignProspect, isActiveCampaignSend } from '../campaign-scope';
 import { excludedRowsForProspects, queueRowsForProspects } from './admin-actions';
 import { sortProspectsForSend } from '../enrichment/scorer';
 import type {
@@ -152,15 +153,17 @@ function buildSummaryFromParts(
 /** Fast path for admin stat boxes — skips send rows and queue tables. */
 export async function buildOutreachDashboardSummary(): Promise<OutreachActivityReportResult> {
   const today = new Date().toISOString().slice(0, 10);
-  const [sends, prospectCounts, sentToday, sentIds] = await Promise.all([
+  const [allSends, prospectCounts, sentToday, sentIds] = await Promise.all([
     listAllSends(),
     countProspectsByStatus(),
     getDailySendCount(today),
     listProspectIdsByStatus('sent').then((ids) => ids.slice(0, SENT_PROSPECTS_FOLLOWUP_LIMIT)),
   ]);
+  const sends = allSends.filter(isActiveCampaignSend);
 
   const sentProspectsMap = await getProspectsByIds(sentIds);
-  const followUp = computeFollowUpMetrics([...sentProspectsMap.values()]);
+  const sentProspects = [...sentProspectsMap.values()].filter(isActiveCampaignProspect);
+  const followUp = computeFollowUpMetrics(sentProspects);
   const summary = buildSummaryFromParts(prospectCounts, sends, sentToday, followUp);
 
   return {
@@ -177,11 +180,12 @@ export async function buildOutreachDashboardSummary(): Promise<OutreachActivityR
 }
 
 export async function buildOutreachActivityReport(): Promise<OutreachActivityReportResult> {
-  const [sends, suppressions, prospectCounts] = await Promise.all([
+  const [allSends, suppressions, prospectCounts] = await Promise.all([
     listAllSends(),
     listAllSuppressions(),
     countProspectsByStatus(),
   ]);
+  const sends = allSends.filter(isActiveCampaignSend);
 
   const prospectIds = [...new Set(sends.map((s) => s.prospectId))];
   const sendEmails = sends.map((s) => s.email);
@@ -236,11 +240,13 @@ export async function buildOutreachActivityReport(): Promise<OutreachActivityRep
     getProspectsByIds(excludedIds),
     getProspectsByIds(readyIds),
   ]);
-  const sentProspects = [...sentProspectsMap.values()];
-  const excludedProspects = [...excludedProspectsMap.values()].sort((a, b) =>
-    b.updatedAt.localeCompare(a.updatedAt),
+  const sentProspects = [...sentProspectsMap.values()].filter(isActiveCampaignProspect);
+  const excludedProspects = [...excludedProspectsMap.values()]
+    .filter(isActiveCampaignProspect)
+    .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+  const readyProspects = sortProspectsForSend(
+    [...readyProspectsMap.values()].filter(isActiveCampaignProspect),
   );
-  const readyProspects = sortProspectsForSend([...readyProspectsMap.values()]);
   const [excludedRows, readyRows] = await Promise.all([
     excludedRowsForProspects(excludedProspects),
     queueRowsForProspects(readyProspects),
