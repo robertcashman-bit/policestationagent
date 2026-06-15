@@ -4,8 +4,8 @@
  */
 import { readFileSync, writeFileSync, mkdirSync, statSync } from 'fs';
 import { resolve, dirname } from 'path';
+import ExcelJS from 'exceljs';
 import * as cheerio from 'cheerio';
-import * as XLSX from 'xlsx';
 import { dedupeLaaProviderRecords } from './laa-dedupe';
 import { isCrimeRelatedLaaCategory, LAA_DIRECTORY_URL, type LaaProviderRecord } from './laa-seed';
 
@@ -19,15 +19,43 @@ export const DEFAULT_LAA_CRIME_JSON_PATH = resolve(
 
 const LAA_STALE_MS = 7 * 24 * 60 * 60 * 1000;
 
+export type LaaWorkbook = ExcelJS.Workbook;
+
 function yes(val: unknown): boolean {
   return String(val ?? '').trim().toLowerCase() === 'yes';
 }
 
-export function parseSummarySheet(wb: XLSX.WorkBook): LaaProviderRecord[] {
-  const sheet = wb.Sheets['Summary'];
+function cellValueToString(value: ExcelJS.CellValue): string {
+  if (value == null) return '';
+  if (typeof value === 'object') {
+    if ('result' in value && value.result != null) return String(value.result).trim();
+    if ('text' in value && value.text != null) return String(value.text).trim();
+    if ('richText' in value && Array.isArray(value.richText)) {
+      return value.richText.map((part) => part.text).join('').trim();
+    }
+    if (value instanceof Date) return value.toISOString();
+  }
+  return String(value).trim();
+}
+
+function sheetToRows(sheet: ExcelJS.Worksheet): string[][] {
+  const rows: string[][] = [];
+  sheet.eachRow({ includeEmpty: false }, (row) => {
+    const vals: string[] = [];
+    row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
+      while (vals.length < colNumber - 1) vals.push('');
+      vals[colNumber - 1] = cellValueToString(cell.value);
+    });
+    if (vals.some((v) => v.length > 0)) rows.push(vals);
+  });
+  return rows;
+}
+
+export function parseSummarySheet(wb: LaaWorkbook): LaaProviderRecord[] {
+  const sheet = wb.getWorksheet('Summary');
   if (!sheet) return [];
 
-  const raw = XLSX.utils.sheet_to_json<string[]>(sheet, { header: 1, defval: '' });
+  const raw = sheetToRows(sheet);
   let headerIdx = -1;
   for (let i = 0; i < raw.length; i++) {
     const row = raw[i];
@@ -71,11 +99,11 @@ export function parseSummarySheet(wb: XLSX.WorkBook): LaaProviderRecord[] {
   return records;
 }
 
-export function parseCrimeProvidersSheet(wb: XLSX.WorkBook): LaaProviderRecord[] {
-  const sheet = wb.Sheets['2025 Crime Providers'];
+export function parseCrimeProvidersSheet(wb: LaaWorkbook): LaaProviderRecord[] {
+  const sheet = wb.getWorksheet('2025 Crime Providers');
   if (!sheet) return [];
 
-  const raw = XLSX.utils.sheet_to_json<string[]>(sheet, { header: 1, defval: '' });
+  const raw = sheetToRows(sheet);
   let headerIdx = -1;
   for (let i = 0; i < raw.length; i++) {
     if (raw[i][0]?.trim() === 'Provider Name') {
@@ -119,18 +147,21 @@ export async function resolveLaaXlsxUrl(explicitUrl?: string): Promise<string> {
 export async function downloadLaaWorkbook(opts?: {
   url?: string;
   localFile?: string;
-}): Promise<XLSX.WorkBook> {
+}): Promise<LaaWorkbook> {
+  const wb = new ExcelJS.Workbook();
   if (opts?.localFile) {
-    return XLSX.read(readFileSync(resolve(process.cwd(), opts.localFile)), { type: 'buffer' });
+    await wb.xlsx.readFile(resolve(process.cwd(), opts.localFile));
+    return wb;
   }
   const url = await resolveLaaXlsxUrl(opts?.url);
   const res = await fetch(url, { headers: { 'User-Agent': LAA_FETCH_UA } });
   if (!res.ok) throw new Error(`Spreadsheet download returned ${res.status}`);
   const buf = Buffer.from(await res.arrayBuffer());
-  return XLSX.read(buf, { type: 'buffer' });
+  await wb.xlsx.load(buf);
+  return wb;
 }
 
-export function parseLaaCrimeRecords(wb: XLSX.WorkBook, limit = 0): LaaProviderRecord[] {
+export function parseLaaCrimeRecords(wb: LaaWorkbook, limit = 0): LaaProviderRecord[] {
   const fromSummary = parseSummarySheet(wb).filter((r) => isCrimeRelatedLaaCategory(r.category));
   const fromCrimeSheet = parseCrimeProvidersSheet(wb).filter((r) =>
     isCrimeRelatedLaaCategory(r.category),
@@ -178,7 +209,6 @@ export async function fetchLaaCrimeProviders(opts?: {
     mkdirSync(dirname(writePath), { recursive: true });
     writeFileSync(writePath, JSON.stringify(records, null, 2));
   } catch (err) {
-    // Vercel serverless has a read-only filesystem — use in-memory records only.
     console.warn(
       '[laa-fetch] Cache write skipped:',
       err instanceof Error ? err.message : err,
