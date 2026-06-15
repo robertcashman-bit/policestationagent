@@ -129,7 +129,7 @@ export const metadata: Metadata = {
   },
 };
 
-// WebSite schema with SearchAction
+// WebSite schema
 const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
@@ -139,14 +139,6 @@ const websiteSchema = {
   description: "Expert police station representation and legal services across Kent and the UK.",
   publisher: {
     "@id": `${siteUrl}#legalservice`,
-  },
-  potentialAction: {
-    "@type": "SearchAction",
-    target: {
-      "@type": "EntryPoint",
-      urlTemplate: `${siteUrl}/blog?search={search_term_string}`,
-    },
-    "query-input": "required name=search_term_string",
   },
   inLanguage: "en-GB",
 };

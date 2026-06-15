@@ -41,7 +41,6 @@ const SOLICITOR_LOCATION_PATHS = [
   "/faversham-solicitor",
   "/folkestone-solicitor",
   "/gillingham-solicitor",
-  "/gravesend-solicitor",
   "/herne-bay-solicitor",
   "/maidstone-solicitor",
   "/margate-solicitor",
@@ -64,7 +63,6 @@ const POLICE_STATION_AGENT_PATHS = [
   "/police-station-agent-canterbury",
   "/police-station-agent-dartford",
   "/police-station-agent-folkestone",
-  "/police-station-agent-gravesend",
   "/police-station-agent-maidstone",
   "/police-station-agent-medway",
   "/police-station-agent-sevenoaks",
@@ -561,12 +559,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Police Station Pages
     {
       url: `${baseUrl}/medway-police-station`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/north-kent-gravesend-police-station`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,

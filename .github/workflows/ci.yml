@@ -45,6 +45,16 @@ jobs:
         env:
           CI: 'true'
 
+      - name: E2E contact form tests
+        run: npx playwright test e2e/contact-form.spec.ts
+        env:
+          CI: 'true'
+
+      - name: E2E blog public route tests
+        run: npx playwright test e2e/blog-public-route.spec.ts
+        env:
+          CI: 'true'
+
       - name: E2E firm outreach tests
         run: npm run test:e2e:firm-outreach
         env:
