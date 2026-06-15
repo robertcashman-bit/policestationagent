@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { checkRateLimit } from "@/lib/rate-limit";
+import { getClientIp, rateLimitOk } from "@/lib/contact-guards";
 import { runChatbotSearch } from "@/lib/chatbot-core";
 
 export const runtime = "nodejs";
@@ -12,8 +12,13 @@ function sseMessage(event: string, data: object): string {
 }
 
 export async function POST(request: NextRequest) {
-  const rate = checkRateLimit(request, 20, 60_000);
-  if (!rate.allowed) {
+  const rate = await rateLimitOk({
+    ip: getClientIp(request),
+    scope: 'chatbot',
+    max: 20,
+    windowMs: 60_000,
+  });
+  if (!rate.ok) {
     return new Response(sseMessage("error", { message: "Too many requests. Please try again." }), {
       status: 429,
       headers: { "Content-Type": "text/event-stream" },

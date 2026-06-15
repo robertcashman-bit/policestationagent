@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sendContactFormNotification } from "@/lib/email";
-import { checkRateLimit } from "@/lib/rate-limit";
+import { getClientIp, rateLimitOk } from "@/lib/contact-guards";
 
 function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -10,15 +10,16 @@ const MAX_FIELD_LENGTH = 2000;
 
 export async function POST(request: NextRequest) {
   try {
-    // Rate limit: 5 submissions per IP per minute
-    const rate = checkRateLimit(request, 5, 60_000);
-    if (!rate.allowed) {
+    const rate = await rateLimitOk({
+      ip: getClientIp(request),
+      scope: 'contact',
+      max: 5,
+      windowMs: 60_000,
+    });
+    if (!rate.ok) {
       return NextResponse.json(
-        {
-          error: "Too many requests. Please try again later.",
-          retryAfter: rate.retryAfter,
-        },
-        { status: 429, headers: rate.retryAfter ? { "Retry-After": String(rate.retryAfter) } : {} }
+        { error: "Too many requests. Please try again later." },
+        { status: 429, headers: { "Retry-After": "60" } },
       );
     }
 

@@ -2,13 +2,11 @@
 
 import { useState } from 'react';
 
-const DEFAULT_ADMIN_EMAIL = 'robertdavidcashman@gmail.com';
-
 type Stage = 'email' | 'otp' | 'checking';
 
 export function AdminMagicLoginForm({ kvConfigured = true }: { kvConfigured?: boolean }) {
   const [stage, setStage] = useState<Stage>('email');
-  const [email, setEmail] = useState(DEFAULT_ADMIN_EMAIL);
+  const [email, setEmail] = useState('');
   const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);

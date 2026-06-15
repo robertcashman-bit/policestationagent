@@ -7,24 +7,25 @@ describe('admin-auth', () => {
     delete process.env.OWNER_EMAIL;
   });
 
-  it('allows the default admin email', async () => {
+  it('allows emails from ADMIN_EMAILS env', async () => {
+    process.env.ADMIN_EMAILS = 'admin@example.com,ops@example.com';
     const { isAdminEmail, getDefaultAdminEmail } = await import('@/lib/admin-auth');
-    expect(getDefaultAdminEmail()).toBe('robertdavidcashman@gmail.com');
-    expect(isAdminEmail('robertdavidcashman@gmail.com')).toBe(true);
-    expect(isAdminEmail('ROBERTDAVIDCASHMAN@GMAIL.COM')).toBe(true);
+    expect(getDefaultAdminEmail()).toBe('admin@example.com');
+    expect(isAdminEmail('admin@example.com')).toBe(true);
+    expect(isAdminEmail('OPS@EXAMPLE.COM')).toBe(true);
   });
 
   it('rejects unknown emails', async () => {
+    process.env.ADMIN_EMAILS = 'admin@example.com';
     const { isAdminEmail } = await import('@/lib/admin-auth');
     expect(isAdminEmail('other@example.com')).toBe(false);
     expect(isAdminEmail(null)).toBe(false);
   });
 
-  it('honours ADMIN_EMAILS env additions', async () => {
-    process.env.ADMIN_EMAILS = 'ops@example.com';
+  it('honours OWNER_EMAIL when ADMIN_EMAILS is unset', async () => {
+    process.env.OWNER_EMAIL = 'owner@example.com';
     const { isAdminEmail } = await import('@/lib/admin-auth');
-    expect(isAdminEmail('ops@example.com')).toBe(true);
-    expect(isAdminEmail('robertdavidcashman@gmail.com')).toBe(true);
+    expect(isAdminEmail('owner@example.com')).toBe(true);
   });
 });
 

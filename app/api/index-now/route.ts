@@ -3,7 +3,8 @@ import { SITE_DOMAIN } from "@/config/site";
 import { getAllPosts } from "@/lib/blog-reader";
 import { REP_INDEXNOW_PATHS } from "@/lib/seo/rep-town-paths";
 
-const INDEXNOW_KEY = "655b1cdbce5c462b9fe51c4e19f92678";
+const INDEXNOW_KEY =
+  process.env.INDEXNOW_KEY || "655b1cdbce5c462b9fe51c4e19f92678";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || `https://${SITE_DOMAIN}`;
 
 // Important pages to submit for fast indexing (Google, Bing, DuckDuckGo via IndexNow/Bing)
@@ -169,7 +170,6 @@ export async function POST(request: Request) {
 export async function GET() {
   return NextResponse.json({
     status: "ready",
-    indexNowKey: INDEXNOW_KEY,
     keyUrl: `${SITE_URL}/${INDEXNOW_KEY}.txt`,
     sitemapUrl: `${SITE_URL}/sitemap.xml`,
     blogSitemapUrl: `${SITE_URL}/blog-sitemap.xml`,

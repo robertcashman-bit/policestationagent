@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { checkRateLimit } from "@/lib/rate-limit";
+import { getClientIp, rateLimitOk } from "@/lib/contact-guards";
 import { runChatbotSearch } from "@/lib/chatbot-core";
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
@@ -35,8 +35,13 @@ async function callOpenAI(
 
 export async function POST(request: NextRequest) {
   try {
-    const rate = checkRateLimit(request, 20, 60_000);
-    if (!rate.allowed) {
+    const rate = await rateLimitOk({
+      ip: getClientIp(request),
+      scope: 'chatbot',
+      max: 20,
+      windowMs: 60_000,
+    });
+    if (!rate.ok) {
       return NextResponse.json(
         { error: "Too many requests. Please try again in a moment." },
         { status: 429 }

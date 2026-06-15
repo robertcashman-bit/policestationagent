@@ -2,17 +2,22 @@ import { redirect } from 'next/navigation';
 import { getSessionEmail } from '@/lib/admin-session';
 import { getKV } from '@/lib/kv';
 
-const DEFAULT_ADMIN_EMAIL = 'robertdavidcashman@gmail.com';
-
-const ADMIN_EMAILS = new Set(
-  [
-    DEFAULT_ADMIN_EMAIL,
-    ...(process.env.ADMIN_EMAILS || process.env.OWNER_EMAIL || '')
+function parseAdminEmails(): Set<string> {
+  return new Set(
+    (process.env.ADMIN_EMAILS || process.env.OWNER_EMAIL || '')
       .split(/[,;]+/)
       .map((s) => s.trim().toLowerCase())
       .filter(Boolean),
-  ],
-);
+  );
+}
+
+function getAdminEmails(): Set<string> {
+  const emails = parseAdminEmails();
+  if (process.env.NODE_ENV === 'production' && emails.size === 0) {
+    console.error('[admin-auth] ADMIN_EMAILS or OWNER_EMAIL must be set in production');
+  }
+  return emails;
+}
 
 export interface AdminSession {
   role: 'admin';
@@ -36,11 +41,12 @@ export function isJWTSecretConfigured(): boolean {
 
 export function isAdminEmail(email: string | null | undefined): boolean {
   if (!email) return false;
-  return ADMIN_EMAILS.has(email.toLowerCase());
+  return getAdminEmails().has(email.toLowerCase());
 }
 
 export function getDefaultAdminEmail(): string {
-  return DEFAULT_ADMIN_EMAIL;
+  const first = [...getAdminEmails()][0];
+  return first ?? '';
 }
 
 export async function getAdminSession(): Promise<AdminSession | null> {
