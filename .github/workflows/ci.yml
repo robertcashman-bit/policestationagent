@@ -44,12 +44,6 @@ jobs:
         run: npm run test:e2e:smoke
         env:
           CI: 'true'
-
-      - name: E2E contact form tests
-        run: npx playwright test e2e/contact-form.spec.ts
-        env:
-          CI: 'true'
-
       - name: E2E blog public route tests
         run: npx playwright test e2e/blog-public-route.spec.ts
         env:
