@@ -8,6 +8,9 @@
  *   node scripts/retry-gbp-kent-custody-post.mjs
  *   node scripts/retry-gbp-kent-custody-post.mjs --share-now
  */
+import fs from "fs";
+import os from "os";
+import path from "path";
 import {
   GBP_CHANNEL_ID,
   gbpFallbackAssets,
@@ -18,7 +21,19 @@ import {
 
 const dryRun = process.argv.includes("--dry-run");
 const shareNow = process.argv.includes("--share-now");
-const apiKey = process.env.BUFFER_API_KEY?.trim();
+
+function loadApiKey() {
+  if (process.env.BUFFER_API_KEY?.trim()) return process.env.BUFFER_API_KEY.trim();
+  const mcpPath = path.join(os.homedir(), ".cursor/mcp.json");
+  if (fs.existsSync(mcpPath)) {
+    const mcp = JSON.parse(fs.readFileSync(mcpPath, "utf8"));
+    const auth = mcp?.mcpServers?.buffer?.headers?.Authorization;
+    if (auth?.startsWith("Bearer ")) return auth.slice(7);
+  }
+  return null;
+}
+
+const apiKey = loadApiKey();
 
 const POST = {
   url: "https://www.policestationagent.com/blog/kent-custody-after-arrest-process?utm_source=buffer&utm_medium=social&utm_campaign=policestationagent_googlebusiness",

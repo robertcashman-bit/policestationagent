@@ -2,6 +2,12 @@
 
 Automated work is done in both repos. Complete these when convenient:
 
+## Buffer (GitHub Actions)
+
+Add repository secret **`BUFFER_API_KEY`** (Buffer → Settings → API → Personal Keys) so `.github/workflows/schedule-buffer.yml` schedules the 23-post calendar automatically.
+
+For failed GBP posts, run workflow **Buffer GBP fix and retry** (see `GBP_NEXT_STEPS.md`).
+
 ## Google Business Profile
 1. Claim profile using `GBP_OPTIMIZATION_CONTENT.md`
 2. Set website to `https://www.policestationagent.com`

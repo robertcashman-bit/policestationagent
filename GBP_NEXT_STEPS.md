@@ -1,5 +1,21 @@
 ## Google Business Profile (GBP) – next steps (manual)
 
+### Automated (after Buffer rate limit clears)
+
+GitHub Actions workflow **Buffer GBP fix and retry** (`.github/workflows/buffer-gbp-fix.yml`):
+
+1. Add `BUFFER_API_KEY` in GitHub → Settings → Secrets (Buffer → Settings → API → Personal Keys)
+2. Actions → **Buffer GBP fix and retry** → Run workflow → set `share_now` to `true` for immediate publish
+
+Or locally (when not rate-limited):
+
+```bash
+node scripts/retry-gbp-kent-custody-post.mjs --share-now
+node scripts/audit-fix-gbp-buffer-posts.mjs
+```
+
+GBP-safe format: square image at `/images/buffer/gbp/policestationagent-default.jpg`, **Learn more** button with UTM link, no URL in post body.
+
 ### 1) Create/claim the profile
 - In Google Business Profile, create/claim the business and complete verification.
 - Use the prepared content in `GBP_OPTIMIZATION_CONTENT.md`.

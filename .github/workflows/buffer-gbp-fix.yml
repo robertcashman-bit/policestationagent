@@ -1,0 +1,39 @@
+name: Buffer GBP fix and retry
+
+on:
+  workflow_dispatch:
+    inputs:
+      share_now:
+        description: Publish Kent custody retry immediately (shareNow)
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
+
+jobs:
+  gbp-fix:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Retry failed Kent custody GBP post
+        env:
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+        run: |
+          if [ "${{ inputs.share_now }}" = "true" ]; then
+            node scripts/retry-gbp-kent-custody-post.mjs --share-now
+          else
+            node scripts/retry-gbp-kent-custody-post.mjs
+          fi
+
+      - name: Audit and fix scheduled GBP posts
+        env:
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+        run: node scripts/audit-fix-gbp-buffer-posts.mjs
