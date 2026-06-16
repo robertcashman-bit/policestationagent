@@ -2,6 +2,8 @@
 
 ### Automated (after Buffer rate limit clears)
 
+**Status (2026-06-16):** Buffer API still returns `RATE_LIMIT_EXCEEDED` (24h window). Retry scripts and GitHub workflow are ready — run again after the window resets.
+
 GitHub Actions workflow **Buffer GBP fix and retry** (`.github/workflows/buffer-gbp-fix.yml`):
 
 1. Add `BUFFER_API_KEY` in GitHub → Settings → Secrets (Buffer → Settings → API → Personal Keys)
