@@ -53,6 +53,7 @@
     "test:e2e:firm-outreach": "playwright test e2e/firm-outreach.spec.ts"
   },
   "dependencies": {
+    "@sentry/nextjs": "^10.58.0",
     "@upstash/redis": "^1.38.0",
     "@vercel/speed-insights": "^1.2.0",
     "bcryptjs": "^2.4.3",
@@ -66,7 +67,8 @@
     "react-dom": "^18.3.0",
     "resend": "^6.9.1",
     "sanitize-html": "^2.17.5",
-    "xml2js": "^0.6.2"
+    "xml2js": "^0.6.2",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@playwright/test": "^1.57.0",

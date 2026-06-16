@@ -24,6 +24,8 @@ const nextConfig = {
   experimental: {
     // Optimize package imports
     optimizePackageImports: ["lucide-react"],
+    // Required on Next 14 to enable instrumentation.ts (Sentry + env validation)
+    instrumentationHook: true,
   },
   // Performance: Optimize package imports for smaller bundles
   modularizeImports: {
@@ -519,4 +521,31 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+const { withSentryConfig } = require("@sentry/nextjs");
+
+// Only apply the Sentry build plugin (which injects the client SDK and wraps
+// middleware) when a browser DSN is configured at build time. This keeps the
+// default client bundle and middleware free of Sentry weight when monitoring
+// is not enabled. Server/edge error capture still activates at runtime via
+// instrumentation.ts whenever SENTRY_DSN is set. No DSN/secret is hardcoded.
+const sentryEnabled = Boolean(process.env.NEXT_PUBLIC_SENTRY_DSN);
+
+module.exports = sentryEnabled
+  ? withSentryConfig(nextConfig, {
+      org: process.env.SENTRY_ORG,
+      project: process.env.SENTRY_PROJECT,
+      authToken: process.env.SENTRY_AUTH_TOKEN,
+      silent: true,
+      widenClientFileUpload: true,
+      webpack: {
+        treeshake: {
+          removeDebugLogging: true,
+        },
+      },
+      // Source map upload only runs when an auth token is present (CI/prod);
+      // otherwise the build still succeeds without uploading.
+      sourcemaps: {
+        disable: !process.env.SENTRY_AUTH_TOKEN,
+      },
+    })
+  : nextConfig;
