@@ -416,8 +416,12 @@ const nextConfig = {
           },
           {
             key: "Content-Security-Policy",
+            // NOTE: 'unsafe-inline'/'unsafe-eval' in script-src are required by
+            // Next.js's runtime/hydration and inline JSON-LD. object-src 'none'
+            // and the explicit base-uri/form-action/frame-ancestors keep the
+            // policy restrictive for the highest-impact injection vectors.
             value:
-              "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; connect-src 'self' https:; frame-ancestors 'self'; base-uri 'self'; form-action 'self';",
+              "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; connect-src 'self' https:; frame-ancestors 'self'; frame-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests;",
           },
           {
             key: "Cross-Origin-Opener-Policy",
@@ -444,6 +448,25 @@ const nextConfig = {
           {
             key: "Cache-Control",
             value: "public, s-maxage=0, stale-while-revalidate=60",
+          },
+          {
+            // Never allow API responses to be indexed by search engines.
+            key: "X-Robots-Tag",
+            value: "noindex, nofollow",
+          },
+        ],
+      },
+      {
+        // Private admin area must never be indexed.
+        source: "/admin/:path*",
+        headers: [
+          {
+            key: "X-Robots-Tag",
+            value: "noindex, nofollow, noarchive",
+          },
+          {
+            key: "Cache-Control",
+            value: "no-store, max-age=0",
           },
         ],
       },

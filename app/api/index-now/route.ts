@@ -139,7 +139,23 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     if (body.urls && Array.isArray(body.urls)) {
-      urlsToSubmit = body.urls;
+      // Only accept URLs belonging to this site, and cap the count to prevent
+      // abuse of our IndexNow key against arbitrary hosts.
+      const cleaned = body.urls
+        .filter((u: unknown): u is string => typeof u === "string")
+        .map((u: string) => u.trim())
+        .filter((u: string) => {
+          if (u.startsWith("/")) return true;
+          try {
+            return new URL(u).hostname === SITE_DOMAIN;
+          } catch {
+            return false;
+          }
+        })
+        .slice(0, 1000);
+      if (cleaned.length > 0) {
+        urlsToSubmit = cleaned;
+      }
     }
   } catch {
     // No body or invalid JSON - use default URLs

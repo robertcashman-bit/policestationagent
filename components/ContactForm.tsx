@@ -9,7 +9,7 @@
  * GDPR compliant with consent checkbox.
  */
 
-import { useState, FormEvent } from "react";
+import { useState, useRef, FormEvent } from "react";
 import { PHONE_DISPLAY, PHONE_TEL, SEO_NOT_POLICE, SERVICE_SCOPE_SHORT } from "@/config/contact";
 
 interface FormData {
@@ -46,6 +46,9 @@ export default function ContactForm() {
     nonUrgentConfirmation: false,
     consent: false,
   });
+
+  // Honeypot: hidden field that real users never fill in; bots usually do.
+  const honeypotRef = useRef<HTMLInputElement>(null);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
@@ -102,7 +105,7 @@ export default function ContactForm() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, company: honeypotRef.current?.value ?? "" }),
       });
 
       if (response.ok) {
@@ -137,6 +140,16 @@ export default function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      {/* Honeypot field — hidden from users, ignored by the server when filled. */}
+      <input
+        ref={honeypotRef}
+        type="text"
+        name="company"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        style={{ position: "absolute", left: "-9999px", width: "1px", height: "1px", opacity: 0 }}
+      />
       <div className="bg-white rounded-xl border border-slate-200 shadow-lg p-6 md:p-8">
         {/* Introductory Notice */}
         <div className="bg-blue-50 border-l-4 border-blue-600 p-4 mb-6">

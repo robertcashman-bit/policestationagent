@@ -27,9 +27,19 @@ const NOTIFY_TIMEZONE =
 
 function getSecret(): string {
   const raw =
-    process.env.ADMIN_DECISION_TOKEN_SECRET?.trim() ??
-    process.env.CRON_SECRET?.trim() ??
-    'firm-outreach-dev-secret-change-me';
+    process.env.ADMIN_DECISION_TOKEN_SECRET?.trim() ||
+    process.env.CRON_SECRET?.trim() ||
+    '';
+  // Fail closed in production: never sign/verify approval tokens with a known
+  // default secret, which would let an attacker forge "send" approval links.
+  if (!raw) {
+    if (process.env.NODE_ENV === 'production') {
+      throw new Error(
+        'ADMIN_DECISION_TOKEN_SECRET (or CRON_SECRET) must be set in production for outreach approval tokens',
+      );
+    }
+    return 'firm-outreach-dev-secret-change-me';
+  }
   return raw;
 }
 

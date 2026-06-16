@@ -3,6 +3,21 @@ import { getClientIp, rateLimitOk } from "@/lib/contact-guards";
 import { runChatbotSearch } from "@/lib/chatbot-core";
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+const MAX_QUERY_LENGTH = 1000;
+const MAX_HISTORY_TURNS = 12;
+const MAX_HISTORY_ITEM_LENGTH = 2000;
+
+/** Cap conversation history depth and per-item length to limit LLM cost/abuse. */
+function sanitizeHistory(history: unknown): Array<{ type: string; content: string }> {
+  if (!Array.isArray(history)) return [];
+  return history
+    .filter(
+      (h): h is { type: string; content: string } =>
+        !!h && typeof h.type === "string" && typeof h.content === "string",
+    )
+    .slice(-MAX_HISTORY_TURNS)
+    .map((h) => ({ type: h.type, content: h.content.slice(0, MAX_HISTORY_ITEM_LENGTH) }));
+}
 
 async function callOpenAI(
   messages: Array<{ role: string; content: string }>,
@@ -54,7 +69,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Query is required" }, { status: 400 });
     }
 
-    const result = runChatbotSearch(query, conversationHistory, { openAiKey: OPENAI_API_KEY });
+    if (query.length > MAX_QUERY_LENGTH) {
+      return NextResponse.json({ error: "Query is too long" }, { status: 400 });
+    }
+
+    const history = sanitizeHistory(conversationHistory);
+
+    const result = runChatbotSearch(query, history, { openAiKey: OPENAI_API_KEY });
 
     if (result.type === "instant") {
       return NextResponse.json({
@@ -86,7 +107,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const fallback = runChatbotSearch(query, conversationHistory, { openAiKey: null });
+    const fallback = runChatbotSearch(query, history, { openAiKey: null });
     return NextResponse.json({
       answer: fallback.answer,
       sources: fallback.sources,

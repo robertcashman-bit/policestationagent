@@ -6,9 +6,24 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+const MAX_QUERY_LENGTH = 1000;
+const MAX_HISTORY_TURNS = 12;
+const MAX_HISTORY_ITEM_LENGTH = 2000;
 
 function sseMessage(event: string, data: object): string {
   return `event: ${event}\ndata: ${JSON.stringify(data)}\n\n`;
+}
+
+/** Cap conversation history depth and per-item length to limit LLM cost/abuse. */
+function sanitizeHistory(history: unknown): Array<{ type: string; content: string }> {
+  if (!Array.isArray(history)) return [];
+  return history
+    .filter(
+      (h): h is { type: string; content: string } =>
+        !!h && typeof h.type === "string" && typeof h.content === "string",
+    )
+    .slice(-MAX_HISTORY_TURNS)
+    .map((h) => ({ type: h.type, content: h.content.slice(0, MAX_HISTORY_ITEM_LENGTH) }));
 }
 
 export async function POST(request: NextRequest) {
@@ -46,7 +61,15 @@ export async function POST(request: NextRequest) {
     });
   }
 
-  const result = runChatbotSearch(query, conversationHistory, { openAiKey: OPENAI_API_KEY });
+  if (query.length > MAX_QUERY_LENGTH) {
+    return new Response(sseMessage("error", { message: "Query is too long" }), {
+      status: 400,
+      headers: { "Content-Type": "text/event-stream" },
+    });
+  }
+
+  const history = sanitizeHistory(conversationHistory);
+  const result = runChatbotSearch(query, history, { openAiKey: OPENAI_API_KEY });
 
   if (result.type === "instant" || result.type === "fallback") {
     const stream = new ReadableStream({
@@ -172,10 +195,11 @@ export async function POST(request: NextRequest) {
         controller.enqueue(encoder.encode(sseMessage("done", { sources, usedAI: true })));
         controller.close();
       } catch (error) {
+        console.error("Chatbot stream error:", error);
         controller.enqueue(
           encoder.encode(
             sseMessage("error", {
-              message: error instanceof Error ? error.message : "Stream interrupted",
+              message: "Sorry, the response was interrupted. Please try again.",
             })
           )
         );

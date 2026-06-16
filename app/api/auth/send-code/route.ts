@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import { NextResponse } from 'next/server';
 import { isAdminEmail } from '@/lib/admin-auth';
 import { storeMagicCode } from '@/lib/admin-session';
@@ -39,7 +40,8 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: true });
   }
 
-  const code = String(Math.floor(100000 + Math.random() * 900000));
+  // Cryptographically secure 6-digit code (avoids predictable Math.random()).
+  const code = String(crypto.randomInt(100000, 1000000));
   const sent = await sendMagicCode(email, code);
   if (!sent.success) {
     console.error('[send-code] Magic code email failed:', sent.error);

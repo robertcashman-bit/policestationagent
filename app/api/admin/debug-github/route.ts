@@ -6,6 +6,12 @@ const GITHUB_REPO = process.env.GITHUB_REPO || "robertdavidcashman-droid/one";
 const JSON_FILE_PATH = "data/blog-posts-full.json";
 
 export async function GET(request: NextRequest) {
+  // Diagnostic endpoint: never expose in production (avoids leaking credential
+  // metadata). Returns 404 so its existence is not advertised.
+  if (process.env.NODE_ENV === "production") {
+    return NextResponse.json({ error: "Not found" }, { status: 404 });
+  }
+
   const session = await getAdminSession();
 
   if (!session) {
@@ -16,8 +22,6 @@ export async function GET(request: NextRequest) {
     timestamp: new Date().toISOString(),
     environment: {
       GITHUB_TOKEN_SET: !!GITHUB_TOKEN,
-      GITHUB_TOKEN_LENGTH: GITHUB_TOKEN?.length || 0,
-      GITHUB_TOKEN_PREFIX: GITHUB_TOKEN ? GITHUB_TOKEN.substring(0, 10) + "..." : "NOT SET",
       GITHUB_REPO: GITHUB_REPO,
       JSON_FILE_PATH: JSON_FILE_PATH,
       VERCEL: process.env.VERCEL || "false",

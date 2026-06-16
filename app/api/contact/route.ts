@@ -25,6 +25,13 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json();
 
+    // Honeypot: bots fill hidden fields humans never see. Silently accept and
+    // drop (no email) so the bot believes it succeeded.
+    const honeypot = String(body?.company ?? body?.website ?? "").trim();
+    if (honeypot) {
+      return NextResponse.json({ success: true, emailNotified: false });
+    }
+
     const name = String(body?.name ?? "").trim();
     const contactNumber = String(body?.contactNumber ?? "").trim();
     const emailRaw = String(body?.email ?? "").trim();
@@ -132,9 +139,10 @@ export async function POST(request: NextRequest) {
 
     // Do not fail the request if email notifications are not configured or fail.
     // The form should remain usable even if RESEND_API_KEY / CONTACT_FORM_TO_EMAIL are missing/invalid.
+    // Only expose a boolean to the client — never leak email-subsystem error details.
     return NextResponse.json({
       success: true,
-      email: emailResult ?? { success: false, error: "Email result unavailable" },
+      emailNotified: Boolean(emailResult?.success),
     });
   } catch (error) {
     console.error("Contact submission error:", error);
