@@ -9,12 +9,13 @@ import Script from "next/script";
 import { SITE_URL } from "@/config/site";
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params;
   const station = db.prepare("SELECT * FROM police_stations WHERE slug = ?").get(params.slug) as
     | {
         name: string;
@@ -46,7 +47,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default function PoliceStationPage({ params }: PageProps) {
+export default async function PoliceStationPage(props: PageProps) {
+  const params = await props.params;
   const station = db.prepare("SELECT * FROM police_stations WHERE slug = ?").get(params.slug) as
     | {
         id: number;

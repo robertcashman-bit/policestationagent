@@ -108,9 +108,9 @@ const AREA_DETAILS: Record<string, {
 };
 
 interface PageProps {
-  params: {
+  params: Promise<{
     'area-name': string;
-  };
+  }>;
 }
 
 function getAreaData(areaName: string) {
@@ -121,9 +121,10 @@ function getAreaDetails(areaName: string) {
   return AREA_DETAILS[areaName] || { description: '', cities: [] };
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params;
   const area = getAreaData(params['area-name']);
-  
+
   if (!area) {
     return {
       title: 'Area Not Found',
@@ -131,7 +132,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://policestationagent.com';
-  
+
   return {
     title: `${area.displayName} Criminal Solicitor | Police Station Representation`,
     description: `Criminal defence representation in ${area.displayName}. Information about police station coverage, duty solicitor services, and legal aid in ${area.displayName}.`,
@@ -148,7 +149,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default function AreaPage({ params }: PageProps) {
+export default async function AreaPage(props: PageProps) {
+  const params = await props.params;
   const area = getAreaData(params['area-name']);
   const details = getAreaDetails(params['area-name']);
 

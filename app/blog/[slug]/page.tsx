@@ -17,16 +17,17 @@ export const revalidate = 3600; // 1 hour
 export const dynamicParams = true;
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export function generateStaticParams() {
   return getAllSlugs().map((slug) => ({ slug }));
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params;
   const post = getPostBySlug(params.slug);
 
   if (!post) {
@@ -91,7 +92,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default function BlogPostPage({ params }: Readonly<PageProps>) {
+export default async function BlogPostPage(props: Readonly<PageProps>) {
+  const params = await props.params;
   const post = getPostBySlug(params.slug);
 
   if (!post) {

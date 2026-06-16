@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import db from "@/lib/db";
 import { requireAdminApi } from "@/lib/admin-auth";
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const auth = await requireAdminApi();
   if (!auth.ok) {
     return NextResponse.json({ error: auth.error }, { status: auth.status });
@@ -17,7 +18,8 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
   return NextResponse.json({ post });
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(request: NextRequest, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const auth = await requireAdminApi();
   if (!auth.ok) {
     return NextResponse.json({ error: auth.error }, { status: auth.status });
@@ -62,7 +64,8 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(request: NextRequest, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const auth = await requireAdminApi();
   if (!auth.ok) {
     return NextResponse.json({ error: auth.error }, { status: auth.status });

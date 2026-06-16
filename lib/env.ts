@@ -63,7 +63,6 @@ function parseEnv(): Env {
     ];
     const missing = recommended.filter((key) => !parsed.data[key]);
     if (missing.length > 0) {
-      // eslint-disable-next-line no-console
       console.warn(
         `[env] Missing recommended production env vars: ${missing.join(", ")}`,
       );

@@ -3,14 +3,9 @@ import "./globals.css";
 import { inter } from "./fonts";
 import { SITE_URL, SITE_DOMAIN } from "@/config/site";
 import Script from "next/script";
-import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-
-const LazyChatbot = dynamic(() => import("@/components/LazyChatbot"), {
-  ssr: false,
-  loading: () => null,
-});
+import LazyChatbot from "@/components/LazyChatbot";
 import CookieBanner from "@/components/CookieBanner";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { MobileStickyContactBar } from "@/components/conversion/MobileStickyContactBar";

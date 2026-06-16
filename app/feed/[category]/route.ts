@@ -28,7 +28,8 @@ function toAbsoluteUrl(url: string | null | undefined): string | null {
  * Category RSS Feeds
  * RSS 2.0 compliant feeds for each blog category
  */
-export async function GET(request: Request, { params }: { params: { category: string } }) {
+export async function GET(request: Request, props: { params: Promise<{ category: string }> }) {
+  const params = await props.params;
   try {
     const categorySlug = decodeURIComponent(params.category);
 

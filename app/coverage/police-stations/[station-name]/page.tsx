@@ -114,18 +114,19 @@ const STATIONS: Record<string, {
 };
 
 interface PageProps {
-  params: {
+  params: Promise<{
     'station-name': string;
-  };
+  }>;
 }
 
 function getStationData(stationName: string) {
   return STATIONS[stationName];
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params;
   const station = getStationData(params['station-name']);
-  
+
   if (!station) {
     return {
       title: 'Police Station Not Found',
@@ -133,13 +134,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://policestationagent.com';
-  
+
   const custodyDescription = station.custodyType === '24-hour Custody' 
     ? '24-hour custody facility' 
     : station.custodyType === 'Voluntary Interviews Only' 
       ? 'Voluntary interview station' 
       : 'Tactical operations base';
-  
+
   return {
     title: `${station.name} Police Station - Police Station Coverage`,
     description: `Information about ${station.name} Police Station. ${custodyDescription}. Located in ${station.areaCovered}. Criminal defence representation available.`,
@@ -182,7 +183,8 @@ function getAreaLink(areaCovered: string): string {
   return areaMap[areaCovered] || areaCovered.toLowerCase().replace(/\s+/g, '-');
 }
 
-export default function PoliceStationPage({ params }: PageProps) {
+export default async function PoliceStationPage(props: PageProps) {
+  const params = await props.params;
   const station = getStationData(params['station-name']);
 
   if (!station) {

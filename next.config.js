@@ -8,8 +8,6 @@ const nextConfig = {
   compress: true,
   // Production optimizations
   productionBrowserSourceMaps: false,
-  // Performance: Enable SWC minification (faster and better compression)
-  swcMinify: true,
   // Compiler optimizations for better performance
   compiler: {
     // Remove console logs in production
@@ -24,8 +22,6 @@ const nextConfig = {
   experimental: {
     // Optimize package imports
     optimizePackageImports: ["lucide-react"],
-    // Required on Next 14 to enable instrumentation.ts (Sentry + env validation)
-    instrumentationHook: true,
   },
   // Performance: Optimize package imports for smaller bundles
   modularizeImports: {

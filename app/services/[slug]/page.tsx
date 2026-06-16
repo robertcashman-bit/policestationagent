@@ -7,12 +7,13 @@ import db from "@/lib/db";
 import type { Metadata } from "next";
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params;
   const service = db.prepare("SELECT * FROM services WHERE slug = ?").get(params.slug) as
     | {
         title: string;
@@ -37,7 +38,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default function ServicePage({ params }: PageProps) {
+export default async function ServicePage(props: PageProps) {
+  const params = await props.params;
   const service = db.prepare("SELECT * FROM services WHERE slug = ?").get(params.slug) as
     | {
         id: number;
