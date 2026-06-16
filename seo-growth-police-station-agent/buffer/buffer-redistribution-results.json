@@ -1,0 +1,778 @@
+{
+  "organizationId": "69d26bdf0f822245c9a723c4",
+  "executedAt": "2026-06-16T06:53:41.256Z",
+  "movesPlanned": 145,
+  "moved": [
+    {
+      "oldId": "6a2e7a9961b0aab8c165e859",
+      "newId": "6a30504c59ca4a5050e36c32",
+      "dueAt": "2026-06-22T11:45:00.000Z",
+      "fromChannelId": "69d26c06031bfa423cd0c50d",
+      "to": "Police Station Agent (Facebook)",
+      "toChannelId": "6a304bd938b55793459b4255"
+    },
+    {
+      "oldId": "6a2e7a9acaa57c982020f2b6",
+      "newId": "6a30504fecd98441ea966015",
+      "dueAt": "2026-06-22T16:30:00.000Z",
+      "fromChannelId": "69d26c8b031bfa423cd0c8b7",
+      "to": "Police Station Agent (LinkedIn)",
+      "toChannelId": "69d26c06031bfa423cd0c50d"
+    },
+    {
+      "oldId": "6a2e7a9b699f807eb307c0a4",
+      "newId": "6a305055435f2edc32c3e91a",
+      "dueAt": "2026-06-23T08:15:00.000Z",
+      "fromChannelId": "69d26c3d031bfa423cd0c6b3",
+      "to": "Criminal Solicitor (Facebook)",
+      "toChannelId": "6a304bd838b55793459b4247"
+    },
+    {
+      "oldId": "6a2e8bf761b0aab8c16638ed",
+      "newId": "6a305057ecd98441ea96604e",
+      "dueAt": "2026-06-23T11:30:00.000Z",
+      "fromChannelId": "69d26c3d031bfa423cd0c6b3",
+      "to": "Robert Cashman (Facebook)",
+      "toChannelId": "6a304bd838b55793459b4248"
+    },
+    {
+      "oldId": "6a2e7a9ccbbe21946a37f99f",
+      "newId": "6a30505a6b4deb23f0227bd3",
+      "dueAt": "2026-06-23T11:45:00.000Z",
+      "fromChannelId": "69d26c06031bfa423cd0c50d",
+      "to": "Policestationrepuk (Facebook)",
+      "toChannelId": "6a304bd938b55793459b4254"
+    },
+    {
+      "oldId": "6a2ef40888e56947beb8e42c",
+      "newId": "6a30505d435f2edc32c3e95c",
+      "dueAt": "2026-06-23T15:38:00.000Z",
+      "fromChannelId": "69d26c06031bfa423cd0c50d",
+      "to": "Police Station Agent (Facebook)",
+      "toChannelId": "6a304bd938b55793459b4255"
+    },
+    {
+      "oldId": "6a2e7a9d173b697c8a911c8e",
+      "newId": "6a30505f83fef8f23a6ee638",
+      "dueAt": "2026-06-23T16:30:00.000Z",
+      "fromChannelId": "69d26c8b031bfa423cd0c8b7",
+      "to": "Police Station Agent (LinkedIn)",
+      "toChannelId": "69d26c06031bfa423cd0c50d"
+    },
+    {
+      "oldId": "6a2e7acccbbe21946a37fb31",
+      "newId": "6a30506359ca4a5050e36d12",
+      "dueAt": "2026-06-24T08:30:00.000Z",
+      "fromChannelId": "69d26c3d031bfa423cd0c6b3",
+      "to": "Criminal Solicitor (Facebook)",
+      "toChannelId": "6a304bd838b55793459b4247"
+    },
+    {
+      "oldId": "6a2e7acb173b697c8a911e3d",
+      "newId": "6a3050666c33ab6ea074d92e",
+      "dueAt": "2026-06-24T08:30:00.000Z",
+      "fromChannelId": "69d26c06031bfa423cd0c50d",
+      "to": "Robert Cashman (Facebook)",
+      "toChannelId": "6a304bd838b55793459b4248"
+    },
+    {
+      "oldId": "6a2e7a9ecbbe21946a37f9c3",
+      "newId": "6a3050686b4deb23f0227c14",
+      "dueAt": "2026-06-24T11:45:00.000Z",
+      "fromChannelId": "69d26c06031bfa423cd0c50d",
+      "to": "Policestationrepuk (Facebook)",
+      "toChannelId": "6a304bd938b55793459b4254"
+    },
+    {
+      "oldId": "6a2e7a9f699f807eb307c0c7",
+      "newId": "6a30506b6c33ab6ea074d977",
+      "dueAt": "2026-06-24T16:30:00.000Z",
+      "fromChannelId": "69d26c8b031bfa423cd0c8b7",
+      "to": "Police Station Agent (Facebook)",
+      "toChannelId": "6a304bd938b55793459b4255"
+    },
+    {
+      "oldId": "6a2e7aa061b0aab8c165e880",
+      "newId": "6a30506d83fef8f23a6ee6ea",
+      "dueAt": "2026-06-25T08:15:00.000Z",
+      "fromChannelId": "69d26c3d031bfa423cd0c6b3",
+      "to": "Police Station Agent (LinkedIn)",
+      "toChannelId": "69d26c06031bfa423cd0c50d"
+    },
+    {
+      "oldId": "6a2fa48b699f807eb30e9b1e",
+      "newId": null,
+      "dueAt": "2026-06-15T20:30:00.000Z",
+      "fromChannelId": "69d26c3d031bfa423cd0c6b3",
+      "to": "Police Station Agent (GBP)",
+      "toChannelId": "69d26c8b031bfa423cd0c8b7",
+      "note": "moved in session; newId not captured before rate limit"
+    },
+    {
+      "oldId": "6a2e7aa1173b697c8a911cb2",
+      "newId": null,
+      "dueAt": "2026-06-25T11:45:00.000Z",
+      "fromChannelId": "69d26c06031bfa423cd0c50d",
+      "to": "Policestationag (Twitter)",
+      "toChannelId": "69d26c3d031bfa423cd0c6b3",
+      "note": "moved in session; newId not captured before rate limit"
+    },
+    {
+      "oldId": "6a2e7aa2173b697c8a911cd6",
+      "newId": null,
+      "dueAt": "2026-06-26T08:15:00.000Z",
+      "fromChannelId": "69d26c3d031bfa423cd0c6b3",
+      "to": "Criminal Solicitor (Facebook)",
+      "toChannelId": "6a304bd838b55793459b4247",
+      "note": "moved in session; newId not captured before rate limit"
+    },
+    {
+      "oldId": "6a2f003e699f807eb30a7e4c",
+      "newId": "6a30eecd0cf8c4f5e8374a66",
+      "dueAt": "2026-06-17T15:03:00.000Z",
+      "fromChannelId": "69d26c06031bfa423cd0c50d",
+      "to": "Police Station Agent (GBP)",
+      "toChannelId": "69d26c8b031bfa423cd0c8b7"
+    },
+    {
+      "oldId": "6a2f004c824a5ebfe36ba182",
+      "newId": "6a30eecfa79b60b5253b2363",
+      "dueAt": "2026-06-21T21:11:00.000Z",
+      "fromChannelId": "69d26c06031bfa423cd0c50d",
+      "to": "Police Station Agent (GBP)",
+      "toChannelId": "69d26c8b031bfa423cd0c8b7"
+    },
+    {
+      "oldId": "6a2ef40561b0aab8c1686dbd",
+      "newId": "6a30eed30872a9814e957784",
+      "dueAt": "2026-06-22T20:19:00.000Z",
+      "fromChannelId": "69d26c06031bfa423cd0c50d",
+      "to": "Policestationag (Twitter)",
+      "toChannelId": "69d26c3d031bfa423cd0c6b3"
+    },
+    {
+      "oldId": "6a2ef407173b697c8a93c022",
+      "newId": "6a30eed67d66e36a74853a1d",
+      "dueAt": "2026-06-22T21:04:00.000Z",
+      "fromChannelId": "69d26c06031bfa423cd0c50d",
+      "to": "Police Station Agent (GBP)",
+      "toChannelId": "69d26c8b031bfa423cd0c8b7"
+    },
+    {
+      "oldId": "6a2e8deccbbe21946a38549f",
+      "newId": "6a30eed80cf8c4f5e8374ab6",
+      "dueAt": "2026-06-24T08:30:00.000Z",
+      "fromChannelId": "69d26c06031bfa423cd0c50d",
+      "to": "Police Station Agent (GBP)",
+      "toChannelId": "69d26c8b031bfa423cd0c8b7"
+    },
+    {
+      "oldId": "6a2ec1a0699f807eb3092c1d",
+      "newId": "6a30eeda0872a9814e9577c5",
+      "dueAt": "2026-06-26T08:30:00.000Z",
+      "fromChannelId": "69d26c06031bfa423cd0c50d",
+      "to": "Robert Cashman (Facebook)",
+      "toChannelId": "6a304bd838b55793459b4248"
+    },
+    {
+      "oldId": "6a2e7ace61b0aab8c165ea4f",
+      "newId": "6a30eedd87285a0f08b524f9",
+      "dueAt": "2026-06-26T08:30:00.000Z",
+      "fromChannelId": "69d26c3d031bfa423cd0c6b3",
+      "to": "Policestationrepuk (Facebook)",
+      "toChannelId": "6a304bd938b55793459b4254"
+    },
+    {
+      "oldId": "6a2e7acd61b0aab8c165ea2b",
+      "newId": "6a30eedfa79b60b5253b23df",
+      "dueAt": "2026-06-26T08:30:00.000Z",
+      "fromChannelId": "69d26c06031bfa423cd0c50d",
+      "to": "Police Station Agent (Facebook)",
+      "toChannelId": "6a304bd938b55793459b4255"
+    },
+    {
+      "oldId": "6a2e7aa4caa57c982020f2fd",
+      "newId": "6a30eee287285a0f08b52528",
+      "dueAt": "2026-06-26T16:30:00.000Z",
+      "fromChannelId": "69d26c8b031bfa423cd0c8b7",
+      "to": "Policestationag (Twitter)",
+      "toChannelId": "69d26c3d031bfa423cd0c6b3"
+    },
+    {
+      "oldId": "6a2e7aa5173b697c8a911cfa",
+      "newId": "6a30eee40872a9814e9578a9",
+      "dueAt": "2026-06-27T08:15:00.000Z",
+      "fromChannelId": "69d26c3d031bfa423cd0c6b3",
+      "to": "Police Station Agent (GBP)",
+      "toChannelId": "69d26c8b031bfa423cd0c8b7"
+    },
+    {
+      "oldId": "6a2e7aa5cbbe21946a37f9e7",
+      "newId": "6a30eee7a79b60b5253b2451",
+      "dueAt": "2026-06-27T11:45:00.000Z",
+      "fromChannelId": "69d26c06031bfa423cd0c50d",
+      "to": "Criminal Solicitor (Facebook)",
+      "toChannelId": "6a304bd838b55793459b4247"
+    },
+    {
+      "oldId": "6a2e7aa6caa57c982020f320",
+      "newId": "6a30eee987285a0f08b52571",
+      "dueAt": "2026-06-27T16:30:00.000Z",
+      "fromChannelId": "69d26c8b031bfa423cd0c8b7",
+      "to": "Robert Cashman (Facebook)",
+      "toChannelId": "6a304bd838b55793459b4248"
+    },
+    {
+      "oldId": "6a2e7aa761b0aab8c165e8df",
+      "newId": "6a30eeecf84463e7e52d1643",
+      "dueAt": "2026-06-28T08:15:00.000Z",
+      "fromChannelId": "69d26c3d031bfa423cd0c6b3",
+      "to": "Policestationrepuk (Facebook)",
+      "toChannelId": "6a304bd938b55793459b4254"
+    },
+    {
+      "oldId": "6a2e7acf699f807eb307c2d6",
+      "newId": "6a30eeeea79b60b5253b249a",
+      "dueAt": "2026-06-28T08:30:00.000Z",
+      "fromChannelId": "69d26c3d031bfa423cd0c6b3",
+      "to": "Police Station Agent (Facebook)",
+      "toChannelId": "6a304bd938b55793459b4255"
+    },
+    {
+      "oldId": "6a2e7aa8699f807eb307c127",
+      "newId": "6a30eef17d66e36a74853afb",
+      "dueAt": "2026-06-28T11:45:00.000Z",
+      "fromChannelId": "69d26c06031bfa423cd0c50d",
+      "to": "Policestationag (Twitter)",
+      "toChannelId": "69d26c3d031bfa423cd0c6b3"
+    },
+    {
+      "oldId": "6a2e7aaa88e56947beb65317",
+      "newId": "6a30eef30cf8c4f5e8374b72",
+      "dueAt": "2026-06-29T08:15:00.000Z",
+      "fromChannelId": "69d26c3d031bfa423cd0c6b3",
+      "to": "Criminal Solicitor (Facebook)",
+      "toChannelId": "6a304bd838b55793459b4247"
+    },
+    {
+      "oldId": "6a2e7aaa88e56947beb6533b",
+      "newId": "6a30eef60cf8c4f5e8374b96",
+      "dueAt": "2026-06-29T11:45:00.000Z",
+      "fromChannelId": "69d26c06031bfa423cd0c50d",
+      "to": "Robert Cashman (Facebook)",
+      "toChannelId": "6a304bd838b55793459b4248"
+    },
+    {
+      "oldId": "6a2e7aab173b697c8a911d1d",
+      "newId": "6a30ef31a79b60b5253b2665",
+      "dueAt": "2026-06-29T16:30:00.000Z",
+      "fromChannelId": "69d26c8b031bfa423cd0c8b7",
+      "to": "Policestationrepuk (Facebook)",
+      "toChannelId": "6a304bd938b55793459b4254"
+    },
+    {
+      "oldId": "6a2e7aac173b697c8a911d41",
+      "newId": "6a30ef33a79b60b5253b2689",
+      "dueAt": "2026-06-30T08:15:00.000Z",
+      "fromChannelId": "69d26c3d031bfa423cd0c6b3",
+      "to": "Police Station Agent (Facebook)",
+      "toChannelId": "6a304bd938b55793459b4255"
+    },
+    {
+      "oldId": "6a2e7aadcbbe21946a37fa10",
+      "newId": "6a30ef38f84463e7e52d17c5",
+      "dueAt": "2026-06-30T11:45:00.000Z",
+      "fromChannelId": "69d26c06031bfa423cd0c50d",
+      "to": "Police Station Agent (GBP)",
+      "toChannelId": "69d26c8b031bfa423cd0c8b7"
+    },
+    {
+      "oldId": "6a2e7aaecaa57c982020f364",
+      "newId": "6a30ef3a87285a0f08b5279a",
+      "dueAt": "2026-06-30T16:30:00.000Z",
+      "fromChannelId": "69d26c8b031bfa423cd0c8b7",
+      "to": "Criminal Solicitor (Facebook)",
+      "toChannelId": "6a304bd838b55793459b4247"
+    },
+    {
+      "oldId": "6a2e7aaf699f807eb307c160",
+      "newId": "6a30ef3da79b60b5253b26b4",
+      "dueAt": "2026-07-01T08:15:00.000Z",
+      "fromChannelId": "69d26c3d031bfa423cd0c6b3",
+      "to": "Robert Cashman (Facebook)",
+      "toChannelId": "6a304bd838b55793459b4248"
+    },
+    {
+      "oldId": "6a2ec1a088e56947beb7bf05",
+      "newId": "6a30ef3f7d66e36a74853f98",
+      "dueAt": "2026-07-01T08:30:00.000Z",
+      "fromChannelId": "69d26c06031bfa423cd0c50d",
+      "to": "Policestationrepuk (Facebook)",
+      "toChannelId": "6a304bd938b55793459b4254"
+    },
+    {
+      "oldId": "6a2e7ab061b0aab8c165e90d",
+      "newId": "6a30ef4287285a0f08b527e3",
+      "dueAt": "2026-07-01T11:45:00.000Z",
+      "fromChannelId": "69d26c06031bfa423cd0c50d",
+      "to": "Police Station Agent (Facebook)",
+      "toChannelId": "6a304bd938b55793459b4255"
+    },
+    {
+      "oldId": "6a2e7ab061b0aab8c165e930",
+      "newId": "6a30ef447d66e36a74853ff8",
+      "dueAt": "2026-07-01T16:30:00.000Z",
+      "fromChannelId": "69d26c8b031bfa423cd0c8b7",
+      "to": "Police Station Agent (LinkedIn)",
+      "toChannelId": "69d26c06031bfa423cd0c50d"
+    },
+    {
+      "oldId": "6a2e7ad3173b697c8a911e85",
+      "newId": "6a30ef460872a9814e957aae",
+      "dueAt": "2026-07-02T08:30:00.000Z",
+      "fromChannelId": "69d26c3d031bfa423cd0c6b3",
+      "to": "Police Station Agent (GBP)",
+      "toChannelId": "69d26c8b031bfa423cd0c8b7"
+    },
+    {
+      "oldId": "6a2e7ad2173b697c8a911e61",
+      "newId": "6a30ef4987285a0f08b5287a",
+      "dueAt": "2026-07-02T08:30:00.000Z",
+      "fromChannelId": "69d26c06031bfa423cd0c50d",
+      "to": "Criminal Solicitor (Facebook)",
+      "toChannelId": "6a304bd838b55793459b4247"
+    },
+    {
+      "oldId": "6a2e7ab2173b697c8a911d65",
+      "newId": "6a30ef4ca79b60b5253b27be",
+      "dueAt": "2026-07-02T11:45:00.000Z",
+      "fromChannelId": "69d26c06031bfa423cd0c50d",
+      "to": "Robert Cashman (Facebook)",
+      "toChannelId": "6a304bd838b55793459b4248"
+    },
+    {
+      "oldId": "6a2e7ab3caa57c982020f387",
+      "newId": "6a30ef4ef84463e7e52d18d1",
+      "dueAt": "2026-07-02T16:30:00.000Z",
+      "fromChannelId": "69d26c8b031bfa423cd0c8b7",
+      "to": "Policestationrepuk (Facebook)",
+      "toChannelId": "6a304bd938b55793459b4254"
+    },
+    {
+      "oldId": "6a2e7ab4cbbe21946a37fa7d",
+      "newId": "6a30ef51a79b60b5253b2806",
+      "dueAt": "2026-07-03T08:15:00.000Z",
+      "fromChannelId": "69d26c3d031bfa423cd0c6b3",
+      "to": "Police Station Agent (Facebook)",
+      "toChannelId": "6a304bd938b55793459b4255"
+    },
+    {
+      "oldId": "6a2e7ab561b0aab8c165e977",
+      "newId": "6a30ef530872a9814e957b2f",
+      "dueAt": "2026-07-03T16:30:00.000Z",
+      "fromChannelId": "69d26c8b031bfa423cd0c8b7",
+      "to": "Policestationag (Twitter)",
+      "toChannelId": "69d26c3d031bfa423cd0c6b3"
+    },
+    {
+      "oldId": "6a2e7ab688e56947beb65383",
+      "newId": "6a30ef567d66e36a748540b1",
+      "dueAt": "2026-07-04T08:15:00.000Z",
+      "fromChannelId": "69d26c3d031bfa423cd0c6b3",
+      "to": "Police Station Agent (GBP)",
+      "toChannelId": "69d26c8b031bfa423cd0c8b7"
+    },
+    {
+      "oldId": "6a2e7ad4caa57c982020f4bf",
+      "newId": "6a30ef580872a9814e957b5d",
+      "dueAt": "2026-07-04T08:30:00.000Z",
+      "fromChannelId": "69d26c3d031bfa423cd0c6b3",
+      "to": "Criminal Solicitor (Facebook)",
+      "toChannelId": "6a304bd838b55793459b4247"
+    },
+    {
+      "oldId": "6a2e7ad4caa57c982020f49a",
+      "newId": "6a30ef5b7d66e36a748540f3",
+      "dueAt": "2026-07-04T08:30:00.000Z",
+      "fromChannelId": "69d26c06031bfa423cd0c50d",
+      "to": "Robert Cashman (Facebook)",
+      "toChannelId": "6a304bd838b55793459b4248"
+    },
+    {
+      "oldId": "6a2e7ab7699f807eb307c1a8",
+      "newId": "6a30ef5da79b60b5253b2860",
+      "dueAt": "2026-07-04T11:45:00.000Z",
+      "fromChannelId": "69d26c06031bfa423cd0c50d",
+      "to": "Policestationrepuk (Facebook)",
+      "toChannelId": "6a304bd938b55793459b4254"
+    },
+    {
+      "oldId": "6a2e7ab788e56947beb653a6",
+      "newId": "6a30ef5fa79b60b5253b2884",
+      "dueAt": "2026-07-04T16:30:00.000Z",
+      "fromChannelId": "69d26c8b031bfa423cd0c8b7",
+      "to": "Police Station Agent (Facebook)",
+      "toChannelId": "6a304bd938b55793459b4255"
+    },
+    {
+      "oldId": "6a2e7ab8caa57c982020f3b1",
+      "newId": "6a30ef620cf8c4f5e8374e07",
+      "dueAt": "2026-07-05T08:15:00.000Z",
+      "fromChannelId": "69d26c3d031bfa423cd0c6b3",
+      "to": "Police Station Agent (LinkedIn)",
+      "toChannelId": "69d26c06031bfa423cd0c50d"
+    },
+    {
+      "oldId": "6a2e7ab9cbbe21946a37faa1",
+      "newId": "6a30ef6487285a0f08b52946",
+      "dueAt": "2026-07-05T11:45:00.000Z",
+      "fromChannelId": "69d26c06031bfa423cd0c50d",
+      "to": "Policestationag (Twitter)",
+      "toChannelId": "69d26c3d031bfa423cd0c6b3"
+    },
+    {
+      "oldId": "6a2e7abbcbbe21946a37fac5",
+      "newId": "6a30ef6787285a0f08b5296a",
+      "dueAt": "2026-07-06T08:15:00.000Z",
+      "fromChannelId": "69d26c3d031bfa423cd0c6b3",
+      "to": "Criminal Solicitor (Facebook)",
+      "toChannelId": "6a304bd838b55793459b4247"
+    },
+    {
+      "oldId": "6a2ec1a1173b697c8a92938d",
+      "newId": "6a30ef69f84463e7e52d19b8",
+      "dueAt": "2026-07-06T08:30:00.000Z",
+      "fromChannelId": "69d26c06031bfa423cd0c50d",
+      "to": "Robert Cashman (Facebook)",
+      "toChannelId": "6a304bd838b55793459b4248"
+    },
+    {
+      "oldId": "6a2e7ad6cbbe21946a37fb79",
+      "newId": "6a30ef6bf84463e7e52d19dc",
+      "dueAt": "2026-07-06T08:30:00.000Z",
+      "fromChannelId": "69d26c3d031bfa423cd0c6b3",
+      "to": "Policestationrepuk (Facebook)",
+      "toChannelId": "6a304bd938b55793459b4254"
+    },
+    {
+      "oldId": "6a2e7ac2caa57c982020f40d",
+      "newId": "6a30f2d0f84463e7e52d2f15",
+      "dueAt": "2026-07-09T08:15:00.000Z",
+      "fromChannelId": "69d26c3d031bfa423cd0c6b3",
+      "to": "Criminal Solicitor (Facebook)",
+      "toChannelId": "6a304bd838b55793459b4247"
+    },
+    {
+      "oldId": "6a2e7ac3cbbe21946a37fae9",
+      "newId": "6a30f2da7d66e36a7485583e",
+      "dueAt": "2026-07-09T11:45:00.000Z",
+      "fromChannelId": "69d26c06031bfa423cd0c50d",
+      "to": "Robert Cashman (Facebook)",
+      "toChannelId": "6a304bd838b55793459b4248"
+    },
+    {
+      "oldId": "6a2e7ac4caa57c982020f444",
+      "newId": "6a30f2e0f84463e7e52d2f39",
+      "dueAt": "2026-07-09T16:30:00.000Z",
+      "fromChannelId": "69d26c8b031bfa423cd0c8b7",
+      "to": "Policestationrepuk (Facebook)",
+      "toChannelId": "6a304bd938b55793459b4254"
+    },
+    {
+      "oldId": "6a2e7ea6173b697c8a913864",
+      "newId": "6a30f2e6f84463e7e52d2f88",
+      "dueAt": "2026-07-10T08:30:00.000Z",
+      "fromChannelId": "69d26c3d031bfa423cd0c6b3",
+      "to": "Police Station Agent (Facebook)",
+      "toChannelId": "6a304bd938b55793459b4255"
+    },
+    {
+      "oldId": "6a2ec1a388e56947beb7bf29",
+      "newId": "6a30f2ebf84463e7e52d2fac",
+      "dueAt": "2026-07-11T08:30:00.000Z",
+      "fromChannelId": "69d26c06031bfa423cd0c50d",
+      "to": "Policestationag (Twitter)",
+      "toChannelId": "69d26c3d031bfa423cd0c6b3"
+    },
+    {
+      "oldId": "6a2e7f5c699f807eb307df9f",
+      "newId": "6a30f2f10872a9814e959270",
+      "dueAt": "2026-07-12T08:30:00.000Z",
+      "fromChannelId": "69d26c3d031bfa423cd0c6b3",
+      "to": "Police Station Agent (GBP)",
+      "toChannelId": "69d26c8b031bfa423cd0c8b7"
+    }
+  ],
+  "failed": [],
+  "skipped": [
+    {
+      "postId": "6a2fa493699f807eb30e9be7",
+      "to": "Police Station Agent (LinkedIn)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2f003761b0aab8c1689b7a",
+      "to": "Policestationag (Twitter)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2fa490897a9080afa86091",
+      "to": "Criminal Solicitor (Facebook)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2f0038173b697c8a93f2ea",
+      "to": "Robert Cashman (Facebook)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2fa48561b0aab8c16cc56f",
+      "to": "Policestationrepuk (Facebook)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2fa491824a5ebfe36fb6ba",
+      "to": "Police Station Agent (Facebook)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2f8821824a5ebfe36e8f42",
+      "to": "Policestationag (Twitter)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2e7a8a88e56947beb6519c",
+      "to": "Criminal Solicitor (Facebook)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2ec19fcbbe21946a396902",
+      "to": "Robert Cashman (Facebook)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2e8bf261b0aab8c16638a5",
+      "to": "Policestationrepuk (Facebook)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2e7ac661b0aab8c165e9e3",
+      "to": "Police Station Agent (Facebook)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2e7a8bcaa57c982020f17b",
+      "to": "Policestationag (Twitter)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2f003c61b0aab8c1689bc9",
+      "to": "Criminal Solicitor (Facebook)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2e7a8bcbbe21946a37f8be",
+      "to": "Robert Cashman (Facebook)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2e7a8c88e56947beb651c2",
+      "to": "Policestationrepuk (Facebook)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2e8bf3699f807eb3081523",
+      "to": "Police Station Agent (Facebook)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2e7a8e173b697c8a911bee",
+      "to": "Criminal Solicitor (Facebook)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2e7a8f173b697c8a911c37",
+      "to": "Robert Cashman (Facebook)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2e8bf388e56947beb6aee0",
+      "to": "Policestationrepuk (Facebook)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2e7ac7699f807eb307c22a",
+      "to": "Police Station Agent (Facebook)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2e7ac761b0aab8c165ea07",
+      "to": "Police Station Agent (LinkedIn)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2e7a8fcbbe21946a37f918",
+      "to": "Policestationag (Twitter)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2f0041caa57c982023a949",
+      "to": "Criminal Solicitor (Facebook)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2f0042897a9080afa44305",
+      "to": "Robert Cashman (Facebook)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2e7a9161b0aab8c165e7ee",
+      "to": "Policestationrepuk (Facebook)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2e7a92173b697c8a911c5f",
+      "to": "Police Station Agent (Facebook)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2f004461b0aab8c1689c11",
+      "to": "Policestationag (Twitter)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2f0049173b697c8a93f37f",
+      "to": "Criminal Solicitor (Facebook)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2e7a94cbbe21946a37f958",
+      "to": "Robert Cashman (Facebook)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2e8bf761b0aab8c16638c9",
+      "to": "Policestationrepuk (Facebook)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2e7ac988e56947beb65411",
+      "to": "Police Station Agent (Facebook)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2e7a9488e56947beb6522a",
+      "to": "Policestationag (Twitter)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2f004acaa57c982023a991",
+      "to": "Criminal Solicitor (Facebook)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2f004b824a5ebfe36ba14a",
+      "to": "Robert Cashman (Facebook)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2e7a96caa57c982020f293",
+      "to": "Policestationrepuk (Facebook)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2ec1a0699f807eb3092bf9",
+      "to": "Police Station Agent (Facebook)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2e7a98cbbe21946a37f97b",
+      "to": "Policestationag (Twitter)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2e7a9988e56947beb65266",
+      "to": "Criminal Solicitor (Facebook)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2e7acb88e56947beb65435",
+      "to": "Robert Cashman (Facebook)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2f003c61b0aab8c1689b9e",
+      "to": "Police Station Agent (GBP)",
+      "reason": "deletePost not allowed"
+    },
+    {
+      "postId": "6a2f003dcaa57c982023a911",
+      "to": "Policestationag (Twitter)",
+      "reason": "deletePost not allowed"
+    },
+    {
+      "postId": "6a2e7aca173b697c8a911e19",
+      "to": "Policestationrepuk (Facebook)",
+      "reason": "duplicate_slot_same_time"
+    },
+    {
+      "postId": "6a2e7ad188e56947beb6547d",
+      "to": "Police Station Agent (LinkedIn)",
+      "reason": "duplicate_slot_same_time"
+    },
+    {
+      "postId": "6a2e7ad088e56947beb65459",
+      "to": "Policestationag (Twitter)",
+      "reason": "duplicate_slot_same_time"
+    },
+    {
+      "postId": "6a2e7ad5cbbe21946a37fb55",
+      "to": "Police Station Agent (Facebook)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2e7abc699f807eb307c1cb",
+      "to": "Policestationag (Twitter)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2e7abd61b0aab8c165e9bf",
+      "to": "Police Station Agent (GBP)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2e7abe699f807eb307c1ef",
+      "to": "Criminal Solicitor (Facebook)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2e7abf88e56947beb653c9",
+      "to": "Robert Cashman (Facebook)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2e7ac0173b697c8a911dd2",
+      "to": "Policestationrepuk (Facebook)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2e7ad8cbbe21946a37fb9d",
+      "to": "Police Station Agent (Facebook)",
+      "reason": "post not found (already moved or deleted)"
+    },
+    {
+      "postId": "6a2e7ac188e56947beb653ed",
+      "to": "Policestationag (Twitter)",
+      "reason": "post not found (already moved or deleted)"
+    }
+  ],
+  "status": "partial",
+  "summary": {
+    "moved": 62,
+    "failed": 0,
+    "skipped": 52,
+    "remaining": 31,
+    "pendingRetry": 0
+  },
+  "rateLimitNote": "Buffer wants 1333min wait — re-run: node scripts/execute-buffer-redistribution-plan.mjs --resume"
+}
