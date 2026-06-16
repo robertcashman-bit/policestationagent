@@ -1,11 +1,11 @@
 # Firm outreach — shared package
 
-Firm-outreach logic now lives in **`@robertcashman/firm-outreach-core`** (`../shared-packages/packages/firm-outreach-core`).
+Firm-outreach logic lives in **`@robertcashman/firm-outreach-core`** (`packages/firm-outreach-core`, vendored from [shared-packages](https://github.com/robertcashman-bit/shared-packages)).
 
 ## Workflow
 
-1. Edit shared code in `shared-packages/packages/firm-outreach-core/src/`.
-2. `cd ../shared-packages/packages/firm-outreach-core && npm run build`
+1. Edit shared code in the canonical `shared-packages` repo, then copy into `packages/firm-outreach-core/` here (or edit in place and backport).
+2. `cd packages/firm-outreach-core && npm run build`
 3. Site-specific copy/templates stay in `lib/firm-outreach/site-config.ts`, `templates.ts`, `send.ts`, etc.
 4. Run `npm test` in **both** policestationagent and Policestationrepuk.
 

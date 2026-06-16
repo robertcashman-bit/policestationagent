@@ -53,8 +53,8 @@
     "test:e2e:firm-outreach": "playwright test e2e/firm-outreach.spec.ts"
   },
   "dependencies": {
-    "@robertcashman/firm-outreach-core": "file:./shared-packages/packages/firm-outreach-core",
-    "@robertcashman/seo-growth-content": "file:./shared-packages/packages/seo-growth-content",
+    "@robertcashman/firm-outreach-core": "file:./packages/firm-outreach-core",
+    "@robertcashman/seo-growth-content": "file:./packages/seo-growth-content",
     "@sentry/nextjs": "^10.58.0",
     "@upstash/redis": "^1.38.0",
     "@vercel/speed-insights": "^1.2.0",
