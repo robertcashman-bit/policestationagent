@@ -1,15 +1,19 @@
 import ScrapedHtmlPage from "@/components/ScrapedHtmlPage";
 import type { Metadata } from "next";
 
+const TITLE = "Expert Police Station Representation in Kent | Police Station Agent";
+const DESCRIPTION =
+  "Free, independent legal advice and representation for anyone facing a police interview across Kent. Available for arrests and voluntary interviews, led by criminal solicitor Robert Cashman.";
+
 export const metadata: Metadata = {
-  title: "Police Station Agent",
-  description: "",
+  title: TITLE,
+  description: DESCRIPTION,
   alternates: {
     canonical: "https://policestationagent.com/policestationreps",
   },
   openGraph: {
-    title: "Police Station Agent",
-    description: "",
+    title: TITLE,
+    description: DESCRIPTION,
     type: "website",
     url: "https://policestationagent.com/policestationreps",
   },

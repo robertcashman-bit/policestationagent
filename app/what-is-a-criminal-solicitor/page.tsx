@@ -2,15 +2,19 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 
+const TITLE = "What Is a Criminal Solicitor? | Police Station Agent";
+const DESCRIPTION =
+  "A criminal solicitor is a fully qualified lawyer who defends people accused of criminal offences. Learn how a solicitor differs from a police station rep and why early involvement matters.";
+
 export const metadata: Metadata = {
-  title: "Police Station Agent",
-  description: "",
+  title: TITLE,
+  description: DESCRIPTION,
   alternates: {
     canonical: "https://policestationagent.com/what-is-a-criminal-solicitor",
   },
   openGraph: {
-    title: "Police Station Agent",
-    description: "",
+    title: TITLE,
+    description: DESCRIPTION,
     url: "https://policestationagent.com/what-is-a-criminal-solicitor",
     siteName: "Police Station Agent",
     type: "website",

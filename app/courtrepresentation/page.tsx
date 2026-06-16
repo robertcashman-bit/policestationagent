@@ -2,15 +2,19 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 
+const TITLE = "Court Representation in Kent | Police Station Agent";
+const DESCRIPTION =
+  "Expert court advocacy in the Magistrates' and Crown Court through a close professional partnership with Tuckers Solicitors LLP, with a seamless handover from the police station stage.";
+
 export const metadata: Metadata = {
-  title: "Police Station Agent",
-  description: "",
+  title: TITLE,
+  description: DESCRIPTION,
   alternates: {
     canonical: "https://policestationagent.com/courtrepresentation",
   },
   openGraph: {
-    title: "Police Station Agent",
-    description: "",
+    title: TITLE,
+    description: DESCRIPTION,
     url: "https://policestationagent.com/courtrepresentation",
     siteName: "Police Station Agent",
     type: "website",

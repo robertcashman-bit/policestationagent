@@ -1,15 +1,19 @@
 import ScrapedHtmlPage from "@/components/ScrapedHtmlPage";
 import type { Metadata } from "next";
 
+const TITLE = "Police Station Rep Cover for Solicitors | Police Station Agent";
+const DESCRIPTION =
+  "Reliable, professional police station representation cover for criminal law firms across Kent and beyond. Single instructions, contract cover and extended-hours support with detailed attendance notes.";
+
 export const metadata: Metadata = {
-  title: "Police Station Agent",
-  description: "",
+  title: TITLE,
+  description: DESCRIPTION,
   alternates: {
     canonical: "https://policestationagent.com/repcover",
   },
   openGraph: {
-    title: "Police Station Agent",
-    description: "",
+    title: TITLE,
+    description: DESCRIPTION,
     type: "website",
     url: "https://policestationagent.com/repcover",
   },

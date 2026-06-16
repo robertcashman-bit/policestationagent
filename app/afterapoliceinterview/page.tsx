@@ -1,17 +1,26 @@
 import ScrapedHtmlPage from "@/components/ScrapedHtmlPage";
 import type { Metadata } from "next";
 
+// This legacy non-hyphenated URL is permanently redirected to
+// /after-a-police-interview in next.config.js. The metadata below points the
+// canonical at the hyphenated URL and marks the page noindex as defense-in-depth
+// in case the redirect is ever removed.
+const TITLE = "After a Police Interview: What Happens Next? | Police Station Agent";
+const DESCRIPTION =
+  "No further action, released under investigation, pre-charge bail or charge — understand the possible outcomes after a police interview and get expert advice across Kent.";
+
 export const metadata: Metadata = {
-  title: "Police Station Agent",
-  description: "",
+  title: TITLE,
+  description: DESCRIPTION,
+  robots: { index: false, follow: true },
   alternates: {
-    canonical: "https://policestationagent.com/afterapoliceinterview",
+    canonical: "https://policestationagent.com/after-a-police-interview",
   },
   openGraph: {
-    title: "Police Station Agent",
-    description: "",
+    title: TITLE,
+    description: DESCRIPTION,
     type: "website",
-    url: "https://policestationagent.com/afterapoliceinterview",
+    url: "https://policestationagent.com/after-a-police-interview",
   },
 };
 

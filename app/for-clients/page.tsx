@@ -10,8 +10,9 @@ export const metadata: Metadata = {
     canonical: "https://policestationagent.com/ServicesForClients",
   },
   openGraph: {
-    title: "\n   Police Station Agent\n  ",
-    description: "",
+    title: "Services for Clients | Police Station Agent",
+    description:
+      "Expert legal representation at suspect interviews across Kent. Free legal aid available. Contact us extended hours for prompt assistance.",
     type: "website",
     url: "https://policestationagent.com/for-clients",
   },

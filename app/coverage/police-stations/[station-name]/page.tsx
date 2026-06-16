@@ -3,7 +3,7 @@ import Footer from '@/components/Footer';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import { BreadcrumbList } from '@/components/StructuredData';
+import { BreadcrumbList, PlaceSchema } from '@/components/StructuredData';
 
 // Station data - factual information only
 const STATIONS: Record<string, {
@@ -203,6 +203,13 @@ export default function PoliceStationPage({ params }: PageProps) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
       <BreadcrumbList items={breadcrumbItems} />
+      <PlaceSchema
+        name={`${station.name} Police Station`}
+        address={station.address}
+        url={`${siteUrl}/coverage/police-stations/${params['station-name']}`}
+        description={`${station.notes}. ${custodyExplanation}`}
+        areaServed={station.areaCovered}
+      />
       <Header />
       <main className="flex-grow relative" id="main-content" role="main" aria-live="polite">
         {/* Hero Section */}

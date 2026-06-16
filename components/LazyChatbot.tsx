@@ -9,8 +9,18 @@ const Chatbot = dynamic(() => import("./Chatbot"), {
 });
 
 /**
- * Defers loading the chatbot bundle until the user interacts or the browser is idle.
+ * Defers loading the chatbot bundle until the user actually engages with the
+ * page (first scroll, pointer, touch or keyboard input) or explicitly opens the
+ * chat. This avoids eagerly downloading the chatbot on page load, keeping it off
+ * the critical path for LCP/TBT on every page.
  */
+const ACTIVATION_EVENTS: Array<keyof WindowEventMap> = [
+  "scroll",
+  "pointerdown",
+  "keydown",
+  "touchstart",
+];
+
 export default function LazyChatbot() {
   const [loadChat, setLoadChat] = useState(false);
 
@@ -20,12 +30,19 @@ export default function LazyChatbot() {
 
   useEffect(() => {
     if (loadChat) return;
-    if (typeof window.requestIdleCallback === "function") {
-      const id = window.requestIdleCallback(() => setLoadChat(true), { timeout: 8000 });
-      return () => window.cancelIdleCallback(id);
+
+    const onInteraction = () => setLoadChat(true);
+    const options: AddEventListenerOptions = { passive: true, once: true };
+
+    for (const eventName of ACTIVATION_EVENTS) {
+      window.addEventListener(eventName, onInteraction, options);
     }
-    const t = window.setTimeout(() => setLoadChat(true), 8000);
-    return () => window.clearTimeout(t);
+
+    return () => {
+      for (const eventName of ACTIVATION_EVENTS) {
+        window.removeEventListener(eventName, onInteraction);
+      }
+    };
   }, [loadChat]);
 
   if (loadChat) {

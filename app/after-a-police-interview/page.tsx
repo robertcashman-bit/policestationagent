@@ -2,15 +2,19 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 
+const TITLE = "After a Police Interview: What Happens Next? | Police Station Agent";
+const DESCRIPTION =
+  "No further action, released under investigation, pre-charge bail or charge — understand the possible outcomes after a police interview and get expert advice across Kent.";
+
 export const metadata: Metadata = {
-  title: "Police Station Agent",
-  description: "",
+  title: TITLE,
+  description: DESCRIPTION,
   alternates: {
     canonical: "https://policestationagent.com/after-a-police-interview",
   },
   openGraph: {
-    title: "Police Station Agent",
-    description: "",
+    title: TITLE,
+    description: DESCRIPTION,
     url: "https://policestationagent.com/after-a-police-interview",
     siteName: "Police Station Agent",
     type: "website",
