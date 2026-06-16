@@ -1,6 +1,17 @@
 /** @type {import('next').NextConfig} */
+const path = require('path');
+const estateRoot = path.join(__dirname, '..');
+
 const nextConfig = {
   reactStrictMode: true,
+  transpilePackages: ['@robertcashman/firm-outreach-core'],
+  turbopack: {
+    root: estateRoot,
+    resolveAlias: {
+      '@robertcashman/firm-outreach-core':
+        '../shared-packages/packages/firm-outreach-core',
+    },
+  },
   // Enable clean URLs
   trailingSlash: false,
   // SEO optimization

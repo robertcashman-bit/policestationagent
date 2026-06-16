@@ -1,14 +1,12 @@
-# Firm outreach — keeping PSA and RepUK in sync
+# Firm outreach — shared package
 
-`lib/firm-outreach/` is duplicated between **policestationagent** (canonical) and **Policestationrepuk**. Fixes should land in PSA first, then sync to RepUK:
+Firm-outreach logic now lives in **`@robertcashman/firm-outreach-core`** (`../shared-packages/packages/firm-outreach-core`).
 
-```bash
-# Preview
-node scripts/sync-firm-outreach-to-repuk.mjs
+## Workflow
 
-# Apply (then commit in Policestationrepuk)
-node scripts/sync-firm-outreach-to-repuk.mjs --apply
-cd ../Policestationrepuk && git diff lib/firm-outreach
-```
+1. Edit shared code in `shared-packages/packages/firm-outreach-core/src/`.
+2. `cd ../shared-packages/packages/firm-outreach-core && npm run build`
+3. Site-specific copy/templates stay in `lib/firm-outreach/site-config.ts`, `templates.ts`, `send.ts`, etc.
+4. Run `npm test` in **both** policestationagent and Policestationrepuk.
 
-Long term, extract a private npm package or git submodule so both apps depend on one source tree.
+The old one-way sync script (`scripts/sync-firm-outreach-to-repuk.mjs`) is deprecated.
