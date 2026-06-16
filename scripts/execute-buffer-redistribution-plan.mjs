@@ -12,6 +12,13 @@
 import fs from "fs";
 import os from "os";
 import path from "path";
+import {
+  gbpLinkFromItem,
+  gbpPostText,
+  gbpSafeAssets,
+  googleBusinessMetadata,
+  rewriteUtm,
+} from "./lib/buffer-gbp.mjs";
 
 const ORG_ID = "69d26bdf0f822245c9a723c4";
 const API_URL = "https://api.buffer.com";
@@ -165,17 +172,6 @@ async function getPost(postId) {
   return data.post;
 }
 
-function rewriteUtm(text, utmSlug) {
-  return text.replace(/utm_campaign=([^&\s]+)/g, (_, campaign) => {
-    const base = campaign.replace(
-      /_(linkedin|twitter|googlebusiness|facebook[^&\s]*|facebook)$/i,
-      "",
-    );
-    const cleaned = base.replace(/_+$/, "");
-    return `utm_campaign=${cleaned}_${utmSlug}`;
-  });
-}
-
 function textForService(text, service) {
   if (service !== "twitter") return text;
   if (text.length <= 280) return text;
@@ -227,12 +223,10 @@ function metadataForService(service, sourceMetadata) {
     case "facebook":
       return { facebook: { type: "post" } };
     case "googlebusiness":
-      return {
-        google: {
-          type: "whats_new",
-          detailsWhatsNew: { button: "none" },
-        },
-      };
+      return googleBusinessMetadata({
+        url: gbpLinkFromItem({ text: sourceMetadata?.linkUrl || "" }),
+        utmSlug: "googlebusiness",
+      });
     case "linkedin":
       if (sourceMetadata?.linkAttachment?.url) {
         return {
@@ -257,7 +251,11 @@ function metadataForService(service, sourceMetadata) {
 }
 
 function buildCreateInput(exportPost, move, livePost) {
-  const text = textForService(rewriteUtm(exportPost.text, move.utmSlug), move.toService);
+  const rewritten = rewriteUtm(exportPost.text, move.utmSlug);
+  const text =
+    move.toService === "googlebusiness"
+      ? gbpPostText(rewritten, move.utmSlug)
+      : textForService(rewritten, move.toService);
   const schedulingType = livePost.schedulingType || move.schedulingType || "automatic";
   const mode = move.shareMode;
   const input = {
@@ -265,7 +263,7 @@ function buildCreateInput(exportPost, move, livePost) {
     text,
     schedulingType,
     mode,
-    assets: move.toService === "googlebusiness" ? [] : mapAssets(exportPost.assets),
+    assets: move.toService === "googlebusiness" ? gbpSafeAssets() : mapAssets(exportPost.assets),
   };
 
   if (mode === "customScheduled" && move.dueAt) {
@@ -275,7 +273,13 @@ function buildCreateInput(exportPost, move, livePost) {
   const tagIds = exportPost.tags?.map((t) => t.id).filter(Boolean);
   if (tagIds?.length) input.tagIds = tagIds;
 
-  const metadata = metadataForService(move.toService, exportPost.metadata);
+  const metadata =
+    move.toService === "googlebusiness"
+      ? googleBusinessMetadata({
+          url: gbpLinkFromItem({ text: exportPost.text }),
+          utmSlug: move.utmSlug,
+        })
+      : metadataForService(move.toService, exportPost.metadata);
   if (metadata) input.metadata = metadata;
 
   return input;

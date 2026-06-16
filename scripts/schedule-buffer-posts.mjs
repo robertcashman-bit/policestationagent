@@ -10,6 +10,13 @@
  */
 import fs from "fs";
 import path from "path";
+import {
+  gbpLinkFromItem,
+  gbpPostText,
+  gbpSafeAssets,
+  googleBusinessMetadata,
+  rewriteUtm,
+} from "./lib/buffer-gbp.mjs";
 
 const dryRun = process.argv.includes("--dry-run");
 const apiKey = process.env.BUFFER_API_KEY?.trim();
@@ -19,14 +26,6 @@ const forceChannelId =
 const DELAY_MS = Number(process.env.BUFFER_SCHEDULE_DELAY_MS ?? 1500);
 
 const ORG_ID = "69d26bdf0f822245c9a723c4";
-const GBP_FALLBACK_IMAGE = {
-  url: "https://policestationrepuk.org/images/buffer/gbp/policestationagent-default.jpg",
-  thumbnailUrl: "https://policestationrepuk.org/images/buffer/gbp/policestationagent-default.jpg",
-  altText: "Police station legal advice",
-  width: 720,
-  height: 720,
-};
-
 const CHANNELS = [
   { id: "69d26c06031bfa423cd0c50d", service: "linkedin", name: "Police Station Agent (LinkedIn)", utmSlug: "linkedin" },
   { id: "69d26c3d031bfa423cd0c6b3", service: "twitter", name: "Policestationag (Twitter)", utmSlug: "twitter" },
@@ -76,14 +75,6 @@ function channelForIndex(index) {
     );
   }
   return CHANNELS[index % CHANNELS.length];
-}
-
-function rewriteUtm(text, utmSlug) {
-  return text.replace(/utm_campaign=([^&\s]+)/g, (_, campaign) => {
-    const base = campaign.replace(/_(linkedin|twitter|googlebusiness|facebook[^&\s]*|facebook)$/i, "");
-    const cleaned = base.replace(/_+$/, "");
-    return `utm_campaign=${cleaned}_${utmSlug}`;
-  });
 }
 
 function truncateForTwitter(text, maxLen = 280) {
@@ -137,36 +128,12 @@ function mapAssets(assets) {
     .filter(Boolean);
 }
 
-function gbpSafeAssets(assets) {
-  const mapped = mapAssets(assets);
-  if (!mapped.length) {
-    return [
-      {
-        image: {
-          url: GBP_FALLBACK_IMAGE.url,
-          thumbnailUrl: GBP_FALLBACK_IMAGE.thumbnailUrl,
-          metadata: {
-            altText: GBP_FALLBACK_IMAGE.altText,
-            dimensions: { width: GBP_FALLBACK_IMAGE.width, height: GBP_FALLBACK_IMAGE.height },
-          },
-        },
-      },
-    ];
-  }
-  return mapped;
-}
-
 function metadataForChannel(channel, item) {
   switch (channel.service) {
     case "facebook":
       return { facebook: { type: "post" } };
     case "googlebusiness":
-      return {
-        google: {
-          type: "whats_new",
-          detailsWhatsNew: { button: "none" },
-        },
-      };
+      return googleBusinessMetadata({ url: gbpLinkFromItem(item, channel.utmSlug), utmSlug: channel.utmSlug });
     case "linkedin":
       if (item.url) {
         return { linkedin: { linkAttachment: { url: rewriteUtm(item.url, channel.utmSlug) } } };
@@ -178,7 +145,10 @@ function metadataForChannel(channel, item) {
 }
 
 function buildCreateInput(item, channel) {
-  let text = rewriteUtm(`${item.text}\n\n${item.hashtags}`, channel.utmSlug);
+  let text =
+    channel.service === "googlebusiness"
+      ? gbpPostText(`${item.text}\n\n${item.hashtags}`, channel.utmSlug)
+      : rewriteUtm(`${item.text}\n\n${item.hashtags}`, channel.utmSlug);
   if (channel.service === "twitter") text = truncateForTwitter(text);
 
   const input = {
@@ -189,7 +159,7 @@ function buildCreateInput(item, channel) {
     dueAt: `${item.date}T08:30:00.000Z`,
     assets:
       channel.service === "googlebusiness"
-        ? gbpSafeAssets(calendarAssets(item))
+        ? gbpSafeAssets()
         : mapAssets(calendarAssets(item)),
   };
 

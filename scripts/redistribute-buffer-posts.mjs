@@ -9,6 +9,13 @@
  */
 import fs from "fs";
 import path from "path";
+import {
+  gbpLinkFromItem,
+  gbpPostText,
+  gbpSafeAssets,
+  googleBusinessMetadata,
+  rewriteUtm,
+} from "./lib/buffer-gbp.mjs";
 
 const dryRun = process.argv.includes("--dry-run");
 const inputIdx = process.argv.indexOf("--input");
@@ -19,13 +26,6 @@ const ORG_ID = "69d26bdf0f822245c9a723c4";
 const API_URL = "https://api.buffer.com";
 const DELAY_MS = 1500;
 const IMMINENT_MS = 30 * 60 * 1000;
-const GBP_FALLBACK_IMAGE = {
-  url: "https://policestationrepuk.org/images/buffer/gbp/policestationagent-default.jpg",
-  thumbnailUrl: "https://policestationrepuk.org/images/buffer/gbp/policestationagent-default.jpg",
-  altText: "Police station legal advice",
-  width: 720,
-  height: 720,
-};
 
 const CHANNELS = [
   { id: "69d26c06031bfa423cd0c50d", service: "linkedin", name: "Police Station Agent (LinkedIn)", utmSlug: "linkedin" },
@@ -166,14 +166,6 @@ function assignTargets(posts) {
   }));
 }
 
-function rewriteUtm(text, utmSlug) {
-  return text.replace(/utm_campaign=([^&\s]+)/g, (_, campaign) => {
-    const base = campaign.replace(/_(linkedin|twitter|googlebusiness|facebook[^&\s]*|facebook)$/i, "");
-    const cleaned = base.replace(/_+$/, "");
-    return `utm_campaign=${cleaned}_${utmSlug}`;
-  });
-}
-
 function truncateForTwitter(text, maxLen = 280) {
   if (text.length <= maxLen) return text;
   const urlMatch = text.match(/https?:\/\/[^\s]+/);
@@ -187,39 +179,6 @@ function truncateForTwitter(text, maxLen = 280) {
     return url.slice(0, maxLen);
   }
   return `${text.slice(0, maxLen - 1).trim()}…`;
-}
-
-function gbpSafeAssets(assets) {
-  const mapped = mapAssets(assets);
-  if (!mapped.length) {
-    return [{
-      image: {
-        url: GBP_FALLBACK_IMAGE.url,
-        thumbnailUrl: GBP_FALLBACK_IMAGE.thumbnailUrl,
-        metadata: {
-          altText: GBP_FALLBACK_IMAGE.altText,
-          dimensions: { width: GBP_FALLBACK_IMAGE.width, height: GBP_FALLBACK_IMAGE.height },
-        },
-      },
-    }];
-  }
-  return mapped.map((item) => {
-    const w = item.image?.metadata?.dimensions?.width ?? 0;
-    const h = item.image?.metadata?.dimensions?.height ?? 0;
-    if (w < 250 || h < 250) {
-      return {
-        image: {
-          url: GBP_FALLBACK_IMAGE.url,
-          thumbnailUrl: GBP_FALLBACK_IMAGE.thumbnailUrl,
-          metadata: {
-            altText: item.image.metadata.altText || GBP_FALLBACK_IMAGE.altText,
-            dimensions: { width: GBP_FALLBACK_IMAGE.width, height: GBP_FALLBACK_IMAGE.height },
-          },
-        },
-      };
-    }
-    return item;
-  });
 }
 
 function mapAssets(assets) {
@@ -259,12 +218,10 @@ function metadataForService(service, sourceMetadata) {
     case "facebook":
       return { facebook: { type: "post" } };
     case "googlebusiness":
-      return {
-        google: {
-          type: "whats_new",
-          detailsWhatsNew: { button: "none" },
-        },
-      };
+      return googleBusinessMetadata({
+        url: gbpLinkFromItem({ text: sourceMetadata?.text || "" }),
+        utmSlug: "googlebusiness",
+      });
     case "linkedin":
       if (sourceMetadata?.linkAttachment?.url) {
         return { linkedin: { linkAttachment: { url: sourceMetadata.linkAttachment.url } } };
@@ -285,7 +242,11 @@ function metadataForService(service, sourceMetadata) {
 }
 
 function buildCreateInput(post, target) {
-  let text = rewriteUtm(post.text, target.utmSlug);
+  const rewritten = rewriteUtm(post.text, target.utmSlug);
+  let text =
+    target.service === "googlebusiness"
+      ? gbpPostText(rewritten, target.utmSlug)
+      : rewritten;
   if (target.service === "twitter") {
     text = truncateForTwitter(text);
   }
@@ -296,7 +257,7 @@ function buildCreateInput(post, target) {
     text,
     schedulingType,
     mode,
-    assets: target.service === "googlebusiness" ? gbpSafeAssets(post.assets) : mapAssets(post.assets),
+    assets: target.service === "googlebusiness" ? gbpSafeAssets() : mapAssets(post.assets),
   };
 
   if (mode === "customScheduled" && post.dueAt) {
@@ -306,7 +267,13 @@ function buildCreateInput(post, target) {
   const tagIds = post.tags?.map((t) => t.id).filter(Boolean);
   if (tagIds?.length) input.tagIds = tagIds;
 
-  const metadata = metadataForService(target.service, post.metadata);
+  const metadata =
+    target.service === "googlebusiness"
+      ? googleBusinessMetadata({
+          url: gbpLinkFromItem({ text: post.text }),
+          utmSlug: target.utmSlug,
+        })
+      : metadataForService(target.service, post.metadata);
   if (metadata) input.metadata = metadata;
 
   return input;
