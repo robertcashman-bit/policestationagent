@@ -89,6 +89,10 @@ export default function Page() {
             title="All Services"
             links={[
               { href: "/services/police-station-representation", text: "Police Station Representation", description: "Main service (police station Legal Aid is free)" },
+              { href: "/free-police-station-advice-kent", text: "Free Police Station Advice Kent", description: "Legal Aid at custody — not means-tested" },
+              { href: "/kent-police-station-reps", text: "Kent Police Station Reps", description: "Town rep pages across Kent" },
+              { href: "/police-station-rep-gravesend", text: "Police Station Rep Gravesend", description: "North Kent custody cover" },
+              { href: "/police-station-rep-medway", text: "Police Station Solicitor Medway", description: "Chatham, Gillingham, Rochester" },
               { href: "/offences-we-deal-with", text: "Offences We Deal With", description: "Types of offences we handle" },
               { href: "/services/pre-charge-advice", text: "Police Interview Advice Solicitor", description: "Pre-charge advice and representations" },
               { href: "/services/bail-applications", text: "Duty Solicitor Police Station", description: "Bail applications and advice" },

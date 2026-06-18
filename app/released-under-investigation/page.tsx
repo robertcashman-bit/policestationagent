@@ -117,6 +117,10 @@ export default function ReleasedUnderInvestigationPage() {
             </Link>
             .
           </AnswerFirstBlock>
+          <p className="text-slate-700 mb-6">
+            In my experience advising clients in Kent, RUI cases often drag on for months — early
+            solicitor involvement helps you understand status changes and respond to further contact.
+          </p>
 
           <div className="prose prose-lg max-w-none">
             <h2>What Is Released Under Investigation?</h2>

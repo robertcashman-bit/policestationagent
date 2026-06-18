@@ -2,14 +2,11 @@
 
 ## After deploy
 
-1. **Verify production URLs** — spot-check redirects and new pages on `https://policestationagent.com`
-2. **Google Search Console** — URL inspection for:
-   - `/kent-police-station-reps`
-   - `/dscc-and-custody-record-support`
-   - `/police-station-rep-medway` (and other rep pages)
-   - 6 new blog posts under `/blog/…`
-3. **Bing Webmaster Tools** — submit sitemap `https://policestationagent.com/sitemap.xml`
-4. **IndexNow** — run `npm run indexnow` (or `node scripts/notify-search-engines.js`) after deploy
+1. **Verify production URLs** — spot-check redirects and new pages on `https://www.policestationagent.com`
+2. **Automated checks** — `npm run seo:setup-indexing` (sitemap + IndexNow + manual checklist)
+3. **Google Search Console** — URL inspection for priority list: `npm run seo:gsc-priority`
+4. **Bing Webmaster Tools** — submit sitemap `https://www.policestationagent.com/sitemap.xml`
+5. **IndexNow** — run `npm run indexnow` (or `node scripts/notify-search-engines.js`) after deploy
 
 ## Priority URLs for IndexNow
 

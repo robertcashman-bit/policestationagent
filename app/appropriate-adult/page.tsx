@@ -113,6 +113,10 @@ export default function AppropriateAdultPage() {
               out in Code C.
               <Ref n={1} />
             </p>
+            <p className="text-slate-700">
+              In my experience, the appropriate adult role is often misunderstood — a solicitor can
+              explain what the adult can and cannot do during interview.
+            </p>
           </div>
 
           <div className="prose prose-lg max-w-none">

@@ -13,7 +13,7 @@ export function HomePriorityCoverage() {
           cover at North Kent (Gravesend) and Tonbridge — two of the county&apos;s main 24-hour custody
           facilities — alongside Medway, Maidstone, Canterbury and the rest of Kent.
         </p>
-        <div className="grid sm:grid-cols-2 gap-4 mb-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
           <Link
             href="/police-station-rep-gravesend"
             className="rounded-xl border border-slate-200 bg-slate-50 hover:border-blue-400 hover:bg-blue-50 p-5 transition-colors"
@@ -28,7 +28,23 @@ export function HomePriorityCoverage() {
             <p className="font-bold text-slate-900">Tonbridge custody &amp; interviews</p>
             <p className="text-sm text-slate-600 mt-1">West Kent — custody and voluntary interviews</p>
           </Link>
+          <Link
+            href="/police-station-rep-medway"
+            className="rounded-xl border border-slate-200 bg-slate-50 hover:border-blue-400 hover:bg-blue-50 p-5 transition-colors"
+          >
+            <p className="font-bold text-slate-900">Medway custody (Chatham/Gillingham)</p>
+            <p className="text-sm text-slate-600 mt-1">Purser Way — 24-hour custody suite</p>
+          </Link>
         </div>
+        <p className="text-center text-sm text-slate-600 mb-4">
+          <Link href="/free-police-station-advice-kent" className="font-semibold text-blue-700 hover:underline">
+            Free police station advice in Kent
+          </Link>
+          {" · "}
+          <Link href="/kent-police-station-reps" className="font-semibold text-blue-700 hover:underline">
+            All Kent police station reps
+          </Link>
+        </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
           <ConversionCTAGroup layout="stacked" className="max-w-md w-full" />
         </div>

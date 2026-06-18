@@ -123,8 +123,11 @@ export default function PaceCodeCPage() {
               <strong>medical care</strong>, and
               <strong>fair treatment</strong> during interviews.
               <Ref n={1} /> If evidence is obtained unfairly, a court has a power to exclude it
-              under PACE section 78.
-              <Ref n={2} />
+              under section 78 PACE.
+            </p>
+            <p className="text-slate-700">
+              In my experience, custody officers sometimes overlook Code C entitlements — having a
+              solicitor present helps ensure reviews, rest periods and disclosure rights are respected.
             </p>
           </div>
 

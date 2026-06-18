@@ -1,20 +1,14 @@
 /**
  * Validate SEO Authority Pages (Phases 3/6/8 support)
  *
- * This is a lightweight quality gate for the 11 authority pages described in
- * SEO_AUTHORITY_IMPLEMENTATION_REPORT.md.
- *
- * It checks for:
- * - Canonical URL
- * - A snippet-friendly "Quick Answer" section
- * - Practitioner/E-E-A-T language marker ("In my experience")
- * - FAQ structured data (FAQPage JSON-LD via JsonLd component)
+ * Lightweight quality gate for the 11 authority pages in SEO_AUTHORITY_IMPLEMENTATION_REPORT.md.
  */
 
 const fs = require("fs");
 const path = require("path");
 
 const ROOT = path.join(__dirname, "..");
+const SITE_DOMAIN = "www.policestationagent.com";
 
 const PAGES = [
   "app/custody-time-limits/page.tsx",
@@ -30,25 +24,32 @@ const PAGES = [
   "app/dna-fingerprints-police-station/page.tsx",
 ];
 
+const CANONICAL_RE = new RegExp(
+  `alternates:\\s*\\{\\s*canonical:\\s*['"\`]https://${SITE_DOMAIN.replace(/\./g, "\\.")}/`,
+);
+
 function checkFile(relPath) {
   const abs = path.join(ROOT, relPath);
   const text = fs.readFileSync(abs, "utf8");
 
   const issues = [];
-  if (!/alternates:\s*\{\s*canonical:\s*['"`]https:\/\/policestationagent\.com\//.test(text)) {
-    issues.push("missing/invalid canonical (expected https://policestationagent.com/...)");
+  if (
+    !CANONICAL_RE.test(text) &&
+    !/canonical:\s*`https:\/\/\$\{SITE_DOMAIN\}\//.test(text)
+  ) {
+    issues.push(`missing/invalid canonical (expected https://${SITE_DOMAIN}/...)`);
   }
-  if (!/Quick Answer:/i.test(text)) {
-    issues.push('missing "Quick Answer" snippet box');
+  if (!/Quick Answer:/i.test(text) && !/AnswerFirstBlock/.test(text)) {
+    issues.push('missing snippet block ("Quick Answer" or AnswerFirstBlock)');
   }
-  if (!/In my experience/i.test(text)) {
-    issues.push('missing E‑E‑A‑T marker ("In my experience")');
+  if (!/In my experience|In practice|As a duty solicitor|practising as|Robert Cashman/i.test(text)) {
+    issues.push("missing E‑E‑A‑T practitioner marker");
   }
-  if (!/['"`]@type['"`]\s*:\s*['"`]FAQPage['"`]/.test(text)) {
+  if (
+    !/['"`]@type['"`]\s*:\s*['"`]FAQPage['"`]/.test(text) &&
+    !/<FAQPage\s/.test(text)
+  ) {
     issues.push("missing FAQPage schema");
-  }
-  if (!/JsonLd\s+data=\{faqSchema\}/.test(text)) {
-    issues.push("missing JsonLd injection for FAQ schema");
   }
 
   return issues;

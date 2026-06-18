@@ -7,12 +7,12 @@ import { SITE_DOMAIN } from "@/config/site";
 import { REPUK_DIRECTORY_KENT_HREF } from "@/lib/policestationrepuk-promo";
 
 const PATH = "/free-police-station-advice-kent";
-const LAST_UPDATED = "2026-06-06";
+const LAST_UPDATED = "2026-06-18";
 
 export const metadata: Metadata = {
-  title: "Free Police Station Advice in Kent | Legal Aid at Custody",
+  title: "Free Police Station Advice Kent | Duty Solicitor | Call 01732 247427",
   description:
-    "How free legal advice works at Kent police stations under Legal Aid. PACE rights, duty solicitor scheme, and when Robert Cashman can attend custody or scheduled voluntary interviews.",
+    "Free Legal Aid advice at Kent police stations — not means-tested for most interviews. PACE s.58 rights, duty solicitor scheme, and how to request Robert Cashman at custody or voluntary interviews.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}${PATH}`,
   },

@@ -31,7 +31,9 @@ export const REGULATORY_LINKS = {
   clsa: "https://www.clsa.co.uk/",
 } as const;
 
-/** Schema sameAs — add GBP URL when available */
+/** Schema sameAs — add GBP URL when GOOGLE_BUSINESS_PROFILE_URL is set in Vercel */
+const GBP_PROFILE_URL = process.env.GOOGLE_BUSINESS_PROFILE_URL?.trim();
+
 export const SAME_AS_URLS = [
   "https://www.facebook.com/policestationagent",
   "https://www.linkedin.com/company/police-station-agent",
@@ -39,6 +41,26 @@ export const SAME_AS_URLS = [
   REPUK_PROFILE_URL,
   REGULATORY_LINKS.sraFindASolicitor,
   REGULATORY_LINKS.clsa,
+  ...(GBP_PROFILE_URL ? [GBP_PROFILE_URL] : []),
+] as const;
+
+/** Directory and citation targets — use consistent NAP (AUTHORITY_NAP) */
+export const DIRECTORY_CITATIONS = [
+  {
+    name: "RepUK professional profile",
+    url: REPUK_PROFILE_URL,
+    anchor: "Robert Cashman — police station rep (Kent)",
+  },
+  {
+    name: "SRA Find a Solicitor (Tuckers LLP)",
+    url: "https://www.sra.org.uk/consumers/register/organisation/?sraNumber=127795",
+    anchor: "Tuckers Solicitors LLP — SRA 127795",
+  },
+  {
+    name: "Kent police custody resources hub",
+    url: RESOURCE_HUB_URL,
+    anchor: "Kent police custody rights guide",
+  },
 ] as const;
 
 export const SUGGESTED_LINK_ANCHORS = [

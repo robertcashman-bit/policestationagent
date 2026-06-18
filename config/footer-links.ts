@@ -56,17 +56,18 @@ export const FOOTER_ADVICE_PAGES: FooterLink[] = [
 ];
 
 export const FOOTER_STATION_HUBS: FooterLink[] = [
-  { href: "/police-station-rep-gravesend", label: "Police station rep in Gravesend" },
-  { href: "/police-station-rep-tonbridge", label: "Police station rep in Tonbridge" },
-  { href: "/kent-police-station-reps", label: "Police station reps in Kent" },
-  { href: "/locations", label: "All rep town pages" },
-  { href: "/police-stations", label: "All Kent Police Stations" },
-  { href: "/coverage", label: "Service Coverage" },
-  { href: "/kent-police-custody-resources", label: "Kent Custody Resources Hub" },
+  { href: "/police-station-rep-gravesend", label: "Duty solicitor Gravesend & North Kent" },
+  { href: "/police-station-rep-tonbridge", label: "Police station rep Tonbridge & West Kent" },
+  { href: "/police-station-rep-medway", label: "Police station solicitor Medway & Chatham" },
+  { href: "/police-station-rep-maidstone", label: "Police station advice Maidstone" },
+  { href: "/police-station-rep-canterbury", label: "Canterbury custody legal advice" },
+  { href: "/kent-police-station-reps", label: "Kent police station reps hub" },
+  { href: "/free-police-station-advice-kent", label: "Free police station advice Kent" },
+  { href: "/locations", label: "All Kent rep town pages" },
+  { href: "/police-stations", label: "Kent police stations directory" },
+  { href: "/kent-police-custody-resources", label: "Kent custody resources hub" },
   { href: "/coverage/areas/north-kent", label: "North Kent area hub" },
   { href: "/coverage/areas/west-kent", label: "West Kent area hub" },
-  { href: "/canterbury-police-station", label: "Canterbury Police Station" },
-  { href: "/folkestone-police-station", label: "Folkestone Police Station" },
 ];
 
 export const FOOTER_SERVICES: FooterLink[] = [

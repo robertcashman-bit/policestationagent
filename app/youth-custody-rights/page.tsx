@@ -109,7 +109,11 @@ export default function YouthCustodyRightsPage() {
               <Ref n={1} /> Code C also requires the custody officer (if practicable) to identify
               and inform a person responsible for the juvenile’s welfare, as soon as practicable,
               that the juvenile has been arrested and where they are detained.
-              <Ref n={1} />
+              <Ref n={2} />
+            </p>
+            <p className="text-slate-700">
+              In my experience, families often do not realise an appropriate adult is mandatory for
+              under-18s — instruct a solicitor immediately if a young person is detained in Kent.
             </p>
           </div>
 

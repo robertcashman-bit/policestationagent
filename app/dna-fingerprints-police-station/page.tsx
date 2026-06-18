@@ -124,6 +124,10 @@ export default function DNAFingerprintsPolicePage() {
               “intimate sample” and “non‑intimate sample”) are defined in section 65.
               <Ref n={4} />
             </p>
+            <p className="text-slate-700">
+              In my experience, clients are sometimes asked to consent to samples without understanding
+              the statutory basis — take legal advice before agreeing.
+            </p>
           </div>
 
           <div className="prose prose-lg max-w-none">

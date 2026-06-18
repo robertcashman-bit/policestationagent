@@ -5,6 +5,8 @@ import {
   RESOURCE_HUB_URL,
   SUGGESTED_LINK_ANCHORS,
   AUTHORITY_NAP,
+  DIRECTORY_CITATIONS,
+  REPUK_PROFILE_URL,
 } from "@/config/link-authority";
 
 function CopyButton({ label, value }: { label: string; value: string }) {
@@ -43,6 +45,18 @@ export default function LinkToUsPanel() {
           value={`<a href="${RESOURCE_HUB_URL}">${anchor}</a>`}
         />
       ))}
+      <h3 className="text-sm font-bold text-slate-900 pt-4">Directory &amp; authority links</h3>
+      {DIRECTORY_CITATIONS.map((c) => (
+        <CopyButton
+          key={c.url}
+          label={c.name}
+          value={`<a href="${c.url}" rel="noopener noreferrer">${c.anchor}</a>`}
+        />
+      ))}
+      <CopyButton
+        label="RepUK profile (Robert Cashman)"
+        value={REPUK_PROFILE_URL}
+      />
       <p className="text-sm text-slate-600 pt-2">
         You may link to these pages freely for educational or community purposes. Content is
         sourced from gov.uk and legislation.gov.uk where cited. Contact{" "}

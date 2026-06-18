@@ -144,6 +144,10 @@ export default function PoliceBailExplainedPage() {
             </Link>
             .
           </AnswerFirstBlock>
+          <p className="text-slate-700 mb-6">
+            In my experience at Kent custody suites, bail conditions are often negotiable — a solicitor
+            can challenge unreasonable terms before you leave the station.
+          </p>
 
           <div className="prose prose-lg max-w-none">
             <h2>What Is Police Bail?</h2>

@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
+const { LEGACY_LOCAL_REDIRECTS } = require("./config/legacy-local-redirects.js");
+
 const nextConfig = {
   reactStrictMode: true,
   transpilePackages: ['@robertcashman/firm-outreach-core'],
@@ -386,6 +388,7 @@ const nextConfig = {
         destination: "/services/police-station-representation",
         permanent: true,
       },
+      ...LEGACY_LOCAL_REDIRECTS,
     ];
   },
   // Headers for cache control, security, and performance
