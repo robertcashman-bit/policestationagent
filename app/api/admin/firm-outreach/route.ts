@@ -126,8 +126,21 @@ export async function POST(request: Request) {
       const result = await bootstrapOutreach({
         batches: body.limit && body.limit > 10 ? Math.min(body.limit, 15) : 8,
         limit: 60,
+        reindex: true,
       });
       return NextResponse.json({ ok: true, ...result });
+    }
+
+    if (body.action === 'reindex') {
+      if (!getKV()) {
+        return NextResponse.json({ error: 'KV not configured' }, { status: 503 });
+      }
+      const { reindexProspectStatuses } = await import('@/lib/firm-outreach/reindex-prospects');
+      const { countProspectsByStatus } = await import('@/lib/firm-outreach/storage');
+      const countsBefore = await countProspectsByStatus();
+      const reindex = await reindexProspectStatuses();
+      const countsAfter = await countProspectsByStatus();
+      return NextResponse.json({ ok: true, reindex, countsBefore, countsAfter });
     }
 
     if (body.action === 'set_pause') {

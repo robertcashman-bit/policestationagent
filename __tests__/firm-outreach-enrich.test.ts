@@ -47,6 +47,86 @@ describe('advanceEnrichCursor', () => {
   });
 });
 
+describe('runFirmEnrichment saveProspect indexing', () => {
+  beforeEach(() => {
+    vi.resetModules();
+  });
+
+  it('passes pre-enrich status to saveProspect so indexes update', async () => {
+    const saveProspect = vi.fn();
+    const prospect = {
+      id: 'p1',
+      status: 'discovered' as const,
+      priorityScore: 10,
+      sources: ['laa'],
+      enrichAttempts: 0,
+      firmName: 'A',
+      firmKey: 'a',
+      prospectType: 'firm' as const,
+      campaignId: 'agent_cover_kent_v1',
+      createdAt: '',
+      updatedAt: '',
+      regulatoryNumber: '123',
+      websiteUrl: 'https://example.co.uk',
+    };
+
+    vi.doMock('@/lib/firm-outreach/storage', () => ({
+      CURSOR_ENRICH: 'firmoutreach:cursor:enrich',
+      listProspectIdsByStatus: vi.fn(async (status: string) =>
+        status === 'discovered' ? ['p1'] : [],
+      ),
+      getProspect: vi.fn().mockResolvedValue({ ...prospect }),
+      saveProspect,
+      getCursor: vi.fn().mockResolvedValue(0),
+      setCursor: vi.fn(),
+      isDuplicateInitialSend: vi.fn().mockResolvedValue(false),
+    }));
+
+    vi.doMock('@/lib/firm-outreach/constants', () => ({
+      enrichBatchSize: () => 5,
+    }));
+
+    vi.doMock('@/lib/dscc-register-lookup', () => ({
+      ensureDsccRegisterCache: vi.fn().mockResolvedValue({ entries: [] }),
+    }));
+
+    vi.doMock('@/lib/legal-directory/laa-fetch', () => ({
+      readLaaCrimeJson: vi.fn().mockReturnValue([]),
+    }));
+
+    vi.doMock('@/lib/firm-outreach/enrichment/resolve-prospect-website', () => ({
+      resolveProspectWebsite: vi.fn().mockResolvedValue(undefined),
+    }));
+
+    vi.doMock('@/lib/firm-outreach/enrichment/email-crawler', () => ({
+      crawlEmailsForProspect: vi.fn().mockResolvedValue({
+        best: { address: 'info@example.co.uk', confidence: 'high', score: 90 },
+        alternatives: [],
+      }),
+    }));
+
+    vi.doMock('@/lib/firm-outreach/enrichment/paid-enrichment', () => ({
+      paidEnrichEmails: vi.fn().mockResolvedValue([]),
+    }));
+
+    vi.doMock('@/lib/firm-outreach/crime-website-verify', () => ({
+      websiteIndicatesCrimePractice: vi.fn().mockResolvedValue(false),
+    }));
+
+    vi.doMock('@/lib/firm-outreach/qualification', () => ({
+      buildCrimeRegistry: vi.fn().mockReturnValue({ laa: new Set(), dscc: new Set() }),
+      resolveStatusWithQualification: vi.fn().mockReturnValue('ready_to_send'),
+    }));
+
+    const { runFirmEnrichment } = await import('@/lib/firm-outreach/enrichment/run-enrich');
+    await runFirmEnrichment({ limit: 5 });
+
+    expect(saveProspect).toHaveBeenCalledTimes(1);
+    expect(saveProspect.mock.calls[0][1]).toBe('discovered');
+    expect(saveProspect.mock.calls[0][0].status).toBe('ready_to_send');
+  });
+});
+
 describe('runFirmEnrichment cursor on timeout', () => {
   beforeEach(() => {
     vi.resetModules();

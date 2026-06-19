@@ -45,6 +45,7 @@ async function enrichOne(prospect: FirmProspect, registry: CrimeRegistry): Promi
   // (notably DSCC-only solicitors) never get a website to crawl → no email.
   await resolveProspectWebsite(prospect);
   if (prospect.excludedReason === 'sra_not_authorised') {
+    prospect.status = 'excluded';
     prospect.updatedAt = new Date().toISOString();
     return prospect;
   }
@@ -165,12 +166,14 @@ export async function runFirmEnrichment(opts?: {
   const windowIds = pool.slice(cursor, cursor + scanWindow);
   const candidates: { id: string; score: number }[] = [];
   let stoppedEarly = false;
+  let scannedInWindow = 0;
 
   for (const id of windowIds) {
     if (opts?.maxElapsedMs != null && Date.now() - started >= opts.maxElapsedMs) {
       stoppedEarly = true;
       break;
     }
+    scannedInWindow++;
     const p = await getProspect(id);
     if (!p || !shouldEnrichProspect(p)) continue;
     candidates.push({ id, score: enrichCandidateScore(p) });
@@ -194,8 +197,9 @@ export async function runFirmEnrichment(opts?: {
     try {
       const p = await getProspect(id);
       if (!p || !shouldEnrichProspect(p)) continue;
+      const prevStatus = p.status;
       const enriched = await enrichOne(p, registry);
-      await saveProspect(enriched, p.status);
+      await saveProspect(enriched, prevStatus);
       processedCount++;
       if (enriched.email) emailsFound++;
       if (enriched.status === 'ready_to_send') readyToSend++;
@@ -206,8 +210,8 @@ export async function runFirmEnrichment(opts?: {
     }
   }
 
-  if (processedCount > 0 || (!stoppedEarly && candidates.length > 0)) {
-    await advanceEnrichCursor(cursor, windowIds.length, pool.length);
+  if (scannedInWindow > 0) {
+    await advanceEnrichCursor(cursor, scannedInWindow, pool.length);
   }
 
   return {

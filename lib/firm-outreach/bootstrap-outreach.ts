@@ -1,4 +1,5 @@
 import { runFirmEnrichment } from './enrichment/run-enrich';
+import { reindexProspectStatuses } from './reindex-prospects';
 import { isOutreachSendAllowed, setAdminPauseState, getOutreachPauseSummary } from './pause-state';
 import { countProspectsByStatus } from './storage';
 
@@ -9,6 +10,7 @@ export interface BootstrapOutreachResult {
   sendAllowed: boolean;
   countsBefore: Record<string, number>;
   countsAfter: Record<string, number>;
+  reindex?: Awaited<ReturnType<typeof reindexProspectStatuses>>;
   batches: Awaited<ReturnType<typeof runFirmEnrichment>>[];
   totals: {
     processed: number;
@@ -27,6 +29,10 @@ export async function bootstrapOutreach(opts?: {
   totalMaxElapsedMs?: number;
   /** Only clear admin pause and return counts — no enrichment. */
   unpauseOnly?: boolean;
+  /** Rebuild status indexes from prospect records before enrich. */
+  reindex?: boolean;
+  /** Reindex only — skip enrich batches. */
+  reindexOnly?: boolean;
 }): Promise<BootstrapOutreachResult> {
   const batches = opts?.batches ?? 2;
   const limit = opts?.limit ?? 25;
@@ -42,25 +48,35 @@ export async function bootstrapOutreach(opts?: {
   }
 
   const pauseAfter = await getOutreachPauseSummary();
-  const countsBefore = await countProspectsByStatus();
+  let countsBefore = await countProspectsByStatus();
+  let reindexResult: Awaited<ReturnType<typeof reindexProspectStatuses>> | undefined;
 
-  if (opts?.unpauseOnly) {
+  if (opts?.reindex || opts?.reindexOnly) {
+    reindexResult = await reindexProspectStatuses();
+    countsBefore = await countProspectsByStatus();
+  }
+
+  const emptyTotals = {
+    processed: 0,
+    emailsFound: 0,
+    readyToSend: 0,
+    noEmail: 0,
+    errors: 0,
+  };
+
+  if (opts?.unpauseOnly || opts?.reindexOnly) {
     const sendAllowed = await isOutreachSendAllowed();
+    const countsAfter = await countProspectsByStatus();
     return {
       unpaused,
       pauseBefore,
       pauseAfter,
       sendAllowed,
       countsBefore,
-      countsAfter: countsBefore,
+      countsAfter,
+      reindex: reindexResult,
       batches: [],
-      totals: {
-        processed: 0,
-        emailsFound: 0,
-        readyToSend: 0,
-        noEmail: 0,
-        errors: 0,
-      },
+      totals: emptyTotals,
     };
   }
 
@@ -98,6 +114,7 @@ export async function bootstrapOutreach(opts?: {
     sendAllowed,
     countsBefore,
     countsAfter,
+    reindex: reindexResult,
     batches: batchResults,
     totals,
   };

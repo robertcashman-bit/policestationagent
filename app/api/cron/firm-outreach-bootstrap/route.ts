@@ -14,15 +14,19 @@ export async function GET(request: Request) {
 
   const url = new URL(request.url);
   const unpauseOnly = url.searchParams.get('unpause') === '1';
-  const batches = Number(url.searchParams.get('batches') || 1) || 1;
-  const limit = Number(url.searchParams.get('limit') || 10) || 10;
+  const reindex = url.searchParams.get('reindex') === '1';
+  const reindexOnly = url.searchParams.get('reindexOnly') === '1';
+  const batches = Number(url.searchParams.get('batches') || 2) || 2;
+  const limit = Number(url.searchParams.get('limit') || 25) || 25;
 
   const result = await bootstrapOutreach({
     batches,
     limit,
-    totalMaxElapsedMs: 50_000,
-    maxElapsedMs: 45_000,
+    totalMaxElapsedMs: 240_000,
+    maxElapsedMs: 110_000,
     unpauseOnly,
+    reindex,
+    reindexOnly,
   });
   return NextResponse.json({ ok: true, mode: 'bootstrap', ...result });
 }
