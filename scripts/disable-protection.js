@@ -3,7 +3,8 @@
 const https = require("https");
 
 const token = process.env.VERCEL_TOKEN;
-const projectId = "prj_CYDRRsP52A9YVyp44NIT5omVcgQJ";
+// pstrain-rebuild — override with VERCEL_PROJECT_ID env if needed
+const projectId = process.env.VERCEL_PROJECT_ID || "prj_uJSNdPK7XUfrt5qzVvZxkQgAlA6I";
 
 function makeRequest(options, data = null) {
   return new Promise((resolve, reject) => {
