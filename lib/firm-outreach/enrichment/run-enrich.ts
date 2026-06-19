@@ -8,7 +8,7 @@ import {
   CURSOR_ENRICH,
   getCursor,
   isDuplicateInitialSend,
-  listAllProspectIds,
+  listProspectIdsByStatus,
   getProspect,
   saveProspect,
   setCursor,
@@ -149,32 +149,41 @@ export async function runFirmEnrichment(opts?: {
   const started = Date.now();
   const limit = opts?.limit ?? enrichBatchSize();
   const registry = await loadEnrichRegistry();
-  const ids = await listAllProspectIds();
-  const candidates: { id: string; score: number }[] = [];
 
-  for (const id of ids) {
+  const discoveredIds = await listProspectIdsByStatus('discovered');
+  const noEmailIds = await listProspectIdsByStatus('no_email');
+  const pool = [...discoveredIds, ...noEmailIds];
+
+  let cursor = await getCursor(CURSOR_ENRICH);
+  if (cursor >= pool.length && pool.length > 0) {
+    cursor = 0;
+    await setCursor(CURSOR_ENRICH, 0);
+  }
+
+  // Score a sliding window — avoid loading thousands of prospects every cron tick.
+  const scanWindow = Math.min(Math.max(limit * 4, 40), 120);
+  const windowIds = pool.slice(cursor, cursor + scanWindow);
+  const candidates: { id: string; score: number }[] = [];
+  let stoppedEarly = false;
+
+  for (const id of windowIds) {
+    if (opts?.maxElapsedMs != null && Date.now() - started >= opts.maxElapsedMs) {
+      stoppedEarly = true;
+      break;
+    }
     const p = await getProspect(id);
     if (!p || !shouldEnrichProspect(p)) continue;
     candidates.push({ id, score: enrichCandidateScore(p) });
   }
 
   candidates.sort((a, b) => b.score - a.score);
-  const needEnrich = candidates.map((c) => c.id);
-
-  let cursor = await getCursor(CURSOR_ENRICH);
-  if (cursor >= needEnrich.length && needEnrich.length > 0) {
-    cursor = 0;
-    await setCursor(CURSOR_ENRICH, 0);
-  }
-
-  const batch = needEnrich.slice(cursor, cursor + limit);
+  const batch = candidates.slice(0, limit).map((c) => c.id);
 
   let emailsFound = 0;
   let readyToSend = 0;
   let noEmail = 0;
   let errors = 0;
   let processedCount = 0;
-  let stoppedEarly = false;
 
   for (const id of batch) {
     if (opts?.maxElapsedMs != null && Date.now() - started >= opts.maxElapsedMs) {
@@ -197,7 +206,9 @@ export async function runFirmEnrichment(opts?: {
     }
   }
 
-  await advanceEnrichCursor(cursor, processedCount, needEnrich.length);
+  if (processedCount > 0 || (!stoppedEarly && candidates.length > 0)) {
+    await advanceEnrichCursor(cursor, windowIds.length, pool.length);
+  }
 
   return {
     processed: processedCount,

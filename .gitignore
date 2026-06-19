@@ -46,3 +46,4 @@ next-env.d.ts
 !data/web44ai.db
 
 .env.vercel.production
+.env*

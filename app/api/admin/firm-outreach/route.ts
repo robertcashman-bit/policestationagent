@@ -118,6 +118,18 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 });
     }
 
+    if (body.action === 'bootstrap') {
+      if (!getKV()) {
+        return NextResponse.json({ error: 'KV not configured' }, { status: 503 });
+      }
+      const { bootstrapOutreach } = await import('@/lib/firm-outreach/bootstrap-outreach');
+      const result = await bootstrapOutreach({
+        batches: body.limit && body.limit > 10 ? Math.min(body.limit, 15) : 8,
+        limit: 60,
+      });
+      return NextResponse.json({ ok: true, ...result });
+    }
+
     if (body.action === 'set_pause') {
       if (!getKV()) {
         return NextResponse.json({ error: 'KV not configured' }, { status: 503 });
