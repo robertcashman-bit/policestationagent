@@ -5,6 +5,37 @@ import { FIRM_OUTREACH_CAMPAIGN_ID } from './constants';
 import { buildOutreachEmailHtml, subjectForStep } from './outreach/templates';
 import type { FirmProspect } from './types';
 
+export function checkEnrichSaveUsesPreviousStatus(rootDir = process.cwd()): RepoCheckResult {
+  const file = resolve(rootDir, 'lib/firm-outreach/enrichment/run-enrich.ts');
+  if (!existsSync(file)) {
+    return { name: 'enrich_save_previous_status', ok: false, detail: 'run-enrich.ts missing' };
+  }
+  const src = readFileSync(file, 'utf8');
+  const ok =
+    src.includes('const prevStatus = p.status') &&
+    src.includes('saveProspect(enriched, prevStatus)') &&
+    !src.includes('saveProspect(enriched, p.status)');
+  return {
+    name: 'enrich_save_previous_status',
+    ok,
+    detail: ok ? 'prevStatus captured before enrichOne' : 'saveProspect still uses mutated status',
+  };
+}
+
+export function checkReindexSafetyGuard(rootDir = process.cwd()): RepoCheckResult {
+  const file = resolve(rootDir, 'lib/firm-outreach/reindex-prospects.ts');
+  if (!existsSync(file)) {
+    return { name: 'reindex_safety_guard', ok: false, detail: 'reindex-prospects.ts missing' };
+  }
+  const src = readFileSync(file, 'utf8');
+  const ok = src.includes('assertSafeReindexWrite') && src.includes('ReindexSafetyError');
+  return {
+    name: 'reindex_safety_guard',
+    ok,
+    detail: ok ? 'assertSafeReindexWrite present' : 'missing reindex safety guard',
+  };
+}
+
 export const EXPECTED_CRON_ROUTES = [
   '/api/cron/firm-outreach-pipeline/maintain',
   '/api/cron/firm-outreach-enrich',
@@ -188,6 +219,8 @@ export function runRepoChecks(rootDir = process.cwd()): RepoCheckResult[] {
     checkBrochureExists(),
     checkBrochureMinSize(),
     checkBrochureLoadsAsAttachment(),
+    checkEnrichSaveUsesPreviousStatus(rootDir),
+    checkReindexSafetyGuard(rootDir),
     ...checkOutreachTemplates(),
     ...checkVercelCronConfig(vercelJson),
     ...checkCronRouteFilesExist(rootDir),

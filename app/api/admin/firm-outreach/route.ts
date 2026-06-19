@@ -49,6 +49,12 @@ async function buildStatusPayload(scope: 'summary' | 'full') {
     scope === 'full'
       ? await buildOutreachActivityReport()
       : await buildOutreachDashboardSummary();
+
+  const { getProspectIndexHealth } = await import('@/lib/firm-outreach/index-health');
+  const indexHealth = await getProspectIndexHealth();
+  const warnings: string[] = [];
+  if (indexHealth.warning) warnings.push(indexHealth.warning);
+
   return {
     ok: true as const,
     kvConfigured: true,
@@ -59,6 +65,8 @@ async function buildStatusPayload(scope: 'summary' | 'full') {
     counts: prospectCounts,
     report,
     scope,
+    indexHealth,
+    warning: warnings.length > 0 ? warnings.join(' ') : undefined,
   };
 }
 

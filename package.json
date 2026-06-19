@@ -51,6 +51,8 @@
     "firm-outreach:bootstrap": "tsx scripts/firm-outreach-bootstrap.ts",
     "firm-outreach:admin-smoke": "tsx scripts/firm-outreach-admin-smoke.ts",
     "firm-outreach:requalify": "tsx scripts/firm-outreach-requalify.ts",
+    "firm-outreach:reindex": "tsx scripts/firm-outreach-reindex.ts",
+    "firm-outreach:repair-loop": "node scripts/firm-outreach-repair-loop.mjs",
     "verify:firm-outreach": "tsx scripts/verify-firm-outreach.ts",
     "test:firm-outreach": "vitest run __tests__/firm-outreach*.test.ts",
     "test:e2e:smoke": "playwright test e2e/smoke.spec.ts",

@@ -115,6 +115,12 @@ interface OutreachConfig {
 interface OutreachStats {
   kvConfigured?: boolean;
   warning?: string;
+  indexHealth?: {
+    masterIndexCount: number;
+    indexedTotal: number;
+    drifted: boolean;
+    warning?: string;
+  };
   paused: boolean;
   sendEnabled: boolean;
   dailyCap: number;
@@ -593,6 +599,21 @@ export function FirmOutreachDashboard() {
         setPipelineResult(
           `Pipeline — discovery +${d?.created ?? 0}/${d?.updated ?? 0}, enrich ${e?.processed ?? 0} (${e?.emailsFound ?? 0} emails), send ${s?.sent ?? 0}`,
         );
+      } else if (
+        action === 'reindex' &&
+        'reindex' in json &&
+        json.reindex &&
+        typeof json.reindex === 'object' &&
+        'scanned' in json.reindex
+      ) {
+        const r = json.reindex as { scanned: number; byStatus?: Record<string, number> };
+        const discovered = r.byStatus?.discovered ?? 0;
+        setPipelineResult(`Reindex: ${r.scanned} scanned, ${discovered} discovered`);
+      } else if (action === 'bootstrap' && 'countsAfter' in json) {
+        const after = json.countsAfter as Record<string, number>;
+        setPipelineResult(
+          `Bootstrap: discovered ${after.discovered ?? 0}, ready ${after.ready_to_send ?? 0}`,
+        );
       } else {
         setPipelineResult(`${label} completed`);
       }
@@ -680,6 +701,9 @@ export function FirmOutreachDashboard() {
   const cfg = data.config;
   const configWarnings: string[] = [];
   if (data.warning) configWarnings.push(data.warning);
+  if (data.indexHealth?.warning && !data.warning?.includes(data.indexHealth.warning)) {
+    configWarnings.push(data.indexHealth.warning);
+  }
   if (cfg && !cfg.kvConfigured) configWarnings.push('Upstash Redis is not configured.');
   if (cfg && !cfg.resendConfigured) configWarnings.push('RESEND_API_KEY is not set — emails cannot send.');
   if (cfg && !cfg.brochureExists) configWarnings.push('Brochure PDF missing from public/outreach/.');
@@ -729,6 +753,15 @@ export function FirmOutreachDashboard() {
             className={BTN_OUTLINE}
           >
             {pipelineBusy === 'run_discovery' ? 'Running…' : 'Run discovery'}
+          </button>
+          <button
+            type="button"
+            disabled={Boolean(pipelineBusy)}
+            onClick={() => runPipelineAction('reindex')}
+            className={data.indexHealth?.drifted ? BTN_PRIMARY : BTN_OUTLINE}
+            title="Rebuild status indexes from prospect records"
+          >
+            {pipelineBusy === 'reindex' ? 'Rebuilding…' : 'Rebuild indexes'}
           </button>
           <button
             type="button"

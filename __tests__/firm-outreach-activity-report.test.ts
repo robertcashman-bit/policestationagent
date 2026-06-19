@@ -402,6 +402,17 @@ describe('GET /api/admin/firm-outreach', () => {
     vi.clearAllMocks();
   });
 
+  function mockIndexHealthModule() {
+    vi.doMock('@/lib/firm-outreach/index-health', () => ({
+      getProspectIndexHealth: vi.fn().mockResolvedValue({
+        masterIndexCount: 10,
+        indexedTotal: 12,
+        prospectCounts: { discovered: 10, ready_to_send: 2 },
+        drifted: false,
+      }),
+    }));
+  }
+
   it('returns ok payload with report and counts when admin authorised', async () => {
     const mockBuildSummary = vi.fn().mockResolvedValue({
       prospectCounts: { discovered: 10, ready_to_send: 2 },
@@ -459,6 +470,7 @@ describe('GET /api/admin/firm-outreach', () => {
       outreachPaused: () => false,
       outreachSendEnabled: () => true,
     }));
+    mockIndexHealthModule();
 
     const { GET } = await import('@/app/api/admin/firm-outreach/route');
     const res = await GET(new Request('http://localhost/api/admin/firm-outreach'));
@@ -508,6 +520,7 @@ describe('GET /api/admin/firm-outreach', () => {
     vi.doMock('@/lib/firm-outreach/constants', () => ({
       dailySendCap: () => 30,
     }));
+    mockIndexHealthModule();
 
     const { GET } = await import('@/app/api/admin/firm-outreach/route');
     const res = await GET(new Request('http://localhost/api/admin/firm-outreach?scope=full'));

@@ -31,6 +31,8 @@ export async function GET(request: Request) {
   }
 
   const { report, prospectCounts } = await buildOutreachActivityReport();
+  const { getProspectIndexHealth } = await import('@/lib/firm-outreach/index-health');
+  const indexHealth = await getProspectIndexHealth();
 
   return NextResponse.json({
     ok: true,
@@ -39,6 +41,7 @@ export async function GET(request: Request) {
     pause,
     summary: report.summary,
     counts: prospectCounts,
+    indexHealth,
     generatedAt: report.generatedAt,
   });
 }
