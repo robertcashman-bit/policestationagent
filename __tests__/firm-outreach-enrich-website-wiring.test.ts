@@ -39,7 +39,7 @@ describe('enrichment wires Serper website discovery before crawl', () => {
       CURSOR_ENRICH: 'firmoutreach:cursor:enrich',
       getCursor: vi.fn().mockResolvedValue(0),
       setCursor: vi.fn(),
-      listProspectIdsByStatus: vi.fn(async (status: string) =>
+      listProspectIdsByRecordStatus: vi.fn(async (status: string) =>
         status === 'discovered' ? ['p1'] : [],
       ),
       getProspect: vi.fn().mockImplementation(async () => structuredClone(prospect)),
@@ -119,7 +119,7 @@ describe('enrichment wires Serper website discovery before crawl', () => {
       CURSOR_ENRICH: 'firmoutreach:cursor:enrich',
       getCursor: vi.fn().mockResolvedValue(0),
       setCursor: vi.fn(),
-      listProspectIdsByStatus: vi.fn(async (status: string) =>
+      listProspectIdsByRecordStatus: vi.fn(async (status: string) =>
         status === 'discovered' ? ['p2'] : [],
       ),
       getProspect: vi.fn().mockImplementation(async () => structuredClone(prospect)),

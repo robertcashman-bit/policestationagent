@@ -72,7 +72,7 @@ describe('runFirmEnrichment saveProspect indexing', () => {
 
     vi.doMock('@/lib/firm-outreach/storage', () => ({
       CURSOR_ENRICH: 'firmoutreach:cursor:enrich',
-      listProspectIdsByStatus: vi.fn(async (status: string) =>
+      listProspectIdsByRecordStatus: vi.fn(async (status: string) =>
         status === 'discovered' ? ['p1'] : [],
       ),
       getProspect: vi.fn().mockResolvedValue({ ...prospect }),
@@ -153,7 +153,7 @@ describe('runFirmEnrichment cursor on timeout', () => {
 
     vi.doMock('@/lib/firm-outreach/storage', () => ({
       CURSOR_ENRICH: 'firmoutreach:cursor:enrich',
-      listProspectIdsByStatus: vi.fn(async (status: string) =>
+      listProspectIdsByRecordStatus: vi.fn(async (status: string) =>
         status === 'discovered' ? ['p1'] : [],
       ),
       getProspect: vi.fn().mockResolvedValue(prospect),

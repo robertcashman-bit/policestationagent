@@ -84,7 +84,8 @@ export async function saveProspect(prospect: FirmProspect, previousStatus?: Firm
   if (!kv) throw new Error('KV not configured');
   const existing = await getProspect(prospect.id);
   const oldStatus = previousStatus ?? existing?.status;
-  await kv.set(prospectKey(prospect.id), prospect);
+  const payload: FirmProspect = { ...prospect };
+  await kv.set(prospectKey(prospect.id), payload);
   await appendIndex(PROSPECT_INDEX, prospect.id);
   await appendIndex(statusIndexKey(prospect.status), prospect.id);
   await appendIndex(PROSPECT_FIRM_INDEX + prospect.firmKey, prospect.id);
@@ -93,6 +94,13 @@ export async function saveProspect(prospect: FirmProspect, previousStatus?: Firm
   }
   if (oldStatus && oldStatus !== prospect.status) {
     await removeFromIndex(statusIndexKey(oldStatus), prospect.id);
+  }
+  // Clear stale index membership when status indexes drifted.
+  if (prospect.status !== 'discovered') {
+    await removeFromIndex(statusIndexKey('discovered'), prospect.id);
+  }
+  if (prospect.status !== 'enriching') {
+    await removeFromIndex(statusIndexKey('enriching'), prospect.id);
   }
 }
 
@@ -158,6 +166,18 @@ export async function getProspectByEmail(
 export async function listProspectIdsByStatus(status: FirmProspectStatus): Promise<string[]> {
   if (skipKVInPrerender()) return [];
   return readStringList(statusIndexKey(status));
+}
+
+/** Active-campaign prospect ids whose stored record matches the given status. */
+export async function listProspectIdsByRecordStatus(status: FirmProspectStatus): Promise<string[]> {
+  if (skipKVInPrerender()) return [];
+  const ids = [...new Set(await listAllProspectIds())];
+  if (ids.length === 0) return [];
+  const map = await getProspectsByIds(ids);
+  return ids.filter((id) => {
+    const p = map.get(id);
+    return p && isActiveCampaignProspect(p) && p.status === status;
+  });
 }
 
 export async function listAllProspectIds(): Promise<string[]> {
@@ -527,19 +547,17 @@ export async function countProspectsByStatus(): Promise<Record<string, number>> 
     'excluded',
     'no_email',
   ];
-  const lists = await Promise.all(statuses.map((s) => listProspectIdsByStatus(s)));
   const out: Record<string, number> = {};
-  for (let i = 0; i < statuses.length; i++) {
-    const ids = lists[i];
-    if (ids.length === 0) {
-      out[statuses[i]] = 0;
-      continue;
-    }
-    const map = await getProspectsByIds(ids);
-    out[statuses[i]] = ids.filter((id) => {
-      const p = map.get(id);
-      return p && isActiveCampaignProspect(p);
-    }).length;
+  for (const s of statuses) out[s] = 0;
+
+  const ids = [...new Set(await listAllProspectIds())];
+  if (ids.length === 0) return out;
+
+  const map = await getProspectsByIds(ids);
+  for (const id of ids) {
+    const p = map.get(id);
+    if (!p || !isActiveCampaignProspect(p)) continue;
+    if (p.status in out) out[p.status]++;
   }
   return out;
 }

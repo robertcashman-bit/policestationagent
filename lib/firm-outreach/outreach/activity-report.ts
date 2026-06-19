@@ -5,6 +5,7 @@ import {
   getSuppressionsByEmails,
   listAllSends,
   listAllSuppressions,
+  listProspectIdsByRecordStatus,
   listProspectIdsByStatus,
 } from '../storage';
 import { isActiveCampaignProspect, isActiveCampaignSend } from '../campaign-scope';
@@ -233,7 +234,7 @@ export async function buildOutreachActivityReport(): Promise<OutreachActivityRep
   const [sentIds, excludedIds, readyIds] = await Promise.all([
     listProspectIdsByStatus('sent').then((ids) => ids.slice(0, SENT_PROSPECTS_FOLLOWUP_LIMIT)),
     listProspectIdsByStatus('excluded').then((ids) => ids.slice(0, EXCLUDED_PROSPECTS_LIMIT)),
-    listProspectIdsByStatus('ready_to_send').then((ids) => ids.slice(0, READY_TO_SEND_LIMIT)),
+    listProspectIdsByRecordStatus('ready_to_send').then((ids) => ids.slice(0, READY_TO_SEND_LIMIT)),
   ]);
   const [sentProspectsMap, excludedProspectsMap, readyProspectsMap] = await Promise.all([
     getProspectsByIds(sentIds),

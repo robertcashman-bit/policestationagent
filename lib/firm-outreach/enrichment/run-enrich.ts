@@ -4,12 +4,13 @@ import { enrichBatchSize } from '../constants';
 import { buildCrimeRegistry, resolveStatusWithQualification } from '../qualification';
 import type { CrimeRegistry } from '../qualification';
 import { resolveProspectWebsite } from './resolve-prospect-website';
+import { isActiveCampaignProspect } from '../campaign-scope';
 import {
   CURSOR_ENRICH,
   getCursor,
-  isDuplicateInitialSend,
-  listProspectIdsByStatus,
   getProspect,
+  isDuplicateInitialSend,
+  listProspectIdsByRecordStatus,
   saveProspect,
   setCursor,
 } from '../storage';
@@ -98,7 +99,11 @@ async function enrichOne(prospect: FirmProspect, registry: CrimeRegistry): Promi
   }
 
   if (prospect.email && isPlausibleOutreachEmail(prospect.email)) {
-    prospect.status = resolveStatusWithQualification(prospect, 'ready_to_send', registry);
+    prospect.status = resolveStatusWithQualification(
+      { ...prospect, status: 'discovered' },
+      'ready_to_send',
+      registry,
+    );
     if (
       prospect.status === 'ready_to_send' &&
       (await isDuplicateInitialSend(prospect.email, prospect.id))
@@ -151,8 +156,8 @@ export async function runFirmEnrichment(opts?: {
   const limit = opts?.limit ?? enrichBatchSize();
   const registry = await loadEnrichRegistry();
 
-  const discoveredIds = await listProspectIdsByStatus('discovered');
-  const noEmailIds = await listProspectIdsByStatus('no_email');
+  const discoveredIds = await listProspectIdsByRecordStatus('discovered');
+  const noEmailIds = await listProspectIdsByRecordStatus('no_email');
   const pool = [...discoveredIds, ...noEmailIds];
 
   let cursor = await getCursor(CURSOR_ENRICH);
@@ -205,7 +210,7 @@ export async function runFirmEnrichment(opts?: {
       processedCount++;
       if (enriched.email) emailsFound++;
       if (enriched.status === 'ready_to_send') readyToSend++;
-      if (saved?.status === 'ready_to_send') persistedReady++;
+      if (saved?.status === 'ready_to_send' && isActiveCampaignProspect(saved)) persistedReady++;
       if (enriched.status === 'no_email') noEmail++;
     } catch (err) {
       errors++;

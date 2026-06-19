@@ -8,6 +8,7 @@ const mockListAllSuppressions = vi.fn();
 const mockGetProspectsByIds = vi.fn();
 const mockGetSuppressionsByEmails = vi.fn();
 const mockListProspectIdsByStatus = vi.fn();
+const mockListProspectIdsByRecordStatus = vi.fn();
 const mockQueueRowsForProspects = vi.fn();
 const mockExcludedRowsForProspects = vi.fn();
 
@@ -24,6 +25,7 @@ vi.mock('@/lib/firm-outreach/storage', () => ({
   getProspectsByIds: (...args: unknown[]) => mockGetProspectsByIds(...args),
   getSuppressionsByEmails: (...args: unknown[]) => mockGetSuppressionsByEmails(...args),
   listProspectIdsByStatus: (...args: unknown[]) => mockListProspectIdsByStatus(...args),
+  listProspectIdsByRecordStatus: (...args: unknown[]) => mockListProspectIdsByRecordStatus(...args),
 }));
 
 describe('buildOutreachActivityReport', () => {
@@ -47,13 +49,12 @@ describe('buildOutreachActivityReport', () => {
     mockGetProspectsByIds.mockResolvedValue(new Map());
     mockGetSuppressionsByEmails.mockResolvedValue(new Map());
     mockListProspectIdsByStatus.mockResolvedValue([]);
+    mockListProspectIdsByRecordStatus.mockResolvedValue([]);
   });
 
   it('loads ready-to-send prospect ids for admin queue (batched mget)', async () => {
     mockListAllSends.mockResolvedValue([]);
-    mockListProspectIdsByStatus.mockImplementation((status: string) => {
-      if (status === 'sent') return Promise.resolve([]);
-      if (status === 'excluded') return Promise.resolve([]);
+    mockListProspectIdsByRecordStatus.mockImplementation((status: string) => {
       if (status === 'ready_to_send') return Promise.resolve(['fop_ready1']);
       return Promise.resolve([]);
     });
@@ -101,7 +102,7 @@ describe('buildOutreachActivityReport', () => {
     );
     const { report } = await buildOutreachActivityReport();
 
-    expect(mockListProspectIdsByStatus).toHaveBeenCalledWith('ready_to_send');
+    expect(mockListProspectIdsByRecordStatus).toHaveBeenCalledWith('ready_to_send');
     expect(report.readyToSendProspects).toHaveLength(1);
     expect(report.readyToSendProspects[0].firmName).toBe('Crime Defence LLP');
   });
@@ -173,7 +174,7 @@ describe('buildOutreachActivityReport', () => {
 
     expect(mockCountProspectsByStatus).toHaveBeenCalledTimes(1);
     expect(mockListProspectIdsByStatus).not.toHaveBeenCalledWith('discovered');
-    expect(mockListProspectIdsByStatus).toHaveBeenCalledWith('ready_to_send');
+    expect(mockListProspectIdsByRecordStatus).toHaveBeenCalledWith('ready_to_send');
     expect(report.summary.discovered).toBe(4547);
     expect(report.summary.readyToSend).toBe(42);
   });
@@ -194,7 +195,7 @@ describe('buildOutreachActivityReport', () => {
 
     expect(mockListProspectIdsByStatus).toHaveBeenCalledWith('sent');
     expect(mockListProspectIdsByStatus).toHaveBeenCalledWith('excluded');
-    expect(mockListProspectIdsByStatus).toHaveBeenCalledWith('ready_to_send');
+    expect(mockListProspectIdsByRecordStatus).toHaveBeenCalledWith('ready_to_send');
     expect(mockGetProspectsByIds).toHaveBeenCalledWith(['fop_a', 'fop_b']);
   });
 
@@ -371,7 +372,7 @@ describe('buildOutreachDashboardSummary', () => {
 
     expect(mockListProspectIdsByStatus).toHaveBeenCalledWith('sent');
     expect(mockListProspectIdsByStatus).not.toHaveBeenCalledWith('excluded');
-    expect(mockListProspectIdsByStatus).not.toHaveBeenCalledWith('ready_to_send');
+    expect(mockListProspectIdsByRecordStatus).not.toHaveBeenCalledWith('ready_to_send');
   });
 });
 
