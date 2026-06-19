@@ -4,7 +4,7 @@
  */
 import { getKV } from '@/lib/kv';
 import type { FirmProspectStatus } from './types';
-import { getProspect, listAllProspectIds } from './storage';
+import { getProspectsByIds, listAllProspectIds } from './storage';
 
 const PROSPECT_STATUS_INDEX = 'firmprospect:status:';
 
@@ -35,21 +35,26 @@ export async function reindexProspectStatuses(): Promise<{
   const byStatus: Record<string, number> = {};
   for (const s of ALL_STATUSES) {
     byStatus[s] = 0;
-    await kv.set(statusIndexKey(s), []);
   }
 
   const ids = await listAllProspectIds();
+  const buckets = new Map<FirmProspectStatus, string[]>();
+  for (const s of ALL_STATUSES) {
+    buckets.set(s, []);
+  }
+
+  const prospects = await getProspectsByIds(ids);
   for (const id of ids) {
-    const p = await getProspect(id);
+    const p = prospects.get(id);
     if (!p) continue;
-    const key = statusIndexKey(p.status);
-    const current = (await kv.get<string[]>(key)) ?? [];
-    if (!current.includes(id)) {
-      current.push(id);
-      await kv.set(key, current);
-    }
+    const bucket = buckets.get(p.status);
+    if (bucket) bucket.push(id);
     byStatus[p.status] = (byStatus[p.status] ?? 0) + 1;
   }
+
+  await Promise.all(
+    ALL_STATUSES.map((status) => kv.set(statusIndexKey(status), buckets.get(status) ?? [])),
+  );
 
   return { scanned: ids.length, byStatus };
 }
