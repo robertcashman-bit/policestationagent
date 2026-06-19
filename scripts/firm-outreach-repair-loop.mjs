@@ -66,10 +66,18 @@ async function main() {
       console.log('\n[enrich] reindex=1 batches=2 limit=25…');
       const enrich = await bootstrap('reindex=1&batches=2&limit=25');
       const counts = enrich.countsAfter ?? {};
+      const active = enrich.reindex?.activeByStatus ?? {};
       console.log(
         `  processed=${enrich.totals?.processed ?? 0} ready=${counts.ready_to_send ?? 0} discovered=${counts.discovered ?? 0}`,
       );
-      console.log('\nRepair OK — indexes restored and enrich pass completed');
+      console.log(
+        `  active records: ready=${active.ready_to_send ?? 0} discovered=${active.discovered ?? 0}`,
+      );
+      if ((counts.ready_to_send ?? 0) > 0 || (active.ready_to_send ?? 0) > 0) {
+        console.log('\nRepair OK — indexes restored and ready queue populated');
+        return;
+      }
+      console.log('\nRepair partial — indexes restored; ready queue still empty (check enrich saves)');
       return;
     }
 

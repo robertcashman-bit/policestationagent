@@ -3,6 +3,7 @@
  * npx tsx scripts/firm-outreach-reindex.ts
  */
 import { getKV } from '@/lib/kv';
+import { isActiveCampaignProspect } from './campaign-scope';
 import type { FirmProspectStatus } from './types';
 import { getProspectsByIds, listAllProspectIds } from './storage';
 
@@ -52,13 +53,16 @@ export function assertSafeReindexWrite(
 export async function reindexProspectStatuses(): Promise<{
   scanned: number;
   byStatus: Record<string, number>;
+  activeByStatus: Record<string, number>;
 }> {
   const kv = getKV();
   if (!kv) throw new Error('KV not configured');
 
   const byStatus: Record<string, number> = {};
+  const activeByStatus: Record<string, number> = {};
   for (const s of ALL_STATUSES) {
     byStatus[s] = 0;
+    activeByStatus[s] = 0;
   }
 
   const ids = await listAllProspectIds();
@@ -74,6 +78,9 @@ export async function reindexProspectStatuses(): Promise<{
     const bucket = buckets.get(p.status);
     if (bucket) bucket.push(id);
     byStatus[p.status] = (byStatus[p.status] ?? 0) + 1;
+    if (isActiveCampaignProspect(p)) {
+      activeByStatus[p.status] = (activeByStatus[p.status] ?? 0) + 1;
+    }
   }
 
   const bucketTotal = [...buckets.values()].reduce((sum, bucket) => sum + bucket.length, 0);
@@ -83,5 +90,5 @@ export async function reindexProspectStatuses(): Promise<{
     ALL_STATUSES.map((status) => kv.set(statusIndexKey(status), buckets.get(status) ?? [])),
   );
 
-  return { scanned: ids.length, byStatus };
+  return { scanned: ids.length, byStatus, activeByStatus };
 }

@@ -75,7 +75,7 @@ describe('reindexProspectStatuses batch write', () => {
           firmKey: 'a',
           firmName: 'A',
           prospectType: 'firm' as const,
-          campaignId: 'c',
+          campaignId: 'agent_cover_kent_v1',
           sources: ['laa'],
           priorityScore: 1,
           enrichAttempts: 0,
@@ -91,7 +91,7 @@ describe('reindexProspectStatuses batch write', () => {
           firmKey: 'b',
           firmName: 'B',
           prospectType: 'firm' as const,
-          campaignId: 'c',
+          campaignId: 'agent_cover_kent_v1',
           sources: ['laa'],
           priorityScore: 1,
           enrichAttempts: 0,
@@ -120,6 +120,7 @@ describe('reindexProspectStatuses batch write', () => {
     expect(result.scanned).toBe(2);
     expect(result.byStatus.discovered).toBe(1);
     expect(result.byStatus.excluded).toBe(1);
+    expect(result.activeByStatus.discovered).toBe(1);
     expect(sets.get('firmprospect:status:discovered')).toEqual(['p1']);
     expect(sets.get('firmprospect:status:excluded')).toEqual(['p2']);
   });

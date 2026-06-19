@@ -93,9 +93,6 @@ export async function bootstrapOutreach(opts?: {
     if (stats.processed === 0) break;
   }
 
-  const countsAfter = await countProspectsByStatus();
-  const sendAllowed = await isOutreachSendAllowed();
-
   const totals = batchResults.reduce(
     (acc, stats) => ({
       processed: acc.processed + stats.processed,
@@ -106,6 +103,14 @@ export async function bootstrapOutreach(opts?: {
     }),
     { processed: 0, emailsFound: 0, readyToSend: 0, noEmail: 0, errors: 0 },
   );
+
+  let countsAfter = await countProspectsByStatus();
+  if (totals.processed > 0) {
+    reindexResult = await reindexProspectStatuses();
+    countsAfter = await countProspectsByStatus();
+  }
+
+  const sendAllowed = await isOutreachSendAllowed();
 
   return {
     unpaused,
