@@ -16,6 +16,7 @@ export interface BootstrapOutreachResult {
     processed: number;
     emailsFound: number;
     readyToSend: number;
+    persistedReady: number;
     noEmail: number;
     errors: number;
   };
@@ -60,6 +61,7 @@ export async function bootstrapOutreach(opts?: {
     processed: 0,
     emailsFound: 0,
     readyToSend: 0,
+    persistedReady: 0,
     noEmail: 0,
     errors: 0,
   };
@@ -98,10 +100,11 @@ export async function bootstrapOutreach(opts?: {
       processed: acc.processed + stats.processed,
       emailsFound: acc.emailsFound + stats.emailsFound,
       readyToSend: acc.readyToSend + stats.readyToSend,
+      persistedReady: acc.persistedReady + (stats.persistedReady ?? 0),
       noEmail: acc.noEmail + stats.noEmail,
       errors: acc.errors + stats.errors,
     }),
-    { processed: 0, emailsFound: 0, readyToSend: 0, noEmail: 0, errors: 0 },
+    { processed: 0, emailsFound: 0, readyToSend: 0, persistedReady: 0, noEmail: 0, errors: 0 },
   );
 
   let countsAfter = await countProspectsByStatus();

@@ -184,6 +184,7 @@ export async function runFirmEnrichment(opts?: {
 
   let emailsFound = 0;
   let readyToSend = 0;
+  let persistedReady = 0;
   let noEmail = 0;
   let errors = 0;
   let processedCount = 0;
@@ -200,9 +201,11 @@ export async function runFirmEnrichment(opts?: {
       const prevStatus = p.status;
       const enriched = await enrichOne(p, registry);
       await saveProspect(enriched, prevStatus);
+      const saved = await getProspect(id);
       processedCount++;
       if (enriched.email) emailsFound++;
       if (enriched.status === 'ready_to_send') readyToSend++;
+      if (saved?.status === 'ready_to_send') persistedReady++;
       if (enriched.status === 'no_email') noEmail++;
     } catch (err) {
       errors++;
@@ -218,6 +221,7 @@ export async function runFirmEnrichment(opts?: {
     processed: processedCount,
     emailsFound,
     readyToSend,
+    persistedReady,
     noEmail,
     errors,
     elapsedMs: Date.now() - started,
