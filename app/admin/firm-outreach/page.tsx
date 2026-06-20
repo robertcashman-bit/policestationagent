@@ -8,7 +8,7 @@ export const revalidate = 0;
 
 export const metadata: Metadata = {
   title: 'Firm outreach | Admin',
-  description: 'National agent cover outreach — discovery, enrichment, and email sends.',
+  description: 'Kent agent cover outreach — discovery, enrichment, and email sends.',
   robots: { index: false, follow: false },
 };
 
@@ -20,7 +20,7 @@ export default function FirmOutreachAdminPage() {
           active="firm-outreach"
           adminEmail={email}
           title="Firm outreach"
-          description="Automated discovery, email enrichment, and national agent cover invitations for criminal defence firms and solicitors."
+          description="Automated discovery, email enrichment, and Kent-only agent cover invitations for criminal defence firms and solicitors."
         >
           <FirmOutreachDashboard />
         </AdminShell>

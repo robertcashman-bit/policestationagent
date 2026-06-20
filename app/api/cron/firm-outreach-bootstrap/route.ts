@@ -17,9 +17,20 @@ export async function GET(request: Request) {
   const reindex = url.searchParams.get('reindex') === '1';
   const reindexOnly = url.searchParams.get('reindexOnly') === '1';
   const sendApproval = url.searchParams.get('sendApproval') === '1';
+  const sendKentCorrection = url.searchParams.get('sendKentCorrection') === '1';
   const forceApproval = url.searchParams.get('force') === '1';
   const batches = Number(url.searchParams.get('batches') || 2) || 2;
   const limit = Number(url.searchParams.get('limit') || 25) || 25;
+
+  if (sendKentCorrection) {
+    const dryRun = url.searchParams.get('dryRun') === '1';
+    const limit = Number(url.searchParams.get('limit') || 0) || undefined;
+    const { runKentCorrectionEmails } = await import(
+      '@/lib/firm-outreach/outreach/run-kent-corrections'
+    );
+    const correction = await runKentCorrectionEmails({ dryRun, limit });
+    return NextResponse.json({ ok: true, mode: 'sendKentCorrection', dryRun, correction });
+  }
 
   if (sendApproval) {
     if (url.searchParams.get('unpause') === '1') {

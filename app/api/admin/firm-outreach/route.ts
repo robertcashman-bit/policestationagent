@@ -261,6 +261,20 @@ export async function POST(request: Request) {
       return NextResponse.json({ ok: true, pipeline: result, dryRun: Boolean(body.dryRun) });
     }
 
+    if (body.action === 'send_kent_corrections') {
+      if (!getKV()) {
+        return NextResponse.json({ error: 'KV not configured' }, { status: 503 });
+      }
+      const { runKentCorrectionEmails } = await import(
+        '@/lib/firm-outreach/outreach/run-kent-corrections'
+      );
+      const correction = await runKentCorrectionEmails({
+        dryRun: body.dryRun,
+        limit: body.limit,
+      });
+      return NextResponse.json({ ok: true, correction, dryRun: Boolean(body.dryRun) });
+    }
+
     if (body.action === 'mark_joined' && body.prospectId?.trim()) {
       const prospect = await markProspectJoinedWhatsApp(body.prospectId.trim());
       if (!prospect) {
