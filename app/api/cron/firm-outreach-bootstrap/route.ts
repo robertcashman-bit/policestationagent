@@ -16,8 +16,30 @@ export async function GET(request: Request) {
   const unpauseOnly = url.searchParams.get('unpause') === '1';
   const reindex = url.searchParams.get('reindex') === '1';
   const reindexOnly = url.searchParams.get('reindexOnly') === '1';
+  const sendApproval = url.searchParams.get('sendApproval') === '1';
+  const forceApproval = url.searchParams.get('force') === '1';
   const batches = Number(url.searchParams.get('batches') || 2) || 2;
   const limit = Number(url.searchParams.get('limit') || 25) || 25;
+
+  if (sendApproval) {
+    if (url.searchParams.get('unpause') === '1') {
+      await bootstrapOutreach({ unpauseOnly: true, batches: 0, limit: 0 });
+    }
+    const { sendOutreachApprovalRequestEmail } = await import(
+      '@/lib/firm-outreach/outreach/approval-request-email'
+    );
+    const approval = await sendOutreachApprovalRequestEmail({ force: forceApproval });
+    const { countProspectsByStatus } = await import('@/lib/firm-outreach/storage');
+    const counts = await countProspectsByStatus();
+    const { isOutreachSendAllowed } = await import('@/lib/firm-outreach/pause-state');
+    return NextResponse.json({
+      ok: true,
+      mode: 'sendApproval',
+      approval,
+      sendAllowed: await isOutreachSendAllowed(),
+      counts,
+    });
+  }
 
   const result = await bootstrapOutreach({
     batches,
