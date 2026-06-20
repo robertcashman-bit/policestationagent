@@ -1,0 +1,34 @@
+---
+description: Site-wide legal accuracy — no invented citations, verified PACE and case law
+globs: data/blog-posts/**/*.json,data/blog-posts-full.json,app/**/page.tsx,components/**/*.tsx,app/api/admin/generate-blog/**,app/api/admin/posts/**
+alwaysApply: false
+---
+
+# Legal accuracy (required)
+
+When creating or editing public legal content:
+
+## Case law
+
+- Never invent case citations or holdings.
+- Every `R v …`, `[YYYY] EWCA`, or `(YYYY) … Cr App R` reference must link to BAILII or appear in `data/legal-case-registry.json`.
+- Summarise holdings accurately; link to primary source.
+
+## PACE and Code C
+
+- Verify section/paragraph numbers against GOV.UK Code C 2023 or legislation.gov.uk before publishing.
+- Do not attribute rights to wrong sections (e.g. s.58 = right to legal advice, not evidence-weight rules).
+- Distinguish: fitness to interview ≠ fitness to plead; Code breach ≠ automatic exclusion.
+
+## Sources
+
+- Public blog posts and substantive guides must end with `<h2>Sources</h2>` and official links.
+- Minimum two official domains in Sources for substantive legal posts (`gov.uk`, `legislation.gov.uk`, `cps.gov.uk`, `bailii.org`).
+
+## After editing
+
+```bash
+node scripts/sync-blog-index.mjs
+npm run audit:legal
+npm run test:legal
+```

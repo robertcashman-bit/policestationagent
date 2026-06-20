@@ -5,6 +5,11 @@
  */
 import fs from "fs";
 import path from "path";
+import {
+  sourcesAtBottom,
+  sourcesExternalLinkQuality,
+} from "./lib/blog-sources-audit.mjs";
+import { isLegalContent } from "./lib/legal-content-scanner.mjs";
 
 const BLOG_POSTS_DIR = path.join(process.cwd(), "data", "blog-posts");
 const LEGACY_JSON_PATH = path.join(process.cwd(), "data", "blog-posts-full.json");
@@ -93,6 +98,16 @@ const FIRM_PATTERNS = [
   /billing expectations/i,
 ];
 
+const BLOG_SOURCES_REQUIRED_FROM = "2026-06-14";
+
+function requiresSourcesCompliance(post) {
+  if (post.status === "draft") return false;
+  const html = post.contentHtml || "";
+  const audience = classifyAudience(post.title, html);
+  if (audience !== "public") return false;
+  return isLegalContent(html);
+}
+
 function classifyAudience(title, html) {
   const text = `${title} ${html}`;
   if (REP_NETWORK_PATTERNS.some((p) => p.test(text))) return "rep-network";
@@ -117,6 +132,8 @@ function auditPost(post) {
     hasNotKentPolice: /not kent police/i.test(html),
     hasKeyTakeaways: /key-takeaways/i.test(html),
     hasSources: /<h2[^>]*>sources<\/h2>/i.test(html),
+    sourcesAtBottom: sourcesAtBottom(html),
+    sourcesLinkQuality: sourcesExternalLinkQuality(html).ok,
     hasPublicCta: /01732\s*247427/i.test(html),
     hasFirmPrimaryCta: /need police station cover in kent/i.test(html),
     hasRepKentLink: /policestationrepkent/i.test(html),
@@ -148,7 +165,21 @@ function getIndexOrphans(allSlugs) {
 }
 
 const posts = getAllPosts();
-const audits = posts.map(auditPost);
+const audits = posts.map((post) => auditPost(post));
+const sourcesViolations = posts
+  .filter((p) => requiresSourcesCompliance(p))
+  .map((post) => {
+    const html = post.contentHtml || "";
+    const linkCheck = sourcesExternalLinkQuality(html);
+    const issues = [];
+    if (!/<h2[^>]*>sources<\/h2>/i.test(html)) issues.push("missing Sources section");
+    if (!sourcesAtBottom(html)) issues.push("Sources not at bottom (after Conclusion/CTA)");
+    if (/<h2[^>]*>sources<\/h2>/i.test(html) && !linkCheck.ok) {
+      issues.push(...linkCheck.issues);
+    }
+    return { slug: post.slug, date: post.date, issues };
+  })
+  .filter((v) => v.issues.length > 0);
 const orphans = getIndexOrphans(posts.map((p) => p.slug));
 
 const summary = {
@@ -162,6 +193,11 @@ const summary = {
   missingNotKentPolice: audits.filter((a) => !a.hasNotKentPolice).length,
   missingKeyTakeaways: audits.filter((a) => !a.hasKeyTakeaways).length,
   missingSources: audits.filter((a) => !a.hasSources).length,
+  missingSourcesAtBottom: audits.filter(
+    (a) => a.source === "canonical" && (!a.hasSources || !a.sourcesAtBottom),
+  ).length,
+  badSourcesLinks: audits.filter((a) => a.source === "canonical" && a.hasSources && !a.sourcesLinkQuality)
+    .length,
   firmPrimaryCta: audits.filter((a) => a.hasFirmPrimaryCta).length,
   repKentLinks: audits.filter((a) => a.hasRepKentLink).length,
   wixImages: audits.filter((a) => a.hasWixImage).length,
@@ -187,6 +223,23 @@ audits
   .forEach((a) => console.log(`  - [${a.audience}] ${a.slug}`));
 console.log(`\nMissing inline figure:`);
 audits.filter((a) => !a.hasInlineFigure).forEach((a) => console.log(`  - ${a.slug}`));
+console.log(`\nCanonical posts missing Sources at bottom:`);
+audits
+  .filter((a) => a.source === "canonical" && (!a.hasSources || !a.sourcesAtBottom))
+  .forEach((a) => console.log(`  - ${a.slug}`));
+console.log(`\nCanonical posts with Sources link issues:`);
+audits
+  .filter((a) => a.source === "canonical" && a.hasSources && !a.sourcesLinkQuality)
+  .forEach((a) => console.log(`  - ${a.slug}`));
 console.log(`\nIndex orphans: ${orphans.length}`);
 orphans.forEach((o) => console.log(`  - ${o.slug}`));
+console.log(`\nSources compliance failures (public legal posts):`);
+if (sourcesViolations.length === 0) {
+  console.log("  (none)");
+} else {
+  for (const v of sourcesViolations) {
+    console.log(`  - ${v.slug} (${v.date}): ${v.issues.join("; ")}`);
+  }
+  process.exit(1);
+}
 console.log(`\nWrote ${OUT_CSV} and ${OUT_JSON}`);

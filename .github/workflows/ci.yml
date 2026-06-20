@@ -26,6 +26,12 @@ jobs:
       - name: Compliance scan
         run: npm run compliance:scan
 
+      - name: Legal accuracy audit
+        run: npm run audit:legal
+
+      - name: Legal accuracy tests
+        run: npm run test:legal
+
       - name: Unit tests
         run: npm test
 

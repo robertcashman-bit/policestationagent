@@ -1,0 +1,51 @@
+[
+  {
+    "id": "absolam-1988",
+    "citations": ["R v Absolam", "Absolam", "(1988) 88 Cr App R 332"],
+    "officialUrl": "https://www.cps.gov.uk/legal-guidance/confessions-unfairly-obtained-evidence-and-breaches-pace",
+    "verifiedHolding": "Code C breach does not automatically exclude evidence; section 78 discretion requires breach to be significant and substantial.",
+    "bailiiUrl": null
+  },
+  {
+    "id": "foster-2003",
+    "citations": ["R v Foster", "[2003] EWCA Crim 178", "EWCA Crim 178"],
+    "officialUrl": "https://www.bailii.org/ew/cases/EWCA/Crim/2003/178.html",
+    "verifiedHolding": "Court of Appeal on PACE section 77 jury warning and appropriate adult role in reducing risk of unreliable information.",
+    "bailiiUrl": "https://www.bailii.org/ew/cases/EWCA/Crim/2003/178.html"
+  },
+  {
+    "id": "argent-1997",
+    "citations": ["R v Argent", "Argent", "[1997] 2 Cr App R 27"],
+    "officialUrl": "https://www.cps.gov.uk/legal-guidance/adverse-inference",
+    "verifiedHolding": "Leading authority on when an adverse inference may be drawn from silence under the Criminal Justice and Public Order Act 1994.",
+    "bailiiUrl": null
+  },
+  {
+    "id": "samuel-1988",
+    "citations": ["R v Samuel", "Samuel", "[1988] QB 615"],
+    "officialUrl": "https://www.legislation.gov.uk/ukpga/1984/60/section/58",
+    "verifiedHolding": "Court of Appeal authority on the right to legal advice under PACE section 58 at the police station.",
+    "bailiiUrl": null
+  },
+  {
+    "id": "roble-1997",
+    "citations": ["R v Roble", "Roble", "[1997] Crim LR 449"],
+    "officialUrl": "https://www.cps.gov.uk/legal-guidance/adverse-inference",
+    "verifiedHolding": "Authority on adverse inference and the need for proper cautioning before silence can be relied upon.",
+    "bailiiUrl": null
+  },
+  {
+    "id": "betts-1994",
+    "citations": ["R v Betts", "Betts", "[1994] 3 All ER 69"],
+    "officialUrl": "https://www.cps.gov.uk/legal-guidance/adverse-inference",
+    "verifiedHolding": "Authority on adverse inference where a defendant fails to mention facts when questioned under caution.",
+    "bailiiUrl": null
+  },
+  {
+    "id": "chandler-1992",
+    "citations": ["R v Chandler", "Chandler", "(1992) 97 Cr App R 76"],
+    "officialUrl": "https://www.legislation.gov.uk/ukpga/1984/60/section/76",
+    "verifiedHolding": "Authority on the scope and administration of the police caution before interview.",
+    "bailiiUrl": null
+  }
+]

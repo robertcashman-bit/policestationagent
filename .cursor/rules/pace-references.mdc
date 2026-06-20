@@ -1,0 +1,25 @@
+---
+description: PACE section and Code C paragraph references must match official wording
+globs: data/blog-posts/**/*.json,data/blog-posts-full.json,app/**/page.tsx,components/**/*.tsx
+alwaysApply: false
+---
+
+# PACE references (required)
+
+Before writing "paragraph X.X says…" or "section N of PACE":
+
+1. Check [PACE Code C 2023 (accessible)](https://www.gov.uk/government/publications/pace-code-c-2023/pace-code-c-2023-accessible) or [legislation.gov.uk PACE 1984](https://www.legislation.gov.uk/ukpga/1984/60/contents).
+2. Use consistent format: `PACE section 58` or `Code C paragraph 11.1A`.
+3. Add the reference to `data/pace-reference-registry.json` if introducing a new citation used on the site.
+4. Link Sources to the matching official URL.
+
+## Common mistakes to avoid
+
+- **s.58**: right to free legal advice — not a rule about court assessing "weight of evidence".
+- **s.76/s.78**: exclusion powers — not automatic for every Code breach.
+- **11.1A**: disclosure to enable legal advice — not full prosecution case disclosure.
+- **Annex G / 12.3**: fitness to be interviewed — not the same as fitness to plead (CPIA 1964 s.4).
+
+## Registry
+
+Curated verified summaries live in `data/pace-reference-registry.json`. Run `npm run audit:legal` before commit.

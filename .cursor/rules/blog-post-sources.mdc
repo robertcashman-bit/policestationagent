@@ -1,0 +1,42 @@
+---
+description: Blog posts must end with a Sources section and official links
+globs: data/blog-posts/**/*.json
+alwaysApply: false
+---
+
+# Blog post sources (required)
+
+When creating or editing published posts in `data/blog-posts/*.json`:
+
+## Placement
+
+- Include `<h2>Sources</h2>` **at the bottom** of `contentHtml` (after Conclusion and the public CTA box).
+- End with a short disclaimer: *General information only — not legal advice…*
+
+## Content order (tail of article)
+
+1. Related guides (optional)
+2. Public CTA (`advert-cta`)
+3. **Conclusion**
+4. **Sources** ← required
+5. Disclaimer paragraph
+
+## Source links
+
+- Prefer **official** URLs: `gov.uk`, `legislation.gov.uk`, `cps.gov.uk`, `bailii.org` (for reported cases).
+- Each external link: `rel="noopener noreferrer"`.
+- Briefly note which Code paragraph / section each source supports.
+- Do **not** invent case citations or statute wording — link to primary sources.
+- Do **not** paraphrase PACE Code C paragraphs inaccurately — verify against GOV.UK Code C 2023.
+- Distinguish legal concepts accurately (e.g. fitness to be interviewed ≠ fitness to plead).
+- Substantive legal posts need **at least two official source links** in Sources (`gov.uk`, `legislation.gov.uk`, `cps.gov.uk`, `bailii.org`).
+
+## After editing
+
+```bash
+node scripts/sync-blog-index.mjs
+npm run audit:legal
+npm run test:legal
+```
+
+All public blog posts fail audit if Sources is missing or not at the bottom.

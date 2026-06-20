@@ -1,0 +1,109 @@
+[
+  {
+    "id": "pace-s58",
+    "type": "pace-section",
+    "officialUrl": "https://www.legislation.gov.uk/ukpga/1984/60/section/58",
+    "verifiedSummary": "Right of persons detained to consult solicitor; legal advice is free and not means-tested at the police station.",
+    "allowedClaimPatterns": [
+      "legal advice",
+      "consult a solicitor",
+      "free",
+      "right to",
+      "section 58"
+    ],
+    "forbiddenClaimPatterns": [
+      "weight of.*evidence",
+      "assessing the weight",
+      "automatically exclude",
+      "inadmissible.*section 58"
+    ]
+  },
+  {
+    "id": "pace-s76",
+    "type": "pace-section",
+    "officialUrl": "https://www.legislation.gov.uk/ukpga/1984/60/section/76",
+    "verifiedSummary": "Court must exclude confession obtained by oppression or in consequence of something likely to render it unreliable unless prosecution proves otherwise.",
+    "allowedClaimPatterns": ["confession", "oppression", "unreliable", "exclude"],
+    "forbiddenClaimPatterns": ["automatically excluded", "always inadmissible"]
+  },
+  {
+    "id": "pace-s77",
+    "type": "pace-section",
+    "officialUrl": "https://www.legislation.gov.uk/ukpga/1984/60/section/77",
+    "verifiedSummary": "Where case depends substantially on confession by mentally handicapped person not made in presence of independent person, judge must warn jury.",
+    "allowedClaimPatterns": ["mentally handicapped", "jury warning", "independent person"],
+    "forbiddenClaimPatterns": []
+  },
+  {
+    "id": "pace-s78",
+    "type": "pace-section",
+    "officialUrl": "https://www.legislation.gov.uk/ukpga/1984/60/section/78",
+    "verifiedSummary": "Court may exclude evidence if admission would have adverse effect on fairness of proceedings.",
+    "allowedClaimPatterns": ["fairness", "exclude", "unfair"],
+    "forbiddenClaimPatterns": ["automatically exclude", "guaranteed to be excluded"]
+  },
+  {
+    "id": "code-c-11.1A",
+    "type": "code-c-paragraph",
+    "officialUrl": "https://www.gov.uk/government/publications/pace-code-c-2023/pace-code-c-2023-accessible",
+    "verifiedSummary": "Before interview, officer in charge must provide sufficient information to enable the detainee's legal adviser to give effective advice.",
+    "allowedClaimPatterns": ["disclosure", "legal advice", "11\\.1A", "sufficient information"],
+    "forbiddenClaimPatterns": ["guaranteed disclosure", "full disclosure of all evidence"]
+  },
+  {
+    "id": "code-c-1.4",
+    "type": "code-c-paragraph",
+    "officialUrl": "https://www.gov.uk/government/publications/pace-code-c-2023/pace-code-c-2023-accessible",
+    "verifiedSummary": "If officer has reason to suspect person is juvenile or vulnerable, must treat as such unless clear evidence to dispel suspicion.",
+    "allowedClaimPatterns": ["vulnerable", "juvenile", "reason to suspect"],
+    "forbiddenClaimPatterns": []
+  },
+  {
+    "id": "code-c-1.13d",
+    "type": "code-c-paragraph",
+    "officialUrl": "https://www.gov.uk/government/publications/pace-code-c-2023/pace-code-c-2023-accessible",
+    "verifiedSummary": "Vulnerable person includes someone who may have difficulty understanding detention or rights due to mental health condition or disorder.",
+    "allowedClaimPatterns": ["vulnerable", "mental health", "appropriate adult", "1\\.13"],
+    "forbiddenClaimPatterns": []
+  },
+  {
+    "id": "code-c-9.5",
+    "type": "code-c-paragraph",
+    "officialUrl": "https://www.gov.uk/government/publications/pace-code-c-2023/pace-code-c-2023-accessible",
+    "verifiedSummary": "Custody officer must ensure clinical attention if detainee appears suffering from mental disorder; urgent cases require healthcare professional or ambulance.",
+    "allowedClaimPatterns": ["clinical", "healthcare", "mental disorder", "9\\.5"],
+    "forbiddenClaimPatterns": []
+  },
+  {
+    "id": "code-c-11.15",
+    "type": "code-c-paragraph",
+    "officialUrl": "https://www.gov.uk/government/publications/pace-code-c-2023/pace-code-c-2023-accessible",
+    "verifiedSummary": "Juvenile or vulnerable person must not be interviewed about offence in absence of appropriate adult except in limited urgent circumstances.",
+    "allowedClaimPatterns": ["appropriate adult", "must not be interviewed", "11\\.15"],
+    "forbiddenClaimPatterns": ["never be interviewed"]
+  },
+  {
+    "id": "code-c-12.3",
+    "type": "code-c-paragraph",
+    "officialUrl": "https://www.gov.uk/government/publications/pace-code-c-2023/pace-code-c-2023-accessible",
+    "verifiedSummary": "Custody officer must assess fitness to be interviewed; shall not allow interview if it would cause significant harm to physical or mental state.",
+    "allowedClaimPatterns": ["fitness", "significant harm", "12\\.3", "interviewed"],
+    "forbiddenClaimPatterns": ["never be interviewed", "always unfit"]
+  },
+  {
+    "id": "code-c-annex-g",
+    "type": "code-c-annex",
+    "officialUrl": "https://www.gov.uk/government/publications/pace-code-c-2023/pace-code-c-2023-accessible",
+    "verifiedSummary": "Annex G sets out fitness to be interviewed: risk of significant harm or unreliable answers due to physical or mental state; healthcare advice required.",
+    "allowedClaimPatterns": ["fitness to be interviewed", "annex g", "unreliable", "healthcare"],
+    "forbiddenClaimPatterns": []
+  },
+  {
+    "id": "cpia-s4",
+    "type": "legislation-section",
+    "officialUrl": "https://www.legislation.gov.uk/ukpga/1964/60/section/4",
+    "verifiedSummary": "Crown Court procedure for finding unfitness to plead under Criminal Procedure (Insanity) Act 1964 section 4.",
+    "allowedClaimPatterns": ["fitness to plead", "court", "section 4", "1964"],
+    "forbiddenClaimPatterns": ["same as fitness to interview", "police station fitness to plead"]
+  }
+]

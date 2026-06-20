@@ -155,6 +155,28 @@ export async function POST(request: NextRequest) {
 
   const req = reqCheck.request;
 
+  const { auditPostForPublish } = await import("../../../../scripts/lib/legal-publish-audit.mjs");
+  const publishAudit = auditPostForPublish({
+    title: req.title,
+    slug: req.title
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, "")
+      .replace(/\s+/g, "-")
+      .slice(0, 80),
+    contentHtml: req.contentHtml,
+    faq: req.faq,
+  });
+  if (!publishAudit.ok) {
+    return NextResponse.json(
+      {
+        success: false,
+        error: "Legal accuracy audit failed",
+        issues: publishAudit.issues,
+      },
+      { status: 422 },
+    );
+  }
+
   // 2. Create post object for GitHub
   const post = createBlogPost({
     title: req.title,

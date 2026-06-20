@@ -1,15 +1,17 @@
 {
   "summary": {
-    "total": 98,
+    "total": 101,
     "byAudience": {
-      "public": 98,
-      "firm": 0,
+      "public": 97,
+      "firm": 4,
       "repNetwork": 0
     },
     "missingInlineFigure": 0,
     "missingNotKentPolice": 0,
     "missingKeyTakeaways": 9,
-    "missingSources": 77,
+    "missingSources": 0,
+    "missingSourcesAtBottom": 0,
+    "badSourcesLinks": 0,
     "firmPrimaryCta": 0,
     "repKentLinks": 0,
     "wixImages": 0,
@@ -27,13 +29,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 802
+      "wordCount": 899
     },
     {
       "slug": "help-the-police-have-contacted-me-1",
@@ -46,13 +50,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 762
+      "wordCount": 859
     },
     {
       "slug": "have-to-attend-a-police-station-part-2-1",
@@ -65,13 +71,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 865
+      "wordCount": 931
     },
     {
       "slug": "welcome-to-our-blog",
@@ -84,13 +92,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 773
+      "wordCount": 870
     },
     {
       "slug": "what-is-a-duty-solicitor-4",
@@ -103,13 +113,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 763
+      "wordCount": 860
     },
     {
       "slug": "demystifying-police-bail-understanding-imposition-conditions-breaches-and-legal-implications",
@@ -122,13 +134,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 794
+      "wordCount": 860
     },
     {
       "slug": "property-returned-from-police-uk",
@@ -141,13 +155,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 771
+      "wordCount": 837
     },
     {
       "slug": "arrested-or-have-a-policewarrant-in-kent-here-s-what-you-need-to-know0",
@@ -160,13 +176,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 879
+      "wordCount": 945
     },
     {
       "slug": "what-happens-if-you-don-t-attend-a-voluntary-police-interview-inengland",
@@ -179,13 +197,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 828
+      "wordCount": 925
     },
     {
       "slug": "whats-a-voluntary-police-interview",
@@ -198,13 +218,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 741
+      "wordCount": 838
     },
     {
       "slug": "whats-a-duty-solicitor",
@@ -217,13 +239,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 818
+      "wordCount": 915
     },
     {
       "slug": "is-legal-advice-free-at-the-police-station",
@@ -236,13 +260,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 807
+      "wordCount": 904
     },
     {
       "slug": "kent-police-stations-legal-representation-24-7",
@@ -255,13 +281,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 756
+      "wordCount": 853
     },
     {
       "slug": "police-station-interview-rights-kent-legal-representation",
@@ -274,13 +302,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 764
+      "wordCount": 861
     },
     {
       "slug": "police-voluntary-interview-questions-4",
@@ -293,13 +323,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 740
+      "wordCount": 837
     },
     {
       "slug": "criminal-law-faq-kent-police-station-rights",
@@ -312,13 +344,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 673
+      "wordCount": 739
     },
     {
       "slug": "nofurtheractionafterpoliceinterview",
@@ -331,13 +365,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 834
+      "wordCount": 931
     },
     {
       "slug": "being-interviewed-by-the-police-why-you-need-a-criminal-solicitor-in-the-police-station",
@@ -350,13 +386,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 757
+      "wordCount": 854
     },
     {
       "slug": "voluntaryinterviewwithpolice",
@@ -369,13 +407,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 794
+      "wordCount": 891
     },
     {
       "slug": "what-happens-at-a-police-station-voluntary-interview-page-4",
@@ -388,13 +428,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 798
+      "wordCount": 895
     },
     {
       "slug": "navigating-the-legal-system-understanding-the-impact-of-police-cautions-on-employment-criminal-rec",
@@ -407,13 +449,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 881
+      "wordCount": 947
     },
     {
       "slug": "copy-of-what-is-common-assault-in-english-law",
@@ -426,13 +470,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 910
+      "wordCount": 976
     },
     {
       "slug": "police-station-representation-do-i-need-it-i-don-t-do-i",
@@ -445,13 +491,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 713
+      "wordCount": 810
     },
     {
       "slug": "whats-happens-at-a-police-station-voluntary-interview-part-2",
@@ -464,13 +512,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 917
+      "wordCount": 983
     },
     {
       "slug": "police-station-reps-and-agents-for-swanley-police-station",
@@ -483,13 +533,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 742
+      "wordCount": 839
     },
     {
       "slug": "police-caution",
@@ -502,13 +554,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 875
+      "wordCount": 941
     },
     {
       "slug": "police-caution-difference",
@@ -521,13 +575,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 878
+      "wordCount": 944
     },
     {
       "slug": "the-hidden-risks-of-voluntary-police-interviews-in-the-uk-you-need-to-know",
@@ -540,13 +596,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 799
+      "wordCount": 896
     },
     {
       "slug": "understanding-community-resolutions-and-their-impact-on-dbs-checks-and-employment",
@@ -559,13 +617,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 842
+      "wordCount": 908
     },
     {
       "slug": "the-role-of-higher-court-advocates-in-the-uk",
@@ -578,13 +638,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 834
+      "wordCount": 900
     },
     {
       "slug": "how-police-station-reps-safeguard-your-rights",
@@ -597,13 +659,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 717
+      "wordCount": 814
     },
     {
       "slug": "understanding-police-cautions-and-warnings-what-you-need-to-know",
@@ -616,13 +680,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 878
+      "wordCount": 944
     },
     {
       "slug": "what-happens-at-a-police-station-voluntary-interview-part-3",
@@ -635,13 +701,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 747
+      "wordCount": 844
     },
     {
       "slug": "no-further-action-after-police-interview",
@@ -654,13 +722,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 822
+      "wordCount": 888
     },
     {
       "slug": "complete-guide-to-legal-representation-at-kent-police-stations",
@@ -673,13 +743,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 742
+      "wordCount": 839
     },
     {
       "slug": "what-to-expect-during-a-police-station-interview-in-kent-your-rights-and-legal-representation",
@@ -692,13 +764,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 766
+      "wordCount": 863
     },
     {
       "slug": "how-new-sentencing-guidelines-impact-your-rights-at-the-kent-police-station",
@@ -711,13 +785,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 754
+      "wordCount": 851
     },
     {
       "slug": "why-you-need-a-criminal-law-specialist",
@@ -730,13 +806,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 826
+      "wordCount": 892
     },
     {
       "slug": "understanding-police-warrants-and-interviews-in-kent",
@@ -749,13 +827,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 734
+      "wordCount": 831
     },
     {
       "slug": "what-happens-if-you-don-t-attend-a-voluntary-police-interview-in-england",
@@ -768,13 +848,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 748
+      "wordCount": 845
     },
     {
       "slug": "expert-legal-representation-for-police-stations-in-kent",
@@ -787,13 +869,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 738
+      "wordCount": 835
     },
     {
       "slug": "understanding-police-bail-imposition-conditions-breaches-and-legal-implications-explained",
@@ -806,13 +890,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 794
+      "wordCount": 860
     },
     {
       "slug": "the-unseen-errors-navigating-common-pitfalls-in-police-station-interviews",
@@ -825,13 +911,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 746
+      "wordCount": 843
     },
     {
       "slug": "getting-your-property-returned-by-the-police-in-the-uk",
@@ -844,13 +932,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 771
+      "wordCount": 837
     },
     {
       "slug": "what-is-the-sex-offender-register",
@@ -863,13 +953,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 822
+      "wordCount": 888
     },
     {
       "slug": "understanding-the-role-of-a-duty-solicitor-everything-you-need-to-know",
@@ -882,13 +974,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 742
+      "wordCount": 839
     },
     {
       "slug": "released-under-investigation-versus-bail",
@@ -901,13 +995,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 789
+      "wordCount": 855
     },
     {
       "slug": "what-does-a-criminal-solicitor-do-part-2-the-magistrates-court",
@@ -920,13 +1016,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 846
+      "wordCount": 912
     },
     {
       "slug": "voluntary-interview-no-further-action",
@@ -939,13 +1037,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 742
+      "wordCount": 839
     },
     {
       "slug": "what-does-a-criminal-solicitor-do-part-one-police-station-representation-the-initial-job",
@@ -958,13 +1058,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 726
+      "wordCount": 823
     },
     {
       "slug": "what-is-common-assault-in-english-law",
@@ -977,13 +1079,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 826
+      "wordCount": 892
     },
     {
       "slug": "what-police-stations-in-kent-do-you-cover-and-can-send-police-station-reps-or-agents-to",
@@ -996,13 +1100,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 727
+      "wordCount": 824
     },
     {
       "slug": "inside-a-voluntary-police-interview-what-to-expect-part-2",
@@ -1015,13 +1121,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 746
+      "wordCount": 843
     },
     {
       "slug": "voluntary-interview-at-swanley-police-station",
@@ -1034,13 +1142,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 742
+      "wordCount": 839
     },
     {
       "slug": "i-think-i-may-be-arrested-by-the-police-what-should-i-do",
@@ -1053,13 +1163,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 850
+      "wordCount": 916
     },
     {
       "slug": "have-to-attend-a-police-station-part-2",
@@ -1072,13 +1184,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 738
+      "wordCount": 835
     },
     {
       "slug": "have-to-attend-a-police-station",
@@ -1091,13 +1205,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 734
+      "wordCount": 831
     },
     {
       "slug": "what-is-a-duty-solicitor",
@@ -1110,13 +1226,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 735
+      "wordCount": 832
     },
     {
       "slug": "help-the-police-have-contacted-me",
@@ -1129,13 +1247,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 822
+      "wordCount": 888
     },
     {
       "slug": "police-station-disclosure-by-police-station-agent",
@@ -1148,13 +1268,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 734
+      "wordCount": 831
     },
     {
       "slug": "the-police-caution-means-police-station-agent",
@@ -1167,13 +1289,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 875
+      "wordCount": 941
     },
     {
       "slug": "police-station-agent-blog",
@@ -1186,13 +1310,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 722
+      "wordCount": 819
     },
     {
       "slug": "police-station-representation",
@@ -1205,13 +1331,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 713
+      "wordCount": 810
     },
     {
       "slug": "what-s-a-voluntary-police-interview",
@@ -1224,13 +1352,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 741
+      "wordCount": 838
     },
     {
       "slug": "what-happens-at-a-police-station-interview-in-kent",
@@ -1243,13 +1373,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 741
+      "wordCount": 838
     },
     {
       "slug": "do-i-need-a-solicitor-at-a-police-station-interview",
@@ -1262,13 +1394,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": true,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 862
+      "wordCount": 928
     },
     {
       "slug": "what-is-police-station-representation",
@@ -1281,13 +1415,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "none",
-      "wordCount": 715
+      "wordCount": 812
     },
     {
       "slug": "why-you-need-a-criminal-solicitor-in-the-police-station",
@@ -1300,13 +1436,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "q/a",
-      "wordCount": 1227
+      "wordCount": 1293
     },
     {
       "slug": "domestic-allegations-police-station-stage",
@@ -1319,13 +1457,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": false,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "q/a",
-      "wordCount": 635
+      "wordCount": 701
     },
     {
       "slug": "drug-allegations-police-station-interviews",
@@ -1338,13 +1478,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": false,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "q/a",
-      "wordCount": 695
+      "wordCount": 761
     },
     {
       "slug": "how-digital-evidence-voluntary-police-interview",
@@ -1357,13 +1499,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": false,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "q/a",
-      "wordCount": 1127
+      "wordCount": 1193
     },
     {
       "slug": "motoring-driving-allegations-police-station",
@@ -1376,13 +1520,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": false,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "q/a",
-      "wordCount": 625
+      "wordCount": 691
     },
     {
       "slug": "sexual-allegations-police-station-stage",
@@ -1395,13 +1541,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": false,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "q/a",
-      "wordCount": 628
+      "wordCount": 694
     },
     {
       "slug": "theft-fraud-financial-police-station",
@@ -1414,13 +1562,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": false,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "q/a",
-      "wordCount": 684
+      "wordCount": 750
     },
     {
       "slug": "types-of-offences-police-station-stage",
@@ -1433,13 +1583,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": false,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "q/a",
-      "wordCount": 1165
+      "wordCount": 1231
     },
     {
       "slug": "violence-public-order-police-station-stage",
@@ -1452,13 +1604,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": false,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "q/a",
-      "wordCount": 698
+      "wordCount": 764
     },
     {
       "slug": "what-happens-if-charged-criminal-offence-court",
@@ -1471,13 +1625,15 @@
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": false,
-      "hasSources": false,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": false,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "q/a",
-      "wordCount": 1109
+      "wordCount": 1175
     },
     {
       "slug": "immediate-family-instruct-police-station-solicitor",
@@ -1491,12 +1647,14 @@
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
       "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": true,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "q/a",
-      "wordCount": 704
+      "wordCount": 797
     },
     {
       "slug": "kent-custody-after-arrest-process",
@@ -1510,12 +1668,14 @@
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
       "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": true,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "q/a",
-      "wordCount": 738
+      "wordCount": 838
     },
     {
       "slug": "released-under-investigation-kent-plain-english",
@@ -1529,12 +1689,14 @@
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
       "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": true,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "q/a",
-      "wordCount": 699
+      "wordCount": 798
     },
     {
       "slug": "custody-record-number-dscc-reference",
@@ -1548,6 +1710,8 @@
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
       "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": true,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
@@ -1561,18 +1725,20 @@
       "date": "2026-06-12",
       "source": "canonical",
       "file": "2026-06-12-freelance-police-station-agents-for-solicitors.json",
-      "audience": "public",
+      "audience": "firm",
       "hasFeaturedImage": true,
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
       "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": true,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "q/a",
-      "wordCount": 642
+      "wordCount": 905
     },
     {
       "slug": "arrange-solicitor-someone-in-custody",
@@ -1580,18 +1746,20 @@
       "date": "2026-06-12",
       "source": "canonical",
       "file": "2026-06-12-instructing-a-police-station-representative.json",
-      "audience": "public",
+      "audience": "firm",
       "hasFeaturedImage": true,
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
       "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": true,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "q/a",
-      "wordCount": 607
+      "wordCount": 899
     },
     {
       "slug": "north-kent-gravesend-custody-legal-advice",
@@ -1605,12 +1773,14 @@
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
       "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": true,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "q/a",
-      "wordCount": 1473
+      "wordCount": 1567
     },
     {
       "slug": "police-station-attendance-notes",
@@ -1618,18 +1788,20 @@
       "date": "2026-06-12",
       "source": "canonical",
       "file": "2026-06-12-police-station-attendance-notes.json",
-      "audience": "public",
+      "audience": "firm",
       "hasFeaturedImage": true,
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
       "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": true,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "q/a",
-      "wordCount": 659
+      "wordCount": 886
     },
     {
       "slug": "legal-advice-medway-custody-kent",
@@ -1643,12 +1815,14 @@
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
       "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": true,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "q/a",
-      "wordCount": 590
+      "wordCount": 892
     },
     {
       "slug": "tonbridge-police-station-custody-and-interviews",
@@ -1662,12 +1836,14 @@
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
       "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": true,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "q/a",
-      "wordCount": 1211
+      "wordCount": 1306
     },
     {
       "slug": "when-to-ask-for-solicitor-kent-police-station",
@@ -1675,18 +1851,20 @@
       "date": "2026-06-12",
       "source": "canonical",
       "file": "2026-06-12-when-to-instruct-police-station-agent.json",
-      "audience": "public",
+      "audience": "firm",
       "hasFeaturedImage": true,
       "hasInlineFigure": true,
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
       "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": true,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "q/a",
-      "wordCount": 678
+      "wordCount": 995
     },
     {
       "slug": "canterbury-custody-legal-advice-kent",
@@ -1700,12 +1878,14 @@
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
       "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": true,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "q/a",
-      "wordCount": 703
+      "wordCount": 1382
     },
     {
       "slug": "folkestone-custody-legal-advice-kent",
@@ -1719,12 +1899,14 @@
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
       "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": true,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "q/a",
-      "wordCount": 560
+      "wordCount": 1305
     },
     {
       "slug": "is-police-station-legal-advice-free-kent",
@@ -1738,12 +1920,14 @@
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
       "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": true,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "q/a",
-      "wordCount": 857
+      "wordCount": 1417
     },
     {
       "slug": "maidstone-voluntary-interview-mid-kent-legal-advice",
@@ -1757,12 +1941,14 @@
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
       "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": true,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "q/a",
-      "wordCount": 719
+      "wordCount": 1400
     },
     {
       "slug": "no-further-action-after-police-interview-kent",
@@ -1776,12 +1962,14 @@
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
       "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": true,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "q/a",
-      "wordCount": 670
+      "wordCount": 1409
     },
     {
       "slug": "police-station-rep-near-me-kent",
@@ -1795,12 +1983,14 @@
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
       "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": true,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "q/a",
-      "wordCount": 719
+      "wordCount": 1390
     },
     {
       "slug": "police-warrant-arrest-kent-what-to-do",
@@ -1814,12 +2004,14 @@
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
       "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": true,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "q/a",
-      "wordCount": 639
+      "wordCount": 1361
     },
     {
       "slug": "qualified-duty-solicitor-vs-police-station-rep-kent",
@@ -1833,12 +2025,14 @@
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
       "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": true,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "q/a",
-      "wordCount": 728
+      "wordCount": 1370
     },
     {
       "slug": "sevenoaks-voluntary-interview-legal-advice-kent",
@@ -1852,12 +2046,14 @@
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
       "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": true,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "q/a",
-      "wordCount": 566
+      "wordCount": 1331
     },
     {
       "slug": "voluntary-interview-letter-kent-what-to-do",
@@ -1871,12 +2067,77 @@
       "hasNotKentPolice": true,
       "hasKeyTakeaways": true,
       "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
       "hasPublicCta": true,
       "hasFirmPrimaryCta": false,
       "hasRepKentLink": false,
       "hasWixImage": false,
       "faqFormat": "q/a",
-      "wordCount": 1043
+      "wordCount": 1460
+    },
+    {
+      "slug": "dartford-voluntary-interview-legal-advice-kent",
+      "title": "Dartford Voluntary Police Interview — Legal Advice in Kent",
+      "date": "2026-06-18",
+      "source": "canonical",
+      "file": "2026-06-18-dartford-voluntary-interview-legal-advice-kent.json",
+      "audience": "public",
+      "hasFeaturedImage": true,
+      "hasInlineFigure": true,
+      "hasNotKentPolice": true,
+      "hasKeyTakeaways": true,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
+      "hasPublicCta": true,
+      "hasFirmPrimaryCta": false,
+      "hasRepKentLink": false,
+      "hasWixImage": false,
+      "faqFormat": "q/a",
+      "wordCount": 490
+    },
+    {
+      "slug": "swanley-police-station-interview-advice-kent",
+      "title": "Swanley Police Station Interview — Legal Advice in Kent",
+      "date": "2026-06-18",
+      "source": "canonical",
+      "file": "2026-06-18-swanley-police-station-interview-advice-kent.json",
+      "audience": "public",
+      "hasFeaturedImage": true,
+      "hasInlineFigure": true,
+      "hasNotKentPolice": true,
+      "hasKeyTakeaways": true,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
+      "hasPublicCta": true,
+      "hasFirmPrimaryCta": false,
+      "hasRepKentLink": false,
+      "hasWixImage": false,
+      "faqFormat": "q/a",
+      "wordCount": 441
+    },
+    {
+      "slug": "unfitness-to-interview-pace-code-c-kent",
+      "title": "Unfitness to Interview at a Kent Police Station: What PACE Code C Says",
+      "date": "2026-06-20",
+      "source": "canonical",
+      "file": "2026-06-20-unfitness-to-interview-pace-code-c-kent.json",
+      "audience": "public",
+      "hasFeaturedImage": true,
+      "hasInlineFigure": true,
+      "hasNotKentPolice": true,
+      "hasKeyTakeaways": true,
+      "hasSources": true,
+      "sourcesAtBottom": true,
+      "sourcesLinkQuality": true,
+      "hasPublicCta": true,
+      "hasFirmPrimaryCta": false,
+      "hasRepKentLink": false,
+      "hasWixImage": false,
+      "faqFormat": "q/a",
+      "wordCount": 1725
     }
   ],
   "orphans": []

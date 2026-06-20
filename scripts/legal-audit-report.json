@@ -1,0 +1,174 @@
+{
+  "summary": {
+    "scanned": 313,
+    "itemsWithIssues": 10,
+    "errors": 0,
+    "warnings": 21
+  },
+  "results": [
+    {
+      "slug": "/arrested-what-to-do",
+      "surface": "static-page",
+      "file": "app/arrested-what-to-do/page.tsx",
+      "title": "arrested-what-to-do",
+      "issues": [
+        {
+          "severity": "warn",
+          "message": "/arrested-what-to-do: cites pace-s58 but no official gov.uk/legislation link in content"
+        },
+        {
+          "severity": "warn",
+          "message": "/arrested-what-to-do: cites pace-s58 but no official gov.uk/legislation link in content"
+        }
+      ]
+    },
+    {
+      "slug": "/article-interview-under-caution",
+      "surface": "static-page",
+      "file": "app/article-interview-under-caution/page.tsx",
+      "title": "article-interview-under-caution",
+      "issues": [
+        {
+          "severity": "warn",
+          "message": "/article-interview-under-caution: cites pace-s58 but no official gov.uk/legislation link in content"
+        }
+      ]
+    },
+    {
+      "slug": "/article-police-caution-before-interview",
+      "surface": "static-page",
+      "file": "app/article-police-caution-before-interview/page.tsx",
+      "title": "article-police-caution-before-interview",
+      "issues": [
+        {
+          "severity": "warn",
+          "message": "/article-police-caution-before-interview: cites pace-s78 but no official gov.uk/legislation link in content"
+        },
+        {
+          "severity": "warn",
+          "message": "/article-police-caution-before-interview: case \"R v Argent\" should link to official guidance"
+        },
+        {
+          "severity": "warn",
+          "message": "/article-police-caution-before-interview: case \"R v Samuel\" should link to official guidance"
+        },
+        {
+          "severity": "warn",
+          "message": "/article-police-caution-before-interview: case \"R v Roble\" should link to official guidance"
+        },
+        {
+          "severity": "warn",
+          "message": "/article-police-caution-before-interview: case \"R v Betts\" should link to official guidance"
+        },
+        {
+          "severity": "warn",
+          "message": "/article-police-caution-before-interview: case \"R v Chandler\" should link to official guidance"
+        }
+      ]
+    },
+    {
+      "slug": "/emergency-police-station-representation",
+      "surface": "static-page",
+      "file": "app/emergency-police-station-representation/page.tsx",
+      "title": "emergency-police-station-representation",
+      "issues": [
+        {
+          "severity": "warn",
+          "message": "/emergency-police-station-representation: cites pace-s58 but no official gov.uk/legislation link in content"
+        },
+        {
+          "severity": "warn",
+          "message": "/emergency-police-station-representation: cites pace-s58 but no official gov.uk/legislation link in content"
+        },
+        {
+          "severity": "warn",
+          "message": "/emergency-police-station-representation: cites pace-s58 but no official gov.uk/legislation link in content"
+        },
+        {
+          "severity": "warn",
+          "message": "/emergency-police-station-representation: case \"R v Samuel\" should link to official guidance"
+        }
+      ]
+    },
+    {
+      "slug": "/free-police-station-advice-kent",
+      "surface": "static-page",
+      "file": "app/free-police-station-advice-kent/page.tsx",
+      "title": "free-police-station-advice-kent",
+      "issues": [
+        {
+          "severity": "warn",
+          "message": "/free-police-station-advice-kent: cites pace-s58 but no official gov.uk/legislation link in content"
+        }
+      ]
+    },
+    {
+      "slug": "/police-custody-rights",
+      "surface": "static-page",
+      "file": "app/police-custody-rights/page.tsx",
+      "title": "police-custody-rights",
+      "issues": [
+        {
+          "severity": "warn",
+          "message": "/police-custody-rights: case \"R v Argent\" should link to official guidance"
+        }
+      ]
+    },
+    {
+      "slug": "/police-interview-rights",
+      "surface": "static-page",
+      "file": "app/police-interview-rights/page.tsx",
+      "title": "police-interview-rights",
+      "issues": [
+        {
+          "severity": "warn",
+          "message": "/police-interview-rights: case \"R v Argent\" should link to official guidance"
+        },
+        {
+          "severity": "warn",
+          "message": "/police-interview-rights: case \"R v Roble\" should link to official guidance"
+        },
+        {
+          "severity": "warn",
+          "message": "/police-interview-rights: case \"R v Betts\" should link to official guidance"
+        }
+      ]
+    },
+    {
+      "slug": "/police-station-agent-kent",
+      "surface": "static-page",
+      "file": "app/police-station-agent-kent/page.tsx",
+      "title": "police-station-agent-kent",
+      "issues": [
+        {
+          "severity": "warn",
+          "message": "/police-station-agent-kent: cites pace-s58 but no official gov.uk/legislation link in content"
+        }
+      ]
+    },
+    {
+      "slug": "/what-happens-if-ignore-police-interview",
+      "surface": "static-page",
+      "file": "app/what-happens-if-ignore-police-interview/page.tsx",
+      "title": "what-happens-if-ignore-police-interview",
+      "issues": [
+        {
+          "severity": "warn",
+          "message": "/what-happens-if-ignore-police-interview: case \"R v Argent\" should link to official guidance"
+        }
+      ]
+    },
+    {
+      "slug": "/what-to-expect-at-a-police-interview-in-kent",
+      "surface": "static-page",
+      "file": "app/what-to-expect-at-a-police-interview-in-kent/page.tsx",
+      "title": "what-to-expect-at-a-police-interview-in-kent",
+      "issues": [
+        {
+          "severity": "warn",
+          "message": "/what-to-expect-at-a-police-interview-in-kent: cites pace-s58 but no official gov.uk/legislation link in content"
+        }
+      ]
+    }
+  ]
+}
