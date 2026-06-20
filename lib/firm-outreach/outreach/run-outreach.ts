@@ -15,7 +15,7 @@ import {
   incrementDailySendCount,
   isDuplicateInitialSend,
   isSuppressed,
-  listProspectsByStatus,
+  listProspectsByRecordStatus,
   listProspectsForFirmKey,
   saveProspect,
   saveSend,
@@ -91,8 +91,8 @@ export async function runFirmOutreach(opts?: {
     return stats;
   }
 
-  const ready = (await listProspectsByStatus('ready_to_send', 2000)).filter(isActiveCampaignProspect);
-  const sent = (await listProspectsByStatus('sent', 2000)).filter(isActiveCampaignProspect);
+  const ready = await listProspectsByRecordStatus('ready_to_send', 2000);
+  const sent = await listProspectsByRecordStatus('sent', 2000);
   const candidates = sortProspectsForSend([...ready, ...sent]);
   const emailsSentThisRun = new Set<string>();
 

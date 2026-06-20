@@ -22,6 +22,142 @@ export function checkEnrichSaveUsesPreviousStatus(rootDir = process.cwd()): Repo
   };
 }
 
+export function checkSendUsesRecordStatus(rootDir = process.cwd()): RepoCheckResult {
+  const file = resolve(rootDir, 'lib/firm-outreach/outreach/run-outreach.ts');
+  if (!existsSync(file)) {
+    return { name: 'send_uses_record_status', ok: false, detail: 'run-outreach.ts missing' };
+  }
+  const src = readFileSync(file, 'utf8');
+  const ok =
+    src.includes('listProspectsByRecordStatus') &&
+    !src.includes("listProspectsByStatus('ready_to_send'") &&
+    !src.includes("listProspectsByStatus('sent'");
+  return {
+    name: 'send_uses_record_status',
+    ok,
+    detail: ok ? 'run-outreach uses record-based lists' : 'send still uses index-based status lists',
+  };
+}
+
+export function checkListProspectsByRecordStatusExported(rootDir = process.cwd()): RepoCheckResult {
+  const file = resolve(rootDir, 'lib/firm-outreach/storage.ts');
+  if (!existsSync(file)) {
+    return { name: 'listProspectsByRecordStatus_exported', ok: false, detail: 'storage.ts missing' };
+  }
+  const src = readFileSync(file, 'utf8');
+  const ok =
+    src.includes('export async function listProspectIdsByRecordStatus') &&
+    src.includes('export async function listProspectsByRecordStatus');
+  return {
+    name: 'listProspectsByRecordStatus_exported',
+    ok,
+    detail: ok ? 'record status helpers exported' : 'missing listProspectsByRecordStatus',
+  };
+}
+
+export function checkApprovalCronSkipsSend(rootDir = process.cwd()): RepoCheckResult {
+  const file = resolve(rootDir, 'app/api/cron/firm-outreach-pipeline/full/route.ts');
+  if (!existsSync(file)) {
+    return { name: 'approval_cron_skips_send', ok: false, detail: 'full cron route missing' };
+  }
+  const src = readFileSync(file, 'utf8');
+  const ok =
+    src.includes('outreachRequireApproval') &&
+    src.includes('skipSend: true') &&
+    src.includes('sendOutreachApprovalRequestEmail');
+  return {
+    name: 'approval_cron_skips_send',
+    ok,
+    detail: ok ? 'approval-only morning cron' : 'full cron missing approval gate',
+  };
+}
+
+export function checkBootstrapSecretRouteExists(rootDir = process.cwd()): RepoCheckResult {
+  const file = resolve(rootDir, 'app/api/cron/firm-outreach-bootstrap/route.ts');
+  const ok = existsSync(file);
+  return {
+    name: 'bootstrap_secret_route_exists',
+    ok,
+    detail: ok ? file : 'Missing firm-outreach-bootstrap route',
+  };
+}
+
+export function checkSendApprovalTokenGuard(rootDir = process.cwd()): RepoCheckResult {
+  const file = resolve(rootDir, 'lib/firm-outreach/outreach/send-approval-token.ts');
+  if (!existsSync(file)) {
+    return { name: 'send_approval_token_guard', ok: false, detail: 'send-approval-token.ts missing' };
+  }
+  const src = readFileSync(file, 'utf8');
+  const ok =
+    src.includes('ADMIN_DECISION_TOKEN_SECRET') &&
+    src.includes('CRON_SECRET') &&
+    src.includes('production');
+  return {
+    name: 'send_approval_token_guard',
+    ok,
+    detail: ok ? 'approval token fail-closed in production' : 'missing production token guard',
+  };
+}
+
+export function checkRepairLoopRequiresReady(rootDir = process.cwd()): RepoCheckResult {
+  const file = resolve(rootDir, 'scripts/firm-outreach-repair-loop.mjs');
+  if (!existsSync(file)) {
+    return { name: 'repair_loop_checks_ready', ok: false, detail: 'repair-loop script missing' };
+  }
+  const src = readFileSync(file, 'utf8');
+  const ok =
+    src.includes('ready_to_send') &&
+    src.includes('sendAllowed') &&
+    src.includes('Repair OK');
+  return {
+    name: 'repair_loop_checks_ready',
+    ok,
+    detail: ok ? 'repair loop asserts ready queue' : 'repair loop missing ready success criteria',
+  };
+}
+
+export function checkTestGlobIncludesOutreachSendApproved(rootDir = process.cwd()): RepoCheckResult {
+  const file = resolve(rootDir, 'package.json');
+  if (!existsSync(file)) {
+    return { name: 'test_glob_includes_outreach_send_approved', ok: false, detail: 'package.json missing' };
+  }
+  const pkg = JSON.parse(readFileSync(file, 'utf8')) as {
+    scripts?: { 'test:firm-outreach'?: string };
+  };
+  const script = pkg.scripts?.['test:firm-outreach'] ?? '';
+  const ok =
+    script.includes('firm-outreach*.test.ts') && script.includes('outreach-*.test.ts');
+  return {
+    name: 'test_glob_includes_outreach_send_approved',
+    ok,
+    detail: ok ? script : 'test:firm-outreach glob should include firm-outreach*.test.ts and outreach-*.test.ts',
+  };
+}
+
+export function checkHealthLoopScriptExists(rootDir = process.cwd()): RepoCheckResult {
+  const file = resolve(rootDir, 'scripts/firm-outreach-health-loop.mjs');
+  const ok = existsSync(file);
+  return {
+    name: 'health_loop_script_exists',
+    ok,
+    detail: ok ? file : 'Missing firm-outreach-health-loop.mjs',
+  };
+}
+
+export function checkNationalDiscoveryScope(rootDir = process.cwd()): RepoCheckResult {
+  const file = resolve(rootDir, 'lib/firm-outreach/constants.ts');
+  if (!existsSync(file)) {
+    return { name: 'national_discovery_scope', ok: false, detail: 'constants.ts missing' };
+  }
+  const src = readFileSync(file, 'utf8');
+  const ok = /countyAllowlist:\s*null/.test(src);
+  return {
+    name: 'national_discovery_scope',
+    ok,
+    detail: ok ? 'discovery includes all counties by default' : 'countyAllowlist still restricted',
+  };
+}
+
 export function checkReindexSafetyGuard(rootDir = process.cwd()): RepoCheckResult {
   const file = resolve(rootDir, 'lib/firm-outreach/reindex-prospects.ts');
   if (!existsSync(file)) {
@@ -221,6 +357,15 @@ export function runRepoChecks(rootDir = process.cwd()): RepoCheckResult[] {
     checkBrochureLoadsAsAttachment(),
     checkEnrichSaveUsesPreviousStatus(rootDir),
     checkReindexSafetyGuard(rootDir),
+    checkSendUsesRecordStatus(rootDir),
+    checkListProspectsByRecordStatusExported(rootDir),
+    checkNationalDiscoveryScope(rootDir),
+    checkApprovalCronSkipsSend(rootDir),
+    checkBootstrapSecretRouteExists(rootDir),
+    checkSendApprovalTokenGuard(rootDir),
+    checkRepairLoopRequiresReady(rootDir),
+    checkTestGlobIncludesOutreachSendApproved(rootDir),
+    checkHealthLoopScriptExists(rootDir),
     ...checkOutreachTemplates(),
     ...checkVercelCronConfig(vercelJson),
     ...checkCronRouteFilesExist(rootDir),
@@ -229,7 +374,7 @@ export function runRepoChecks(rootDir = process.cwd()): RepoCheckResult[] {
 
 export async function runHttpChecks(
   baseUrl: string,
-  opts?: { cronSecret?: string },
+  opts?: { cronSecret?: string; bootstrapSecret?: string },
 ): Promise<HttpCheckResult[]> {
   const base = baseUrl.replace(/\/$/, '');
   const results: HttpCheckResult[] = [];
@@ -289,7 +434,15 @@ export async function runHttpChecks(
     } else {
       type StatusPayload = {
         ok?: boolean;
-        config?: { sendAllowed?: boolean; resendConfigured?: boolean };
+        config?: {
+          sendAllowed?: boolean;
+          resendConfigured?: boolean;
+          effectivePaused?: boolean;
+          requireApproval?: boolean;
+        };
+        summary?: { readyToSend?: number };
+        indexHealth?: { drifted?: boolean; activeByStatus?: Record<string, number> };
+        counts?: Record<string, number>;
       };
       let payload: StatusPayload | null = null;
       try {
@@ -305,8 +458,90 @@ export async function runHttpChecks(
           ? `sendAllowed=${payload.config.sendAllowed} resendConfigured=${payload.config.resendConfigured}`
           : undefined,
       });
+      results.push({
+        name: 'cron_status_resend_configured',
+        ok: statusRes.status === 200 && payload?.config?.resendConfigured === true,
+        status: statusRes.status,
+      });
+      results.push({
+        name: 'cron_status_send_allowed',
+        ok:
+          statusRes.status === 200 &&
+          payload?.config?.sendAllowed === true &&
+          payload?.config?.effectivePaused !== true,
+        status: statusRes.status,
+      });
+      const ready = payload?.summary?.readyToSend ?? payload?.counts?.ready_to_send ?? 0;
+      results.push({
+        name: 'cron_status_ready_queue',
+        ok: statusRes.status === 200 && ready >= 0,
+        status: statusRes.status,
+        detail: `readyToSend=${ready}`,
+      });
+      if (payload?.indexHealth) {
+        results.push({
+          name: 'cron_status_index_health',
+          ok: payload.indexHealth.drifted === false,
+          status: statusRes.status,
+          detail: payload.indexHealth.drifted ? 'index drift detected — run repair-loop' : 'indexes aligned',
+        });
+        const readyRecords = payload.indexHealth.activeByStatus?.ready_to_send;
+        const readyIndexed = payload.counts?.ready_to_send;
+        if (typeof readyRecords === 'number' && typeof readyIndexed === 'number') {
+          results.push({
+            name: 'cron_status_record_index_parity',
+            ok: readyRecords === readyIndexed,
+            status: statusRes.status,
+            detail: `records=${readyRecords} index=${readyIndexed}`,
+          });
+        }
+      }
+      results.push({
+        name: 'cron_status_require_approval',
+        ok: statusRes.status === 200 && payload?.config?.requireApproval === true,
+        status: statusRes.status,
+        detail: `requireApproval=${payload?.config?.requireApproval ?? 'missing'}`,
+      });
     }
   }
+
+  if (opts?.bootstrapSecret) {
+    const bootstrapRes = await get('/api/cron/firm-outreach-bootstrap?unpause=1', {
+      headers: { 'x-firm-outreach-bootstrap-secret': opts.bootstrapSecret },
+    });
+    type BootstrapPayload = {
+      ok?: boolean;
+      sendAllowed?: boolean;
+      countsAfter?: Record<string, number>;
+    };
+    let payload: BootstrapPayload | null = null;
+    try {
+      payload = (await bootstrapRes.json()) as BootstrapPayload;
+    } catch {
+      payload = null;
+    }
+    const discovered = payload?.countsAfter?.discovered ?? 0;
+    results.push({
+      name: 'bootstrap_unpause_ok',
+      ok: bootstrapRes.status === 200 && payload?.ok === true,
+      status: bootstrapRes.status,
+    });
+    results.push({
+      name: 'bootstrap_send_allowed',
+      ok: bootstrapRes.status === 200 && payload?.sendAllowed === true,
+      status: bootstrapRes.status,
+    });
+    results.push({
+      name: 'bootstrap_discovered_nonzero',
+      ok: bootstrapRes.status === 200 && discovered > 0,
+      status: bootstrapRes.status,
+      detail: `discovered=${discovered}`,
+    });
+  }
+
+  results.push(
+    await checkStatus('send_approved_get_405', () => get('/api/outreach/send-approved'), 405),
+  );
 
   return results;
 }

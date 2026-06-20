@@ -195,6 +195,17 @@ export async function listProspectsByStatus(status: FirmProspectStatus, limit = 
   return out;
 }
 
+/** Active-campaign prospects whose stored record matches the given status. */
+export async function listProspectsByRecordStatus(
+  status: FirmProspectStatus,
+  limit = 500,
+): Promise<FirmProspect[]> {
+  const ids = (await listProspectIdsByRecordStatus(status)).slice(0, limit);
+  if (ids.length === 0) return [];
+  const map = await getProspectsByIds(ids);
+  return ids.map((id) => map.get(id)).filter((p): p is FirmProspect => Boolean(p));
+}
+
 export async function listProspectsForFirmKey(firmKey: string): Promise<FirmProspect[]> {
   const kv = getKV();
   if (!kv) return [];

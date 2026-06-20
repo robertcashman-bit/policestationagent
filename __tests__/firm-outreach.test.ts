@@ -24,7 +24,7 @@ import {
   parseSraOrganisationSearchResults,
 } from '@/lib/firm-outreach/sra-org-lookup';
 import { issueUnsubscribeToken, verifyUnsubscribeToken } from '@/lib/firm-outreach/outreach/unsubscribe-token';
-import { outreachSendEnabled } from '@/lib/firm-outreach/constants';
+import { countyAllowlist, outreachSendEnabled } from '@/lib/firm-outreach/constants';
 import { activityReportToCsv } from '@/lib/firm-outreach/outreach/activity-report';
 import { laaJsonIsStale } from '@/lib/legal-directory/laa-fetch';
 import type { OutreachActivityReport } from '@/lib/firm-outreach/types';
@@ -43,6 +43,13 @@ describe('firm-outreach postcode filter', () => {
 
   it('accepts Gloucestershire GL postcodes', () => {
     expect(isEnglandWalesPostcode('GL1 1AA')).toBe(true);
+  });
+});
+
+describe('firm-outreach discovery scope', () => {
+  it('includes all England & Wales counties by default (no Kent-only filter)', () => {
+    delete process.env.FIRM_OUTREACH_COUNTY_ALLOWLIST;
+    expect(countyAllowlist()).toBeNull();
   });
 });
 

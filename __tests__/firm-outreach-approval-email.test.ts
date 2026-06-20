@@ -85,6 +85,23 @@ describe('sendOutreachApprovalRequestEmail', () => {
     expect(result.sent).toBe(false);
     expect(result.reason).toBe('already_sent_today');
   });
+
+  it('skips when readyCount is zero', async () => {
+    mockBuildReport.mockResolvedValue({
+      report: {
+        summary: { readyToSend: 0, sentToday: 0 },
+        readyToSendProspects: [],
+      },
+    });
+    vi.resetModules();
+    const { sendOutreachApprovalRequestEmail } = await import(
+      '@/lib/firm-outreach/outreach/approval-request-email'
+    );
+    const result = await sendOutreachApprovalRequestEmail();
+    expect(result.sent).toBe(false);
+    expect(result.reason).toBe('none_ready');
+    expect(mockIssueToken).not.toHaveBeenCalled();
+  });
 });
 
 describe('sendOutreachSendConfirmationEmail', () => {

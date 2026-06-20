@@ -58,6 +58,10 @@ export async function sendOutreachApprovalRequestEmail(opts?: {
   const sendableReady = report.readyToSendProspects.filter((r) => !r.suppressed && r.email);
   const remaining = Math.max(0, cap - Math.max(report.summary.sentToday, sentTodayKv));
 
+  if (readyCount === 0 && !opts?.force) {
+    return { sent: false, reason: 'none_ready', date };
+  }
+
   if (opts?.reminder && remaining === 0) {
     return { sent: false, reason: 'daily_cap_reached', date };
   }
@@ -79,7 +83,7 @@ export async function sendOutreachApprovalRequestEmail(opts?: {
 
   const html = `
     <div style="font-family:system-ui,sans-serif;color:#0f172a;max-width:720px;">
-      <h2 style="margin:0 0 12px;">Kent agent cover outreach — ready to send</h2>
+      <h2 style="margin:0 0 12px;">Police station agent cover outreach — ready to send</h2>
       <p style="margin:0 0 16px;line-height:1.5;">
         <strong>${escapeHtml(String(readyCount))}</strong> prospects are ready
         (${sendableReady.length} with email, not suppressed).

@@ -22,11 +22,11 @@ export function buildTrackedJoinUrl(prospect: FirmProspect): string {
 export function subjectForStep(prospect: FirmProspect, step: number): string {
   if (step === 0) {
     return prospect.prospectType === 'solicitor'
-      ? 'Kent police station agent cover — for criminal defence solicitors'
-      : 'Police station agent cover in Kent — for criminal defence firms';
+      ? 'Police station agent cover — for criminal defence solicitors'
+      : 'Police station agent cover — for criminal defence firms';
   }
   if (step === 1) {
-    return 'Reminder: Kent police station agent cover for your firm';
+    return 'Reminder: police station agent cover for your firm';
   }
   return 'Last note — agent cover when your duty rota needs a rep';
 }
@@ -47,20 +47,20 @@ export function buildOutreachEmailHtml(opts: {
   const intro =
     step === 0
       ? prospect.prospectType === 'solicitor'
-        ? `<p>I provide <strong>accredited police station agent cover in Kent</strong> for criminal defence solicitors when your duty rota or panel needs attendance at custody — evenings, weekends, and bank holidays included.</p>`
-        : `<p>I provide <strong>accredited police station agent cover in Kent</strong> for criminal defence firms when your duty rota needs attendance at custody — evenings, weekends, and bank holidays included.</p>`
+        ? `<p>I provide <strong>accredited police station agent cover</strong> for criminal defence solicitors when your duty rota or panel needs attendance at custody — evenings, weekends, and bank holidays included.</p>`
+        : `<p>I provide <strong>accredited police station agent cover</strong> for criminal defence firms when your duty rota needs attendance at custody — evenings, weekends, and bank holidays included.</p>`
       : step === 1
-        ? `<p>A quick reminder — if <strong>${firmLine}</strong> needs police station cover in Kent, I can attend custody suites across the county when your own reps are unavailable.</p>`
-        : `<p>Final note from us — if ${firmLine} ever needs freelance police station cover in Kent, you can reach me directly. No agency layer.</p>`;
+        ? `<p>A quick reminder — if <strong>${firmLine}</strong> needs police station cover, I can attend custody suites when your own reps are unavailable.</p>`
+        : `<p>Final note from us — if ${firmLine} ever needs freelance police station cover, you can reach me directly. No agency layer.</p>`;
 
   const benefits =
     step === 0
       ? `<ul style="margin:16px 0;padding-left:20px;line-height:1.6">
           <li>Accredited duty solicitor — police station and custody work only (25+ years)</li>
-          <li>Coverage across Kent custody suites including Medway, Maidstone, Canterbury, and Gravesend</li>
+          <li>Coverage at police stations across England &amp; Wales when your roster cannot cover</li>
           <li>Detailed attendance notes — disclosure, advice, and interview outcome</li>
           <li>Extended hours — evenings, weekends, and bank holidays</li>
-          <li>Attached brochure with police station services and Kent coverage</li>
+          <li>Attached brochure with police station agent services</li>
         </ul>`
       : '';
 

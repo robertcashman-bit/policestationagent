@@ -37,6 +37,7 @@ async function main() {
     console.log(`\n=== Firm outreach — HTTP checks (${baseUrl}) ===`);
     const httpResults = await runHttpChecks(baseUrl, {
       cronSecret: process.env.CRON_SECRET?.trim(),
+      bootstrapSecret: process.env.FIRM_OUTREACH_BOOTSTRAP_SECRET?.trim(),
     });
     httpSummary = summarizeResults(httpResults);
     for (const r of httpResults) {

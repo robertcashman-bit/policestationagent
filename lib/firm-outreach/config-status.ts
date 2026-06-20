@@ -1,7 +1,7 @@
 import { existsSync } from 'fs';
 import { getKV } from '@/lib/kv';
 import { BROCHURE_PUBLIC_PATH } from './brochure/load-attachment';
-import { countyAllowlist, dailySendCap, outreachEnabled } from './constants';
+import { countyAllowlist, dailySendCap, outreachEnabled, outreachRequireApproval } from './constants';
 import { getOutreachPauseSummary, isOutreachSendAllowed } from './pause-state';
 
 export async function getOutreachConfigStatus() {
@@ -19,6 +19,7 @@ export async function getOutreachConfigStatus() {
     fromEmail: process.env.FIRM_OUTREACH_FROM_EMAIL?.trim() || null,
     digestEmail: process.env.FIRM_OUTREACH_DIGEST_EMAIL?.trim() || null,
     countyAllowlist: countyAllowlist(),
+    requireApproval: outreachRequireApproval(),
     dailyCap: dailySendCap(),
     cronConfigured: Boolean(process.env.CRON_SECRET?.trim()),
     ...pause,

@@ -35,6 +35,11 @@ function countyAllowed(county: string | undefined): boolean {
   return allow.some((a) => c.includes(a) || a.includes(c));
 }
 
+/** Exported for tests — whether a discovered prospect county passes the allowlist. */
+export function countyAllowedForDiscovery(county: string | undefined): boolean {
+  return countyAllowed(county);
+}
+
 function filterByCounty(inputs: RawProspectInput[]): RawProspectInput[] {
   return inputs.filter((i) => countyAllowed(i.county));
 }

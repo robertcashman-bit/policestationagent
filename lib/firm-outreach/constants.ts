@@ -14,7 +14,7 @@ export {
 } from '@robertcashman/firm-outreach-core';
 
 const env = createOutreachEnvHelpers({
-  countyAllowlist: ['kent'],
+  countyAllowlist: null,
   cronEnrichBatch: 30,
   enrichMaxMs: 240_000,
   paidDailyCap: 50,

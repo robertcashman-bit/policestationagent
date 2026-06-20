@@ -53,8 +53,12 @@
     "firm-outreach:requalify": "tsx scripts/firm-outreach-requalify.ts",
     "firm-outreach:reindex": "tsx scripts/firm-outreach-reindex.ts",
     "firm-outreach:repair-loop": "node scripts/firm-outreach-repair-loop.mjs",
+    "firm-outreach:health-loop": "node scripts/firm-outreach-health-loop.mjs",
+    "firm-outreach:autotest": "npm run test:firm-outreach && npm run verify:firm-outreach",
+    "firm-outreach:send-approval-email": "tsx scripts/firm-outreach-send-approval-email.ts",
+    "firm-outreach:configure-resend": "node scripts/resend-configure-webhook.mjs",
     "verify:firm-outreach": "tsx scripts/verify-firm-outreach.ts",
-    "test:firm-outreach": "vitest run __tests__/firm-outreach*.test.ts",
+    "test:firm-outreach": "vitest run __tests__/firm-outreach*.test.ts __tests__/outreach-*.test.ts",
     "test:e2e:smoke": "playwright test e2e/smoke.spec.ts",
     "test:e2e:firm-outreach": "playwright test e2e/firm-outreach.spec.ts"
   },

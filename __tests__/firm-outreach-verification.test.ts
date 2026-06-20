@@ -5,7 +5,12 @@ import {
   checkBrochureLoadsAsAttachment,
   checkBrochureMinSize,
   checkCronRouteFilesExist,
+  checkListProspectsByRecordStatusExported,
+  checkNationalDiscoveryScope,
   checkOutreachTemplates,
+  checkRepairLoopRequiresReady,
+  checkSendUsesRecordStatus,
+  checkTestGlobIncludesOutreachSendApproved,
   checkVercelCronConfig,
   loadVercelJson,
   runRepoChecks,
@@ -46,6 +51,14 @@ describe('firm-outreach verify-checks (repo)', () => {
   it('email templates render for all sequence steps', () => {
     const checks = checkOutreachTemplates();
     expect(checks.every((c) => c.ok)).toBe(true);
+  });
+
+  it('send path and discovery scope repo guards pass', () => {
+    expect(checkSendUsesRecordStatus().ok).toBe(true);
+    expect(checkListProspectsByRecordStatusExported().ok).toBe(true);
+    expect(checkNationalDiscoveryScope().ok).toBe(true);
+    expect(checkRepairLoopRequiresReady().ok).toBe(true);
+    expect(checkTestGlobIncludesOutreachSendApproved().ok).toBe(true);
   });
 });
 

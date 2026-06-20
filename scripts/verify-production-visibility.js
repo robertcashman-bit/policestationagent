@@ -4,7 +4,8 @@
 const https = require("https");
 const http = require("http");
 
-const PRODUCTION_URL = "https://web44ai.vercel.app";
+const PRODUCTION_URL = process.env.PRODUCTION_URL || "https://www.policestationagent.com";
+const ADMIN_PATH = "/admin";
 
 function fetchUrl(url) {
   return new Promise((resolve, reject) => {
@@ -29,6 +30,26 @@ function fetchUrl(url) {
       )
       .on("error", reject);
   });
+}
+
+async function verifyAdminPage() {
+  console.log("6. Checking admin login page...");
+  const admin = await fetchUrl(`${PRODUCTION_URL}${ADMIN_PATH}`);
+
+  if (admin.status !== 200) {
+    console.error(`   ❌ Admin page returned status ${admin.status}`);
+    return false;
+  }
+
+  const hasMagicLogin = admin.body.includes("Sign in to admin");
+  const hasJwtError =
+    admin.body.includes("JWT_SECRET") || admin.body.includes("Configuration Error");
+
+  console.log("   - Magic login form present:", hasMagicLogin);
+  console.log("   - Legacy JWT error absent:", !hasJwtError);
+  console.log("   - Cache-Control:", admin.headers["cache-control"] || "Not found");
+
+  return hasMagicLogin && !hasJwtError;
 }
 
 async function verifyChanges() {
@@ -103,12 +124,16 @@ async function verifyChanges() {
     const hasLatestCommit = body.includes("41e632d") || body.includes("Production deployment");
     console.log("   - Contains latest commit marker:", hasLatestCommit || "Cannot verify");
 
-    const allChecks = hasOnlyLegalLinks && footerHasInfoLinks && !hasFAQInInfoDropdown;
+    const adminOk = await verifyAdminPage();
+
+    const allChecks =
+      hasOnlyLegalLinks && footerHasInfoLinks && !hasFAQInInfoDropdown && adminOk;
 
     console.log("\n" + "=".repeat(60));
     if (allChecks && xContentTypeOptions && xFrameOptions) {
       console.log("✅ PASS: All changes are visible on production");
       console.log("✅ Navigation structure verified");
+      console.log("✅ Admin magic login page verified");
       console.log("✅ Security headers present");
       return true;
     } else {
@@ -116,6 +141,7 @@ async function verifyChanges() {
       if (!hasOnlyLegalLinks) console.log("   - Legal links in header not found");
       if (!footerHasInfoLinks) console.log("   - Informational links in footer not found");
       if (hasFAQInInfoDropdown) console.log("   - Informational links still in header");
+      if (!adminOk) console.log("   - Admin page missing magic login or still shows JWT error");
       return false;
     }
   } catch (error) {
