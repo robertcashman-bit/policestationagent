@@ -12,6 +12,7 @@ import { FAQPage } from "@/components/StructuredData";
 import { SEO_NOT_POLICE, SERVICE_SCOPE, PHONE_DISPLAY, PHONE_TEL, SMS_DISPLAY, SMS_TEL } from "@/config/contact";
 import { HomeHeroCover } from "@/components/conversion/HomeHeroCover";
 import { HomePriorityCoverage } from "@/components/conversion/HomePriorityCoverage";
+import { StandardPaceSources } from "@/components/legal/StandardPaceSources";
 
 export const metadata: Metadata = {
   title: "Independent Duty Solicitor Kent | Police Station Rep Kent | NOT the Police",
@@ -287,6 +288,10 @@ export default function Page() {
               ))).replaceAll("Park Place, Dover", "Ladywell, Dover CT16 1DJ"),
             }}
           />
+        </div>
+      
+        <div className="max-w-4xl mx-auto px-4 pb-8">
+          <StandardPaceSources />
         </div>
       </main>
       <Footer />

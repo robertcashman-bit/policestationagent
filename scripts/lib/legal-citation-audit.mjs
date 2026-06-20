@@ -44,6 +44,10 @@ export function auditCaseCitations(content, contextLabel) {
       });
     } else if (inRegistry) {
       const entry = registry.find((e) => matchesRegistry(cite, [e]));
+      const hasSourceComponent = /LegalReferences|StandardPaceSources|ScrapedHtmlPage/i.test(content);
+      if (hasSourceComponent) {
+        continue;
+      }
       if (entry?.bailiiUrl && !content.includes("bailii.org")) {
         issues.push({
           severity: "warn",

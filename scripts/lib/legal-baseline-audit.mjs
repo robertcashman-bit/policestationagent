@@ -3,7 +3,7 @@ import {
   sourcesAtBottom,
   sourcesExternalLinkQuality,
 } from "./blog-sources-audit.mjs";
-import { isLegalContent } from "./legal-content-scanner.mjs";
+import { isLegalContent, hasPaceLegalRefs } from "./legal-content-scanner.mjs";
 
 const OFFICIAL_DOMAINS = /gov\.uk|legislation\.gov\.uk|cps\.gov\.uk|bailii\.org/i;
 
@@ -91,26 +91,32 @@ export function auditBlogBaseline(post) {
 export function auditStaticPageBaseline(page) {
   const content = page.contentHtml || "";
   const issues = [];
-  const hasLegalReferences = /LegalReferences|sources:\s*LegalSource\[\]/i.test(content);
-  const hasPaceRefs = /PACE|Code C|section \d+|paragraph \d+/i.test(content);
+  const hasLegalSources =
+    /LegalReferences|StandardPaceSources|ScrapedHtmlPage|sources:\s*LegalSource\[\]|STANDARD_PACE_SOURCES/i.test(
+      content,
+    );
+  const hasPaceRefs = hasPaceLegalRefs(content);
+  const isScrapedTemplate = /dangerouslySetInnerHTML/i.test(content);
+  const isDynamicBlogTemplate = page.file === "app/blog/[slug]/page.tsx";
 
-  if (!hasPaceRefs) return { issues, hasLegalReferences };
+  if (!hasPaceRefs || isDynamicBlogTemplate) {
+    return { issues, hasLegalReferences: hasLegalSources };
+  }
 
-  if (hasLegalReferences) {
-    const hrefs = [...content.matchAll(/href:\s*"(https?:\/\/[^"]+)"/g)].map((m) => m[1]);
-    const official = hrefs.filter((h) => OFFICIAL_DOMAINS.test(h));
-    if (official.length === 0) {
-      issues.push({
-        severity: "error",
-        message: `${page.file}: LegalReferences page missing official source URLs`,
-      });
-    }
-  } else if (hasPaceRefs && /dangerouslySetInnerHTML/i.test(content)) {
+  const officialLinks = [...content.matchAll(/(?:href:\s*"|href=")(https?:\/\/[^"]+)"/g)]
+    .map((m) => m[1])
+    .filter((h) => OFFICIAL_DOMAINS.test(h));
+
+  if (hasLegalSources || officialLinks.length >= 2) {
+    return { issues, hasLegalReferences: hasLegalSources };
+  }
+
+  if (isScrapedTemplate) {
     issues.push({
-      severity: "warn",
-      message: `${page.file}: scraped page cites PACE without LegalReferences component`,
+      severity: "error",
+      message: `${page.file}: page cites PACE/Code C but lacks LegalReferences, StandardPaceSources, or official source URLs`,
     });
   }
 
-  return { issues, hasLegalReferences };
+  return { issues, hasLegalReferences: hasLegalSources };
 }

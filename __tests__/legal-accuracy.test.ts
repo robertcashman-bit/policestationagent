@@ -57,7 +57,20 @@ describe("PACE reference registry", () => {
   });
 });
 
-describe("case law registry", () => {
+describe("blog generator legal tail", () => {
+  it("wraps generated HTML with Sources and disclaimer for audit", async () => {
+    const { wrapGeneratedBlogHtml } = await import("../scripts/lib/blog-legal-tail.mjs");
+    const { auditPostForPublish } = await import("../scripts/lib/legal-publish-audit.mjs");
+    const wrapped = wrapGeneratedBlogHtml("<h2>Test topic</h2><p>PACE section 58 rights.</p>", "Test topic");
+    const result = auditPostForPublish({
+      title: "Test topic",
+      slug: "test-topic",
+      contentHtml: wrapped,
+      faq: [{ q: "Q?", a: "A." }],
+    });
+    expect(result.ok, result.issues?.join("; ")).toBe(true);
+  });
+});
   it("every entry has citations and verifiedHolding", () => {
     for (const entry of loadCaseRegistry()) {
       expect(entry.citations?.length, entry.id).toBeGreaterThan(0);

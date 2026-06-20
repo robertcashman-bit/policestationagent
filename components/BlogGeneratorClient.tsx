@@ -164,7 +164,10 @@ export default function BlogGeneratorClient({ embedded = false }: { embedded?: b
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to generate blog post");
+        const issueText = Array.isArray(errorData.issues)
+          ? `: ${errorData.issues.join("; ")}`
+          : "";
+        throw new Error((errorData.error || "Failed to generate blog post") + issueText);
       }
 
       const data = await response.json();
@@ -206,7 +209,10 @@ export default function BlogGeneratorClient({ embedded = false }: { embedded?: b
       const data = await response.json();
 
       if (!response.ok || !data.success) {
-        throw new Error(data.error || "Failed to publish post");
+        throw new Error(
+          (data.error || "Failed to publish post") +
+            (Array.isArray(data.issues) ? `: ${data.issues.join("; ")}` : ""),
+        );
       }
 
       setSuccess({

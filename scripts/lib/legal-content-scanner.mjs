@@ -109,8 +109,14 @@ export function stripHtml(html) {
 }
 
 export function isLegalContent(text) {
-  return /pace|code c|section \d+|paragraph \d+|police station|custody|interview under caution|legal advice|appropriate adult|bail/i.test(
+  return /\bPACE\b|\bCode C\b|\bsection \d+[A-Za-z]?\b|\bparagraph \d+[\d.A-Za-z]*\b|\bpolice station\b|\bcustody\b|\binterview under caution\b|\blegal advice\b|\bappropriate adult\b|\bbail\b/i.test(
     text,
+  );
+}
+
+export function hasPaceLegalRefs(text) {
+  return /\bPACE\b|\bCode C\b|\bsection \d+[A-Za-z]?\b|\bparagraph \d+[\d.A-Za-z]*\b/i.test(
+    text || "",
   );
 }
 

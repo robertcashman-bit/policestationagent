@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
 import { SITE_DOMAIN } from "@/config/site";
 import { REPUK_DIRECTORY_KENT_HREF } from "@/lib/policestationrepuk-promo";
+import { StandardPaceSources } from "@/components/legal/StandardPaceSources";
 
 const PATH = "/free-police-station-advice-kent";
 const LAST_UPDATED = "2026-06-18";
@@ -116,6 +117,8 @@ export default function FreePoliceStationAdviceKentPage() {
               </li>
             </ul>
           </section>
+
+          <StandardPaceSources />
         </div>
       </main>
       <Footer />

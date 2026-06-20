@@ -1,7 +1,12 @@
 import type { ReactNode } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { StandardPaceSources } from "@/components/legal/StandardPaceSources";
 import { normalizeScrapedHtml } from "@/lib/scraped-html";
+
+function htmlHasPaceLegalRefs(html: string) {
+  return /\bPACE\b|\bCode C\b|\bsection \d+[A-Za-z]?\b|\bparagraph \d+[\d.A-Za-z]*\b/i.test(html);
+}
 
 type Props = {
   html: string;
@@ -36,6 +41,11 @@ export default function ScrapedHtmlPage({
             dangerouslySetInnerHTML={{ __html: normalized }}
           />
         </div>
+        {htmlHasPaceLegalRefs(raw) ? (
+          <div className="max-w-4xl mx-auto px-4 pb-8">
+            <StandardPaceSources />
+          </div>
+        ) : null}
       </main>
       <Footer />
       {afterMain}

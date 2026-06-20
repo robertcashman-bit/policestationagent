@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { SITE_DOMAIN } from "@/config/site";
 import { InternalLinkHub } from "@/components/InternalLinkHub";
 import { BreadcrumbList } from "@/components/StructuredData";
+import { StandardPaceSources } from "@/components/legal/StandardPaceSources";
 
 export const metadata: Metadata = {
   title: "Legal Aid at the Police Station & Fees | Kent Police Station Solicitor",
@@ -82,6 +83,10 @@ export default function Page() {
               ]}
             />
           </div>
+        </div>
+      
+        <div className="max-w-4xl mx-auto px-4 pb-8">
+          <StandardPaceSources />
         </div>
       </main>
       <Footer />

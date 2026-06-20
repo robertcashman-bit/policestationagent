@@ -468,10 +468,36 @@ export async function POST(request: NextRequest) {
     // Generate slug
     const slug = generateSlug(formData.topic);
 
+    const { wrapGeneratedBlogHtml } = await import("../../../../scripts/lib/blog-legal-tail.mjs");
+    const { auditPostForPublish } = await import("../../../../scripts/lib/legal-publish-audit.mjs");
+
+    const wrappedContent = wrapGeneratedBlogHtml(
+      generatedContent.content,
+      generatedContent.title,
+    );
+    const faqForAudit = generatedContent.faqs.map((f) => ({ q: f.question, a: f.answer }));
+
+    const audit = auditPostForPublish({
+      title: generatedContent.title,
+      slug,
+      contentHtml: wrappedContent,
+      faq: faqForAudit,
+    });
+
+    if (!audit.ok) {
+      return NextResponse.json(
+        {
+          error: "Generated content failed legal accuracy audit",
+          issues: audit.issues,
+        },
+        { status: 422 },
+      );
+    }
+
     return NextResponse.json({
       title: generatedContent.title,
       slug,
-      content: generatedContent.content,
+      content: wrappedContent,
       metaTitle: generatedContent.metaTitle,
       metaDescription: generatedContent.metaDescription,
       faqs: generatedContent.faqs,

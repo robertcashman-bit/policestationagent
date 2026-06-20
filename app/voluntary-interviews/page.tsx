@@ -9,6 +9,7 @@ import { AuthorBio } from "@/components/E-E-A-T/AuthorBio";
 import { RegulatoryReferences } from "@/components/E-E-A-T/RegulatoryReferences";
 import { InternalLinkHub } from "@/components/InternalLinkHub";
 import { FAQPage } from "@/components/StructuredData";
+import { StandardPaceSources } from "@/components/legal/StandardPaceSources";
 
 export const metadata: Metadata = {
   title: "Legal Advice at Police Station Kent | Voluntary Interview Solicitor | FREE | PACE Rights",
@@ -112,6 +113,10 @@ export default function VoluntaryInterviewsPage() {
               <RegulatoryReferences />
             </div>
           </div>
+        </div>
+      
+        <div className="max-w-4xl mx-auto px-4 pb-8">
+          <StandardPaceSources />
         </div>
       </main>
       <Footer />

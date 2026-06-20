@@ -3,6 +3,7 @@ import { normalizeScrapedHtml } from "@/lib/scraped-html";
 import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 import { SITE_URL } from "@/config/site";
+import { StandardPaceSources } from "@/components/legal/StandardPaceSources";
 
 const pageUrl = `${SITE_URL}/emergency-police-station-representation`;
 
@@ -36,6 +37,10 @@ export default function Page() {
             }}
 
           />
+        </div>
+      
+        <div className="max-w-4xl mx-auto px-4 pb-8">
+          <StandardPaceSources />
         </div>
       </main>
       <Footer />

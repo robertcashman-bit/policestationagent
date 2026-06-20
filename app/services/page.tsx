@@ -7,6 +7,7 @@ import { ComprehensiveLegalServiceSchema } from "@/components/schema/Comprehensi
 import { PersonSchema } from "@/components/schema/PersonSchema";
 import { InternalLinkHub } from "@/components/InternalLinkHub";
 import { FAQPage, BreadcrumbList } from "@/components/StructuredData";
+import { StandardPaceSources } from "@/components/legal/StandardPaceSources";
 
 export const metadata: Metadata = {
   title: "Police Station Solicitor in Kent | Police Station Representation Services",
@@ -101,6 +102,10 @@ export default function Page() {
               { href: "/voluntary-interviews", text: "Legal Advice at Police Station", description: "Voluntary interview guidance" },
             ]}
           />
+        </div>
+      
+        <div className="max-w-4xl mx-auto px-4 pb-8">
+          <StandardPaceSources />
         </div>
       </main>
       <Footer />

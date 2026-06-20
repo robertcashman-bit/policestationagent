@@ -64,19 +64,18 @@ export function auditPaceCitations(content, contextLabel) {
   }
 
   const refs = extractPaceReferences(text);
+  const hasOfficialInFile = /gov\.uk|legislation\.gov\.uk|cps\.gov\.uk|bailii\.org/i.test(content);
+  const hasLegalSourcesComponent = /LegalReferences|StandardPaceSources|ScrapedHtmlPage/i.test(content);
+
   for (const ref of refs) {
     if (!byId.has(ref.id)) continue;
-    const entry = byId.get(ref.id);
-    const hasOfficialLink =
-      entry.officialUrl && content.includes(entry.officialUrl.split("/").slice(-2).join("/"));
-    const hasGovLink = /gov\.uk|legislation\.gov\.uk/i.test(content);
-    if (refs.length > 0 && !hasGovLink && content.length > 500) {
+    if (hasOfficialInFile || hasLegalSourcesComponent) continue;
+    if (refs.length > 0 && content.length > 500) {
       issues.push({
-        severity: "warn",
-        message: `${contextLabel}: cites ${ref.id} but no official gov.uk/legislation link in content`,
+        severity: "error",
+        message: `${contextLabel}: cites ${ref.id} but no official gov.uk/legislation link or LegalReferences in page`,
       });
     }
-    void hasOfficialLink;
   }
 
   return issues;

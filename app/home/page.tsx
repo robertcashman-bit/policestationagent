@@ -3,6 +3,7 @@ import { normalizeScrapedHtml } from "@/lib/scraped-html";
 import Footer from "@/components/Footer";
 import ReplaceTextOnMount from "@/components/ReplaceTextOnMount";
 import type { Metadata } from "next";
+import { StandardPaceSources } from "@/components/legal/StandardPaceSources";
 
 export const metadata: Metadata = {
   title: "Duty Solicitor Kent extended hours | 01732 247427 | FREE Police Station Advice",
@@ -34,6 +35,10 @@ export default function Page() {
             }}
 
           />
+        </div>
+      
+        <div className="max-w-4xl mx-auto px-4 pb-8">
+          <StandardPaceSources />
         </div>
       </main>
       <Footer />

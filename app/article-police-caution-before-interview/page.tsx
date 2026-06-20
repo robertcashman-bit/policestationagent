@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { SITE_DOMAIN, SITE_URL } from "@/config/site";
 import Script from "next/script";
 import { FAQPage } from "@/components/StructuredData";
+import { StandardPaceSources } from "@/components/legal/StandardPaceSources";
 
 export const metadata: Metadata = {
   title: "The Police Caution Before Interview | Police Station Agent",
@@ -94,6 +95,10 @@ export default function ArticlePoliceCautionBeforeInterviewPage() {
             }}
 
           />
+        </div>
+      
+        <div className="max-w-4xl mx-auto px-4 pb-8">
+          <StandardPaceSources />
         </div>
       </main>
       <Footer />

@@ -6,6 +6,7 @@ import { SITE_DOMAIN } from "@/config/site";
 import { InternalLinkHub } from "@/components/InternalLinkHub";
 import { FAQPage } from "@/components/StructuredData";
 import { AnswerFirstBlock } from "@/components/conversion/AnswerFirstBlock";
+import { StandardPaceSources } from "@/components/legal/StandardPaceSources";
 
 export const metadata: Metadata = {
   title: "Voluntary Police Interview Solicitor | Legal Advice Before Attendance (Kent)",
@@ -142,6 +143,10 @@ export default function VoluntaryPoliceInterviewPage() {
               ))}
             </div>
           </section>
+        </div>
+      
+        <div className="max-w-4xl mx-auto px-4 pb-8">
+          <StandardPaceSources />
         </div>
       </main>
       <Footer />
