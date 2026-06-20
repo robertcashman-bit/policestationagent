@@ -71,6 +71,8 @@ describe("blog generator legal tail", () => {
     expect(result.ok, result.issues?.join("; ")).toBe(true);
   });
 });
+
+describe("legal case registry", () => {
   it("every entry has citations and verifiedHolding", () => {
     for (const entry of loadCaseRegistry()) {
       expect(entry.citations?.length, entry.id).toBeGreaterThan(0);

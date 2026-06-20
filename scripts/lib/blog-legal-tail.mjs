@@ -1,4 +1,5 @@
 /** Wrap generated blog HTML with mandatory legal tail for audit compliance. */
+import { LEGAL_ACCURACY_DISCLAIMER_HTML } from "./legal-accuracy-disclaimer-html.mjs";
 
 export const STANDARD_SOURCES_HTML = `
 <h2>Sources</h2>
@@ -8,7 +9,7 @@ export const STANDARD_SOURCES_HTML = `
   <li><a href="https://www.legislation.gov.uk/ukpga/1984/60/section/76" rel="noopener noreferrer">PACE 1984, section 76</a> — exclusion of confessions</li>
   <li><a href="https://www.sra.org.uk/consumers/register/organisation/?sraNumber=127795" rel="noopener noreferrer">SRA register — Tuckers Solicitors LLP (127795)</a></li>
 </ul>
-<p><em>General information only — not legal advice about any individual case. Statutory references and Code C paragraphs are summarised for readability; refer to the official published versions linked above.</em></p>`;
+${LEGAL_ACCURACY_DISCLAIMER_HTML}`;
 
 export function wrapGeneratedBlogHtml(bodyHtml, title) {
   const inner = (bodyHtml || "").trim();

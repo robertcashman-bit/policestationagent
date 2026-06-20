@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { LegalAccuracyNotice } from "@/components/legal/LegalAccuracyNotice";
 
 export type LegalSource = {
   id: string;
@@ -50,10 +51,7 @@ export function LegalReferences({
           </li>
         ))}
       </ol>
-      <p className="mt-4 text-xs text-slate-500">
-        Note: UK legislation changes. If something is urgent or unclear, get advice for your
-        specific situation.
-      </p>
+      <LegalAccuracyNotice variant="text" className="mt-4" />
     </section>
   );
 }

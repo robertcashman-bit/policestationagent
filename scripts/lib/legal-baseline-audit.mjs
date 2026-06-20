@@ -85,6 +85,13 @@ export function auditBlogBaseline(post) {
     issues.push({ severity: "warn", message: `${post.slug}: missing general-information disclaimer` });
   }
 
+  if (!/\/contact|report a content error|reporting a content error/i.test(html)) {
+    issues.push({
+      severity: "warn",
+      message: `${post.slug}: missing link to contact page for reporting content errors`,
+    });
+  }
+
   return { issues, audience, legal };
 }
 

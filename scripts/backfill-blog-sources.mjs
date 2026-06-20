@@ -5,6 +5,7 @@
  */
 import fs from "fs";
 import path from "path";
+import { LEGAL_ACCURACY_DISCLAIMER_HTML } from "./lib/legal-accuracy-disclaimer-html.mjs";
 
 const BLOG_DIR = path.join(process.cwd(), "data", "blog-posts");
 const LEGACY_PATH = path.join(process.cwd(), "data", "blog-posts-full.json");
@@ -17,7 +18,7 @@ const STANDARD_SOURCES = `
   <li><a href="https://www.legislation.gov.uk/ukpga/1984/60/section/76" rel="noopener noreferrer">PACE 1984, section 76</a> — exclusion of confessions</li>
   <li><a href="https://www.sra.org.uk/consumers/register/organisation/?sraNumber=127795" rel="noopener noreferrer">SRA register — Tuckers Solicitors LLP (127795)</a></li>
 </ul>
-<p><em>General information only — not legal advice about any individual case. Statutory references and Code C paragraphs are summarised for readability; refer to the official published versions linked above.</em></p>`;
+${LEGAL_ACCURACY_DISCLAIMER_HTML}`;
 
 const S58_MISQUOTE =
   "However, the court will consider whether you were properly advised of your rights under section 58 of PACE when assessing the weight of that evidence.";

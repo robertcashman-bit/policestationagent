@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 interface ServiceDisclaimerProps {
   className?: string;
@@ -25,7 +26,11 @@ export function ServiceDisclaimer({
     <div className={`bg-slate-50 border-l-4 border-slate-400 p-6 rounded-r-lg ${className}`}>
       <h3 className="text-lg font-bold text-slate-900 mb-3">Important Information</h3>
       <p className="text-slate-700 mb-4">
-        <strong>Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795).</strong> Robert Cashman is a qualified solicitor and accredited duty solicitor. This website provides general information only and does not constitute legal advice. You should seek specific legal advice for your situation.
+        <strong>Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795).</strong> Robert Cashman is a qualified solicitor and accredited duty solicitor. This website provides general information only and does not constitute legal advice. While every care is taken to keep information accurate, errors may occur — please{" "}
+        <Link href="/contact" className="text-blue-700 hover:underline font-medium">
+          contact us
+        </Link>{" "}
+        to report a content error. You should seek specific legal advice for your situation.
       </p>
       {notForList.length > 0 && (
         <div className="mt-4">

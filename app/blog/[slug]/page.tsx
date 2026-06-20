@@ -3,6 +3,7 @@ import { normalizeScrapedHtml } from "@/lib/scraped-html";
 import Footer from "@/components/Footer";
 import BlogAdvertBlock from "@/components/BlogAdvertBlock";
 import { AuthorBox } from "@/components/blog/AuthorBox";
+import { LegalAccuracyNotice } from "@/components/legal/LegalAccuracyNotice";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -324,16 +325,8 @@ export default async function BlogPostPage(props: Readonly<PageProps>) {
 
             <AuthorBox />
 
-            {/* Legal Disclaimer */}
             <div className="mt-12 pt-8 border-t border-slate-200">
-              <div className="bg-blue-50 border-l-4 border-blue-500 p-4 text-sm text-slate-700 rounded-r-lg">
-                <p className="font-semibold mb-1">Legal Disclaimer</p>
-                <p>
-                  This article is general information only. If you are detained, ask custody staff
-                  to contact a solicitor. Legal services are provided by Tuckers Solicitors LLP (SRA
-                  ID: 127795).
-                </p>
-              </div>
+              <LegalAccuracyNotice variant="box" />
             </div>
 
             {/* Mandatory Advert Block */}
