@@ -170,7 +170,7 @@ describe('runFirmOutreach record-based queue', () => {
 
   it('respects daily send cap', async () => {
     const { runFirmOutreach, mockSend } = await loadRunOutreachMocks({
-      getDailySendCount: vi.fn().mockResolvedValue(50),
+      getDailySendCount: vi.fn().mockResolvedValue(95),
     });
     const stats = await runFirmOutreach({ dryRun: true });
     expect(stats.sent).toBe(0);

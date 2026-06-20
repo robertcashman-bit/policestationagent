@@ -18,6 +18,8 @@ const env = createOutreachEnvHelpers({
   cronEnrichBatch: 30,
   enrichMaxMs: 240_000,
   paidDailyCap: 50,
+  /** Resend free tier: 100 emails/day total (all transactional mail). */
+  dailyCap: 95,
 });
 
 export const outreachEnabled = env.outreachEnabled;

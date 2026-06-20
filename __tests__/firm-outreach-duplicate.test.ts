@@ -83,7 +83,7 @@ describe('dailySendCap default', () => {
     delete process.env.FIRM_OUTREACH_DAILY_CAP;
     vi.resetModules();
     const { dailySendCap } = await import('@/lib/firm-outreach/constants');
-    expect(dailySendCap()).toBe(50);
+    expect(dailySendCap()).toBe(95);
     if (prev === undefined) delete process.env.FIRM_OUTREACH_DAILY_CAP;
     else process.env.FIRM_OUTREACH_DAILY_CAP = prev;
   });
