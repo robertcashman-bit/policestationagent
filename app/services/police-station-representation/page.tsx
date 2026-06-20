@@ -46,7 +46,7 @@ export default function PoliceStationRepresentationPage() {
     {
       question: "How quickly can a duty solicitor attend in Kent?",
       answer:
-        "We aim to respond promptly. Attendance times depend on location, custody demand and solicitor availability. Our extended hours service covers all Kent police stations including evenings, weekends and bank holidays, ensuring rapid response across all Kent custody suites.",
+        "45 min away Our extended hours service covers all Kent police stations including evenings, weekends and bank holidays, ensuring rapid response across all Kent custody suites.",
     },
     {
       question: "Which Kent custody suites do you cover as a duty solicitor?",

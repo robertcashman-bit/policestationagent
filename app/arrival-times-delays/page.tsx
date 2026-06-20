@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     description:
       "Expected arrival times for duty solicitor representation at Kent police stations. Understanding delays and your rights under PACE 1984 when waiting for a solicitor.",
     url: "https://criminaldefencekent.co.uk/arrival-times-delays",
-    siteName: "Criminal Defence Kent",
+    siteName: "Police Station Agent",
     type: "website",
   },
 };

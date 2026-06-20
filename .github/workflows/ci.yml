@@ -29,6 +29,12 @@ jobs:
       - name: Legal accuracy audit
         run: npm run audit:legal
 
+      - name: Blog image audit
+        run: npm run audit:blog-images
+
+      - name: Readability audit
+        run: npm run audit:readability
+
       - name: Legal accuracy tests
         run: npm run test:legal
 

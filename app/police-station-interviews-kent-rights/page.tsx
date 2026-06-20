@@ -468,7 +468,7 @@ export default function Page() {
                           
                           <div class="border-b border-slate-200 pb-6">
                             <h3 class="font-bold text-slate-900 mb-2 text-lg">How long will I have to wait for a solicitor?</h3>
-                            <p class="text-slate-700">We aim to respond promptly. Attendance times depend on location, custody demand and solicitor availability. Police should not unreasonably delay your access to legal advice.</p>
+                            <p class="text-slate-700">45 min away Police should not unreasonably delay your access to legal advice.</p>
                           </div>
                           
                           <div class="border-b border-slate-200 pb-6">

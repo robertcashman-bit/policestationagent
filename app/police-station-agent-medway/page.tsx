@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     description:
       "Police Station Duty Solicitor Medway - Expert representation by qualified solicitor at Medway Police Station. Accredited Duty Solicitor & Higher Court Advocate. FREE legal advice under Legal Aid.",
     url: "https://criminaldefencekent.co.uk/police-station-agent-medway",
-    siteName: "Criminal Defence Kent",
+    siteName: "Police Station Agent",
     type: "website",
   },
 };

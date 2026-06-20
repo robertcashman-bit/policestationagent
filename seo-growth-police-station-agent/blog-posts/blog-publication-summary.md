@@ -47,6 +47,27 @@ Published 2026-06-14 via `scripts/generate-click-driving-blog-posts.mjs`. All in
 
 Buffer calendar: `scripts/generate-buffer-calendar.mjs` (23 social entries).
 
+Buffer calendar: `scripts/generate-buffer-calendar.mjs` (49 social entries including authority blogs).
+
+## Authority guide companion blogs (June 2026)
+
+Kent-focused companion posts linking to canonical guide pages (`scripts/generate-authority-guide-blogs.mjs`):
+
+| Slug | Guide page |
+|------|------------|
+| `can-police-take-my-phone-kent` | `/can-police-take-my-phone` |
+| `police-bail-explained-kent` | `/police-bail-explained` |
+| `no-comment-interview-kent` | `/no-comment-interview` |
+| `prepared-statements-kent` | `/prepared-statements` |
+| `adverse-inference-kent` | `/adverse-inference` |
+| `custody-time-limits-kent` | `/custody-time-limits` |
+| `pace-code-c-kent-guide` | `/pace-code-c` |
+| `youth-custody-rights-kent` | `/youth-custody-rights` |
+| `appropriate-adult-kent` | `/appropriate-adult` |
+| `dna-fingerprints-police-station-kent` | `/dna-fingerprints-police-station` |
+
+Each post has a unique slug-based featured image (`data/blog-image-registry.json`). Blog image audit: `npm run audit:blog-images`.
+
 ## Skipped (existing canonical URL)
 
 | Requested slug | Action | Canonical URL | Improvements |

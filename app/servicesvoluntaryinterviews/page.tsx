@@ -1,4 +1,6 @@
 import Header from "@/components/Header";
+import { normalizeScrapedHtml } from "@/lib/scraped-html";
+
 import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 import { StandardPaceSources } from "@/components/legal/StandardPaceSources";

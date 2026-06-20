@@ -589,6 +589,12 @@ export default function CanPoliceTakeMyPhonePage() {
                 <span className="font-medium text-blue-600">Interview Rights →</span>
               </Link>
               <Link
+                href="/blog/can-police-take-my-phone-kent"
+                className="p-4 bg-white rounded-lg border hover:border-blue-300"
+              >
+                <span className="font-medium text-blue-600">Kent blog: phone seizure at police station →</span>
+              </Link>
+              <Link
                 href="/released-under-investigation"
                 className="p-4 bg-white rounded-lg border hover:border-blue-300"
               >

@@ -75,5 +75,15 @@ export function normalizeScrapedHtml(html: string): string {
   out = out.replace(/WhatsApp text message only/gi, `Text ${SMS_DISPLAY}`);
   out = out.replace(/>\s*WhatsApp\s*</gi, `>Text ${SMS_DISPLAY}<`);
 
+  // Garbled hero copy from legacy bulk replace (solicitor landing pages).
+  out = out.replace(
+    /We're We aim to respond promptly\. Attendance times depend on location, custody demand and solicitor availability\./gi,
+    "We aim to respond promptly. Attendance times depend on location, custody demand and solicitor availability.",
+  );
+  out = out.replace(
+    /solicitor We aim to respond promptly\. Attendance times depend on location, custody demand and solicitor availability\./gi,
+    "We aim to respond promptly. Attendance times depend on location, custody demand and solicitor availability.",
+  );
+
   return out;
 }

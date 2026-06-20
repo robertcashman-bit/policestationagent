@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     description:
       "Police Station Duty Solicitor Ashford - Expert police station representation by qualified solicitor. FREE legal advice under Legal Aid. Accredited Duty Solicitor & Higher Court Advocate. Call 01732 247427.",
     url: "https://policestationagent.com/police-station-agent-ashford",
-    siteName: "Criminal Defence Kent",
+    siteName: "Police Station Agent",
     type: "website",
   },
 };

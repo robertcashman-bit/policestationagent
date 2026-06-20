@@ -1,5 +1,85 @@
 [
   {
+    "id": "2026-06-25-appropriate-adult-kent",
+    "title": "Appropriate Adults at Kent Police Stations: Who They Are and When You Need One",
+    "slug": "appropriate-adult-kent",
+    "excerpt": "When an appropriate adult is required at Kent police interviews for juveniles and vulnerable suspects under PACE Code C.",
+    "published_at": "2026-06-25T12:00:00",
+    "created_at": "2026-06-25T12:00:00"
+  },
+  {
+    "id": "2026-06-25-dna-fingerprints-police-station-kent",
+    "title": "DNA and Fingerprints at Kent Police Stations: Your Rights",
+    "slug": "dna-fingerprints-police-station-kent",
+    "excerpt": "When Kent police can take DNA and fingerprints in custody, your rights under PACE and what happens to biometric data.",
+    "published_at": "2026-06-25T12:00:00",
+    "created_at": "2026-06-25T12:00:00"
+  },
+  {
+    "id": "2026-06-24-pace-code-c-kent-guide",
+    "title": "PACE Code C at Kent Police Stations: Your Rights in Custody",
+    "slug": "pace-code-c-kent-guide",
+    "excerpt": "What PACE Code C means for detainees at Kent custody suites: rights, reviews, interviews, vulnerability and appropriate adults.",
+    "published_at": "2026-06-24T12:00:00",
+    "created_at": "2026-06-24T12:00:00"
+  },
+  {
+    "id": "2026-06-24-youth-custody-rights-kent",
+    "title": "Youth Custody Rights in Kent: Under 18 at a Police Station",
+    "slug": "youth-custody-rights-kent",
+    "excerpt": "Rights of under-18s detained at Kent police stations: appropriate adult, legal advice, interview safeguards under PACE Code C.",
+    "published_at": "2026-06-24T12:00:00",
+    "created_at": "2026-06-24T12:00:00"
+  },
+  {
+    "id": "2026-06-23-adverse-inference-kent",
+    "title": "Adverse Inference in Kent Police Interviews: What Silence Can Mean at Court",
+    "slug": "adverse-inference-kent",
+    "excerpt": "How section 34 CJPOA adverse inferences may apply after a Kent police interview, and why legal advice before interview matters.",
+    "published_at": "2026-06-23T12:00:00",
+    "created_at": "2026-06-23T12:00:00"
+  },
+  {
+    "id": "2026-06-23-custody-time-limits-kent",
+    "title": "How Long Can Police Hold You in Kent? Custody Time Limits Explained",
+    "slug": "custody-time-limits-kent",
+    "excerpt": "PACE custody time limits after arrest at Kent police stations: 24 hours, extensions, and when you must be released or charged.",
+    "published_at": "2026-06-23T12:00:00",
+    "created_at": "2026-06-23T12:00:00"
+  },
+  {
+    "id": "2026-06-22-no-comment-interview-kent",
+    "title": "No Comment Interview at a Kent Police Station: When Silence Makes Sense",
+    "slug": "no-comment-interview-kent",
+    "excerpt": "When to answer no comment in a Kent police interview, section 34 CJPOA adverse inferences, and why legal advice matters before you decide.",
+    "published_at": "2026-06-22T12:00:00",
+    "created_at": "2026-06-22T12:00:00"
+  },
+  {
+    "id": "2026-06-22-prepared-statements-kent",
+    "title": "Prepared Statements in Kent Police Interviews: A Practical Guide",
+    "slug": "prepared-statements-kent",
+    "excerpt": "How prepared statements work in Kent police interviews, when they may be used instead of full answers, and why solicitor advice is essential.",
+    "published_at": "2026-06-22T12:00:00",
+    "created_at": "2026-06-22T12:00:00"
+  },
+  {
+    "id": "2026-06-21-can-police-take-my-phone-kent",
+    "title": "Can Police Take My Phone at a Kent Police Station? Your Rights Explained",
+    "slug": "can-police-take-my-phone-kent",
+    "excerpt": "When Kent police can seize your phone on arrest, PIN/password rules under RIPA s.49, how long they can keep it, and voluntary interview rights. General information with official sources.",
+    "published_at": "2026-06-21T12:00:00",
+    "created_at": "2026-06-21T12:00:00"
+  },
+  {
+    "id": "2026-06-21-police-bail-explained-kent",
+    "title": "Police Bail Explained for Kent: Conditions, Time Limits and Your Rights",
+    "slug": "police-bail-explained-kent",
+    "excerpt": "What police bail means after release from Kent custody, pre-charge time limits under PACE, conditions, breach and RUI. General information with official sources.",
+    "published_at": "2026-06-21T12:00:00",
+    "created_at": "2026-06-21T12:00:00"
+  },
+  {
     "id": "2026-06-20-unfitness-to-interview-pace-code-c-kent",
     "title": "Unfitness to Interview at a Kent Police Station: What PACE Code C Says",
     "slug": "unfitness-to-interview-pace-code-c-kent",
