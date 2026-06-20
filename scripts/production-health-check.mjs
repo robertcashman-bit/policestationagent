@@ -186,9 +186,11 @@ async function checkOutreach() {
     fail('send_allowed', `sendAllowed=${cfg.sendAllowed} paused=${cfg.effectivePaused}`);
   } else pass('send_allowed');
 
-  if (cfg.requireApproval !== true) {
-    fail('require_approval', `requireApproval=${cfg.requireApproval}`);
-  } else pass('require_approval');
+  if (cfg.requireApproval === true) {
+    pass('require_approval', 'approval-gated sends');
+  } else {
+    pass('autosend_enabled', 'cron sends without approval email');
+  }
 
   if (ih.drifted === true) {
     fail('index_health', 'index drift detected — run repair-loop');

@@ -219,10 +219,16 @@ export async function POST(request: Request) {
         return NextResponse.json({ error: 'KV not configured' }, { status: 503 });
       }
       const { runFirmOutreach } = await import('@/lib/firm-outreach/outreach/run-outreach');
+      const { notifyOutreachBatchSent } = await import(
+        '@/lib/firm-outreach/outreach/send-confirmation-email'
+      );
       const send = await runFirmOutreach({
         limit: body.limit,
         dryRun: body.dryRun,
       });
+      if (!body.dryRun) {
+        await notifyOutreachBatchSent(send, { source: 'manual' });
+      }
       return NextResponse.json({ ok: true, send, dryRun: Boolean(body.dryRun) });
     }
 

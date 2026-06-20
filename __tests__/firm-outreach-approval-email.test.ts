@@ -121,4 +121,35 @@ describe('sendOutreachSendConfirmationEmail', () => {
     });
     expect(typeof ok).toBe('boolean');
   });
+
+  it('uses autosend copy when source is autosend', async () => {
+    process.env.RESEND_API_KEY = 're_test';
+    process.env.FIRM_OUTREACH_DIGEST_EMAIL = 'robertdavidcashman@gmail.com';
+    mockResendSend.mockResolvedValue({ data: { id: 'msg_2' } });
+    vi.resetModules();
+    const { sendOutreachSendConfirmationEmail } = await import(
+      '@/lib/firm-outreach/outreach/send-confirmation-email'
+    );
+    await sendOutreachSendConfirmationEmail({
+      stats: { queued: 2, sent: 2, skipped: 0, suppressed: 0, errors: 0, elapsedMs: 1 },
+      receipts: [
+        {
+          firmName: 'Beta LLP',
+          email: 'crime@beta.co.uk',
+          touchLabel: 'Initial invite',
+          sentAt: '2026-06-18T09:30:00.000Z',
+        },
+      ],
+      readyRemaining: 26,
+      source: 'autosend',
+      date: '2026-06-18',
+    });
+    expect(mockResendSend).toHaveBeenCalledWith(
+      expect.objectContaining({
+        to: 'robertdavidcashman@gmail.com',
+        subject: '[Firm outreach] 2 sent — 2026-06-18',
+        html: expect.stringContaining('automated daily send'),
+      }),
+    );
+  });
 });

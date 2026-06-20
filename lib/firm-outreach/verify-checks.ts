@@ -550,8 +550,8 @@ export async function runHttpChecks(
         }
       }
       results.push({
-        name: 'cron_status_require_approval',
-        ok: statusRes.status === 200 && payload?.config?.requireApproval === true,
+        name: 'cron_status_autosend',
+        ok: statusRes.status === 200 && payload?.config?.requireApproval === false,
         status: statusRes.status,
         detail: `requireApproval=${payload?.config?.requireApproval ?? 'missing'}`,
       });

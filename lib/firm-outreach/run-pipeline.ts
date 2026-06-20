@@ -5,6 +5,7 @@ import { isOutreachSendAllowed } from './pause-state';
 import { runFirmDiscovery } from './discovery/run-discovery';
 import { runFirmEnrichment } from './enrichment/run-enrich';
 import { sendDailyOutreachDigest } from './outreach/digest-email';
+import { notifyOutreachBatchSent } from './outreach/send-confirmation-email';
 import { runFirmOutreach } from './outreach/run-outreach';
 import { requalifyAllProspects } from './requalify-prospects';
 import { countProspectsByStatus } from './storage';
@@ -98,6 +99,10 @@ export async function runFirmOutreachPipeline(opts?: {
       : await runFirmOutreach({ limit: opts?.sendLimit, dryRun: opts?.sendDryRun });
 
   const counts = await countProspectsByStatus();
+
+  if (send.sent > 0 && !opts?.sendDryRun) {
+    await notifyOutreachBatchSent(send, { source: 'autosend' });
+  }
 
   if (!opts?.skipDigest) {
     await sendDailyOutreachDigest({

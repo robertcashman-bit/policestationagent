@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import { outreachSendEnabled } from '@/lib/firm-outreach/constants';
-import { buildOutreachActivityReport } from '@/lib/firm-outreach/outreach/activity-report';
-import { sendOutreachSendConfirmationEmail } from '@/lib/firm-outreach/outreach/send-confirmation-email';
+import { notifyOutreachBatchSent } from '@/lib/firm-outreach/outreach/send-confirmation-email';
 import {
   finalizeSendApproval,
   releaseSendApprovalClaim,
@@ -67,22 +66,7 @@ export async function POST(request: Request) {
 
   try {
     const stats = await runFirmOutreach();
-    const { report } = await buildOutreachActivityReport();
-    const startOfUtcDay = Date.UTC(
-      new Date().getUTCFullYear(),
-      new Date().getUTCMonth(),
-      new Date().getUTCDate(),
-    );
-    const receipts = report.sends
-      .filter((s) => s.sentAt && Date.parse(s.sentAt) >= startOfUtcDay)
-      .sort((a, b) => (b.sentAt ?? '').localeCompare(a.sentAt ?? ''))
-      .slice(0, stats.sent);
-
-    await sendOutreachSendConfirmationEmail({
-      stats,
-      receipts,
-      readyRemaining: report.summary.readyToSend,
-    });
+    await notifyOutreachBatchSent(stats, { source: 'approval' });
 
     await finalizeSendApproval(approvalRef);
 

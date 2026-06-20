@@ -23,7 +23,7 @@ vi.mock('@/lib/firm-outreach/outreach/activity-report', () => ({
 }));
 
 vi.mock('@/lib/firm-outreach/outreach/send-confirmation-email', () => ({
-  sendOutreachSendConfirmationEmail: (...args: unknown[]) => mockConfirmEmail(...args),
+  notifyOutreachBatchSent: (...args: unknown[]) => mockConfirmEmail(...args),
 }));
 
 vi.mock('@/lib/firm-outreach/constants', () => ({

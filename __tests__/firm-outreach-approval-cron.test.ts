@@ -39,6 +39,23 @@ describe('firm-outreach approval crons', () => {
       expect(res.status).toBe(401);
     });
 
+    it('auto-sends when approval is disabled', async () => {
+      process.env.FIRM_OUTREACH_REQUIRE_APPROVAL = 'false';
+      mockPipeline.mockResolvedValue({ skipped: false, send: { sent: 12 } });
+      const res = await fullGet(
+        new Request('http://localhost/api/cron/firm-outreach-pipeline/full', {
+          headers: { authorization: 'Bearer cron-test' },
+        }),
+      );
+      expect(res.status).toBe(200);
+      const json = await res.json();
+      expect(json.mode).toBe('send-only');
+      expect(mockPipeline).toHaveBeenCalledWith(
+        expect.objectContaining({ skipDiscovery: true, skipEnrich: true }),
+      );
+      expect(mockApprovalEmail).not.toHaveBeenCalled();
+    });
+
     it('sends approval email without auto-send when approval required', async () => {
       const res = await fullGet(
         new Request('http://localhost/api/cron/firm-outreach-pipeline/full', {

@@ -15,7 +15,7 @@ Requires **Upstash Redis** (sessions + prospect data) and **RESEND_API_KEY** (lo
 | `06:00` | `/api/cron/firm-outreach-enrich` | Enrich only (30 firms, ~240s max) |
 | `07:00` | `/api/cron/firm-outreach-enrich` | Enrich only (30 firms, ~240s max) |
 | `08:00` | `/api/cron/firm-outreach-enrich` | Enrich only (30 firms, ~240s max) |
-| `09:30` | `/api/cron/firm-outreach-pipeline/full` | **Approval email only** (owner clicks link to send; not auto-send) + daily digest |
+| `09:30` | `/api/cron/firm-outreach-pipeline/full` | **Auto-send** ready queue (up to daily cap) + confirmation email to owner + daily digest |
 | `17:00` | `/api/cron/firm-outreach-digest` | Digest backup if morning run did not send one |
 
 All cron routes require `Authorization: Bearer $CRON_SECRET` (Vercel adds this automatically).
@@ -29,7 +29,8 @@ All cron routes require `Authorization: Bearer $CRON_SECRET` (Vercel adds this a
 | `CRON_SECRET` | — | Cron auth + unsubscribe token signing |
 | `FIRM_OUTREACH_COUNTY_ALLOWLIST` | _(empty — all counties)_ | Optional comma-separated county filter for discovery |
 | `FIRM_OUTREACH_DAILY_CAP` | `95` | Max outreach sends per UTC day (Resend free tier allows 100/day total including login, digest, and approval mail — leave headroom) |
-| `FIRM_OUTREACH_DIGEST_EMAIL` | `CONTACT_FORM_TO_EMAIL` | Daily digest recipient |
+| `FIRM_OUTREACH_REQUIRE_APPROVAL` | `false` (autosend) | Set `true` to require clicking the daily approval email before sends |
+| `FIRM_OUTREACH_DIGEST_EMAIL` | `robertdavidcashman@gmail.com` | Digest + post-send confirmation recipient |
 | `FIRM_OUTREACH_CRON_ENRICH_BATCH` | `30` | Firms per cron enrich tick |
 | `FIRM_OUTREACH_ENRICH_MAX_MS` | `240000` | Wall-clock cap per enrich cron run |
 | `FIRM_OUTREACH_SEND_ENABLED` | enabled | Set `false` to disable automated sends |

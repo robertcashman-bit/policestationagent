@@ -1,8 +1,45 @@
 import { Resend } from 'resend';
 import { SITE_URL } from '@/config/site';
 import type { OutreachActivityRow, OutreachRunStats } from '../types';
+import { buildOutreachActivityReport } from './activity-report';
 import { outreachNotifyEmail } from './notify-recipient';
 import { outreachApprovalDate } from './send-approval-token';
+
+export type OutreachSendConfirmationSource = 'approval' | 'autosend' | 'manual';
+
+function startOfUtcDayMs(): number {
+  const now = new Date();
+  return Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+}
+
+export async function buildSendReceiptsForStats(stats: OutreachRunStats): Promise<{
+  receipts: OutreachActivityRow[];
+  readyRemaining: number;
+}> {
+  const { report } = await buildOutreachActivityReport();
+  const startOfUtcDay = startOfUtcDayMs();
+  const receipts = report.sends
+    .filter((s) => s.sentAt && Date.parse(s.sentAt) >= startOfUtcDay)
+    .sort((a, b) => (b.sentAt ?? '').localeCompare(a.sentAt ?? ''))
+    .slice(0, stats.sent);
+
+  return { receipts, readyRemaining: report.summary.readyToSend };
+}
+
+/** After a real send batch, email the owner with count + recipient list. */
+export async function notifyOutreachBatchSent(
+  stats: OutreachRunStats,
+  opts?: { source?: OutreachSendConfirmationSource; dryRun?: boolean },
+): Promise<boolean> {
+  if (opts?.dryRun || stats.sent <= 0) return false;
+  const { receipts, readyRemaining } = await buildSendReceiptsForStats(stats);
+  return sendOutreachSendConfirmationEmail({
+    stats,
+    receipts,
+    readyRemaining,
+    source: opts?.source ?? 'autosend',
+  });
+}
 
 const FROM_EMAIL =
   process.env.FIRM_OUTREACH_FROM_EMAIL?.trim() ||
@@ -59,21 +96,34 @@ function renderReceiptsTable(rows: OutreachActivityRow[]): string {
   `;
 }
 
+function confirmationIntro(source: OutreachSendConfirmationSource, date: string): string {
+  switch (source) {
+    case 'approval':
+      return `Your approval send for <strong>${escapeHtml(date)}</strong> completed.`;
+    case 'manual':
+      return `The manual send from admin for <strong>${escapeHtml(date)}</strong> completed.`;
+    default:
+      return `The automated daily send for <strong>${escapeHtml(date)}</strong> completed.`;
+  }
+}
+
 export async function sendOutreachSendConfirmationEmail(opts: {
   stats: OutreachRunStats;
   receipts: OutreachActivityRow[];
   readyRemaining: number;
   date?: string;
+  source?: OutreachSendConfirmationSource;
 }): Promise<boolean> {
   const to = outreachNotifyEmail();
   const date = opts.date ?? outreachApprovalDate();
+  const source = opts.source ?? 'autosend';
   const subject = `[Firm outreach] ${opts.stats.sent} sent — ${date}`;
 
   const html = `
     <div style="font-family:system-ui,sans-serif;color:#0f172a;max-width:720px;">
       <h2 style="margin:0 0 12px;">Firm outreach — batch sent</h2>
       <p style="margin:0 0 16px;line-height:1.5;">
-        Your approval send for <strong>${escapeHtml(date)}</strong> completed.
+        ${confirmationIntro(source, date)}
       </p>
       <ul style="margin:0 0 16px;padding-left:20px;line-height:1.6;">
         <li><strong>Sent:</strong> ${opts.stats.sent}</li>
