@@ -45,13 +45,16 @@ async function buildStatusPayload(scope: 'summary' | 'full') {
     };
   }
 
+  const { getProspectStatusSnapshot } = await import('@/lib/firm-outreach/storage');
+  const { getProspectIndexHealth } = await import('@/lib/firm-outreach/index-health');
+  const snapshot = await getProspectStatusSnapshot();
+
   const { report, prospectCounts } =
     scope === 'full'
-      ? await buildOutreachActivityReport()
-      : await buildOutreachDashboardSummary();
+      ? await buildOutreachActivityReport(snapshot)
+      : await buildOutreachDashboardSummary(snapshot);
 
-  const { getProspectIndexHealth } = await import('@/lib/firm-outreach/index-health');
-  const indexHealth = await getProspectIndexHealth();
+  const indexHealth = await getProspectIndexHealth(snapshot);
   const warnings: string[] = [];
   if (indexHealth.warning) warnings.push(indexHealth.warning);
 
@@ -66,6 +69,7 @@ async function buildStatusPayload(scope: 'summary' | 'full') {
     report,
     scope,
     indexHealth,
+    countsFromCache: snapshot.fromCache,
     warning: warnings.length > 0 ? warnings.join(' ') : undefined,
   };
 }

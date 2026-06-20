@@ -30,9 +30,11 @@ export async function GET(request: Request) {
     });
   }
 
-  const { report, prospectCounts } = await buildOutreachActivityReport();
+  const { getProspectStatusSnapshot } = await import('@/lib/firm-outreach/storage');
   const { getProspectIndexHealth } = await import('@/lib/firm-outreach/index-health');
-  const indexHealth = await getProspectIndexHealth();
+  const snapshot = await getProspectStatusSnapshot();
+  const { report, prospectCounts } = await buildOutreachActivityReport(snapshot);
+  const indexHealth = await getProspectIndexHealth(snapshot);
 
   return NextResponse.json({
     ok: true,
@@ -42,6 +44,7 @@ export async function GET(request: Request) {
     summary: report.summary,
     counts: prospectCounts,
     indexHealth,
+    countsFromCache: snapshot.fromCache,
     generatedAt: report.generatedAt,
   });
 }

@@ -205,5 +205,9 @@ export async function runFirmOutreach(opts?: {
   }
 
   stats.elapsedMs = Date.now() - started;
+  if (stats.sent > 0 || stats.errors > 0) {
+    const { refreshProspectStatusSnapshotCache } = await import('../storage');
+    await refreshProspectStatusSnapshotCache();
+  }
   return stats;
 }

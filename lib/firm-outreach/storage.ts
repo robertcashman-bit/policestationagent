@@ -29,6 +29,31 @@ const SUPPRESSION_PREFIX = 'firmoutreach:suppression:';
 const CURSOR_ENRICH = 'firmoutreach:cursor:enrich';
 const CURSOR_SEND = 'firmoutreach:cursor:send';
 const PAID_DAILY_PREFIX = 'firmoutreach:paid:';
+const PROSPECT_COUNTS_CACHE = 'firmoutreach:cache:prospect_counts';
+const PROSPECT_COUNTS_CACHE_TTL_MS = 5 * 60 * 1000;
+
+const COUNTABLE_STATUSES: FirmProspectStatus[] = [
+  'discovered',
+  'enriching',
+  'enriched',
+  'ready_to_send',
+  'sent',
+  'bounced',
+  'unsubscribed',
+  'joined_whatsapp',
+  'excluded',
+  'no_email',
+];
+
+export interface ProspectCountsCacheEntry {
+  counts: Record<string, number>;
+  masterIndexCount: number;
+  computedAt: string;
+}
+
+export interface ProspectStatusSnapshot extends ProspectCountsCacheEntry {
+  fromCache: boolean;
+}
 
 function prospectKey(id: string): string {
   return `${PROSPECT_PREFIX}${id}`;
@@ -546,29 +571,92 @@ export function createSendRecord(input: {
   };
 }
 
-export async function countProspectsByStatus(): Promise<Record<string, number>> {
-  const statuses: FirmProspectStatus[] = [
-    'discovered',
-    'enriched',
-    'ready_to_send',
-    'sent',
-    'bounced',
-    'unsubscribed',
-    'joined_whatsapp',
-    'excluded',
-    'no_email',
-  ];
-  const out: Record<string, number> = {};
-  for (const s of statuses) out[s] = 0;
+export async function invalidateProspectCountsCache(): Promise<void> {
+  const kv = getKV();
+  if (!kv) return;
+  await kv.del(PROSPECT_COUNTS_CACHE);
+}
 
+export async function writeProspectCountsCache(entry: ProspectCountsCacheEntry): Promise<void> {
+  const kv = getKV();
+  if (!kv) return;
+  await kv.set(PROSPECT_COUNTS_CACHE, entry);
+}
+
+async function readProspectCountsCache(): Promise<ProspectCountsCacheEntry | null> {
+  const kv = getKV();
+  if (!kv) return null;
+  const raw = await kv.get<ProspectCountsCacheEntry>(PROSPECT_COUNTS_CACHE);
+  if (!raw?.computedAt || !raw.counts) return null;
+  return raw;
+}
+
+function isProspectCountsCacheFresh(entry: ProspectCountsCacheEntry, maxAgeMs = PROSPECT_COUNTS_CACHE_TTL_MS): boolean {
+  const age = Date.now() - Date.parse(entry.computedAt);
+  return Number.isFinite(age) && age >= 0 && age < maxAgeMs;
+}
+
+async function computeProspectStatusSnapshot(): Promise<ProspectCountsCacheEntry> {
   const ids = [...new Set(await listAllProspectIds())];
-  if (ids.length === 0) return out;
+  const out: Record<string, number> = {};
+  for (const s of COUNTABLE_STATUSES) out[s] = 0;
 
-  const map = await getProspectsByIds(ids);
-  for (const id of ids) {
-    const p = map.get(id);
-    if (!p || !isActiveCampaignProspect(p)) continue;
-    if (p.status in out) out[p.status]++;
+  if (ids.length > 0) {
+    const map = await getProspectsByIds(ids);
+    for (const id of ids) {
+      const p = map.get(id);
+      if (!p || !isActiveCampaignProspect(p)) continue;
+      if (p.status in out) out[p.status]++;
+    }
   }
+
+  return {
+    counts: out,
+    masterIndexCount: ids.length,
+    computedAt: new Date().toISOString(),
+  };
+}
+
+/** Fast status bucket sizes from KV indexes (no record mget). */
+export async function countProspectsByStatusFromIndexes(): Promise<Record<string, number>> {
+  const out: Record<string, number> = {};
+  const lists = await Promise.all(
+    COUNTABLE_STATUSES.map(async (status) => ({
+      status,
+      ids: await listProspectIdsByStatus(status),
+    })),
+  );
+  for (const { status } of lists) out[status] = 0;
+  for (const { status, ids } of lists) out[status] = ids.length;
   return out;
+}
+
+export async function countProspectsByStatus(): Promise<Record<string, number>> {
+  const snapshot = await getProspectStatusSnapshot();
+  return snapshot.counts;
+}
+
+/** Record-based active-campaign counts with KV cache (5 min TTL). */
+export async function getProspectStatusSnapshot(options?: {
+  forceRefresh?: boolean;
+  maxAgeMs?: number;
+  /** When true, return expired cache instead of running a full prospect scan. */
+  allowStale?: boolean;
+}): Promise<ProspectStatusSnapshot> {
+  const cached = await readProspectCountsCache();
+  if (cached && !options?.forceRefresh) {
+    const fresh = isProspectCountsCacheFresh(cached, options?.maxAgeMs);
+    if (fresh || options?.allowStale !== false) {
+      return { ...cached, fromCache: fresh };
+    }
+  }
+
+  const computed = await computeProspectStatusSnapshot();
+  await writeProspectCountsCache(computed);
+  return { ...computed, fromCache: false };
+}
+
+/** Recompute and persist prospect counts (after bulk reindex/enrich/send). */
+export async function refreshProspectStatusSnapshotCache(): Promise<ProspectStatusSnapshot> {
+  return getProspectStatusSnapshot({ forceRefresh: true });
 }

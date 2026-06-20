@@ -5,7 +5,7 @@
 import { getKV } from '@/lib/kv';
 import { isActiveCampaignProspect } from './campaign-scope';
 import type { FirmProspectStatus } from './types';
-import { getProspectsByIds, listAllProspectIds } from './storage';
+import { getProspectsByIds, listAllProspectIds, writeProspectCountsCache } from './storage';
 
 const PROSPECT_STATUS_INDEX = 'firmprospect:status:';
 
@@ -89,6 +89,12 @@ export async function reindexProspectStatuses(): Promise<{
   await Promise.all(
     ALL_STATUSES.map((status) => kv.set(statusIndexKey(status), buckets.get(status) ?? [])),
   );
+
+  await writeProspectCountsCache({
+    counts: activeByStatus,
+    masterIndexCount: ids.length,
+    computedAt: new Date().toISOString(),
+  });
 
   return { scanned: ids.length, byStatus, activeByStatus };
 }

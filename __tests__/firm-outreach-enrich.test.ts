@@ -80,6 +80,12 @@ describe('runFirmEnrichment saveProspect indexing', () => {
       getCursor: vi.fn().mockResolvedValue(0),
       setCursor: vi.fn(),
       isDuplicateInitialSend: vi.fn().mockResolvedValue(false),
+      refreshProspectStatusSnapshotCache: vi.fn().mockResolvedValue({
+        counts: {},
+        masterIndexCount: 0,
+        computedAt: new Date().toISOString(),
+        fromCache: false,
+      }),
     }));
 
     vi.doMock('@/lib/firm-outreach/constants', () => ({

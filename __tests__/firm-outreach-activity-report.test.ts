@@ -1,7 +1,7 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest';
 import type { FirmOutreachSend, FirmProspect } from '@/lib/firm-outreach/types';
 
-const mockCountProspectsByStatus = vi.fn();
+const mockGetProspectStatusSnapshot = vi.fn();
 const mockGetDailySendCount = vi.fn();
 const mockListAllSends = vi.fn();
 const mockListAllSuppressions = vi.fn();
@@ -18,7 +18,7 @@ vi.mock('@/lib/firm-outreach/outreach/admin-actions', () => ({
 }));
 
 vi.mock('@/lib/firm-outreach/storage', () => ({
-  countProspectsByStatus: (...args: unknown[]) => mockCountProspectsByStatus(...args),
+  getProspectStatusSnapshot: (...args: unknown[]) => mockGetProspectStatusSnapshot(...args),
   getDailySendCount: (...args: unknown[]) => mockGetDailySendCount(...args),
   listAllSends: (...args: unknown[]) => mockListAllSends(...args),
   listAllSuppressions: (...args: unknown[]) => mockListAllSuppressions(...args),
@@ -28,13 +28,22 @@ vi.mock('@/lib/firm-outreach/storage', () => ({
   listProspectIdsByRecordStatus: (...args: unknown[]) => mockListProspectIdsByRecordStatus(...args),
 }));
 
+function mockSnapshotCounts(counts: Record<string, number>) {
+  mockGetProspectStatusSnapshot.mockResolvedValue({
+    counts,
+    masterIndexCount: Object.values(counts).reduce((sum, n) => sum + n, 0),
+    computedAt: new Date().toISOString(),
+    fromCache: false,
+  });
+}
+
 describe('buildOutreachActivityReport', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockGetDailySendCount.mockResolvedValue(0);
     mockQueueRowsForProspects.mockResolvedValue([]);
     mockExcludedRowsForProspects.mockResolvedValue([]);
-    mockCountProspectsByStatus.mockResolvedValue({
+    mockSnapshotCounts({
       discovered: 4547,
       ready_to_send: 42,
       sent: 1,
@@ -44,6 +53,7 @@ describe('buildOutreachActivityReport', () => {
       bounced: 0,
       unsubscribed: 0,
       enriched: 0,
+      enriching: 0,
     });
     mockListAllSuppressions.mockResolvedValue([]);
     mockGetProspectsByIds.mockResolvedValue(new Map());
@@ -164,7 +174,7 @@ describe('buildOutreachActivityReport', () => {
     expect(report.excludedProspects[0].excludedReason).toBe('archive_only_not_on_laa_or_dscc');
   });
 
-  it('uses countProspectsByStatus for summary counts, not bulk discovered loads', async () => {
+  it('uses prospect status snapshot for summary counts, not bulk discovered loads', async () => {
     mockListAllSends.mockResolvedValue([]);
 
     const { buildOutreachActivityReport } = await import(
@@ -172,7 +182,7 @@ describe('buildOutreachActivityReport', () => {
     );
     const { report } = await buildOutreachActivityReport();
 
-    expect(mockCountProspectsByStatus).toHaveBeenCalledTimes(1);
+    expect(mockGetProspectStatusSnapshot).toHaveBeenCalledTimes(1);
     expect(mockListProspectIdsByStatus).not.toHaveBeenCalledWith('discovered');
     expect(mockListProspectIdsByRecordStatus).toHaveBeenCalledWith('ready_to_send');
     expect(report.summary.discovered).toBe(4547);
@@ -247,7 +257,7 @@ describe('buildOutreachActivityReport', () => {
 
   it('completes quickly with large discovered count (no per-prospect fetches for counts)', async () => {
     mockListAllSends.mockResolvedValue([]);
-    mockCountProspectsByStatus.mockResolvedValue({
+    mockSnapshotCounts({
       discovered: 5000,
       ready_to_send: 100,
       sent: 0,
@@ -257,6 +267,7 @@ describe('buildOutreachActivityReport', () => {
       bounced: 0,
       unsubscribed: 0,
       enriched: 0,
+      enriching: 0,
     });
 
     const { buildOutreachActivityReport } = await import(
@@ -316,7 +327,7 @@ describe('buildOutreachDashboardSummary', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockGetDailySendCount.mockResolvedValue(5);
-    mockCountProspectsByStatus.mockResolvedValue({
+    mockSnapshotCounts({
       discovered: 100,
       ready_to_send: 12,
       sent: 3,
@@ -326,6 +337,7 @@ describe('buildOutreachDashboardSummary', () => {
       bounced: 0,
       unsubscribed: 0,
       enriched: 0,
+      enriching: 0,
     });
     mockListAllSends.mockResolvedValue([
       {
@@ -374,6 +386,30 @@ describe('buildOutreachDashboardSummary', () => {
     expect(mockListProspectIdsByStatus).not.toHaveBeenCalledWith('excluded');
     expect(mockListProspectIdsByRecordStatus).not.toHaveBeenCalledWith('ready_to_send');
   });
+
+  it('accepts injected snapshot counts without calling getProspectStatusSnapshot', async () => {
+    const { buildOutreachDashboardSummary } = await import(
+      '@/lib/firm-outreach/outreach/activity-report'
+    );
+    const { report } = await buildOutreachDashboardSummary({
+      counts: {
+        discovered: 200,
+        ready_to_send: 5,
+        sent: 0,
+        excluded: 0,
+        no_email: 0,
+        joined_whatsapp: 0,
+        bounced: 0,
+        unsubscribed: 0,
+        enriched: 0,
+        enriching: 0,
+      },
+    });
+
+    expect(mockGetProspectStatusSnapshot).not.toHaveBeenCalled();
+    expect(report.summary.discovered).toBe(200);
+    expect(report.summary.readyToSend).toBe(5);
+  });
 });
 
 describe('computeSendWindowCounts', () => {
@@ -408,8 +444,20 @@ describe('GET /api/admin/firm-outreach', () => {
       getProspectIndexHealth: vi.fn().mockResolvedValue({
         masterIndexCount: 10,
         indexedTotal: 12,
+        recordTotal: 12,
         prospectCounts: { discovered: 10, ready_to_send: 2 },
         drifted: false,
+      }),
+    }));
+  }
+
+  function mockStorageSnapshot() {
+    vi.doMock('@/lib/firm-outreach/storage', () => ({
+      getProspectStatusSnapshot: vi.fn().mockResolvedValue({
+        counts: { discovered: 10, ready_to_send: 2 },
+        masterIndexCount: 10,
+        computedAt: '2026-06-11T12:00:00Z',
+        fromCache: true,
       }),
     }));
   }
@@ -472,6 +520,7 @@ describe('GET /api/admin/firm-outreach', () => {
       outreachSendEnabled: () => true,
     }));
     mockIndexHealthModule();
+    mockStorageSnapshot();
 
     const { GET } = await import('@/app/api/admin/firm-outreach/route');
     const res = await GET(new Request('http://localhost/api/admin/firm-outreach'));
@@ -481,8 +530,15 @@ describe('GET /api/admin/firm-outreach', () => {
     expect(json.ok).toBe(true);
     expect(json.scope).toBe('summary');
     expect(mockBuildSummary).toHaveBeenCalledTimes(1);
+    expect(mockBuildSummary).toHaveBeenCalledWith(
+      expect.objectContaining({
+        counts: { discovered: 10, ready_to_send: 2 },
+        fromCache: true,
+      }),
+    );
     expect(json.counts.discovered).toBe(10);
     expect(json.report.summary.totalSends).toBe(1);
+    expect(json.countsFromCache).toBe(true);
   });
 
   it('uses full report when scope=full', async () => {
@@ -522,6 +578,7 @@ describe('GET /api/admin/firm-outreach', () => {
       dailySendCap: () => 30,
     }));
     mockIndexHealthModule();
+    mockStorageSnapshot();
 
     const { GET } = await import('@/app/api/admin/firm-outreach/route');
     const res = await GET(new Request('http://localhost/api/admin/firm-outreach?scope=full'));
@@ -530,6 +587,11 @@ describe('GET /api/admin/firm-outreach', () => {
     expect(res.status).toBe(200);
     expect(json.scope).toBe('full');
     expect(mockBuildFull).toHaveBeenCalledTimes(1);
+    expect(mockBuildFull).toHaveBeenCalledWith(
+      expect.objectContaining({
+        counts: { discovered: 10, ready_to_send: 2 },
+      }),
+    );
     expect(json.report.sends).toHaveLength(1);
   });
 });

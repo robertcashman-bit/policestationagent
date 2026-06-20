@@ -1,6 +1,8 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest';
 import {
   buildIndexDriftWarning,
+  buildProspectIndexHealth,
+  getProspectIndexHealth,
   sumIndexedProspectCounts,
 } from '@/lib/firm-outreach/index-health';
 import {
@@ -21,19 +23,38 @@ describe('sumIndexedProspectCounts', () => {
 });
 
 describe('buildIndexDriftWarning', () => {
-  it('warns when master index has ids but status counts are all zero', () => {
+  it('warns when record counts exist but index totals are zero', () => {
     const warning = buildIndexDriftWarning(3774, 0);
     expect(warning).toContain('3774');
     expect(warning).toContain('empty');
   });
 
-  it('returns undefined when counts match storage', () => {
+  it('returns undefined when index and record totals align', () => {
     expect(buildIndexDriftWarning(100, 100)).toBeUndefined();
   });
 
   it('warns on severe partial drift', () => {
     const warning = buildIndexDriftWarning(1000, 100);
     expect(warning).toContain('incomplete');
+  });
+
+  it('does not warn when master index is larger than active records', () => {
+    expect(buildIndexDriftWarning(3774, 3774)).toBeUndefined();
+  });
+});
+
+describe('buildProspectIndexHealth', () => {
+  it('compares index totals against record totals', () => {
+    const health = buildProspectIndexHealth({
+      prospectCounts: { discovered: 10, ready_to_send: 2 },
+      masterIndexCount: 8367,
+      indexCounts: { discovered: 10, ready_to_send: 2 },
+    });
+
+    expect(health.drifted).toBe(false);
+    expect(health.recordTotal).toBe(12);
+    expect(health.indexedTotal).toBe(12);
+    expect(health.masterIndexCount).toBe(8367);
   });
 });
 
@@ -112,6 +133,7 @@ describe('reindexProspectStatuses batch write', () => {
     vi.doMock('@/lib/firm-outreach/storage', () => ({
       listAllProspectIds: vi.fn().mockResolvedValue(['p1', 'p2']),
       getProspectsByIds: vi.fn().mockResolvedValue(prospects),
+      writeProspectCountsCache: vi.fn().mockResolvedValue(undefined),
     }));
 
     const { reindexProspectStatuses } = await import('@/lib/firm-outreach/reindex-prospects');
@@ -131,10 +153,15 @@ describe('getProspectIndexHealth', () => {
     vi.resetModules();
   });
 
-  it('detects drift when master list is populated but status counts are zero', async () => {
+  it('detects drift when record counts exist but index totals are zero', async () => {
     vi.doMock('@/lib/firm-outreach/storage', () => ({
-      listAllProspectIds: vi.fn().mockResolvedValue(['p1', 'p2']),
-      countProspectsByStatus: vi.fn().mockResolvedValue({
+      getProspectStatusSnapshot: vi.fn().mockResolvedValue({
+        counts: { discovered: 2, ready_to_send: 0, excluded: 0 },
+        masterIndexCount: 8367,
+        computedAt: new Date().toISOString(),
+        fromCache: false,
+      }),
+      countProspectsByStatusFromIndexes: vi.fn().mockResolvedValue({
         discovered: 0,
         ready_to_send: 0,
         excluded: 0,
@@ -145,8 +172,36 @@ describe('getProspectIndexHealth', () => {
     const health = await getProspectIndexHealth();
 
     expect(health.drifted).toBe(true);
-    expect(health.masterIndexCount).toBe(2);
+    expect(health.masterIndexCount).toBe(8367);
+    expect(health.recordTotal).toBe(2);
     expect(health.indexedTotal).toBe(0);
     expect(health.warning).toContain('empty');
+  });
+
+  it('reuses injected snapshot without calling getProspectStatusSnapshot', async () => {
+    const mockSnapshot = vi.fn();
+    const mockIndexCounts = vi.fn().mockResolvedValue({
+      discovered: 2,
+      ready_to_send: 1,
+    });
+
+    vi.doMock('@/lib/firm-outreach/storage', () => ({
+      getProspectStatusSnapshot: mockSnapshot,
+      countProspectsByStatusFromIndexes: mockIndexCounts,
+    }));
+
+    const { getProspectIndexHealth } = await import('@/lib/firm-outreach/index-health');
+    const health = await getProspectIndexHealth({
+      counts: { discovered: 2, ready_to_send: 1 },
+      masterIndexCount: 10,
+      computedAt: new Date().toISOString(),
+      fromCache: true,
+    });
+
+    expect(mockSnapshot).not.toHaveBeenCalled();
+    expect(mockIndexCounts).toHaveBeenCalledTimes(1);
+    expect(health.drifted).toBe(false);
+    expect(health.recordTotal).toBe(3);
+    expect(health.indexedTotal).toBe(3);
   });
 });

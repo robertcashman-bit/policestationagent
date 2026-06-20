@@ -9,6 +9,9 @@ function makeKvStore(initial: Record<string, unknown> = {}) {
       store.set(key, value);
     },
     mget: async (...keys: string[]) => keys.map((k) => store.get(k) ?? null),
+    del: async (key: string) => {
+      store.delete(key);
+    },
     store,
   };
 }

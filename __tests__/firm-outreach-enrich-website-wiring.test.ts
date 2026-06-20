@@ -45,6 +45,12 @@ describe('enrichment wires Serper website discovery before crawl', () => {
       getProspect: vi.fn().mockImplementation(async () => structuredClone(prospect)),
       saveProspect,
       isDuplicateInitialSend: vi.fn().mockResolvedValue(false),
+      refreshProspectStatusSnapshotCache: vi.fn().mockResolvedValue({
+        counts: {},
+        masterIndexCount: 0,
+        computedAt: new Date().toISOString(),
+        fromCache: false,
+      }),
     }));
 
     vi.doMock('@/lib/dscc-register-lookup', () => ({
@@ -127,6 +133,12 @@ describe('enrichment wires Serper website discovery before crawl', () => {
         saved = { ...p };
       }),
       isDuplicateInitialSend: vi.fn().mockResolvedValue(false),
+      refreshProspectStatusSnapshotCache: vi.fn().mockResolvedValue({
+        counts: {},
+        masterIndexCount: 0,
+        computedAt: new Date().toISOString(),
+        fromCache: false,
+      }),
     }));
     vi.doMock('@/lib/dscc-register-lookup', () => ({
       ensureDsccRegisterCache: vi.fn().mockResolvedValue({ entries: [] }),

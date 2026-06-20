@@ -1,12 +1,13 @@
 import {
-  countProspectsByStatus,
   getDailySendCount,
+  getProspectStatusSnapshot,
   getProspectsByIds,
   getSuppressionsByEmails,
   listAllSends,
   listAllSuppressions,
   listProspectIdsByRecordStatus,
   listProspectIdsByStatus,
+  type ProspectStatusSnapshot,
 } from '../storage';
 import { isActiveCampaignProspect, isActiveCampaignSend } from '../campaign-scope';
 import { excludedRowsForProspects, queueRowsForProspects } from './admin-actions';
@@ -152,11 +153,18 @@ function buildSummaryFromParts(
 }
 
 /** Fast path for admin stat boxes — skips send rows and queue tables. */
-export async function buildOutreachDashboardSummary(): Promise<OutreachActivityReportResult> {
+export async function buildOutreachDashboardSummary(
+  snapshot?: Pick<ProspectStatusSnapshot, 'counts'>,
+): Promise<OutreachActivityReportResult> {
   const today = new Date().toISOString().slice(0, 10);
+  const prospectCountsPromise =
+    snapshot?.counts != null
+      ? Promise.resolve(snapshot.counts)
+      : getProspectStatusSnapshot().then((s) => s.counts);
+
   const [allSends, prospectCounts, sentToday, sentIds] = await Promise.all([
     listAllSends(),
-    countProspectsByStatus(),
+    prospectCountsPromise,
     getDailySendCount(today),
     listProspectIdsByStatus('sent').then((ids) => ids.slice(0, SENT_PROSPECTS_FOLLOWUP_LIMIT)),
   ]);
@@ -180,11 +188,18 @@ export async function buildOutreachDashboardSummary(): Promise<OutreachActivityR
   };
 }
 
-export async function buildOutreachActivityReport(): Promise<OutreachActivityReportResult> {
+export async function buildOutreachActivityReport(
+  snapshot?: Pick<ProspectStatusSnapshot, 'counts'>,
+): Promise<OutreachActivityReportResult> {
+  const prospectCountsPromise =
+    snapshot?.counts != null
+      ? Promise.resolve(snapshot.counts)
+      : getProspectStatusSnapshot().then((s) => s.counts);
+
   const [allSends, suppressions, prospectCounts] = await Promise.all([
     listAllSends(),
     listAllSuppressions(),
-    countProspectsByStatus(),
+    prospectCountsPromise,
   ]);
   const sends = allSends.filter(isActiveCampaignSend);
 

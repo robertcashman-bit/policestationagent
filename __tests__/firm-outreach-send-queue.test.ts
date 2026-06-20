@@ -39,6 +39,9 @@ function makeKvStore(initial: Record<string, unknown> = {}) {
       store.set(key, value);
     },
     mget: async (...keys: string[]) => keys.map((k) => store.get(k) ?? null),
+    del: async (key: string) => {
+      store.delete(key);
+    },
     store,
   };
 }
@@ -116,6 +119,12 @@ describe('runFirmOutreach record-based queue', () => {
       incrementDailySendCount: vi.fn(),
       excludeProspectDuplicateEmail: vi.fn(),
       addSuppression: vi.fn(),
+      refreshProspectStatusSnapshotCache: vi.fn().mockResolvedValue({
+        counts: {},
+        masterIndexCount: 0,
+        computedAt: new Date().toISOString(),
+        fromCache: false,
+      }),
       ...overrides,
     }));
     vi.doMock('@/lib/firm-outreach/enrichment/validator', () => ({
@@ -249,6 +258,12 @@ describe('runFirmOutreach follow-ups from record-based sent list', () => {
       incrementDailySendCount: vi.fn(),
       excludeProspectDuplicateEmail: vi.fn(),
       addSuppression: vi.fn(),
+      refreshProspectStatusSnapshotCache: vi.fn().mockResolvedValue({
+        counts: {},
+        masterIndexCount: 0,
+        computedAt: new Date().toISOString(),
+        fromCache: false,
+      }),
     }));
     vi.doMock('@/lib/firm-outreach/enrichment/validator', () => ({
       validateEmailForSend: vi.fn().mockResolvedValue({ ok: true }),

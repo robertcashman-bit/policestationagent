@@ -169,7 +169,7 @@ function statusBadge(status: string): string {
   return map[status] ?? 'bg-slate-50 text-slate-600';
 }
 
-const SUMMARY_TIMEOUT_MS = 8_000;
+const SUMMARY_TIMEOUT_MS = 60_000;
 const FULL_TIMEOUT_MS = 25_000;
 
 const BTN_PRIMARY =

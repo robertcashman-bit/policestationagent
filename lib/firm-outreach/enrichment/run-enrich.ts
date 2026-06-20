@@ -222,6 +222,11 @@ export async function runFirmEnrichment(opts?: {
     await advanceEnrichCursor(cursor, scannedInWindow, pool.length);
   }
 
+  if (processedCount > 0) {
+    const { refreshProspectStatusSnapshotCache } = await import('../storage');
+    await refreshProspectStatusSnapshotCache();
+  }
+
   return {
     processed: processedCount,
     emailsFound,

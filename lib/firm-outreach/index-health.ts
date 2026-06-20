@@ -1,4 +1,8 @@
-import { countProspectsByStatus, listAllProspectIds } from './storage';
+import {
+  countProspectsByStatusFromIndexes,
+  getProspectStatusSnapshot,
+  type ProspectStatusSnapshot,
+} from './storage';
 
 export function sumIndexedProspectCounts(counts: Record<string, number>): number {
   return Object.values(counts).reduce((sum, n) => sum + (n ?? 0), 0);
@@ -7,39 +11,56 @@ export function sumIndexedProspectCounts(counts: Record<string, number>): number
 export interface ProspectIndexHealth {
   masterIndexCount: number;
   indexedTotal: number;
+  recordTotal: number;
   prospectCounts: Record<string, number>;
-  /** True when prospects exist in KV but status index counts look broken. */
+  /** True when status index bucket counts diverge from stored record counts. */
   drifted: boolean;
   warning?: string;
 }
 
 export function buildIndexDriftWarning(
-  masterIndexCount: number,
+  recordTotal: number,
   indexedTotal: number,
 ): string | undefined {
-  if (masterIndexCount <= 0) return undefined;
+  if (recordTotal <= 0) return undefined;
   if (indexedTotal === 0) {
-    return `${masterIndexCount} prospects in storage but status indexes are empty — run Rebuild indexes`;
+    return `${recordTotal} active prospects in storage but status indexes are empty — run Rebuild indexes`;
   }
-  if (indexedTotal < masterIndexCount * 0.5) {
-    return `Status indexes look incomplete (${indexedTotal} indexed vs ${masterIndexCount} prospects) — run Rebuild indexes`;
+  if (indexedTotal < recordTotal * 0.5) {
+    return `Status indexes look incomplete (${indexedTotal} indexed vs ${recordTotal} active records) — run Rebuild indexes`;
   }
   return undefined;
 }
 
-export async function getProspectIndexHealth(): Promise<ProspectIndexHealth> {
-  const [ids, prospectCounts] = await Promise.all([
-    listAllProspectIds(),
-    countProspectsByStatus(),
-  ]);
-  const masterIndexCount = ids.length;
-  const indexedTotal = sumIndexedProspectCounts(prospectCounts);
-  const warning = buildIndexDriftWarning(masterIndexCount, indexedTotal);
+export interface ProspectIndexHealthInput {
+  prospectCounts: Record<string, number>;
+  masterIndexCount: number;
+  indexCounts?: Record<string, number>;
+}
+
+export function buildProspectIndexHealth(input: ProspectIndexHealthInput): ProspectIndexHealth {
+  const recordTotal = sumIndexedProspectCounts(input.prospectCounts);
+  const indexCounts = input.indexCounts ?? {};
+  const indexedTotal = sumIndexedProspectCounts(indexCounts);
+  const warning = buildIndexDriftWarning(recordTotal, indexedTotal);
   return {
-    masterIndexCount,
+    masterIndexCount: input.masterIndexCount,
     indexedTotal,
-    prospectCounts,
+    recordTotal,
+    prospectCounts: input.prospectCounts,
     drifted: Boolean(warning),
     warning,
   };
+}
+
+export async function getProspectIndexHealth(
+  snapshot?: Pick<ProspectStatusSnapshot, 'counts' | 'masterIndexCount'>,
+): Promise<ProspectIndexHealth> {
+  const resolved = snapshot ?? (await getProspectStatusSnapshot());
+  const indexCounts = await countProspectsByStatusFromIndexes();
+  return buildProspectIndexHealth({
+    prospectCounts: resolved.counts,
+    masterIndexCount: resolved.masterIndexCount,
+    indexCounts,
+  });
 }

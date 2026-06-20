@@ -172,6 +172,56 @@ export function checkReindexSafetyGuard(rootDir = process.cwd()): RepoCheckResul
   };
 }
 
+export function checkAdminSummarySnapshotDeduped(rootDir = process.cwd()): RepoCheckResult {
+  const file = resolve(rootDir, 'app/api/admin/firm-outreach/route.ts');
+  if (!existsSync(file)) {
+    return { name: 'admin_summary_snapshot_deduped', ok: false, detail: 'admin route missing' };
+  }
+  const src = readFileSync(file, 'utf8');
+  const ok =
+    src.includes('getProspectStatusSnapshot()') &&
+    src.includes('buildOutreachDashboardSummary(snapshot)') &&
+    src.includes('getProspectIndexHealth(snapshot)');
+  return {
+    name: 'admin_summary_snapshot_deduped',
+    ok,
+    detail: ok ? 'single snapshot shared across summary and index health' : 'duplicate prospect scans',
+  };
+}
+
+export function checkAdminSummaryTimeout(rootDir = process.cwd()): RepoCheckResult {
+  const file = resolve(rootDir, 'components/admin/FirmOutreachDashboard.tsx');
+  if (!existsSync(file)) {
+    return { name: 'admin_summary_timeout', ok: false, detail: 'FirmOutreachDashboard missing' };
+  }
+  const src = readFileSync(file, 'utf8');
+  const match = src.match(/SUMMARY_TIMEOUT_MS\s*=\s*([\d_]+)/);
+  const ms = match ? Number(match[1].replace(/_/g, '')) : 0;
+  const ok = ms >= 25_000;
+  return {
+    name: 'admin_summary_timeout',
+    ok,
+    detail: ok ? `${ms}ms client abort` : `timeout too low (${ms || 'missing'}ms)`,
+  };
+}
+
+export function checkProspectCountsCache(rootDir = process.cwd()): RepoCheckResult {
+  const file = resolve(rootDir, 'lib/firm-outreach/storage.ts');
+  if (!existsSync(file)) {
+    return { name: 'prospect_counts_cache', ok: false, detail: 'storage.ts missing' };
+  }
+  const src = readFileSync(file, 'utf8');
+  const ok =
+    src.includes('getProspectStatusSnapshot') &&
+    src.includes('allowStale') &&
+    src.includes('writeProspectCountsCache');
+  return {
+    name: 'prospect_counts_cache',
+    ok,
+    detail: ok ? 'KV snapshot cache with stale fallback' : 'missing prospect counts cache',
+  };
+}
+
 export const EXPECTED_CRON_ROUTES = [
   '/api/cron/firm-outreach-pipeline/maintain',
   '/api/cron/firm-outreach-enrich',
@@ -357,6 +407,9 @@ export function runRepoChecks(rootDir = process.cwd()): RepoCheckResult[] {
     checkBrochureLoadsAsAttachment(),
     checkEnrichSaveUsesPreviousStatus(rootDir),
     checkReindexSafetyGuard(rootDir),
+    checkAdminSummarySnapshotDeduped(rootDir),
+    checkAdminSummaryTimeout(rootDir),
+    checkProspectCountsCache(rootDir),
     checkSendUsesRecordStatus(rootDir),
     checkListProspectsByRecordStatusExported(rootDir),
     checkNationalDiscoveryScope(rootDir),
