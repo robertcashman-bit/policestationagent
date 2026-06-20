@@ -16,6 +16,7 @@ Requires **Upstash Redis** (sessions + prospect data) and **RESEND_API_KEY** (lo
 | `07:00` | `/api/cron/firm-outreach-enrich` | Enrich only (30 firms, ~240s max) |
 | `08:00` | `/api/cron/firm-outreach-enrich` | Enrich only (30 firms, ~240s max) |
 | `09:30` | `/api/cron/firm-outreach-pipeline/full` | **Auto-send** ready queue (up to daily cap) + confirmation email to owner + daily digest |
+| `*/15` | `/api/cron/firm-outreach-kent-corrections` | **Auto-send Kent correction emails** for legacy nationwide initial sends (until queue empty) |
 | `17:00` | `/api/cron/firm-outreach-digest` | Digest backup if morning run did not send one |
 
 All cron routes require `Authorization: Bearer $CRON_SECRET` (Vercel adds this automatically).

@@ -134,8 +134,37 @@ export async function runKentCorrectionEmails(opts?: {
     }
   }
 
-  stats.elapsedMs = Date.now() - started;
   return stats;
+}
+
+/** Run correction batch when legacy nationwide sends are still pending. */
+export async function runPendingKentCorrections(opts?: {
+  dryRun?: boolean;
+  limit?: number;
+}): Promise<
+  OutreachRunStats & {
+    nonePending?: boolean;
+    candidates: number;
+    corrected: number;
+    samples: Array<{ firmName: string; email: string }>;
+  }
+> {
+  const candidates = await listProspectsNeedingKentCorrection();
+  if (candidates.length === 0) {
+    return {
+      nonePending: true,
+      candidates: 0,
+      queued: 0,
+      sent: 0,
+      skipped: 0,
+      suppressed: 0,
+      errors: 0,
+      elapsedMs: 0,
+      corrected: 0,
+      samples: [],
+    };
+  }
+  return runKentCorrectionEmails(opts);
 }
 
 /** True when brochure PDF is present for attachment on step-0 and correction sends. */

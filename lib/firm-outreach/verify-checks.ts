@@ -223,6 +223,7 @@ export function checkProspectCountsCache(rootDir = process.cwd()): RepoCheckResu
 }
 
 export const EXPECTED_CRON_ROUTES = [
+  '/api/cron/firm-outreach-kent-corrections',
   '/api/cron/firm-outreach-pipeline/maintain',
   '/api/cron/firm-outreach-enrich',
   '/api/cron/firm-outreach-pipeline/full',

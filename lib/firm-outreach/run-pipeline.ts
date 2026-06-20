@@ -1,11 +1,12 @@
 import { fetchLaaCrimeProviders } from '@/lib/legal-directory/laa-fetch';
 import { ensureDsccRegisterCache } from '@/lib/dscc-register-lookup';
-import { outreachEnabled } from './constants';
+import { outreachEnabled, dailySendCap } from './constants';
 import { isOutreachSendAllowed } from './pause-state';
 import { runFirmDiscovery } from './discovery/run-discovery';
 import { runFirmEnrichment } from './enrichment/run-enrich';
 import { sendDailyOutreachDigest } from './outreach/digest-email';
 import { notifyOutreachBatchSent } from './outreach/send-confirmation-email';
+import { runPendingKentCorrections } from './outreach/run-kent-corrections';
 import { runFirmOutreach } from './outreach/run-outreach';
 import { requalifyAllProspects } from './requalify-prospects';
 import { countProspectsByStatus } from './storage';
@@ -24,6 +25,7 @@ export interface FirmOutreachPipelineResult {
   requalify: Awaited<ReturnType<typeof requalifyAllProspects>>;
   enrich: EnrichmentRunStats;
   send: OutreachRunStats;
+  kentCorrection?: Awaited<ReturnType<typeof runPendingKentCorrections>>;
   counts: Record<string, number>;
   elapsedMs: number;
 }
@@ -45,6 +47,8 @@ export async function runFirmOutreachPipeline(opts?: {
   /** Skip LAA/DSCC refresh, discovery, and requalify (enrich-only or send-only crons). */
   skipDiscovery?: boolean;
   skipDigest?: boolean;
+  /** Skip legacy nationwide correction sends (cron route handles these separately). */
+  skipKentCorrection?: boolean;
 }): Promise<FirmOutreachPipelineResult> {
   const started = Date.now();
 
@@ -62,6 +66,11 @@ export async function runFirmOutreachPipeline(opts?: {
       elapsedMs: Date.now() - started,
     };
   }
+
+  const kentCorrection =
+    opts?.skipKentCorrection || opts?.sendDryRun
+      ? undefined
+      : await runPendingKentCorrections({ limit: dailySendCap() });
 
   let laaResult = { refreshed: false, source: 'none' as string, records: [] as unknown[] };
   let dsccCount = 0;
@@ -131,6 +140,7 @@ export async function runFirmOutreachPipeline(opts?: {
     requalify,
     enrich,
     send,
+    kentCorrection,
     counts,
     elapsedMs: Date.now() - started,
   };
