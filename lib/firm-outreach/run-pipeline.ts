@@ -49,6 +49,10 @@ export async function runFirmOutreachPipeline(opts?: {
   skipDigest?: boolean;
   /** Skip legacy nationwide correction sends (cron route handles these separately). */
   skipKentCorrection?: boolean;
+  /** Wall-clock budget for discovery + requalify (maintain cron safety). */
+  maintainMaxElapsedMs?: number;
+  /** Archive website HTTP checks during requalify (slow; default true). */
+  requalifyVerifyWebsites?: boolean;
 }): Promise<FirmOutreachPipelineResult> {
   const started = Date.now();
 
@@ -80,6 +84,8 @@ export async function runFirmOutreachPipeline(opts?: {
   let enrich = emptyEnrich();
 
   if (!opts?.skipDiscovery) {
+    const discoveryStarted = Date.now();
+    const maintainDeadline = opts?.maintainMaxElapsedMs;
     const forceLaa = opts?.forceLaaRefresh ?? isSundayUtc();
     laaResult = await fetchLaaCrimeProviders({ force: forceLaa }).catch((err) => {
       console.warn('[firm-outreach pipeline] LAA fetch failed, using cache:', err);
@@ -89,8 +95,24 @@ export async function runFirmOutreachPipeline(opts?: {
     const dscc = await ensureDsccRegisterCache();
     dsccCount = dscc?.count ?? 0;
     dsccSyncedAt = dscc?.syncedAt ?? null;
-    discovery = await runFirmDiscovery();
-    requalify = await requalifyAllProspects();
+
+    const remainingMs =
+      maintainDeadline != null ? maintainDeadline - (Date.now() - discoveryStarted) : undefined;
+
+    discovery = await runFirmDiscovery({
+      startedAt: discoveryStarted,
+      maxElapsedMs: remainingMs != null && remainingMs > 0 ? remainingMs : undefined,
+    });
+
+    const requalifyRemainingMs =
+      maintainDeadline != null ? maintainDeadline - (Date.now() - discoveryStarted) : undefined;
+
+    requalify = await requalifyAllProspects({
+      verifyWebsites: opts?.requalifyVerifyWebsites ?? true,
+      startedAt: discoveryStarted,
+      maxElapsedMs:
+        requalifyRemainingMs != null && requalifyRemainingMs > 0 ? requalifyRemainingMs : undefined,
+    });
   }
 
   if (!opts?.skipEnrich) {

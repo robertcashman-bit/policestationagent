@@ -202,6 +202,8 @@ export interface DiscoveryRunStats {
   updated: number;
   excluded: number;
   elapsedMs: number;
+  /** True when stopped early due to maxElapsedMs budget. */
+  stoppedEarly?: boolean;
 }
 
 export interface EnrichmentRunStats {

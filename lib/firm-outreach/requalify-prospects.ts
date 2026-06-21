@@ -16,15 +16,21 @@ export interface RequalifyResult {
   heldForReview: number;
   websiteVerified: number;
   stillReady: number;
+  stoppedEarly?: boolean;
   samples: Array<{ id: string; firmName: string; from: string; to: string; reason: string }>;
 }
 
 export async function requalifyAllProspects(opts?: {
   sampleLimit?: number;
   verifyWebsites?: boolean;
+  maxElapsedMs?: number;
+  startedAt?: number;
 }): Promise<RequalifyResult> {
   const sampleLimit = opts?.sampleLimit ?? 20;
   const verifyWebsites = opts?.verifyWebsites ?? true;
+  const started = opts?.startedAt ?? Date.now();
+  const deadline =
+    opts?.maxElapsedMs != null ? started + opts.maxElapsedMs : undefined;
   const result: RequalifyResult = {
     scanned: 0,
     downgradedFromReady: 0,
@@ -32,6 +38,7 @@ export async function requalifyAllProspects(opts?: {
     heldForReview: 0,
     websiteVerified: 0,
     stillReady: 0,
+    stoppedEarly: false,
     samples: [],
   };
 
@@ -41,6 +48,10 @@ export async function requalifyAllProspects(opts?: {
 
   const ids = await listAllProspectIds();
   for (const id of ids) {
+    if (deadline != null && Date.now() >= deadline) {
+      result.stoppedEarly = true;
+      break;
+    }
     const p = await getProspect(id);
     if (!p) continue;
     result.scanned++;

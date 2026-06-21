@@ -13,6 +13,21 @@ export async function GET(request: Request) {
   }
 
   const url = new URL(request.url);
+
+  if (url.searchParams.get('auditToday') === '1') {
+    const { buildOutreachTodayAudit } = await import('@/lib/firm-outreach/audit-today');
+    const audit = await buildOutreachTodayAudit();
+    return NextResponse.json({ ok: true, mode: 'auditToday', audit });
+  }
+
+  if (url.searchParams.get('setupResendWebhook') === '1') {
+    const { configureResendOutreachWebhook } = await import(
+      '@/lib/firm-outreach/resend-webhook-setup'
+    );
+    const webhook = await configureResendOutreachWebhook();
+    return NextResponse.json({ ok: webhook.ok, mode: 'setupResendWebhook', webhook });
+  }
+
   const unpauseOnly = url.searchParams.get('unpause') === '1';
   const reindex = url.searchParams.get('reindex') === '1';
   const reindexOnly = url.searchParams.get('reindexOnly') === '1';

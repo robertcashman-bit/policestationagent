@@ -111,7 +111,7 @@ function createOutreachEnvHelpers(defaults = {}) {
                 process.env.FIRM_OUTREACH_PAUSED !== 'true');
         },
         outreachRequireApproval() {
-            return process.env.FIRM_OUTREACH_REQUIRE_APPROVAL !== 'false';
+            return process.env.FIRM_OUTREACH_REQUIRE_APPROVAL === 'true';
         },
         dailySendCap() {
             return Number(process.env.FIRM_OUTREACH_DAILY_CAP ?? defaults.dailyCap ?? 50) || 50;

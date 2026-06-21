@@ -71,8 +71,13 @@ async function directoryInputs(): Promise<RawProspectInput[]> {
   }
 }
 
-export async function runFirmDiscovery(): Promise<DiscoveryRunStats> {
-  const started = Date.now();
+export async function runFirmDiscovery(opts?: {
+  maxElapsedMs?: number;
+  startedAt?: number;
+}): Promise<DiscoveryRunStats> {
+  const started = opts?.startedAt ?? Date.now();
+  const deadline =
+    opts?.maxElapsedMs != null ? started + opts.maxElapsedMs : undefined;
   const laa = readLaaCrimeJson();
   const archive = loadArchiveFirms();
   const dscc = await ensureDsccRegisterCache();
@@ -94,8 +99,13 @@ export async function runFirmDiscovery(): Promise<DiscoveryRunStats> {
   let created = 0;
   let updated = 0;
   let excluded = 0;
+  let stoppedEarly = false;
 
   for (const input of allInputs) {
+    if (deadline != null && Date.now() >= deadline) {
+      stoppedEarly = true;
+      break;
+    }
     const built = buildProspectFromInput(input);
     if (!built) continue;
     if (built.status === 'excluded') excluded++;
@@ -121,6 +131,7 @@ export async function runFirmDiscovery(): Promise<DiscoveryRunStats> {
     created,
     updated,
     excluded,
+    stoppedEarly,
     elapsedMs: Date.now() - started,
   };
 }

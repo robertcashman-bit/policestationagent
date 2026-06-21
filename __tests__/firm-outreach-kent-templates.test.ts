@@ -38,6 +38,8 @@ describe('Kent-only outreach templates', () => {
     });
     expect(html).toContain('Kent custody suites');
     expect(html).not.toContain('England &amp; Wales when your roster');
+    expect(html).toContain('07535 494446');
+    expect(html).toContain('01732 247427');
   });
 
   it('mentions Kent in follow-up steps', () => {

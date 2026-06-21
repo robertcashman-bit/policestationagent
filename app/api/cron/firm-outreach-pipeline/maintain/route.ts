@@ -23,7 +23,10 @@ export async function GET(request: Request) {
     skipSend: true,
     skipDigest: true,
     skipEnrich: true,
+    skipKentCorrection: true,
     forceLaaRefresh: false,
+    maintainMaxElapsedMs: 240_000,
+    requalifyVerifyWebsites: isSundayUtc(),
   });
 
   return NextResponse.json({ ok: true, mode: 'maintain', requeue, ...result });

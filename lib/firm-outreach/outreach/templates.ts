@@ -1,4 +1,5 @@
 import { SITE_URL } from '@/config/site';
+import { PHONE_DISPLAY, PHONE_TEL, SMS_DISPLAY, SMS_TEL } from '@/config/contact';
 import type { FirmProspect } from '../types';
 
 export const OUTREACH_CONTACT_EMAIL =
@@ -12,8 +13,9 @@ export const LEGACY_NATIONWIDE_INITIAL_SUBJECTS = [
 
 export const KENT_CORRECTION_SUBJECT = 'Correction — Kent police station agent cover only';
 
-const PHONE_DISPLAY = '01732 247427';
-const PHONE_HREF = 'tel:+441732247427';
+function outreachContactLinksHtml(): string {
+  return `<a href="tel:${PHONE_TEL}">${escapeHtml(PHONE_DISPLAY)}</a> · <a href="sms:${SMS_TEL}">${escapeHtml(SMS_DISPLAY)}</a> (call or text)`;
+}
 
 function escapeHtml(val: string): string {
   return val
@@ -108,7 +110,7 @@ export function buildOutreachEmailHtml(opts: {
       </p>
       <p style="font-size:14px;color:#475569">
         <a href="${SITE_URL}/contact">Contact form</a> ·
-        <a href="${PHONE_HREF}">${PHONE_DISPLAY}</a> ·
+        ${outreachContactLinksHtml()} ·
         <a href="${SITE_URL}/for-solicitors">More about agent cover</a>
       </p>
       ${refLine}
@@ -147,7 +149,7 @@ export function buildKentCorrectionEmailHtml(opts: {
       </p>
       <p style="font-size:14px;color:#475569">
         <a href="${SITE_URL}/contact">Contact form</a> ·
-        <a href="${PHONE_HREF}">${PHONE_DISPLAY}</a> ·
+        ${outreachContactLinksHtml()} ·
         <a href="${SITE_URL}/for-solicitors">More about agent cover</a>
       </p>
       <p style="font-size:12px;color:#64748b">Ref: ${escapeHtml(prospect.id)}</p>
