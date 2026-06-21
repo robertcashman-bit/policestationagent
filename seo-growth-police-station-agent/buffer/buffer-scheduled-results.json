@@ -1,24 +1,315 @@
 {
   "organization": "My Organization",
   "organizationId": "69d26bdf0f822245c9a723c4",
-  "channel": "Police Station Agent (LinkedIn)",
-  "channelId": "69d26c06031bfa423cd0c50d",
-  "scheduledAt": "2026-06-14T14:58:51.500Z",
-  "posts": [
-    { "id": "6a2ec19fcbbe21946a396902", "dueAt": "2026-06-16T08:30:00.000Z", "url": "https://policestationagent.com/blog/instructing-a-police-station-representative" },
-    { "id": "6a2ec1a0699f807eb3092bf9", "dueAt": "2026-06-21T08:30:00.000Z", "url": "https://policestationagent.com/blog/instructing-a-police-station-representative" },
-    { "id": "6a2ec1a0699f807eb3092c1d", "dueAt": "2026-06-26T08:30:00.000Z", "url": "https://policestationagent.com/blog/custody-record-number-dscc-reference" },
-    { "id": "6a2ec1a088e56947beb7bf05", "dueAt": "2026-07-01T08:30:00.000Z", "url": "https://policestationagent.com/dscc-and-custody-record-support" },
-    { "id": "6a2ec1a1173b697c8a92938d", "dueAt": "2026-07-06T08:30:00.000Z", "url": "https://policestationagent.com/blog/when-to-instruct-police-station-agent" },
-    { "id": "6a2ec1a388e56947beb7bf29", "dueAt": "2026-07-11T08:30:00.000Z", "url": "https://policestationagent.com/blog/when-to-instruct-police-station-agent" },
-    { "id": "6a2ec1a3699f807eb3092c44", "dueAt": "2026-07-16T08:30:00.000Z", "url": "https://policestationagent.com/blog/police-station-attendance-notes" },
-    { "id": "6a2ec1a4173b697c8a9293b1", "dueAt": "2026-07-21T08:30:00.000Z", "url": "https://policestationagent.com/blog/police-station-attendance-notes" },
-    { "id": "6a2ec1a4173b697c8a9293d5", "dueAt": "2026-07-26T08:30:00.000Z", "url": "https://policestationagent.com/blog/freelance-police-station-agents-for-solicitors" },
-    { "id": "6a2ec1a5caa57c9820225ad2", "dueAt": "2026-07-31T08:30:00.000Z", "url": "https://policestationagent.com/blog/freelance-police-station-agents-for-solicitors" },
-    { "id": "6a2ec1aa699f807eb3092c95", "dueAt": "2026-08-05T08:30:00.000Z", "url": "https://policestationagent.com/blog/police-station-cover-criminal-defence-firms-kent-medway" },
-    { "id": "6a2ec1aacbbe21946a396945", "dueAt": "2026-08-10T08:30:00.000Z", "url": "https://policestationagent.com/blog/police-station-cover-criminal-defence-firms-kent-medway" },
-    { "id": "6a2ec1aa173b697c8a9293fe", "dueAt": "2026-08-15T08:30:00.000Z", "url": "https://policestationagent.com/for-solicitors" },
-    { "id": "6a2ec1ab61b0aab8c16752f2", "dueAt": "2026-08-22T08:30:00.000Z", "url": "https://policestationagent.com/dscc-and-custody-record-support" },
-    { "id": "6a2ec1abcaa57c9820225af6", "dueAt": "2026-08-29T08:30:00.000Z", "url": "https://policestationagent.com/kent-police-station-reps" }
-  ]
+  "distribution": "round-robin",
+  "channels": [
+    "Police Station Agent (LinkedIn)",
+    "Policestationag (Twitter)",
+    "Police Station Agent (GBP)",
+    "Criminal Solicitor (Facebook)",
+    "Robert Cashman (Facebook)",
+    "Policestationrepuk (Facebook)",
+    "Police Station Agent (Facebook)"
+  ],
+  "scheduledAt": "2026-06-21T07:04:36.390Z",
+  "resume": true,
+  "api": "graphql",
+  "posts": [],
+  "skipped": [
+    {
+      "slug": "can-police-take-my-phone-kent",
+      "date": "2026-06-21",
+      "channel": "Police Station Agent (LinkedIn)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "can-police-take-my-phone-kent",
+      "date": "2026-06-24",
+      "channel": "Policestationag (Twitter)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "police-bail-explained-kent",
+      "date": "2026-06-27",
+      "channel": "Police Station Agent (GBP)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "police-bail-explained-kent",
+      "date": "2026-06-30",
+      "channel": "Criminal Solicitor (Facebook)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "no-comment-interview-kent",
+      "date": "2026-07-03",
+      "channel": "Robert Cashman (Facebook)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "no-comment-interview-kent",
+      "date": "2026-07-06",
+      "channel": "Policestationrepuk (Facebook)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "prepared-statements-kent",
+      "date": "2026-07-09",
+      "channel": "Police Station Agent (Facebook)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "prepared-statements-kent",
+      "date": "2026-07-12",
+      "channel": "Police Station Agent (LinkedIn)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "adverse-inference-kent",
+      "date": "2026-07-15",
+      "channel": "Policestationag (Twitter)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "adverse-inference-kent",
+      "date": "2026-07-18",
+      "channel": "Police Station Agent (GBP)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "custody-time-limits-kent",
+      "date": "2026-07-21",
+      "channel": "Criminal Solicitor (Facebook)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "custody-time-limits-kent",
+      "date": "2026-07-24",
+      "channel": "Robert Cashman (Facebook)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "pace-code-c-kent-guide",
+      "date": "2026-07-27",
+      "channel": "Policestationrepuk (Facebook)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "pace-code-c-kent-guide",
+      "date": "2026-07-30",
+      "channel": "Police Station Agent (Facebook)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "youth-custody-rights-kent",
+      "date": "2026-08-02",
+      "channel": "Police Station Agent (LinkedIn)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "youth-custody-rights-kent",
+      "date": "2026-08-05",
+      "channel": "Policestationag (Twitter)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "appropriate-adult-kent",
+      "date": "2026-08-08",
+      "channel": "Police Station Agent (GBP)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "appropriate-adult-kent",
+      "date": "2026-08-11",
+      "channel": "Criminal Solicitor (Facebook)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "dna-fingerprints-police-station-kent",
+      "date": "2026-08-14",
+      "channel": "Robert Cashman (Facebook)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "dna-fingerprints-police-station-kent",
+      "date": "2026-08-17",
+      "channel": "Policestationrepuk (Facebook)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "unfitness-to-interview-pace-code-c-kent",
+      "date": "2026-08-20",
+      "channel": "Police Station Agent (Facebook)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "unfitness-to-interview-pace-code-c-kent",
+      "date": "2026-08-23",
+      "channel": "Police Station Agent (LinkedIn)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "released-under-investigation-kent-plain-english",
+      "date": "2026-08-26",
+      "channel": "Policestationag (Twitter)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "released-under-investigation-kent-plain-english",
+      "date": "2026-08-29",
+      "channel": "Police Station Agent (GBP)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "voluntary-interview-letter-kent-what-to-do",
+      "date": "2026-09-01",
+      "channel": "Criminal Solicitor (Facebook)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "voluntary-interview-letter-kent-what-to-do",
+      "date": "2026-09-04",
+      "channel": "Robert Cashman (Facebook)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "is-police-station-legal-advice-free-kent",
+      "date": "2026-09-07",
+      "channel": "Policestationrepuk (Facebook)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "is-police-station-legal-advice-free-kent",
+      "date": "2026-09-10",
+      "channel": "Police Station Agent (Facebook)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "police-station-rep-near-me-kent",
+      "date": "2026-09-13",
+      "channel": "Police Station Agent (LinkedIn)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "police-station-rep-near-me-kent",
+      "date": "2026-09-16",
+      "channel": "Policestationag (Twitter)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "maidstone-voluntary-interview-mid-kent-legal-advice",
+      "date": "2026-09-19",
+      "channel": "Police Station Agent (GBP)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "maidstone-voluntary-interview-mid-kent-legal-advice",
+      "date": "2026-09-22",
+      "channel": "Criminal Solicitor (Facebook)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "canterbury-custody-legal-advice-kent",
+      "date": "2026-09-25",
+      "channel": "Robert Cashman (Facebook)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "canterbury-custody-legal-advice-kent",
+      "date": "2026-09-28",
+      "channel": "Policestationrepuk (Facebook)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "sevenoaks-voluntary-interview-legal-advice-kent",
+      "date": "2026-10-01",
+      "channel": "Police Station Agent (Facebook)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "sevenoaks-voluntary-interview-legal-advice-kent",
+      "date": "2026-10-04",
+      "channel": "Police Station Agent (LinkedIn)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "folkestone-custody-legal-advice-kent",
+      "date": "2026-10-07",
+      "channel": "Policestationag (Twitter)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "folkestone-custody-legal-advice-kent",
+      "date": "2026-10-10",
+      "channel": "Police Station Agent (GBP)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "qualified-duty-solicitor-vs-police-station-rep-kent",
+      "date": "2026-10-13",
+      "channel": "Criminal Solicitor (Facebook)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "qualified-duty-solicitor-vs-police-station-rep-kent",
+      "date": "2026-10-16",
+      "channel": "Robert Cashman (Facebook)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "police-warrant-arrest-kent-what-to-do",
+      "date": "2026-10-19",
+      "channel": "Policestationrepuk (Facebook)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "police-warrant-arrest-kent-what-to-do",
+      "date": "2026-10-22",
+      "channel": "Police Station Agent (Facebook)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "no-further-action-after-police-interview-kent",
+      "date": "2026-10-25",
+      "channel": "Police Station Agent (LinkedIn)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "no-further-action-after-police-interview-kent",
+      "date": "2026-10-28",
+      "channel": "Policestationag (Twitter)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "can-police-take-my-phone",
+      "date": "2026-10-31",
+      "channel": "Police Station Agent (GBP)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "no-comment-interview",
+      "date": "2026-11-04",
+      "channel": "Criminal Solicitor (Facebook)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "police-bail-explained",
+      "date": "2026-11-08",
+      "channel": "Robert Cashman (Facebook)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "voluntary-police-interview",
+      "date": "2026-11-12",
+      "channel": "Policestationrepuk (Facebook)",
+      "reason": "already scheduled"
+    },
+    {
+      "slug": "free-police-station-advice-kent",
+      "date": "2026-11-16",
+      "channel": "Police Station Agent (Facebook)",
+      "reason": "already scheduled"
+    }
+  ],
+  "failures": []
 }

@@ -168,6 +168,8 @@ export interface EnrichmentRunStats {
     processed: number;
     emailsFound: number;
     readyToSend: number;
+    /** Prospects re-read from KV with status ready_to_send after save. */
+    persistedReady?: number;
     noEmail: number;
     errors: number;
     elapsedMs: number;
