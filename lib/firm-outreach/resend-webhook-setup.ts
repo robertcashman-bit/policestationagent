@@ -42,7 +42,7 @@ export async function configureResendOutreachWebhook(): Promise<{
   const hooks = listData?.data ?? [];
   const ours = hooks.find((h) => h.endpoint === WEBHOOK_URL);
 
-  if (ours && eventsMatch(ours.events) && ours.status === 'enabled') {
+  if (ours && eventsMatch(ours.events ?? undefined) && ours.status === 'enabled') {
     const { data: detail } = await resend.webhooks.get(ours.id);
     return {
       ok: true,
