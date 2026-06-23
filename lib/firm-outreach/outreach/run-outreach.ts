@@ -172,6 +172,12 @@ export async function runFirmOutreach(opts?: {
         await addSuppression(email, 'bounce');
         prospect.status = 'bounced';
         await saveProspect(prospect);
+      } else if (prospect.status === 'ready_to_send') {
+        const prev = prospect.status;
+        prospect.status = 'excluded';
+        prospect.excludedReason = 'send_failed';
+        prospect.updatedAt = new Date().toISOString();
+        await saveProspect(prospect, prev);
       }
       continue;
     }

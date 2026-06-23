@@ -28,6 +28,24 @@ export async function GET(request: Request) {
     return NextResponse.json({ ok: webhook.ok, mode: 'setupResendWebhook', webhook });
   }
 
+  if (url.searchParams.get('requalifyOnly') === '1') {
+    const { requalifyAllProspects } = await import('@/lib/firm-outreach/requalify-prospects');
+    const { reindexProspectStatuses } = await import('@/lib/firm-outreach/reindex-prospects');
+    const { countProspectsByStatus } = await import('@/lib/firm-outreach/storage');
+    const countsBefore = await countProspectsByStatus();
+    const requalify = await requalifyAllProspects({ verifyWebsites: false });
+    const reindex = await reindexProspectStatuses();
+    const countsAfter = await countProspectsByStatus();
+    return NextResponse.json({
+      ok: true,
+      mode: 'requalifyOnly',
+      requalify,
+      reindex,
+      countsBefore,
+      countsAfter,
+    });
+  }
+
   const unpauseOnly = url.searchParams.get('unpause') === '1';
   const reindex = url.searchParams.get('reindex') === '1';
   const reindexOnly = url.searchParams.get('reindexOnly') === '1';

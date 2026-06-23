@@ -1,18 +1,20 @@
 import { ensureDsccRegisterCache } from '@/lib/dscc-register-lookup';
 import { readLaaCrimeJson } from '@/lib/legal-directory/laa-fetch';
 import { websiteIndicatesCrimePractice } from './crime-website-verify';
+import { isPlausibleOutreachEmail } from './enrichment/validator';
 import {
   buildCrimeRegistry,
   qualifyProspectForOutreach,
   resolveStatusWithQualification,
 } from './qualification';
 import { reconcileReadyProspectStatus } from './reconcile-ready-status';
-import { getProspect, listAllProspectIds, saveProspect } from './storage';
+import { getProspect, isDuplicateInitialSend, listAllProspectIds, saveProspect } from './storage';
 
 export interface RequalifyResult {
   scanned: number;
   downgradedFromReady: number;
   reconciledFromReady: number;
+  promotedToReady: number;
   heldForReview: number;
   websiteVerified: number;
   stillReady: number;
@@ -35,6 +37,7 @@ export async function requalifyAllProspects(opts?: {
     scanned: 0,
     downgradedFromReady: 0,
     reconciledFromReady: 0,
+    promotedToReady: 0,
     heldForReview: 0,
     websiteVerified: 0,
     stillReady: 0,
@@ -85,6 +88,28 @@ export async function requalifyAllProspects(opts?: {
           from: prevStatus,
           to: p.status,
           reason: reconciled === 'sent' ? 'initial_send_already_recorded' : 'invalid_email_format',
+        });
+      }
+      continue;
+    }
+
+    if (p.status === 'discovered' && p.email?.trim() && q.qualified && isPlausibleOutreachEmail(p.email)) {
+      if (await isDuplicateInitialSend(p.email, p.id)) {
+        p.status = 'excluded';
+        p.excludedReason = 'duplicate_email';
+      } else {
+        p.status = resolveStatusWithQualification(p, 'ready_to_send', registry);
+      }
+      p.updatedAt = new Date().toISOString();
+      await saveProspect(p, prevStatus);
+      if (p.status === 'ready_to_send') result.promotedToReady++;
+      if (result.samples.length < sampleLimit) {
+        result.samples.push({
+          id: p.id,
+          firmName: p.firmName,
+          from: prevStatus,
+          to: p.status,
+          reason: q.reason,
         });
       }
       continue;
