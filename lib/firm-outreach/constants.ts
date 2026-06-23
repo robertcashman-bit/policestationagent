@@ -15,9 +15,9 @@ export {
 
 const env = createOutreachEnvHelpers({
   countyAllowlist: null,
-  cronEnrichBatch: 30,
-  enrichMaxMs: 240_000,
-  paidDailyCap: 50,
+  cronEnrichBatch: 50,
+  enrichMaxMs: 270_000,
+  paidDailyCap: 100,
   /** Resend free tier: 100 emails/day total (all transactional mail). */
   dailyCap: 95,
 });
