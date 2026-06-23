@@ -8,6 +8,7 @@ import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 config({ path: resolve(__dirname, '../.env.local') });
+config({ path: resolve(__dirname, '../.env.vercel.production') });
 config();
 
 const limitArg = process.argv.find((a) => a.startsWith('--limit='));
