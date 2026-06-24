@@ -107,7 +107,7 @@ export async function bootstrapOutreach(opts?: {
     { processed: 0, emailsFound: 0, readyToSend: 0, persistedReady: 0, noEmail: 0, errors: 0 },
   );
 
-  let countsAfter = await countProspectsByStatus();
+  const countsAfter = await countProspectsByStatus();
 
   const sendAllowed = await isOutreachSendAllowed();
 
