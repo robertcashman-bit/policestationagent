@@ -22,6 +22,9 @@ export async function GET(request: Request) {
     await setAdminPauseState(false);
   }
 
+  const { maybeRunPostDeployKick } = await import('@/lib/firm-outreach/post-deploy-kick');
+  const postDeployKick = await maybeRunPostDeployKick();
+
   const result = await runFirmOutreachPipeline({
     skipDiscovery: true,
     skipSend: true,
@@ -30,5 +33,5 @@ export async function GET(request: Request) {
     enrichMaxElapsedMs: enrichMaxElapsedMs(),
   });
 
-  return NextResponse.json({ ok: true, mode: 'enrich-only', ...result });
+  return NextResponse.json({ ok: true, mode: 'enrich-only', postDeployKick, ...result });
 }
