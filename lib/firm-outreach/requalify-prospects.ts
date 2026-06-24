@@ -8,7 +8,7 @@ import {
   resolveStatusWithQualification,
 } from './qualification';
 import { reconcileReadyProspectStatus } from './reconcile-ready-status';
-import { getProspect, isDuplicateInitialSend, listAllProspectIds, saveProspect } from './storage';
+import { getProspect, isDuplicateInitialSend, listAllProspectIds, listProspectIdsByStatus, saveProspect } from './storage';
 
 export interface RequalifyResult {
   scanned: number;
@@ -26,6 +26,8 @@ export interface RequalifyResult {
 export async function requalifyAllProspects(opts?: {
   sampleLimit?: number;
   verifyWebsites?: boolean;
+  /** Only scan ready_to_send rows (fast path for bootstrap kick). */
+  readyOnly?: boolean;
   maxElapsedMs?: number;
   startedAt?: number;
   /** Max MX lookups per run (maintain cron stays within timeout). */
@@ -33,6 +35,7 @@ export async function requalifyAllProspects(opts?: {
 }): Promise<RequalifyResult> {
   const sampleLimit = opts?.sampleLimit ?? 20;
   const verifyWebsites = opts?.verifyWebsites ?? true;
+  const readyOnly = opts?.readyOnly ?? false;
   const mxCheckLimit = opts?.mxCheckLimit ?? 50;
   const started = opts?.startedAt ?? Date.now();
   const deadline =
@@ -54,7 +57,9 @@ export async function requalifyAllProspects(opts?: {
   const dscc = await ensureDsccRegisterCache();
   const registry = buildCrimeRegistry(laa, dscc?.entries ?? []);
 
-  const ids = await listAllProspectIds();
+  const ids = readyOnly
+    ? await listProspectIdsByStatus('ready_to_send')
+    : await listAllProspectIds();
   let mxChecks = 0;
   for (const id of ids) {
     if (deadline != null && Date.now() >= deadline) {
