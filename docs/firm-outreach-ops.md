@@ -92,4 +92,5 @@ FIRM_OUTREACH_BOOTSTRAP_SECRET=... npx tsx scripts/firm-outreach-audit-today.ts
 - Cron enrich uses batches of **60** (default) with a 270s wall-clock guard.
 - **Eight** enrich crons per day (05/06/07/08/10/12/14/18 UTC) plus send-only top-ups at 14:30 and 18:30 UTC.
 - Nightly maintain requalify downgrades `ready_to_send` rows with implausible emails or failed MX checks (batch-limited).
+- Post-deploy kick: GitHub Actions [firm-outreach-kick.yml](.github/workflows/firm-outreach-kick.yml) runs requalify + 2 enrich batches after green CI on `master`.
 - **Verify on Vercel:** confirm `FIRM_OUTREACH_REQUIRE_APPROVAL=false` if you want automatic sends at 09:30/14:30/18:30 UTC.
