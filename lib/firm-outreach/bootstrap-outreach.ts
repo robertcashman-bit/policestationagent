@@ -108,10 +108,6 @@ export async function bootstrapOutreach(opts?: {
   );
 
   let countsAfter = await countProspectsByStatus();
-  if (totals.processed > 0) {
-    reindexResult = await reindexProspectStatuses();
-    countsAfter = await countProspectsByStatus();
-  }
 
   const sendAllowed = await isOutreachSendAllowed();
 
