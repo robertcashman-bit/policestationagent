@@ -1,7 +1,7 @@
 import { ensureDsccRegisterCache } from '@/lib/dscc-register-lookup';
 import { readLaaCrimeJson } from '@/lib/legal-directory/laa-fetch';
 import { websiteIndicatesCrimePractice } from './crime-website-verify';
-import { isPlausibleOutreachEmail } from './enrichment/validator';
+import { isPlausibleOutreachEmail, validateEmailForSend } from './enrichment/validator';
 import {
   buildCrimeRegistry,
   qualifyProspectForOutreach,
@@ -14,6 +14,7 @@ export interface RequalifyResult {
   scanned: number;
   downgradedFromReady: number;
   reconciledFromReady: number;
+  mxDowngradedFromReady: number;
   promotedToReady: number;
   heldForReview: number;
   websiteVerified: number;
@@ -27,9 +28,12 @@ export async function requalifyAllProspects(opts?: {
   verifyWebsites?: boolean;
   maxElapsedMs?: number;
   startedAt?: number;
+  /** Max MX lookups per run (maintain cron stays within timeout). */
+  mxCheckLimit?: number;
 }): Promise<RequalifyResult> {
   const sampleLimit = opts?.sampleLimit ?? 20;
   const verifyWebsites = opts?.verifyWebsites ?? true;
+  const mxCheckLimit = opts?.mxCheckLimit ?? 50;
   const started = opts?.startedAt ?? Date.now();
   const deadline =
     opts?.maxElapsedMs != null ? started + opts.maxElapsedMs : undefined;
@@ -37,6 +41,7 @@ export async function requalifyAllProspects(opts?: {
     scanned: 0,
     downgradedFromReady: 0,
     reconciledFromReady: 0,
+    mxDowngradedFromReady: 0,
     promotedToReady: 0,
     heldForReview: 0,
     websiteVerified: 0,
@@ -50,6 +55,7 @@ export async function requalifyAllProspects(opts?: {
   const registry = buildCrimeRegistry(laa, dscc?.entries ?? []);
 
   const ids = await listAllProspectIds();
+  let mxChecks = 0;
   for (const id of ids) {
     if (deadline != null && Date.now() >= deadline) {
       result.stoppedEarly = true;
@@ -91,6 +97,37 @@ export async function requalifyAllProspects(opts?: {
         });
       }
       continue;
+    }
+
+    if (
+      p.status === 'ready_to_send' &&
+      p.email &&
+      isPlausibleOutreachEmail(p.email) &&
+      mxChecks < mxCheckLimit
+    ) {
+      mxChecks++;
+      const mx = await validateEmailForSend(p.email);
+      if (!mx.ok) {
+        const prevStatus = p.status;
+        p.email = undefined;
+        p.emailConfidence = undefined;
+        p.emailScore = undefined;
+        p.status = 'discovered';
+        p.updatedAt = new Date().toISOString();
+        await saveProspect(p, prevStatus);
+        result.downgradedFromReady++;
+        result.mxDowngradedFromReady++;
+        if (result.samples.length < sampleLimit) {
+          result.samples.push({
+            id: p.id,
+            firmName: p.firmName,
+            from: prevStatus,
+            to: p.status,
+            reason: mx.reason ?? 'no_mx',
+          });
+        }
+        continue;
+      }
     }
 
     if (p.status === 'discovered' && p.email?.trim() && q.qualified && isPlausibleOutreachEmail(p.email)) {

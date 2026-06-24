@@ -12,12 +12,14 @@ Requires **Upstash Redis** (sessions + prospect data) and **RESEND_API_KEY** (lo
 | Time | Route | What runs |
 |------|-------|-----------|
 | `03:00` | `/api/cron/firm-outreach-pipeline/maintain` | LAA + DSCC + discovery + requalify (240s budget; website checks Sunday only); Sunday requeues `no_email` |
-| `06:00` | `/api/cron/firm-outreach-enrich` | Enrich only (50 firms, ~270s max) |
-| `07:00` | `/api/cron/firm-outreach-enrich` | Enrich only (50 firms, ~270s max) |
-| `08:00` | `/api/cron/firm-outreach-enrich` | Enrich only (50 firms, ~270s max) |
-| `10:00` | `/api/cron/firm-outreach-enrich` | Enrich only (50 firms, ~270s max) |
-| `14:00` | `/api/cron/firm-outreach-enrich` | Enrich only (50 firms, ~270s max) |
-| `18:00` | `/api/cron/firm-outreach-enrich` | Enrich only (50 firms, ~270s max) |
+| `05:00` | `/api/cron/firm-outreach-enrich` | Enrich only (~60 firms, ~270s max) |
+| `06:00` | `/api/cron/firm-outreach-enrich` | Enrich only (~60 firms, ~270s max) |
+| `07:00` | `/api/cron/firm-outreach-enrich` | Enrich only (~60 firms, ~270s max) |
+| `08:00` | `/api/cron/firm-outreach-enrich` | Enrich only (~60 firms, ~270s max) |
+| `10:00` | `/api/cron/firm-outreach-enrich` | Enrich only (~60 firms, ~270s max) |
+| `12:00` | `/api/cron/firm-outreach-enrich` | Enrich only (~60 firms, ~270s max) |
+| `14:00` | `/api/cron/firm-outreach-enrich` | Enrich only (~60 firms, ~270s max) |
+| `18:00` | `/api/cron/firm-outreach-enrich` | Enrich only (~60 firms, ~270s max) |
 | `09:30` | `/api/cron/firm-outreach-pipeline/full` | Auto-send ready queue (up to daily cap) |
 | `14:30` | `/api/cron/firm-outreach-send` | Send-only top-up (no digest) |
 | `18:30` | `/api/cron/firm-outreach-send` | Send-only top-up (no digest) |
@@ -36,9 +38,9 @@ All cron routes require `Authorization: Bearer $CRON_SECRET` (Vercel adds this a
 | `CRON_SECRET` | — | Cron auth + unsubscribe token signing |
 | `FIRM_OUTREACH_COUNTY_ALLOWLIST` | _(empty — all counties)_ | Optional comma-separated county filter for discovery |
 | `FIRM_OUTREACH_DAILY_CAP` | `95` | Max outreach sends per UTC day (Resend free tier allows 100/day total including login, digest, and approval mail — leave headroom) |
-| `FIRM_OUTREACH_REQUIRE_APPROVAL` | off (autosend) | Set `true` to require clicking the daily approval email before sends |
+| `FIRM_OUTREACH_REQUIRE_APPROVAL` | *(unset = approval required)* | Set **`false`** on Vercel for automatic sends; set `true` for click-to-send |
 | `FIRM_OUTREACH_DIGEST_EMAIL` | `robertdavidcashman@gmail.com` | Digest + post-send confirmation recipient |
-| `FIRM_OUTREACH_CRON_ENRICH_BATCH` | `50` | Firms per cron enrich tick |
+| `FIRM_OUTREACH_CRON_ENRICH_BATCH` | `60` | Firms per cron enrich tick |
 | `FIRM_OUTREACH_ENRICH_MAX_MS` | `270000` | Wall-clock cap per enrich cron run |
 | `SERPER_API_KEY` | — | Google search when SRA has no website |
 | `FIRM_OUTREACH_SEND_ENABLED` | enabled | Set `false` to disable automated sends |
@@ -83,3 +85,11 @@ FIRM_OUTREACH_BOOTSTRAP_SECRET=... npx tsx scripts/firm-outreach-audit-today.ts
 2. Deploy — outreach sends run automatically via cron (no manual toggles unless you set `FIRM_OUTREACH_SEND_ENABLED=false`).
 3. Sign in at `/admin` to review queue and stats on the Overview and Firm outreach tabs.
 4. Optional: set `FIRM_OUTREACH_DRY_RUN=true` only while testing sends without delivery.
+
+## Reliability notes
+
+- Enrichment uses active-campaign record status and a sliding scan window — LAA firms without email are prioritised each tick.
+- Cron enrich uses batches of **60** (default) with a 270s wall-clock guard.
+- **Eight** enrich crons per day (05/06/07/08/10/12/14/18 UTC) plus send-only top-ups at 14:30 and 18:30 UTC.
+- Nightly maintain requalify downgrades `ready_to_send` rows with implausible emails or failed MX checks (batch-limited).
+- **Verify on Vercel:** confirm `FIRM_OUTREACH_REQUIRE_APPROVAL=false` if you want automatic sends at 09:30/14:30/18:30 UTC.

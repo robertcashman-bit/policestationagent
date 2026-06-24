@@ -51,6 +51,10 @@
     },
     {
       "path": "/api/cron/firm-outreach-enrich",
+      "schedule": "0 5 * * *"
+    },
+    {
+      "path": "/api/cron/firm-outreach-enrich",
       "schedule": "0 6 * * *"
     },
     {
@@ -64,6 +68,10 @@
     {
       "path": "/api/cron/firm-outreach-enrich",
       "schedule": "0 10 * * *"
+    },
+    {
+      "path": "/api/cron/firm-outreach-enrich",
+      "schedule": "0 12 * * *"
     },
     {
       "path": "/api/cron/firm-outreach-enrich",

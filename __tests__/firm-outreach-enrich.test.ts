@@ -124,6 +124,11 @@ describe('runFirmEnrichment saveProspect indexing', () => {
       resolveStatusWithQualification: vi.fn().mockReturnValue('ready_to_send'),
     }));
 
+    vi.doMock('@/lib/firm-outreach/enrichment/validator', () => ({
+      isPlausibleOutreachEmail: () => true,
+      validateEmailForSend: vi.fn().mockResolvedValue({ ok: true }),
+    }));
+
     const { runFirmEnrichment } = await import('@/lib/firm-outreach/enrichment/run-enrich');
     await runFirmEnrichment({ limit: 5 });
 

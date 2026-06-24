@@ -357,8 +357,8 @@ export function checkVercelCronConfig(vercelJson: {
   });
   const enrichCronCount = paths.filter((p) => p === '/api/cron/firm-outreach-enrich').length;
   results.push({
-    name: 'vercel_cron_enrich_six_times_daily',
-    ok: enrichCronCount === 6,
+    name: 'vercel_cron_enrich_eight_times_daily',
+    ok: enrichCronCount === 8,
     detail: `count=${enrichCronCount}`,
   });
   const sendOnlyCronCount = paths.filter((p) => p === '/api/cron/firm-outreach-send').length;

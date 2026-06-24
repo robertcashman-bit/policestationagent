@@ -91,6 +91,7 @@ describe('enrichment wires Serper website discovery before crawl', () => {
     }));
     vi.doMock('@/lib/firm-outreach/enrichment/validator', () => ({
       isPlausibleOutreachEmail: () => true,
+      validateEmailForSend: vi.fn().mockResolvedValue({ ok: true }),
     }));
 
     const { runFirmEnrichment } = await import('@/lib/firm-outreach/enrichment/run-enrich');
@@ -117,7 +118,7 @@ describe('enrichment wires Serper website discovery before crawl', () => {
       campaignId: 'c',
       createdAt: '',
       updatedAt: '',
-      enrichAttempts: 2,
+      enrichAttempts: 5,
     };
 
     let saved: Record<string, unknown> | undefined;
@@ -168,6 +169,7 @@ describe('enrichment wires Serper website discovery before crawl', () => {
     }));
     vi.doMock('@/lib/firm-outreach/enrichment/validator', () => ({
       isPlausibleOutreachEmail: () => true,
+      validateEmailForSend: vi.fn().mockResolvedValue({ ok: true }),
     }));
 
     const { runFirmEnrichment } = await import('@/lib/firm-outreach/enrichment/run-enrich');

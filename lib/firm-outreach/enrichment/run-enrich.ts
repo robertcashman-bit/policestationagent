@@ -17,14 +17,16 @@ import {
 import type { EnrichmentRunStats, FirmProspect } from '../types';
 import {
   enrichCandidateScore,
+  ENRICH_SCAN_MULTIPLIER,
   MAX_ENRICH_ATTEMPTS,
+  NO_EMAIL_AFTER_ATTEMPTS,
   shouldEnrichProspect,
 } from './enrich-candidates';
 import { crawlEmailsForProspect } from './email-crawler';
 import { paidEnrichEmails } from './paid-enrichment';
 import { domainFromUrl } from '../normalize';
 import { websiteIndicatesCrimePractice } from '../crime-website-verify';
-import { isPlausibleOutreachEmail } from './validator';
+import { isPlausibleOutreachEmail, validateEmailForSend } from './validator';
 
 function pickDeliverableEmail(
   best: { address: string; confidence: FirmProspect['emailConfidence']; score: number } | null,
@@ -41,9 +43,6 @@ async function enrichOne(prospect: FirmProspect, registry: CrimeRegistry): Promi
   prospect.enrichAttempts += 1;
   prospect.updatedAt = now;
 
-  // SRA register lookup THEN Serper homepage discovery when the register has no
-  // website. Without the Serper step, firms/solicitors with no SRA-listed site
-  // (notably DSCC-only solicitors) never get a website to crawl → no email.
   await resolveProspectWebsite(prospect);
   if (prospect.excludedReason === 'sra_not_authorised') {
     prospect.status = 'excluded';
@@ -58,7 +57,7 @@ async function enrichOne(prospect: FirmProspect, registry: CrimeRegistry): Promi
       prospect.emailScore = undefined;
     }
 
-    const crawled = await crawlEmailsForProspect(prospect);
+    const crawled = await crawlEmailsForProspect(prospect, { maxPages: 5 });
     prospect.websiteUrl = crawled.websiteUrl ?? prospect.websiteUrl;
     const chosen = pickDeliverableEmail(crawled.best, crawled.alternatives);
     if (chosen) {
@@ -99,6 +98,16 @@ async function enrichOne(prospect: FirmProspect, registry: CrimeRegistry): Promi
   }
 
   if (prospect.email && isPlausibleOutreachEmail(prospect.email)) {
+    const mx = await validateEmailForSend(prospect.email);
+    if (!mx.ok) {
+      prospect.email = undefined;
+      prospect.emailConfidence = undefined;
+      prospect.emailScore = undefined;
+      prospect.status =
+        prospect.enrichAttempts >= NO_EMAIL_AFTER_ATTEMPTS ? 'no_email' : 'discovered';
+      return prospect;
+    }
+
     prospect.status = resolveStatusWithQualification(
       { ...prospect, status: 'discovered' },
       'ready_to_send',
@@ -111,7 +120,7 @@ async function enrichOne(prospect: FirmProspect, registry: CrimeRegistry): Promi
       prospect.status = 'excluded';
       prospect.excludedReason = 'duplicate_email';
     }
-  } else if (prospect.enrichAttempts >= 3) {
+  } else if (prospect.enrichAttempts >= NO_EMAIL_AFTER_ATTEMPTS) {
     prospect.status = 'no_email';
   } else {
     prospect.status = 'discovered';
@@ -123,21 +132,21 @@ async function enrichOne(prospect: FirmProspect, registry: CrimeRegistry): Promi
 export async function advanceEnrichCursor(
   cursor: number,
   processedCount: number,
-  needEnrichLength: number,
+  poolLength: number,
 ): Promise<number> {
-  if (needEnrichLength === 0) {
+  if (poolLength === 0) {
     await setCursor(CURSOR_ENRICH, 0);
     return 0;
   }
   if (processedCount <= 0) {
-    if (cursor >= needEnrichLength) {
+    if (cursor >= poolLength) {
       await setCursor(CURSOR_ENRICH, 0);
       return 0;
     }
     return cursor;
   }
   const next = cursor + processedCount;
-  const wrapped = next >= needEnrichLength ? 0 : next;
+  const wrapped = next >= poolLength ? 0 : next;
   await setCursor(CURSOR_ENRICH, wrapped);
   return wrapped;
 }
@@ -148,6 +157,48 @@ async function loadEnrichRegistry(): Promise<CrimeRegistry> {
   return buildCrimeRegistry(laa, dscc?.entries ?? []);
 }
 
+/** Load enrichable active-campaign prospect IDs from record status. */
+export async function loadEnrichPoolIds(): Promise<string[]> {
+  const discovered = await listProspectIdsByRecordStatus('discovered');
+  const noEmail = await listProspectIdsByRecordStatus('no_email');
+  const now = Date.now();
+  const retryIds: string[] = [];
+  for (const id of noEmail) {
+    const p = await getProspect(id);
+    if (p && shouldEnrichProspect(p, now)) retryIds.push(id);
+  }
+  return [...discovered, ...retryIds];
+}
+
+/** Score a sliding window of the pool and return top IDs for this batch. */
+export async function pickEnrichBatchIds(opts: {
+  poolIds: string[];
+  cursor: number;
+  limit: number;
+  scanMultiplier?: number;
+}): Promise<{ batchIds: string[]; scanned: number }> {
+  const { poolIds, cursor, limit } = opts;
+  const scanMultiplier = opts.scanMultiplier ?? ENRICH_SCAN_MULTIPLIER;
+  if (poolIds.length === 0) return { batchIds: [], scanned: 0 };
+
+  const scanCount = Math.min(poolIds.length, Math.max(limit * 2, limit * scanMultiplier));
+  const start = cursor % poolIds.length;
+  const candidates: { id: string; score: number }[] = [];
+
+  for (let i = 0; i < scanCount; i++) {
+    const id = poolIds[(start + i) % poolIds.length];
+    const p = await getProspect(id);
+    if (!p || !shouldEnrichProspect(p)) continue;
+    candidates.push({ id, score: enrichCandidateScore(p) });
+  }
+
+  candidates.sort((a, b) => b.score - a.score);
+  return {
+    batchIds: candidates.slice(0, limit).map((c) => c.id),
+    scanned: scanCount,
+  };
+}
+
 export async function runFirmEnrichment(opts?: {
   limit?: number;
   maxElapsedMs?: number;
@@ -155,37 +206,19 @@ export async function runFirmEnrichment(opts?: {
   const started = Date.now();
   const limit = opts?.limit ?? enrichBatchSize();
   const registry = await loadEnrichRegistry();
-
-  const discoveredIds = await listProspectIdsByRecordStatus('discovered');
-  const noEmailIds = await listProspectIdsByRecordStatus('no_email');
-  const pool = [...discoveredIds, ...noEmailIds];
+  const poolIds = await loadEnrichPoolIds();
 
   let cursor = await getCursor(CURSOR_ENRICH);
-  if (cursor >= pool.length && pool.length > 0) {
+  if (cursor >= poolIds.length && poolIds.length > 0) {
     cursor = 0;
     await setCursor(CURSOR_ENRICH, 0);
   }
 
-  // Score a sliding window — avoid loading thousands of prospects every cron tick.
-  const scanWindow = Math.min(Math.max(limit * 4, 40), 120);
-  const windowIds = pool.slice(cursor, cursor + scanWindow);
-  const candidates: { id: string; score: number }[] = [];
-  let stoppedEarly = false;
-  let scannedInWindow = 0;
-
-  for (const id of windowIds) {
-    if (opts?.maxElapsedMs != null && Date.now() - started >= opts.maxElapsedMs) {
-      stoppedEarly = true;
-      break;
-    }
-    scannedInWindow++;
-    const p = await getProspect(id);
-    if (!p || !shouldEnrichProspect(p)) continue;
-    candidates.push({ id, score: enrichCandidateScore(p) });
-  }
-
-  candidates.sort((a, b) => b.score - a.score);
-  const batch = candidates.slice(0, limit).map((c) => c.id);
+  const { batchIds, scanned } = await pickEnrichBatchIds({
+    poolIds,
+    cursor,
+    limit,
+  });
 
   let emailsFound = 0;
   let readyToSend = 0;
@@ -193,8 +226,9 @@ export async function runFirmEnrichment(opts?: {
   let noEmail = 0;
   let errors = 0;
   let processedCount = 0;
+  let stoppedEarly = false;
 
-  for (const id of batch) {
+  for (const id of batchIds) {
     if (opts?.maxElapsedMs != null && Date.now() - started >= opts.maxElapsedMs) {
       stoppedEarly = true;
       break;
@@ -218,9 +252,8 @@ export async function runFirmEnrichment(opts?: {
     }
   }
 
-  if (scannedInWindow > 0) {
-    await advanceEnrichCursor(cursor, scannedInWindow, pool.length);
-  }
+  const advanceBy = processedCount > 0 || !stoppedEarly ? scanned : 0;
+  await advanceEnrichCursor(cursor, advanceBy, poolIds.length);
 
   if (processedCount > 0) {
     const { refreshProspectStatusSnapshotCache } = await import('../storage');
@@ -236,7 +269,15 @@ export async function runFirmEnrichment(opts?: {
     errors,
     elapsedMs: Date.now() - started,
     stoppedEarly: stoppedEarly || undefined,
+    poolSize: poolIds.length,
+    candidatesScanned: scanned,
   };
 }
 
-export { shouldEnrichProspect, enrichCandidateScore, MAX_ENRICH_ATTEMPTS } from './enrich-candidates';
+export {
+  shouldEnrichProspect,
+  enrichCandidateScore,
+  MAX_ENRICH_ATTEMPTS,
+  NO_EMAIL_AFTER_ATTEMPTS,
+  ENRICH_SCAN_MULTIPLIER,
+} from './enrich-candidates';
