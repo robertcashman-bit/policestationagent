@@ -26,6 +26,8 @@ const SEARCH_ENGINE_SITES = [
     bingSiteUrl: "https://policestationrepuk.org",
     useSitemap: true,
     maxSitemapUrls: 1000,
+    /** Bing daily URL submission quota — cap per run to avoid 400 errors */
+    maxBingUrls: 100,
   },
 ];
 

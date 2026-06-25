@@ -196,9 +196,13 @@ async function submitIndexNowForSite(site, urls) {
 
 async function submitBingForSite(site, urls, apiKey) {
   const siteUrl = site.bingSiteUrl || site.siteUrl;
+  const capped = site.maxBingUrls ? urls.slice(0, site.maxBingUrls) : urls;
+  if (site.maxBingUrls && urls.length > site.maxBingUrls) {
+    console.log(`  ℹ️  Bing ${site.id}: capped to ${site.maxBingUrls} URLs (daily quota)`);
+  }
   let ok = true;
-  for (let i = 0; i < urls.length; i += BING_BATCH_SIZE) {
-    const batch = urls.slice(i, i + BING_BATCH_SIZE);
+  for (let i = 0; i < capped.length; i += BING_BATCH_SIZE) {
+    const batch = capped.slice(i, i + BING_BATCH_SIZE);
     try {
       const response = await fetch(
         `https://ssl.bing.com/webmaster/api.svc/json/SubmitUrlbatch?apikey=${apiKey}`,
