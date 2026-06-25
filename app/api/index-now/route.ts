@@ -94,6 +94,36 @@ async function submitToIndexNow(urls: string[]): Promise<{ success: boolean; mes
 }
 
 /**
+ * Submit URLs directly to Bing via the Bing Webmaster URL Submission API.
+ * Stronger, direct signal than IndexNow and most improves DuckDuckGo (Bing-backed).
+ * Skips gracefully when BING_WEBMASTER_API_KEY is not configured.
+ */
+async function submitToBing(urls: string[]): Promise<{ success: boolean; message: string }> {
+  const apiKey = process.env.BING_WEBMASTER_API_KEY?.trim();
+  if (!apiKey) {
+    return { success: true, message: "Bing: skipped (no BING_WEBMASTER_API_KEY; IndexNow covers Bing)" };
+  }
+  try {
+    const urlList = urls.map((url) => (url.startsWith("http") ? url : `${SITE_URL}${url}`));
+    const response = await fetch(
+      `https://ssl.bing.com/webmaster/api.svc/json/SubmitUrlbatch?apikey=${apiKey}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+        body: JSON.stringify({ siteUrl: SITE_URL, urlList }),
+      },
+    );
+    if (response.ok) {
+      return { success: true, message: `Bing: Submitted ${urlList.length} URLs via Webmaster API` };
+    }
+    const text = await response.text();
+    return { success: false, message: `Bing Webmaster API error: ${response.status} - ${text.slice(0, 200)}` };
+  } catch (error) {
+    return { success: false, message: `Bing Webmaster API error: ${error}` };
+  }
+}
+
+/**
  * Ping Yandex with sitemap URL (faster indexing, some DDG/other engines use multiple sources)
  */
 async function pingYandex(): Promise<{ success: boolean; message: string }> {
@@ -161,7 +191,11 @@ export async function POST(request: Request) {
     // No body or invalid JSON - use default URLs
   }
 
-  const results = await Promise.all([submitToIndexNow(urlsToSubmit), pingYandex()]);
+  const results = await Promise.all([
+    submitToIndexNow(urlsToSubmit),
+    pingYandex(),
+    submitToBing(urlsToSubmit),
+  ]);
 
   const allSuccess = results.every((r) => r.success);
 

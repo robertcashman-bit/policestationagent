@@ -27,6 +27,8 @@ jobs:
         run: sleep 120
 
       - name: Notify sitemap and IndexNow
+        env:
+          BING_WEBMASTER_API_KEY: ${{ secrets.BING_WEBMASTER_API_KEY }}
         run: node scripts/notify-search-engines.js
 
       - name: Call site IndexNow API

@@ -169,6 +169,42 @@ async function submitToIndexNow() {
   }
 }
 
+/**
+ * Submit URLs directly to Bing via the Bing Webmaster URL Submission API.
+ * This is a stronger, direct signal than IndexNow and most improves DuckDuckGo
+ * (which sources organic results from Bing). Skips gracefully when no API key
+ * is configured — get one from Bing Webmaster Tools → Settings → API access.
+ */
+async function submitToBing() {
+  const apiKey = process.env.BING_WEBMASTER_API_KEY?.trim();
+  if (!apiKey) {
+    console.log("⏭️  Bing: BING_WEBMASTER_API_KEY not set — skipping direct Bing submission (IndexNow still covers Bing).");
+    return true;
+  }
+  console.log("📍 Submitting to Bing Webmaster (direct)...");
+  try {
+    const urls = getIndexNowUrls().map((url) => `${SITE_URL}${url}`);
+    const response = await fetch(
+      `https://ssl.bing.com/webmaster/api.svc/json/SubmitUrlbatch?apikey=${apiKey}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+        body: JSON.stringify({ siteUrl: SITE_URL, urlList: urls }),
+      },
+    );
+    if (response.ok) {
+      console.log(`✅ Bing: Submitted ${urls.length} URLs via Webmaster API`);
+      return true;
+    }
+    const text = await response.text();
+    console.log(`⚠️ Bing Webmaster API returned: ${response.status} - ${text.slice(0, 300)}`);
+    return false;
+  } catch (error) {
+    console.log(`❌ Bing Webmaster API error: ${error.message}`);
+    return false;
+  }
+}
+
 async function main() {
   console.log("");
   console.log("🔔 Notifying Search Engines of Site Update");
@@ -182,7 +218,7 @@ async function main() {
   console.log("Bing: IndexNow submission covers Bing and helps DuckDuckGo discovery.");
   console.log("");
 
-  const results = await Promise.all([pingYandex(), submitToIndexNow()]);
+  const results = await Promise.all([pingYandex(), submitToIndexNow(), submitToBing()]);
 
   console.log("");
   console.log("==========================================");
