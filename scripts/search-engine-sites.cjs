@@ -19,16 +19,9 @@ const SEARCH_ENGINE_SITES = [
     },
     useSitemap: false,
   },
-  {
-    id: "repuk",
-    siteUrl: "https://policestationrepuk.org",
-    sitemapUrl: "https://policestationrepuk.org/sitemap.xml",
-    bingSiteUrl: "https://policestationrepuk.org",
-    useSitemap: true,
-    maxSitemapUrls: 1000,
-    /** Bing daily URL submission quota — cap per run to avoid 400 errors */
-    maxBingUrls: 100,
-  },
+  // policestationrepuk.org self-manages search-engine submission via its own
+  // repo (postbuild IndexNow + Bing + daily cron sweep). Do not double-submit
+  // it from here — that hit Bing's daily quota and is redundant.
 ];
 
 module.exports = { SEARCH_ENGINE_SITES, PSA_INDEXNOW_KEY };
