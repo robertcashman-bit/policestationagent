@@ -1,25 +1,21 @@
 #!/usr/bin/env node
 /**
- * Notify Search Engines Script
+ * Notify search engines after deploy (IndexNow, Bing Webmaster, Yandex).
  *
- * This script pings Google and Bing with the sitemap URL and submits
- * priority URLs to IndexNow after deployment.
+ * Sites: policestationagent.com + policestationrepuk.org
  *
  * Usage:
  *   node scripts/notify-search-engines.js
  *   npm run notify:search-engines
- *
- * Can also be called via Vercel deploy hook or GitHub Actions.
  */
 
 const fs = require("fs");
 const path = require("path");
 const { REP_INDEXNOW_PATHS } = require("./rep-town-paths.cjs");
+const { SEARCH_ENGINE_SITES } = require("./search-engine-sites.cjs");
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.policestationagent.com";
-const INDEXNOW_KEY = "655b1cdbce5c462b9fe51c4e19f92678";
+const BING_BATCH_SIZE = 500;
 
-// Priority URLs for fast indexing (Google, Bing, DuckDuckGo via Bing/IndexNow)
 const PRIORITY_URLS = [
   "/",
   "/about",
@@ -45,26 +41,25 @@ const PRIORITY_URLS = [
   "/police-bail-explained",
   "/released-under-investigation",
   "/offences-we-deal-with",
-    "/start/in-custody",
-    "/start/voluntary-interview",
-    "/emergency-police-station-representation",
-    "/free-police-station-advice-kent",
-    "/kent-police-custody-resources",
+  "/start/in-custody",
+  "/start/voluntary-interview",
+  "/emergency-police-station-representation",
+  "/free-police-station-advice-kent",
+  "/kent-police-custody-resources",
   "/resources",
   "/resources/pace-rights-guide",
   "/link-to-us",
-    "/press",
-    "/canwehelp",
-    "/blog/is-police-station-legal-advice-free-kent",
-    "/blog/police-station-rep-near-me-kent",
-    "/blog/dartford-voluntary-interview-legal-advice-kent",
-    "/blog/swanley-police-station-interview-advice-kent",
+  "/press",
+  "/canwehelp",
+  "/blog/is-police-station-legal-advice-free-kent",
+  "/blog/police-station-rep-near-me-kent",
+  "/blog/dartford-voluntary-interview-legal-advice-kent",
+  "/blog/swanley-police-station-interview-advice-kent",
   ...REP_INDEXNOW_PATHS,
 ];
 
 function normalizeSlug(input) {
   if (!input || typeof input !== "string") return "";
-
   return input
     .toLowerCase()
     .trim()
@@ -114,122 +109,159 @@ function getPublishedBlogSlugs() {
   return Array.from(slugs).sort();
 }
 
-function getIndexNowUrls() {
+function getPsaUrls(siteUrl) {
   const blogUrls = getPublishedBlogSlugs().map((slug) => `/blog/${slug}`);
-  return Array.from(new Set([...PRIORITY_URLS, ...blogUrls]));
+  return Array.from(new Set([...PRIORITY_URLS, ...blogUrls])).map((url) =>
+    url.startsWith("http") ? url : `${siteUrl}${url}`,
+  );
 }
 
-async function pingYandex() {
-  console.log("📍 Pinging Yandex...");
-  try {
-    const sitemapFull = `${SITE_URL}/sitemap.xml`;
-    const response = await fetch(`https://webmaster.yandex.com/ping?sitemap=${encodeURIComponent(sitemapFull)}`);
-    if (response.ok) {
-      console.log("✅ Yandex: Sitemap ping successful");
-      return true;
-    } else {
-      console.log(`⚠️ Yandex ping returned: ${response.status}`);
-      return false;
+async function fetchSitemapUrls(sitemapUrl, maxUrls = 1000) {
+  const response = await fetch(sitemapUrl);
+  if (!response.ok) {
+    throw new Error(`sitemap HTTP ${response.status}`);
+  }
+  const xml = await response.text();
+  const urls = [];
+  const re = /<loc>([^<]+)<\/loc>/g;
+  let match;
+  while ((match = re.exec(xml)) !== null && urls.length < maxUrls) {
+    urls.push(match[1].trim());
+  }
+  return urls;
+}
+
+async function resolveSiteUrls(site) {
+  if (site.useSitemap) {
+    try {
+      const urls = await fetchSitemapUrls(site.sitemapUrl, site.maxSitemapUrls ?? 1000);
+      console.log(`  ${site.id}: fetched ${urls.length} URLs from sitemap`);
+      return urls;
+    } catch (error) {
+      console.log(`  ⚠️ ${site.id}: sitemap fetch failed (${error.message}) — using homepage only`);
+      return [site.siteUrl];
     }
-  } catch (error) {
-    console.log(`❌ Yandex ping error: ${error.message}`);
-    return false;
   }
+  const urls = getPsaUrls(site.siteUrl);
+  console.log(`  ${site.id}: ${urls.length} curated URLs`);
+  return urls;
 }
 
-async function submitToIndexNow() {
-  console.log("📍 Submitting to IndexNow...");
+async function pingYandexForSite(site) {
   try {
-    const host = new URL(SITE_URL).hostname;
-    const urls = getIndexNowUrls();
-    const response = await fetch("https://api.indexnow.org/indexnow", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        host: host,
-        key: INDEXNOW_KEY,
-        keyLocation: `${SITE_URL}/${INDEXNOW_KEY}.txt`,
-        urlList: urls.map((url) => `${SITE_URL}${url}`),
-      }),
-    });
-
-    if (response.ok || response.status === 200 || response.status === 202) {
-      console.log(`✅ IndexNow: Submitted ${urls.length} URLs`);
-      return true;
-    } else {
-      const text = await response.text();
-      console.log(`⚠️ IndexNow returned: ${response.status} - ${text}`);
-      return false;
-    }
-  } catch (error) {
-    console.log(`❌ IndexNow error: ${error.message}`);
-    return false;
-  }
-}
-
-/**
- * Submit URLs directly to Bing via the Bing Webmaster URL Submission API.
- * This is a stronger, direct signal than IndexNow and most improves DuckDuckGo
- * (which sources organic results from Bing). Skips gracefully when no API key
- * is configured — get one from Bing Webmaster Tools → Settings → API access.
- */
-async function submitToBing() {
-  const apiKey = process.env.BING_WEBMASTER_API_KEY?.trim();
-  if (!apiKey) {
-    console.log("⏭️  Bing: BING_WEBMASTER_API_KEY not set — skipping direct Bing submission (IndexNow still covers Bing).");
-    return true;
-  }
-  console.log("📍 Submitting to Bing Webmaster (direct)...");
-  try {
-    const urls = getIndexNowUrls().map((url) => `${SITE_URL}${url}`);
     const response = await fetch(
-      `https://ssl.bing.com/webmaster/api.svc/json/SubmitUrlbatch?apikey=${apiKey}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json; charset=utf-8" },
-        body: JSON.stringify({ siteUrl: SITE_URL, urlList: urls }),
-      },
+      `https://webmaster.yandex.com/ping?sitemap=${encodeURIComponent(site.sitemapUrl)}`,
     );
     if (response.ok) {
-      console.log(`✅ Bing: Submitted ${urls.length} URLs via Webmaster API`);
+      console.log(`  ✅ Yandex: ${site.id} sitemap ping OK`);
+      return true;
+    }
+    console.log(`  ⚠️ Yandex ${site.id}: HTTP ${response.status}`);
+    return false;
+  } catch (error) {
+    console.log(`  ❌ Yandex ${site.id}: ${error.message}`);
+    return false;
+  }
+}
+
+async function submitIndexNowForSite(site, urls) {
+  if (!site.indexNow) {
+    console.log(`  ⏭️  IndexNow ${site.id}: no key on host — skipped`);
+    return true;
+  }
+  try {
+    const host = new URL(site.siteUrl).hostname;
+    const response = await fetch("https://api.indexnow.org/indexnow", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        host,
+        key: site.indexNow.key,
+        keyLocation: site.indexNow.keyLocation,
+        urlList: urls,
+      }),
+    });
+    if (response.ok || response.status === 200 || response.status === 202) {
+      console.log(`  ✅ IndexNow ${site.id}: ${urls.length} URLs`);
       return true;
     }
     const text = await response.text();
-    console.log(`⚠️ Bing Webmaster API returned: ${response.status} - ${text.slice(0, 300)}`);
+    console.log(`  ⚠️ IndexNow ${site.id}: HTTP ${response.status} - ${text.slice(0, 200)}`);
     return false;
   } catch (error) {
-    console.log(`❌ Bing Webmaster API error: ${error.message}`);
+    console.log(`  ❌ IndexNow ${site.id}: ${error.message}`);
     return false;
   }
 }
 
-async function main() {
-  console.log("");
-  console.log("🔔 Notifying Search Engines of Site Update");
-  console.log("==========================================");
-  console.log(`Site URL: ${SITE_URL}`);
-  console.log(`Sitemap: ${SITE_URL}/sitemap.xml`);
-  console.log(`Blog sitemap: ${SITE_URL}/blog-sitemap.xml`);
-  console.log(`LLMs file: ${SITE_URL}/llms.txt`);
-  console.log(`URLs to submit: ${getIndexNowUrls().length}`);
-  console.log("Google: submit sitemap.xml and blog-sitemap.xml in Search Console (no public ping API).");
-  console.log("Bing: IndexNow submission covers Bing and helps DuckDuckGo discovery.");
-  console.log("");
+async function submitBingForSite(site, urls, apiKey) {
+  const siteUrl = site.bingSiteUrl || site.siteUrl;
+  let ok = true;
+  for (let i = 0; i < urls.length; i += BING_BATCH_SIZE) {
+    const batch = urls.slice(i, i + BING_BATCH_SIZE);
+    try {
+      const response = await fetch(
+        `https://ssl.bing.com/webmaster/api.svc/json/SubmitUrlbatch?apikey=${apiKey}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json; charset=utf-8" },
+          body: JSON.stringify({ siteUrl, urlList: batch }),
+        },
+      );
+      if (response.ok) {
+        console.log(`  ✅ Bing ${site.id}: batch ${Math.floor(i / BING_BATCH_SIZE) + 1} (${batch.length} URLs)`);
+      } else {
+        const text = await response.text();
+        console.log(`  ⚠️ Bing ${site.id}: HTTP ${response.status} - ${text.slice(0, 200)}`);
+        ok = false;
+      }
+    } catch (error) {
+      console.log(`  ❌ Bing ${site.id}: ${error.message}`);
+      ok = false;
+    }
+  }
+  return ok;
+}
 
-  const results = await Promise.all([pingYandex(), submitToIndexNow(), submitToBing()]);
-
-  console.log("");
-  console.log("==========================================");
-
-  const successCount = results.filter(Boolean).length;
-  if (successCount === results.length) {
-    console.log("✅ IndexNow/Yandex notifications completed successfully!");
+async function notifySite(site, apiKey) {
+  console.log(`\n📍 ${site.id.toUpperCase()} (${site.siteUrl})`);
+  const urls = await resolveSiteUrls(site);
+  const results = [
+    await pingYandexForSite(site),
+    await submitIndexNowForSite(site, urls),
+  ];
+  if (apiKey) {
+    results.push(await submitBingForSite(site, urls, apiKey));
   } else {
-    console.log(`⚠️ ${successCount}/${results.length} notifications succeeded`);
+    console.log(`  ⏭️  Bing ${site.id}: no BING_WEBMASTER_API_KEY`);
+    results.push(true);
+  }
+  return results.every(Boolean);
+}
+
+async function main() {
+  const apiKey = process.env.BING_WEBMASTER_API_KEY?.trim();
+  console.log("");
+  console.log("🔔 Notifying Search Engines (multi-site)");
+  console.log("========================================");
+  console.log(`Sites: ${SEARCH_ENGINE_SITES.map((s) => s.id).join(", ")}`);
+  console.log(
+    apiKey
+      ? "Bing Webmaster API: configured"
+      : "Bing Webmaster API: not set (IndexNow/Yandex still run)",
+  );
+  console.log("Google: submit sitemaps in Search Console (no public ping API).");
+  console.log("");
+
+  const siteResults = [];
+  for (const site of SEARCH_ENGINE_SITES) {
+    siteResults.push(await notifySite(site, apiKey));
   }
 
+  console.log("");
+  console.log("==========================================");
+  const ok = siteResults.filter(Boolean).length;
+  console.log(`${ok}/${siteResults.length} sites notified successfully`);
   console.log("");
 }
 

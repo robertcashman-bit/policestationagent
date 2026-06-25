@@ -46,7 +46,7 @@ jobs:
       - name: Summary
         run: |
           echo "✅ Search engine notifications complete!"
-          echo "- IndexNow: URL list submitted (Bing/DuckDuckGo benefit)"
-          echo "- Yandex: sitemap ping sent"
-          echo "- Google: submit sitemap.xml and blog-sitemap.xml in Search Console"
-          echo "- DuckDuckGo: no direct ping; indexing via Bing index"
+          echo "- policestationagent.com: IndexNow + Yandex (+ Bing if key set)"
+          echo "- policestationrepuk.org: sitemap URLs + Yandex (+ Bing if key set)"
+          echo "- Google: submit sitemaps in Search Console"
+          echo "- DuckDuckGo: follows Bing index"
