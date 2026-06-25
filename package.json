@@ -67,6 +67,10 @@
     "audit:readability": "node scripts/audit-readability.mjs",
     "test:legal": "vitest run __tests__/legal-accuracy.test.ts __tests__/pace-references.test.ts",
     "backfill:blog-sources": "node scripts/backfill-blog-sources.mjs",
+    "publish:first-12": "node scripts/publish-first-12-articles.mjs",
+    "publish:first-12:dry-run": "node scripts/publish-first-12-articles.mjs --dry-run",
+    "publish:first-12:buffer": "node scripts/publish-first-12-articles.mjs --write-psa-buffer",
+    "test:first-12": "vitest run __tests__/seo-first-12.test.ts",
     "test:e2e:smoke": "playwright test e2e/smoke.spec.ts",
     "test:e2e:firm-outreach": "playwright test e2e/firm-outreach.spec.ts"
   },

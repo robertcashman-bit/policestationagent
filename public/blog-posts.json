@@ -1,5 +1,29 @@
 [
   {
+    "id": "2026-06-28-private-police-station-solicitor-cost-kent",
+    "title": "How Much Does a Police Station Solicitor Cost in Kent?",
+    "slug": "private-police-station-solicitor-cost-kent",
+    "excerpt": "Police station legal advice is free for everyone. When might you pay privately, what private cover includes, and how Kent fees typically work.",
+    "published_at": "2026-06-28T12:00:00",
+    "created_at": "2026-06-28T12:00:00"
+  },
+  {
+    "id": "2026-06-27-out-of-hours-solicitor-kent-custody",
+    "title": "Getting an Out-of-Hours Solicitor in Kent Custody",
+    "slug": "out-of-hours-solicitor-kent-custody",
+    "excerpt": "Need a solicitor at the police station at night or the weekend in Kent? Police station legal advice is free and 24/7. How to get cover fast.",
+    "published_at": "2026-06-27T12:00:00",
+    "created_at": "2026-06-27T12:00:00"
+  },
+  {
+    "id": "2026-06-26-first-hour-after-arrest-kent",
+    "title": "The First Hour After a Kent Arrest: What to Do",
+    "slug": "first-hour-after-arrest-kent",
+    "excerpt": "Arrested in Kent? The first hour matters most. Your right to free legal advice, what to say, and how to get a representative to the custody suite fast.",
+    "published_at": "2026-06-26T12:00:00",
+    "created_at": "2026-06-26T12:00:00"
+  },
+  {
     "id": "2026-06-25-appropriate-adult-kent",
     "title": "Appropriate Adults at Kent Police Stations: Who They Are and When You Need One",
     "slug": "appropriate-adult-kent",
@@ -456,14 +480,6 @@
     "created_at": "2025-12-12 23:04:13"
   },
   {
-    "id": 42,
-    "title": "Inside a Voluntary Police Interview: What to Expect, Part 2",
-    "slug": "inside-a-voluntary-police-interview-what-to-expect-part-2",
-    "excerpt": "Inside a Voluntary Police Interview: What to Expect, Part 2 Police station agent Mar 10, 2021 3 min read Updated: Oct 3, 2024 Following on from our first post....",
-    "published_at": "2025-12-12T22:59:18.875Z",
-    "created_at": "2025-12-12 23:04:13"
-  },
-  {
     "id": 40,
     "title": "What Police Stations In Kent Do You Cover And Can Send Police Station Reps or Agents To?",
     "slug": "what-police-stations-in-kent-do-you-cover-and-can-send-police-station-reps-or-agents-to",
@@ -512,14 +528,6 @@
     "created_at": "2025-12-12 23:04:13"
   },
   {
-    "id": 32,
-    "title": "Understanding the Role of a Duty Solicitor: Everything You Need to Know",
-    "slug": "understanding-the-role-of-a-duty-solicitor-everything-you-need-to-know",
-    "excerpt": "Understanding the Role of a Duty Solicitor: Everything You Need to Know Police station agent Sep 24, 2023 3 min read Updated: Sep 8 Understanding Duty...",
-    "published_at": "2025-12-12T22:57:45.890Z",
-    "created_at": "2025-12-12 23:04:13"
-  },
-  {
     "id": 31,
     "title": "What is the Sex Offender Register?",
     "slug": "what-is-the-sex-offender-register",
@@ -541,14 +549,6 @@
     "slug": "the-unseen-errors-navigating-common-pitfalls-in-police-station-interviews",
     "excerpt": "The Unseen Errors: Navigating Common Pitfalls in Police Station Interviews Police station agent Oct 3, 2024 2 min read Navigating a police station interview...",
     "published_at": "2025-12-12T22:57:12.494Z",
-    "created_at": "2025-12-12 23:04:13"
-  },
-  {
-    "id": 27,
-    "title": "Understanding Police Bail: Imposition, Conditions, Breaches, and Legal Implications Explained",
-    "slug": "understanding-police-bail-imposition-conditions-breaches-and-legal-implications-explained",
-    "excerpt": "Understanding Police Bail: Imposition, Conditions, Breaches, and Legal Implications Explained Police station agent Jan 12 5 min read Updated: Jul 20 In the...",
-    "published_at": "2025-12-12T22:57:05.110Z",
     "created_at": "2025-12-12 23:04:13"
   },
   {
@@ -616,14 +616,6 @@
     "created_at": "2025-12-12 23:04:13"
   },
   {
-    "id": 11,
-    "title": "What happens at a Police Station Voluntary Interview - Part 3",
-    "slug": "what-happens-at-a-police-station-voluntary-interview-part-3",
-    "excerpt": "What happens at a Police Station Voluntary Interview - Part 3 Police station agent Sep 16 3 min read The Police Interview The police interview is the crucial...",
-    "published_at": "2025-12-12T22:54:38.726Z",
-    "created_at": "2025-12-12 23:04:13"
-  },
-  {
     "id": 9,
     "title": "Understanding Police Cautions and Warnings: What You Need to Know",
     "slug": "understanding-police-cautions-and-warnings-what-you-need-to-know",
@@ -680,28 +672,12 @@
     "created_at": "2025-12-13 18:44:06"
   },
   {
-    "id": 80,
-    "title": "What is Common Assault in English Law?",
-    "slug": "copy-of-what-is-common-assault-in-english-law",
-    "excerpt": "Common Assault in English Law is \"using or threatening unlawful violence\"",
-    "published_at": "2025-10-02T23:00:00.000Z",
-    "created_at": "2025-12-13 18:46:02"
-  },
-  {
     "id": 81,
     "title": "Police Station Representation.",
     "slug": "police-station-representation-do-i-need-it-i-don-t-do-i",
     "excerpt": null,
     "published_at": "2025-10-02T23:00:00.000Z",
     "created_at": "2025-12-13 18:46:07"
-  },
-  {
-    "id": 84,
-    "title": "Inside a Voluntary Police Interview: What to Expect, Part 2",
-    "slug": "whats-happens-at-a-police-station-voluntary-interview-part-2",
-    "excerpt": "Following on from our first post. Available here",
-    "published_at": "2025-10-02T23:00:00.000Z",
-    "created_at": "2025-12-13 18:46:35"
   },
   {
     "id": 88,
@@ -734,14 +710,6 @@
     "excerpt": "voluntary interview with police",
     "published_at": "2025-09-16T00:00:00.000Z",
     "created_at": "2025-12-13 18:44:11"
-  },
-  {
-    "id": 87,
-    "title": "What happens at a police station voluntary interview",
-    "slug": "what-happens-at-a-police-station-voluntary-interview-page-4",
-    "excerpt": "The Police Interview.",
-    "published_at": "2025-09-16T00:00:00.000Z",
-    "created_at": "2025-12-13 18:46:56"
   },
   {
     "id": 70,
@@ -784,44 +752,12 @@
     "created_at": "2025-12-13 18:46:30"
   },
   {
-    "id": 85,
-    "title": "Police Voluntary Interview Questions",
-    "slug": "police-voluntary-interview-questions-4",
-    "excerpt": "Title: An In-Depth Look at Police Voluntary Interview Questions: What to Expect and How to Prepare",
-    "published_at": "2025-09-11T00:00:00.000Z",
-    "created_at": "2025-12-13 18:46:46"
-  },
-  {
     "id": 89,
     "title": "Criminal Law FAQ: Your Rights and Legal Representation in Kent",
     "slug": "criminal-law-faq-kent-police-station-rights",
     "excerpt": "As Kent's leading police station representative, I regularly receive questions about criminal law procedures, rights during arrest, and police station interviews. Here are the most common questions an",
     "published_at": "2025-09-11T00:00:00.000Z",
     "created_at": "2025-12-13 18:47:30"
-  },
-  {
-    "id": 75,
-    "title": "What's A Voluntary Police Interview?",
-    "slug": "whats-a-voluntary-police-interview",
-    "excerpt": "So you have received a phone call from the  Police after that unfortunate incident last week?",
-    "published_at": "2025-09-07T23:00:00.000Z",
-    "created_at": "2025-12-13 18:45:21"
-  },
-  {
-    "id": 82,
-    "title": "Understanding the Role of a Duty Solicitor: Everything You Need to Know",
-    "slug": "whats-a-duty-solicitor",
-    "excerpt": "Understanding Duty Solicitors in England and Wales\nHello to our readers in England and Wales! Today, we'll delve deep into the world of 'duty solicitors', understanding their role in police stations, ",
-    "published_at": "2025-09-07T23:00:00.000Z",
-    "created_at": "2025-12-13 18:46:21"
-  },
-  {
-    "id": 63,
-    "title": "What Happens If You Don't Attend a Voluntary Police Interview in England?",
-    "slug": "what-happens-if-you-don-t-attend-a-voluntary-police-interview-inengland",
-    "excerpt": "By Police Station Agent – Representing You When It Matters Most",
-    "published_at": "2025-08-27T23:00:00.000Z",
-    "created_at": "2025-12-13 18:43:19"
   },
   {
     "id": 67,
@@ -832,28 +768,12 @@
     "created_at": "2025-12-13 18:43:56"
   },
   {
-    "id": 77,
-    "title": "Understanding Police Bail: Imposition, Conditions, Breaches, and Legal Implications Explained",
-    "slug": "demystifying-police-bail-understanding-imposition-conditions-breaches-and-legal-implications",
-    "excerpt": "In the criminal justice system of England and Wales, police bail often raises questions among the public. Many wonder about its definition, the criteria for being placed on bail, and the conditions th",
-    "published_at": "2025-07-19T23:00:00.000Z",
-    "created_at": "2025-12-13 18:45:33"
-  },
-  {
     "id": 86,
     "title": "Getting Your Property Returned By The Police In The UK",
     "slug": "property-returned-from-police-uk",
     "excerpt": "In order to get your property back after your release from Police detention in the Uk you need to follow these simple steps:",
     "published_at": "2025-07-19T23:00:00.000Z",
     "created_at": "2025-12-13 18:46:51"
-  },
-  {
-    "id": 65,
-    "title": "What is a Duty Solicitor?",
-    "slug": "what-is-a-duty-solicitor-4",
-    "excerpt": "A Duty Solicitor is",
-    "published_at": "2025-01-21T00:00:00.000Z",
-    "created_at": "2025-12-13 18:43:33"
   },
   {
     "id": 91,
