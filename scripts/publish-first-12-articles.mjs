@@ -7,6 +7,7 @@
  *   node scripts/publish-first-12-articles.mjs --site=psa|psrtrain|custodynote|repuk
  *   node scripts/publish-first-12-articles.mjs --write-psa-buffer
  */
+import { execSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -28,6 +29,9 @@ const data = JSON.parse(
 
 const DRY = process.argv.includes('--dry-run');
 const WRITE_BUFFER = process.argv.includes('--write-psa-buffer');
+const VERIFY_REPUK_CI =
+  process.argv.includes('--verify-repuk-ci') ||
+  (!process.argv.includes('--skip-repuk-ci') && !DRY);
 const siteArg = process.argv.find((a) => a.startsWith('--site='))?.slice('--site='.length);
 
 const PUBLISH_DATES = {
@@ -131,3 +135,9 @@ if (missing > 0) {
   process.exit(DRY ? 0 : 1);
 }
 console.log('\nAll checked articles are present.');
+
+if (VERIFY_REPUK_CI && fs.existsSync(REPOS.repuk)) {
+  console.log('\nRunning REPUK blog CI gates (audit:blog-seo, audit:blog-orphans)…');
+  execSync('npm run verify:blog-ci', { cwd: REPOS.repuk, stdio: 'inherit' });
+  console.log('REPUK blog CI gates passed.');
+}
