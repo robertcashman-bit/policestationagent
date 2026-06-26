@@ -53,14 +53,6 @@ export function ComprehensiveLegalServiceSchema({
     jurisdiction: jurisdiction,
     serviceType: serviceType,
     category: "Legal Services",
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "GBP",
-      description: "FREE under Legal Aid",
-      availability: "https://schema.org/InStock",
-      validFrom: "2025-01-01",
-    },
     availableChannel: {
       "@type": "ServiceChannel",
       serviceType: "Telephone",
