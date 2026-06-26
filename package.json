@@ -71,6 +71,7 @@
     "publish:first-12:dry-run": "node scripts/publish-first-12-articles.mjs --dry-run",
     "publish:first-12:buffer": "node scripts/publish-first-12-articles.mjs --write-psa-buffer --skip-repuk-ci",
     "count:outreach-today": "tsx scripts/count-outreach-today.ts",
+    "outreach:queue-health": "tsx scripts/breakdown-by-campaign.ts",
     "test:first-12": "vitest run __tests__/seo-first-12.test.ts",
     "test:e2e:smoke": "playwright test e2e/smoke.spec.ts",
     "test:e2e:firm-outreach": "playwright test e2e/firm-outreach.spec.ts"

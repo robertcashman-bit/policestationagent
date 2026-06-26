@@ -27,9 +27,19 @@ import {
   type OutreachSentRecord,
 } from '../lib/firm-outreach/count-today';
 import { ensurePsaBootstrapSecret } from '../lib/firm-outreach/ensure-psa-bootstrap';
+import {
+  formatQueueCounts,
+  getCampaignQueueCounts,
+} from '../lib/firm-outreach/queue-health';
 import { FIRM_OUTREACH_CAMPAIGN_ID as PSA_CAMPAIGN_ID } from '../lib/firm-outreach/site-config';
+import { Redis } from '@upstash/redis';
 
 const REPUK_CAMPAIGN_ID = 'whatsapp_invite_v1';
+
+const CAMPAIGN_LABELS: Record<string, string> = {
+  [PSA_CAMPAIGN_ID]: 'policestationagent.com',
+  [REPUK_CAMPAIGN_ID]: 'policestationrepuk.org',
+};
 
 const PSA_ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const HOME = dirname(PSA_ROOT);
@@ -142,6 +152,14 @@ async function main(): Promise<void> {
 
   const combined = Object.values(perDomain).reduce((sum, n) => sum + n, 0);
   const date = new Date().toISOString().slice(0, 10);
+
+  if (hasKvCreds(sharedKv)) {
+    const redis = new Redis(sharedKv);
+    const queueCounts = await getCampaignQueueCounts(redis);
+    for (const line of formatQueueCounts(queueCounts, CAMPAIGN_LABELS)) {
+      console.log(line);
+    }
+  }
 
   console.log(`\n=== Outreach emails sent today (${date}, UTC) ===`);
   console.log(`Policestationrepuk.org emails today: ${perDomain['policestationrepuk.org'] ?? 0}`);
