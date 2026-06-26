@@ -10,7 +10,9 @@ import type { FirmOutreachSend } from './types';
  * ISO-8601 (UTC) timestamp. These records are the outreach emails to firms —
  * owner approval / digest / confirmation emails are not in this index.
  *
- * Each domain has its own KV store, so a source is (domain, url, token).
+ * Each send record carries a `campaignId`. PSA and REPUK share one Upstash
+ * instance but use different campaigns (`agent_cover_kent_v1` vs
+ * `whatsapp_invite_v1`), so callers must pass campaignId on each source.
  */
 
 const SEND_INDEX = 'firmoutreach:send:index';
@@ -24,6 +26,8 @@ export interface OutreachDomainSource {
   url: string;
   /** Upstash Redis REST token for that domain's KV store. */
   token: string;
+  /** Firm-outreach campaign id — required when multiple campaigns share one KV store. */
+  campaignId?: string;
 }
 
 export interface OutreachTodayCount {
@@ -77,6 +81,7 @@ async function fetchSentInWindow(
       if (!send?.sentAt) continue;
       const t = Date.parse(send.sentAt);
       if (!Number.isFinite(t) || t < start || t > end) continue;
+      if (source.campaignId && send.campaignId !== source.campaignId) continue;
       out.push({
         domain: source.domain,
         sentAt: send.sentAt,

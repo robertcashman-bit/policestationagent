@@ -27,6 +27,9 @@ import {
   type OutreachSentRecord,
 } from '../lib/firm-outreach/count-today';
 import { ensurePsaBootstrapSecret } from '../lib/firm-outreach/ensure-psa-bootstrap';
+import { FIRM_OUTREACH_CAMPAIGN_ID as PSA_CAMPAIGN_ID } from '../lib/firm-outreach/site-config';
+
+const REPUK_CAMPAIGN_ID = 'whatsapp_invite_v1';
 
 const PSA_ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const HOME = dirname(PSA_ROOT);
@@ -83,27 +86,34 @@ async function psaSendsViaEndpoint(secret: string): Promise<OutreachSentRecord[]
     headers: { 'x-firm-outreach-bootstrap-secret': secret },
   });
   const json = (await res.json().catch(() => null)) as
-    | { audit?: { todaySends?: OutreachSentRecord[] }; error?: string }
+    | { audit?: { todaySends?: Array<OutreachSentRecord & { campaignId?: string }> }; error?: string }
     | null;
   if (!res.ok || !json?.audit) {
     throw new Error(`HTTP ${res.status}: ${json?.error ?? 'unexpected response'}`);
   }
-  return (json.audit.todaySends ?? []).map((s) => ({ ...s, domain: 'policestationagent.com' }));
+  return (json.audit.todaySends ?? [])
+    .filter((s) => s.campaignId === PSA_CAMPAIGN_ID)
+    .map((s) => ({ ...s, domain: 'policestationagent.com' }));
 }
 
 async function main(): Promise<void> {
   const psaEnv = loadEnv(join(PSA_ROOT, '.env.local'), join(PSA_ROOT, '.env.vercel.production'));
   const repukEnv = loadEnv(join(HOME, 'Policestationrepuk', '.env.local'));
 
+  const sharedKv = kvCredsFromFile(repukEnv);
+
   const repukSource: OutreachDomainSource = {
     domain: 'policestationrepuk.org',
-    ...kvCredsFromFile(repukEnv),
+    ...sharedKv,
+    campaignId: REPUK_CAMPAIGN_ID,
   };
   const psaFileCreds = kvCredsFromFile(psaEnv);
   const psaProcessCreds = kvCredsFromProcess();
+  const psaKv = hasKvCreds(psaProcessCreds) ? psaProcessCreds : hasKvCreds(psaFileCreds) ? psaFileCreds : sharedKv;
   const psaSource: OutreachDomainSource = {
     domain: 'policestationagent.com',
-    ...(hasKvCreds(psaProcessCreds) ? psaProcessCreds : psaFileCreds),
+    ...psaKv,
+    campaignId: PSA_CAMPAIGN_ID,
   };
 
   const perDomain: Record<string, number> = {};
@@ -113,7 +123,7 @@ async function main(): Promise<void> {
   perDomain[repukSource.domain] = repukSends.length;
   printSends(repukSource.domain, repukSends, 'local KV');
 
-  // policestationagent.com — local KV if available, else production audit endpoint.
+  // policestationagent.com — shared KV (campaign-filtered) or production audit endpoint.
   if (hasKvCreds(psaSource)) {
     const psaSends = await listOutreachSentToday(psaSource);
     perDomain[psaSource.domain] = psaSends.length;
