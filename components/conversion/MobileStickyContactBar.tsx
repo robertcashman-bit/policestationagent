@@ -1,6 +1,6 @@
 "use client";
 
-import { PHONE_TEL, SMS_TEL } from "@/config/contact";
+import { PHONE_TEL, PHONE_DISPLAY, SMS_TEL, SMS_DISPLAY } from "@/config/contact";
 
 export function MobileStickyContactBar() {
   return (
@@ -13,16 +13,20 @@ export function MobileStickyContactBar() {
         <a
           href={`tel:${PHONE_TEL}`}
           data-event="call_click"
-          className="flex flex-col items-center justify-center py-3 text-xs font-semibold text-red-700"
+          className="flex flex-col items-center justify-center gap-0.5 py-2.5 text-red-700"
+          aria-label={`Call ${PHONE_DISPLAY}`}
         >
-          Call
+          <span className="text-[11px] font-bold uppercase tracking-wide">Call</span>
+          <span className="text-sm font-black leading-none">{PHONE_DISPLAY}</span>
         </a>
         <a
           href={`sms:${SMS_TEL}`}
           data-event="sms_click"
-          className="flex flex-col items-center justify-center py-3 text-xs font-semibold text-[#0A2342]"
+          className="flex flex-col items-center justify-center gap-0.5 py-2.5 text-[#0A2342]"
+          aria-label={`Text ${SMS_DISPLAY}`}
         >
-          Text
+          <span className="text-[11px] font-bold uppercase tracking-wide">Text</span>
+          <span className="text-sm font-black leading-none">{SMS_DISPLAY}</span>
         </a>
       </div>
     </div>

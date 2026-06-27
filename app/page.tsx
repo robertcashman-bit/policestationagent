@@ -15,6 +15,7 @@ import { HomeAudienceSelector } from "@/components/conversion/HomeAudienceSelect
 import { HomeProofBar } from "@/components/conversion/HomeProofBar";
 import { HomeFirmSection } from "@/components/conversion/HomeFirmSection";
 import { HomePriorityCoverage } from "@/components/conversion/HomePriorityCoverage";
+import { KentCoverCard } from "@/components/conversion/KentCoverCard";
 import { StandardPaceSources } from "@/components/legal/StandardPaceSources";
 
 export const metadata: Metadata = {
@@ -130,6 +131,10 @@ export default function Page() {
         <HomeHeroCover />
         <HomeAudienceSelector />
         <HomeProofBar />
+        {/* Social proof near the top of the homepage for fast trust-building */}
+        <div id="testimonials">
+          <TestimonialCarousel />
+        </div>
         <div className="bg-slate-50 min-h-screen">
           <div
             className="prose prose-lg max-w-6xl mx-auto px-4 py-16"
@@ -282,10 +287,7 @@ export default function Page() {
           </section>
           {/* Blog Carousel */}
           <BlogCarousel />
-          {/* Testimonial Carousel - Working interactive component */}
-          <div id="testimonials">
-            <TestimonialCarousel />
-          </div>
+          <KentCoverCard className="pb-4" />
           <HomeFirmSection />
           <HomePriorityCoverage />
           <div

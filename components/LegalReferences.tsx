@@ -10,7 +10,7 @@ export type LegalSource = {
 export function Ref({ n }: { n: number }) {
   return (
     <sup className="ml-0.5 align-super text-[0.8em]">
-      <a href={`#source-${n}`} className="text-blue-700 hover:underline">
+      <a href={`#source-${n}`} className="text-blue-800 underline">
         [{n}]
       </a>
     </sup>
@@ -35,13 +35,13 @@ export function LegalReferences({
             <span className="font-medium">{s.label}</span>
             <span className="mx-2 text-slate-400">—</span>
             {s.href.startsWith("/") ? (
-              <Link href={s.href} className="text-blue-700 hover:underline">
+              <Link href={s.href} className="text-blue-800 underline">
                 {s.href}
               </Link>
             ) : (
               <a
                 href={s.href}
-                className="text-blue-700 hover:underline"
+                className="text-blue-800 underline"
                 target="_blank"
                 rel="noopener noreferrer"
               >

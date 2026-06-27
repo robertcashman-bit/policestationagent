@@ -104,6 +104,46 @@ test.describe('Conversion smoke — desktop', () => {
     await expect(page.getByText(/your request has been submitted successfully/i)).toBeVisible();
   });
 
+  test('testimonials section appears near top (before blog carousel)', async ({ page }) => {
+    await page.goto('/');
+    const testimonials = page.locator('#testimonials');
+    await expect(testimonials).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: /trusted by clients across kent/i }).first(),
+    ).toBeVisible();
+  });
+
+  test('homepage exposes LegalService and LocalBusiness JSON-LD', async ({ page }) => {
+    await page.goto('/');
+    // Layout injects org @graph afterInteractive; give it a moment to attach.
+    await page.waitForLoadState('networkidle');
+    const ldBlocks = await page.locator('script[type="application/ld+json"]').allTextContents();
+    const combined = ldBlocks.join('\n');
+    expect(combined).toContain('LegalService');
+    expect(combined).toContain('LocalBusiness');
+  });
+
+  test('Kent cover card download link present on homepage and for-solicitors', async ({ page }) => {
+    await page.goto('/');
+    const homeCard = page.locator('a[data-event="save_cover_card"]');
+    await expect(homeCard).toBeVisible();
+    await expect(homeCard).toHaveAttribute('href', /\.vcf$/);
+    await expect(homeCard).toHaveAttribute('download', /.+/);
+
+    await page.goto('/for-solicitors');
+    const firmCard = page.locator('a[data-event="save_cover_card"]');
+    await expect(firmCard).toBeVisible();
+    await expect(firmCard).toHaveAttribute('href', /\.vcf$/);
+  });
+
+  test('Kent cover card vCard file is downloadable', async ({ page }) => {
+    const res = await page.request.get('/kent-police-station-cover-card.vcf');
+    expect(res.status()).toBeLessThan(400);
+    const body = await res.text();
+    expect(body).toContain('BEGIN:VCARD');
+    expect(body).toContain('01732');
+  });
+
   test('homepage has title and meta description', async ({ page }) => {
     await page.goto('/');
     await expect(page).toHaveTitle(/Kent|Police Station/i);
@@ -160,6 +200,17 @@ test.describe('Conversion smoke — mobile viewport', () => {
     await expect(textBtn).toBeVisible();
     await expect(callBtn).toHaveText(/call/i);
     await expect(textBtn).toHaveText(/text/i);
+  });
+
+  test('sticky mobile CTA shows full phone and text numbers', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/');
+    const callBtn = page.locator('a[data-event="call_click"]').last();
+    const textBtn = page.locator('a[data-event="sms_click"]').last();
+    await expect(callBtn).toContainText('01732 247427');
+    await expect(textBtn).toContainText('07535 494446');
+    await expect(callBtn).toHaveAttribute('href', 'tel:01732247427');
+    await expect(textBtn).toHaveAttribute('href', 'sms:07535494446');
   });
 
   test('audience selector visible on mobile', async ({ page }) => {

@@ -8,6 +8,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import LazyChatbot from "@/components/LazyChatbot";
 import CookieBanner from "@/components/CookieBanner";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
+import { GoogleTagManager, GoogleTagManagerNoScript } from "@/components/GoogleTagManager";
 import { MobileStickyContactBar } from "@/components/conversion/MobileStickyContactBar";
 import { ConversionEventListener } from "@/components/conversion/ConversionEventListener";
 import InternalLinkInterceptor from "@/components/InternalLinkInterceptor";
@@ -479,8 +480,11 @@ export default function RootLayout({
         {/* Preload critical hero images for LCP optimization */}
         <link rel="preload" as="image" href={`${siteUrl}/og-image.jpg`} />
         {/* Note: Font preloading is handled automatically by next/font/google - no manual link needed */}
+        {/* Google Tag Manager — only injected when NEXT_PUBLIC_GTM_ID is set */}
+        <GoogleTagManager />
       </head>
       <body className={`${inter.className} pb-16 lg:pb-0`}>
+        <GoogleTagManagerNoScript />
         <ComplianceStrip />
         <NotPoliceScopeBanner />
         <ContactLinkGuard />

@@ -9,6 +9,7 @@ import { AuthorBio } from "@/components/E-E-A-T/AuthorBio";
 import { RegulatoryReferences } from "@/components/E-E-A-T/RegulatoryReferences";
 import { ServiceDisclaimer } from "@/components/E-E-A-T/ServiceDisclaimer";
 import { InternalLinkHub } from "@/components/InternalLinkHub";
+import { KentCoverCard } from "@/components/conversion/KentCoverCard";
 
 export const metadata: Metadata = {
   title: "Police Station Cover for Solicitors | Kent Agent",
@@ -72,6 +73,7 @@ export default function Page() {
               heading="Firm enquiry — police station attendance"
             />
           </section>
+          <KentCoverCard className="pb-16" />
           {/* Internal Linking Hub */}
           <InternalLinkHub
             title="Related Services and Information"
