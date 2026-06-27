@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const { LEGACY_LOCAL_REDIRECTS } = require("./config/legacy-local-redirects.js");
+const { BLOG_REDIRECT_NEXT_RULES } = require("./config/blog-slug-redirects.js");
 
 const nextConfig = {
   reactStrictMode: true,
@@ -388,7 +389,81 @@ const nextConfig = {
         destination: "/services/police-station-representation",
         permanent: true,
       },
+      // Legacy/stale sitemap URLs (WordPress/Yoast/Wix era) that search engines
+      // still hold. They 404'd after the migration, which is why Bing Webmaster
+      // reported sitemaps "with errors". 301 them to the two canonical sitemaps
+      // so the errors clear on the next crawl. Canonical sitemaps:
+      //   /sitemap.xml        (app/sitemap.ts)
+      //   /blog-sitemap.xml   (app/blog-sitemap.xml/route.ts)
+      {
+        source: "/blog-posts-sitemap.xml",
+        destination: "/blog-sitemap.xml",
+        permanent: true,
+      },
+      {
+        source: "/post-sitemap.xml",
+        destination: "/blog-sitemap.xml",
+        permanent: true,
+      },
+      {
+        source: "/sitemap_index.xml",
+        destination: "/sitemap.xml",
+        permanent: true,
+      },
+      {
+        source: "/sitemap-index.xml",
+        destination: "/sitemap.xml",
+        permanent: true,
+      },
+      {
+        source: "/wp-sitemap.xml",
+        destination: "/sitemap.xml",
+        permanent: true,
+      },
+      {
+        source: "/page-sitemap.xml",
+        destination: "/sitemap.xml",
+        permanent: true,
+      },
+      {
+        source: "/category-sitemap.xml",
+        destination: "/sitemap.xml",
+        permanent: true,
+      },
+      {
+        source: "/post_tag-sitemap.xml",
+        destination: "/sitemap.xml",
+        permanent: true,
+      },
+      {
+        source: "/author-sitemap.xml",
+        destination: "/sitemap.xml",
+        permanent: true,
+      },
+      {
+        source: "/news-sitemap.xml",
+        destination: "/sitemap.xml",
+        permanent: true,
+      },
+      {
+        source: "/image-sitemap.xml",
+        destination: "/sitemap.xml",
+        permanent: true,
+      },
+      {
+        source: "/local-sitemap.xml",
+        destination: "/sitemap.xml",
+        permanent: true,
+      },
+      {
+        source: "/sitemap1.xml",
+        destination: "/sitemap.xml",
+        permanent: true,
+      },
       ...LEGACY_LOCAL_REDIRECTS,
+      // Phase 2 SEO — legacy blog-slug cannibalisation remediation (canonical + 301, no deletions).
+      // Source of truth: config/blog-slug-redirects.json. See docs/seo-content-strategy.md §2.
+      ...BLOG_REDIRECT_NEXT_RULES,
     ];
   },
   // Headers for cache control, security, and performance

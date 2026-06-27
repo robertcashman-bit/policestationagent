@@ -6,14 +6,14 @@ export const metadata: Metadata = {
   description:
     "What is a police station duty solicitor? Learn about duty solicitors and their crucial role in protecting your rights during police interviews in Kent. Accredited Duty Solicitor representation at all Kent custody suites.",
   alternates: {
-    canonical: "https://criminaldefencekent.co.uk/whatisapolicestationrep",
+    canonical: "https://policestationagent.com/whatisapolicestationrep",
   },
   openGraph: {
     title: "What Is A Police Station Duty Solicitor? | Duty Solicitor Representation Kent",
     description:
       "What is a police station duty solicitor? Learn about duty solicitors and their crucial role in protecting your rights during police interviews in Kent. Accredited Duty Solicitor representation at all Kent custody suites.",
     type: "website",
-    url: "https://criminaldefencekent.co.uk/whatisapolicestationrep",
+    url: "https://policestationagent.com/whatisapolicestationrep",
   },
 };
 

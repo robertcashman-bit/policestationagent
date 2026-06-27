@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description:
     "Police Station Duty Solicitor Canterbury - Expert police station representation by qualified solicitor. FREE legal advice under Legal Aid. Accredited Duty Solicitor & Higher Court Advocate. Call 01732 247427.",
   alternates: {
-    canonical: "https://criminaldefencekent.co.uk/police-station-agent-canterbury",
+    canonical: "https://policestationagent.com/police-station-rep-canterbury",
   },
   openGraph: {
     title:

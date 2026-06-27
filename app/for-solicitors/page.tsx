@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import { normalizeScrapedHtml } from "@/lib/scraped-html";
 import Footer from "@/components/Footer";
+import ContactForm from "@/components/ContactForm";
 import type { Metadata } from "next";
 import { ComprehensiveLegalServiceSchema } from "@/components/schema/ComprehensiveLegalServiceSchema";
 import { PersonSchema } from "@/components/schema/PersonSchema";
@@ -47,6 +48,30 @@ export default function Page() {
             }}
 
           />
+          {/* Firm enquiry form */}
+          <section
+            id="firm-enquiry"
+            className="max-w-3xl mx-auto px-4 pb-16 scroll-mt-24"
+            aria-labelledby="firm-enquiry-heading"
+          >
+            <div className="text-center mb-8">
+              <h2 id="firm-enquiry-heading" className="text-3xl font-black text-slate-900">
+                Instruct Kent police station cover
+              </h2>
+              <p className="text-slate-600 mt-2 max-w-xl mx-auto">
+                For scheduled attendances and solicitor instructions. Someone in custody now? Call{" "}
+                <a href="tel:01732247427" className="font-bold text-blue-700 hover:underline">
+                  01732 247427
+                </a>{" "}
+                — do not use this form for urgent custody.
+              </p>
+            </div>
+            <ContactForm
+              defaultRole="solicitor"
+              defaultAttendanceType="solicitor-instruction"
+              heading="Firm enquiry — police station attendance"
+            />
+          </section>
           {/* Internal Linking Hub */}
           <InternalLinkHub
             title="Related Services and Information"

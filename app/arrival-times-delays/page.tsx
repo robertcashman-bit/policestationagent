@@ -8,13 +8,13 @@ export const metadata: Metadata = {
   description:
     "Expected arrival times for duty solicitor representation at Kent police stations. Understanding delays and your rights under PACE 1984 when waiting for a solicitor. Accredited Duty Solicitor Kent.",
   alternates: {
-    canonical: "https://criminaldefencekent.co.uk/arrival-times-delays",
+    canonical: "https://policestationagent.com/arrival-times-delays",
   },
   openGraph: {
     title: "Duty Solicitor Arrival Times Kent | Police Station Representation Solicitor",
     description:
       "Expected arrival times for duty solicitor representation at Kent police stations. Understanding delays and your rights under PACE 1984 when waiting for a solicitor.",
-    url: "https://criminaldefencekent.co.uk/arrival-times-delays",
+    url: "https://policestationagent.com/arrival-times-delays",
     siteName: "Police Station Agent",
     type: "website",
   },

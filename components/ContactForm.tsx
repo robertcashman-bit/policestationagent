@@ -29,18 +29,28 @@ interface FormData {
   consent: boolean;
 }
 
-export default function ContactForm() {
+interface ContactFormProps {
+  defaultRole?: FormData["role"];
+  defaultAttendanceType?: FormData["attendanceType"];
+  heading?: string;
+}
+
+export default function ContactForm({
+  defaultRole = "family",
+  defaultAttendanceType = "scheduled-voluntary",
+  heading = "Request Police Station Solicitor Attendance",
+}: ContactFormProps = {}) {
   const [formData, setFormData] = useState<FormData>({
     name: "",
     contactNumber: "",
     email: "",
-    role: "family",
+    role: defaultRole,
     clientName: "",
     clientDOB: "",
     policeStation: "",
     interviewDate: "",
     interviewTime: "",
-    attendanceType: "scheduled-voluntary",
+    attendanceType: defaultAttendanceType,
     briefDetails: "",
     supportNeeds: "",
     nonUrgentConfirmation: false,
@@ -115,13 +125,13 @@ export default function ContactForm() {
           name: "",
           contactNumber: "",
           email: "",
-          role: "family",
+          role: defaultRole,
           clientName: "",
           clientDOB: "",
           policeStation: "",
           interviewDate: "",
           interviewTime: "",
-          attendanceType: "scheduled-voluntary",
+          attendanceType: defaultAttendanceType,
           briefDetails: "",
           supportNeeds: "",
           nonUrgentConfirmation: false,
@@ -171,9 +181,7 @@ export default function ContactForm() {
           </p>
         </div>
 
-        <h2 className="text-2xl font-bold text-slate-900 mb-6">
-          Request Police Station Solicitor Attendance
-        </h2>
+        <h2 className="text-2xl font-bold text-slate-900 mb-6">{heading}</h2>
 
         {/* Requestor Information */}
         <div className="space-y-6 mb-8">

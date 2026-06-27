@@ -7,6 +7,7 @@ import path from "path";
 
 const BLOG_DIR = path.join(process.cwd(), "data", "blog-posts");
 const LEGACY_PATH = path.join(process.cwd(), "data", "blog-posts-full.json");
+const REDIRECTS_PATH = path.join(process.cwd(), "config", "blog-slug-redirects.json");
 
 function normalizeSlug(input) {
   if (!input || typeof input !== "string") return "";
@@ -22,8 +23,19 @@ function normalizeSlug(input) {
     .replace(/^-+|-+$/g, "");
 }
 
+function getRedirectedSlugs() {
+  try {
+    if (!fs.existsSync(REDIRECTS_PATH)) return new Set();
+    const rules = JSON.parse(fs.readFileSync(REDIRECTS_PATH, "utf-8"));
+    return new Set(rules.map((r) => normalizeSlug(r.from)));
+  } catch {
+    return new Set();
+  }
+}
+
 function getPosts() {
   const map = new Map();
+  const redirected = getRedirectedSlugs();
 
   if (fs.existsSync(LEGACY_PATH)) {
     const legacy = JSON.parse(fs.readFileSync(LEGACY_PATH, "utf-8"));
@@ -52,6 +64,10 @@ function getPosts() {
         created_at: `${post.date}T12:00:00`,
       });
     }
+  }
+
+  for (const slug of redirected) {
+    map.delete(slug);
   }
 
   return Array.from(map.values()).sort(

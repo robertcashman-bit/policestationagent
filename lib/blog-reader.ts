@@ -56,6 +56,29 @@ export interface BlogPostSummary {
 
 const BLOG_POSTS_DIR = path.join(process.cwd(), "data", "blog-posts");
 const LEGACY_JSON_PATH = path.join(process.cwd(), "data", "blog-posts-full.json");
+const BLOG_SLUG_REDIRECTS_PATH = path.join(
+  process.cwd(),
+  "config",
+  "blog-slug-redirects.json"
+);
+
+/**
+ * Slugs that 301 to a canonical owner (Phase 2 cannibalisation remediation).
+ * Excluded from the published index/sitemap/static params so only canonical
+ * URLs are served. The legacy data is NOT deleted — next.config.js 301s these.
+ */
+function getRedirectedSlugSet(): Set<string> {
+  try {
+    if (!fs.existsSync(BLOG_SLUG_REDIRECTS_PATH)) return new Set();
+    const rules = JSON.parse(
+      fs.readFileSync(BLOG_SLUG_REDIRECTS_PATH, "utf-8")
+    ) as Array<{ from: string; to: string }>;
+    return new Set(rules.map((r) => normalizeSlug(r.from)));
+  } catch (error) {
+    console.error("[blog-reader] Error reading blog-slug-redirects:", error);
+    return new Set();
+  }
+}
 
 // =============================================================================
 // ENSURE DIRECTORY EXISTS
@@ -176,6 +199,13 @@ export function getAllPosts(): BlogPost[] {
   // Add new posts (overwrite legacy if same slug)
   for (const post of newPosts) {
     postMap.set(normalizeSlug(post.slug), post);
+  }
+
+  // Exclude slugs that 301 to a canonical owner so they never appear in the
+  // index, sitemap, or static params (next.config.js serves the 301 instead).
+  const redirected = getRedirectedSlugSet();
+  for (const slug of redirected) {
+    postMap.delete(slug);
   }
 
   // Convert map to array

@@ -9,13 +9,13 @@ export const metadata: Metadata = {
   description:
     "Police Station Duty Solicitor Medway - Expert police station representation by qualified solicitor at Medway Police Station. FREE legal advice under Legal Aid. Accredited Duty Solicitor & Higher Court Advocate. Gillingham, Chatham, Rochester. Call 01732 247427.",
   alternates: {
-    canonical: "https://criminaldefencekent.co.uk/police-station-agent-medway",
+    canonical: "https://policestationagent.com/police-station-rep-medway",
   },
   openGraph: {
     title: "Police Station Duty Solicitor Medway | Duty Solicitor Representation Kent",
     description:
       "Police Station Duty Solicitor Medway - Expert representation by qualified solicitor at Medway Police Station. Accredited Duty Solicitor & Higher Court Advocate. FREE legal advice under Legal Aid.",
-    url: "https://criminaldefencekent.co.uk/police-station-agent-medway",
+    url: "https://policestationagent.com/police-station-rep-medway",
     siteName: "Police Station Agent",
     type: "website",
   },
