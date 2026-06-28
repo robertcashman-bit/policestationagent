@@ -1,11 +1,23 @@
-import type { BufferEngineAdapter, SchedulablePost } from '@robertcashman/buffer-engine';
+import type { BufferEngineAdapter, BufferKV, SchedulablePost } from '@robertcashman/buffer-engine';
 import { getAllPosts } from '@/lib/blog-reader';
 import { SITE_URL } from '@/config/site';
+import { getKV } from '@/lib/kv';
 import { writeFileSync, mkdirSync, readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 
 const SITE_ID = 'policestationagent';
 const OVERRIDES_PATH = join(process.cwd(), 'data', 'buffer-image-overrides.json');
+
+function kvAdapter(): BufferKV | null {
+  const redis = getKV();
+  if (!redis) return null;
+  return {
+    get: (key) => redis.get(key),
+    set: (key, value, options) =>
+      redis.set(key, value, options?.ex != null ? { ex: options.ex } : undefined),
+    del: (key) => redis.del(key),
+  };
+}
 
 function absImage(src: string | null | undefined): string | undefined {
   if (!src?.trim()) return undefined;
@@ -17,7 +29,11 @@ function absImage(src: string | null | undefined): string | undefined {
 function loadImageOverrides(): Record<string, string> {
   try {
     if (!existsSync(OVERRIDES_PATH)) return {};
-    return JSON.parse(readFileSync(OVERRIDES_PATH, 'utf-8')) as Record<string, string>;
+    const raw = JSON.parse(readFileSync(OVERRIDES_PATH, 'utf-8')) as Record<string, string>;
+    if (process.env.VERCEL_ENV === 'production') return raw;
+    return Object.fromEntries(
+      Object.entries(raw).filter(([, url]) => !url.includes('/images/buffer/')),
+    );
   } catch {
     return {};
   }
@@ -34,7 +50,7 @@ export function createPsaBufferAdapter(): BufferEngineAdapter {
   return {
     siteId: SITE_ID,
     siteUrl: SITE_URL,
-    kv: null,
+    kv: kvAdapter(),
     getSchedulablePosts(): SchedulablePost[] {
       const overrides = loadImageOverrides();
       return getAllPosts().map((post) => ({
@@ -48,6 +64,7 @@ export function createPsaBufferAdapter(): BufferEngineAdapter {
       }));
     },
     async correctSourceImage(input) {
+      if (process.env.VERCEL_ENV !== 'production') return;
       saveImageOverride(input.slug, input.publicUrl);
     },
   };
