@@ -41,7 +41,7 @@ export function createPsaBufferAdapter(): BufferEngineAdapter {
         feedId: SITE_ID,
         slug: post.slug,
         title: post.title,
-        excerpt: (post.excerpt ?? post.metaDescription ?? '').trim(),
+        excerpt: (post.metaDescription ?? '').trim(),
         url: `${SITE_URL}/blog/${post.slug}`,
         imageUrl: overrides[post.slug] ?? absImage(post.featuredImage),
         imageAlt: post.featuredImageAlt ?? post.title,
