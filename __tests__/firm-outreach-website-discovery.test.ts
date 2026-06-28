@@ -10,6 +10,11 @@ describe('firm-outreach website discovery', () => {
   it('flags directory and social URLs', () => {
     expect(isDirectoryOrSocialUrl('https://www.yell.com/biz/foo')).toBe(true);
     expect(isDirectoryOrSocialUrl('https://solicitors.lawsociety.org.uk/foo')).toBe(true);
+    expect(
+      isDirectoryOrSocialUrl(
+        'https://policestationrepuk.org/legal-services-directory/category/solicitors',
+      ),
+    ).toBe(true);
     expect(isDirectoryOrSocialUrl('https://smithsolicitors.co.uk/contact')).toBe(false);
   });
 
