@@ -134,6 +134,14 @@
       "schedule": "0 17 * * *"
     },
     {
+      "path": "/api/cron/firm-outreach-cross-digest?phase=morning",
+      "schedule": "0 11 * * *"
+    },
+    {
+      "path": "/api/cron/firm-outreach-cross-digest?phase=evening",
+      "schedule": "0 19 * * *"
+    },
+    {
       "path": "/api/buffer/schedule",
       "schedule": "10 6 * * *"
     },

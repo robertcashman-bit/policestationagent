@@ -135,10 +135,11 @@ describe('outreach env flags', () => {
 describe('cron route handlers reject unauthenticated requests', () => {
   beforeEach(() => {
     process.env.CRON_SECRET = 'route-test-secret';
-    process.env.NODE_ENV = 'production';
+    vi.stubEnv('NODE_ENV', 'production');
   });
 
   afterEach(() => {
+    vi.unstubAllEnvs();
     vi.resetModules();
   });
 
@@ -183,7 +184,10 @@ describe('sendOutreachEmail dry-run and missing resend', () => {
     prospectType: 'firm' as const,
     status: 'ready_to_send' as const,
     sequenceStep: 0,
-    sources: ['test'],
+    sources: ['laa' as 'laa'],
+    priorityScore: 10,
+    campaignId: 'agent_cover_kent_v1',
+    enrichAttempts: 0,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     email: 'test@examplefirm.co.uk',
@@ -223,12 +227,13 @@ describe('sendOutreachEmail dry-run and missing resend', () => {
 
 describe('resend webhook verification', () => {
   beforeEach(() => {
-    process.env.NODE_ENV = 'production';
+    vi.stubEnv('NODE_ENV', 'production');
     process.env.RESEND_WEBHOOK_SECRET = 'whsec_test';
     process.env.RESEND_API_KEY = 're_test';
   });
 
   afterEach(() => {
+    vi.unstubAllEnvs();
     vi.resetModules();
   });
 
@@ -257,12 +262,15 @@ describe('admin firm-outreach API auth', () => {
 });
 
 describe('expected cron route list completeness', () => {
-  it('includes all scheduled vercel crons', () => {
+  it('includes all scheduled vercel crons', async () => {
+    const { cronRouteScheduled, EXPECTED_CRON_ROUTES } = await import(
+      '@/lib/firm-outreach/verify-checks'
+    );
     const vercelRaw = require('fs').readFileSync(require('path').resolve('vercel.json'), 'utf8');
     const vercelJson = JSON.parse(vercelRaw.replace(/,\s*([}\]])/g, '$1'));
-    const scheduled = new Set((vercelJson.crons ?? []).map((c: { path: string }) => c.path));
+    const paths = (vercelJson.crons ?? []).map((c: { path: string }) => c.path);
     for (const route of EXPECTED_CRON_ROUTES) {
-      expect(scheduled.has(route)).toBe(true);
+      expect(cronRouteScheduled(paths, route)).toBe(true);
     }
   });
 });

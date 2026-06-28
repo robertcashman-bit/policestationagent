@@ -1,16 +1,17 @@
-import test from "node:test";
-import assert from "node:assert/strict";
+import { describe, it, expect } from "vitest";
 import { isOutOfScopeEnquiry } from "../config/scope-faqs";
 
-test("isOutOfScopeEnquiry detects past arrest queries", () => {
-  assert.equal(isOutOfScopeEnquiry("He was arrested yesterday what happened"), true);
-  assert.equal(isOutOfScopeEnquiry("Someone is in custody right now at Maidstone"), false);
-});
+describe("isOutOfScopeEnquiry", () => {
+  it("detects past arrest queries", () => {
+    expect(isOutOfScopeEnquiry("He was arrested yesterday what happened")).toBe(true);
+    expect(isOutOfScopeEnquiry("Someone is in custody right now at Maidstone")).toBe(false);
+  });
 
-test("isOutOfScopeEnquiry detects friend instructing", () => {
-  assert.equal(isOutOfScopeEnquiry("My friend was arrested can you help"), true);
-});
+  it("detects friend instructing", () => {
+    expect(isOutOfScopeEnquiry("My friend was arrested can you help")).toBe(true);
+  });
 
-test("isOutOfScopeEnquiry detects missing person queries", () => {
-  assert.equal(isOutOfScopeEnquiry("My son disappeared where is he"), true);
+  it("detects missing person queries", () => {
+    expect(isOutOfScopeEnquiry("My son disappeared where is he")).toBe(true);
+  });
 });

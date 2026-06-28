@@ -134,10 +134,18 @@ describe('sendOutreachSendConfirmationEmail', () => {
       stats: { queued: 2, sent: 2, skipped: 0, suppressed: 0, errors: 0, elapsedMs: 1 },
       receipts: [
         {
+          sendId: 'send_beta_1',
+          prospectId: 'fop_beta_1',
           firmName: 'Beta LLP',
+          prospectType: 'firm' as const,
           email: 'crime@beta.co.uk',
+          sequenceStep: 0,
           touchLabel: 'Initial invite',
+          subject: 'Police station cover for Beta LLP',
+          sendStatus: 'sent' as const,
+          prospectStatus: 'sent' as const,
           sentAt: '2026-06-18T09:30:00.000Z',
+          suppressed: false,
         },
       ],
       readyRemaining: 26,

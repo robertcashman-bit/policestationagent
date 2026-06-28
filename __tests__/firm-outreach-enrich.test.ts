@@ -213,8 +213,11 @@ describe('shouldEnrichProspect', () => {
     firmName: 'Test',
     prospectType: 'firm' as const,
     campaignId: 'c',
-    sources: ['laa'],
+    sources: ['laa' as const],
     priorityScore: 10,
+    sequenceStep: 0,
+    enrichAttempts: 0,
+    status: 'discovered' as const,
     createdAt: '',
     updatedAt: '',
   };

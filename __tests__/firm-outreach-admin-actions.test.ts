@@ -115,6 +115,7 @@ describe('restoreExcludedProspect', () => {
     const result = await restoreExcludedProspect('fop_ex1');
 
     expect(result.ok).toBe(false);
+    if (result.ok) throw new Error('expected failure result');
     expect(result.error).toBe('not_excluded');
   });
 
@@ -125,6 +126,7 @@ describe('restoreExcludedProspect', () => {
     const result = await restoreExcludedProspect('missing');
 
     expect(result.ok).toBe(false);
+    if (result.ok) throw new Error('expected failure result');
     expect(result.error).toBe('not_found');
   });
 });
@@ -179,6 +181,7 @@ describe('manualSendProspect', () => {
     const result = await manualSendProspect('fop_ex1');
 
     expect(result.ok).toBe(false);
+    if (result.ok) throw new Error('expected failure result');
     expect(result.error).toBe('suppressed');
     expect(mockSendOutreachEmail).not.toHaveBeenCalled();
   });
@@ -191,6 +194,7 @@ describe('manualSendProspect', () => {
     const result = await manualSendProspect('fop_ex1');
 
     expect(result.ok).toBe(false);
+    if (result.ok) throw new Error('expected failure result');
     expect(result.error).toBe('duplicate_email');
     expect(mockSendOutreachEmail).not.toHaveBeenCalled();
   });

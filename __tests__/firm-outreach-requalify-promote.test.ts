@@ -30,6 +30,8 @@ const base: FirmProspect = {
   sequenceStep: 0,
   county: 'Kent',
   sources: ['laa'],
+  priorityScore: 10,
+  enrichAttempts: 0,
   createdAt: '2026-01-01T00:00:00.000Z',
   updatedAt: '2026-01-01T00:00:00.000Z',
 };

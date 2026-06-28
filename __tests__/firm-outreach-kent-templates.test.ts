@@ -19,6 +19,8 @@ const prospect: FirmProspect = {
   campaignId: 'agent_cover_kent_v1',
   sequenceStep: 0,
   county: 'Kent',
+  priorityScore: 10,
+  enrichAttempts: 0,
   createdAt: '2026-01-01T00:00:00.000Z',
   updatedAt: '2026-01-01T00:00:00.000Z',
   sources: [],

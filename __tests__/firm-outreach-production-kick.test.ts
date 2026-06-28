@@ -47,7 +47,7 @@ describe('runProductionKickSteps', () => {
       baseUrl: 'https://example.com',
       auth: { header: 'Authorization', value: 'Bearer x' },
       steps: DEFAULT_PRODUCTION_KICK_STEPS,
-      fetchFn: fetchFn as typeof fetch,
+      fetchFn: fetchFn as unknown as typeof fetch,
     });
 
     expect(failed).toBe(false);
@@ -69,7 +69,7 @@ describe('runProductionKickSteps', () => {
       baseUrl: 'https://example.com',
       auth: { header: 'Authorization', value: 'Bearer x' },
       steps: DEFAULT_PRODUCTION_KICK_STEPS,
-      fetchFn: fetchFn as typeof fetch,
+      fetchFn: fetchFn as unknown as typeof fetch,
     });
 
     expect(failed).toBe(true);
@@ -109,7 +109,7 @@ describe('waitForVercelProductionDeploy', () => {
       pollMs: 1,
       now: () => 0,
       sleep: async () => {},
-      fetchFn: fetchFn as typeof fetch,
+      fetchFn: fetchFn as unknown as typeof fetch,
     });
 
     expect(result.ready).toBe(true);

@@ -14,7 +14,7 @@ describe("PACE references", () => {
   });
 
   it("registry ids are unique", () => {
-    const ids = loadPaceRegistry().map((e) => e.id);
+    const ids = loadPaceRegistry().map((e: { id: string }) => e.id);
     expect(new Set(ids).size).toBe(ids.length);
   });
 });

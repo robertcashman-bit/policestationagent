@@ -228,6 +228,7 @@ export const EXPECTED_CRON_ROUTES = [
   '/api/cron/firm-outreach-enrich',
   '/api/cron/firm-outreach-pipeline/full',
   '/api/cron/firm-outreach-digest',
+  '/api/cron/firm-outreach-cross-digest',
 ] as const;
 
 export const VERIFY_CRON_ROUTES = ['/api/cron/firm-outreach-status'] as const;
@@ -334,6 +335,14 @@ export function checkOutreachTemplates(): RepoCheckResult[] {
   return results;
 }
 
+/** True if vercel.json lists the route exactly or with query params (e.g. ?phase=morning). */
+export function cronRouteScheduled(
+  paths: string[],
+  route: string,
+): boolean {
+  return paths.some((p) => p === route || p.startsWith(`${route}?`));
+}
+
 export function checkVercelCronConfig(vercelJson: {
   crons?: Array<{ path: string; schedule: string }>;
 }): RepoCheckResult[] {
@@ -342,10 +351,11 @@ export function checkVercelCronConfig(vercelJson: {
   const results: RepoCheckResult[] = [];
 
   for (const route of EXPECTED_CRON_ROUTES) {
+    const ok = cronRouteScheduled(paths, route);
     results.push({
       name: `vercel_cron_configured:${route}`,
-      ok: paths.includes(route),
-      detail: paths.includes(route) ? 'present' : 'missing from vercel.json crons',
+      ok,
+      detail: ok ? 'present' : 'missing from vercel.json crons',
     });
   }
 
@@ -366,6 +376,16 @@ export function checkVercelCronConfig(vercelJson: {
     name: 'vercel_cron_send_only_four_times_daily',
     ok: sendOnlyCronCount === 4,
     detail: `count=${sendOnlyCronCount}`,
+  });
+  results.push({
+    name: 'vercel_cron_cross_digest_morning',
+    ok: schedules['/api/cron/firm-outreach-cross-digest?phase=morning'] === '0 11 * * *',
+    detail: String(schedules['/api/cron/firm-outreach-cross-digest?phase=morning'] ?? 'missing'),
+  });
+  results.push({
+    name: 'vercel_cron_cross_digest_evening',
+    ok: schedules['/api/cron/firm-outreach-cross-digest?phase=evening'] === '0 19 * * *',
+    detail: String(schedules['/api/cron/firm-outreach-cross-digest?phase=evening'] ?? 'missing'),
   });
 
   return results;

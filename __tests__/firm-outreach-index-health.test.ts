@@ -194,8 +194,6 @@ describe('getProspectIndexHealth', () => {
     const health = await getProspectIndexHealth({
       counts: { discovered: 2, ready_to_send: 1 },
       masterIndexCount: 10,
-      computedAt: new Date().toISOString(),
-      fromCache: true,
     });
 
     expect(mockSnapshot).not.toHaveBeenCalled();
