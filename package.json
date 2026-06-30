@@ -58,6 +58,8 @@
     "firm-outreach:health-check": "node scripts/production-health-check.mjs",
     "firm-outreach:send-approval-email": "tsx scripts/firm-outreach-send-approval-email.ts",
     "firm-outreach:configure-resend": "node scripts/resend-configure-webhook.mjs",
+    "firm-outreach:cleanup-bad-emails": "tsx scripts/firm-outreach-cleanup-non-firm-emails.ts --apply",
+    "firm-outreach:backfill-resend-ids": "tsx scripts/firm-outreach-backfill-resend-ids.ts --apply",
     "verify:firm-outreach": "tsx scripts/verify-firm-outreach.ts",
     "test:firm-outreach": "vitest run __tests__/firm-outreach*.test.ts __tests__/outreach-*.test.ts",
     "test:blog": "vitest run __tests__/blog-legal-accuracy.test.ts",

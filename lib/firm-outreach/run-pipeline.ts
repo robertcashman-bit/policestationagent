@@ -1,6 +1,7 @@
 import { fetchLaaCrimeProviders } from '@/lib/legal-directory/laa-fetch';
 import { ensureDsccRegisterCache } from '@/lib/dscc-register-lookup';
 import { outreachEnabled, dailySendCap } from './constants';
+import { cleanupNonFirmProspectEmails } from './cleanup-non-firm-emails';
 import { isOutreachSendAllowed } from './pause-state';
 import { runFirmDiscovery } from './discovery/run-discovery';
 import { runFirmEnrichment } from './enrichment/run-enrich';
@@ -19,6 +20,7 @@ import type {
 export interface FirmOutreachPipelineResult {
   skipped: boolean;
   reason?: string;
+  cleanup?: { reset: number; targets: number };
   laa: { refreshed: boolean; source: string; count: number };
   dscc: { count: number; syncedAt: string | null };
   discovery: DiscoveryRunStats;
@@ -55,6 +57,7 @@ export async function runFirmOutreachPipeline(opts?: {
   requalifyVerifyWebsites?: boolean;
 }): Promise<FirmOutreachPipelineResult> {
   const started = Date.now();
+  let cleanup: { reset: number; targets: number } | undefined;
 
   if (!outreachEnabled()) {
     return {
@@ -70,6 +73,9 @@ export async function runFirmOutreachPipeline(opts?: {
       elapsedMs: Date.now() - started,
     };
   }
+
+  const cleanupResult = await cleanupNonFirmProspectEmails({ dryRun: false });
+  cleanup = { reset: cleanupResult.reset, targets: cleanupResult.targets.length };
 
   const kentCorrection =
     opts?.skipKentCorrection || opts?.sendDryRun
@@ -149,6 +155,7 @@ export async function runFirmOutreachPipeline(opts?: {
 
   return {
     skipped: false,
+    cleanup,
     laa: {
       refreshed: laaResult.refreshed,
       source: laaResult.source,
