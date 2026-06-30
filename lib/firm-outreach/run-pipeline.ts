@@ -57,7 +57,6 @@ export async function runFirmOutreachPipeline(opts?: {
   requalifyVerifyWebsites?: boolean;
 }): Promise<FirmOutreachPipelineResult> {
   const started = Date.now();
-  let cleanup: { reset: number; targets: number } | undefined;
 
   if (!outreachEnabled()) {
     return {
@@ -75,7 +74,7 @@ export async function runFirmOutreachPipeline(opts?: {
   }
 
   const cleanupResult = await cleanupNonFirmProspectEmails({ dryRun: false });
-  cleanup = { reset: cleanupResult.reset, targets: cleanupResult.targets.length };
+  const cleanup = { reset: cleanupResult.reset, targets: cleanupResult.targets.length };
 
   const kentCorrection =
     opts?.skipKentCorrection || opts?.sendDryRun
