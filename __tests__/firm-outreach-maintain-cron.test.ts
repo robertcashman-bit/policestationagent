@@ -58,16 +58,22 @@ describe('outreachRequireApproval default', () => {
     process.env = { ...ENV };
   });
 
-  it('defaults to autosend when env unset', async () => {
+  it('defaults to require approval when env unset', async () => {
     process.env = { ...ENV };
     delete process.env.FIRM_OUTREACH_REQUIRE_APPROVAL;
     const { outreachRequireApproval } = await import('@/lib/firm-outreach/constants');
-    expect(outreachRequireApproval()).toBe(false);
+    expect(outreachRequireApproval()).toBe(true);
   });
 
-  it('requires approval only when env is true', async () => {
+  it('requires approval when env is true', async () => {
     process.env = { ...ENV, FIRM_OUTREACH_REQUIRE_APPROVAL: 'true' };
     const { outreachRequireApproval } = await import('@/lib/firm-outreach/constants');
     expect(outreachRequireApproval()).toBe(true);
+  });
+
+  it('allows autosend only when env is false', async () => {
+    process.env = { ...ENV, FIRM_OUTREACH_REQUIRE_APPROVAL: 'false' };
+    const { outreachRequireApproval } = await import('@/lib/firm-outreach/constants');
+    expect(outreachRequireApproval()).toBe(false);
   });
 });
