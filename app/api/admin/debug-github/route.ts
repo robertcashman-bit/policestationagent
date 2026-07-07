@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getAdminSession } from "@/lib/admin-auth";
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-const GITHUB_REPO = process.env.GITHUB_REPO || "robertdavidcashman-droid/one";
+const GITHUB_REPO = process.env.GITHUB_REPO || "robertcashman-bit/policestationagent";
 const JSON_FILE_PATH = "data/blog-posts-full.json";
 
 export async function GET(request: NextRequest) {
