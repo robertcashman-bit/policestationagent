@@ -135,10 +135,10 @@ export default function TestimonialCarousel({
             ))}
           </div>
           <h2 className="text-3xl md:text-4xl font-black text-white mb-4">
-            Trusted by Clients Across Kent
+            What people in Kent say after we helped
           </h2>
           <p className="text-lg text-blue-200 max-w-2xl mx-auto">
-            Real experiences from clients we've helped through challenging times
+            Straight feedback from clients we sat with through custody and interview
           </p>
         </div>
 

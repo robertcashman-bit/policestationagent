@@ -15,25 +15,25 @@ export function HomeHeroCover() {
           Kent — NOT the police
         </p>
         <h1 id="home-hero-heading" className="text-3xl md:text-5xl font-black mb-4 leading-tight text-white">
-          Police Station Rep Across Kent
+          At the police station or booked for interview?
         </h1>
         <p className="text-lg md:text-xl text-white mb-8 max-w-3xl mx-auto">
-          Custody attendance and voluntary interview representation at all Kent police stations — for
-          criminal defence firms and free legal advice for clients in custody or booked for interview.
+          We attend Kent custody suites and voluntary interviews — for people who need free advice
+          now, and for defence firms who need reliable cover.
         </p>
 
         <div className="rounded-xl bg-white p-5 md:p-6 shadow-lg max-w-xl mx-auto text-left">
           <p className="text-slate-800 text-sm md:text-base mb-4">
-            Robert Cashman, solicitor at Tuckers Solicitors LLP. Kent-wide extended-hours cover — with
-            regular attendance at{" "}
+            Robert Cashman, solicitor at Tuckers Solicitors LLP. Kent-wide cover in the evenings and
+            at weekends too — including{" "}
             <Link href="/police-station-rep-gravesend" className="font-semibold text-blue-700 hover:underline">
-              police station rep in Gravesend
+              Gravesend
             </Link>{" "}
             and{" "}
             <Link href="/police-station-rep-tonbridge" className="font-semibold text-blue-700 hover:underline">
-              police station rep in Tonbridge
+              Tonbridge
             </Link>
-            , plus Medway, Maidstone, Canterbury and all other Kent stations.
+            , plus Medway, Maidstone, Canterbury and the rest of Kent.
           </p>
           <ConversionCTAGroup layout="stacked" />
           <p className="text-slate-700 text-sm mt-4">
@@ -41,7 +41,7 @@ export function HomeHeroCover() {
             <Link href="/for-solicitors" className="font-semibold text-blue-700 hover:underline">
               police station cover for solicitors
             </Link>{" "}
-            or{" "}
+            or our{" "}
             <Link href="/dscc-and-custody-record-support" className="font-semibold text-blue-700 hover:underline">
               DSCC &amp; custody record guide
             </Link>

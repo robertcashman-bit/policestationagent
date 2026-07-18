@@ -2,11 +2,11 @@ import Link from "next/link";
 import { PHONE_DISPLAY, PHONE_TEL } from "@/config/contact";
 
 const FIRM_BULLETS = [
-  "Qualified duty solicitor attendance — not just an accredited rep",
-  "Detailed attendance notes for your file and LAA billing",
-  "All Kent custody suites — Medway, Maidstone, Gravesend, Canterbury, Tonbridge & more",
-  "Extended-hours cover including evenings and weekends",
-  "Competitive fixed rates for Legal Aid and private client work",
+  "A duty solicitor on the ground — not only an accredited rep",
+  "Clear attendance notes you can put straight on the file and bill from",
+  "We cover every Kent custody suite — Medway, Maidstone, Gravesend, Canterbury, Tonbridge and more",
+  "Evenings and weekends included",
+  "Fixed rates for Legal Aid and private clients — told upfront",
 ] as const;
 
 export function HomeFirmSection() {

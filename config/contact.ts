@@ -33,4 +33,4 @@ export const CUSTODY_PHONE_CTA =
   "Telephone for current custody or a booked voluntary interview";
 
 export const HEADER_STRAPLINE =
-  "Independent duty solicitor (NOT the police) — immediate custody & booked interviews, Kent";
+  "Independent solicitor — NOT the police. Kent custody and booked interviews.";

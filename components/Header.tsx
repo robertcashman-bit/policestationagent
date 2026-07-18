@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import HeaderTopStrip, {
   CUSTODY_PHONE_CTA,
   PHONE_DISPLAY,
@@ -14,13 +14,69 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
-  const handleDropdownToggle = (dropdown: string) => {
-    setOpenDropdown(openDropdown === dropdown ? null : dropdown);
-  };
+  const DROPDOWN_CLOSE_MS = 200;
+  const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const navRef = useRef<HTMLElement>(null);
 
-  const closeDropdowns = () => {
+  const clearCloseTimer = useCallback(() => {
+    if (closeTimerRef.current !== null) {
+      clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
+  }, []);
+
+  const closeDropdowns = useCallback(() => {
+    clearCloseTimer();
     setOpenDropdown(null);
-  };
+  }, [clearCloseTimer]);
+
+  const scheduleCloseDropdowns = useCallback(() => {
+    clearCloseTimer();
+    closeTimerRef.current = setTimeout(() => {
+      setOpenDropdown(null);
+      closeTimerRef.current = null;
+    }, DROPDOWN_CLOSE_MS);
+  }, [clearCloseTimer]);
+
+  const cancelCloseDropdowns = useCallback(() => {
+    clearCloseTimer();
+  }, [clearCloseTimer]);
+
+  const handleDropdownToggle = useCallback(
+    (dropdown: string) => {
+      clearCloseTimer();
+      setOpenDropdown((current) => (current === dropdown ? null : dropdown));
+    },
+    [clearCloseTimer]
+  );
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeDropdowns();
+      }
+    };
+
+    const handleMouseDown = (event: MouseEvent) => {
+      if (!openDropdown || openDropdown.startsWith("mobile-")) return;
+      if (navRef.current && !navRef.current.contains(event.target as Node)) {
+        closeDropdowns();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("mousedown", handleMouseDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("mousedown", handleMouseDown);
+    };
+  }, [openDropdown, closeDropdowns]);
+
+  useEffect(() => {
+    return () => {
+      clearCloseTimer();
+    };
+  }, [clearCloseTimer]);
 
   return (
     <header className="bg-white shadow-md border-b border-slate-200/60 relative z-50">
@@ -106,6 +162,7 @@ export default function Header() {
         <div className="flex justify-between items-center h-16">
           {/* Desktop Navigation */}
           <nav
+            ref={navRef}
             className="hidden lg:flex items-center space-x-0.5 flex-nowrap flex-1 justify-between"
             role="navigation"
             aria-label="Main navigation"
@@ -134,9 +191,9 @@ export default function Header() {
             </Link>
 
             {/* Services Dropdown - SECOND */}
-            <div className="relative group flex-shrink-0" onMouseLeave={closeDropdowns}>
+            <div className="relative group flex-shrink-0" onMouseLeave={scheduleCloseDropdowns} onMouseEnter={cancelCloseDropdowns}>
               <button
-                className={`px-3 py-2 text-sm text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50 flex items-center gap-1 whitespace-nowrap ${
+                className={`px-3 py-2 min-h-[44px] text-sm text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50 flex items-center gap-1 whitespace-nowrap ${
                   openDropdown === "services" ? "text-blue-700 bg-slate-50" : ""
                 }`}
                 onClick={() => handleDropdownToggle("services")}
@@ -159,22 +216,22 @@ export default function Header() {
                 </svg>
               </button>
               {openDropdown === "services" && (
-                <div className="absolute top-full left-0 mt-1.5 w-72 bg-white rounded-lg shadow-xl border border-slate-200/80 py-1.5 z-50">
+                <div className="absolute top-full left-0 pt-2 w-72 bg-white rounded-lg shadow-xl border border-slate-200/80 py-1.5 z-50">
                   <ul role="menu" aria-label="Services">
                     <li role="none">
                       <Link
                         href="/services"
-                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        className="block px-4 min-h-[44px] flex items-center text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
                       >
-                        Police Station Rep Services Kent
+                        All services
                       </Link>
                     </li>
                     <li role="none">
                       <Link
                         href="/services/police-station-representation"
-                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        className="block px-4 min-h-[44px] flex items-center text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
                       >
@@ -184,7 +241,7 @@ export default function Header() {
                     <li role="none">
                       <Link
                         href="/offences-we-deal-with"
-                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        className="block px-4 min-h-[44px] flex items-center text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
                       >
@@ -194,7 +251,7 @@ export default function Header() {
                     <li role="none">
                       <Link
                         href="/voluntary-interviews"
-                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        className="block px-4 min-h-[44px] flex items-center text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
                       >
@@ -204,7 +261,7 @@ export default function Header() {
                     <li role="none">
                       <Link
                         href="/courtrepresentation"
-                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        className="block px-4 min-h-[44px] flex items-center text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
                       >
@@ -214,7 +271,7 @@ export default function Header() {
                     <li role="none">
                       <Link
                         href="/for-solicitors"
-                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        className="block px-4 min-h-[44px] flex items-center text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
                       >
@@ -224,7 +281,7 @@ export default function Header() {
                     <li role="none">
                       <Link
                         href="/start/solicitors-agent-cover"
-                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        className="block px-4 min-h-[44px] flex items-center text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
                       >
@@ -234,7 +291,7 @@ export default function Header() {
                     <li role="none">
                       <Link
                         href="/privatecrime"
-                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        className="block px-4 min-h-[44px] flex items-center text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
                       >
@@ -244,7 +301,7 @@ export default function Header() {
                     <li role="none">
                       <Link
                         href="/fees"
-                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        className="block px-4 min-h-[44px] flex items-center text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
                       >
@@ -254,7 +311,7 @@ export default function Header() {
                     <li role="none">
                       <Link
                         href="/for-clients"
-                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        className="block px-4 min-h-[44px] flex items-center text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
                       >
@@ -264,7 +321,7 @@ export default function Header() {
                     <li role="none">
                       <Link
                         href="/emergency-police-station-representation"
-                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        className="block px-4 min-h-[44px] flex items-center text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
                       >
@@ -277,9 +334,9 @@ export default function Header() {
             </div>
 
             {/* Information Dropdown - Consolidated Legal Advice, Interviews, Custody, Rights */}
-            <div className="relative group flex-shrink-0" onMouseLeave={closeDropdowns}>
+            <div className="relative group flex-shrink-0" onMouseLeave={scheduleCloseDropdowns} onMouseEnter={cancelCloseDropdowns}>
               <button
-                className={`px-3 py-2 text-sm text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50 flex items-center gap-1 whitespace-nowrap ${
+                className={`px-3 py-2 min-h-[44px] text-sm text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50 flex items-center gap-1 whitespace-nowrap ${
                   openDropdown === "information" ? "text-blue-700 bg-slate-50" : ""
                 }`}
                 onClick={() => handleDropdownToggle("information")}
@@ -302,7 +359,7 @@ export default function Header() {
                 </svg>
               </button>
               {openDropdown === "information" && (
-                <div className="absolute top-full left-0 mt-1.5 w-80 bg-white rounded-lg shadow-xl border border-slate-200/80 py-1.5 z-50 max-h-[600px] overflow-y-auto">
+                <div className="absolute top-full left-0 pt-2 w-80 bg-white rounded-lg shadow-xl border border-slate-200/80 py-1.5 z-50 max-h-[600px] overflow-y-auto">
                   <ul role="menu" aria-label="Information & Resources">
                     {/* Legal Advice Section */}
                     <li
@@ -531,9 +588,9 @@ export default function Header() {
             </div>
 
             {/* Coverage Dropdown */}
-            <div className="relative group flex-shrink-0" onMouseLeave={closeDropdowns}>
+            <div className="relative group flex-shrink-0" onMouseLeave={scheduleCloseDropdowns} onMouseEnter={cancelCloseDropdowns}>
               <button
-                className={`px-3 py-2 text-sm text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50 flex items-center gap-1 whitespace-nowrap ${
+                className={`px-3 py-2 min-h-[44px] text-sm text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50 flex items-center gap-1 whitespace-nowrap ${
                   openDropdown === "coverage" ? "text-blue-700 bg-slate-50" : ""
                 }`}
                 onClick={() => handleDropdownToggle("coverage")}
@@ -556,12 +613,12 @@ export default function Header() {
                 </svg>
               </button>
               {openDropdown === "coverage" && (
-                <div className="absolute top-full left-0 mt-1.5 w-72 bg-white rounded-lg shadow-xl border border-slate-200/80 py-1.5 z-50">
+                <div className="absolute top-full left-0 pt-2 w-72 bg-white rounded-lg shadow-xl border border-slate-200/80 py-1.5 z-50">
                   <ul role="menu" aria-label="Coverage">
                     <li role="none">
                       <Link
                         href="/police-stations"
-                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        className="block px-4 min-h-[44px] flex items-center text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
                       >
@@ -571,17 +628,17 @@ export default function Header() {
                     <li role="none">
                       <Link
                         href="/coverage"
-                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        className="block px-4 min-h-[44px] flex items-center text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
                       >
-                        Service Coverage Areas
+                        Where we cover
                       </Link>
                     </li>
                     <li role="none">
                       <Link
                         href="/kent-police-station-reps"
-                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        className="block px-4 min-h-[44px] flex items-center text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
                       >
@@ -591,7 +648,7 @@ export default function Header() {
                     <li role="none">
                       <Link
                         href="/kent-police-stations"
-                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        className="block px-4 min-h-[44px] flex items-center text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
                       >
@@ -601,7 +658,7 @@ export default function Header() {
                     <li role="none">
                       <Link
                         href="/psastations"
-                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        className="block px-4 min-h-[44px] flex items-center text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
                       >
@@ -611,7 +668,7 @@ export default function Header() {
                     <li role="none">
                       <Link
                         href="/out-of-area"
-                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        className="block px-4 min-h-[44px] flex items-center text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
                       >
@@ -624,9 +681,9 @@ export default function Header() {
             </div>
 
             {/* About Dropdown */}
-            <div className="relative group flex-shrink-0" onMouseLeave={closeDropdowns}>
+            <div className="relative group flex-shrink-0" onMouseLeave={scheduleCloseDropdowns} onMouseEnter={cancelCloseDropdowns}>
               <button
-                className={`px-3 py-2 text-sm text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50 flex items-center gap-1 whitespace-nowrap ${
+                className={`px-3 py-2 min-h-[44px] text-sm text-slate-700 hover:text-blue-700 font-medium transition-all rounded-md hover:bg-slate-50 flex items-center gap-1 whitespace-nowrap ${
                   openDropdown === "about" ? "text-blue-700 bg-slate-50" : ""
                 }`}
                 onClick={() => handleDropdownToggle("about")}
@@ -649,12 +706,12 @@ export default function Header() {
                 </svg>
               </button>
               {openDropdown === "about" && (
-                <div className="absolute top-full left-0 mt-1.5 w-72 bg-white rounded-lg shadow-xl border border-slate-200/80 py-1.5 z-50">
+                <div className="absolute top-full left-0 pt-2 w-72 bg-white rounded-lg shadow-xl border border-slate-200/80 py-1.5 z-50">
                   <ul role="menu" aria-label="About">
                     <li role="none">
                       <Link
                         href="/about"
-                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        className="block px-4 min-h-[44px] flex items-center text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
                       >
@@ -664,7 +721,7 @@ export default function Header() {
                     <li role="none">
                       <Link
                         href="/why-use-us"
-                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        className="block px-4 min-h-[44px] flex items-center text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
                       >
@@ -674,7 +731,7 @@ export default function Header() {
                     <li role="none">
                       <Link
                         href="/what-we-do"
-                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        className="block px-4 min-h-[44px] flex items-center text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
                       >
@@ -684,7 +741,7 @@ export default function Header() {
                     <li role="none">
                       <Link
                         href="/testimonials"
-                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        className="block px-4 min-h-[44px] flex items-center text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
                       >
@@ -694,7 +751,7 @@ export default function Header() {
                     <li role="none">
                       <Link
                         href="/for-clients"
-                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        className="block px-4 min-h-[44px] flex items-center text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
                       >
@@ -704,7 +761,7 @@ export default function Header() {
                     <li role="none">
                       <Link
                         href="/privateclientfaq"
-                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        className="block px-4 min-h-[44px] flex items-center text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
                       >
@@ -714,7 +771,7 @@ export default function Header() {
                     <li role="none">
                       <Link
                         href="/can-we-help"
-                        className="block px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
+                        className="block px-4 min-h-[44px] flex items-center text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm"
                         role="menuitem"
                         onClick={closeDropdowns}
                       >
@@ -818,6 +875,8 @@ export default function Header() {
               <button
                 className="w-full flex items-center justify-between px-4 py-3 text-slate-700 hover:text-blue-600 hover:bg-slate-50 font-medium rounded-md transition-colors"
                 onClick={() => handleDropdownToggle("mobile-services")}
+                aria-expanded={openDropdown === "mobile-services"}
+                aria-haspopup="true"
               >
                 Services
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -840,7 +899,7 @@ export default function Header() {
                         closeDropdowns();
                       }}
                     >
-                      Police Station Rep Services Kent
+                      All services
                     </Link>
                   </li>
                   <li>
@@ -981,6 +1040,8 @@ export default function Header() {
               <button
                 className="w-full flex items-center justify-between px-4 py-3 text-slate-700 hover:text-blue-600 hover:bg-slate-50 font-medium rounded-md transition-colors"
                 onClick={() => handleDropdownToggle("mobile-information")}
+                aria-expanded={openDropdown === "mobile-information"}
+                aria-haspopup="true"
               >
                 Information
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1250,6 +1311,8 @@ export default function Header() {
               <button
                 className="w-full flex items-center justify-between px-4 py-3 text-slate-700 hover:text-blue-600 hover:bg-slate-50 font-medium rounded-md transition-colors"
                 onClick={() => handleDropdownToggle("mobile-coverage")}
+                aria-expanded={openDropdown === "mobile-coverage"}
+                aria-haspopup="true"
               >
                 Coverage
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1284,7 +1347,7 @@ export default function Header() {
                         closeDropdowns();
                       }}
                     >
-                      Service Coverage Areas
+                      Where we cover
                     </Link>
                   </li>
                   <li>
@@ -1344,6 +1407,8 @@ export default function Header() {
               <button
                 className="w-full flex items-center justify-between px-4 py-3 text-slate-700 hover:text-blue-600 hover:bg-slate-50 font-medium rounded-md transition-colors"
                 onClick={() => handleDropdownToggle("mobile-about")}
+                aria-expanded={openDropdown === "mobile-about"}
+                aria-haspopup="true"
               >
                 About
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
