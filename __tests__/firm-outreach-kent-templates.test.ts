@@ -27,9 +27,9 @@ const prospect: FirmProspect = {
 };
 
 describe('Kent-only outreach templates', () => {
-  it('uses Kent in initial subject lines', () => {
-    expect(subjectForStep(prospect, 0)).toContain('Kent');
-    expect(subjectForStep({ ...prospect, prospectType: 'solicitor' }, 0)).toContain('Kent');
+  it('uses Maidstone radius in initial subject lines', () => {
+    expect(subjectForStep(prospect, 0)).toContain('Maidstone');
+    expect(subjectForStep({ ...prospect, prospectType: 'solicitor' }, 0)).toContain('Maidstone');
   });
 
   it('does not mention nationwide roster coverage in step 0 body', () => {
@@ -38,20 +38,20 @@ describe('Kent-only outreach templates', () => {
       step: 0,
       unsubscribeUrl: 'https://example.com/unsub',
     });
-    expect(html).toContain('Kent custody suites');
+    expect(html).toContain('45 minutes of Maidstone');
     expect(html).not.toContain('England &amp; Wales when your roster');
     expect(html).toContain('07535 494446');
     expect(html).toContain('01732 247427');
   });
 
-  it('mentions Kent in follow-up steps', () => {
+  it('mentions Maidstone radius in follow-up steps', () => {
     for (const step of [1, 2]) {
       const html = buildOutreachEmailHtml({
         prospect,
         step,
         unsubscribeUrl: 'https://example.com/unsub',
       });
-      expect(html.toLowerCase()).toContain('kent');
+      expect(html.toLowerCase()).toContain('maidstone');
     }
   });
 
@@ -62,14 +62,14 @@ describe('Kent-only outreach templates', () => {
     expect(isLegacyNationwideInitialSubject(subjectForStep(prospect, 0))).toBe(false);
   });
 
-  it('builds correction email with apology and Kent-only scope', () => {
+  it('builds correction email with apology and Maidstone radius scope', () => {
     const html = buildKentCorrectionEmailHtml({
       prospect,
       unsubscribeUrl: 'https://example.com/unsub',
     });
-    expect(KENT_CORRECTION_SUBJECT).toContain('Kent');
+    expect(KENT_CORRECTION_SUBJECT).toContain('Maidstone');
     expect(html).toContain('incorrectly suggested nationwide');
-    expect(html).toContain('Kent custody suites only');
+    expect(html).toContain('45 minutes of Maidstone');
   });
 });
 

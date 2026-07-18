@@ -24,7 +24,7 @@ test.describe('Conversion smoke — desktop', () => {
   test('homepage proof bar and firm section present', async ({ page }) => {
     await page.goto('/');
     await expect(page.getByLabel('Experience and credentials')).toBeVisible();
-    await expect(page.getByRole('heading', { name: /kent police station cover for solicitors/i })).toBeVisible();
+    await expect(page.getByRole('heading', { name: /police station agent cover for solicitors/i })).toBeVisible();
   });
 
   test('homepage loads without app console errors', async ({ page }) => {

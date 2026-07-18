@@ -4,7 +4,7 @@ import { PHONE_DISPLAY, PHONE_TEL } from "@/config/contact";
 const FIRM_BULLETS = [
   "A duty solicitor on the ground — not only an accredited rep",
   "Clear attendance notes you can put straight on the file and bill from",
-  "We cover every Kent custody suite — Medway, Maidstone, Gravesend, Canterbury, Tonbridge and more",
+  "Agency attendance at police stations within about 45 minutes of Maidstone",
   "Evenings and weekends included",
   "Fixed rates for Legal Aid and private clients — told upfront",
 ] as const;
@@ -22,11 +22,12 @@ export function HomeFirmSection() {
               For criminal defence firms
             </p>
             <h2 id="firm-cover-heading" className="text-2xl md:text-3xl font-black text-slate-900 mt-1">
-              Kent police station cover for solicitors
+              Police station agent cover for solicitors
             </h2>
             <p className="text-slate-600 mt-2 max-w-2xl">
-              Instruct Robert Cashman for reliable police station attendance across Kent. Custody,
-              voluntary interviews, and pre-booked attendances.
+              Instruct Robert Cashman for reliable police station agency attendance anywhere
+              within about 45 minutes of Maidstone — custody, voluntary interviews, and
+              pre-booked attendances.
             </p>
             <ul className="mt-4 space-y-2">
               {FIRM_BULLETS.map((bullet) => (

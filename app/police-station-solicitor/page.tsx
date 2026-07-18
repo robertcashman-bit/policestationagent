@@ -11,7 +11,7 @@ const LAST_UPDATED = "2026-06-06";
 export const metadata: Metadata = {
   title: "Police Station Solicitor | Kent Criminal Defence Cover",
   description:
-    "What a criminal defence solicitor does at the police station in Kent: Legal Aid advice, interview representation, PACE safeguards, and agency cover for law firms.",
+    "What a criminal defence solicitor does at the police station in Kent: Legal Aid advice, interview representation, PACE safeguards, and agency cover within about 45 minutes of Maidstone.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}${PATH}`,
   },
@@ -83,8 +83,8 @@ export default function PoliceStationSolicitorPage() {
           <section className="mb-8">
             <h2 className="text-2xl font-bold text-slate-900 mb-3">For law firms</h2>
             <p className="text-slate-700 mb-3">
-              Police Station Agent also provides agency cover for criminal defence firms needing Kent
-              attendance.
+              Police Station Agent also provides agency cover for criminal defence firms — police station
+              attendance within about 45 minutes of Maidstone.
             </p>
             <Link href="/for-solicitors" className="text-blue-700 font-semibold hover:underline">
               Agent cover for solicitors →

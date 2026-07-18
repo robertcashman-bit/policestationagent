@@ -18,7 +18,7 @@ const BANNED_PATTERNS = [
   },
   {
     id: "forty-five-minutes",
-    pattern: /(?:available\s+)?within\s+45\s+minutes|attend\s+within\s+45\s+minutes/gi,
+    pattern: /(?:available\s+)?within\s+45\s+minutes(?!\s+of\s+Maidstone)|attend\s+within\s+45\s+minutes(?!\s+of\s+Maidstone)/gi,
     description: "45 minute SLA claims",
   },
   {

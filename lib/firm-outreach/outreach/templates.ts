@@ -11,7 +11,7 @@ export const LEGACY_NATIONWIDE_INITIAL_SUBJECTS = [
   'Police station agent cover — for criminal defence firms',
 ] as const;
 
-export const KENT_CORRECTION_SUBJECT = 'Correction — Kent police station agent cover only';
+export const KENT_CORRECTION_SUBJECT = 'Correction — police station agent cover within 45 mins of Maidstone';
 
 function outreachContactLinksHtml(): string {
   return `<a href="tel:${PHONE_TEL}">${escapeHtml(PHONE_DISPLAY)}</a> · <a href="sms:${SMS_TEL}">${escapeHtml(SMS_DISPLAY)}</a> (call or text)`;
@@ -34,19 +34,24 @@ export function isLegacyNationwideInitialSubject(subject: string): boolean {
   if ((LEGACY_NATIONWIDE_INITIAL_SUBJECTS as readonly string[]).includes(trimmed)) {
     return true;
   }
-  return trimmed.includes('agent cover') && !trimmed.toLowerCase().includes('kent');
+  const lower = trimmed.toLowerCase();
+  // Current subjects use Maidstone radius; treat Kent-only or Maidstone-scoped subjects as non-legacy.
+  if (lower.includes('kent') || lower.includes('maidstone')) {
+    return false;
+  }
+  return trimmed.includes('agent cover');
 }
 
 export function subjectForStep(prospect: FirmProspect, step: number): string {
   if (step === 0) {
     return prospect.prospectType === 'solicitor'
-      ? 'Kent police station agent cover — for criminal defence solicitors'
-      : 'Kent police station agent cover — for criminal defence firms';
+      ? 'Police station agent cover (45 mins of Maidstone) — for criminal defence solicitors'
+      : 'Police station agent cover (45 mins of Maidstone) — for criminal defence firms';
   }
   if (step === 1) {
-    return 'Reminder: Kent police station agent cover for your firm';
+    return 'Reminder: police station agent cover within 45 mins of Maidstone';
   }
-  return 'Last note — Kent agent cover when your duty rota needs a rep';
+  return 'Last note — agent cover within 45 mins of Maidstone when your rota needs a rep';
 }
 
 function outreachFooter(unsubscribeUrl: string): string {
@@ -77,21 +82,21 @@ export function buildOutreachEmailHtml(opts: {
   const intro =
     step === 0
       ? prospect.prospectType === 'solicitor'
-        ? `<p>I provide <strong>accredited police station agent cover at Kent custody suites</strong> for criminal defence solicitors when your duty rota or panel needs attendance — evenings, weekends, and bank holidays included.</p>`
-        : `<p>I provide <strong>accredited police station agent cover at Kent custody suites</strong> for criminal defence firms when your duty rota needs attendance — evenings, weekends, and bank holidays included.</p>`
+        ? `<p>I provide <strong>accredited police station agent cover at stations within about 45 minutes of Maidstone</strong> for criminal defence solicitors when your duty rota or panel needs attendance — evenings, weekends, and bank holidays included.</p>`
+        : `<p>I provide <strong>accredited police station agent cover at stations within about 45 minutes of Maidstone</strong> for criminal defence firms when your duty rota needs attendance — evenings, weekends, and bank holidays included.</p>`
       : step === 1
-        ? `<p>A quick reminder — if <strong>${firmLine}</strong> needs police station cover in <strong>Kent</strong>, I can attend Kent custody suites when your own reps are unavailable.</p>`
-        : `<p>Final note from us — if ${firmLine} ever needs freelance <strong>Kent</strong> police station cover, you can reach me directly. Kent custody suites only — no agency layer.</p>`;
+        ? `<p>A quick reminder — if <strong>${firmLine}</strong> needs police station cover within about <strong>45 minutes of Maidstone</strong>, I can attend when your own reps are unavailable.</p>`
+        : `<p>Final note from us — if ${firmLine} ever needs freelance police station cover within about <strong>45 minutes of Maidstone</strong>, you can reach me directly — no agency layer.</p>`;
 
   const benefits =
     step === 0
       ? `<ul style="margin:16px 0;padding-left:20px;line-height:1.6">
           <li>Accredited duty solicitor — police station and custody work only (25+ years)</li>
-          <li>Coverage at <strong>Kent police stations and custody suites</strong> when your roster cannot cover</li>
-          <li>Medway, Maidstone, Canterbury, Gravesend, and every Kent custody suite</li>
+          <li>Coverage at police stations <strong>within about 45 minutes of Maidstone</strong> when your roster cannot cover</li>
+          <li>Including nearby Kent stations in that travel radius</li>
           <li>Detailed attendance notes — disclosure, advice, and interview outcome</li>
           <li>Extended hours — evenings, weekends, and bank holidays</li>
-          <li>Attached brochure with Kent police station agent services</li>
+          <li>Attached brochure with police station agent services (45 minutes of Maidstone)</li>
         </ul>`
       : '';
 
@@ -134,12 +139,12 @@ export function buildKentCorrectionEmailHtml(opts: {
     <div style="font-family:system-ui,sans-serif;color:#0f172a;max-width:640px;line-height:1.5">
       <p>${greeting}</p>
       <p>Please ignore the coverage line in our earlier email — it incorrectly suggested nationwide attendance.</p>
-      <p>I provide <strong>accredited police station agent cover at Kent custody suites only</strong> — Medway, Maidstone, Canterbury, Gravesend, and every Kent police station and custody suite. Evenings, weekends, and bank holidays included.</p>
+      <p>I provide <strong>accredited police station agent cover within about 45 minutes of Maidstone</strong> — not England &amp; Wales-wide cover. Evenings, weekends, and bank holidays included.</p>
       <ul style="margin:16px 0;padding-left:20px;line-height:1.6">
-        <li>Kent custody suites only — not England &amp; Wales-wide cover</li>
+        <li>Police stations within about 45 minutes of Maidstone only</li>
         <li>Accredited duty solicitor — police station and custody work only (25+ years)</li>
         <li>Detailed attendance notes — disclosure, advice, and interview outcome</li>
-        <li>Corrected Kent brochure attached</li>
+        <li>Corrected brochure attached (45 minutes of Maidstone)</li>
       </ul>
       <p style="margin:24px 0">
         <a href="${escapeHtml(ctaUrl)}"

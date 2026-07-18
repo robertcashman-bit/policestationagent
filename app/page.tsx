@@ -21,14 +21,14 @@ import { StandardPaceSources } from "@/components/legal/StandardPaceSources";
 export const metadata: Metadata = {
   title: "Police Station Solicitor Kent | Duty Solicitor & Voluntary Interviews | NOT the Police",
   description:
-    `${SEO_NOT_POLICE} Police station solicitor across Kent for custody and voluntary interview under caution. ${SERVICE_SCOPE} Free Legal Aid. Agent cover for firms. Robert Cashman via Tuckers Solicitors LLP. Call ${PHONE_DISPLAY}.`,
+    `${SEO_NOT_POLICE} Police station solicitor across Kent for custody and voluntary interview under caution. ${SERVICE_SCOPE} Free Legal Aid. Agent cover for firms within about 45 minutes of Maidstone. Robert Cashman via Tuckers Solicitors LLP. Call ${PHONE_DISPLAY}.`,
   alternates: {
     canonical: `https://${SITE_DOMAIN}/`,
   },
   openGraph: {
     title: "Police Station Solicitor Kent | Duty Solicitor & Voluntary Interviews | NOT the Police",
     description:
-      `${SEO_NOT_POLICE} Police station solicitor for Kent custody and voluntary interviews. Free Legal Aid. Agent cover for firms. Tuckers Solicitors LLP.`,
+      `${SEO_NOT_POLICE} Police station solicitor for Kent custody and voluntary interviews. Free Legal Aid. Agent cover for firms within about 45 minutes of Maidstone. Tuckers Solicitors LLP.`,
     url: `https://${SITE_DOMAIN}/`,
     siteName: "Police Station Agent",
     type: "website",

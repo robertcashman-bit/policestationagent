@@ -61,7 +61,7 @@ export default function FAQContent() {
         {
           question: "Who do you represent?",
           answer:
-            "We represent anyone who has been arrested or invited for a voluntary police interview in Kent. This includes individuals facing any type of criminal allegation, from minor offences to serious matters. We also provide agent cover services for other criminal law firms who need police station representation for their clients.",
+            "We represent anyone who has been arrested or invited for a voluntary police interview in Kent. This includes individuals facing any type of criminal allegation, from minor offences to serious matters. We also provide agent cover for other criminal law firms at police stations within about 45 minutes of Maidstone.",
         },
         {
           question: "What types of offences do you cover?",
@@ -253,7 +253,7 @@ export default function FAQContent() {
         {
           question: "What agent services do you provide to law firms?",
           answer:
-            "We provide reliable police station agent cover for criminal law firms across Kent. Our services include: attending police stations on behalf of your clients, providing detailed attendance notes, ensuring compliance with PACE and professional standards, and maintaining communication with your firm throughout. We understand the importance of seamless service for your clients.",
+            "We provide reliable police station agent cover for criminal law firms at stations within about 45 minutes of Maidstone. Our services include: attending police stations on behalf of your clients, providing detailed attendance notes, ensuring compliance with PACE and professional standards, and maintaining communication with your firm throughout.",
         },
         {
           question: "What information do you provide after attending?",

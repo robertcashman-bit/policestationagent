@@ -20,13 +20,13 @@ export function buildBrochureHtml(): string {
 
   const stationCount = stations.length;
   const stationPills = stations.map((s) => `<span class="station-pill">${s}</span>`).join("");
-  const coverageLine = `${stations.slice(0, 4).join(" · ")} · and every Kent custody suite`;
+  const coverageLine = `Police stations within about 45 minutes of Maidstone — e.g. ${stations.slice(0, 4).join(" · ")}`;
 
   return `<!DOCTYPE html>
 <html lang="en-GB">
 <head>
   <meta charset="utf-8" />
-  <title>Police Station Agent — Kent Police Station Cover</title>
+  <title>Police Station Agent — Agency Cover within 45 mins of Maidstone</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
@@ -446,8 +446,8 @@ export function buildBrochureHtml(): string {
     <div class="hero">
       <div class="hero-inner">
         <span class="badge">Police station agency only</span>
-        <h1>Kent police station cover when your firm needs a <em>rep</em></h1>
-        <p class="hero-sub">Professional agency attendance at Kent custody suites — in-custody interviews, voluntary interviews, and detailed attendance notes. Evenings, weekends, and bank holidays.</p>
+        <h1>Police station agent cover within 45 minutes of Maidstone</h1>
+        <p class="hero-sub">Professional agency attendance at police stations within about 45 minutes of Maidstone — in-custody interviews, voluntary interviews, and detailed attendance notes. Evenings, weekends, and bank holidays.</p>
         <div class="hero-stats">
           <div class="stat">
             <div class="stat-num">25+</div>
@@ -459,14 +459,14 @@ export function buildBrochureHtml(): string {
           </div>
           <div class="stat">
             <div class="stat-num">${stationCount}</div>
-            <div class="stat-label">Kent suites</div>
+            <div class="stat-label">~45 min radius</div>
           </div>
         </div>
       </div>
     </div>
 
     <div class="coverage-band">
-      <h2>Kent police station coverage</h2>
+      <h2>Agency coverage — within 45 minutes of Maidstone</h2>
       <p class="tagline">${coverageLine}</p>
       ${stationPills}
     </div>
@@ -474,7 +474,7 @@ export function buildBrochureHtml(): string {
     <div class="body-p1">
       <p class="section-title">Agency cover for criminal firms</p>
       <p class="intro">
-        <strong>Police Station Agent</strong> provides police station agency cover when your duty rota, distance, or workload needs attendance at short notice. Led by duty-accredited police station solicitor <strong>Robert Cashman</strong> — freelance representation for criminal defence firms across Kent custody suites.
+        <strong>Police Station Agent</strong> provides police station agency cover when your duty rota, distance, or workload needs attendance at short notice. Led by duty-accredited police station solicitor <strong>Robert Cashman</strong> — freelance representation for criminal defence firms at police stations within about 45 minutes of Maidstone.
       </p>
       <div class="services-grid">
         <div class="service-card legal-aid">
@@ -504,8 +504,8 @@ export function buildBrochureHtml(): string {
 
     <div class="cta-strip">
       <div>
-        <p>Instruct agent cover for your client at any Kent police station.</p>
-        <p class="cta-sub">Medway · Maidstone · Canterbury · Gravesend · and all Kent custody suites</p>
+        <p>Instruct agent cover for your client at a police station within about 45 minutes of Maidstone.</p>
+        <p class="cta-sub">Anywhere within ~45 minutes of Maidstone — including nearby Kent stations in that radius</p>
       </div>
       <div class="cta-phone">
         <div class="label">Instruct agent cover</div>
@@ -521,7 +521,7 @@ export function buildBrochureHtml(): string {
   <!-- PAGE 2 -->
   <section class="page page2-inner">
     <div class="page2-header">
-      <h2>Every Kent custody suite covered</h2>
+      <h2>Stations within about 45 minutes of Maidstone</h2>
       <p>Extended hours attendance — evenings, weekends, and bank holidays when your panel needs a police station rep.</p>
     </div>
 
@@ -534,7 +534,7 @@ export function buildBrochureHtml(): string {
       <div class="why-card">
         <div class="why-icon">🚔</div>
         <h4>Fast attendance</h4>
-        <p>Prompt attendance at Kent custody suites when your rota cannot cover.</p>
+        <p>Prompt attendance at police stations within about 45 minutes of Maidstone when your rota cannot cover.</p>
       </div>
       <div class="why-card">
         <div class="why-icon">📋</div>
@@ -552,7 +552,7 @@ export function buildBrochureHtml(): string {
       <div class="bio-photo">RC</div>
       <div>
         <h3>Robert Cashman — police station specialist</h3>
-        <p>Over 25 years in police station and custody work across Kent. Duty-accredited for police station attendance. Experienced freelance agent cover for criminal defence firms — from minor matters to serious allegations at every Kent custody suite.</p>
+        <p>Over 25 years in police station and custody work. Duty-accredited for police station attendance. Experienced freelance agent cover for criminal defence firms — from minor matters to serious allegations at police stations within about 45 minutes of Maidstone.</p>
       </div>
     </div>
 

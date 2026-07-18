@@ -26,7 +26,7 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
     answerFirst:
       "In brief: this hub covers police station reps and police station representatives across Kent — with regular attendance at North Kent (Gravesend) and Tonbridge custody suites, plus voluntary interviews at Maidstone, Sevenoaks, Tunbridge Wells, Swanley and other Kent stations.",
     intro:
-      "Robert Cashman provides police station representation and agency cover across Kent — with regular extended-hours attendance at North Kent (Gravesend) and Tonbridge custody suites among others. Criminal defence firms can instruct cover; clients in custody or booked for interview can request advice through Tuckers Solicitors LLP.",
+      "Robert Cashman provides police station representation across Kent, and agency cover at police stations within about 45 minutes of Maidstone — with regular extended-hours attendance at North Kent (Gravesend) and Tonbridge among others. Criminal defence firms can instruct cover; clients in custody or booked for interview can request advice through Tuckers Solicitors LLP.",
     areas: [
       "Gravesend",
       "Northfleet",

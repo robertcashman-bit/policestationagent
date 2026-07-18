@@ -7,7 +7,7 @@ import { SITE_DOMAIN, SITE_URL } from "@/config/site";
 export const metadata: Metadata = {
   title: "What We Do | Police Station Agent - Expert Legal Representation Kent",
   description:
-    "Expert police station representation and criminal defence services across Kent. FREE legal advice under Legal Aid, extended hours availability, voluntary interviews, and agent cover for law firms.",
+    "Expert police station representation and criminal defence services across Kent. FREE legal advice under Legal Aid, extended hours availability, voluntary interviews, and agent cover within about 45 minutes of Maidstone.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/what-we-do`,
   },
@@ -432,9 +432,9 @@ export default function Page() {
                   Agent Cover for Law Firms
                 </h2>
                 <p className="text-slate-600 leading-relaxed mb-4">
-                  We provide reliable police station agent services for criminal law firms across
-                  the country. Our comprehensive service includes detailed attendance notes,
-                  competitive fixed rates, and expert representation.
+                  For agency work, Robert Cashman attends police stations anywhere within about
+                  45 minutes of Maidstone. Detailed attendance notes, competitive fixed rates,
+                  and expert representation for instructing firms.
                 </p>
                 <ul className="space-y-2 text-slate-600 mb-6">
                   <li className="flex items-start gap-2">

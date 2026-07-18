@@ -6,9 +6,9 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Solicitors: Police Station Attendance Cover Across Kent | Agent Services",
+  title: "Solicitors: Police Station Agent Cover | Within 45 mins of Maidstone",
   description:
-    "Attendance cover for solicitors across Kent custody suites and police stations. Custody and voluntary interview attendances. Competitive rates. Call 01732 247427.",
+    "Police station agent cover for solicitors — attendance within about 45 minutes of Maidstone. Custody and voluntary interview attendances. Competitive rates. Call 01732 247427.",
   alternates: {
     canonical: "https://policestationagent.com/start/solicitors-agent-cover",
   },
@@ -28,18 +28,19 @@ export default function SolicitorsAgentCoverPage() {
             >
               <div className="max-w-3xl mx-auto text-center px-4">
                 <h1 id="page-title" className="text-4xl md:text-5xl font-black mb-6 text-white">
-                  Solicitors: Police Station Attendance Cover Across Kent
+                  Solicitors: Police Station Agent Cover
                 </h1>
                 <p className="text-xl text-amber-100 mb-8">
-                  Attendance cover for solicitors across Kent custody suites/police stations.
+                  Agency attendance at police stations within about 45 minutes of Maidstone.
                 </p>
               </div>
             </section>
 
             <AnswerFirstBlock>
-              In brief: criminal defence firms instruct Robert Cashman for police station attendance
-              cover across Kent custody suites and voluntary interviews. Send client name, station,
-              custody record number, DSCC reference, interview time and allegation summary. See our{" "}
+              In brief: criminal defence firms instruct Robert Cashman for police station agency
+              attendance within about 45 minutes of Maidstone — custody and voluntary interviews.
+              Send client name, station, custody record number, DSCC reference, interview time and
+              allegation summary. See our{" "}
               <Link href="/dscc-and-custody-record-support" className="text-blue-700 font-semibold hover:underline">
                 DSCC and custody record guide
               </Link>

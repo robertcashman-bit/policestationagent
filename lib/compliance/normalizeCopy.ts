@@ -28,10 +28,12 @@ export const BANNED_PATTERNS = [
   },
   {
     id: "forty-five-minutes",
-    pattern: /(?:available\s+)?within\s+45\s+minutes|attend\s+within\s+45\s+minutes/gi,
+    // Allow agency coverage radius ("within 45 minutes of Maidstone"); block bare SLA claims.
+    pattern:
+      /(?:available\s+)?within\s+45\s+minutes(?!\s+of\s+Maidstone)|attend\s+within\s+45\s+minutes(?!\s+of\s+Maidstone)/gi,
     replacement:
       "We aim to respond promptly. Attendance times depend on location, custody demand and solicitor availability.",
-    description: "45 minute SLA claims",
+    description: "45 minute SLA claims (excluding Maidstone agency radius)",
   },
   {
     id: "twenty-four-seven-representation",

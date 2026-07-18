@@ -20,7 +20,7 @@ export function HomeHeroCover() {
         <p className="text-lg md:text-xl text-white mb-8 max-w-3xl mx-auto">
           Duty solicitor and voluntary interview solicitor help across Kent — free Legal Aid for
           people in custody or booked under caution, plus police station agent cover for defence
-          firms. Legal services by Tuckers Solicitors LLP.
+          firms within about 45 minutes of Maidstone. Legal services by Tuckers Solicitors LLP.
         </p>
 
         <div className="rounded-xl bg-white p-5 md:p-6 shadow-lg max-w-xl mx-auto text-left">
