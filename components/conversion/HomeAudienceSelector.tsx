@@ -25,8 +25,8 @@ const AUDIENCE_OPTIONS = [
   },
   {
     href: "/for-solicitors#firm-enquiry",
-    title: "Law firm needing cover",
-    description: "Instruct Kent police station attendance for your client",
+    title: "Law firm needing agent cover",
+    description: "Police station agent cover across Kent for your client",
     iconBg: "bg-amber-100 group-hover:bg-amber-200",
     iconColor: "text-amber-600",
     borderHover: "hover:border-amber-400 hover:bg-amber-50",

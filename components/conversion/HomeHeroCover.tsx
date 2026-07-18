@@ -18,8 +18,9 @@ export function HomeHeroCover() {
           Police station solicitors across Kent
         </h1>
         <p className="text-lg md:text-xl text-white mb-8 max-w-3xl mx-auto">
-          Free advice for people in custody or booked for interview under caution — and reliable
-          agent cover for criminal defence firms. Legal services by Tuckers Solicitors LLP.
+          Duty solicitor and voluntary interview solicitor help across Kent — free Legal Aid for
+          people in custody or booked under caution, plus police station agent cover for defence
+          firms. Legal services by Tuckers Solicitors LLP.
         </p>
 
         <div className="rounded-xl bg-white p-5 md:p-6 shadow-lg max-w-xl mx-auto text-left">
@@ -36,17 +37,39 @@ export function HomeHeroCover() {
             , plus Medway, Maidstone, Canterbury and the rest of Kent.
           </p>
           <ConversionCTAGroup layout="stacked" />
-          <p className="text-slate-700 text-sm mt-4">
-            Firms: see{" "}
-            <Link href="/for-solicitors" className="font-semibold text-blue-700 hover:underline">
-              police station cover for solicitors
-            </Link>{" "}
-            or our{" "}
-            <Link href="/dscc-and-custody-record-support" className="font-semibold text-blue-700 hover:underline">
-              DSCC &amp; custody record guide
-            </Link>
-            .
-          </p>
+          <nav className="mt-4 text-sm text-slate-700" aria-label="Core services">
+            <ul className="flex flex-col gap-1.5">
+              <li>
+                <Link href="/services" className="font-semibold text-blue-700 hover:underline">
+                  Police station solicitor services
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/services/police-station-representation"
+                  className="font-semibold text-blue-700 hover:underline"
+                >
+                  Police station representation (Legal Aid)
+                </Link>
+              </li>
+              <li>
+                <Link href="/for-clients" className="font-semibold text-blue-700 hover:underline">
+                  Help for clients in custody or interview
+                </Link>
+              </li>
+              <li>
+                <Link href="/freelegaladvice" className="font-semibold text-blue-700 hover:underline">
+                  Free legal advice at the police station
+                </Link>
+              </li>
+              <li>
+                Firms:{" "}
+                <Link href="/for-solicitors" className="font-semibold text-blue-700 hover:underline">
+                  police station agent cover for solicitors
+                </Link>
+              </li>
+            </ul>
+          </nav>
         </div>
       </div>
     </section>
