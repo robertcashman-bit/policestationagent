@@ -83,6 +83,17 @@ jobs:
             source .env.production
           fi
           set +a
+          # vercel env pull redacts Sensitive vars as [SENSITIVE]; prefer GitHub secrets
+          if [ -n "${{ secrets.CRON_SECRET }}" ]; then
+            export CRON_SECRET="${{ secrets.CRON_SECRET }}"
+          fi
+          if [ -n "${{ secrets.FIRM_OUTREACH_BOOTSTRAP_SECRET }}" ]; then
+            export FIRM_OUTREACH_BOOTSTRAP_SECRET="${{ secrets.FIRM_OUTREACH_BOOTSTRAP_SECRET }}"
+          fi
+          if [ "${CRON_SECRET:-}" = "[SENSITIVE]" ] || [ "${FIRM_OUTREACH_BOOTSTRAP_SECRET:-}" = "[SENSITIVE]" ]; then
+            echo "Sensitive cron auth still redacted — set CRON_SECRET / FIRM_OUTREACH_BOOTSTRAP_SECRET in GitHub Actions secrets"
+            exit 1
+          fi
           export FIRM_OUTREACH_KICK_BASE_URL="https://www.policestationagent.com"
           export VERCEL_TOKEN="${{ secrets.VERCEL_TOKEN }}"
           export FIRM_OUTREACH_KICK_COMMIT_SHA="${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}"
