@@ -56,14 +56,24 @@ export const BANNED_PATTERNS = [
   },
   {
     id: "we-provide-representation",
-    pattern: /we\s+provide\s+representation/gi,
-    replacement: "Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795).",
+    // Match full clause so we do not leave a leading "We" or dangling "at …"
+    pattern:
+      /we\s+provide\s+representation(?:\s+at\s+all\s+police\s+stations(?:\s+and\s+custody\s+suites)?(?:\s+across\s+Kent(?:\s*(?:&|and)\s*Medway)?)?)?/gi,
+    replacement:
+      "Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795) at police stations and custody suites across Kent and Medway",
     description: "We provide representation claims",
+  },
+  {
+    id: "broken-we-legal-services-splice",
+    pattern:
+      /We\s+Legal\s+services\s+are\s+provided\s+by\s+Tuckers\s+Solicitors\s+LLP\s+\(SRA\s+ID:\s*127795\)\.\s*/g,
+    replacement: "Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795) ",
+    description: "Cleanup for prior bad compliance splice leaving 'We Legal services…'",
   },
   {
     id: "our-advice-representation",
     pattern: /our\s+advice\s+and\s+representation/gi,
-    replacement: "Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795).",
+    replacement: "Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795)",
     description: "Our advice and representation claims",
   },
   {
