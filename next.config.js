@@ -490,7 +490,8 @@ const nextConfig = {
           },
           {
             key: "Permissions-Policy",
-            value: "camera=(), microphone=(), geolocation=()",
+            // Allow geolocation for the nearest-station finder (same origin only).
+            value: "camera=(), microphone=(), geolocation=(self)",
           },
           {
             key: "Strict-Transport-Security",

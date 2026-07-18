@@ -80,7 +80,10 @@ export default function NearestStationFinder() {
   };
 
   return (
-    <div className="not-prose mb-8 rounded-xl border border-blue-200 bg-blue-50 p-6 shadow-sm">
+    <div
+      id="nearest-station"
+      className="not-prose mb-8 rounded-xl border border-blue-200 bg-blue-50 p-6 shadow-sm scroll-mt-24"
+    >
       <h2 className="text-xl font-bold text-slate-900 mb-2">Find your nearest custody suite</h2>
       <p className="text-slate-700 mb-4">
         Use your current location to get a quick “nearest” suggestion, then view the full station
