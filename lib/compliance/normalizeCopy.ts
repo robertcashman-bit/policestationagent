@@ -42,10 +42,12 @@ export const BANNED_PATTERNS = [
   },
   {
     id: "guaranteed-representation",
-    pattern: /(?:guaranteed|you\s+are\s+guaranteed\s+to\s+be\s+represented\s+by)/gi,
+    // Do NOT match bare "guaranteed" — that shreds mid-sentence copy into nonsense.
+    pattern:
+      /you\s+are\s+guaranteed\s+to\s+be\s+represented\s+by(?:\s+Robert\s+Cashman)?|guaranteed\s+(?:to\s+be\s+)?represented\s+by(?:\s+Robert\s+Cashman)?|representation\s+is\s+guaranteed/gi,
     replacement:
-      "Where possible, you may be represented by Robert Cashman, subject to availability and conflicts. If Robert cannot attend, Tuckers will arrange an alternative suitably qualified representative.",
-    description: "Guarantee language",
+      "Where possible, you may be represented by Robert Cashman, subject to availability and conflicts. If Robert cannot attend, Tuckers will arrange an alternative suitably qualified representative",
+    description: "Guarantee language (full-phrase only)",
   },
   {
     id: "we-provide-urgent-attendance",
@@ -69,6 +71,14 @@ export const BANNED_PATTERNS = [
       /We\s+Legal\s+services\s+are\s+provided\s+by\s+Tuckers\s+Solicitors\s+LLP\s+\(SRA\s+ID:\s*127795\)\.\s*/g,
     replacement: "Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795) ",
     description: "Cleanup for prior bad compliance splice leaving 'We Legal services…'",
+  },
+  {
+    id: "broken-warranties-or-guarantees-splice",
+    // Bare "guarantees" was once replaced mid-legal-disclaimer.
+    pattern:
+      /warranties\s+or\s+Where\s+possible,\s+you\s+may\s+be\s+represented\s+by\s+Robert\s+Cashman,\s+subject\s+to\s+availability\s+and\s+conflicts\.\s+If\s+Robert\s+cannot\s+attend,\s+Tuckers(?:\s+Solicitors\s+LLP)?\s+will\s+arrange\s+an\s+alternative\s+suitably\s+qualified\s+representative\.?/gi,
+    replacement: "warranties or guarantees",
+    description: "Cleanup for prior bad compliance splice of legal 'guarantees'",
   },
   {
     id: "our-advice-representation",

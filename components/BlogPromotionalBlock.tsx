@@ -13,10 +13,9 @@ export default function BlogPromotionalBlock() {
           Police Station Advice & Representation
         </h2>
         <p className="text-slate-700 mb-6 leading-relaxed">
-          Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795). and legal services
-          across Kent and the UK. Our accredited duty solicitor, Robert Cashman, offers free legal
-          advice under Legal Aid for police station interviews, voluntary attendances, and custody
-          matters. Available during extended hours for urgent legal assistance.
+          Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795) across Kent and the UK.
+          Our accredited duty solicitor, Robert Cashman, offers free legal advice under Legal Aid for
+          police station interviews, voluntary attendances, and custody matters — including extended hours.
         </p>
         <div className="flex flex-col sm:flex-row gap-4">
           <a

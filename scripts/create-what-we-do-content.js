@@ -100,7 +100,7 @@ const WHAT_WE_DO_CONTENT = `<div class="bg-gradient-to-br from-slate-50 to-blue-
         </div>
         <h2 class="text-2xl font-bold text-slate-900 mb-4">Legal Aid & Private Representation</h2>
         <p class="text-slate-600 leading-relaxed mb-4">
-          We provide both Legal Aid (free) and private representation services. Legal Aid is available to everyone at the police station, while private representation offers Where possible, you may be represented by Robert Cashman, subject to availability and conflicts. If Robert cannot attend, Tuckers Solicitors LLP will arrange an alternative suitably qualified representative. and enhanced service.
+          We provide both Legal Aid (free) and private representation services. Legal Aid is available to everyone at the police station, while private representation offers, where possible, representation by Robert Cashman and an enhanced private service. If Robert cannot attend, Tuckers Solicitors LLP will arrange an alternative suitably qualified representative.
         </p>
         <ul class="space-y-2 text-slate-600">
           <li class="flex items-start gap-2">
@@ -113,7 +113,7 @@ const WHAT_WE_DO_CONTENT = `<div class="bg-gradient-to-br from-slate-50 to-blue-
             <svg class="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
             </svg>
-            <span>Private representation with Where possible, you may be represented by Robert Cashman, subject to availability and conflicts. If Robert cannot attend, Tuckers Solicitors LLP will arrange an alternative suitably qualified representative.</span>
+            <span>Private representation — where possible, by Robert Cashman, subject to availability and conflicts. If Robert cannot attend, Tuckers Solicitors LLP will arrange an alternative suitably qualified representative.</span>
           </li>
           <li class="flex items-start gap-2">
             <svg class="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">

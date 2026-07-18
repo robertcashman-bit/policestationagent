@@ -30,7 +30,7 @@ export default function FAQAccordion() {
       question: "Why should I pay privately if police station advice is free?",
       answer: `<p>While Legal Aid provides excellent free representation, private funding offers several advantages:</p>
 <ul>
-<li><strong>Where possible, you may be represented by Robert Cashman, subject to availability and conflicts. If Robert cannot attend, Tuckers Solicitors LLP will arrange an alternative suitably qualified representative.:</strong> Where possible, you may be represented by Robert Cashman, subject to availability and conflicts. If Robert cannot attend, Tuckers Solicitors LLP will arrange an alternative suitably qualified representative. Robert Cashman, a solicitor with 35+ years of experience, rather than whoever is on the duty rota</li>
+<li><strong>Named senior solicitor:</strong> Where possible, representation by Robert Cashman — a solicitor with 35+ years of experience — rather than whoever is on the duty rota. If Robert cannot attend, Tuckers Solicitors LLP will arrange an alternative suitably qualified representative.</li>
 <li><strong>Continuity:</strong> The same solicitor will handle your case from police station through to court if needed</li>
 <li><strong>Proactive approach:</strong> More time can be spent on pre-charge engagement and case preparation</li>
 <li><strong>Flexibility:</strong> Greater flexibility in communication and meeting arrangements</li>
@@ -55,8 +55,8 @@ export default function FAQAccordion() {
       question: "Can I get Robert Cashman even if I'm not paying privately?",
       answer: `<p>Yes, you can request Robert Cashman under Legal Aid. When you ask for legal representation at the police station, tell the custody officer: <strong>"I want Robert Cashman"</strong> or <strong>"I want Tuckers Solicitors LLP - Robert Cashman"</strong>.</p>
 <p>However, under Legal Aid, representation is subject to availability and the duty rota. While we will do our best to ensure Robert Cashman attends, we cannot guarantee it will be him on every occasion.</p>
-<p>With private funding, you are <strong>guaranteed</strong> to be represented by Robert Cashman, providing certainty and continuity.</p>
-<p>If you specifically want Robert Cashman and want to ensure he attends, private funding is the way to guarantee this.</p>`,
+<p>With private funding, representation by Robert Cashman is arranged where possible, subject to availability and conflicts, giving greater continuity than the duty rota.</p>
+<p>If you specifically want Robert Cashman, private funding is the best way to request him as your named solicitor — though attendance still depends on availability and conflicts.</p>`,
     },
     {
       question: "What's the difference between your Legal Aid and private service?",
@@ -76,7 +76,7 @@ export default function FAQAccordion() {
 <h4 class="font-bold mb-2 text-slate-900">Private Service:</h4>
 <ul class="list-disc pl-5 space-y-1 text-slate-600">
 <li>Fixed fee agreed upfront</li>
-<li>Where possible, you may be represented by Robert Cashman, subject to availability and conflicts. If Robert cannot attend, Tuckers Solicitors LLP will arrange an alternative suitably qualified representative. by Robert Cashman</li>
+<li>Where possible, representation by Robert Cashman (otherwise Tuckers will arrange a suitably qualified alternative)</li>
 <li>Continuity from police station through to court</li>
 <li>Proactive defence strategy from the outset</li>
 <li>Greater time dedicated to pre-charge engagement</li>
@@ -85,7 +85,7 @@ export default function FAQAccordion() {
 </ul>
 </div>
 </div>
-<p>Both services provide expert representation. The choice depends on your priorities: cost (Legal Aid) or Where possible, you may be represented by Robert Cashman, subject to availability and conflicts. If Robert cannot attend, Tuckers Solicitors LLP will arrange an alternative suitably qualified representative. and enhanced service (private).</p>`,
+<p>Both services provide expert representation. The choice depends on your priorities: cost (Legal Aid) or enhanced private service with, where possible, representation by Robert Cashman (otherwise Tuckers will arrange a suitably qualified alternative).</p>`,
     },
   ];
 
