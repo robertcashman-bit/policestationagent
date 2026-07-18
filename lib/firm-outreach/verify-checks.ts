@@ -322,13 +322,14 @@ export function checkOutreachTemplates(): RepoCheckResult[] {
       step,
       unsubscribeUrl: 'https://policestationagent.com/outreach/unsubscribe/test-token',
     });
-    const kentOnly =
-      html.toLowerCase().includes('kent custody') &&
+    const lower = html.toLowerCase();
+    const maidstoneScoped =
+      lower.includes('45 minutes of maidstone') &&
       !html.includes('England &amp; Wales when your roster');
     results.push({
       name: `template_html_step_${step}`,
-      ok: html.includes('Unsubscribe') && html.includes('verify-test-prospect') && kentOnly,
-      detail: `html_length=${html.length} kent_only=${kentOnly}`,
+      ok: html.includes('Unsubscribe') && html.includes('verify-test-prospect') && maidstoneScoped,
+      detail: `html_length=${html.length} maidstone_scoped=${maidstoneScoped}`,
     });
   }
 
