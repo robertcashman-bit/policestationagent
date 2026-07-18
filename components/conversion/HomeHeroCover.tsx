@@ -15,11 +15,11 @@ export function HomeHeroCover() {
           Kent — NOT the police
         </p>
         <h1 id="home-hero-heading" className="text-3xl md:text-5xl font-black mb-4 leading-tight text-white">
-          At the police station or booked for interview?
+          Police station solicitors across Kent
         </h1>
         <p className="text-lg md:text-xl text-white mb-8 max-w-3xl mx-auto">
-          We attend Kent custody suites and voluntary interviews — for people who need free advice
-          now, and for defence firms who need reliable cover.
+          Free advice for people in custody or booked for interview under caution — and reliable
+          agent cover for criminal defence firms. Legal services by Tuckers Solicitors LLP.
         </p>
 
         <div className="rounded-xl bg-white p-5 md:p-6 shadow-lg max-w-xl mx-auto text-left">
