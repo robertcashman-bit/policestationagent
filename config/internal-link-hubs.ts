@@ -56,7 +56,7 @@ export const RIGHTS_HUB: HubDefinition = {
 
 export const STATIONS_HUB: HubDefinition = {
   id: "stations",
-  title: "Kent Police Stations & Local Representation",
+  title: "Kent police station information & local representation",
   links: [
     {
       href: "/kent-police-station-reps",

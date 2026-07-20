@@ -5,15 +5,13 @@ import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Coldharbour Police Station Solicitor | Robert Cashman | FREE",
-  description:
-    "Voluntary police interview in Coldharbour (Aylesford)? Call Robert Cashman - Duty Solicitor. FREE legal advice for voluntary interviews. 01732 247427.",
+  description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Coldharbour custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
   alternates: {
     canonical: "https://policestationagent.com/coldharbour-police-station",
   },
   openGraph: {
     title: "Coldharbour Police Station Solicitor | Robert Cashman | FREE",
-    description:
-      "Voluntary police interview in Coldharbour (Aylesford)? Call Robert Cashman - Duty Solicitor. FREE legal advice for voluntary interviews. 01732 247427.",
+    description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Coldharbour custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
     url: "https://policestationagent.com/coldharbour-police-station",
     siteName: "Police Station Agent",
     type: "website",

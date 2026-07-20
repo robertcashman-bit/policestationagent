@@ -5,15 +5,13 @@ import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Tunbridge Wells Police Station Solicitor | Robert Cashman | FREE",
-  description:
-    "Voluntary police interview in Tunbridge Wells? Call Robert Cashman - Duty Solicitor. FREE legal advice for voluntary attendance. 01732 247427.",
+  description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Tunbridge Wells custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
   alternates: {
     canonical: "https://policestationagent.com/tunbridge-wells-police-station",
   },
   openGraph: {
     title: "Tunbridge Wells Police Station Solicitor | Robert Cashman | FREE",
-    description:
-      "Voluntary police interview in Tunbridge Wells? Call Robert Cashman - Duty Solicitor. FREE legal advice for voluntary attendance. 01732 247427.",
+    description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Tunbridge Wells custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
     url: "https://policestationagent.com/tunbridge-wells-police-station",
     siteName: "Police Station Agent",
     type: "website",

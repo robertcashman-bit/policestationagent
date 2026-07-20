@@ -5,15 +5,13 @@ import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Dover Police Station Solicitor | Robert Cashman | FREE Advice",
-  description:
-    "Police interview in Dover? Port or customs matter? Call Robert Cashman - Duty Solicitor. FREE legal advice, immigration arrests covered. 01732 247427.",
+  description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Dover custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
   alternates: {
     canonical: "https://policestationagent.com/dover-police-station",
   },
   openGraph: {
     title: "Dover Police Station Solicitor | Robert Cashman | FREE Advice",
-    description:
-      "Police interview in Dover? Port or customs matter? Call Robert Cashman - Duty Solicitor. FREE legal advice, immigration arrests covered. 01732 247427.",
+    description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Dover custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
     url: "https://policestationagent.com/dover-police-station",
     siteName: "Police Station Agent",
     type: "website",

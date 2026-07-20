@@ -6,15 +6,13 @@ import { StandardPaceSources } from "@/components/legal/StandardPaceSources";
 
 export const metadata: Metadata = {
   title: "Medway Police Station Solicitor | Robert Cashman | FREE extended hours",
-  description:
-    "Police interview at Medway Custody Suite, Gillingham? Call Robert Cashman - Duty Solicitor. FREE legal advice under PACE. 30+ years experience. 01732 247427.",
+  description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Medway custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
   alternates: {
     canonical: "https://policestationagent.com/medway-police-station",
   },
   openGraph: {
     title: "Medway Police Station Solicitor | Robert Cashman | FREE extended hours",
-    description:
-      "Police interview at Medway Custody Suite, Gillingham? Call Robert Cashman - Duty Solicitor. FREE legal advice under PACE. 30+ years experience. 01732 247427.",
+    description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Medway custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
     url: "https://policestationagent.com/medway-police-station",
     siteName: "Police Station Agent",
     type: "website",

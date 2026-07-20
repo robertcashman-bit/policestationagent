@@ -24,8 +24,43 @@ function loadLatestReport(): PoliceConfusionHealthReport | null {
   }
 }
 
+function loadHistory(limit = 7): Array<{
+  date: string;
+  averageScore: number;
+  highRiskCount: number;
+  pagesTested: number;
+}> {
+  const dir = path.join(process.cwd(), "data", "police-confusion-reports");
+  if (!fs.existsSync(dir)) return [];
+  const files = fs
+    .readdirSync(dir)
+    .filter((f) => /^\d{4}-\d{2}-\d{2}\.json$/.test(f))
+    .sort()
+    .reverse()
+    .slice(0, limit);
+
+  const rows = [];
+  for (const file of files) {
+    try {
+      const report = JSON.parse(
+        fs.readFileSync(path.join(dir, file), "utf8"),
+      ) as PoliceConfusionHealthReport;
+      rows.push({
+        date: file.replace(/\.json$/, ""),
+        averageScore: report.summary?.averageScore ?? 0,
+        highRiskCount: report.summary?.highRiskCount ?? 0,
+        pagesTested: report.summary?.pagesTested ?? 0,
+      });
+    } catch {
+      // skip corrupt
+    }
+  }
+  return rows;
+}
+
 export default function PoliceConfusionAdminPage() {
   const report = loadLatestReport();
+  const history = loadHistory(7);
 
   return (
     <AdminGate>
@@ -38,7 +73,8 @@ export default function PoliceConfusionAdminPage() {
         >
           {!report ? (
             <p className="text-slate-600">
-              No report yet. Run <code className="text-sm bg-slate-100 px-1 rounded">npm run seo:police-confusion</code>{" "}
+              No report yet. Run{" "}
+              <code className="text-sm bg-slate-100 px-1 rounded">npm run seo:police-confusion</code>{" "}
               or wait for the daily cron at 02:00 UTC.
             </p>
           ) : (
@@ -48,12 +84,26 @@ export default function PoliceConfusionAdminPage() {
                 <Stat label="Average score" value={String(report.summary.averageScore)} />
                 <Stat label="High risk" value={String(report.summary.highRiskCount)} />
                 <Stat label="Trend" value={report.summary.trendSincePrevious} />
+                <Stat
+                  label="False police intent"
+                  value={String(report.summary.falsePoliceIntent ?? 0)}
+                />
+                <Stat
+                  label="Snippet problems"
+                  value={String(report.summary.snippetProblems ?? 0)}
+                />
+                <Stat
+                  label="Schema errors"
+                  value={String(report.summary.schemaErrors)}
+                />
+                <Stat
+                  label="False telephone assoc."
+                  value={String(report.summary.falseTelephoneAssociation)}
+                />
               </div>
 
               <p className="text-sm text-slate-500">
-                Generated {new Date(report.generatedAt).toLocaleString("en-GB")} · Schema errors:{" "}
-                {report.summary.schemaErrors} · False telephone association:{" "}
-                {report.summary.falseTelephoneAssociation}
+                Generated {new Date(report.generatedAt).toLocaleString("en-GB")}
               </p>
 
               <section>
@@ -87,6 +137,61 @@ export default function PoliceConfusionAdminPage() {
                             <li key={r}>{r}</li>
                           ))}
                         </ul>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </section>
+
+              <section>
+                <h2 className="text-lg font-semibold text-slate-900 mb-3">All scored pages</h2>
+                <div className="overflow-x-auto rounded-lg border border-slate-200">
+                  <table className="min-w-full text-sm">
+                    <thead className="bg-slate-50 text-left text-xs uppercase tracking-wide text-slate-500">
+                      <tr>
+                        <th className="px-3 py-2">Path</th>
+                        <th className="px-3 py-2">Score</th>
+                        <th className="px-3 py-2">Police</th>
+                        <th className="px-3 py-2">Legal</th>
+                        <th className="px-3 py-2">Flags</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {[...report.pages]
+                        .sort((a, b) => b.score - a.score)
+                        .map((p) => (
+                          <tr key={p.path} className="border-t border-slate-100">
+                            <td className="px-3 py-2 font-mono text-xs text-slate-800">
+                              {p.path}
+                            </td>
+                            <td className="px-3 py-2 font-semibold">{p.score}</td>
+                            <td className="px-3 py-2">{p.policeIntent}</td>
+                            <td className="px-3 py-2">{p.legalIntent}</td>
+                            <td className="px-3 py-2 text-slate-600">
+                              {p.flags.length ? p.flags.join(", ") : "—"}
+                            </td>
+                          </tr>
+                        ))}
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+
+              <section>
+                <h2 className="text-lg font-semibold text-slate-900 mb-3">History (last 7)</h2>
+                {history.length === 0 ? (
+                  <p className="text-sm text-slate-600">No dated reports yet.</p>
+                ) : (
+                  <ul className="space-y-2 text-sm">
+                    {history.map((h) => (
+                      <li
+                        key={h.date}
+                        className="flex flex-wrap gap-4 rounded-lg border border-slate-200 bg-white px-4 py-2"
+                      >
+                        <span className="font-medium text-slate-900">{h.date}</span>
+                        <span className="text-slate-600">avg {h.averageScore}</span>
+                        <span className="text-slate-600">high-risk {h.highRiskCount}</span>
+                        <span className="text-slate-600">pages {h.pagesTested}</span>
                       </li>
                     ))}
                   </ul>

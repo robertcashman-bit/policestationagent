@@ -57,6 +57,21 @@ describe("disambiguateStationHtml", () => {
     expect(out).toContain("Need the police? (official)");
     expect(out).toContain("Need a solicitor? Independent legal advice");
     expect(out).toContain("Medway Police Station Information");
-    expect(out).toContain('data-nosnippet');
+    expect(out).toContain("data-nosnippet");
+  });
+
+  it("labels and nosnippets hero tel:01732 under H1", () => {
+    const input = `
+      <h1>Police Station Rep Medway Custody</h1>
+      <p class="text-lg">URGENT: Police Station Help</p>
+      <a href="tel:01732247427" class="bg-red-600">Call 01732 247427</a>
+      <div>Police Station Details</div>
+      <a>Get Directions</a>
+    `;
+    const out = disambiguateStationHtml(input);
+    expect(out).toContain("data-station-not-police");
+    expect(out).toContain('data-solicitor-label="true"');
+    expect(out).toMatch(/href="tel:01732247427" data-nosnippet/);
+    expect(out).toContain("Need a solicitor? Independent legal advice");
   });
 });

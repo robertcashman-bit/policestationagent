@@ -7,7 +7,7 @@ import { LegalReferences, Ref, type LegalSource } from "@/components/LegalRefere
 import { SITE_DOMAIN } from "@/config/site";
 
 export const metadata: Metadata = {
-  title: "DNA & Fingerprints at Police Station: Your Rights UK",
+  title: "DNA & Fingerprints at Police Station: Your Rights UK Information | Independent Criminal Defence Solicitors",
   description:
     "Fingerprints and samples at the police station: what PACE says about fingerprints, intimate samples, and non-intimate samples (England & Wales). Sources included.",
   alternates: {

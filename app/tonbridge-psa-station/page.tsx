@@ -5,15 +5,13 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Tonbridge Police Station Solicitor | Robert Cashman | Extended Hours",
-  description:
-    "Police interview at Tonbridge Custody Suite? Call Robert Cashman - Duty Solicitor. FREE legal advice, West Malling & Tunbridge Wells. 01732 247427.",
+  description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Tonbridge custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
   alternates: {
     canonical: "https://policestationagent.com/tonbridge-psa-station",
   },
   openGraph: {
     title: "Tonbridge Police Station Solicitor | Robert Cashman | Extended Hours",
-    description:
-      "Police interview at Tonbridge Custody Suite? Call Robert Cashman - Duty Solicitor. FREE legal advice, West Malling & Tunbridge Wells. 01732 247427.",
+    description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Tonbridge custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
     type: "website",
     url: "https://policestationagent.com/tonbridge-psa-station",
   },

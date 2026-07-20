@@ -5,15 +5,13 @@ import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Margate Police Station Solicitor | Robert Cashman | FREE extended hours",
-  description:
-    "Arrested in Margate or Thanet? Call Robert Cashman - Duty Solicitor. FREE legal advice at Margate extended hours Custody Suite. 01732 247427.",
+  description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Margate custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
   alternates: {
     canonical: "https://policestationagent.com/margate-police-station",
   },
   openGraph: {
     title: "Margate Police Station Solicitor | Robert Cashman | FREE extended hours",
-    description:
-      "Arrested in Margate or Thanet? Call Robert Cashman - Duty Solicitor. FREE legal advice at Margate extended hours Custody Suite. 01732 247427.",
+    description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Margate custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
     url: "https://policestationagent.com/margate-police-station",
     siteName: "Police Station Agent",
     type: "website",

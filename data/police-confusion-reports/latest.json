@@ -1,20 +1,23 @@
 {
-  "generatedAt": "2026-07-20T15:49:27.916Z",
+  "generatedAt": "2026-07-20T17:03:36.402Z",
   "summary": {
-    "pagesTested": 6,
-    "averageScore": 0,
+    "pagesTested": 38,
+    "averageScore": 1,
     "highRiskCount": 0,
     "falsePoliceIntent": 0,
     "falseTelephoneAssociation": 0,
     "schemaErrors": 0,
+    "snippetProblems": 0,
     "actionsPerformed": [
       "Scored on-page police confusion signals",
       "Runtime scraped HTML disambiguation is active via normalizeScrapedHtml",
-      "Healed 25 solicitor page title(s): removed Call 01732 from titles"
+      "Audited 38 discovered station/hub targets",
+      "Healed 1 station page title(s): added Information / Independent framing",
+      "Healed 1 station meta description(s): removed Call 01732 / custody phone framing"
     ],
     "outstandingIssues": [],
     "trendSincePrevious": "unchanged",
-    "previousAverageScore": 0,
+    "previousAverageScore": 1,
     "externalChecks": {
       "status": "skipped",
       "serp": null,
@@ -29,18 +32,66 @@
   },
   "pages": [
     {
-      "path": "/app/kent-police-stations/page.tsx",
+      "path": "/app/arrested-at-police-station/page.tsx",
       "score": 0,
-      "policeIntent": 2,
-      "legalIntent": 7,
+      "policeIntent": 1,
+      "legalIntent": 8,
       "flags": [],
       "recommendations": []
     },
     {
-      "path": "/app/police-stations/[slug]/page.tsx",
+      "path": "/app/ashford-police-station/page.tsx",
       "score": 0,
-      "policeIntent": 3,
-      "legalIntent": 7,
+      "policeIntent": 1,
+      "legalIntent": 9,
+      "flags": [],
+      "recommendations": []
+    },
+    {
+      "path": "/app/ashford-psa-station/page.tsx",
+      "score": 0,
+      "policeIntent": 2,
+      "legalIntent": 9,
+      "flags": [],
+      "recommendations": []
+    },
+    {
+      "path": "/app/bluewater-police-station/page.tsx",
+      "score": 0,
+      "policeIntent": 1,
+      "legalIntent": 9,
+      "flags": [],
+      "recommendations": []
+    },
+    {
+      "path": "/app/bluewater-psa-station/page.tsx",
+      "score": 0,
+      "policeIntent": 2,
+      "legalIntent": 9,
+      "flags": [],
+      "recommendations": []
+    },
+    {
+      "path": "/app/canterbury-police-station/page.tsx",
+      "score": 0,
+      "policeIntent": 1,
+      "legalIntent": 8,
+      "flags": [],
+      "recommendations": []
+    },
+    {
+      "path": "/app/canterbury-psa-station/page.tsx",
+      "score": 0,
+      "policeIntent": 2,
+      "legalIntent": 8,
+      "flags": [],
+      "recommendations": []
+    },
+    {
+      "path": "/app/coldharbour-police-station/page.tsx",
+      "score": 0,
+      "policeIntent": 1,
+      "legalIntent": 9,
       "flags": [],
       "recommendations": []
     },
@@ -53,15 +104,39 @@
       "recommendations": []
     },
     {
-      "path": "/app/medway-police-station/page.tsx",
+      "path": "/app/coverage/police-stations/page.tsx",
       "score": 0,
-      "policeIntent": 1,
-      "legalIntent": 7,
+      "policeIntent": 2,
+      "legalIntent": 4,
       "flags": [],
       "recommendations": []
     },
     {
-      "path": "/app/maidstone-police-station/page.tsx",
+      "path": "/app/dna-fingerprints-police-station/page.tsx",
+      "score": 0,
+      "policeIntent": 1,
+      "legalIntent": 5,
+      "flags": [],
+      "recommendations": []
+    },
+    {
+      "path": "/app/dover-police-station/page.tsx",
+      "score": 0,
+      "policeIntent": 1,
+      "legalIntent": 9,
+      "flags": [],
+      "recommendations": []
+    },
+    {
+      "path": "/app/dover-psa-station/page.tsx",
+      "score": 0,
+      "policeIntent": 2,
+      "legalIntent": 9,
+      "flags": [],
+      "recommendations": []
+    },
+    {
+      "path": "/app/folkestone-police-station/page.tsx",
       "score": 0,
       "policeIntent": 1,
       "legalIntent": 8,
@@ -69,10 +144,204 @@
       "recommendations": []
     },
     {
-      "path": "/app/canterbury-police-station/page.tsx",
+      "path": "/app/folkestone-psa-station/page.tsx",
+      "score": 0,
+      "policeIntent": 2,
+      "legalIntent": 8,
+      "flags": [],
+      "recommendations": []
+    },
+    {
+      "path": "/app/gravesend-police-station/page.tsx",
       "score": 0,
       "policeIntent": 1,
+      "legalIntent": 8,
+      "flags": [],
+      "recommendations": []
+    },
+    {
+      "path": "/app/kent-police-stations/page.tsx",
+      "score": 0,
+      "policeIntent": 2,
+      "legalIntent": 8,
+      "flags": [],
+      "recommendations": []
+    },
+    {
+      "path": "/app/locations/page.tsx",
+      "score": 15,
+      "policeIntent": 1,
+      "legalIntent": 1,
+      "flags": [
+        "missing_not_police"
+      ],
+      "recommendations": [
+        "Add explicit NOT the police / independent solicitor disclaimer"
+      ]
+    },
+    {
+      "path": "/app/maidstone-police-station/page.tsx",
+      "score": 0,
+      "policeIntent": 1,
+      "legalIntent": 9,
+      "flags": [],
+      "recommendations": []
+    },
+    {
+      "path": "/app/maidstone-psa-station/page.tsx",
+      "score": 0,
+      "policeIntent": 2,
+      "legalIntent": 9,
+      "flags": [],
+      "recommendations": []
+    },
+    {
+      "path": "/app/margate-police-station/page.tsx",
+      "score": 0,
+      "policeIntent": 1,
+      "legalIntent": 8,
+      "flags": [],
+      "recommendations": []
+    },
+    {
+      "path": "/app/margate-psa-station/page.tsx",
+      "score": 0,
+      "policeIntent": 2,
+      "legalIntent": 9,
+      "flags": [],
+      "recommendations": []
+    },
+    {
+      "path": "/app/medway-police-station/page.tsx",
+      "score": 0,
+      "policeIntent": 1,
+      "legalIntent": 8,
+      "flags": [],
+      "recommendations": []
+    },
+    {
+      "path": "/app/medway-psa-station/page.tsx",
+      "score": 0,
+      "policeIntent": 2,
+      "legalIntent": 8,
+      "flags": [],
+      "recommendations": []
+    },
+    {
+      "path": "/app/north-kent-gravesend-police-station/page.tsx",
+      "score": 0,
+      "policeIntent": 1,
+      "legalIntent": 8,
+      "flags": [],
+      "recommendations": []
+    },
+    {
+      "path": "/app/north-kent-gravesend-psa-station/page.tsx",
+      "score": 0,
+      "policeIntent": 2,
+      "legalIntent": 8,
+      "flags": [],
+      "recommendations": []
+    },
+    {
+      "path": "/app/police-stations/[slug]/page.tsx",
+      "score": 0,
+      "policeIntent": 3,
       "legalIntent": 7,
+      "flags": [],
+      "recommendations": []
+    },
+    {
+      "path": "/app/police-stations/page.tsx",
+      "score": 35,
+      "policeIntent": 1,
+      "legalIntent": 3,
+      "flags": [
+        "title_police_entity",
+        "missing_not_police"
+      ],
+      "recommendations": [
+        "Title should lead with independent solicitor framing",
+        "Add explicit NOT the police / independent solicitor disclaimer"
+      ]
+    },
+    {
+      "path": "/app/sevenoaks-police-station/page.tsx",
+      "score": 0,
+      "policeIntent": 1,
+      "legalIntent": 9,
+      "flags": [],
+      "recommendations": []
+    },
+    {
+      "path": "/app/sevenoaks-psa-station/page.tsx",
+      "score": 0,
+      "policeIntent": 2,
+      "legalIntent": 9,
+      "flags": [],
+      "recommendations": []
+    },
+    {
+      "path": "/app/sittingbourne-police-station/page.tsx",
+      "score": 0,
+      "policeIntent": 1,
+      "legalIntent": 9,
+      "flags": [],
+      "recommendations": []
+    },
+    {
+      "path": "/app/sittingbourne-psa-station/page.tsx",
+      "score": 0,
+      "policeIntent": 2,
+      "legalIntent": 9,
+      "flags": [],
+      "recommendations": []
+    },
+    {
+      "path": "/app/swanley-police-station/page.tsx",
+      "score": 0,
+      "policeIntent": 1,
+      "legalIntent": 9,
+      "flags": [],
+      "recommendations": []
+    },
+    {
+      "path": "/app/swanley-psa-station/page.tsx",
+      "score": 0,
+      "policeIntent": 2,
+      "legalIntent": 9,
+      "flags": [],
+      "recommendations": []
+    },
+    {
+      "path": "/app/tonbridge-police-station/page.tsx",
+      "score": 0,
+      "policeIntent": 1,
+      "legalIntent": 9,
+      "flags": [],
+      "recommendations": []
+    },
+    {
+      "path": "/app/tonbridge-psa-station/page.tsx",
+      "score": 0,
+      "policeIntent": 2,
+      "legalIntent": 9,
+      "flags": [],
+      "recommendations": []
+    },
+    {
+      "path": "/app/tunbridge-wells-police-station/page.tsx",
+      "score": 0,
+      "policeIntent": 1,
+      "legalIntent": 9,
+      "flags": [],
+      "recommendations": []
+    },
+    {
+      "path": "/app/tunbridge-wells-psa-station/page.tsx",
+      "score": 0,
+      "policeIntent": 2,
+      "legalIntent": 9,
       "flags": [],
       "recommendations": []
     }

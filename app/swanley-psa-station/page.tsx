@@ -5,15 +5,13 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Swanley Police Station Solicitor | Robert Cashman | FREE Advice",
-  description:
-    "Voluntary police interview in Swanley? Call Robert Cashman - Duty Solicitor. FREE legal advice for voluntary interviews. North West Kent covered. 01732 247427.",
+  description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Swanley custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
   alternates: {
     canonical: "https://policestationagent.com/swanley-psa-station",
   },
   openGraph: {
     title: "Swanley Police Station Solicitor | Robert Cashman | FREE Advice",
-    description:
-      "Voluntary police interview in Swanley? Call Robert Cashman - Duty Solicitor. FREE legal advice for voluntary interviews. North West Kent covered. 01732 247427.",
+    description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Swanley custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
     type: "website",
     url: "https://policestationagent.com/swanley-psa-station",
   },

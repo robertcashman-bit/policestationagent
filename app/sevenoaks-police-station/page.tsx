@@ -5,15 +5,13 @@ import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Sevenoaks Police Station Solicitor | Robert Cashman | FREE",
-  description:
-    "Voluntary police interview in Sevenoaks? Call Robert Cashman - Duty Solicitor. FREE legal advice for voluntary attendance. 30+ years experience. 01732 247427.",
+  description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Sevenoaks custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
   alternates: {
     canonical: "https://policestationagent.com/sevenoaks-police-station",
   },
   openGraph: {
     title: "Sevenoaks Police Station Solicitor | Robert Cashman | FREE",
-    description:
-      "Voluntary police interview in Sevenoaks? Call Robert Cashman - Duty Solicitor. FREE legal advice for voluntary attendance. 30+ years experience. 01732 247427.",
+    description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Sevenoaks custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
     url: "https://policestationagent.com/sevenoaks-police-station",
     siteName: "Police Station Agent",
     type: "website",

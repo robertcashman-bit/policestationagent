@@ -3,11 +3,18 @@ import path from "path";
 import {
   CONFUSION_THRESHOLD,
   scorePageConfusion,
+  type ConfusionFlag,
   type ConfusionResult,
 } from "@/lib/seo/police-confusion-score";
 import { runExternalConfusionChecks } from "@/lib/seo/external-confusion-monitors";
 import { disambiguateStationHtml } from "@/lib/seo/disambiguate-station-html";
 import { applySafeMetadataHeals } from "@/lib/seo/police-confusion-safe-heal";
+
+const SNIPPET_FLAGS: ConfusionFlag[] = [
+  "opening_starts_with_call",
+  "phone_under_station_facts",
+  "meta_call_near_station",
+];
 
 export interface PoliceConfusionHealthReport {
   generatedAt: string;
@@ -18,6 +25,7 @@ export interface PoliceConfusionHealthReport {
     falsePoliceIntent: number;
     falseTelephoneAssociation: number;
     schemaErrors: number;
+    snippetProblems: number;
     actionsPerformed: string[];
     outstandingIssues: Array<{
       path: string;
@@ -32,14 +40,36 @@ export interface PoliceConfusionHealthReport {
   pages: ConfusionResult[];
 }
 
-const TARGET_RELATIVE = [
+const STATIC_TARGETS = [
   "app/kent-police-stations/page.tsx",
   "app/police-stations/[slug]/page.tsx",
+  "app/coverage/police-stations/page.tsx",
   "app/coverage/police-stations/[station-name]/page.tsx",
-  "app/medway-police-station/page.tsx",
-  "app/maidstone-police-station/page.tsx",
-  "app/canterbury-police-station/page.tsx",
+  "app/police-stations/page.tsx",
+  "app/locations/page.tsx",
 ];
+
+/** Discover station page sources + fixed hubs. */
+export function discoverConfusionTargets(root = process.cwd()): string[] {
+  const appDir = path.join(root, "app");
+  const found = new Set<string>(STATIC_TARGETS);
+
+  if (fs.existsSync(appDir)) {
+    for (const entry of fs.readdirSync(appDir)) {
+      if (
+        entry.endsWith("-police-station") ||
+        entry.endsWith("-psa-station")
+      ) {
+        const rel = `app/${entry}/page.tsx`;
+        if (fs.existsSync(path.join(root, rel))) {
+          found.add(rel);
+        }
+      }
+    }
+  }
+
+  return [...found].sort();
+}
 
 function extractQuoted(src: string, key: string): string {
   const re = new RegExp(`${key}:\\s*[\`'\"]([\\s\\S]*?)[\`'\"]`, "i");
@@ -68,12 +98,15 @@ export async function runPoliceConfusionHealthCheck(): Promise<PoliceConfusionHe
     }
   }
 
+  // Heal metadata first so scores reflect post-heal titles/descriptions
+  const healActions = applySafeMetadataHeals(root);
+
+  const targets = discoverConfusionTargets(root);
   const pages: ConfusionResult[] = [];
-  for (const rel of TARGET_RELATIVE) {
+  for (const rel of targets) {
     const full = path.join(root, rel);
     if (!fs.existsSync(full)) continue;
     const src = fs.readFileSync(full, "utf8");
-    // Score runtime-healed HTML for scraped station blobs
     const healed = disambiguateStationHtml(src);
     pages.push(
       scorePageConfusion({
@@ -95,8 +128,11 @@ export async function runPoliceConfusionHealthCheck(): Promise<PoliceConfusionHe
       : Math.round(pages.reduce((s, p) => s + p.score, 0) / pages.length);
   const prevAvg = previous?.summary?.averageScore ?? null;
 
-  const healActions = applySafeMetadataHeals(root);
   const externalChecks = await runExternalConfusionChecks();
+
+  const snippetProblems = pages.filter((p) =>
+    p.flags.some((f) => SNIPPET_FLAGS.includes(f)),
+  ).length;
 
   const report: PoliceConfusionHealthReport = {
     generatedAt: new Date().toISOString(),
@@ -114,9 +150,11 @@ export async function runPoliceConfusionHealthCheck(): Promise<PoliceConfusionHe
       schemaErrors: pages.filter((p) =>
         p.flags.includes("schema_telephone_on_station_address"),
       ).length,
+      snippetProblems,
       actionsPerformed: [
         "Scored on-page police confusion signals",
         "Runtime scraped HTML disambiguation is active via normalizeScrapedHtml",
+        `Audited ${targets.length} discovered station/hub targets`,
         ...healActions,
       ],
       outstandingIssues: highRisk.map((p) => ({

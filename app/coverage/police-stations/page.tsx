@@ -5,8 +5,9 @@ import type { Metadata } from 'next';
 import { BreadcrumbList } from '@/components/StructuredData';
 
 export const metadata: Metadata = {
-  title: "Police Stations - Coverage | Police Station Agent",
-  description: "Information about police stations covered across Kent and Medway, including 24-hour custody suites and voluntary interview stations.",
+  title: "Kent Police Station Information - Coverage | Independent Criminal Defence Solicitors",
+  description:
+    "Independent guide to Kent and Medway police stations and custody facilities. Criminal defence solicitor information — not an official police directory.",
   alternates: {
     canonical: "https://policestationagent.com/coverage/police-stations",
   },
@@ -34,7 +35,7 @@ export default function PoliceStationsPage() {
   const breadcrumbItems = [
     { name: 'Home', url: siteUrl },
     { name: 'Coverage', url: `${siteUrl}/coverage` },
-    { name: 'Police Stations', url: `${siteUrl}/coverage/police-stations` },
+    { name: 'Police station information', url: `${siteUrl}/coverage/police-stations` },
   ];
 
   const custodyStations = STATIONS.filter(s => s.type.includes('24-hour'));
@@ -59,9 +60,9 @@ export default function PoliceStationsPage() {
                 </svg>
                 Back to Coverage
               </Link>
-              <h1 className="text-4xl md:text-5xl font-bold mb-4">Police Stations</h1>
+              <h1 className="text-4xl md:text-5xl font-bold mb-4">Kent Police Station Information</h1>
               <p className="text-xl text-blue-100">
-                Information about police stations and custody facilities across Kent and Medway
+                Independent information about police stations and custody facilities across Kent and Medway — not an official police directory
               </p>
             </div>
           </div>

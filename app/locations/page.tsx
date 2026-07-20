@@ -142,7 +142,7 @@ export default function LocationsPage() {
             <h2>Kent police stations</h2>
             <p>
               If you’re looking for a specific custody suite page, start here. For the complete
-              directory, see <Link href="/police-stations">All Police Stations</Link>.
+              directory, see <Link href="/police-stations">All Kent police station information</Link>.
             </p>
             <LinkGrid items={stations} />
 

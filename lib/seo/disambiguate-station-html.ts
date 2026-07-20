@@ -10,7 +10,10 @@ const CLEAR_101_BLOCK = `<div class="mt-4 pt-4 border-t border-slate-200" data-p
 const INTRO_HTML = `<aside class="rounded-lg border border-red-200 bg-red-50 p-4 md:p-5 mb-6 max-w-4xl mx-auto" ${INTRO_MARKER} aria-label="Not the police"><p class="text-sm md:text-base text-slate-800 leading-relaxed mb-2"><strong class="text-red-900">${SEO_NOT_POLICE}</strong> Independent criminal defence solicitors — we do not operate police stations, cannot transfer calls to police, and do not take crime reports.</p><p class="text-sm text-slate-700">Police assistance: <strong>999</strong> or <strong>101</strong>. Need a solicitor for custody or a booked interview? Use the legal contact options below.</p></aside>`;
 
 const SOLICITOR_HEADING =
-  '<p class="text-sm font-bold text-blue-900 mb-2 uppercase tracking-wide">Need a solicitor? Independent legal advice</p>';
+  '<p class="text-sm font-bold text-blue-900 mb-2 uppercase tracking-wide" data-solicitor-label="true">Need a solicitor? Independent legal advice</p>';
+
+const HERO_SOLICITOR_LABEL =
+  '<p class="text-xs font-bold uppercase tracking-wide mb-2 opacity-90" data-solicitor-label="true">Need a solicitor? Independent legal advice</p>';
 
 /**
  * Runtime HTML disambiguation for scraped police-station pages.
@@ -25,19 +28,14 @@ export function disambiguateStationHtml(html: string): string {
 
   out = out.replace(BAD_101_BLOCK, CLEAR_101_BLOCK);
 
-  if (!out.includes("Need a solicitor? Independent legal advice")) {
+  if (!out.includes('data-solicitor-label="true"')) {
     out = out.replace(
       /(<div class="rounded-xl border bg-amber-500[^"]*"[^>]*>)/gi,
       `$1${SOLICITOR_HEADING}`,
     );
   }
 
-  out = addNoSnippetToSolicitorTelsNearStationFacts(out);
-
-  if (!out.includes(INTRO_MARKER)) {
-    out = out.replace(/<\/h1>/i, `</h1>${INTRO_HTML}`);
-  }
-
+  // Soften H1 before intro so intro sits under corrected heading
   out = out.replace(
     /(<h1[^>]*>)\s*([A-Za-z][A-Za-z\s'()-]+Police Station)\s*(<\/h1>)/gi,
     (_m, open: string, title: string, close: string) => {
@@ -48,6 +46,14 @@ export function disambiguateStationHtml(html: string): string {
     },
   );
 
+  if (!out.includes(INTRO_MARKER)) {
+    out = out.replace(/<\/h1>/i, `</h1>${INTRO_HTML}`);
+  }
+
+  out = demoteHeroSolicitorTels(out);
+  out = addNoSnippetToSolicitorTelsNearStationFacts(out);
+  out = addNoSnippetInHeroZone(out);
+
   return out;
 }
 
@@ -55,8 +61,55 @@ function looksLikeStationPage(html: string): boolean {
   return (
     /Police Station Details/i.test(html) ||
     /Kent Police Non-Emergency/i.test(html) ||
-    (/Get Directions/i.test(html) && /Custody/i.test(html))
+    /data-police-assistance="true"/i.test(html) ||
+    (/Get Directions/i.test(html) && /Custody/i.test(html)) ||
+    (/police station/i.test(html) && new RegExp(`tel:${PHONE_TEL}`, "i").test(html))
   );
+}
+
+/**
+ * Label and nosnippet solicitor tel links in the hero (first ~1200 chars after H1).
+ * Keeps links functional — does not remove them.
+ */
+function demoteHeroSolicitorTels(html: string): string {
+  const h1End = html.search(/<\/h1>/i);
+  if (h1End === -1) return html;
+
+  const start = h1End + "</h1>".length;
+  const end = Math.min(html.length, start + 1200);
+  const before = html.slice(0, start);
+  let hero = html.slice(start, end);
+  const after = html.slice(end);
+
+  const telHref = new RegExp(`href="tel:${PHONE_TEL}"`, "i");
+  if (telHref.test(hero) && !hero.includes('data-solicitor-label="true"')) {
+    hero = hero.replace(
+      new RegExp(`(<a[^>]*href="tel:${PHONE_TEL}"[^>]*>)`, "i"),
+      `${HERO_SOLICITOR_LABEL}$1`,
+    );
+  }
+
+  hero = hero.replace(
+    new RegExp(`href="tel:${PHONE_TEL}"(?![^>]*data-nosnippet)`, "gi"),
+    `href="tel:${PHONE_TEL}" data-nosnippet`,
+  );
+
+  return before + hero + after;
+}
+
+function addNoSnippetInHeroZone(html: string): string {
+  const h1End = html.search(/<\/h1>/i);
+  if (h1End === -1) return html;
+  const start = h1End;
+  const end = Math.min(html.length, start + 800);
+  const before = html.slice(0, start);
+  const zone = html.slice(start, end);
+  const after = html.slice(end);
+  const patched = zone.replace(
+    new RegExp(`href="tel:${PHONE_TEL}"(?![^>]*data-nosnippet)`, "gi"),
+    `href="tel:${PHONE_TEL}" data-nosnippet`,
+  );
+  return before + patched + after;
 }
 
 function addNoSnippetToSolicitorTelsNearStationFacts(html: string): string {

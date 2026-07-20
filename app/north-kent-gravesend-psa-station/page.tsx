@@ -5,15 +5,13 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Gravesend Police Station Solicitor | Robert Cashman | Extended Hours",
-  description:
-    "Police interview at North Kent (Gravesend) Custody? Call Robert Cashman - Duty Solicitor. FREE legal advice, Dartford area covered. Extended hours service. 01732 247427.",
+  description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for North Kent Gravesend custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
   alternates: {
     canonical: "https://policestationagent.com/north-kent-gravesend-psa-station",
   },
   openGraph: {
     title: "Gravesend Police Station Solicitor | Robert Cashman | Extended Hours",
-    description:
-      "Police interview at North Kent (Gravesend) Custody? Call Robert Cashman - Duty Solicitor. FREE legal advice, Dartford area covered. Extended hours service. 01732 247427.",
+    description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for North Kent Gravesend custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
     type: "website",
     url: "https://policestationagent.com/north-kent-gravesend-psa-station",
   },
