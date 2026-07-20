@@ -6,7 +6,7 @@ import { SITE_DOMAIN } from "@/config/site";
 
 export const metadata: Metadata = {
   title:
-    "Tonbridge Police Station Solicitor | TN9/TN10/TN11/TN12 | FREE Legal Aid | Call 01732 247427",
+    "Tonbridge Police Station Solicitor | TN9/TN10/TN11/TN12 | FREE Legal Aid | Independent Criminal Defence",
   description:
     "Arrested in Tonbridge? Police station solicitor 20 min away. FREE legal aid representation. Available during extended hours - call now.",
   alternates: {
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title:
-      "Tonbridge Police Station Solicitor | TN9/TN10/TN11/TN12 | FREE Legal Aid | Call 01732 247427",
+      "Tonbridge Police Station Solicitor | TN9/TN10/TN11/TN12 | FREE Legal Aid | Independent Criminal Defence",
     description:
       "Arrested in Tonbridge? Police station solicitor 20 min away. FREE legal aid representation. Available during extended hours.",
     url: `https://${SITE_DOMAIN}/tonbridge-solicitor`,

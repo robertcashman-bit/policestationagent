@@ -4,14 +4,14 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Medway Police Station Solicitor | Gillingham ME7 | FREE Legal Aid | Call 01732 247427",
+  title: "Medway Police Station Solicitor | Gillingham ME7 | FREE Legal Aid | Independent Criminal Defence",
   description:
     "Arrested in Gillingham, Chatham, Rochester or Strood? Police station solicitor 12 minutes from Medway custody suite (ME7). FREE extended hours representation.",
   alternates: {
     canonical: "https://policestationagent.com/medway-solicitor",
   },
   openGraph: {
-    title: "Medway Police Station Solicitor | Gillingham ME7 | FREE Legal Aid | Call 01732 247427",
+    title: "Medway Police Station Solicitor | Gillingham ME7 | FREE Legal Aid | Independent Criminal Defence",
     description:
       "Arrested in Gillingham, Chatham, Rochester or Strood? Police station solicitor 12 minutes from Medway custody suite (ME7). FREE extended hours representation.",
     url: "https://policestationagent.com/medway-solicitor",

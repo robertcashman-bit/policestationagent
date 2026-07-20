@@ -4,14 +4,14 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Maidstone Police Station Solicitor | ME15 | FREE Legal Aid | Call 01732 247427",
+  title: "Maidstone Police Station Solicitor | ME15 | FREE Legal Aid | Independent Criminal Defence",
   description:
     "Arrested in Maidstone? Police station solicitor 25 min away. FREE legal aid representation at Maidstone Police Station (ME15). Available during extended hours - call now.",
   alternates: {
     canonical: "https://policestationagent.com/maidstone-solicitor",
   },
   openGraph: {
-    title: "Maidstone Police Station Solicitor | ME15 | FREE Legal Aid | Call 01732 247427",
+    title: "Maidstone Police Station Solicitor | ME15 | FREE Legal Aid | Independent Criminal Defence",
     description:
       "Arrested in Maidstone? Police station solicitor 25 min away. FREE legal aid representation at Maidstone Police Station (ME15). Available during extended hours - call now.",
     url: "https://policestationagent.com/maidstone-solicitor",

@@ -5,14 +5,14 @@ import type { Metadata } from "next";
 import { SITE_DOMAIN } from "@/config/site";
 
 export const metadata: Metadata = {
-  title: "Dover Police Station Solicitor | CT16/CT17 | FREE Legal Aid | Call 01732 247427",
+  title: "Dover Police Station Solicitor | CT16/CT17 | FREE Legal Aid | Independent Criminal Defence",
   description:
     "Invited for interview in Dover? Police station solicitor 65 min away. FREE legal aid representation. Available during extended hours - call now.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/dover-solicitor`,
   },
   openGraph: {
-    title: "Dover Police Station Solicitor | CT16/CT17 | FREE Legal Aid | Call 01732 247427",
+    title: "Dover Police Station Solicitor | CT16/CT17 | FREE Legal Aid | Independent Criminal Defence",
     description:
       "Invited for interview in Dover? Police station solicitor 65 min away. FREE legal aid representation. Available during extended hours.",
     url: `https://${SITE_DOMAIN}/dover-solicitor`,

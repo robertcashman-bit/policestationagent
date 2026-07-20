@@ -7,6 +7,7 @@ import {
 } from "@/lib/seo/police-confusion-score";
 import { runExternalConfusionChecks } from "@/lib/seo/external-confusion-monitors";
 import { disambiguateStationHtml } from "@/lib/seo/disambiguate-station-html";
+import { applySafeMetadataHeals } from "@/lib/seo/police-confusion-safe-heal";
 
 export interface PoliceConfusionHealthReport {
   generatedAt: string;
@@ -94,6 +95,7 @@ export async function runPoliceConfusionHealthCheck(): Promise<PoliceConfusionHe
       : Math.round(pages.reduce((s, p) => s + p.score, 0) / pages.length);
   const prevAvg = previous?.summary?.averageScore ?? null;
 
+  const healActions = applySafeMetadataHeals(root);
   const externalChecks = await runExternalConfusionChecks();
 
   const report: PoliceConfusionHealthReport = {
@@ -115,6 +117,7 @@ export async function runPoliceConfusionHealthCheck(): Promise<PoliceConfusionHe
       actionsPerformed: [
         "Scored on-page police confusion signals",
         "Runtime scraped HTML disambiguation is active via normalizeScrapedHtml",
+        ...healActions,
       ],
       outstandingIssues: highRisk.map((p) => ({
         path: p.path,

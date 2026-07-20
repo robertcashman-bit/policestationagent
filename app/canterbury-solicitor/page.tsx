@@ -4,14 +4,14 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Canterbury Police Station Solicitor | CT1 | FREE Legal Aid | Call 01732 247427",
+  title: "Canterbury Police Station Solicitor | CT1 | FREE Legal Aid | Independent Criminal Defence",
   description:
     "Arrested in Canterbury? Police station solicitor 50 min away. FREE legal aid at Canterbury custody suite (CT1). extended hours emergency response - call now.",
   alternates: {
     canonical: "https://policestationagent.com/canterbury-solicitor",
   },
   openGraph: {
-    title: "Canterbury Police Station Solicitor | CT1 | FREE Legal Aid | Call 01732 247427",
+    title: "Canterbury Police Station Solicitor | CT1 | FREE Legal Aid | Independent Criminal Defence",
     description:
       "Arrested in Canterbury? Police station solicitor 50 min away. FREE legal aid at Canterbury custody suite (CT1). extended hours emergency response - call now.",
     url: "https://policestationagent.com/canterbury-solicitor",

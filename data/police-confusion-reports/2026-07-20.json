@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-20T13:34:50.598Z",
+  "generatedAt": "2026-07-20T15:49:27.916Z",
   "summary": {
     "pagesTested": 6,
     "averageScore": 0,
@@ -9,11 +9,12 @@
     "schemaErrors": 0,
     "actionsPerformed": [
       "Scored on-page police confusion signals",
-      "Runtime scraped HTML disambiguation is active via normalizeScrapedHtml"
+      "Runtime scraped HTML disambiguation is active via normalizeScrapedHtml",
+      "Healed 25 solicitor page title(s): removed Call 01732 from titles"
     ],
     "outstandingIssues": [],
-    "trendSincePrevious": "improved",
-    "previousAverageScore": 12,
+    "trendSincePrevious": "unchanged",
+    "previousAverageScore": 0,
     "externalChecks": {
       "status": "skipped",
       "serp": null,

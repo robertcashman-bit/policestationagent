@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import db from '@/lib/db';
 import type { Metadata } from 'next';
 import { JsonLd } from '@/components/JsonLd';
+import { SEO_NOT_POLICE } from '@/config/contact';
 
 interface PageProps {
   params: {
@@ -24,11 +25,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
+  const townName = station.name.replace(/\s*Police\s*Station.*/i, '').trim();
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://policestationagent.com';
-  
+
   return {
-    title: `${station.name} - Police Station Representation`,
-    description: station.content ? station.content.substring(0, 160) : `Expert legal representation at ${station.name}`,
+    title: `${townName} Police Station Information | Independent Criminal Defence Solicitors`,
+    description: `${SEO_NOT_POLICE} Independent legal representation information for ${townName} — not a police contact number.`,
     alternates: {
       canonical: `${siteUrl}/police-stations/${params.slug}`,
     },
@@ -50,50 +52,82 @@ export default function PoliceStationPage({ params }: PageProps) {
   }
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://policestationagent.com';
-  
-  const localBusinessSchema = {
+  const townName = station.name.replace(/\s*Police\s*Station.*/i, '').trim();
+  const stationLabel = `${townName} Police Station`;
+
+  // Place = station only (no telephone). LegalService = firm (no station streetAddress).
+  const placeSchema = {
     '@context': 'https://schema.org',
-    '@type': 'LocalBusiness',
-    name: `${station.name} - Legal Representation`,
-    description: `Expert legal representation services at ${station.name}`,
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: station.address || '',
-      addressLocality: 'Kent',
-      addressCountry: 'GB',
-    },
-    telephone: station.phone || '',
+    '@type': 'Place',
+    name: stationLabel,
+    description: `Independent information about ${stationLabel}. Not an official police page.`,
+    ...(station.address
+      ? {
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: station.address,
+            addressRegion: 'Kent',
+            addressCountry: 'GB',
+          },
+        }
+      : {}),
     url: `${siteUrl}/police-stations/${station.slug}`,
-    priceRange: '$$',
+  };
+
+  const legalServiceSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'LegalService',
+    '@id': `${siteUrl}/police-stations/${station.slug}#legalservice`,
+    name: 'Police Station Agent — Independent Criminal Defence Solicitors',
+    description: `${SEO_NOT_POLICE} Independent police station representation for Kent custody and booked voluntary interviews.`,
+    url: siteUrl,
+    telephone: '+441732247427',
     areaServed: {
-      '@type': 'City',
+      '@type': 'AdministrativeArea',
       name: 'Kent',
     },
+    serviceType: 'Police Station Representation',
+    priceRange: 'Free under Legal Aid',
   };
 
   return (
     <div className="min-h-screen flex flex-col">
-      <JsonLd data={localBusinessSchema} />
+      <JsonLd data={placeSchema} />
+      <JsonLd data={legalServiceSchema} />
       <Header />
       <main className="flex-grow">
-        {/* Hero Section */}
         <section className="bg-[#0A2342] text-white py-12">
           <div className="container-custom">
-            <Link 
-              href="/police-stations" 
+            <Link
+              href="/police-stations"
               className="inline-flex items-center gap-2 text-gray-200 hover:text-white mb-6 transition-colors"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
-              Back to Police Stations
+              Back to Kent police station information
             </Link>
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">{station.name}</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+              {townName} Police Station Information
+            </h1>
+            <p className="text-gray-200 mb-4">
+              Independent solicitor information — not an official police contact page.
+            </p>
             {station.address && (
               <div className="flex items-center gap-2 text-gray-200">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
                 </svg>
                 <span>{station.address}</span>
               </div>
@@ -101,44 +135,42 @@ export default function PoliceStationPage({ params }: PageProps) {
           </div>
         </section>
 
-        {/* Content Section */}
         <section className="py-12 bg-white">
           <div className="container-custom">
             <div className="max-w-4xl mx-auto">
-              {station.phone && (
-                <div className="bg-gray-50 p-6 rounded-xl mb-8 border-l-4 border-[#0A2342]">
-                  <div className="flex items-center gap-3">
-                    <svg className="w-6 h-6 text-[#0A2342]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                    </svg>
-                    <div>
-                      <p className="text-sm text-gray-600 mb-1">Contact</p>
-                      <p className="text-lg font-semibold text-gray-900">{station.phone}</p>
-                    </div>
-                  </div>
-                </div>
-              )}
-              
+              <aside className="bg-red-50 border border-red-200 p-4 rounded-lg mb-8">
+                <p className="text-sm text-slate-800">
+                  <strong className="text-red-900">{SEO_NOT_POLICE}</strong> We cannot transfer
+                  calls to police stations. For police assistance call 999 or 101. For a solicitor,
+                  use the legal contact options below.
+                </p>
+              </aside>
+
               {station.content ? (
                 <div className="prose prose-lg max-w-none mb-12 text-gray-700">
-                  <div 
-                    dangerouslySetInnerHTML={{ __html: station.content }} 
+                  <div
+                    dangerouslySetInnerHTML={{ __html: station.content }}
                     className="space-y-4"
                   />
                 </div>
               ) : (
                 <div className="bg-gray-50 p-8 rounded-xl mb-12 border-l-4 border-[#0A2342]">
-                  <h2 className="text-2xl font-semibold mb-4">Expert Representation Available</h2>
+                  <h2 className="text-2xl font-semibold mb-4">
+                    Independent representation at {stationLabel}
+                  </h2>
                   <p className="text-gray-700 leading-relaxed">
-                    We provide professional legal representation at {station.name}. Our experienced solicitors are available under Legal Aid for urgent matters.
+                    We provide professional legal representation at {stationLabel}. Our experienced
+                    solicitors are available under Legal Aid for urgent custody and booked interview
+                    matters.
                   </p>
                 </div>
               )}
-              
+
               <div className="bg-[#0A2342] text-white p-6 rounded-lg">
-                <h2 className="text-xl font-semibold mb-4">Need Legal Assistance?</h2>
+                <h2 className="text-xl font-semibold mb-4">Need a solicitor?</h2>
                 <p className="text-gray-200 mb-4">
-                  If you or someone you know has been arrested or needs legal representation at {station.name}, contact us immediately.
+                  If you need independent legal representation for current custody or a booked
+                  voluntary interview at {stationLabel}, contact us. We are not the police.
                 </p>
                 <Link
                   href="/contact"
@@ -155,8 +187,3 @@ export default function PoliceStationPage({ params }: PageProps) {
     </div>
   );
 }
-
-
-
-
-

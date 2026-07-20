@@ -4,14 +4,14 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Gravesend Police Station Solicitor | DA12 | FREE Legal Aid | Call 01732 247427",
+  title: "Gravesend Police Station Solicitor | DA12 | FREE Legal Aid | Independent Criminal Defence",
   description:
     "Arrested in Gravesend or Dartford? Police station solicitor 12 minutes from North Kent custody suite (DA12). FREE extended hours legal representation - call now.",
   alternates: {
     canonical: "https://policestationagent.com/gravesend-solicitor",
   },
   openGraph: {
-    title: "Gravesend Police Station Solicitor | DA12 | FREE Legal Aid | Call 01732 247427",
+    title: "Gravesend Police Station Solicitor | DA12 | FREE Legal Aid | Independent Criminal Defence",
     description:
       "Arrested in Gravesend or Dartford? Police station solicitor 12 minutes from North Kent custody suite (DA12). FREE extended hours legal representation - call now.",
     url: "https://policestationagent.com/gravesend-solicitor",

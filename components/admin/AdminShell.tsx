@@ -4,13 +4,19 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import type { ReactNode } from 'react';
 
-export type AdminSection = 'overview' | 'firm-outreach' | 'content' | 'blog-generator';
+export type AdminSection =
+  | 'overview'
+  | 'firm-outreach'
+  | 'content'
+  | 'blog-generator'
+  | 'police-confusion';
 
 const NAV: { id: AdminSection; href: string; label: string }[] = [
   { id: 'overview', href: '/admin', label: 'Overview' },
   { id: 'firm-outreach', href: '/admin/firm-outreach', label: 'Firm outreach' },
   { id: 'content', href: '/admin/content', label: 'Content' },
   { id: 'blog-generator', href: '/admin/blog-generator', label: 'Blog generator' },
+  { id: 'police-confusion', href: '/admin/police-confusion', label: 'Police confusion' },
 ];
 
 function isActive(pathname: string, href: string): boolean {
