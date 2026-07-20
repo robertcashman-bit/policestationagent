@@ -176,7 +176,7 @@ export default function HarassmentStalkingPage() {
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-blue-600 font-bold mt-1">•</span>
-                  <span><strong>Guide You:</strong> We can advise on bail conditions, RUI, restraining orders, and next steps.</span>
+                  <span><strong>After interview (information):</strong> Bail, RUI and next steps are explained during attendance — not as free post-release phone advice.</span>
                 </li>
               </ul>
               <p className="text-slate-700">
@@ -338,7 +338,7 @@ export default function HarassmentStalkingPage() {
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-amber-300 font-bold mt-1">•</span>
-                  <span>Guide you on bail conditions, RUI, restraining orders, and next steps</span>
+                  <span>Explain typical next steps after interview (information only — not free post-release phone advice)</span>
                 </li>
               </ul>
               <p className="text-purple-100 mb-6">

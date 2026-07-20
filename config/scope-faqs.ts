@@ -46,6 +46,11 @@ export const NOT_POLICE_FAQ_ITEMS = [
 export const SCOPE_FAQ_ITEMS = [
   ...NOT_POLICE_FAQ_ITEMS,
   {
+    question: "I've already been interviewed or released — can you give free advice?",
+    answer:
+      "No. This telephone line is for instructing representation when someone is currently in Kent police custody, or has a booked voluntary (VAI) interview. We do not provide free advice after release, after a past interview, or for general case updates. If you need a solicitor after release, contact a criminal defence firm directly for a private appointment.",
+  },
+  {
     question: "Do you deal with arrests from yesterday or a few days ago?",
     answer: `${SCOPE_IMMEDIATE_ONLY} If someone was arrested yesterday, two days ago, or earlier — or has already been released — we cannot attend, trace what happened, or provide a case update. If they need a solicitor after release, they should contact a criminal defence firm directly.`,
   },
@@ -87,6 +92,7 @@ export const SCOPE_CALLOUT_CANNOT = [
   "Friends or non-family calling on someone's behalf",
   "Missing-person enquiries — where are they? what happened to them?",
   "General legal advice, welfare checks, or status updates",
+  "Free advice after you have already been interviewed or released",
 ] as const;
 
 /** Detect out-of-scope queries (status, past arrest, friends, missing person) */
@@ -94,9 +100,13 @@ export function isOutOfScopeEnquiry(query: string): boolean {
   const q = query.toLowerCase();
 
   const pastArrest =
-    /\b(yesterday|last week|few days|2 days|two days|days ago|already released|was arrested|got arrested)\b/.test(
+    /\b(yesterday|last week|few days|2 days|two days|days ago|already released|been released|was arrested|got arrested|been interviewed)\b/.test(
       q
-    ) && !/\b(right now|currently|today|in custody now)\b/.test(q);
+    ) && !/\b(right now|currently|today|in custody now|booked|voluntary interview)\b/.test(q);
+
+  const postReleaseAdvice =
+    /\b(free advice|need advice|advice on (my|the) case)\b/.test(q) &&
+    /\b(released|rui|after (the )?interview|bail)\b/.test(q);
 
   const missingPerson =
     /\b(disappeared|missing|where are they|what happened to them|find them|trace them|locate them)\b/.test(
@@ -117,5 +127,12 @@ export function isOutOfScopeEnquiry(query: string): boolean {
   const generalOnly =
     /\b(general (question|enquiry|inquiry|advice)|legal advice by phone)\b/.test(q);
 
-  return pastArrest || missingPerson || friendInstruct || statusCheck || generalOnly;
+  return (
+    pastArrest ||
+    postReleaseAdvice ||
+    missingPerson ||
+    friendInstruct ||
+    statusCheck ||
+    generalOnly
+  );
 }

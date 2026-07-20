@@ -10,7 +10,7 @@
  */
 
 import { useState, useRef, FormEvent } from "react";
-import { PHONE_DISPLAY, PHONE_TEL, SEO_NOT_POLICE, SERVICE_SCOPE_SHORT } from "@/config/contact";
+import { PHONE_DISPLAY, PHONE_TEL, SEO_NOT_POLICE, SERVICE_SCOPE_SHORT, CTA_OUT_OF_SCOPE } from "@/config/contact";
 
 interface FormData {
   name: string;
@@ -168,6 +168,7 @@ export default function ContactForm({
           </h3>
           <p className="text-red-800 font-semibold text-sm mb-2">{SEO_NOT_POLICE}</p>
           <p className="text-slate-700 mb-2">{SERVICE_SCOPE_SHORT}</p>
+          <p className="text-slate-700 mb-2 font-medium text-red-900">{CTA_OUT_OF_SCOPE}</p>
           <p className="text-slate-700 mb-2">
             This form is for <strong>scheduled</strong> voluntary (VAI) interviews or solicitor
             attendance instructions — not general legal advice.

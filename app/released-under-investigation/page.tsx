@@ -6,6 +6,13 @@ import { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
 import { LegalReferences, Ref, type LegalSource } from "@/components/LegalReferences";
 import { SITE_DOMAIN } from "@/config/site";
+import {
+  CTA_OUT_OF_SCOPE,
+  CTA_WHO_CAN_CALL,
+  PHONE_DISPLAY,
+  PHONE_TEL,
+  SCOPE_HELP_HREF,
+} from "@/config/contact";
 
 export const metadata: Metadata = {
   title: "Released Under Investigation (RUI): What It Means & How Long It Lasts",
@@ -296,26 +303,27 @@ export default function ReleasedUnderInvestigationPage() {
             </div>
           </div>
 
-          {/* CTA */}
+          {/* CTA — custody/VAI instructions only; this page is educational */}
           <div className="bg-slate-900 text-white rounded-xl p-8 my-12">
-            <h3 className="text-2xl font-bold mb-4">Released Under Investigation?</h3>
-            <p className="text-slate-300 mb-6">
-              If you've been released under investigation and want advice on your case, I can help.
-              I offer free initial consultations and can make enquiries with the investigating
-              officer on your behalf.
+            <h3 className="text-2xl font-bold mb-4">Need a solicitor at the police station?</h3>
+            <p className="text-slate-300 mb-3">
+              This page explains RUI in general terms. It is not an offer of free advice after
+              release.
             </p>
+            <p className="text-amber-200 font-medium mb-2">{CTA_WHO_CAN_CALL}</p>
+            <p className="text-slate-400 text-sm mb-6">{CTA_OUT_OF_SCOPE}</p>
             <div className="flex flex-wrap gap-4">
               <a
-                href="tel:01732247427"
+                href={`tel:${PHONE_TEL}`}
                 className="inline-flex items-center px-6 py-3 bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold rounded-lg"
               >
-                Call 01732 247427
+                Call {PHONE_DISPLAY}
               </a>
               <Link
-                href="/contact"
+                href={SCOPE_HELP_HREF}
                 className="inline-flex items-center px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-bold rounded-lg"
               >
-                Contact Online
+                Who can call?
               </Link>
             </div>
           </div>

@@ -10,18 +10,26 @@ import { RegulatoryReferences } from "@/components/E-E-A-T/RegulatoryReferences"
 import { ServiceDisclaimer } from "@/components/E-E-A-T/ServiceDisclaimer";
 import { InternalLinkHub } from "@/components/InternalLinkHub";
 import { LLMContentBlock } from "@/components/LLMContentBlock";
+import {
+  CTA_OUT_OF_SCOPE,
+  CTA_WHO_CAN_CALL,
+  PHONE_DISPLAY,
+  PHONE_TEL,
+  SCOPE_HELP_HREF,
+  SEO_NOT_POLICE,
+} from "@/config/contact";
 
 export const metadata: Metadata = {
-  title: "Police Interview Advice Solicitor Kent | Pre-Charge Advice | FREE Legal Aid",
+  title: "Police Interview Advice Solicitor Kent | Pre-Charge Advice | Custody & VAI",
   description:
-    "Police interview advice solicitor in Kent. Expert pre-charge advice and strategic representations to police/CPS before charging decisions. FREE under Legal Aid. Qualified duty solicitor. Call 01732 247427.",
+    `${SEO_NOT_POLICE} Police interview advice for current Kent custody or a booked voluntary interview. FREE Legal Aid at the station where eligible — not free post-release phone advice.`,
   alternates: {
     canonical: `https://${SITE_DOMAIN}/services/pre-charge-advice`,
   },
   openGraph: {
-    title: "Police Interview Advice Solicitor Kent | Pre-Charge Advice | FREE",
+    title: "Police Interview Advice Solicitor Kent | Custody & Booked VAI",
     description:
-      "Expert police interview advice from qualified solicitor in Kent. Strategic pre-charge representations to prevent or narrow charges. FREE under Legal Aid.",
+      "Expert police interview advice for Kent custody and booked voluntary interviews. FREE under Legal Aid at the station where eligible.",
     url: `https://${SITE_DOMAIN}/services/pre-charge-advice`,
     siteName: "Police Station Agent",
     type: "website",
@@ -38,17 +46,17 @@ export default function PreChargeAdvicePage() {
     {
       question: "When is the best time to get pre‑charge advice?",
       answer:
-        "As early as possible—ideally before interview and again after interview while the case is being considered for charge. Early advice can help you avoid unnecessary disclosure, protect your position, and ensure key points are raised at the right time.",
+        "As early as possible—ideally before a police interview. Our telephone line is for current Kent custody or a booked voluntary interview. Work after release outside the police station is not free Legal Aid phone advice and may need a private appointment with a criminal defence firm.",
     },
     {
       question: "Can a solicitor speak to the police or CPS for me before I am charged?",
       answer:
-        "Yes. Where appropriate, we can make representations to the investigating officer and, in suitable cases, to the CPS. The aim is to highlight weaknesses in the evidence, point to alternative explanations, and provide relevant mitigation before a charging decision is taken.",
+        "Where we are instructed for current custody or a booked interview, we can make appropriate representations as part of that attendance. Speculative post-release calls for free status updates or case advice are outside our phone intake.",
     },
     {
       question: "Is pre‑charge advice free at the police station?",
       answer:
-        "Legal advice at the police station is free under Legal Aid. Some pre‑charge work outside the police station may be privately funded depending on circumstances. If funding is relevant, we will explain your options clearly before any work is done.",
+        "Legal advice at the police station (custody or booked voluntary interview) is free under Legal Aid where eligible. Work outside the police station after release is not free phone advice via this line.",
     },
     {
       question: "Do you cover pre‑charge advice across Kent?",
@@ -76,17 +84,16 @@ export default function PreChargeAdvicePage() {
             
             <LLMContentBlock
               serviceName="Police Interview Advice Solicitor"
-              serviceDefinition="Police interview advice solicitor provides expert pre-charge advice and strategic representations to police/CPS before charging decisions. This service includes interview strategy, evidence review, and written representations to prevent or narrow charges. FREE under Legal Aid in England & Wales."
-              whoFor="This service is for anyone facing a police interview, whether under arrest or attending voluntarily, or anyone told a charging decision is pending. It is suitable for all individuals and is free under Legal Aid regardless of financial circumstances."
-              whenToUse="You should use this service as early as possible—ideally before interview and again after interview while the case is being considered for charge. Do not attend an interview without advice. Call 01732 247427 for prompt assistance."
+              serviceDefinition="Police interview advice for people in Kent custody or attending a booked voluntary interview, including interview strategy and representations as part of that attendance. FREE under Legal Aid at the police station where eligible."
+              whoFor="This service is for people currently in Kent police custody or with a booked voluntary interview. It is not a free phone helpline for advice after you have already been released."
+              whenToUse="Instruct us when you are in custody now or have a scheduled voluntary interview. Do not attend an interview without advice. Do not call this line for free advice after release."
               jurisdiction="England & Wales"
             />
 
             <p className="lead text-xl text-slate-700 mb-8">
-              Pre‑charge work is often where a case is won or lost. If you have been arrested,
-              invited to a voluntary interview, or told a charging decision is pending, early advice
-              can protect your position and help ensure the right points are raised at the right
-              time.
+              If you have been arrested or invited to a booked voluntary interview, early advice at
+              the police station can protect your position. This page is not an invitation to call
+              for free advice after you have already been released.
             </p>
 
             <h2>What “pre‑charge” means</h2>
@@ -120,33 +127,30 @@ export default function PreChargeAdvicePage() {
 
             <h2>When to contact us</h2>
             <p>
-              If the police want to speak to you, do not attend an interview without advice. Call us
-              as soon as you can so we can help you prepare and protect your rights.
+              {CTA_WHO_CAN_CALL} {CTA_OUT_OF_SCOPE}
             </p>
 
             <div className="not-prose mt-10 rounded-xl border bg-white shadow p-6">
-              <h3 className="text-xl font-bold text-slate-900 mb-2">Need urgent advice?</h3>
-              <p className="text-slate-700 mb-4">
-                If you are due to be interviewed or have been arrested, call now for free police
-                station advice.
-              </p>
+              <h3 className="text-xl font-bold text-slate-900 mb-2">Need urgent police station representation?</h3>
+              <p className="text-slate-700 mb-2">{CTA_WHO_CAN_CALL}</p>
+              <p className="text-slate-600 text-sm mb-4">{CTA_OUT_OF_SCOPE}</p>
               <div className="flex flex-col sm:flex-row gap-3">
                 <a
-                  href="tel:01732247427"
+                  href={`tel:${PHONE_TEL}`}
                   className="inline-flex items-center justify-center rounded-md bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-3"
                 >
-                  Call 01732 247427
+                  Call {PHONE_DISPLAY}
                 </a>
                 <a
-                  href="/contact"
+                  href={SCOPE_HELP_HREF}
                   className="inline-flex items-center justify-center rounded-md border border-slate-300 hover:bg-slate-50 text-slate-900 font-semibold px-6 py-3"
                 >
-                  Use the contact form
+                  Who can call?
                 </a>
               </div>
               <p className="text-xs text-slate-500 mt-4">
                 If you are in a police station or custody suite, ask for a solicitor. Police station
-                advice is free under Legal Aid.
+                advice is free under Legal Aid where eligible.
               </p>
             </div>
 

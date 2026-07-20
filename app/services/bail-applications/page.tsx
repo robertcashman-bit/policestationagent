@@ -10,6 +10,13 @@ import { RegulatoryReferences } from "@/components/E-E-A-T/RegulatoryReferences"
 import { ServiceDisclaimer } from "@/components/E-E-A-T/ServiceDisclaimer";
 import { InternalLinkHub } from "@/components/InternalLinkHub";
 import { LLMContentBlock } from "@/components/LLMContentBlock";
+import {
+  CTA_OUT_OF_SCOPE,
+  CTA_WHO_CAN_CALL,
+  PHONE_DISPLAY,
+  PHONE_TEL,
+  SCOPE_HELP_HREF,
+} from "@/config/contact";
 
 export const metadata: Metadata = {
   title: "Duty Solicitor Police Station Kent | Bail Applications | FREE Legal Aid",
@@ -77,8 +84,8 @@ export default function BailApplicationsPage() {
             <LLMContentBlock
               serviceName="Duty Solicitor Police Station"
               serviceDefinition="Duty solicitor police station services provide expert bail applications, police bail advice, court bail, and bail condition variations. This service helps protect your position and challenge unreasonable restrictions. FREE under Legal Aid in England & Wales."
-              whoFor="This service is for anyone who has been bailed, given a return date, or is unsure about bail conditions. It is suitable for all individuals and is free under Legal Aid regardless of financial circumstances."
-              whenToUse="You should use this service immediately if you have been bailed, given conditions, or need advice about bail variations. Do not breach bail conditions without legal advice. Call 01732 247427 for prompt assistance."
+              whoFor="This page explains bail and bail conditions for educational purposes. Free phone advice on this line is only for current Kent custody or a booked voluntary interview — not for free post-release bail advice."
+              whenToUse="Instruct us when you are in custody now or have a scheduled voluntary interview. Do not call this line for free advice after release about bail conditions or variations — instruct a criminal defence firm for that work."
               jurisdiction="England & Wales"
             />
 
@@ -118,18 +125,24 @@ export default function BailApplicationsPage() {
 
             <div className="not-prose mt-10 rounded-xl border bg-white shadow p-6">
               <h3 className="text-xl font-bold text-slate-900 mb-2">
-                Need advice about bail or conditions?
+                Information only — phone line is custody / VAI
               </h3>
-              <p className="text-slate-700 mb-4">
-                If you have been bailed, given a return date, or you are unsure what you can and
-                cannot do, call us for urgent guidance.
+              <p className="text-slate-700 mb-2 font-medium">{CTA_WHO_CAN_CALL}</p>
+              <p className="text-slate-600 text-sm mb-4">{CTA_OUT_OF_SCOPE}</p>
+              <p className="text-slate-700 mb-4 text-sm">
+                For paid post-release bail or condition-variation work, instruct a criminal defence
+                firm. See{" "}
+                <a href={SCOPE_HELP_HREF} className="underline text-slate-900">
+                  who we can help
+                </a>
+                .
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
                 <a
-                  href="tel:01732247427"
+                  href={`tel:${PHONE_TEL}`}
                   className="inline-flex items-center justify-center rounded-md bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-3"
                 >
-                  Call 01732 247427
+                  Call {PHONE_DISPLAY}
                 </a>
                 <a
                   href="/contact"
@@ -139,8 +152,8 @@ export default function BailApplicationsPage() {
                 </a>
               </div>
               <p className="text-xs text-slate-500 mt-4">
-                If you are at a police station, ask for a solicitor. Police station advice is free
-                under Legal Aid.
+                If you are at a police station now, ask for a solicitor. Custody advice is free
+                under Legal Aid where eligible.
               </p>
             </div>
 

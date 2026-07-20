@@ -4,6 +4,13 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { SITE_DOMAIN } from "@/config/site";
 import { BreadcrumbList } from "@/components/StructuredData";
+import {
+  CTA_OUT_OF_SCOPE,
+  CTA_WHO_CAN_CALL,
+  PHONE_DISPLAY,
+  PHONE_TEL,
+  SCOPE_HELP_HREF,
+} from "@/config/contact";
 
 export const metadata: Metadata = {
   title: "Offences We Deal With | Police Station Representation in Kent",
@@ -85,7 +92,10 @@ export default function OffencesWeDealWithPage() {
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-blue-600 font-bold mt-1">•</span>
-                  <span>Post-interview advice on bail, release under investigation (RUI), and next steps</span>
+                  <span>
+                    Information about what commonly happens after interview (bail, RUI, next steps) —
+                    not free post-release phone advice
+                  </span>
                 </li>
               </ul>
               <p className="text-slate-700">
@@ -433,24 +443,30 @@ export default function OffencesWeDealWithPage() {
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-amber-300 font-bold mt-1">•</span>
-                  <span>Guide you on bail, RUI, and next steps</span>
+                  <span>
+                    Explain typical next steps after interview (bail / RUI) as information — we do
+                    not offer free post-release phone advice
+                  </span>
                 </li>
               </ul>
+              <p className="text-amber-200 font-medium mb-2">{CTA_WHO_CAN_CALL}</p>
+              <p className="text-blue-100 text-sm mb-4">{CTA_OUT_OF_SCOPE}</p>
               <p className="text-blue-100 mb-6">
-                We cover police stations across Kent and can attend voluntary interviews and custody interviews subject to availability and conflicts.
+                We cover police stations across Kent and can attend voluntary interviews and custody
+                interviews subject to availability and conflicts.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a
-                  href="tel:01732247427"
+                  href={`tel:${PHONE_TEL}`}
                   className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-lg font-bold transition-colors bg-amber-400 hover:bg-amber-500 text-slate-900 px-8 py-4 rounded-full shadow-xl"
                 >
-                  Call 01732 247427
+                  Call {PHONE_DISPLAY}
                 </a>
                 <Link
-                  href="/contact"
+                  href={SCOPE_HELP_HREF}
                   className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-lg font-bold transition-colors border-2 border-white text-white hover:bg-white/10 px-8 py-4 rounded-full shadow-xl"
                 >
-                  Contact Us
+                  Who can call?
                 </Link>
               </div>
             </section>

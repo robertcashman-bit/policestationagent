@@ -21,7 +21,7 @@ export default function WhoProvidesPanel() {
       <p className="text-sm text-red-800 font-semibold leading-relaxed">
         We are NOT Kent Police or any police force. Instructions are accepted for people in police
         custody and scheduled voluntary (VAI) interviews at Kent stations — not general legal advice
-        by telephone.
+        by telephone, and not free advice after release or after a past interview.
       </p>
     </div>
   );

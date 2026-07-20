@@ -27,10 +27,21 @@ export const SERVICE_SCOPE =
   "Immediate matters only: current police custody or a scheduled voluntary (VAI) interview at a Kent station — instructed by the detainee or immediate family (detainee must confirm). Not past arrests, friends, missing-person enquiries, or general legal advice by phone.";
 
 export const SERVICE_SCOPE_SHORT =
-  "Immediate custody & booked VAI only — immediate family may instruct; not past arrests or general advice.";
+  "Immediate custody & booked VAI only — immediate family may instruct; not past arrests, post-release free advice, or general advice.";
 
 export const CUSTODY_PHONE_CTA =
   "Telephone for current custody or a booked voluntary interview";
 
 export const HEADER_STRAPLINE =
   "Independent solicitor — NOT the police. Kent custody and booked interviews.";
+
+/** Short CTA: who this phone line is for */
+export const CTA_WHO_CAN_CALL =
+  "Call only for current Kent police custody or a booked voluntary (VAI) interview.";
+
+/** Short CTA: who should not call for free phone advice */
+export const CTA_OUT_OF_SCOPE =
+  "Do not call for free advice after release, after a past interview, or for general case updates.";
+
+/** Scope FAQ / can-we-help anchor */
+export const SCOPE_HELP_HREF = "/faq#immediate-custody-only";
