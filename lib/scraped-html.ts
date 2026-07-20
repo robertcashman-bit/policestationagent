@@ -4,6 +4,7 @@ import {
   SMS_DISPLAY,
   SMS_TEL,
 } from "@/config/contact";
+import { disambiguateStationHtml } from "@/lib/seo/disambiguate-station-html";
 
 /** Strip embedded version badges from scraped HTML blobs. */
 const VERSION_BADGE_PATTERN =
@@ -84,6 +85,9 @@ export function normalizeScrapedHtml(html: string): string {
     /solicitor We aim to respond promptly\. Attendance times depend on location, custody demand and solicitor availability\./gi,
     "We aim to respond promptly. Attendance times depend on location, custody demand and solicitor availability.",
   );
+
+  // Separate police contact (999/101) from solicitor phone; inject not-police intro.
+  out = disambiguateStationHtml(out);
 
   return out;
 }

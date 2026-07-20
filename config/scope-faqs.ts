@@ -18,8 +18,33 @@ export const SCOPE_NOT_GENERAL =
 export const SCOPE_STATUS_ENQUIRY_HEADLINE =
   "Immediate custody & scheduled interviews only — not past arrests or general enquiries";
 
+/** Entity disambiguation FAQs — reduce confusion with Kent Police */
+export const NOT_POLICE_FAQ_ITEMS = [
+  {
+    question: "Is this Kent Police?",
+    answer:
+      "No. PoliceStationAgent.com is an independent criminal defence solicitor service. We are not Kent Police, we are not part of any police force, and we do not operate police stations. For police assistance call 999 (emergency) or 101 (non-emergency).",
+  },
+  {
+    question: "Can I report a crime here?",
+    answer:
+      "No. We cannot take crime reports or police enquiries. To report a crime, call 999 in an emergency or 101 for non-emergency matters, or use the official Kent Police website.",
+  },
+  {
+    question: "Can you transfer me to the police?",
+    answer:
+      "No. We cannot transfer calls to police stations, custody suites, or police switchboards. Our telephone line is for instructing independent legal representation only.",
+  },
+  {
+    question: "Can you arrange a solicitor?",
+    answer:
+      "Yes. We arrange independent criminal defence solicitors for people in current Kent police custody or with a booked voluntary (VAI) interview. Immediate family may instruct for current custody — the detainee must confirm. Call 01732 247427.",
+  },
+] as const;
+
 /** Scope section FAQs — used in FAQ page, chatbot, and JSON-LD */
 export const SCOPE_FAQ_ITEMS = [
+  ...NOT_POLICE_FAQ_ITEMS,
   {
     question: "Do you deal with arrests from yesterday or a few days ago?",
     answer: `${SCOPE_IMMEDIATE_ONLY} If someone was arrested yesterday, two days ago, or earlier — or has already been released — we cannot attend, trace what happened, or provide a case update. If they need a solicitor after release, they should contact a criminal defence firm directly.`,

@@ -1,0 +1,79 @@
+{
+  "generatedAt": "2026-07-20T13:34:50.598Z",
+  "summary": {
+    "pagesTested": 6,
+    "averageScore": 0,
+    "highRiskCount": 0,
+    "falsePoliceIntent": 0,
+    "falseTelephoneAssociation": 0,
+    "schemaErrors": 0,
+    "actionsPerformed": [
+      "Scored on-page police confusion signals",
+      "Runtime scraped HTML disambiguation is active via normalizeScrapedHtml"
+    ],
+    "outstandingIssues": [],
+    "trendSincePrevious": "improved",
+    "previousAverageScore": 12,
+    "externalChecks": {
+      "status": "skipped",
+      "serp": null,
+      "ai": null,
+      "gsc": null,
+      "notes": [
+        "SERP checks skipped — set SERPAPI_KEY or DATAFORSEO_LOGIN",
+        "AI prompt checks skipped — set OPENAI_API_KEY",
+        "GSC checks skipped — configure GSC service account env vars"
+      ]
+    }
+  },
+  "pages": [
+    {
+      "path": "/app/kent-police-stations/page.tsx",
+      "score": 0,
+      "policeIntent": 2,
+      "legalIntent": 7,
+      "flags": [],
+      "recommendations": []
+    },
+    {
+      "path": "/app/police-stations/[slug]/page.tsx",
+      "score": 0,
+      "policeIntent": 3,
+      "legalIntent": 7,
+      "flags": [],
+      "recommendations": []
+    },
+    {
+      "path": "/app/coverage/police-stations/[station-name]/page.tsx",
+      "score": 0,
+      "policeIntent": 1,
+      "legalIntent": 8,
+      "flags": [],
+      "recommendations": []
+    },
+    {
+      "path": "/app/medway-police-station/page.tsx",
+      "score": 0,
+      "policeIntent": 1,
+      "legalIntent": 7,
+      "flags": [],
+      "recommendations": []
+    },
+    {
+      "path": "/app/maidstone-police-station/page.tsx",
+      "score": 0,
+      "policeIntent": 1,
+      "legalIntent": 8,
+      "flags": [],
+      "recommendations": []
+    },
+    {
+      "path": "/app/canterbury-police-station/page.tsx",
+      "score": 0,
+      "policeIntent": 1,
+      "legalIntent": 7,
+      "flags": [],
+      "recommendations": []
+    }
+  ]
+}

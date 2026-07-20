@@ -1,12 +1,16 @@
 import Header from "@/components/Header";
-import { normalizeScrapedHtml } from "@/lib/scraped-html";
 import Footer from "@/components/Footer";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import db from "@/lib/db";
 import type { Metadata } from "next";
-import Script from "next/script";
 import { SITE_URL } from "@/config/site";
+import { SEO_NOT_POLICE } from "@/config/contact";
+import { PlaceSchema } from "@/components/StructuredData";
+import StationNotPoliceIntro from "@/components/compliance/StationNotPoliceIntro";
+import PoliceAssistanceBlock from "@/components/compliance/PoliceAssistanceBlock";
+import SolicitorHelpCTA from "@/components/compliance/SolicitorHelpCTA";
+import Script from "next/script";
 
 interface PageProps {
   params: Promise<{
@@ -29,17 +33,18 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
     };
   }
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://policestationagent.com";
+  const townName = station.name.replace(/\s*Police\s*Station.*/i, "").trim();
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_URL;
 
   return {
-    title: `Police Station Rep at ${station.name} | FREE extended hours | Kent`,
-    description: `Expert police station rep at ${station.name}, Kent. FREE legal advice extended hours. Accredited duty solicitor Robert Cashman.${station.address ? " Located at " + station.address : ""} Call 01732 247427.`,
+    title: `${townName} Police Station Information | Independent Criminal Defence Solicitors`,
+    description: `${SEO_NOT_POLICE} Independent guide to ${townName} police station information. FREE Legal Aid criminal defence solicitors for Kent custody and booked voluntary interviews — not a police contact number.`,
     alternates: {
       canonical: `${siteUrl}/police-stations/${params.slug}`,
     },
     openGraph: {
-      title: `Police Station Rep at ${station.name} | FREE extended hours | Kent`,
-      description: `Expert police station rep at ${station.name}, Kent. FREE legal advice extended hours. Accredited duty solicitor.`,
+      title: `${townName} Police Station Information | Independent Criminal Defence Solicitors`,
+      description: `${SEO_NOT_POLICE} Independent legal representation for Kent custody and booked voluntary interviews.`,
       url: `${siteUrl}/police-stations/${params.slug}`,
       siteName: "Police Station Agent",
       type: "website",
@@ -64,59 +69,51 @@ export default async function PoliceStationPage(props: PageProps) {
   }
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_URL;
-
-  // Extract town name from station name (e.g., "Medway Police Station" -> "Medway")
   const townName = station.name.replace(/\s*Police\s*Station.*/i, "").trim();
+  const stationLabel = `${townName} Police Station`;
 
-  // Create LocalBusiness schema
-  const localBusinessSchema = {
+  // Place = station location only (no telephone). LegalService = firm (no station address).
+  const legalServiceSchema = {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "@id": `${siteUrl}/police-stations/${params.slug}#business`,
-    name: `Police Station Representative - ${station.name}`,
-    description: `Expert police station rep service at ${station.name}, Kent. FREE extended hours representation for police interviews and custody matters.`,
-    ...(station.address && {
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: townName,
-        addressRegion: "Kent",
-        addressCountry: "GB",
-        streetAddress: station.address.split(",")[0] || station.address,
-      },
-    }),
+    "@type": "LegalService",
+    "@id": `${siteUrl}/police-stations/${params.slug}#legalservice`,
+    name: "Police Station Agent — Independent Criminal Defence Solicitors",
+    description: `${SEO_NOT_POLICE} Independent police station representation at Kent custody suites and booked voluntary interviews. Free under Legal Aid where eligible.`,
+    url: siteUrl,
+    telephone: "+441732247427",
     areaServed: [
       {
         "@type": "City",
         name: townName,
-        containedIn: {
-          "@type": "State",
-          name: "Kent",
-        },
+        containedIn: { "@type": "AdministrativeArea", name: "Kent" },
       },
-      {
-        "@type": "State",
-        name: "Kent",
-      },
+      { "@type": "AdministrativeArea", name: "Kent" },
     ],
     serviceType: "Police Station Representation",
-    telephone: "+441732247427",
     priceRange: "Free under Legal Aid",
-    openingHours: "Mo-Su 00:00-23:59",
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
+      {station.address ? (
+        <PlaceSchema
+          name={stationLabel}
+          address={station.address}
+          url={`${siteUrl}/police-stations/${params.slug}`}
+          description={`Independent information about ${stationLabel}. Not an official police page.`}
+          areaServed="Kent"
+        />
+      ) : null}
       <Script
-        id="local-business-schema"
+        id="legal-service-schema"
         type="application/ld+json"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(localBusinessSchema),
+          __html: JSON.stringify(legalServiceSchema),
         }}
       />
       <Header />
       <main className="flex-grow relative" id="main-content" role="main" aria-live="polite">
-        {/* Hero Section */}
         <section className="bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">
@@ -139,9 +136,14 @@ export default async function PoliceStationPage(props: PageProps) {
                   <path d="m12 19-7-7 7-7"></path>
                   <path d="M19 12H5"></path>
                 </svg>
-                Back to Kent Police Stations - Police Station Rep Coverage
+                Back to Kent police station information
               </Link>
-              <h1 className="text-4xl md:text-5xl font-bold mb-4">{station.name} Police Station</h1>
+              <h1 className="text-4xl md:text-5xl font-bold mb-4">
+                {townName} Police Station Information
+              </h1>
+              <p className="text-lg text-blue-100 mb-4">
+                Independent legal representation information — not an official police contact page.
+              </p>
               {station.address && (
                 <div className="flex items-center gap-2 text-blue-100">
                   <svg
@@ -166,9 +168,11 @@ export default async function PoliceStationPage(props: PageProps) {
           </div>
         </section>
 
-        {/* Content Section */}
         <section className="py-16 bg-gradient-to-br from-slate-50 via-blue-50 to-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <StationNotPoliceIntro stationLabel={stationLabel} />
+            <PoliceAssistanceBlock />
+
             {station.content ? (
               <div className="prose prose-lg max-w-none mb-12">
                 <div
@@ -179,109 +183,29 @@ export default async function PoliceStationPage(props: PageProps) {
             ) : (
               <div className="bg-white p-8 rounded-xl mb-12 border-l-4 border-blue-600 shadow-sm">
                 <h2 className="text-2xl font-bold mb-4 text-slate-800">
-                  Police Station Representation at {station.name}
+                  Independent representation at {stationLabel}
                 </h2>
                 <p className="text-slate-700 leading-relaxed text-lg mb-4">
-                  We provide professional police station representation services at {station.name}.
-                  Our experienced duty solicitors are available during extended hours to protect
-                  your rights during police interviews and custody.
+                  Police Station Agent provides independent criminal defence solicitors for people
+                  detained or invited for interview at {stationLabel}. We are not the police.
                 </p>
                 <div className="mt-6 space-y-3">
-                  <div className="flex items-start gap-3">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="lucide lucide-check-circle text-green-600 w-5 h-5 mt-0.5 flex-shrink-0"
-                    >
-                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                      <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                    </svg>
-                    <p className="text-slate-700">Free legal advice under Legal Aid</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="lucide lucide-check-circle text-green-600 w-5 h-5 mt-0.5 flex-shrink-0"
-                    >
-                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                      <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                    </svg>
-                    <p className="text-slate-700">
-                      Available during extended hours for urgent matters
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="lucide lucide-check-circle text-green-600 w-5 h-5 mt-0.5 flex-shrink-0"
-                    >
-                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                      <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                    </svg>
-                    <p className="text-slate-700">Expert representation during interviews</p>
-                  </div>
+                  <p className="text-slate-700">Free legal advice under Legal Aid where eligible</p>
+                  <p className="text-slate-700">
+                    Available for urgent custody and booked voluntary interviews
+                  </p>
+                  <p className="text-slate-700">Expert representation during interviews under caution</p>
                 </div>
               </div>
             )}
 
-            <div className="bg-blue-600 text-white p-6 rounded-lg shadow-lg">
-              <h2 className="text-xl font-semibold mb-4">Need Help at {station.name}?</h2>
-              <p className="text-blue-100 mb-4">
-                If you or someone you know has been arrested or invited for a police interview at{" "}
-                {station.name}, contact us immediately for free legal advice.
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <a
-                  href="tel:01732247427"
-                  className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition inline-flex items-center gap-2"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="lucide lucide-phone w-5 h-5"
-                  >
-                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-                  </svg>
-                  Call 01732 247427
-                </a>
-                <Link
-                  href="/contact"
-                  className="bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-800 transition inline-flex items-center gap-2"
-                >
-                  Contact Police Station Rep for {townName}
-                </Link>
-              </div>
-            </div>
+            <SolicitorHelpCTA
+              heading={`Need a solicitor at ${stationLabel}?`}
+              description={`If you or an immediate family member needs independent legal representation for current custody or a booked voluntary interview at ${stationLabel}, contact us. We cannot transfer you to the police.`}
+              noSnippetPhone
+              contactHref="/contact"
+              contactLabel={`Contact Police Station Rep for ${townName}`}
+            />
           </div>
         </section>
       </main>

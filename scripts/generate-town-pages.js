@@ -179,18 +179,12 @@ export const metadata: Metadata = {
   },
 };
 
-const localBusinessSchema = {
+const legalServiceSchema = {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "@id": \`\${SITE_URL}/police-station-rep-${town.slug}#business\`,
-  "name": "Police Station Representative - ${town.displayName}, Kent",
-  "description": "Expert police station rep service in ${town.displayName}, Kent. FREE We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor.${town.type === "Custody Suite" ? " at " + town.displayName + " custody suite" : " for " + town.type.toLowerCase()}' for police interviews and custody matters.",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "${town.displayName}",
-    "addressRegion": "Kent",
-    "addressCountry": "GB"
-  },
+  "@type": "LegalService",
+  "@id": \`\${SITE_URL}/police-station-rep-${town.slug}#legalservice\`,
+  "name": "Police Station Agent — Independent Criminal Defence Solicitors (${town.displayName})",
+  "description": "Private defence solicitor website — NOT Kent Police. Independent police station representation in ${town.displayName}, Kent. FREE Legal Aid where eligible for custody and booked voluntary interviews.",
   "areaServed": [
 ${town.areaServed
   .map(
@@ -198,32 +192,31 @@ ${town.areaServed
       "@type": "City",
       "name": "${area}",
       "containedIn": {
-        "@type": "State",
+        "@type": "AdministrativeArea",
         "name": "Kent"
       }
     }`
   )
   .join(",\n")},
     {
-      "@type": "State",
+      "@type": "AdministrativeArea",
       "name": "Kent"
     }
   ],
   "serviceType": "Police Station Representation",
   "telephone": "+441732247427",
-  "priceRange": "Free under Legal Aid",
-  "openingHours": "Mo-Su 00:00-23:59"
+  "priceRange": "Free under Legal Aid"
 };
 
 export default function Page() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
       <Script
-        id="local-business-schema"
+        id="legal-service-schema"
         type="application/ld+json"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(localBusinessSchema),
+          __html: JSON.stringify(legalServiceSchema),
         }}
       />
       <Header />

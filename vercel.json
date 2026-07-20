@@ -152,6 +152,10 @@
     {
       "path": "/api/buffer/selftest",
       "schedule": "10 7 * * *"
+    },
+    {
+      "path": "/api/cron/police-confusion-health",
+      "schedule": "0 2 * * *"
     }
   ]
 }
