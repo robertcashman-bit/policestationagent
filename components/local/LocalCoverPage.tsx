@@ -5,6 +5,7 @@ import { InternalLinkHub } from "@/components/InternalLinkHub";
 import type { LocalCoverConfig } from "@/lib/seo/local-cover-data";
 import Link from "next/link";
 import { SITE_URL } from "@/config/site";
+import { STATION_SOLICITOR_CTA, STATION_CONTACT_BUTTON } from "@/config/contact";
 
 type Props = {
   config: LocalCoverConfig;
@@ -64,9 +65,19 @@ export function LocalCoverPage({ config }: Props) {
         <div className="max-w-4xl mx-auto px-4">
           <p className="text-xs uppercase tracking-wide text-white mb-2 font-semibold">Kent police station rep</p>
           <h1 className="text-3xl md:text-4xl font-bold mb-4 text-white">{config.h1}</h1>
+          <p className="text-sm md:text-base text-amber-100 mb-4 max-w-3xl" data-station-not-police="true">
+            <strong className="text-white">NOT THE POLICE.</strong> We are criminal solicitors serving this area.{" "}
+            {STATION_SOLICITOR_CTA} Police assistance: <strong>999</strong> or <strong>101</strong>.
+          </p>
           <p className="text-white text-lg mb-6">{config.intro}</p>
           <div className="rounded-xl bg-white p-4 shadow-lg max-w-xl">
-            <ConversionCTAGroup />
+            <ConversionCTAGroup forceHideDigits />
+            <p className="mt-3 text-xs text-slate-600">
+              <Link href="/contact" className="font-semibold underline text-blue-800">
+                {STATION_CONTACT_BUTTON}
+              </Link>{" "}
+              — solicitor telephone is last on that page.
+            </p>
           </div>
         </div>
       </section>

@@ -17,11 +17,11 @@ export function localCoverMetadata(config: LocalCoverConfig): Metadata {
 export function LocalCoverPageShell({ config }: { config: LocalCoverConfig }) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col pb-16 lg:pb-0">
-      <Header />
+      <Header forceHidePhone />
       <main className="flex-grow" id="main-content" role="main">
         <LocalCoverPage config={config} />
       </main>
-      <Footer />
+      <Footer forceHidePhone />
     </div>
   );
 }

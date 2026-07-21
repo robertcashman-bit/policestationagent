@@ -97,8 +97,12 @@ describe("isPoliceContactIntentPath", () => {
     expect(isPoliceContactIntentPath("/maidstone-police-station/")).toBe(true);
     expect(isPoliceContactIntentPath("/kent-police-stations")).toBe(true);
     expect(isPoliceContactIntentPath("/police-stations/medway")).toBe(true);
+    // Canonical targets of *-police-station redirects — hide digits
+    expect(isPoliceContactIntentPath("/police-station-rep-maidstone")).toBe(true);
+    expect(isPoliceContactIntentPath("/police-station-rep-medway")).toBe(true);
+    expect(isPoliceContactIntentPath("/kent-police-station-reps")).toBe(true);
     expect(isPoliceContactIntentPath("/maidstone-solicitor")).toBe(false);
-    expect(isPoliceContactIntentPath("/police-station-rep-maidstone")).toBe(false);
+    expect(isPoliceContactIntentPath("/police-station-agent-medway")).toBe(false);
     expect(isPoliceContactIntentPath("/contact")).toBe(false);
   });
 });
