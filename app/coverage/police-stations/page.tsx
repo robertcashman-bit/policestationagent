@@ -45,7 +45,7 @@ export default function PoliceStationsPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
       <BreadcrumbList items={breadcrumbItems} />
-      <Header />
+      <Header forceHidePhone />
       <main className="flex-grow relative" id="main-content" role="main" aria-live="polite">
         <section className="bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -146,7 +146,7 @@ export default function PoliceStationsPage() {
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer forceHidePhone />
     </div>
   );
 }

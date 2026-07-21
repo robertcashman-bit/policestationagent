@@ -79,11 +79,22 @@ describe("disambiguateStationHtml", () => {
     expect(out).toMatch(/Urgent solicitor representation|Contact criminal solicitors/i);
     expect(out).toMatch(/forthcoming police interview/i);
   });
+
+  it("keeps firm tel on solicitor landing HTML without station details", () => {
+    const input = `
+      <h1>Medway Police Station Solicitor</h1>
+      <a href="tel:01732247427" class="bg-red-600">Call 01732 247427</a>
+    `;
+    const out = disambiguateStationHtml(input);
+    expect(out).toMatch(/href="tel:01732247427"/);
+    expect(out).not.toContain("data-solicitor-contact");
+  });
 });
 
 describe("isPoliceContactIntentPath", () => {
   it("flags station URLs and spares solicitor/contact URLs", () => {
     expect(isPoliceContactIntentPath("/maidstone-police-station")).toBe(true);
+    expect(isPoliceContactIntentPath("/maidstone-police-station/")).toBe(true);
     expect(isPoliceContactIntentPath("/kent-police-stations")).toBe(true);
     expect(isPoliceContactIntentPath("/police-stations/medway")).toBe(true);
     expect(isPoliceContactIntentPath("/maidstone-solicitor")).toBe(false);

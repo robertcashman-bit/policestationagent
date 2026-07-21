@@ -1,5 +1,4 @@
 import Header from "@/components/Header";
-import { normalizeScrapedHtml } from "@/lib/scraped-html";
 import Footer from "@/components/Footer";
 import FAQContent from "@/app/faq/FAQContent";
 import type { Metadata } from "next";

@@ -8,7 +8,12 @@ import HeaderTopStrip, {
 } from "@/components/header/HeaderTopStrip";
 import RouteAwarePhoneLink from "@/components/compliance/RouteAwarePhoneLink";
 
-export default function Header() {
+export default function Header({
+  forceHidePhone = false,
+}: {
+  /** Station / police-contact pages: SSR-safe hide of firm tel digits in chrome. */
+  forceHidePhone?: boolean;
+} = {}) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
@@ -78,7 +83,7 @@ export default function Header() {
 
   return (
     <header className="bg-white shadow-md border-b border-slate-200/60 relative z-50">
-      <HeaderTopStrip />
+      <HeaderTopStrip forceHideDigits={forceHidePhone} />
 
       {/* Main Header */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -103,6 +108,7 @@ export default function Header() {
           <div className="lg:hidden flex items-center gap-2">
             <RouteAwarePhoneLink
               variant="header-button"
+              forceHideDigits={forceHidePhone}
               className="inline-flex items-center justify-center gap-1.5 whitespace-nowrap text-xs sm:text-sm font-extrabold min-h-[44px] h-11 px-3 sm:px-4 rounded-md bg-amber-400 hover:bg-amber-500 text-slate-900 shadow-md"
               ariaLabel={`${CUSTODY_PHONE_CTA} — ${PHONE_DISPLAY}`}
             />
@@ -794,6 +800,7 @@ export default function Header() {
           <div className="hidden lg:flex items-center ml-4 flex-shrink-0">
             <RouteAwarePhoneLink
               variant="header-button"
+              forceHideDigits={forceHidePhone}
               className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-extrabold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-11 rounded-lg px-5 bg-amber-400 hover:bg-amber-500 text-slate-900 shadow-md hover:shadow-lg hover:scale-105"
               ariaLabel={`${CUSTODY_PHONE_CTA} — ${PHONE_DISPLAY}`}
             >

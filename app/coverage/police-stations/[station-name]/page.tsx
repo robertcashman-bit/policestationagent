@@ -216,7 +216,7 @@ export default async function PoliceStationPage(props: PageProps) {
         description={`${station.notes}. ${custodyExplanation}`}
         areaServed={station.areaCovered}
       />
-      <Header />
+      <Header forceHidePhone />
       <main className="flex-grow relative" id="main-content" role="main" aria-live="polite">
         {/* Hero Section */}
         <section className="bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white py-16">
@@ -386,7 +386,7 @@ export default async function PoliceStationPage(props: PageProps) {
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer forceHidePhone />
     </div>
   );
 }

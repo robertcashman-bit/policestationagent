@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <>
-      <Header />
+      <Header forceHidePhone />
       <main className="min-h-screen bg-white">
         <div className="container mx-auto px-4 py-8">
           <div className="prose prose-lg max-w-none">
@@ -36,7 +36,7 @@ export default function Page() {
           </div>
         </div>
       </main>
-      <Footer />
+      <Footer forceHidePhone />
     </>
   );
 }

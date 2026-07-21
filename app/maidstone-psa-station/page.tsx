@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
-      <Header />
+      <Header forceHidePhone />
       <main className="flex-grow relative" id="main-content" role="main">
         <div className="bg-slate-50 min-h-screen">
           <div
@@ -32,7 +32,7 @@ export default function Page() {
           />
         </div>
       </main>
-      <Footer />
+      <Footer forceHidePhone />
     </div>
   );
 }

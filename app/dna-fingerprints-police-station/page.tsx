@@ -90,7 +90,7 @@ export default function DNAFingerprintsPolicePage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex flex-col">
       <JsonLd data={faqSchema} />
-      <Header />
+      <Header forceHidePhone />
 
       <main className="flex-grow">
         <section className="bg-gradient-to-br from-slate-800 via-blue-900 to-slate-900 text-white py-16">
@@ -349,7 +349,7 @@ export default function DNAFingerprintsPolicePage() {
         </article>
       </main>
 
-      <Footer />
+      <Footer forceHidePhone />
     </div>
   );
 }

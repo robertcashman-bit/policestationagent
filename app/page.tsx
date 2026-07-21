@@ -1,5 +1,4 @@
 import Header from "@/components/Header";
-import { normalizeScrapedHtml } from "@/lib/scraped-html";
 import Footer from "@/components/Footer";
 import TestimonialCarousel from "@/components/TestimonialCarousel";
 import BlogCarousel from "@/components/BlogCarousel";

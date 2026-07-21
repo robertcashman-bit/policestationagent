@@ -11,6 +11,8 @@ type Props = {
   className?: string;
   ariaLabel?: string;
   children?: ReactNode;
+  /** When true, never publish tel digits (station pages SSR-safe). */
+  forceHideDigits?: boolean;
 };
 
 /**
@@ -22,9 +24,10 @@ export default function RouteAwarePhoneLink({
   className,
   ariaLabel,
   children,
+  forceHideDigits = false,
 }: Props) {
   const pathname = usePathname();
-  const hideDigits = isPoliceContactIntentPath(pathname);
+  const hideDigits = forceHideDigits || isPoliceContactIntentPath(pathname);
 
   if (hideDigits) {
     if (variant === "sticky") {

@@ -125,7 +125,7 @@ export default function LocationsPage() {
           { name: "Locations", url: `${siteUrl}/locations` },
         ]}
       />
-      <Header />
+      <Header forceHidePhone />
       <main className="flex-grow relative" id="main-content" role="main" aria-live="polite">
         <div className="bg-slate-50 min-h-screen">
           <div className="prose prose-lg max-w-6xl mx-auto px-4 py-16">
@@ -159,7 +159,7 @@ export default function LocationsPage() {
           </div>
         </div>
       </main>
-      <Footer />
+      <Footer forceHidePhone />
     </div>
   );
 }

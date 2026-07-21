@@ -91,7 +91,7 @@ export default async function ServicePage(props: PageProps) {
               {service.content ? (
                 <div className="prose prose-lg max-w-none mb-12 text-gray-700">
                   <div
-                    dangerouslySetInnerHTML={{ __html: service.content }}
+                    dangerouslySetInnerHTML={{ __html: normalizeScrapedHtml(service.content) }}
                     className="space-y-4"
                   />
                 </div>

@@ -6,7 +6,7 @@
 
 export function isPoliceContactIntentPath(pathname: string | null | undefined): boolean {
   if (!pathname) return false;
-  const path = pathname.split("?")[0].split("#")[0].toLowerCase();
+  const path = pathname.split("?")[0].split("#")[0].toLowerCase().replace(/\/+$/, "") || "/";
 
   // Explicit solicitor / rep intent — keep the number
   if (

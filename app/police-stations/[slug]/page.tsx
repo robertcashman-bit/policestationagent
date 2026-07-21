@@ -112,7 +112,7 @@ export default async function PoliceStationPage(props: PageProps) {
           __html: JSON.stringify(legalServiceSchema),
         }}
       />
-      <Header />
+      <Header forceHidePhone />
       <main className="flex-grow relative" id="main-content" role="main" aria-live="polite">
         <section className="bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -209,7 +209,7 @@ export default async function PoliceStationPage(props: PageProps) {
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer forceHidePhone />
     </div>
   );
 }

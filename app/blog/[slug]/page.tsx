@@ -303,7 +303,7 @@ export default async function BlogPostPage(props: Readonly<PageProps>) {
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <article className="prose prose-lg max-w-none">
               <div
-                dangerouslySetInnerHTML={{ __html: sanitizedContentHtml }}
+                dangerouslySetInnerHTML={{ __html: normalizeScrapedHtml(sanitizedContentHtml) }}
                 className="prose prose-lg max-w-none [&_img]:max-w-full [&_img]:h-auto [&_img]:my-6 [&_img]:mx-auto [&_img]:block [&_img]:rounded-lg [&_img]:shadow-md [&_img]:filter-none [&_img]:backdrop-filter-none"
               />
             </article>

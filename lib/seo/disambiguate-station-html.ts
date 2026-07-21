@@ -1,5 +1,4 @@
 import {
-  PHONE_TEL,
   STATION_CONTACT_BUTTON,
   STATION_PHONE_LABEL,
   STATION_SOLICITOR_CTA,
@@ -25,7 +24,8 @@ const FIRM_PHONE_TEXT = /(?:Call:?\s*)?(?:\+44\s*)?0?1732[\s\-]?247[\s\-]?427/gi
  * Removes firm telephone digits; points to /contact (phone last, after do/don't).
  */
 export function disambiguateStationHtml(html: string): string {
-  if (!looksLikeStationPage(html)) {
+  // Solicitor / about landings mention "police station" but must keep the firm number.
+  if (isSolicitorIntentHtml(html) || !looksLikeStationPage(html)) {
     return html;
   }
 
@@ -69,17 +69,38 @@ export function disambiguateStationHtml(html: string): string {
   return out;
 }
 
-function looksLikeStationPage(html: string): boolean {
-  const hasFirmPhone =
-    new RegExp(`tel:${PHONE_TEL}`, "i").test(html) ||
-    /(?:\+44\s*)?0?1732[\s\-]?247[\s\-]?427/i.test(html);
+/**
+ * Solicitor / agent / about pages: keep tel digits.
+ * Station-directory pages (Details / 101 / directions) always strip.
+ */
+export function isSolicitorIntentHtml(html: string): boolean {
+  if (
+    /Police Station Details/i.test(html) ||
+    /Kent Police Non-Emergency/i.test(html) ||
+    /data-police-assistance="true"/i.test(html) ||
+    (/Get Directions/i.test(html) && /Custody/i.test(html))
+  ) {
+    return false;
+  }
 
+  const h1 = (html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1] || "")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  if (/\bSolicitor\b/i.test(h1) || /\bDuty Solicitor\b/i.test(h1)) return true;
+  if (/^About\b/i.test(h1)) return true;
+  if (/\bPolice Station Agent\b/i.test(h1)) return true;
+
+  return false;
+}
+
+function looksLikeStationPage(html: string): boolean {
   return (
     /Police Station Details/i.test(html) ||
     /Kent Police Non-Emergency/i.test(html) ||
     /data-police-assistance="true"/i.test(html) ||
-    (/Get Directions/i.test(html) && /Custody/i.test(html)) ||
-    (/police station/i.test(html) && hasFirmPhone)
+    (/Get Directions/i.test(html) && /Custody/i.test(html))
   );
 }
 

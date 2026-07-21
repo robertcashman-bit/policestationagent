@@ -50,7 +50,11 @@ function FooterLinkList({
   );
 }
 
-export default function Footer() {
+export default function Footer({
+  forceHidePhone = false,
+}: {
+  forceHidePhone?: boolean;
+} = {}) {
   const currentYear = new Date().getFullYear();
   const appVersion = getFormattedVersion();
   const lastUpdate = getLastUpdateDateTime();
@@ -70,7 +74,7 @@ export default function Footer() {
           </div>
 
           <div className="flex flex-wrap items-center gap-3 text-sm">
-            <RouteAwarePhoneLink variant="footer" />
+            <RouteAwarePhoneLink variant="footer" forceHideDigits={forceHidePhone} />
             <span className="text-sky-600">|</span>
             <a
               href={`sms:${SMS_TEL}?body=I%20need%20custody%20or%20scheduled%20interview%20representation`}
