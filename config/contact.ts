@@ -22,6 +22,9 @@ export function smsUrl(message: string): string {
 export const SEO_NOT_POLICE =
   "Private defence solicitor website — NOT Kent Police or any police force.";
 
+/** Contact / station headline order: NOT THE POLICE first */
+export const CONTACT_HEADLINE = "NOT THE POLICE — We are criminal solicitors";
+
 /** What the practice accepts instructions for */
 export const SERVICE_SCOPE =
   "Immediate matters only: current police custody or a scheduled voluntary (VAI) interview at a Kent station — instructed by the detainee or immediate family (detainee must confirm). Not past arrests, friends, missing-person enquiries, or general legal advice by phone.";
@@ -39,9 +42,24 @@ export const HEADER_STRAPLINE =
 export const CTA_WHO_CAN_CALL =
   "Call only for current Kent police custody or a booked voluntary (VAI) interview.";
 
-/** Short CTA: who should not call for free phone advice */
+/** Short CTA: who should not call — we cannot help with police matters */
 export const CTA_OUT_OF_SCOPE =
-  "Do not call for free advice after release, after a past interview, or for general case updates.";
+  "Do not use this number for police enquiries — we are NOT the police and we cannot help. Do not call for crime reports, switchboard transfers, free advice after release, after a past interview, or general case updates. For police assistance use 999 or 101.";
 
+/**
+ * Station pages: NOT THE POLICE first, then criminal solicitors, then Medway-style
+ * urgent-rep framing. No telephone digits — Contact holds the number last.
+ */
+export const STATION_SOLICITOR_CTA =
+  "NOT THE POLICE. We are criminal solicitors serving this station. Do not use our telephone for police enquiries — we cannot help with those. If you need urgent police station representation for current custody or a forthcoming police interview, go to Contact — that page lists what we do and do not do, then the solicitor telephone. This page is not a police contact directory.";
+
+export const STATION_PHONE_LABEL = "NOT THE POLICE — We are criminal solicitors";
+
+export const STATION_CONTACT_BUTTON =
+  "Contact criminal solicitors — what we do & don't do";
+
+/** Station-page scope (no digits) */
+export const STATION_PHONE_SCOPE =
+  "Solicitor telephone is on the Contact page only (custody or forthcoming interview). Do not use it for police enquiries — we are NOT the police and we cannot help. Use 999 or 101 for police assistance.";
 /** Scope FAQ / can-we-help anchor */
 export const SCOPE_HELP_HREF = "/faq#immediate-custody-only";

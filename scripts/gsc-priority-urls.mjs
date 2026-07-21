@@ -12,6 +12,16 @@ const SITE = (process.env.NEXT_PUBLIC_SITE_URL || "https://www.policestationagen
 
 const GSC_PRIORITY = [
   "/",
+  "/contact",
+  "/police-stations",
+  "/locations",
+  "/kent-police-stations",
+  "/medway-police-station",
+  "/maidstone-police-station",
+  "/tonbridge-police-station",
+  "/gravesend-police-station",
+  "/north-kent-gravesend-police-station",
+  "/canterbury-police-station",
   "/free-police-station-advice-kent",
   "/kent-police-station-reps",
   "/for-solicitors",

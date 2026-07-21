@@ -1,4 +1,9 @@
-import { PHONE_TEL, SEO_NOT_POLICE } from "@/config/contact";
+import {
+  PHONE_TEL,
+  STATION_CONTACT_BUTTON,
+  STATION_PHONE_LABEL,
+  STATION_SOLICITOR_CTA,
+} from "@/config/contact";
 
 const INTRO_MARKER = 'data-station-not-police="true"';
 
@@ -7,17 +12,17 @@ const BAD_101_BLOCK =
 
 const CLEAR_101_BLOCK = `<div class="mt-4 pt-4 border-t border-slate-200" data-police-assistance="true"><p class="text-sm font-semibold text-slate-800 mb-1">Need the police? (official)</p><p class="text-xs text-slate-600 mb-2">This website is NOT Kent Police. For police assistance use official numbers only.</p><p class="text-sm text-slate-700">Emergency <a href="tel:999" class="font-bold text-red-700 underline">999</a> · Non-emergency <a href="tel:101" class="font-bold text-slate-900 underline">101</a></p></div>`;
 
-const INTRO_HTML = `<aside class="rounded-lg border border-red-200 bg-red-50 p-4 md:p-5 mb-6 max-w-4xl mx-auto" ${INTRO_MARKER} aria-label="Not the police"><p class="text-sm md:text-base text-slate-800 leading-relaxed mb-2"><strong class="text-red-900">${SEO_NOT_POLICE}</strong> Independent criminal defence solicitors — we do not operate police stations, cannot transfer calls to police, and do not take crime reports.</p><p class="text-sm text-slate-700">Police assistance: <strong>999</strong> or <strong>101</strong>. Need a solicitor for custody or a booked interview? Use the legal contact options below.</p></aside>`;
+const INTRO_HTML = `<aside class="rounded-lg border border-red-200 bg-red-50 p-4 md:p-5 mb-6 max-w-4xl mx-auto" ${INTRO_MARKER} aria-label="Not the police"><p class="text-sm md:text-base text-slate-800 leading-relaxed mb-2"><strong class="text-red-900">NOT THE POLICE.</strong> We are <strong>criminal solicitors</strong> serving this station.</p><p class="text-sm text-slate-700 mb-2">${STATION_SOLICITOR_CTA}</p><p class="text-sm text-slate-700">Police assistance: <strong>999</strong> or <strong>101</strong>. <a href="/contact" class="font-semibold underline text-blue-800">${STATION_CONTACT_BUTTON}</a> — solicitor telephone is last on that page.</p></aside>`;
 
-const SOLICITOR_HEADING =
-  '<p class="text-sm font-bold text-blue-900 mb-2 uppercase tracking-wide" data-solicitor-label="true">Need a solicitor? Independent legal advice</p>';
+const SOLICITOR_HEADING = `<p class="text-sm font-bold text-blue-900 mb-2 uppercase tracking-wide" data-solicitor-label="true">${STATION_PHONE_LABEL}</p><p class="text-xs text-slate-800 mb-3" data-solicitor-scope="true">${STATION_SOLICITOR_CTA}</p>`;
 
-const HERO_SOLICITOR_LABEL =
-  '<p class="text-xs font-bold uppercase tracking-wide mb-2 opacity-90" data-solicitor-label="true">Need a solicitor? Independent legal advice</p>';
+const CONTACT_CTA_HTML = `<a href="/contact" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-bold shadow h-10 px-8 bg-white text-red-600 hover:bg-red-50" data-solicitor-contact="true" data-nosnippet>${STATION_CONTACT_BUTTON}</a>`;
+
+const FIRM_PHONE_TEXT = /(?:Call:?\s*)?(?:\+44\s*)?0?1732[\s\-]?247[\s\-]?427/gi;
 
 /**
  * Runtime HTML disambiguation for scraped police-station pages.
- * Separates police contact (999/101) from solicitor phone; injects not-police intro.
+ * Removes firm telephone digits; points to /contact (phone last, after do/don't).
  */
 export function disambiguateStationHtml(html: string): string {
   if (!looksLikeStationPage(html)) {
@@ -28,6 +33,16 @@ export function disambiguateStationHtml(html: string): string {
 
   out = out.replace(BAD_101_BLOCK, CLEAR_101_BLOCK);
 
+  // Soften "URGENT: Police Station Help" toward solicitor framing
+  out = out.replace(
+    /URGENT:\s*Police Station Help/gi,
+    "Urgent solicitor representation — NOT the police",
+  );
+  out = out.replace(
+    /Need Expert Police Representation\?/gi,
+    "Need urgent police station representation?",
+  );
+
   if (!out.includes('data-solicitor-label="true"')) {
     out = out.replace(
       /(<div class="rounded-xl border bg-amber-500[^"]*"[^>]*>)/gi,
@@ -35,14 +50,13 @@ export function disambiguateStationHtml(html: string): string {
     );
   }
 
-  // Soften H1 before intro so intro sits under corrected heading
   out = out.replace(
     /(<h1[^>]*>)\s*([A-Za-z][A-Za-z\s'()-]+Police Station)\s*(<\/h1>)/gi,
     (_m, open: string, title: string, close: string) => {
       if (/information|guide|representation|solicitor/i.test(title)) {
         return `${open}${title}${close}`;
       }
-      return `${open}${title.trim()} Information${close}`;
+      return `${open}${title.trim()} Information — Criminal Solicitors (NOT the police)${close}`;
     },
   );
 
@@ -50,89 +64,53 @@ export function disambiguateStationHtml(html: string): string {
     out = out.replace(/<\/h1>/i, `</h1>${INTRO_HTML}`);
   }
 
-  out = demoteHeroSolicitorTels(out);
-  out = addNoSnippetToSolicitorTelsNearStationFacts(out);
-  out = addNoSnippetInHeroZone(out);
+  out = stripFirmTelephoneFromStationHtml(out);
 
   return out;
 }
 
 function looksLikeStationPage(html: string): boolean {
+  const hasFirmPhone =
+    new RegExp(`tel:${PHONE_TEL}`, "i").test(html) ||
+    /(?:\+44\s*)?0?1732[\s\-]?247[\s\-]?427/i.test(html);
+
   return (
     /Police Station Details/i.test(html) ||
     /Kent Police Non-Emergency/i.test(html) ||
     /data-police-assistance="true"/i.test(html) ||
     (/Get Directions/i.test(html) && /Custody/i.test(html)) ||
-    (/police station/i.test(html) && new RegExp(`tel:${PHONE_TEL}`, "i").test(html))
+    (/police station/i.test(html) && hasFirmPhone)
   );
 }
 
 /**
- * Label and nosnippet solicitor tel links in the hero (first ~1200 chars after H1).
- * Keeps links functional — does not remove them.
+ * Replace every firm tel: CTA and visible 01732 digits with a /contact link.
  */
-function demoteHeroSolicitorTels(html: string): string {
-  const h1End = html.search(/<\/h1>/i);
-  if (h1End === -1) return html;
-
-  const start = h1End + "</h1>".length;
-  const end = Math.min(html.length, start + 1200);
-  const before = html.slice(0, start);
-  let hero = html.slice(start, end);
-  const after = html.slice(end);
-
-  const telHref = new RegExp(`href="tel:${PHONE_TEL}"`, "i");
-  if (telHref.test(hero) && !hero.includes('data-solicitor-label="true"')) {
-    hero = hero.replace(
-      new RegExp(`(<a[^>]*href="tel:${PHONE_TEL}"[^>]*>)`, "i"),
-      `${HERO_SOLICITOR_LABEL}$1`,
-    );
-  }
-
-  hero = hero.replace(
-    new RegExp(`href="tel:${PHONE_TEL}"(?![^>]*data-nosnippet)`, "gi"),
-    `href="tel:${PHONE_TEL}" data-nosnippet`,
-  );
-
-  return before + hero + after;
-}
-
-function addNoSnippetInHeroZone(html: string): string {
-  const h1End = html.search(/<\/h1>/i);
-  if (h1End === -1) return html;
-  const start = h1End;
-  const end = Math.min(html.length, start + 800);
-  const before = html.slice(0, start);
-  const zone = html.slice(start, end);
-  const after = html.slice(end);
-  const patched = zone.replace(
-    new RegExp(`href="tel:${PHONE_TEL}"(?![^>]*data-nosnippet)`, "gi"),
-    `href="tel:${PHONE_TEL}" data-nosnippet`,
-  );
-  return before + patched + after;
-}
-
-function addNoSnippetToSolicitorTelsNearStationFacts(html: string): string {
-  const markers = [
-    "Police Station Details",
-    "Get Directions",
-    'data-police-assistance="true"',
-  ];
-
+export function stripFirmTelephoneFromStationHtml(html: string): string {
   let out = html;
-  for (const marker of markers) {
-    const idx = out.indexOf(marker);
-    if (idx === -1) continue;
-    const windowEnd = Math.min(out.length, idx + 2500);
-    const before = out.slice(0, idx);
-    const window = out.slice(idx, windowEnd);
-    const after = out.slice(windowEnd);
 
-    const patched = window.replace(
-      new RegExp(`href="tel:${PHONE_TEL}"(?![^>]*data-nosnippet)`, "gi"),
-      `href="tel:${PHONE_TEL}" data-nosnippet`,
+  out = out.replace(
+    /<a\b[^>]*href=["']tel:(?:\+44)?0?1732\s*247427["'][^>]*>[\s\S]*?<\/a>/gi,
+    () => CONTACT_CTA_HTML,
+  );
+
+  out = out.replace(
+    /href=["']tel:(?:\+44)?0?1732\s*247427["']/gi,
+    'href="/contact" data-solicitor-contact="true" data-nosnippet',
+  );
+
+  out = out.replace(FIRM_PHONE_TEXT, (match, offset: number, full: string) => {
+    const before = full.slice(Math.max(0, offset - 80), offset);
+    if (/data-solicitor-contact/i.test(before)) return match;
+    if (/tel:/i.test(before)) return match;
+    return "criminal solicitors (see Contact)";
+  });
+
+  if (/bg-amber-500/i.test(out) && !/data-solicitor-contact="true"/i.test(out)) {
+    out = out.replace(
+      /(<div class="rounded-xl border bg-amber-500[^"]*"[^>]*>)/i,
+      `$1${SOLICITOR_HEADING}${CONTACT_CTA_HTML}`,
     );
-    out = before + patched + after;
   }
 
   return out;

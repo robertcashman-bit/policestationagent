@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { scorePageConfusion } from "../lib/seo/police-confusion-score";
 import { disambiguateStationHtml } from "../lib/seo/disambiguate-station-html";
+import { isPoliceContactIntentPath } from "../lib/seo/station-contact-routes";
 
 describe("police confusion score", () => {
   it("flags LocalBusiness telephone bound to station streetAddress", () => {
@@ -35,7 +36,7 @@ describe("police confusion score", () => {
         <div>Police Station Details</div>
         <div>Get Directions</div>
         <h2>Need a solicitor?</h2>
-        <a href="tel:01732247427">Call 01732 247427</a>
+        <a href="/contact">See Contact — what we do & don't do</a>
         NOT Kent Police independent criminal defence solicitor Legal Aid
       `,
     });
@@ -45,7 +46,7 @@ describe("police confusion score", () => {
 });
 
 describe("disambiguateStationHtml", () => {
-  it("rewrites adjacent 101 block and injects not-police intro", () => {
+  it("rewrites adjacent 101 block, injects not-police intro, strips firm tel digits", () => {
     const input = `
       <h1>Medway Police Station</h1>
       <div>Police Station Details</div>
@@ -55,12 +56,15 @@ describe("disambiguateStationHtml", () => {
     const out = disambiguateStationHtml(input);
     expect(out).toContain("data-station-not-police");
     expect(out).toContain("Need the police? (official)");
-    expect(out).toContain("Need a solicitor? Independent legal advice");
-    expect(out).toContain("Medway Police Station Information");
-    expect(out).toContain("data-nosnippet");
+    expect(out).toContain("NOT THE POLICE");
+    expect(out).toContain("criminal solicitors");
+    expect(out).toContain('href="/contact"');
+    expect(out).toContain("data-solicitor-contact");
+    expect(out).not.toMatch(/href="tel:01732247427"/);
+    expect(out).toContain("/contact");
   });
 
-  it("labels and nosnippets hero tel:01732 under H1", () => {
+  it("replaces hero tel:01732 with Contact link", () => {
     const input = `
       <h1>Police Station Rep Medway Custody</h1>
       <p class="text-lg">URGENT: Police Station Help</p>
@@ -70,8 +74,20 @@ describe("disambiguateStationHtml", () => {
     `;
     const out = disambiguateStationHtml(input);
     expect(out).toContain("data-station-not-police");
-    expect(out).toContain('data-solicitor-label="true"');
-    expect(out).toMatch(/href="tel:01732247427" data-nosnippet/);
-    expect(out).toContain("Need a solicitor? Independent legal advice");
+    expect(out).toContain('href="/contact"');
+    expect(out).not.toMatch(/href="tel:01732247427"/);
+    expect(out).toMatch(/Urgent solicitor representation|Contact criminal solicitors/i);
+    expect(out).toMatch(/forthcoming police interview/i);
+  });
+});
+
+describe("isPoliceContactIntentPath", () => {
+  it("flags station URLs and spares solicitor/contact URLs", () => {
+    expect(isPoliceContactIntentPath("/maidstone-police-station")).toBe(true);
+    expect(isPoliceContactIntentPath("/kent-police-stations")).toBe(true);
+    expect(isPoliceContactIntentPath("/police-stations/medway")).toBe(true);
+    expect(isPoliceContactIntentPath("/maidstone-solicitor")).toBe(false);
+    expect(isPoliceContactIntentPath("/police-station-rep-maidstone")).toBe(false);
+    expect(isPoliceContactIntentPath("/contact")).toBe(false);
   });
 });

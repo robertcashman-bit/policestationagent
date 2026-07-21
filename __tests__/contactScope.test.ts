@@ -9,6 +9,8 @@ import {
   SERVICE_SCOPE_SHORT,
   CTA_WHO_CAN_CALL,
   CTA_OUT_OF_SCOPE,
+  STATION_SOLICITOR_CTA,
+  STATION_CONTACT_BUTTON,
 } from "../config/contact";
 import { SCOPE_FAQ_ITEMS, isOutOfScopeEnquiry } from "../config/scope-faqs";
 
@@ -23,11 +25,48 @@ describe("contact config", () => {
     expect(SERVICE_SCOPE).toMatch(/general legal advice/i);
   });
 
-  it("CTA copy rejects post-release free advice", () => {
+  it("CTA copy rejects post-release free advice and police enquiries", () => {
     expect(CTA_WHO_CAN_CALL).toMatch(/custody/i);
     expect(CTA_WHO_CAN_CALL).toMatch(/voluntary/i);
     expect(CTA_OUT_OF_SCOPE).toMatch(/after release/i);
+    expect(CTA_OUT_OF_SCOPE).toMatch(/police enquiries/i);
+    expect(CTA_OUT_OF_SCOPE).toMatch(/cannot help/i);
+    expect(CTA_OUT_OF_SCOPE).toMatch(/NOT the police/i);
     expect(SERVICE_SCOPE_SHORT).toMatch(/post-release/i);
+  });
+
+  it("contact page: NOT THE POLICE first, phone last after do/don't", () => {
+    const contact = fs.readFileSync(path.join(root, "app/contact/page.tsx"), "utf8");
+    expect(contact).toContain("CONTACT_HEADLINE");
+    expect(contact).toMatch(/What we do and do not do/);
+    expect(contact).toMatch(/Solicitor telephone \(last\)/);
+    expect(contact).toMatch(/forthcoming police interview/i);
+    expect(contact).toContain("PHONE_DISPLAY");
+    expect(contact).toContain("CTA_OUT_OF_SCOPE");
+    // Phone section must appear after scope heading in source order
+    const scopeIdx = contact.indexOf("What we do and do not do");
+    const phoneIdx = contact.indexOf("Solicitor telephone (last)");
+    expect(scopeIdx).toBeGreaterThan(-1);
+    expect(phoneIdx).toBeGreaterThan(scopeIdx);
+  });
+
+  it("station CTA copy leads with NOT THE POLICE and has no digits", () => {
+    expect(STATION_SOLICITOR_CTA).toMatch(/^NOT THE POLICE/);
+    expect(STATION_SOLICITOR_CTA).toMatch(/criminal solicitors/i);
+    expect(STATION_SOLICITOR_CTA).toMatch(/forthcoming police interview/i);
+    expect(STATION_SOLICITOR_CTA).toMatch(/cannot help/i);
+    expect(STATION_SOLICITOR_CTA).not.toMatch(/01732/);
+    expect(STATION_CONTACT_BUTTON).toMatch(/what we do/i);
+  });
+
+  it("station HTML disambiguation strips firm tel and points to Contact", () => {
+    const disambig = fs.readFileSync(
+      path.join(root, "lib/seo/disambiguate-station-html.ts"),
+      "utf8",
+    );
+    expect(disambig).toContain("stripFirmTelephoneFromStationHtml");
+    expect(disambig).toContain('href="/contact"');
+    expect(disambig).toContain("STATION_SOLICITOR_CTA");
   });
 
   it("FAQ includes already-released free advice rejection", () => {

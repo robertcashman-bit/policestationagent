@@ -72,15 +72,15 @@ export default async function PoliceStationPage(props: PageProps) {
   const townName = station.name.replace(/\s*Police\s*Station.*/i, "").trim();
   const stationLabel = `${townName} Police Station`;
 
-  // Place = station location only (no telephone). LegalService = firm (no station address).
+  // Place = station location only (no telephone).
+  // LegalService on station pages: no telephone — number lives on /contact with do/don't scope.
   const legalServiceSchema = {
     "@context": "https://schema.org",
     "@type": "LegalService",
     "@id": `${siteUrl}/police-stations/${params.slug}#legalservice`,
     name: "Police Station Agent — Independent Criminal Defence Solicitors",
-    description: `${SEO_NOT_POLICE} Independent police station representation at Kent custody suites and booked voluntary interviews. Free under Legal Aid where eligible.`,
-    url: siteUrl,
-    telephone: "+441732247427",
+    description: `${SEO_NOT_POLICE} Independent criminal solicitor for ${townName} custody and booked voluntary interviews — not a police contact number. Telephone and scope (what we do / don't do) on the Contact page.`,
+    url: `${siteUrl}/contact`,
     areaServed: [
       {
         "@type": "City",

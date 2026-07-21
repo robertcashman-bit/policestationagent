@@ -6,16 +6,16 @@ import Footer from "@/components/Footer";
 import { BreadcrumbList } from "@/components/StructuredData";
 
 export const metadata: Metadata = {
-  title: "Police Station Reps in Kent | All Towns",
+  title: "Police Station Reps in Kent | All Towns | NOT the Police",
   description:
-    "Police station rep and police station reps across Kent — browse town rep pages, custody suites, and solicitor coverage by area.",
+    "Private defence solicitor website — NOT Kent Police. Browse town criminal solicitor / police station rep pages across Kent. Telephone and scope (what we do / don't do) are on the Contact page.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/locations`,
   },
   openGraph: {
-    title: "Police Station Reps in Kent | All Towns",
+    title: "Police Station Reps in Kent | All Towns | NOT the Police",
     description:
-      "Police station rep and police station reps across Kent — browse town rep pages, custody suites, and solicitor coverage by area.",
+      "Independent criminal solicitors across Kent — not a police contact directory. See Contact for telephone and what we do / don't do.",
     url: `https://${SITE_DOMAIN}/locations`,
     siteName: "Police Station Agent",
     type: "website",

@@ -1,6 +1,7 @@
 "use client";
 
-import { PHONE_TEL, PHONE_DISPLAY, SMS_TEL, SMS_DISPLAY } from "@/config/contact";
+import { SMS_TEL, SMS_DISPLAY } from "@/config/contact";
+import RouteAwarePhoneLink from "@/components/compliance/RouteAwarePhoneLink";
 
 export function MobileStickyContactBar() {
   return (
@@ -10,15 +11,7 @@ export function MobileStickyContactBar() {
       aria-label="Quick contact"
     >
       <div className="grid grid-cols-2 divide-x divide-slate-200">
-        <a
-          href={`tel:${PHONE_TEL}`}
-          data-event="call_click"
-          className="flex flex-col items-center justify-center gap-0.5 py-2.5 text-red-700"
-          aria-label={`Call ${PHONE_DISPLAY}`}
-        >
-          <span className="text-[11px] font-bold uppercase tracking-wide">Call</span>
-          <span className="text-sm font-black leading-none">{PHONE_DISPLAY}</span>
-        </a>
+        <RouteAwarePhoneLink variant="sticky" />
         <a
           href={`sms:${SMS_TEL}`}
           data-event="sms_click"

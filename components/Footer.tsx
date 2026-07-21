@@ -2,12 +2,11 @@ import Link from "next/link";
 import { getRecentPosts } from "@/lib/blog-reader";
 import { getFormattedVersion, getLastUpdateDateTime } from "@/lib/version";
 import {
-  PHONE_DISPLAY,
-  PHONE_TEL,
   SERVICE_SCOPE_SHORT,
   SMS_DISPLAY,
   SMS_TEL,
 } from "@/config/contact";
+import RouteAwarePhoneLink from "@/components/compliance/RouteAwarePhoneLink";
 import {
   FOOTER_ADVICE_PAGES,
   FOOTER_BLOG_LIMIT,
@@ -71,13 +70,7 @@ export default function Footer() {
           </div>
 
           <div className="flex flex-wrap items-center gap-3 text-sm">
-            <a
-              href={`tel:${PHONE_TEL}`}
-              className="flex items-center gap-1.5 text-white hover:text-blue-300 font-medium"
-              title="Custody or scheduled voluntary interview only"
-            >
-              Call {PHONE_DISPLAY}
-            </a>
+            <RouteAwarePhoneLink variant="footer" />
             <span className="text-sky-600">|</span>
             <a
               href={`sms:${SMS_TEL}?body=I%20need%20custody%20or%20scheduled%20interview%20representation`}

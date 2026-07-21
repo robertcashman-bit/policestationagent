@@ -64,9 +64,16 @@ async function main() {
   console.log("  1. Update SRA Find a Solicitor listing website → " + SITE);
   console.log("  2. Tuckers profile if applicable\n");
 
-  console.log("Priority URL inspection (after GSC verified):");
   const priority = [
     "/",
+    "/contact",
+    "/police-stations",
+    "/locations",
+    "/kent-police-stations",
+    "/medway-police-station",
+    "/maidstone-police-station",
+    "/tonbridge-police-station",
+    "/north-kent-gravesend-police-station",
     "/kent-police-station-reps",
     "/free-police-station-advice-kent",
     "/for-solicitors",
@@ -74,7 +81,11 @@ async function main() {
     "/police-station-rep-medway",
     "/blog/is-police-station-legal-advice-free-kent",
   ];
+  console.log("\nGoogle Search Console — URL Inspection → Request indexing for:");
   for (const p of priority) console.log(`  ${SITE}${p}`);
+  console.log(
+    "\n  Tip: In GSC, paste each URL → URL Inspection → Request indexing (after this deploy goes live).",
+  );
 
   process.exit(allOk ? 0 : 1);
 }
