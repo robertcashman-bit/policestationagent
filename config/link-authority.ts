@@ -1,5 +1,6 @@
 import { PHONE_DISPLAY, PHONE_TEL } from "@/config/contact";
 import { SITE_URL } from "@/config/site";
+import { CUSTODYNOTE_PROMO_PRICE_LINE, CUSTODYNOTE_SITE } from "@/lib/custodynote-promo";
 
 export const AUTHORITY_NAP = {
   name: "Robert Cashman – Police Station Duty Solicitor (Kent)",
@@ -15,7 +16,7 @@ export const REPUK_PROFILE_URL = "https://policestationrepuk.org/rep/robert-cash
 
 /** Owned sibling sites — safe for footer cross-links */
 export const OWNED_NETWORK_SITES = [
-  { url: "https://custodynote.com", label: "Custody Note — digital custody records" },
+  { url: CUSTODYNOTE_SITE, label: `Custody Note — ${CUSTODYNOTE_PROMO_PRICE_LINE}` },
   { url: "https://psrtrain.com", label: "PSR Train — police station rep training" },
 ] as const;
 

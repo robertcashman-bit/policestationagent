@@ -1,5 +1,8 @@
 import { REPUK_DIRECTORY_HREF } from "@/lib/policestationrepuk-promo";
-import { CUSTODYNOTE_TRIAL_HREF } from "@/lib/custodynote-promo";
+import {
+  CUSTODYNOTE_DOWNLOAD_HREF,
+  CUSTODYNOTE_PROMO_PRICE_LINE,
+} from "@/lib/custodynote-promo";
 import { PSRTRAIN_HOME_HREF } from "@/lib/psrtrain-promo";
 import { REPUK_PROFILE_URL } from "@/config/link-authority";
 
@@ -101,8 +104,8 @@ export const FOOTER_NETWORK_LINKS: FooterLink[] = [
     external: true,
   },
   {
-    href: CUSTODYNOTE_TRIAL_HREF,
-    label: "Custody Note — digital custody records",
+    href: CUSTODYNOTE_DOWNLOAD_HREF,
+    label: `Custody Note — ${CUSTODYNOTE_PROMO_PRICE_LINE}`,
     external: true,
   },
   {
