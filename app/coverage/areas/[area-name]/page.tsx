@@ -197,7 +197,7 @@ export default async function AreaPage(props: PageProps) {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
       {faqSchema ? <JsonLd data={faqSchema} /> : null}
       <BreadcrumbList items={breadcrumbItems} />
-      <Header />
+      <Header forceHidePhone />
       <main className="flex-grow relative" id="main-content" role="main" aria-live="polite">
         {/* Hero Section */}
         <section className="bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white py-16">
@@ -364,33 +364,32 @@ export default async function AreaPage(props: PageProps) {
               </ul>
             </div>
             
-            <div className="bg-blue-600 text-white p-6 rounded-lg shadow-lg">
+            <div className="bg-blue-600 text-white p-6 rounded-lg shadow-lg" data-nosnippet>
               <h2 className="text-xl font-semibold mb-4">Need Legal Representation in {area.displayName}?</h2>
               <p className="text-blue-100 mb-4">
-                If you need criminal defence representation in {area.displayName}, contact us for free legal advice under the Legal Aid scheme.
+                If you need criminal defence representation in {area.displayName}, use Contact for
+                free legal advice under the Legal Aid scheme. We are not Kent Police — for police
+                assistance use 101 or 999.
               </p>
               <div className="flex flex-wrap gap-4">
-                <a
-                  href="tel:01732247427"
-                  className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition inline-flex items-center gap-2"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-phone w-5 h-5">
-                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-                  </svg>
-                  Call 01732 247427
-                </a>
                 <Link
                   href="/contact"
+                  className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition inline-flex items-center gap-2"
+                >
+                  Instruct solicitor (Contact)
+                </Link>
+                <Link
+                  href="/start/voluntary-interview"
                   className="bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-800 transition inline-flex items-center gap-2"
                 >
-                  Contact Us
+                  Voluntary interview help
                 </Link>
               </div>
             </div>
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer forceHidePhone />
     </div>
   );
 }

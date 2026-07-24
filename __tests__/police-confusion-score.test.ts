@@ -158,6 +158,10 @@ describe("isPoliceContactIntentPath", () => {
     expect(isPoliceContactIntentPath("/police-station-rep-maidstone")).toBe(true);
     expect(isPoliceContactIntentPath("/police-station-rep-medway")).toBe(true);
     expect(isPoliceContactIntentPath("/kent-police-station-reps")).toBe(true);
+    expect(isPoliceContactIntentPath("/locations")).toBe(true);
+    expect(isPoliceContactIntentPath("/coverage")).toBe(true);
+    expect(isPoliceContactIntentPath("/coverage/areas/east-kent")).toBe(true);
+    expect(isPoliceContactIntentPath("/coverage/police-stations/canterbury")).toBe(true);
     expect(isPoliceContactIntentPath("/maidstone-solicitor")).toBe(false);
     expect(isPoliceContactIntentPath("/police-station-agent-medway")).toBe(false);
     expect(isPoliceContactIntentPath("/contact")).toBe(false);

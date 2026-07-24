@@ -56,6 +56,8 @@ export function isPoliceContactIntentPath(pathname: string | null | undefined): 
     path === "/kent-police-station-reps" ||
     path === "/locations" ||
     path.startsWith("/coverage/police-stations") ||
+    path.startsWith("/coverage/areas") ||
+    path === "/coverage" ||
     path.endsWith("-police-station") ||
     path.endsWith("-psa-station") ||
     path.includes("/police-station-rep-") ||
