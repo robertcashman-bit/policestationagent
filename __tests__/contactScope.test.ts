@@ -39,13 +39,17 @@ describe("contact config", () => {
     const contact = fs.readFileSync(path.join(root, "app/contact/page.tsx"), "utf8");
     expect(contact).toContain("CONTACT_HEADLINE");
     expect(contact).toMatch(/What we do and do not do/);
-    expect(contact).toMatch(/Solicitor telephone \(last\)/);
+    expect(contact).toMatch(/Independent solicitor telephone|Solicitor telephone \(last\)/);
+    expect(contact).toMatch(/Who should you contact/);
     expect(contact).toMatch(/forthcoming police interview/i);
     expect(contact).toContain("PHONE_DISPLAY");
     expect(contact).toContain("CTA_OUT_OF_SCOPE");
     // Phone section must appear after scope heading in source order
     const scopeIdx = contact.indexOf("What we do and do not do");
-    const phoneIdx = contact.indexOf("Solicitor telephone (last)");
+    const phoneIdx = Math.max(
+      contact.indexOf("Solicitor telephone (last)"),
+      contact.indexOf("Independent solicitor telephone"),
+    );
     expect(scopeIdx).toBeGreaterThan(-1);
     expect(phoneIdx).toBeGreaterThan(scopeIdx);
   });

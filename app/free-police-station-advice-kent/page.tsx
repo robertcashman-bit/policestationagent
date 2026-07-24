@@ -11,7 +11,7 @@ const PATH = "/free-police-station-advice-kent";
 const LAST_UPDATED = "2026-06-18";
 
 export const metadata: Metadata = {
-  title: "Free Police Station Advice Kent | Duty Solicitor | Call 01732 247427",
+  title: "Free Police Station Advice Kent | Duty Solicitor",
   description:
     "Free Legal Aid advice at Kent police stations — not means-tested for most interviews. PACE s.58 rights, duty solicitor scheme, and how to request Robert Cashman at custody or voluntary interviews.",
   alternates: {

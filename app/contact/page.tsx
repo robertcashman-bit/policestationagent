@@ -5,6 +5,7 @@ import WhoProvidesLegalService from "@/components/WhoProvidesLegalService";
 import { InternalLinkHub } from "@/components/InternalLinkHub";
 import { SolicitorInstructionChecklist } from "@/components/conversion/SolicitorInstructionChecklist";
 import type { Metadata } from "next";
+import Link from "next/link";
 import { SITE_DOMAIN } from "@/config/site";
 import {
   CONTACT_HEADLINE,
@@ -15,6 +16,7 @@ import {
   SERVICE_SCOPE,
   SMS_DISPLAY,
   SMS_TEL,
+  SOLICITOR_TEL_ARIA,
 } from "@/config/contact";
 
 export const metadata: Metadata = {
@@ -69,6 +71,62 @@ export default function Page() {
                   this section — last, after the scope.
                 </p>
               </div>
+            </section>
+
+            {/* Routing panel — police vs solicitor vs firm agency */}
+            <section
+              className="bg-white border-2 border-slate-200 rounded-xl shadow-lg p-6 md:p-8 mb-8"
+              aria-labelledby="who-contact-heading"
+            >
+              <h2 id="who-contact-heading" className="text-2xl md:text-3xl font-black text-slate-900 mb-4">
+                Who should you contact?
+              </h2>
+              <ul className="space-y-4 text-sm md:text-base text-slate-800">
+                <li className="rounded-lg border border-red-200 bg-red-50 p-4">
+                  <p className="font-bold text-red-900 mb-1">Emergency — life at risk</p>
+                  <p>
+                    Call{" "}
+                    <a href="tel:999" className="font-bold text-red-700 underline">
+                      999
+                    </a>
+                    . This is the emergency services number — not a solicitor line.
+                  </p>
+                </li>
+                <li className="rounded-lg border border-slate-300 bg-slate-100 p-4">
+                  <p className="font-bold text-slate-900 mb-1">Police assistance (non-emergency)</p>
+                  <p>
+                    Call{" "}
+                    <a href="tel:101" className="font-bold text-slate-900 underline">
+                      101
+                    </a>{" "}
+                    for Kent Police / non-emergency police matters. We are not the police and cannot
+                    help with crime reports or switchboard transfers.
+                  </p>
+                </li>
+                <li className="rounded-lg border border-emerald-200 bg-emerald-50 p-4">
+                  <p className="font-bold text-emerald-900 mb-1">
+                    Independent solicitor — legal representation
+                  </p>
+                  <p>
+                    Current Kent custody or a forthcoming / booked voluntary interview? Use the
+                    solicitor telephone at the bottom of this page, or{" "}
+                    <a href="#phone-heading" className="font-semibold text-blue-800 underline">
+                      jump to independent solicitor telephone
+                    </a>
+                    .
+                  </p>
+                </li>
+                <li className="rounded-lg border border-blue-200 bg-blue-50 p-4">
+                  <p className="font-bold text-blue-900 mb-1">Firm-to-firm agency / solicitor cover</p>
+                  <p>
+                    Instructing as another firm for police station cover? See{" "}
+                    <Link href="/for-solicitors" className="font-semibold text-blue-800 underline">
+                      police station cover for solicitors
+                    </Link>
+                    .
+                  </p>
+                </li>
+              </ul>
             </section>
 
             {/* 2. What we do / don't do — before the number */}
@@ -158,7 +216,7 @@ export default function Page() {
               aria-labelledby="phone-heading"
             >
               <h2 id="phone-heading" className="text-xl md:text-2xl font-bold mb-3">
-                Solicitor telephone (last)
+                Independent solicitor telephone — legal representation enquiries only
               </h2>
               <p className="text-amber-200 text-sm md:text-base font-semibold mb-2">
                 NOT THE POLICE. Do not use this number for police enquiries — we cannot help.
@@ -168,8 +226,9 @@ export default function Page() {
               </p>
               <a
                 href={`tel:${PHONE_TEL}`}
+                data-event="call_click"
                 className="inline-flex flex-col items-start gap-1 bg-white text-red-700 font-bold text-xl md:text-2xl px-6 py-4 rounded-lg shadow-lg hover:bg-red-50 transition mb-4"
-                aria-label={`Criminal solicitor line ${PHONE_DISPLAY} — not for police enquiries, we cannot help`}
+                aria-label={SOLICITOR_TEL_ARIA}
               >
                 <span>Solicitor telephone: {PHONE_DISPLAY}</span>
                 <span className="text-sm font-semibold text-red-600">

@@ -15,7 +15,7 @@ import InternalLinkInterceptor from "@/components/InternalLinkInterceptor";
 import ComplianceStrip from "@/components/compliance/ComplianceStrip";
 import NotPoliceScopeBanner from "@/components/compliance/NotPoliceScopeBanner";
 import ContactLinkGuard from "@/components/compliance/ContactLinkGuard";
-import { SEO_NOT_POLICE, SERVICE_SCOPE_SHORT } from "@/config/contact";
+import { SEO_NOT_POLICE, SERVICE_SCOPE_SHORT, LEGAL_SERVICE_SCHEMA_DESCRIPTION } from "@/config/contact";
 import { SAME_AS_URLS } from "@/config/link-authority";
 
 function getSafeSiteUrl(): string {
@@ -159,9 +159,16 @@ const organizationSchema = {
       url: siteUrl,
       logo: `${siteUrl}/logo.png`,
       description:
-        "Qualified Police Station Duty Solicitor serving Kent since 2001. Independent of the police — NOT a police service. Representation at custody and scheduled voluntary interviews under Legal Aid via Tuckers Solicitors LLP.",
+        `${LEGAL_SERVICE_SCHEMA_DESCRIPTION} Qualified Police Station Duty Solicitor serving Kent since 2001. Representation at custody and scheduled voluntary interviews under Legal Aid via Tuckers Solicitors LLP.`,
       telephone: "+441732247427",
       email: "robertcashman@defencelegalservices.co.uk",
+      contactPoint: {
+        "@type": "ContactPoint",
+        contactType: "customer service",
+        telephone: "+441732247427",
+        url: `${siteUrl}/contact`,
+        availableLanguage: "English",
+      },
       address: {
         "@type": "PostalAddress",
         addressCountry: "GB",
@@ -368,6 +375,9 @@ const organizationSchema = {
       "@type": "LocalBusiness",
       "@id": `${siteUrl}#localbusiness`,
       name: "Robert Cashman – Police Station Duty Solicitor (Kent)",
+      description:
+        "Independent criminal defence solicitor — not affiliated with Kent Police or any police force. Police station legal representation in Kent.",
+      url: `${siteUrl}/contact`,
       image: `${siteUrl}/logo.png`,
       telephone: "+441732247427",
       email: "robertcashman@defencelegalservices.co.uk",

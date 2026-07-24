@@ -1,7 +1,18 @@
+import { createRequire } from "module";
 import { describe, expect, it } from "vitest";
-import { scorePageConfusion } from "../lib/seo/police-confusion-score";
+import {
+  scorePageConfusion,
+  snippetReadsAsPoliceContact,
+  buildSnippetCandidate,
+} from "../lib/seo/police-confusion-score";
 import { disambiguateStationHtml } from "../lib/seo/disambiguate-station-html";
 import { isPoliceContactIntentPath } from "../lib/seo/station-contact-routes";
+import { LOCAL_COVER_PAGES } from "../lib/seo/local-cover-data";
+
+const require = createRequire(import.meta.url);
+const { LEGACY_LOCAL_REDIRECTS } = require("../config/legacy-local-redirects.js") as {
+  LEGACY_LOCAL_REDIRECTS: { source: string; destination: string }[];
+};
 
 describe("police confusion score", () => {
   it("flags LocalBusiness telephone bound to station streetAddress", () => {
@@ -23,6 +34,41 @@ describe("police confusion score", () => {
     expect(result.score).toBeGreaterThanOrEqual(40);
   });
 
+  it("flags firm phone in title", () => {
+    const result = scorePageConfusion({
+      path: "/home",
+      title: "Duty Solicitor Kent | 01732 247427 | FREE Advice",
+      metaDescription: "Independent solicitor — NOT Kent Police.",
+      h1: "Kent Duty Solicitor",
+    });
+    expect(result.flags).toContain("title_contains_firm_phone");
+  });
+
+  it("fails snippet simulation when number reads as police contact", () => {
+    const snippet = buildSnippetCandidate({
+      path: "/x",
+      title: "Tonbridge Police Station telephone number",
+      metaDescription: "Call 01732 247427 for Tonbridge custody.",
+      h1: "Tonbridge Police Station",
+    });
+    expect(snippetReadsAsPoliceContact(snippet)).toBe(true);
+  });
+
+  it("passes snippet simulation for solicitor-framed Tonbridge cover", () => {
+    const cfg = LOCAL_COVER_PAGES.tonbridge;
+    const snippet = buildSnippetCandidate({
+      path: "/police-station-rep-tonbridge",
+      title: cfg.title,
+      metaDescription: cfg.metaDescription,
+      h1: cfg.h1,
+    });
+    expect(snippetReadsAsPoliceContact(snippet)).toBe(false);
+    expect(cfg.title).not.toMatch(/01732/);
+    expect(cfg.metaDescription).not.toMatch(/01732|07535/);
+    expect(cfg.metaDescription).toMatch(/not Kent Police/i);
+    expect(cfg.h1).toMatch(/Independent Solicitor/i);
+  });
+
   it("scores low when Place has no telephone and solicitor CTA is labelled", () => {
     const result = scorePageConfusion({
       path: "/coverage/police-stations/medway",
@@ -42,6 +88,17 @@ describe("police confusion score", () => {
     });
     expect(result.flags).not.toContain("schema_telephone_on_station_address");
     expect(result.score).toBeLessThan(40);
+  });
+});
+
+describe("legacy redirects", () => {
+  it("redirects tonbridge psa and police-station duplicates to rep cover", () => {
+    const map = Object.fromEntries(
+      LEGACY_LOCAL_REDIRECTS.map((r) => [r.source, r.destination]),
+    );
+    expect(map["/tonbridge-psa-station"]).toBe("/police-station-rep-tonbridge");
+    expect(map["/tonbridge-police-station"]).toBe("/police-station-rep-tonbridge");
+    expect(map["/tonbridge-solicitor"]).toBe("/police-station-rep-tonbridge");
   });
 });
 
@@ -97,12 +154,20 @@ describe("isPoliceContactIntentPath", () => {
     expect(isPoliceContactIntentPath("/maidstone-police-station/")).toBe(true);
     expect(isPoliceContactIntentPath("/kent-police-stations")).toBe(true);
     expect(isPoliceContactIntentPath("/police-stations/medway")).toBe(true);
-    // Canonical targets of *-police-station redirects — hide digits
     expect(isPoliceContactIntentPath("/police-station-rep-maidstone")).toBe(true);
     expect(isPoliceContactIntentPath("/police-station-rep-medway")).toBe(true);
     expect(isPoliceContactIntentPath("/kent-police-station-reps")).toBe(true);
     expect(isPoliceContactIntentPath("/maidstone-solicitor")).toBe(false);
     expect(isPoliceContactIntentPath("/police-station-agent-medway")).toBe(false);
     expect(isPoliceContactIntentPath("/contact")).toBe(false);
+  });
+});
+
+describe("metadata safeguards", () => {
+  it("no indexable title in local covers contains firm phone", () => {
+    for (const cfg of Object.values(LOCAL_COVER_PAGES)) {
+      expect(cfg.title).not.toMatch(/01732|07535/);
+      expect(cfg.metaDescription).not.toMatch(/01732|07535/);
+    }
   });
 });

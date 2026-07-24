@@ -34,6 +34,7 @@
     "seo:setup-indexing": "node scripts/setup-search-indexing.mjs",
     "seo:gsc-priority": "node scripts/gsc-priority-urls.mjs",
     "seo:police-confusion": "tsx scripts/police-confusion-audit.ts",
+    "seo:police-number-inventory": "tsx scripts/seo-police-number-inventory.ts",
     "seo-growth-audit": "node scripts/seo-growth-audit.mjs",
     "verify:rep-seo": "node scripts/verify-rep-page-seo.mjs",
     "compliance:check": "node scripts/compliance-check.js",

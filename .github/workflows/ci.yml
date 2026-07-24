@@ -41,6 +41,9 @@ jobs:
       - name: Unit tests
         run: npm test
 
+      - name: Police confusion audit
+        run: npm run seo:police-confusion
+
       - name: Firm outreach repo verification
         run: npm run verify:firm-outreach
 

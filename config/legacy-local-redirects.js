@@ -1,5 +1,5 @@
 /**
- * Phase 2 local SEO — 301 legacy scraped town URLs to canonical rep pages.
+ * Phase 2 local SEO — 301/308 legacy scraped town URLs to canonical rep pages.
  * Keeps link equity on one URL scheme (/police-station-rep-{town}).
  */
 const REP = (town) => `/police-station-rep-${town}`;
@@ -17,11 +17,29 @@ const LEGACY_LOCAL_REDIRECTS = [
   { source: "/maidstone-police-station", destination: REP("maidstone"), permanent: true },
   { source: "/margate-police-station", destination: REP("margate"), permanent: true },
   { source: "/medway-police-station", destination: REP("medway"), permanent: true },
+  { source: "/north-kent-gravesend-police-station", destination: REP("gravesend"), permanent: true },
   { source: "/sevenoaks-police-station", destination: REP("sevenoaks"), permanent: true },
   { source: "/sittingbourne-police-station", destination: REP("sittingbourne"), permanent: true },
   { source: "/swanley-police-station", destination: REP("swanley"), permanent: true },
+  { source: "/tonbridge-police-station", destination: REP("tonbridge"), permanent: true },
   { source: "/tunbridge-wells-police-station", destination: REP("tunbridge-wells"), permanent: true },
   { source: "/dartford-police-station", destination: REP("dartford"), permanent: true },
+
+  // Legacy {town}-psa-station duplicates (thin station scrapes)
+  { source: "/ashford-psa-station", destination: REP("ashford"), permanent: true },
+  { source: "/bluewater-psa-station", destination: REP("bluewater"), permanent: true },
+  { source: "/canterbury-psa-station", destination: REP("canterbury"), permanent: true },
+  { source: "/dover-psa-station", destination: REP("dover"), permanent: true },
+  { source: "/folkestone-psa-station", destination: REP("folkestone"), permanent: true },
+  { source: "/maidstone-psa-station", destination: REP("maidstone"), permanent: true },
+  { source: "/margate-psa-station", destination: REP("margate"), permanent: true },
+  { source: "/medway-psa-station", destination: REP("medway"), permanent: true },
+  { source: "/north-kent-gravesend-psa-station", destination: REP("gravesend"), permanent: true },
+  { source: "/sevenoaks-psa-station", destination: REP("sevenoaks"), permanent: true },
+  { source: "/sittingbourne-psa-station", destination: REP("sittingbourne"), permanent: true },
+  { source: "/swanley-psa-station", destination: REP("swanley"), permanent: true },
+  { source: "/tonbridge-psa-station", destination: REP("tonbridge"), permanent: true },
+  { source: "/tunbridge-wells-psa-station", destination: REP("tunbridge-wells"), permanent: true },
 
   // Legacy police-station-agent-{town} alias scheme
   { source: "/police-station-agent-kent", destination: "/kent-police-station-reps", permanent: true },
@@ -39,6 +57,7 @@ const LEGACY_LOCAL_REDIRECTS = [
   { source: "/police-station-agent-swanley", destination: REP("swanley"), permanent: true },
   { source: "/police-station-agent-tunbridge-wells", destination: REP("tunbridge-wells"), permanent: true },
   { source: "/police-station-agent-bluewater", destination: REP("bluewater"), permanent: true },
+  { source: "/police-station-agent-gravesend", destination: REP("gravesend"), permanent: true },
 
   // Legacy {town}-solicitor scraped pages
   { source: "/ashford-solicitor", destination: REP("ashford"), permanent: true },
@@ -48,6 +67,14 @@ const LEGACY_LOCAL_REDIRECTS = [
   { source: "/margate-solicitor", destination: REP("margate"), permanent: true },
   { source: "/sevenoaks-solicitor", destination: REP("sevenoaks"), permanent: true },
   { source: "/dartford-solicitor", destination: REP("dartford"), permanent: true },
+  { source: "/tonbridge-solicitor", destination: REP("tonbridge"), permanent: true },
+  { source: "/medway-solicitor", destination: REP("medway"), permanent: true },
+  { source: "/sittingbourne-solicitor", destination: REP("sittingbourne"), permanent: true },
+  { source: "/swanley-solicitor", destination: REP("swanley"), permanent: true },
+  { source: "/tunbridge-wells-solicitor", destination: REP("tunbridge-wells"), permanent: true },
+  { source: "/dover-solicitor", destination: REP("dover"), permanent: true },
+  { source: "/gravesend-solicitor", destination: REP("gravesend"), permanent: true },
+  { source: "/bluewater-solicitor", destination: REP("bluewater"), permanent: true },
 ];
 
 module.exports = { LEGACY_LOCAL_REDIRECTS };
