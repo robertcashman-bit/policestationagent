@@ -47,6 +47,7 @@ const PRIORITY_URLS = [
   "/no-comment-interview",
   "/custody-time-limits",
   "/police-bail-explained",
+  "/",
   "/released-under-investigation",
   "/offences-we-deal-with",
   "/start/in-custody",

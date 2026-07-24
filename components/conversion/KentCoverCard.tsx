@@ -1,14 +1,16 @@
-import { PHONE_DISPLAY, SMS_DISPLAY } from "@/config/contact";
+import Link from "next/link";
 
 /**
- * "Download our Kent cover card" — a savable vCard with the direct call/text
- * details so firms and clients can store contact details in one tap.
+ * "Download our Kent cover card" — a savable vCard.
+ * Do not publish firm tel/SMS digits here: Google was quoting this copy as the
+ * homepage SERP description and feeding police/solicitor misdials.
  */
 export function KentCoverCard({ className = "" }: { className?: string }) {
   return (
     <section
       aria-labelledby="kent-cover-card-heading"
       className={`max-w-3xl mx-auto px-4 ${className}`}
+      data-nosnippet
     >
       <div className="rounded-2xl border border-slate-200 bg-white shadow-sm p-6 md:p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
@@ -19,8 +21,12 @@ export function KentCoverCard({ className = "" }: { className?: string }) {
             Save our Kent cover card
           </h2>
           <p className="text-slate-600 mt-1 text-sm md:text-base">
-            Keep our direct details on your phone — call {PHONE_DISPLAY} or text{" "}
-            {SMS_DISPLAY} for custody or a booked interview.
+            Independent criminal defence solicitor for custody or a booked voluntary interview —
+            not Kent Police. Telephone and SMS are on the{" "}
+            <Link href="/contact" className="font-semibold underline text-blue-800">
+              Contact
+            </Link>{" "}
+            page.
           </p>
         </div>
         <a

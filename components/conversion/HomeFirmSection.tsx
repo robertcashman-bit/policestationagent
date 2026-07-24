@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { PHONE_DISPLAY, PHONE_TEL } from "@/config/contact";
 
 const FIRM_BULLETS = [
   "A duty solicitor on the ground — not only an accredited rep",
@@ -40,14 +39,14 @@ export function HomeFirmSection() {
               ))}
             </ul>
           </div>
-          <div className="flex flex-col gap-3 shrink-0 md:min-w-[220px]">
-            <a
-              href={`tel:${PHONE_TEL}`}
+          <div className="flex flex-col gap-3 shrink-0 md:min-w-[220px]" data-nosnippet>
+            <Link
+              href="/contact"
               className="inline-flex items-center justify-center rounded-lg bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold px-6 py-3 shadow-md transition-colors"
-              data-event="call_click"
+              data-event="contact_click"
             >
-              Call {PHONE_DISPLAY}
-            </a>
+              Instruct cover (Contact)
+            </Link>
             <Link
               href="/for-solicitors#firm-enquiry"
               className="inline-flex items-center justify-center rounded-lg border-2 border-amber-500 bg-white hover:bg-amber-50 text-slate-900 font-bold px-6 py-3 transition-colors"
