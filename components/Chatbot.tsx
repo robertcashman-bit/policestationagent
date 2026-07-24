@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import ChatbotMessage from "./ChatbotMessage";
 import {
   generateFollowUpQuestions,
@@ -8,6 +10,7 @@ import {
   buildUrgentCallCta,
 } from "@/lib/chatbot-formatters";
 import { PHONE_DISPLAY, PHONE_TEL } from "@/config/contact";
+import { isPoliceContactIntentPath } from "@/lib/seo/station-contact-routes";
 
 interface ChatMessage {
   id: string;
@@ -41,6 +44,8 @@ function parseSseBlock(block: string): { event: string; data: string } | null {
 }
 
 export default function Chatbot() {
+  const pathname = usePathname();
+  const hideDigits = isPoliceContactIntentPath(pathname);
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([
@@ -188,7 +193,9 @@ export default function Chatbot() {
       if (urgent) {
         setMessages((prev) =>
           prev.map((m) =>
-            m.id === botId ? { ...m, content: m.content + buildUrgentCallCta() } : m
+            m.id === botId
+              ? { ...m, content: m.content + buildUrgentCallCta({ hideDigits }) }
+              : m
           )
         );
       }
@@ -207,7 +214,11 @@ export default function Chatbot() {
         if (fallback.ok) {
           const data = await fallback.json();
           updateBotMessage(botId, {
-            content: data.answer || `Please call **${PHONE_DISPLAY}** for assistance.`,
+            content:
+              data.answer ||
+              (hideDigits
+                ? "Please use [Contact](/contact) for solicitor telephone — we are NOT the police."
+                : `Please call **${PHONE_DISPLAY}** for assistance.`),
             sources: data.sources,
             isStreaming: false,
           });
@@ -216,7 +227,9 @@ export default function Chatbot() {
         }
       } catch {
         updateBotMessage(botId, {
-          content: `Sorry, I encountered an error. Please call **[${PHONE_DISPLAY}](tel:${PHONE_TEL})** for assistance.`,
+          content: hideDigits
+            ? "Sorry, I encountered an error. Please use [Contact](/contact) for the solicitor line — we are NOT the police."
+            : `Sorry, I encountered an error. Please call **[${PHONE_DISPLAY}](tel:${PHONE_TEL})** for assistance.`,
           isStreaming: false,
         });
       }
@@ -300,11 +313,24 @@ export default function Chatbot() {
           {!isMinimized && (
             <>
               <div className="px-3 py-2 bg-amber-50 border-b border-amber-100 text-[11px] text-amber-900 leading-snug">
-                {LEGAL_DISCLAIMER} For custody or a booked interview, call{" "}
-                <a href={`tel:${PHONE_TEL}`} className="font-semibold underline">
-                  {PHONE_DISPLAY}
-                </a>
-                .
+                {LEGAL_DISCLAIMER}{" "}
+                {hideDigits ? (
+                  <>
+                    For custody or a booked interview, use{" "}
+                    <Link href="/contact" className="font-semibold underline">
+                      Contact
+                    </Link>{" "}
+                    for the solicitor telephone.
+                  </>
+                ) : (
+                  <>
+                    For custody or a booked interview, call{" "}
+                    <a href={`tel:${PHONE_TEL}`} className="font-semibold underline">
+                      {PHONE_DISPLAY}
+                    </a>
+                    .
+                  </>
+                )}
               </div>
 
               <div

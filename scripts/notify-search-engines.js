@@ -61,8 +61,11 @@ const PRIORITY_URLS = [
   "/canwehelp",
   "/blog/is-police-station-legal-advice-free-kent",
   "/blog/police-station-rep-near-me-kent",
+  "/blog/tonbridge-police-station-custody-and-interviews",
+  "/blog/north-kent-gravesend-custody-legal-advice",
   "/blog/dartford-voluntary-interview-legal-advice-kent",
   "/blog/swanley-police-station-interview-advice-kent",
+  "/tonbridge-police-station",
   ...REP_INDEXNOW_PATHS,
 ];
 

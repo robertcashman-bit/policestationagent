@@ -1,5 +1,5 @@
 import { JsonLd } from "@/components/JsonLd";
-import { ConversionCTAGroup } from "@/components/conversion/ConversionCTAGroup";
+import { ConversionContactOnlyCTA } from "@/components/conversion/ConversionContactOnlyCTA";
 import { GeneralLegalDisclaimer } from "@/components/conversion/GeneralLegalDisclaimer";
 import { InternalLinkHub } from "@/components/InternalLinkHub";
 import NotPoliceNotice from "@/components/compliance/NotPoliceNotice";
@@ -78,7 +78,7 @@ export function LocalCoverPage({ config }: Props) {
             <h2 className="text-base font-bold text-slate-900 mb-3">
               Independent solicitor contact details
             </h2>
-            <ConversionCTAGroup forceHideDigits />
+            <ConversionContactOnlyCTA />
             <p className="mt-3 text-xs text-slate-600">
               <Link href="/contact" className="font-semibold underline text-blue-800">
                 {STATION_CONTACT_BUTTON}

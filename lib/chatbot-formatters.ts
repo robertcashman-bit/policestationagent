@@ -87,7 +87,10 @@ export function extractQuickActions(
   return [];
 }
 
-export function buildUrgentCallCta(): string {
+export function buildUrgentCallCta(options?: { hideDigits?: boolean }): string {
+  if (options?.hideDigits) {
+    return `\n\n**In custody or a booked interview today?** [Contact for solicitor telephone](/contact) — we are NOT the police.`;
+  }
   return `\n\n**In custody or a booked interview today?** Call **[${PHONE_DISPLAY}](tel:${PHONE_TEL})** now.`;
 }
 
