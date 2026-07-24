@@ -2,7 +2,15 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { PHONE_DISPLAY, PHONE_TEL, SMS_DISPLAY, SMS_TEL, STATION_CONTACT_BUTTON } from "@/config/contact";
+import {
+  PHONE_DISPLAY,
+  PHONE_TEL,
+  SMS_DISPLAY,
+  SMS_TEL,
+  SOLICITOR_CONTACT_CTA,
+  SOLICITOR_SMS_ARIA,
+  SOLICITOR_TEL_ARIA,
+} from "@/config/contact";
 import { isPoliceContactIntentPath } from "@/lib/seo/station-contact-routes";
 
 type Props = {
@@ -23,21 +31,21 @@ export function ConversionCTAGroup({
 
   if (hideDigits) {
     return (
-      <div className={`flex flex-wrap gap-3 ${flex} ${className}`}>
+      <div className={`flex flex-wrap gap-3 ${flex} ${className}`} data-nosnippet>
         <Link
           href="/contact"
           data-event="contact_click"
           className="inline-flex items-center justify-center rounded-lg bg-red-600 px-5 py-3 text-sm font-bold text-white hover:bg-red-700"
         >
-          {STATION_CONTACT_BUTTON}
+          {SOLICITOR_CONTACT_CTA}
         </Link>
-        <a
-          href={`sms:${SMS_TEL}`}
-          data-event="sms_click"
+        <Link
+          href="/contact"
+          data-event="contact_click"
           className="inline-flex items-center justify-center rounded-lg border-2 border-[#0A2342] bg-white px-5 py-3 text-sm font-bold text-[#0A2342] hover:bg-slate-50"
         >
-          Text — {SMS_DISPLAY}
-        </a>
+          Solicitor SMS (Contact)
+        </Link>
       </div>
     );
   }
@@ -47,16 +55,18 @@ export function ConversionCTAGroup({
       <a
         href={`tel:${PHONE_TEL}`}
         data-event="call_click"
+        aria-label={SOLICITOR_TEL_ARIA}
         className="inline-flex items-center justify-center rounded-lg bg-red-600 px-5 py-3 text-sm font-bold text-white hover:bg-red-700"
       >
-        Call — {PHONE_DISPLAY}
+        Call independent solicitor — {PHONE_DISPLAY}
       </a>
       <a
         href={`sms:${SMS_TEL}`}
         data-event="sms_click"
+        aria-label={SOLICITOR_SMS_ARIA}
         className="inline-flex items-center justify-center rounded-lg border-2 border-[#0A2342] bg-white px-5 py-3 text-sm font-bold text-[#0A2342] hover:bg-slate-50"
       >
-        Text — {SMS_DISPLAY}
+        Solicitor SMS — {SMS_DISPLAY}
       </a>
     </div>
   );

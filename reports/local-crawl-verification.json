@@ -1,0 +1,38 @@
+[
+  {
+    "path": "/police-station-rep-tonbridge",
+    "status": 200,
+    "title": "Tonbridge Police Station Solicitor | Independent Legal Advice | Police Station Agent",
+    "h1": "Independent Solicitor for Tonbridge Police Interviews",
+    "hasNotice": true,
+    "hasSmsDigits": false,
+    "hasTelDigitsVisible": true,
+    "hasNosnippet": true,
+    "schemaPoliceStation": false
+  },
+  {
+    "path": "/tonbridge-psa-station",
+    "status": 308,
+    "location": "/police-station-rep-tonbridge"
+  },
+  {
+    "path": "/tonbridge-police-station",
+    "status": 308,
+    "location": "/police-station-rep-tonbridge"
+  },
+  {
+    "path": "/contact",
+    "status": 200,
+    "hasRouting": true,
+    "has999": true,
+    "has101": true,
+    "hasSolicitorLabel": true
+  },
+  {
+    "path": "/sitemap.xml",
+    "hasTonbridgePsa": false,
+    "hasTonbridgePoliceStationExact": false,
+    "hasAgentTonbridge": false,
+    "hasRep": true
+  }
+]

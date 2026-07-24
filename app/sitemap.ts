@@ -30,45 +30,20 @@ function locationSitemapEntries(
 }
 
 const SOLICITOR_LOCATION_PATHS = [
-  "/ashford-solicitor",
-  "/bluewater-solicitor",
   "/bromley-solicitor",
-  "/canterbury-solicitor",
   "/chatham-solicitor",
-  "/dartford-solicitor",
   "/deal-solicitor",
-  "/dover-solicitor",
   "/faversham-solicitor",
-  "/folkestone-solicitor",
   "/gillingham-solicitor",
   "/herne-bay-solicitor",
-  "/maidstone-solicitor",
-  "/margate-solicitor",
-  "/medway-solicitor",
   "/police-station-solicitor",
   "/ramsgate-solicitor",
   "/rochester-solicitor",
   "/sandwich-solicitor",
-  "/sevenoaks-solicitor",
-  "/sittingbourne-solicitor",
-  "/swanley-solicitor",
-  "/tonbridge-solicitor",
-  "/tunbridge-wells-solicitor",
   "/whitstable-solicitor",
 ];
 
-const POLICE_STATION_AGENT_PATHS = [
-  "/police-station-agent-kent",
-  "/police-station-agent-ashford",
-  "/police-station-agent-canterbury",
-  "/police-station-agent-dartford",
-  "/police-station-agent-folkestone",
-  "/police-station-agent-maidstone",
-  "/police-station-agent-medway",
-  "/police-station-agent-sevenoaks",
-  "/police-station-agent-sittingbourne",
-  "/police-station-agent-tonbridge",
-];
+const POLICE_STATION_AGENT_PATHS: string[] = [];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || `https://${SITE_DOMAIN}`;
@@ -555,97 +530,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.9,
-    },
-    // Police Station Pages
-    {
-      url: `${baseUrl}/medway-police-station`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/canterbury-police-station`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/folkestone-police-station`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/maidstone-police-station`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/tonbridge-police-station`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/ashford-police-station`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/dover-police-station`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/margate-police-station`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/sevenoaks-police-station`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/tunbridge-wells-police-station`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/swanley-police-station`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/bluewater-police-station`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/sittingbourne-police-station`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/gravesend-police-station`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/coldharbour-police-station`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
     },
     {
       url: `${baseUrl}/locations`,

@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 /**
- * Verify all LocalCover rep pages use rep/representative keywords in title, h1, and meta.
+ * Verify all LocalCover rep pages use solicitor/rep keywords in title, h1, and meta.
+ * Accepts "solicitor", "legal advice", "representation", or "rep" framing.
+ * Blocks firm phone digits in title/meta.
  * Run: node scripts/verify-rep-page-seo.mjs
  */
 import fs from "fs";
@@ -9,8 +11,10 @@ import path from "path";
 const ROOT = process.cwd();
 const DATA_FILE = path.join(ROOT, "lib/seo/local-cover-data.ts");
 
-const REP_PATTERN = /rep|representative/i;
+const SOLICITOR_INTENT = /rep|representative|solicitor|legal advice|legal representation|independent/i;
 const KENT_PATTERN = /kent/i;
+const FIRM_PHONE = /01732|07535/;
+const NOT_POLICE = /not kent police|not the police|101/i;
 
 function extractEntries(source) {
   const entries = [];
@@ -34,14 +38,20 @@ const entries = extractEntries(source);
 const failures = [];
 
 for (const entry of entries) {
-  if (!REP_PATTERN.test(entry.title)) {
-    failures.push(`${entry.key}: title missing rep/representative — "${entry.title}"`);
+  if (!SOLICITOR_INTENT.test(entry.title)) {
+    failures.push(`${entry.key}: title missing solicitor/rep intent — "${entry.title}"`);
   }
-  if (!REP_PATTERN.test(entry.h1)) {
-    failures.push(`${entry.key}: h1 missing rep/representative — "${entry.h1}"`);
+  if (!SOLICITOR_INTENT.test(entry.h1)) {
+    failures.push(`${entry.key}: h1 missing solicitor/rep intent — "${entry.h1}"`);
   }
-  if (!KENT_PATTERN.test(entry.metaDescription)) {
-    failures.push(`${entry.key}: metaDescription missing Kent`);
+  if (!KENT_PATTERN.test(entry.metaDescription) && !NOT_POLICE.test(entry.metaDescription)) {
+    failures.push(`${entry.key}: metaDescription missing Kent or not-police clarification`);
+  }
+  if (FIRM_PHONE.test(entry.title) || FIRM_PHONE.test(entry.metaDescription)) {
+    failures.push(`${entry.key}: firm telephone must not appear in title or metaDescription`);
+  }
+  if (!NOT_POLICE.test(entry.metaDescription)) {
+    failures.push(`${entry.key}: metaDescription should state not Kent Police / 101`);
   }
 }
 

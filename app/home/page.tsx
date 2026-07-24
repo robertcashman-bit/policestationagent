@@ -6,14 +6,14 @@ import type { Metadata } from "next";
 import { StandardPaceSources } from "@/components/legal/StandardPaceSources";
 
 export const metadata: Metadata = {
-  title: "Duty Solicitor Kent extended hours | 01732 247427 | FREE Police Station Advice",
+  title: "Duty Solicitor Kent extended hours | FREE Police Station Advice",
   description:
     "Police interview? Voluntary attendance? Call Robert Cashman - Accredited Duty Solicitor, 35 years experience & 21,000+ cases. FREE legal advice at Medway, Canterbury, Maidstone, Gravesend. Available during extended hours.",
   alternates: {
     canonical: "https://policestationagent.com",
   },
   openGraph: {
-    title: "Duty Solicitor Kent extended hours | 01732 247427 | FREE Police Station Advice",
+    title: "Duty Solicitor Kent extended hours | FREE Police Station Advice",
     description:
       "Police interview? Voluntary attendance? Call Robert Cashman - Accredited Duty Solicitor, 35 years experience & 21,000+ cases. FREE legal advice at Medway, Canterbury, Maidstone, Gravesend. Available during extended hours.",
     type: "website",

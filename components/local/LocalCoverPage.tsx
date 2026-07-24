@@ -2,10 +2,14 @@ import { JsonLd } from "@/components/JsonLd";
 import { ConversionCTAGroup } from "@/components/conversion/ConversionCTAGroup";
 import { GeneralLegalDisclaimer } from "@/components/conversion/GeneralLegalDisclaimer";
 import { InternalLinkHub } from "@/components/InternalLinkHub";
+import NotPoliceNotice from "@/components/compliance/NotPoliceNotice";
 import type { LocalCoverConfig } from "@/lib/seo/local-cover-data";
 import Link from "next/link";
 import { SITE_URL } from "@/config/site";
-import { STATION_SOLICITOR_CTA, STATION_CONTACT_BUTTON } from "@/config/contact";
+import {
+  LEGAL_SERVICE_SCHEMA_DESCRIPTION,
+  STATION_CONTACT_BUTTON,
+} from "@/config/contact";
 
 type Props = {
   config: LocalCoverConfig;
@@ -27,12 +31,13 @@ export function LocalCoverPage({ config }: Props) {
   const serviceSchema = {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: `Police station rep — ${config.town}, Kent`,
-    description: config.metaDescription,
+    name: `Independent solicitor for police interviews — ${config.town}`,
+    description: `${LEGAL_SERVICE_SCHEMA_DESCRIPTION} ${config.metaDescription}`,
     provider: {
       "@type": "LegalService",
       name: "Police Station Agent",
       url: SITE_URL,
+      description: LEGAL_SERVICE_SCHEMA_DESCRIPTION,
     },
     areaServed: {
       "@type": "AdministrativeArea",
@@ -63,14 +68,16 @@ export function LocalCoverPage({ config }: Props) {
 
       <section className="bg-gradient-to-br from-[#0A2342] via-blue-900 to-indigo-900 text-white py-14">
         <div className="max-w-4xl mx-auto px-4">
-          <p className="text-xs uppercase tracking-wide text-white mb-2 font-semibold">Kent police station rep</p>
-          <h1 className="text-3xl md:text-4xl font-bold mb-4 text-white">{config.h1}</h1>
-          <p className="text-sm md:text-base text-amber-100 mb-4 max-w-3xl" data-station-not-police="true">
-            <strong className="text-white">NOT THE POLICE.</strong> We are criminal solicitors serving this area.{" "}
-            {STATION_SOLICITOR_CTA} Police assistance: <strong>999</strong> or <strong>101</strong>.
+          <p className="text-xs uppercase tracking-wide text-white mb-2 font-semibold">
+            Kent police station rep
           </p>
+          <h1 className="text-3xl md:text-4xl font-bold mb-4 text-white">{config.h1}</h1>
+          <NotPoliceNotice className="rounded-lg border border-amber-300/80 bg-amber-50 px-4 py-3 text-sm text-slate-800 leading-relaxed mb-4" />
           <p className="text-white text-lg mb-6">{config.intro}</p>
-          <div className="rounded-xl bg-white p-4 shadow-lg max-w-xl">
+          <div className="rounded-xl bg-white p-4 shadow-lg max-w-xl" data-nosnippet>
+            <h2 className="text-base font-bold text-slate-900 mb-3">
+              Independent solicitor contact details
+            </h2>
             <ConversionCTAGroup forceHideDigits />
             <p className="mt-3 text-xs text-slate-600">
               <Link href="/contact" className="font-semibold underline text-blue-800">
@@ -104,7 +111,13 @@ export function LocalCoverPage({ config }: Props) {
 
         {config.stations?.length ? (
           <section>
-            <h2 className="text-xl font-bold text-slate-900 mb-3">Police stations</h2>
+            <h2 className="text-xl font-bold text-slate-900 mb-2">
+              Police station location information
+            </h2>
+            <p className="text-sm text-slate-600 mb-3">
+              Station addresses below are for orientation only — they are not our office address.
+              Numbers on this site are independent solicitor contacts, not Kent Police.
+            </p>
             <ul className="space-y-3">
               {config.stations.map((s) => (
                 <li key={s.name} className="rounded-lg border border-slate-200 p-4 bg-slate-50">

@@ -21,7 +21,7 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
     town: "Kent",
     title: "Police Station Reps Kent | All Custody Suites",
     metaDescription:
-      "Police station reps and representatives across all Kent custody suites and voluntary interviews — with regular attendance at North Kent (Gravesend) and Tonbridge. Firm instructions and client advice. NOT Kent Police.",
+      "Police station reps and representatives across all Kent custody suites and voluntary interviews — with regular attendance at North Kent (Gravesend) and Tonbridge. Firm instructions and client advice. NOT Kent Police For police assistance call 101 or 999.",
     h1: "Police Station Reps Across Kent",
     answerFirst:
       "In brief: this hub covers police station reps and police station representatives across Kent — with regular attendance at North Kent (Gravesend) and Tonbridge custody suites, plus voluntary interviews at Maidstone, Sevenoaks, Tunbridge Wells, Swanley and other Kent stations.",
@@ -91,7 +91,7 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
     town: "Medway",
     title: "Police Station Rep Medway | Kent",
     metaDescription:
-      "Police station rep in Medway, Kent for custody and voluntary interviews. Solicitor instructions and client advice across Gillingham, Chatham and Rochester. NOT Kent Police.",
+      "Police station rep in Medway, Kent for custody and voluntary interviews. Solicitor instructions and client advice across Gillingham, Chatham and Rochester. NOT Kent Police For police assistance call 101 or 999.",
     h1: "Police Station Rep in Medway, Kent",
     answerFirst:
       "In brief: a police station rep in Medway means qualified representation at Medway custody suite and voluntary interviews across the Medway towns, for criminal defence firms instructing cover and for clients needing legal advice in custody.",
@@ -136,7 +136,7 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
     town: "Sevenoaks",
     title: "Police Station Rep Sevenoaks | Kent",
     metaDescription:
-      "Police station rep in Sevenoaks, Kent for voluntary interviews and custody across west Kent. Solicitor instructions welcome. Private defence site — NOT Kent Police.",
+      "Police station rep in Sevenoaks, Kent for voluntary interviews and custody across west Kent. Solicitor instructions welcome. Private defence site — NOT Kent Police For police assistance call 101 or 999.",
     h1: "Police Station Rep in Sevenoaks, Kent",
     answerFirst:
       "In brief: a police station rep in Sevenoaks covers voluntary interviews at Sevenoaks police station and attendance at Kent custody suites when clients from the Sevenoaks area are detained elsewhere.",
@@ -173,7 +173,7 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
     town: "Swanley",
     title: "Police Station Rep Swanley | Kent",
     metaDescription:
-      "Police station rep in Swanley, Kent for voluntary interviews and Kent custody attendance. Instructions from criminal defence firms. NOT Kent Police.",
+      "Police station rep in Swanley, Kent for voluntary interviews and Kent custody attendance. Instructions from criminal defence firms. NOT Kent Police For police assistance call 101 or 999.",
     h1: "Police Station Rep in Swanley, Kent",
     answerFirst:
       "In brief: a police station rep in Swanley includes representation at Swanley police station for voluntary interviews and attendance at Kent custody suites when required.",
@@ -198,7 +198,7 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
     town: "Dartford",
     title: "Police Station Rep Dartford | Kent",
     metaDescription:
-      "Police station rep in Dartford, Kent. Voluntary interviews and custody support for firms and clients. NOT Kent Police.",
+      "Police station rep in Dartford, Kent. Voluntary interviews and custody support for firms and clients. NOT Kent Police For police assistance call 101 or 999.",
     h1: "Police Station Rep in Dartford, Kent",
     answerFirst:
       "In brief: a police station rep in Dartford covers voluntary interviews locally and custody attendance across north Kent suites including Gravesend when needed.",
@@ -223,7 +223,7 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
     town: "Gravesend",
     title: "Police Station Rep Gravesend & North Kent | Kent",
     metaDescription:
-      "Police station rep at North Kent (Gravesend) 24-hour custody suite — Gravesend, Northfleet and north Kent. Solicitor instructions and client advice. NOT Kent Police.",
+      "Police station rep at North Kent (Gravesend) 24-hour custody suite — Gravesend, Northfleet and north Kent. Solicitor instructions and client advice. NOT Kent Police For police assistance call 101 or 999.",
     h1: "Police Station Rep in Gravesend & North Kent",
     answerFirst:
       "In brief: a police station rep in Gravesend means attendance at the North Kent 24-hour custody suite (Thames Way, Northfleet) and voluntary interview representation across Gravesend, Dartford and north Kent.",
@@ -268,7 +268,7 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
     town: "Maidstone",
     title: "Police Station Rep Maidstone | Kent",
     metaDescription:
-      "Police station rep in Maidstone, Kent for voluntary interviews and Kent custody. Solicitor agent cover. NOT Kent Police.",
+      "Police station rep in Maidstone, Kent for voluntary interviews and Kent custody. Solicitor agent cover. NOT Kent Police For police assistance call 101 or 999.",
     h1: "Police Station Rep in Maidstone, Kent",
     answerFirst:
       "In brief: a police station rep in Maidstone covers voluntary interviews at Maidstone police station; custody matters may be at other Kent suites.",
@@ -298,34 +298,34 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
   tonbridge: {
     slug: "police-station-rep-tonbridge",
     town: "Tonbridge",
-    title: "Police Station Rep Tonbridge & West Kent | Kent",
+    title: "Tonbridge Police Station Solicitor | Independent Legal Advice",
     metaDescription:
-      "Police station rep at Tonbridge 24-hour custody and voluntary interviews across west Kent. Solicitor instructions welcome. NOT Kent Police.",
-    h1: "Police Station Rep in Tonbridge & West Kent",
+      "Independent criminal defence solicitor for suspects in custody or attending a voluntary interview in Tonbridge. This website is not Kent Police. For police assistance call 101 or, in an emergency, 999.",
+    h1: "Independent Solicitor for Tonbridge Police Interviews",
     answerFirst:
-      "In brief: a police station rep in Tonbridge covers the 24-hour custody suite and voluntary interviews at Tonbridge police station for instructing firms and client advice across Tonbridge, Sevenoaks and Tunbridge Wells.",
+      "In brief: an independent criminal defence solicitor can attend Tonbridge's 24-hour custody suite and voluntary interviews for instructing firms and for clients needing legal advice across Tonbridge, Sevenoaks and Tunbridge Wells. This website is not Kent Police.",
     intro:
-      "Tonbridge is west Kent's main 24-hour custody facility and a regular venue for voluntary interviews. Robert Cashman attends by instruction from criminal defence firms or for clients in custody or booked for interview. Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795).",
+      "Tonbridge is west Kent's main 24-hour custody facility and a regular venue for voluntary interviews. Robert Cashman provides independent legal representation by instruction from criminal defence firms or for clients in custody or booked for interview. Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795). This is not a police contact directory.",
     areas: ["Tonbridge", "Tunbridge Wells", "Sevenoaks", "West Kent"],
     stations: [
       {
         name: "Tonbridge police station",
         address: "1 Pembury Road, Tonbridge TN9 2HS",
-        note: "24-hour custody and voluntary interviews",
+        note: "24-hour custody and voluntary interviews — location information only",
       },
     ],
     audience:
-      "Criminal defence firms needing west Kent custody and voluntary interview cover, and clients or family arranging representation at Tonbridge.",
+      "Criminal defence firms needing west Kent custody and voluntary interview cover, and clients or family arranging independent legal representation at Tonbridge.",
     faqs: [
       {
         question: "Do you cover Tonbridge custody suite?",
         answer:
-          "Yes. We attend Tonbridge custody for interviews under caution, subject to availability.",
+          "Yes. We attend Tonbridge custody for interviews under caution as independent criminal defence solicitors, subject to availability. We are not Kent Police — for police assistance use 101 or 999.",
       },
       {
         question: "Can I instruct cover for a Tonbridge voluntary interview?",
         answer:
-          "Yes. Provide client name, interview date/time, offence summary and your firm details by telephone or email.",
+          "Yes. Provide client name, interview date/time, offence summary and your firm details via the Contact page. Do not use our numbers for police enquiries.",
       },
       {
         question: "Can solicitor firms instruct cover for west Kent?",
@@ -334,8 +334,8 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
       },
     ],
     nearbyLinks: [
-      { href: "/police-station-rep-tunbridge-wells", label: "Police station rep in Tunbridge Wells" },
-      { href: "/police-station-rep-sevenoaks", label: "Police station rep in Sevenoaks" },
+      { href: "/police-station-rep-tunbridge-wells", label: "Police station solicitor in Tunbridge Wells" },
+      { href: "/police-station-rep-sevenoaks", label: "Police station solicitor in Sevenoaks" },
       { href: "/coverage/areas/west-kent", label: "West Kent area hub" },
       { href: "/for-solicitors", label: "Cover for solicitors" },
     ],
@@ -345,7 +345,7 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
     town: "Tunbridge Wells",
     title: "Police Station Rep Tunbridge Wells | Kent",
     metaDescription:
-      "Police station rep in Tunbridge Wells, Kent for voluntary interviews and Kent custody. Solicitor instructions. NOT Kent Police.",
+      "Police station rep in Tunbridge Wells, Kent for voluntary interviews and Kent custody. Solicitor instructions. NOT Kent Police For police assistance call 101 or 999.",
     h1: "Police Station Rep in Tunbridge Wells, Kent",
     answerFirst:
       "In brief: we provide police station rep cover for Tunbridge Wells voluntary interviews and Kent custody attendance for west Kent clients.",
@@ -369,7 +369,7 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
     town: "Canterbury",
     title: "Police Station Rep Canterbury | Kent",
     metaDescription:
-      "Police station rep in Canterbury, Kent at Canterbury custody suite. Extended-hours representation across east Kent. NOT Kent Police.",
+      "Police station rep in Canterbury, Kent at Canterbury custody suite. Extended-hours representation across east Kent. NOT Kent Police For police assistance call 101 or 999.",
     h1: "Police Station Rep in Canterbury, Kent",
     answerFirst:
       "In brief: a police station rep in Canterbury provides representation at Canterbury custody suite and voluntary interviews across east Kent including Herne Bay, Whitstable and Faversham.",
@@ -414,7 +414,7 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
     town: "Ashford",
     title: "Police Station Rep Ashford | Kent",
     metaDescription:
-      "Police station rep in Ashford, Kent for voluntary interviews and Kent custody attendance. Solicitor instructions welcome. NOT Kent Police.",
+      "Police station rep in Ashford, Kent for voluntary interviews and Kent custody attendance. Solicitor instructions welcome. NOT Kent Police For police assistance call 101 or 999.",
     h1: "Police Station Rep in Ashford, Kent",
     answerFirst:
       "In brief: a police station rep in Ashford covers voluntary interviews at Ashford police station and attendance at Kent custody suites when clients from mid-Kent are detained.",
@@ -450,7 +450,7 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
     town: "Folkestone",
     title: "Police Station Rep Folkestone | Kent",
     metaDescription:
-      "Police station rep in Folkestone, Kent at Folkestone custody suite. Extended-hours representation across coastal east Kent. NOT Kent Police.",
+      "Police station rep in Folkestone, Kent at Folkestone custody suite. Extended-hours representation across coastal east Kent. NOT Kent Police For police assistance call 101 or 999.",
     h1: "Police Station Rep in Folkestone, Kent",
     answerFirst:
       "In brief: a police station rep in Folkestone provides representation at Folkestone custody suite and voluntary interviews across coastal east Kent including Dover and Hythe.",
@@ -490,7 +490,7 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
     town: "Dover",
     title: "Police Station Rep Dover | Kent",
     metaDescription:
-      "Police station rep in Dover, Kent for voluntary interviews and Kent custody attendance. Solicitor instructions welcome. NOT Kent Police.",
+      "Police station rep in Dover, Kent for voluntary interviews and Kent custody attendance. Solicitor instructions welcome. NOT Kent Police For police assistance call 101 or 999.",
     h1: "Police Station Rep in Dover, Kent",
     answerFirst:
       "In brief: a police station rep in Dover covers voluntary interviews at Dover police station and attendance at Kent custody suites including Folkestone when Dover-area arrests require detention.",
@@ -527,7 +527,7 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
     town: "Margate",
     title: "Police Station Rep Margate | Kent",
     metaDescription:
-      "Police station rep in Margate, Kent at Margate custody suite. Extended-hours representation across Thanet and east Kent. NOT Kent Police.",
+      "Police station rep in Margate, Kent at Margate custody suite. Extended-hours representation across Thanet and east Kent. NOT Kent Police For police assistance call 101 or 999.",
     h1: "Police Station Rep in Margate, Kent",
     answerFirst:
       "In brief: a police station rep in Margate provides representation at Margate custody suite and voluntary interviews across Thanet including Ramsgate and Broadstairs.",
@@ -566,7 +566,7 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
     town: "Sittingbourne",
     title: "Police Station Rep Sittingbourne | Kent",
     metaDescription:
-      "Police station rep in Sittingbourne, Kent for voluntary interviews and Kent custody attendance. Solicitor instructions welcome. NOT Kent Police.",
+      "Police station rep in Sittingbourne, Kent for voluntary interviews and Kent custody attendance. Solicitor instructions welcome. NOT Kent Police For police assistance call 101 or 999.",
     h1: "Police Station Rep in Sittingbourne, Kent",
     answerFirst:
       "In brief: a police station rep in Sittingbourne covers voluntary interviews at Sittingbourne police station and attendance at Kent custody suites when mid-Kent clients are detained.",
@@ -602,7 +602,7 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
     town: "Bluewater",
     title: "Police Station Rep Bluewater | Kent",
     metaDescription:
-      "Police station rep in Bluewater, Kent for voluntary interviews and north Kent custody attendance. Solicitor instructions welcome. NOT Kent Police.",
+      "Police station rep in Bluewater, Kent for voluntary interviews and north Kent custody attendance. Solicitor instructions welcome. NOT Kent Police For police assistance call 101 or 999.",
     h1: "Police Station Rep in Bluewater, Kent",
     answerFirst:
       "In brief: a police station rep in Bluewater covers voluntary interviews locally and custody attendance at north Kent suites including Gravesend and Medway when required.",

@@ -63,3 +63,14 @@ export const STATION_PHONE_SCOPE =
   "Solicitor telephone is on the Contact page only (custody or forthcoming interview). Do not use it for police enquiries — we are NOT the police and we cannot help. Use 999 or 101 for police assistance.";
 /** Scope FAQ / can-we-help anchor */
 export const SCOPE_HELP_HREF = "/faq#immediate-custody-only";
+
+export const NOT_POLICE_NOTICE =
+  "Independent criminal defence solicitor website — not Kent Police. For police assistance call 101, or 999 in an emergency. The solicitor contact details below are only for legal advice and representation.";
+export const SOLICITOR_PHONE_LABEL = "Independent solicitor telephone";
+export const SOLICITOR_SMS_LABEL = "Solicitor SMS — legal representation enquiries only";
+export const SOLICITOR_TEL_ARIA = "Call Robert Cashman, independent criminal defence solicitor";
+export const SOLICITOR_SMS_ARIA = "Text Robert Cashman, independent criminal defence solicitor";
+export const SOLICITOR_CONTACT_CTA = "Request legal representation";
+export const LEGAL_SERVICE_SCHEMA_DESCRIPTION =
+  "Independent criminal defence solicitor providing police station legal representation. Not affiliated with Kent Police or any police force. Legal services delivered through Tuckers Solicitors LLP (SRA ID: 127795).";
+export const PHONE_E164 = "+441732247427";
