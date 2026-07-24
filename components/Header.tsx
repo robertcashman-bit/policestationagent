@@ -1,12 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import HeaderTopStrip, {
   CUSTODY_PHONE_CTA,
   PHONE_DISPLAY,
 } from "@/components/header/HeaderTopStrip";
 import RouteAwarePhoneLink from "@/components/compliance/RouteAwarePhoneLink";
+import { isPoliceContactIntentPath } from "@/lib/seo/station-contact-routes";
 
 export default function Header({
   forceHidePhone = false,
@@ -14,6 +16,8 @@ export default function Header({
   /** Station / police-contact pages: SSR-safe hide of firm tel digits in chrome. */
   forceHidePhone?: boolean;
 } = {}) {
+  const pathname = usePathname();
+  const hidePhoneDigits = forceHidePhone || isPoliceContactIntentPath(pathname);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
@@ -83,7 +87,7 @@ export default function Header({
 
   return (
     <header className="bg-white shadow-md border-b border-slate-200/60 relative z-50">
-      <HeaderTopStrip forceHideDigits={forceHidePhone} />
+      <HeaderTopStrip forceHideDigits={hidePhoneDigits} />
 
       {/* Main Header */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -108,9 +112,13 @@ export default function Header({
           <div className="lg:hidden flex items-center gap-2">
             <RouteAwarePhoneLink
               variant="header-button"
-              forceHideDigits={forceHidePhone}
+              forceHideDigits={hidePhoneDigits}
               className="inline-flex items-center justify-center gap-1.5 whitespace-nowrap text-xs sm:text-sm font-extrabold min-h-[44px] h-11 px-3 sm:px-4 rounded-md bg-amber-400 hover:bg-amber-500 text-slate-900 shadow-md"
-              ariaLabel={`${CUSTODY_PHONE_CTA} — ${PHONE_DISPLAY}`}
+              ariaLabel={
+                hidePhoneDigits
+                  ? "Instruct criminal solicitor — Contact page"
+                  : `${CUSTODY_PHONE_CTA} — ${PHONE_DISPLAY}`
+              }
             />
             <button
               className="flex items-center justify-center w-11 h-11 bg-slate-800 hover:bg-slate-900 text-white rounded-lg shadow-md transition-colors"
@@ -796,32 +804,40 @@ export default function Header({
             </Link>
           </div>
 
-          {/* Desktop Call Now Button — digits hidden on station routes */}
+          {/* Desktop Call Now Button — never pass digit children when hiding (RSC payload leak) */}
           <div className="hidden lg:flex items-center ml-4 flex-shrink-0">
-            <RouteAwarePhoneLink
-              variant="header-button"
-              forceHideDigits={forceHidePhone}
-              className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-extrabold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-11 rounded-lg px-5 bg-amber-400 hover:bg-amber-500 text-slate-900 shadow-md hover:shadow-lg hover:scale-105"
-              ariaLabel={`${CUSTODY_PHONE_CTA} — ${PHONE_DISPLAY}`}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="lucide lucide-phone"
-                aria-hidden="true"
+            {hidePhoneDigits ? (
+              <RouteAwarePhoneLink
+                variant="header-button"
+                forceHideDigits
+                className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-extrabold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-11 rounded-lg px-5 bg-amber-400 hover:bg-amber-500 text-slate-900 shadow-md hover:shadow-lg hover:scale-105"
+                ariaLabel="Instruct criminal solicitor — Contact page"
+              />
+            ) : (
+              <RouteAwarePhoneLink
+                variant="header-button"
+                className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-extrabold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-11 rounded-lg px-5 bg-amber-400 hover:bg-amber-500 text-slate-900 shadow-md hover:shadow-lg hover:scale-105"
+                ariaLabel={`${CUSTODY_PHONE_CTA} — ${PHONE_DISPLAY}`}
               >
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-              </svg>
-              <span className="text-sm">Custody / VAI line</span>
-              <span className="text-base font-black tracking-wide">{PHONE_DISPLAY}</span>
-            </RouteAwarePhoneLink>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="lucide lucide-phone"
+                  aria-hidden="true"
+                >
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                </svg>
+                <span className="text-sm">Custody / VAI line</span>
+                <span className="text-base font-black tracking-wide">{PHONE_DISPLAY}</span>
+              </RouteAwarePhoneLink>
+            )}
           </div>
         </div>
       </div>

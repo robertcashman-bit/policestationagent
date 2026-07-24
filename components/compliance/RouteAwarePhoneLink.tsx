@@ -28,6 +28,11 @@ export default function RouteAwarePhoneLink({
 }: Props) {
   const pathname = usePathname();
   const hideDigits = forceHideDigits || isPoliceContactIntentPath(pathname);
+  // Never publish firm digits in aria when hiding — parents sometimes pass PHONE_DISPLAY.
+  const safeAria =
+    ariaLabel && !/01732|07535|247427|494446/i.test(ariaLabel)
+      ? ariaLabel
+      : undefined;
   const telAria = ariaLabel || SOLICITOR_TEL_ARIA;
 
   if (hideDigits) {
@@ -40,7 +45,9 @@ export default function RouteAwarePhoneLink({
             className ||
             "flex flex-col items-center justify-center gap-0.5 py-2.5 text-red-700"
           }
-          aria-label="Instruct criminal solicitor — see what we do and don't do"
+          aria-label={
+            safeAria || "Instruct criminal solicitor — see what we do and don't do"
+          }
         >
           <span className="text-[11px] font-bold uppercase tracking-wide">Solicitor</span>
           <span className="text-sm font-black leading-none">Contact</span>
@@ -85,7 +92,7 @@ export default function RouteAwarePhoneLink({
           className ||
           "inline-flex items-center justify-center gap-1.5 whitespace-nowrap text-xs sm:text-sm font-extrabold min-h-[44px] h-11 px-3 sm:px-4 rounded-md bg-amber-400 hover:bg-amber-500 text-slate-900 shadow-md"
         }
-        aria-label={ariaLabel || "Instruct criminal solicitor — Contact page"}
+        aria-label={safeAria || "Instruct criminal solicitor — Contact page"}
       >
         <span className="sm:hidden">Contact</span>
         <span className="hidden sm:inline font-black">Instruct solicitor</span>
@@ -93,6 +100,7 @@ export default function RouteAwarePhoneLink({
     );
   }
 
+  // Do not accept digit-bearing children from parents on show-digit routes only.
   if (children) {
     return (
       <a href={`tel:${PHONE_TEL}`} className={className} aria-label={telAria}>

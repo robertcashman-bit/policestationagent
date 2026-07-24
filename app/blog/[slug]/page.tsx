@@ -9,6 +9,8 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getAllSlugs, getPostBySlug, formatBlogDate, generateExcerpt } from "@/lib/blog-reader";
 import { convertH1ToH2, sanitizeBlogHtml } from "@/lib/html-sanitizer";
+import { stripFirmPhonesToContact } from "@/lib/seo/strip-firm-phones";
+import { isStationRiskBlogSlug } from "@/lib/seo/station-contact-routes";
 import { SITE_URL } from "@/config/site";
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
@@ -102,14 +104,21 @@ export default async function BlogPostPage(props: Readonly<PageProps>) {
   }
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_URL;
-  const sanitizedContentHtml = sanitizeBlogHtml(post.contentHtml);
+  const hideFirmDigits = isStationRiskBlogSlug(post.slug);
+  const sanitizedContentHtml = hideFirmDigits
+    ? stripFirmPhonesToContact(sanitizeBlogHtml(post.contentHtml))
+    : sanitizeBlogHtml(post.contentHtml);
 
   // Build structured data
   const blogPostingSchema = {
     "@context": "https://schema.org",
     "@type": ["BlogPosting", "Article"],
     headline: post.title,
-    description: post.metaDescription || generateExcerpt(post.contentHtml, 160),
+    description: hideFirmDigits
+      ? stripFirmPhonesToContact(
+          post.metaDescription || generateExcerpt(post.contentHtml, 160),
+        )
+      : post.metaDescription || generateExcerpt(post.contentHtml, 160),
     datePublished: post.date,
     dateModified: post.date,
     author: {
@@ -182,7 +191,7 @@ export default async function BlogPostPage(props: Readonly<PageProps>) {
             name: faq.q,
             acceptedAnswer: {
               "@type": "Answer",
-              text: faq.a,
+              text: hideFirmDigits ? stripFirmPhonesToContact(faq.a) : faq.a,
             },
           })),
         }
@@ -193,7 +202,7 @@ export default async function BlogPostPage(props: Readonly<PageProps>) {
       <JsonLd data={blogPostingSchema} />
       <JsonLd data={breadcrumbSchema} />
       {faqSchema && <JsonLd data={faqSchema} />}
-      <Header />
+      <Header forceHidePhone={hideFirmDigits} />
       <main className="flex-grow relative" id="main-content" role="main">
         {/* Hero Section */}
         <section className="relative bg-gradient-to-br from-slate-800 via-blue-900 to-slate-900 text-white py-16 md:py-20">
@@ -316,7 +325,9 @@ export default async function BlogPostPage(props: Readonly<PageProps>) {
                   {post.faq.map((faq) => (
                     <div key={faq.q} className="bg-white p-6 rounded-lg shadow">
                       <h3 className="font-semibold text-lg text-blue-900 mb-2">{faq.q}</h3>
-                      <p className="text-gray-700">{faq.a}</p>
+                      <p className="text-gray-700">
+                        {hideFirmDigits ? stripFirmPhonesToContact(faq.a) : faq.a}
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -329,12 +340,12 @@ export default async function BlogPostPage(props: Readonly<PageProps>) {
               <LegalAccuracyNotice variant="box" />
             </div>
 
-            {/* Mandatory Advert Block */}
-            <BlogAdvertBlock />
+            {/* Mandatory Advert Block — no firm digits on station/custody-risk posts */}
+            <BlogAdvertBlock hideDigits={hideFirmDigits} />
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer forceHidePhone={hideFirmDigits} />
     </div>
   );
 }

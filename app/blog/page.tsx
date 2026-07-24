@@ -242,17 +242,17 @@ export default function BlogPage() {
                   immediately.
                 </p>
                 <div className="flex flex-wrap justify-center gap-4">
-                  <a
-                    href="tel:01732247427"
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold rounded-lg transition-colors"
-                  >
-                    Call 01732 247427
-                  </a>
                   <Link
                     href="/contact"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold rounded-lg transition-colors"
+                  >
+                    Instruct solicitor (Contact)
+                  </Link>
+                  <Link
+                    href="/start/voluntary-interview"
                     className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-bold rounded-lg transition-colors"
                   >
-                    Contact Us
+                    Voluntary interview help
                   </Link>
                 </div>
               </div>

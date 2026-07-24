@@ -2,6 +2,8 @@
 
 These cannot be completed safely from repository code alone.
 
+After the Layer 2 digit-hardening deploy, also follow [`reports/misdirect-monitor-checklist.md`](misdirect-monitor-checklist.md) (GSC re-index Tonbridge URLs + weekly SERP/Answer checks).
+
 ## 1. Google Search Console — URL Inspection
 
 | Field | Value |

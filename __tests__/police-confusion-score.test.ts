@@ -7,6 +7,7 @@ import {
 } from "../lib/seo/police-confusion-score";
 import { disambiguateStationHtml } from "../lib/seo/disambiguate-station-html";
 import { isPoliceContactIntentPath } from "../lib/seo/station-contact-routes";
+import { stripFirmPhonesToContact } from "../lib/seo/strip-firm-phones";
 import { LOCAL_COVER_PAGES } from "../lib/seo/local-cover-data";
 
 const require = createRequire(import.meta.url);
@@ -160,6 +161,29 @@ describe("isPoliceContactIntentPath", () => {
     expect(isPoliceContactIntentPath("/maidstone-solicitor")).toBe(false);
     expect(isPoliceContactIntentPath("/police-station-agent-medway")).toBe(false);
     expect(isPoliceContactIntentPath("/contact")).toBe(false);
+    expect(
+      isPoliceContactIntentPath("/blog/tonbridge-police-station-custody-and-interviews"),
+    ).toBe(true);
+    expect(isPoliceContactIntentPath("/blog/north-kent-gravesend-custody-legal-advice")).toBe(
+      true,
+    );
+    expect(isPoliceContactIntentPath("/start/voluntary-interview")).toBe(false);
+  });
+});
+
+describe("stripFirmPhonesToContact", () => {
+  it("removes firm voice and SMS digits from Tonbridge-style blog HTML", () => {
+    const input = `
+      <p>Call 01732 247427 for Tonbridge custody. Text 07535 494446 if you cannot call.</p>
+      <a href="tel:01732247427">Call 01732 247427</a>
+      <a href="sms:07535494446?body=help">Text 07535 494446</a>
+    `;
+    const out = stripFirmPhonesToContact(input);
+    expect(out).not.toMatch(/01732/);
+    expect(out).not.toMatch(/07535/);
+    expect(out).not.toMatch(/tel:01732/i);
+    expect(out).not.toMatch(/sms:07535/i);
+    expect(out).toContain('href="/contact"');
   });
 });
 

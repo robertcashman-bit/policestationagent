@@ -7,6 +7,27 @@
  * rep landings are police-contact intent for phone publishing purposes.
  */
 
+/** Blog slugs/titles that sit next to station/custody language in SERPs. */
+export function isStationRiskBlogSlug(slug: string | null | undefined): boolean {
+  if (!slug) return false;
+  const s = slug.toLowerCase();
+  return (
+    s.includes("police-station") ||
+    s.includes("custody") ||
+    s.includes("voluntary-interview") ||
+    s.includes("duty-solicitor") ||
+    s.includes("arrest") ||
+    s.includes("pace-code") ||
+    s.includes("rui-") ||
+    s.includes("police-bail") ||
+    s.includes("appropriate-adult") ||
+    s.includes("out-of-hours-solicitor") ||
+    /(?:tonbridge|gravesend|medway|maidstone|canterbury|folkestone|sevenoaks|dartford|swanley|dover|ashford|sittingbourne|margate|bluewater|tunbridge)/.test(
+      s,
+    )
+  );
+}
+
 export function isPoliceContactIntentPath(pathname: string | null | undefined): boolean {
   if (!pathname) return false;
   const path = pathname.split("?")[0].split("#")[0].toLowerCase().replace(/\/+$/, "") || "/";
@@ -21,6 +42,11 @@ export function isPoliceContactIntentPath(pathname: string | null | undefined): 
     path === "/start/voluntary-interview"
   ) {
     return false;
+  }
+
+  if (path.startsWith("/blog/")) {
+    const slug = path.slice("/blog/".length);
+    if (isStationRiskBlogSlug(slug)) return true;
   }
 
   return (

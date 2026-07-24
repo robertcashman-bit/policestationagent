@@ -3,6 +3,10 @@ import {
   STATION_PHONE_LABEL,
   STATION_SOLICITOR_CTA,
 } from "@/config/contact";
+import {
+  CONTACT_CTA_HTML,
+  stripFirmPhonesToContact,
+} from "@/lib/seo/strip-firm-phones";
 
 const INTRO_MARKER = 'data-station-not-police="true"';
 
@@ -14,10 +18,6 @@ const CLEAR_101_BLOCK = `<div class="mt-4 pt-4 border-t border-slate-200" data-p
 const INTRO_HTML = `<aside class="rounded-lg border border-red-200 bg-red-50 p-4 md:p-5 mb-6 max-w-4xl mx-auto" ${INTRO_MARKER} aria-label="Not the police"><p class="text-sm md:text-base text-slate-800 leading-relaxed mb-2"><strong class="text-red-900">NOT THE POLICE.</strong> We are <strong>criminal solicitors</strong> serving this station.</p><p class="text-sm text-slate-700 mb-2">${STATION_SOLICITOR_CTA}</p><p class="text-sm text-slate-700">Police assistance: <strong>999</strong> or <strong>101</strong>. <a href="/contact" class="font-semibold underline text-blue-800">${STATION_CONTACT_BUTTON}</a> — solicitor telephone is last on that page.</p></aside>`;
 
 const SOLICITOR_HEADING = `<p class="text-sm font-bold text-blue-900 mb-2 uppercase tracking-wide" data-solicitor-label="true">${STATION_PHONE_LABEL}</p><p class="text-xs text-slate-800 mb-3" data-solicitor-scope="true">${STATION_SOLICITOR_CTA}</p>`;
-
-const CONTACT_CTA_HTML = `<a href="/contact" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-bold shadow h-10 px-8 bg-white text-red-600 hover:bg-red-50" data-solicitor-contact="true" data-nosnippet>${STATION_CONTACT_BUTTON}</a>`;
-
-const FIRM_PHONE_TEXT = /(?:Call:?\s*)?(?:\+44\s*)?0?1732[\s\-]?247[\s\-]?427/gi;
 
 /**
  * Runtime HTML disambiguation for scraped police-station pages.
@@ -105,27 +105,10 @@ function looksLikeStationPage(html: string): boolean {
 }
 
 /**
- * Replace every firm tel: CTA and visible 01732 digits with a /contact link.
+ * Replace every firm tel:/sms: CTA and visible firm digits with a /contact link.
  */
 export function stripFirmTelephoneFromStationHtml(html: string): string {
-  let out = html;
-
-  out = out.replace(
-    /<a\b[^>]*href=["']tel:(?:\+44)?0?1732\s*247427["'][^>]*>[\s\S]*?<\/a>/gi,
-    () => CONTACT_CTA_HTML,
-  );
-
-  out = out.replace(
-    /href=["']tel:(?:\+44)?0?1732\s*247427["']/gi,
-    'href="/contact" data-solicitor-contact="true" data-nosnippet',
-  );
-
-  out = out.replace(FIRM_PHONE_TEXT, (match, offset: number, full: string) => {
-    const before = full.slice(Math.max(0, offset - 80), offset);
-    if (/data-solicitor-contact/i.test(before)) return match;
-    if (/tel:/i.test(before)) return match;
-    return "criminal solicitors (see Contact)";
-  });
+  let out = stripFirmPhonesToContact(html);
 
   if (/bg-amber-500/i.test(out) && !/data-solicitor-contact="true"/i.test(out)) {
     out = out.replace(
