@@ -1,0 +1,444 @@
+
+> web44ai@1.0.0 prebuild
+> npm run vercel:lock && npm run verify:deployment && npm run compliance:scan && npm run verify:rep-seo && npm run audit:legal && npm run audit:blog-images && npm run audit:readability
+
+
+> web44ai@1.0.0 vercel:lock
+> node scripts/vercel-project-lock.mjs
+
+ℹ️  Vercel project lock: Skipped (not running on Vercel)
+
+> web44ai@1.0.0 verify:deployment
+> node scripts/verify-deployment-target.js
+
+🔍 Verifying deployment target...
+
+📦 Vercel Project ID: prj_XvBhew2OZV8JYpI2dNHDTD6P05Ai
+📦 Vercel Project Name: 
+✅ Project ID looks correct (not pstrain)
+📦 Package name: web44ai ✅
+📁 Working directory: /Users/robertcashman/policestationagent ✅
+
+============================================================
+
+✅ DEPLOYMENT TARGET VERIFICATION PASSED
+
+This build will deploy to the correct project.
+Correct target: web44ai-git-master-robert-cashmans-projects.vercel.app
+
+> web44ai@1.0.0 compliance:scan
+> node scripts/compliance-scan-and-fix.js --check
+
+🔍 Compliance SCAN starting...
+
+
+📄 Reports generated:
+   - /Users/robertcashman/policestationagent/compliance-report.md
+   - /Users/robertcashman/policestationagent/compliance-report.json
+
+✅ Compliance check PASSED: No violations found.
+
+
+> web44ai@1.0.0 verify:rep-seo
+> node scripts/verify-rep-page-seo.mjs
+
+verify-rep-page-seo: OK (16 LocalCover entries)
+
+> web44ai@1.0.0 audit:legal
+> node scripts/audit-legal-content.mjs && node scripts/audit-static-legal-pages.mjs
+
+Legal content audit summary:
+{
+  "scanned": 326,
+  "itemsWithIssues": 0,
+  "errors": 0,
+  "warnings": 0
+}
+
+Legal content audit OK
+Static legal pages audit OK (56 pages scanned)
+
+> web44ai@1.0.0 audit:blog-images
+> node scripts/audit-blog-images.mjs
+
+Blog image audit OK (49 unique featured images)
+
+> web44ai@1.0.0 audit:readability
+> node scripts/audit-readability.mjs
+
+Readability audit OK
+
+> web44ai@1.0.0 build
+> next build
+
+Warning: Custom Cache-Control headers detected for the following routes:
+  - /_next/static/(.*)
+  - /_next/image(.*)
+
+Setting a custom Cache-Control header can break Next.js development behavior.
+▲ Next.js 16.2.9 (Turbopack)
+- Environments: .env.production.local, .env.local
+- Experiments (use with caution):
+  · optimizePackageImports
+
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+  Creating an optimized production build ...
+Browserslist: browsers data (caniuse-lite) is 7 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+Turbopack build encountered 3 warnings:
+./packages/firm-outreach-core/dist/index.js
+unexpected export *
+export * used with module [project]/packages/firm-outreach-core/dist/index.js [app-route] (ecmascript) which is a CommonJS module with exports only available at runtime
+List all export names manually (`export { a, b, c } from "...") or rewrite the module to ESM, to avoid the additional runtime code.`
+
+Import traces:
+  #1 [App Route]:
+    ./packages/firm-outreach-core/dist/index.js
+    ./lib/seo/police-confusion-health.ts
+    ./app/api/cron/police-confusion-health/route.ts
+
+  #2 [App Route]:
+    ./packages/firm-outreach-core/dist/index.js
+    ./lib/firm-outreach/constants.ts
+    ./app/api/cron/firm-outreach-kent-corrections/route.ts
+
+  #3 [Server Component]:
+    ./packages/firm-outreach-core/dist/index.js
+    ./lib/firm-outreach/constants.ts
+    ./app/outreach/send-approve/[token]/page.tsx
+
+
+./packages/firm-outreach-core/dist/index.js
+unexpected export *
+export * used with module [project]/packages/firm-outreach-core/dist/index.js [app-rsc] (ecmascript) which is a CommonJS module with exports only available at runtime
+List all export names manually (`export { a, b, c } from "...") or rewrite the module to ESM, to avoid the additional runtime code.`
+
+Import traces:
+  #1 [App Route]:
+    ./packages/firm-outreach-core/dist/index.js
+    ./lib/seo/police-confusion-health.ts
+    ./app/api/cron/police-confusion-health/route.ts
+
+  #2 [App Route]:
+    ./packages/firm-outreach-core/dist/index.js
+    ./lib/firm-outreach/constants.ts
+    ./app/api/cron/firm-outreach-kent-corrections/route.ts
+
+  #3 [Server Component]:
+    ./packages/firm-outreach-core/dist/index.js
+    ./lib/firm-outreach/constants.ts
+    ./app/outreach/send-approve/[token]/page.tsx
+
+
+./next.config.js
+Encountered unexpected file in NFT list
+A file was traced that indicates that the whole project was traced unintentionally. Somewhere in the import trace below, there are:
+- filesystem operations (like path.join, path.resolve or fs.readFile), or
+- very dynamic requires (like require('./' + foo)).
+To resolve this, you can
+- remove them if possible, or
+- only use them in development, or
+- make sure they are statically scoped to some subfolder: path.join(process.cwd(), 'data', bar), or
+- add ignore comments: path.join(/*turbopackIgnore: true*/ process.cwd(), bar)
+
+Import trace:
+  App Route:
+    ./next.config.js
+    ./lib/seo/police-confusion-health.ts
+    ./app/api/cron/police-confusion-health/route.ts
+
+
+✓ Compiled successfully in 6.7s
+  Running TypeScript ...
+  Finished TypeScript in 5.3s ...
+  Collecting page data using 9 workers ...
+  Generating static pages using 9 workers (0/327) ...
+  Generating static pages using 9 workers (81/327) 
+  Generating static pages using 9 workers (163/327) 
+  Generating static pages using 9 workers (245/327) 
+✓ Generating static pages using 9 workers (327/327) in 2.6s
+  Finalizing page optimization ...
+
+Route (app)                                           Revalidate  Expire
+┌ ○ /
+├ ○ /_not-found
+├ ○ /about
+├ ○ /accessibility
+├ ○ /accreditedpolicerep
+├ ƒ /admin
+├ ƒ /admin/blog-generator
+├ ƒ /admin/content
+├ ƒ /admin/firm-outreach
+├ ƒ /admin/login
+├ ƒ /admin/police-confusion
+├ ƒ /admin/posts/[id]/edit
+├ ƒ /admin/posts/new
+├ ○ /adverse-inference
+├ ○ /after-a-police-interview
+├ ○ /afterapoliceinterview
+├ ƒ /api/admin/debug-github
+├ ƒ /api/admin/enhance
+├ ƒ /api/admin/firm-outreach
+├ ƒ /api/admin/generate-blog
+├ ƒ /api/admin/login
+├ ƒ /api/admin/logout
+├ ƒ /api/admin/police-stations
+├ ƒ /api/admin/posts
+├ ƒ /api/admin/posts/[id]
+├ ƒ /api/admin/send-post
+├ ƒ /api/admin/services
+├ ƒ /api/admin/wordpress-import
+├ ƒ /api/auth/[...nextauth]
+├ ƒ /api/auth/login
+├ ƒ /api/auth/send-code
+├ ƒ /api/auth/verify-code
+├ ƒ /api/blog/posts
+├ ƒ /api/buffer/schedule
+├ ƒ /api/buffer/selftest
+├ ƒ /api/buffer/verify
+├ ƒ /api/chatbot/search
+├ ƒ /api/chatbot/stream
+├ ƒ /api/contact
+├ ƒ /api/contact/health
+├ ƒ /api/cron/firm-outreach-bootstrap
+├ ƒ /api/cron/firm-outreach-cross-digest
+├ ƒ /api/cron/firm-outreach-digest
+├ ƒ /api/cron/firm-outreach-discovery
+├ ƒ /api/cron/firm-outreach-enrich
+├ ƒ /api/cron/firm-outreach-kent-corrections
+├ ƒ /api/cron/firm-outreach-kick
+├ ƒ /api/cron/firm-outreach-pipeline/full
+├ ƒ /api/cron/firm-outreach-pipeline/maintain
+├ ƒ /api/cron/firm-outreach-send
+├ ƒ /api/cron/firm-outreach-status
+├ ƒ /api/cron/police-confusion-health
+├ ƒ /api/index-now
+├ ƒ /api/outreach/send-approved
+├ ƒ /api/webhooks/resend
+├ ○ /appropriate-adult
+├ ○ /areas
+├ ○ /arrested-at-police-station
+├ ○ /arrested-what-to-do
+├ ○ /arrestednow
+├ ○ /arrival-times-delays
+├ ○ /article-interview-under-caution
+├ ○ /article-loved-one-arrested-kent
+├ ○ /article-police-caution-before-interview
+├ ○ /article-rights-kent-police-station-2025
+├ ○ /ashford-police-station
+├ ○ /ashford-psa-station
+├ ○ /ashford-solicitor
+├ ○ /attendanceterms
+├ ƒ /BingSiteAuth.xml
+├ ○ /blog                                                     1h      1y
+├ ○ /blog-sitemap.xml                                         1h      1y
+├ ● /blog/[slug]                                              1h      1y
+│ ├ /blog/private-police-station-solicitor-cost-kent          1h      1y
+│ ├ /blog/out-of-hours-solicitor-kent-custody                 1h      1y
+│ ├ /blog/first-hour-after-arrest-kent                        1h      1y
+│ └ [+98 more paths]
+├ ○ /bluewater-police-station
+├ ○ /bluewater-psa-station
+├ ○ /bluewater-solicitor
+├ ○ /booking-in-procedure-in-kent
+├ ○ /bromley-solicitor
+├ ○ /can-police-take-my-phone
+├ ○ /can-we-help
+├ ○ /canterbury-police-station
+├ ○ /canterbury-psa-station
+├ ○ /canterbury-solicitor
+├ ○ /canwehelp
+├ ○ /case-status
+├ ○ /chatham-solicitor
+├ ○ /christmashours
+├ ○ /coldharbour-police-station
+├ ○ /complaints
+├ ○ /contact
+├ ○ /cookies
+├ ○ /court-representation
+├ ○ /courtrepresentation
+├ ○ /coverage
+├ ○ /coverage/areas
+├ ƒ /coverage/areas/[area-name]
+├ ○ /coverage/police-stations
+├ ƒ /coverage/police-stations/[station-name]
+├ ○ /custody-time-limits
+├ ○ /dartford-solicitor
+├ ○ /deal-solicitor
+├ ○ /dna-fingerprints-police-station
+├ ○ /dover-police-station
+├ ○ /dover-psa-station
+├ ○ /dover-solicitor
+├ ○ /dscc-and-custody-record-support
+├ ○ /emergency-police-station-representation
+├ ○ /extendedhours
+├ ○ /f-a-q
+├ ○ /faq
+├ ○ /faversham-solicitor
+├ ○ /feed
+├ ƒ /feed.xml
+├ ƒ /feed/[category]
+├ ƒ /feed/recent
+├ ○ /fees
+├ ○ /folkestone-police-station
+├ ○ /folkestone-psa-station
+├ ○ /folkestone-solicitor
+├ ○ /for-clients
+├ ○ /for-solicitors
+├ ○ /forsolicitors
+├ ○ /free-police-station-advice-kent
+├ ○ /freelegaladvice
+├ ○ /g-d-p-r
+├ ○ /gdpr
+├ ○ /gillingham-solicitor
+├ ○ /gravesend-police-station
+├ ○ /gravesend-solicitor
+├ ○ /guided-assistant
+├ ○ /herne-bay-solicitor
+├ ○ /home
+├ ○ /hours
+├ ○ /import-blog
+├ ○ /importance-of-early-legal-advice
+├ ○ /join
+├ ○ /kent-police-custody-resources
+├ ○ /kent-police-station-reps
+├ ○ /kent-police-stations
+├ ○ /link-to-us
+├ ○ /llms.txt                                                 1h      1y
+├ ○ /locations
+├ ○ /maidstone-police-station
+├ ○ /maidstone-psa-station
+├ ○ /maidstone-solicitor
+├ ○ /manifest.json
+├ ○ /margate-police-station
+├ ○ /margate-psa-station
+├ ○ /margate-solicitor
+├ ○ /medway-police-station
+├ ○ /medway-psa-station
+├ ○ /medway-solicitor
+├ ○ /no-comment-interview
+├ ○ /nofurtheractionafterpoliceinterview
+├ ○ /north-kent-gravesend-police-station
+├ ○ /north-kent-gravesend-psa-station
+├ ○ /offences-we-deal-with
+├ ○ /offences/assault-abh-gbh
+├ ○ /offences/domestic-abuse-allegations
+├ ○ /offences/drug-offences
+├ ○ /offences/fraud-theft
+├ ○ /offences/harassment-stalking
+├ ○ /offences/sexual-offences
+├ ○ /out-of-area
+├ ○ /outofarea
+├ ○ /outreach/brochure
+├ ƒ /outreach/send-approve/[token]
+├ ƒ /outreach/send-approve/result
+├ ƒ /outreach/unsubscribe/[token]
+├ ○ /pace-code-c
+├ ○ /police-bail-explained
+├ ○ /police-custody-rights
+├ ○ /police-interview-rights
+├ ○ /police-station-agent-ashford
+├ ○ /police-station-agent-canterbury
+├ ○ /police-station-agent-dartford
+├ ○ /police-station-agent-folkestone
+├ ○ /police-station-agent-gravesend
+├ ○ /police-station-agent-kent
+├ ○ /police-station-agent-maidstone
+├ ○ /police-station-agent-medway
+├ ○ /police-station-agent-sevenoaks
+├ ○ /police-station-agent-sittingbourne
+├ ○ /police-station-agent-tonbridge
+├ ○ /police-station-interviews-kent-rights
+├ ○ /police-station-rep-ashford
+├ ○ /police-station-rep-bluewater
+├ ○ /police-station-rep-canterbury
+├ ○ /police-station-rep-dartford
+├ ○ /police-station-rep-dover
+├ ○ /police-station-rep-folkestone
+├ ○ /police-station-rep-gravesend
+├ ○ /police-station-rep-maidstone
+├ ○ /police-station-rep-margate
+├ ○ /police-station-rep-medway
+├ ○ /police-station-rep-sevenoaks
+├ ○ /police-station-rep-sittingbourne
+├ ○ /police-station-rep-swanley
+├ ○ /police-station-rep-tonbridge
+├ ○ /police-station-rep-tunbridge-wells
+├ ○ /police-station-solicitor
+├ ○ /police-stations
+├ ƒ /police-stations/[slug]
+├ ○ /policeinterviewhelp
+├ ○ /policestationreps
+├ ƒ /post
+├ ○ /prepared-statements
+├ ○ /preparing-for-police-interview
+├ ○ /press
+├ ○ /privacy
+├ ○ /private-crime
+├ ○ /privateclientfaq
+├ ○ /privatecrime
+├ ○ /psastations
+├ ○ /ramsgate-solicitor
+├ ○ /refusingpoliceinterview
+├ ○ /regulatory-information
+├ ○ /released-under-investigation
+├ ○ /repcover
+├ ○ /resources
+├ ○ /resources/pace-rights-guide
+├ ○ /robots.txt
+├ ○ /rochester-solicitor
+├ ○ /sandwich-solicitor
+├ ○ /servicerates
+├ ○ /services
+├ ƒ /services/[slug]
+├ ○ /services/bail-applications
+├ ○ /services/police-station-representation
+├ ○ /services/pre-charge-advice
+├ ○ /servicesvoluntaryinterviews
+├ ○ /sevenoaks-police-station
+├ ○ /sevenoaks-psa-station
+├ ○ /sevenoaks-solicitor
+├ ○ /sitemap.xml
+├ ○ /sittingbourne-police-station
+├ ○ /sittingbourne-psa-station
+├ ○ /sittingbourne-solicitor
+├ ○ /start/in-custody
+├ ○ /start/solicitors-agent-cover
+├ ○ /start/voluntary-interview
+├ ○ /swanley-police-station
+├ ○ /swanley-psa-station
+├ ○ /swanley-solicitor
+├ ○ /terms-and-conditions
+├ ○ /termsandconditions
+├ ○ /testimonials
+├ ○ /tonbridge-police-station
+├ ○ /tonbridge-psa-station
+├ ○ /tonbridge-solicitor
+├ ○ /tunbridge-wells-police-station
+├ ○ /tunbridge-wells-psa-station
+├ ○ /tunbridge-wells-solicitor
+├ ○ /voluntary-interviews
+├ ○ /voluntary-police-interview
+├ ○ /voluntary-police-interview-risks
+├ ○ /voluntaryinterviews
+├ ○ /vulnerable-adults-in-custody
+├ ○ /what-happens-if-ignore-police-interview
+├ ○ /what-is-a-criminal-solicitor
+├ ○ /what-is-a-police-station-rep
+├ ○ /what-to-do-if-a-loved-one-is-arrested
+├ ○ /what-to-expect-at-a-police-interview-in-kent
+├ ○ /what-we-do
+├ ○ /whatisapolicestationrep
+├ ○ /whitstable-solicitor
+├ ○ /why-use-us
+├ ○ /your-rights-in-custody
+└ ○ /youth-custody-rights
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+

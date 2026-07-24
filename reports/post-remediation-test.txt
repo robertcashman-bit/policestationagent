@@ -1,0 +1,48 @@
+
+> web44ai@1.0.0 test
+> vitest run __tests__/contactScope.test.ts __tests__/scopeFaqs.test.ts __tests__/police-confusion-score.test.ts && npm run test:firm-outreach && vitest run __tests__/admin-magic-login.test.ts && npm run test:legal
+
+
+ RUN  v4.1.8 /Users/robertcashman/policestationagent
+
+
+ Test Files  3 passed (3)
+      Tests  25 passed (25)
+   Start at  11:12:20
+   Duration  230ms (transform 83ms, setup 0ms, import 106ms, tests 10ms, environment 0ms)
+
+
+> web44ai@1.0.0 test:firm-outreach
+> vitest run __tests__/firm-outreach*.test.ts __tests__/outreach-*.test.ts
+
+
+ RUN  v4.1.8 /Users/robertcashman/policestationagent
+
+
+ Test Files  32 passed (32)
+      Tests  240 passed (240)
+   Start at  11:12:21
+   Duration  1.16s (transform 1.12s, setup 0ms, import 1.73s, tests 3.16s, environment 2ms)
+
+
+ RUN  v4.1.8 /Users/robertcashman/policestationagent
+
+
+ Test Files  1 passed (1)
+      Tests  9 passed (9)
+   Start at  11:12:22
+   Duration  150ms (transform 30ms, setup 0ms, import 21ms, tests 65ms, environment 0ms)
+
+
+> web44ai@1.0.0 test:legal
+> vitest run __tests__/legal-accuracy.test.ts __tests__/pace-references.test.ts
+
+
+ RUN  v4.1.8 /Users/robertcashman/policestationagent
+
+
+ Test Files  2 passed (2)
+      Tests  11 passed (11)
+   Start at  11:12:23
+   Duration  214ms (transform 43ms, setup 0ms, import 57ms, tests 12ms, environment 0ms)
+
