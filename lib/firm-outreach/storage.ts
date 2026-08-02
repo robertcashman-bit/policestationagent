@@ -80,29 +80,102 @@ function newSendId(): string {
   return `fos_${Date.now().toString(36)}_${crypto.randomBytes(4).toString('hex')}`;
 }
 
+function isWrongTypeError(err: unknown): boolean {
+  const msg = err instanceof Error ? err.message : String(err);
+  return /WRONGTYPE/i.test(msg);
+}
+
+/** Delete a KV key that held an unexpected Redis type; never throws. */
+async function deleteWrongTypeKey(key: string): Promise<void> {
+  const kv = getKV();
+  if (!kv) return;
+  try {
+    await kv.del(key);
+  } catch (err) {
+    console.error('[firm-outreach] failed to delete WRONGTYPE key', { key, err });
+  }
+}
+
+/**
+ * Read a JSON string-array index. Recovers from Upstash WRONGTYPE
+ * (e.g. key was created as a Redis List) by deleting and treating as empty.
+ * Never throws.
+ */
 async function readStringList(key: string): Promise<string[]> {
   const kv = getKV();
   if (!kv) return [];
-  const raw = await kv.get<string[]>(key);
-  return Array.isArray(raw) ? raw : [];
+  try {
+    const raw = await kv.get<unknown>(key);
+    if (Array.isArray(raw)) {
+      return raw.filter((x): x is string => typeof x === 'string');
+    }
+    if (raw == null) return [];
+    // Stored as a non-array JSON value — wipe so the next write recreates a list.
+    console.warn('[firm-outreach] index key held non-array value; recreating as JSON array', {
+      key,
+      typeofRaw: typeof raw,
+    });
+    await deleteWrongTypeKey(key);
+    return [];
+  } catch (err) {
+    if (isWrongTypeError(err)) {
+      console.warn(
+        '[firm-outreach] WRONGTYPE on index key; deleting and recreating as JSON array',
+        { key },
+      );
+      await deleteWrongTypeKey(key);
+      return [];
+    }
+    console.error('[firm-outreach] readStringList failed', { key, err });
+    return [];
+  }
 }
 
 async function appendIndex(key: string, id: string): Promise<void> {
   const kv = getKV();
   if (!kv) return;
-  const ids = await readStringList(key);
-  if (!ids.includes(id)) {
-    ids.push(id);
-    await kv.set(key, ids);
+  try {
+    const ids = await readStringList(key);
+    if (!ids.includes(id)) {
+      ids.push(id);
+      await kv.set(key, ids);
+    }
+  } catch (err) {
+    if (isWrongTypeError(err)) {
+      console.warn(
+        '[firm-outreach] WRONGTYPE on appendIndex; recreating index as JSON array',
+        { key },
+      );
+      try {
+        await deleteWrongTypeKey(key);
+        await kv.set(key, [id]);
+      } catch (recreateErr) {
+        console.error('[firm-outreach] appendIndex recreate failed', { key, recreateErr });
+      }
+      return;
+    }
+    console.error('[firm-outreach] appendIndex failed', { key, err });
   }
 }
 
 async function removeFromIndex(key: string, id: string): Promise<void> {
   const kv = getKV();
   if (!kv) return;
-  const ids = await readStringList(key);
-  const next = ids.filter((x) => x !== id);
-  if (next.length !== ids.length) await kv.set(key, next);
+  try {
+    const ids = await readStringList(key);
+    const next = ids.filter((x) => x !== id);
+    if (next.length !== ids.length) await kv.set(key, next);
+  } catch (err) {
+    if (isWrongTypeError(err)) {
+      console.warn(
+        '[firm-outreach] WRONGTYPE on removeFromIndex; deleting bad key',
+        { key },
+      );
+      await deleteWrongTypeKey(key);
+      return;
+    }
+    console.error('[firm-outreach] removeFromIndex failed', { key, err });
+  }
 }
 
 export async function saveProspect(prospect: FirmProspect, previousStatus?: FirmProspectStatus): Promise<void> {

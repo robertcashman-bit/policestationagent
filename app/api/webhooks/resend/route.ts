@@ -14,16 +14,31 @@ interface ResendWebhookEvent {
   type?: string;
   created_at?: string;
   data?: {
-    to?: string | string[];
+    to?: unknown;
     email_id?: string;
   };
 }
 
-function emailsFromEvent(data: ResendWebhookEvent['data']): string[] {
+/** Extract recipient emails from a Resend webhook payload. Exported for unit tests. */
+export function emailsFromEvent(data: ResendWebhookEvent['data']): string[] {
   const toRaw = data?.to;
-  if (Array.isArray(toRaw)) return toRaw.map((e) => e.toLowerCase());
-  if (toRaw) return [toRaw.toLowerCase()];
-  return [];
+  const list = Array.isArray(toRaw) ? toRaw : toRaw != null ? [toRaw] : [];
+  const out: string[] = [];
+  for (const entry of list) {
+    if (typeof entry === 'string') {
+      const trimmed = entry.trim();
+      if (trimmed) out.push(trimmed.toLowerCase());
+      continue;
+    }
+    if (entry && typeof entry === 'object') {
+      const nested = (entry as { email?: unknown }).email;
+      if (typeof nested === 'string') {
+        const trimmed = nested.trim();
+        if (trimmed) out.push(trimmed.toLowerCase());
+      }
+    }
+  }
+  return out;
 }
 
 function verifyResendWebhook(request: Request, rawBody: string): boolean {
@@ -67,38 +82,49 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 });
   }
 
-  const type = body.type ?? '';
-  const at = body.created_at ?? new Date().toISOString();
-  const emails = emailsFromEvent(body.data);
-  const resendMessageId = body.data?.email_id;
+  // After a valid signature, always ack with 200 so Resend does not retry on KV/storage failures.
+  try {
+    const type = body.type ?? '';
+    const at = body.created_at ?? new Date().toISOString();
+    const emails = emailsFromEvent(body.data);
+    const resendMessageId = body.data?.email_id;
 
-  if (
-    type === 'email.sent' ||
-    type === 'email.delivered' ||
-    type === 'email.opened' ||
-    type === 'email.clicked' ||
-    type === 'email.bounced' ||
-    type === 'email.complained'
-  ) {
-    const reason = type === 'email.complained' ? 'complaint' : 'bounce';
-    for (const email of emails.length ? emails : ['']) {
-      const send = await applySendWebhookEvent({
-        resendMessageId,
-        email: email || undefined,
-        eventType: type,
-        at,
-      });
-      if (send && (type === 'email.bounced' || type === 'email.complained')) {
-        await addSuppression(send.email, reason);
-        const prospect = await getProspect(send.prospectId);
-        if (prospect) {
-          const prev = prospect.status;
-          prospect.status = reason === 'complaint' ? 'unsubscribed' : 'bounced';
-          prospect.updatedAt = new Date().toISOString();
-          await saveProspect(prospect, prev);
+    if (
+      type === 'email.sent' ||
+      type === 'email.delivered' ||
+      type === 'email.opened' ||
+      type === 'email.clicked' ||
+      type === 'email.bounced' ||
+      type === 'email.complained'
+    ) {
+      const reason = type === 'email.complained' ? 'complaint' : 'bounce';
+      for (const email of emails.length ? emails : ['']) {
+        const send = await applySendWebhookEvent({
+          resendMessageId,
+          email: email || undefined,
+          eventType: type,
+          at,
+        });
+
+        if (type === 'email.bounced' || type === 'email.complained') {
+          const suppressEmail = (send?.email || email || '').trim();
+          if (suppressEmail) {
+            await addSuppression(suppressEmail, reason);
+          }
+          if (send) {
+            const prospect = await getProspect(send.prospectId);
+            if (prospect) {
+              const prev = prospect.status;
+              prospect.status = reason === 'complaint' ? 'unsubscribed' : 'bounced';
+              prospect.updatedAt = new Date().toISOString();
+              await saveProspect(prospect, prev);
+            }
+          }
         }
       }
     }
+  } catch (err) {
+    console.error('[resend-webhook] processing failed after valid signature', err);
   }
 
   return NextResponse.json({ ok: true });

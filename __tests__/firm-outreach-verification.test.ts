@@ -248,6 +248,17 @@ describe('resend webhook verification', () => {
     );
     expect(res.status).toBe(401);
   });
+
+  it('emailsFromEvent ignores non-string to entries', async () => {
+    const { emailsFromEvent } = await import('@/app/api/webhooks/resend/route');
+    expect(
+      emailsFromEvent({
+        to: ['ok@example.com', null, 42, { email: 'Nested@Example.com' }, { email: 1 }, ''],
+      }),
+    ).toEqual(['ok@example.com', 'nested@example.com']);
+    expect(emailsFromEvent({ to: 'Solo@Example.com' })).toEqual(['solo@example.com']);
+    expect(emailsFromEvent({})).toEqual([]);
+  });
 });
 
 describe('admin firm-outreach API auth', () => {

@@ -79,4 +79,44 @@ describe('saveProspect stale-index cleanup', () => {
     expect(ready).toHaveLength(1);
     expect(ready[0].status).toBe('ready_to_send');
   });
+
+  it('recovers from WRONGTYPE on index keys without throwing', async () => {
+    const base = makeKvStore({
+      'firmoutreach:suppression:index': 'not-an-array',
+    });
+    const wrongTypeKeys = new Set(['firmoutreach:suppression:index']);
+    kvRef.kv = {
+      ...base,
+      get: async (key: string) => {
+        if (wrongTypeKeys.has(key)) {
+          throw new Error('WRONGTYPE Operation against a key holding the wrong kind of value');
+        }
+        return base.get(key);
+      },
+      del: async (key: string) => {
+        wrongTypeKeys.delete(key);
+        return base.del(key);
+      },
+    };
+
+    const { addSuppression, listAllSuppressions } = await import('@/lib/firm-outreach/storage');
+    await expect(addSuppression('bounce@example.co.uk', 'bounce')).resolves.toBeUndefined();
+
+    const rows = await listAllSuppressions();
+    expect(rows.some((r) => r.email === 'bounce@example.co.uk')).toBe(true);
+    expect(wrongTypeKeys.size).toBe(0);
+  });
+
+  it('wipes non-array index values and recreates as JSON arrays', async () => {
+    kvRef.kv = makeKvStore({
+      'firmoutreach:suppression:index': { bad: true },
+    });
+
+    const { addSuppression, listAllSuppressions } = await import('@/lib/firm-outreach/storage');
+    await expect(addSuppression('wipe@example.co.uk', 'bounce')).resolves.toBeUndefined();
+
+    const rows = await listAllSuppressions();
+    expect(rows.some((r) => r.email === 'wipe@example.co.uk')).toBe(true);
+    expect(Array.isArray(kvRef.kv!.store.get('firmoutreach:suppression:index'))).toBe(true);
+  });
 });
