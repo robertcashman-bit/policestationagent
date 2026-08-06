@@ -1,5 +1,4 @@
 import { Redis } from '@upstash/redis';
-import { appendFileSync } from 'fs';
 import type { FirmOutreachSend } from './types';
 
 /**
@@ -60,37 +59,6 @@ function utcDayWindow(now: Date): { date: string; start: number; end: number } {
     end: Date.parse(`${date}T23:59:59.999Z`),
   };
 }
-
-// #region agent log
-function debugLog(
-  hypothesisId: string,
-  location: string,
-  message: string,
-  data: Record<string, unknown>,
-): void {
-  const payload = {
-    sessionId: '610743',
-    hypothesisId,
-    location,
-    message,
-    data,
-    timestamp: Date.now(),
-  };
-  fetch('http://127.0.0.1:7678/ingest/67d374d4-9332-4432-8909-cec328e5e44c', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'X-Debug-Session-Id': '610743' },
-    body: JSON.stringify(payload),
-  }).catch(() => {});
-  try {
-    appendFileSync(
-      '/Users/robertcashman/Policestationrepuk/.cursor/debug-610743.log',
-      `${JSON.stringify(payload)}\n`,
-    );
-  } catch {
-    /* ignore */
-  }
-}
-// #endregion
 
 /** Load send IDs from Redis SET (preferred) or legacy JSON array. */
 export async function loadSendIndexIds(redis: Redis): Promise<{
@@ -205,31 +173,10 @@ async function fetchSentInWindow(
   if (!source.url || !source.token) return [];
   const redis = new Redis({ url: source.url, token: source.token });
 
-  const { ids, source: indexSource } = await loadSendIndexIds(redis);
-  // #region agent log
-  debugLog('B', 'count-today.ts:fetchSentInWindow', 'send index load', {
-    domain: source.domain,
-    campaignId: source.campaignId ?? null,
-    indexSource,
-    indexIdCount: ids.length,
-  });
-  // #endregion
-
-  let out =
-    ids.length > 0
-      ? await fetchSentFromIds(redis, source, ids, start, end)
-      : await scanSentInWindow(redis, source, start, end);
-
-  // #region agent log
-  debugLog('B', 'count-today.ts:fetchSentInWindow', 'sent-in-window result', {
-    domain: source.domain,
-    campaignId: source.campaignId ?? null,
-    usedScanFallback: ids.length === 0,
-    sentCount: out.length,
-  });
-  // #endregion
-
-  return out;
+  const { ids } = await loadSendIndexIds(redis);
+  return ids.length > 0
+    ? await fetchSentFromIds(redis, source, ids, start, end)
+    : await scanSentInWindow(redis, source, start, end);
 }
 
 /**
