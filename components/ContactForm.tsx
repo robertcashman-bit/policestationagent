@@ -15,14 +15,13 @@ import {
   SEO_NOT_POLICE,
   SERVICE_SCOPE_SHORT,
   CTA_OUT_OF_SCOPE,
-  ADMIN_ENQUIRY_INTRO,
 } from "@/config/contact";
 
 interface FormData {
   name: string;
   contactNumber: string;
   email: string;
-  role: "family" | "solicitor" | "representative";
+  role: "family" | "solicitor" | "representative" | "prospective_client" | "instructing_solicitor" | "other";
   clientName: string;
   clientDOB: string;
   policeStation: string;
@@ -44,17 +43,19 @@ interface ContactFormProps {
 }
 
 export default function ContactForm({
-  defaultRole = "family",
+  defaultRole,
   defaultAttendanceType = "scheduled-voluntary",
   heading = "Request Police Station Solicitor Attendance",
   variant = "attendance",
 }: ContactFormProps = {}) {
   const isAdmin = variant === "admin";
+  const resolvedDefaultRole: FormData["role"] =
+    defaultRole ?? (isAdmin ? "prospective_client" : "family");
   const [formData, setFormData] = useState<FormData>({
     name: "",
     contactNumber: "",
     email: "",
-    role: defaultRole,
+    role: resolvedDefaultRole,
     clientName: "",
     clientDOB: "",
     policeStation: "",
@@ -78,21 +79,37 @@ export default function ContactForm({
     const newErrors: Partial<Record<keyof FormData, string>> = {};
 
     if (!formData.name.trim()) newErrors.name = "Name is required";
-    if (!formData.contactNumber.trim()) newErrors.contactNumber = "Contact number is required";
     if (isAdmin) {
       if (!formData.email.trim()) {
         newErrors.email = "Email is required for written enquiries";
       } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
         newErrors.email = "Please enter a valid email address";
       }
-    } else if (formData.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Please enter a valid email address";
+      if (
+        formData.contactNumber.trim() &&
+        formData.contactNumber.trim().replace(/\D/g, "").length < 10
+      ) {
+        newErrors.contactNumber = "Please enter a valid contact number";
+      }
+    } else {
+      if (!formData.contactNumber.trim()) newErrors.contactNumber = "Contact number is required";
+      if (formData.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+        newErrors.email = "Please enter a valid email address";
+      }
     }
     if (!formData.role) newErrors.role = "Please select your role";
-    if (!isAdmin && (formData.role === "solicitor" || formData.role === "representative") && !formData.clientName.trim()) {
+    if (
+      !isAdmin &&
+      (formData.role === "solicitor" || formData.role === "representative") &&
+      !formData.clientName.trim()
+    ) {
       newErrors.clientName = "Client name is required";
     }
-    if (!isAdmin && (formData.role === "solicitor" || formData.role === "representative") && !formData.clientDOB.trim()) {
+    if (
+      !isAdmin &&
+      (formData.role === "solicitor" || formData.role === "representative") &&
+      !formData.clientDOB.trim()
+    ) {
       newErrors.clientDOB = "Client date of birth is required";
     }
     if (!isAdmin && !formData.policeStation.trim()) newErrors.policeStation = "Police station is required";
@@ -137,9 +154,9 @@ export default function ContactForm({
           ...formData,
           enquiryKind: isAdmin ? "admin" : "attendance",
           company: honeypotRef.current?.value ?? "",
-          policeStation: formData.policeStation.trim() || (isAdmin ? "N/A — admin enquiry" : ""),
-          interviewDate: formData.interviewDate.trim() || (isAdmin ? "N/A" : ""),
-          interviewTime: formData.interviewTime.trim() || (isAdmin ? "N/A" : ""),
+          policeStation: formData.policeStation.trim(),
+          interviewDate: formData.interviewDate.trim(),
+          interviewTime: formData.interviewTime.trim(),
           attendanceType: isAdmin ? "admin-enquiry" : formData.attendanceType,
         }),
       });
@@ -151,7 +168,7 @@ export default function ContactForm({
           name: "",
           contactNumber: "",
           email: "",
-          role: defaultRole,
+          role: resolvedDefaultRole,
           clientName: "",
           clientDOB: "",
           policeStation: "",
@@ -196,14 +213,20 @@ export default function ContactForm({
           </h3>
           <p className="text-red-800 font-semibold text-sm mb-2">{SEO_NOT_POLICE}</p>
           <p className="text-slate-700 mb-2">{SERVICE_SCOPE_SHORT}</p>
-          <p className="text-slate-700 mb-2 font-medium text-red-900">{CTA_OUT_OF_SCOPE}</p>
           {isAdmin ? (
-            <p className="text-slate-700 mb-2">{ADMIN_ENQUIRY_INTRO}</p>
-          ) : (
-            <p className="text-slate-700 mb-2">
-              This form is for <strong>scheduled</strong> voluntary (VAI) interviews or solicitor
-              attendance instructions — not general legal advice.
+            <p className="text-slate-700 mb-2 font-medium text-red-900">
+              We are NOT the police and cannot help with police enquiries, crime reports, custody
+              status checks, or free advice after release. For police assistance use 999 or 101.
+              Email is the primary channel; phone is optional for a callback.
             </p>
+          ) : (
+            <>
+              <p className="text-slate-700 mb-2 font-medium text-red-900">{CTA_OUT_OF_SCOPE}</p>
+              <p className="text-slate-700 mb-2">
+                This form is for <strong>scheduled</strong> voluntary (VAI) interviews or solicitor
+                attendance instructions — not general legal advice.
+              </p>
+            </>
           )}
           <p className="text-slate-700 font-medium">
             Someone in custody now? Use the{" "}
@@ -251,7 +274,12 @@ export default function ContactForm({
               htmlFor="contactNumber"
               className="block text-sm font-medium text-slate-700 mb-1"
             >
-              Your Contact Number (Mobile Preferred) <span className="text-red-600">*</span>
+              Your Contact Number (Mobile Preferred){" "}
+              {isAdmin ? (
+                <span className="text-slate-500 text-xs">(Optional)</span>
+              ) : (
+                <span className="text-red-600">*</span>
+              )}
             </label>
             <input
               type="tel"
@@ -261,10 +289,12 @@ export default function ContactForm({
               className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                 errors.contactNumber ? "border-red-500" : "border-slate-300"
               }`}
-              placeholder="Your callback number"
-              required
+              placeholder={isAdmin ? "Optional callback number" : "Your callback number"}
+              required={!isAdmin}
             />
-            <p className="text-xs text-slate-500 mt-1">Primary contact method</p>
+            <p className="text-xs text-slate-500 mt-1">
+              {isAdmin ? "Optional — we will reply by email" : "Primary contact method"}
+            </p>
             {errors.contactNumber && (
               <p className="text-red-600 text-sm mt-1">{errors.contactNumber}</p>
             )}
@@ -288,36 +318,54 @@ export default function ContactForm({
                 errors.email ? "border-red-500" : "border-slate-300"
               }`}
               placeholder="your.email@example.com"
+              required={isAdmin}
+              aria-required={isAdmin}
             />
-            <p className="text-xs text-slate-500 mt-1">For follow-up only</p>
+            <p className="text-xs text-slate-500 mt-1">
+              {isAdmin ? "Primary contact method for written enquiries" : "For follow-up only"}
+            </p>
             {errors.email && <p className="text-red-600 text-sm mt-1">{errors.email}</p>}
           </div>
 
           <div>
             <label htmlFor="role" className="block text-sm font-medium text-slate-700 mb-1">
-              Role of person making this request <span className="text-red-600">*</span>
+              {isAdmin ? "Who is enquiring" : "Role of person making this request"}{" "}
+              <span className="text-red-600">*</span>
             </label>
             <select
               id="role"
               value={formData.role}
               onChange={(e) =>
-                setFormData({ ...formData, role: e.target.value as "family" | "solicitor" | "representative" })
+                setFormData({
+                  ...formData,
+                  role: e.target.value as FormData["role"],
+                })
               }
               className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                 errors.role ? "border-red-500" : "border-slate-300"
               }`}
               required
             >
-              <option value="family">Family member or friend</option>
-              <option value="solicitor">Solicitor or law firm</option>
-              <option value="representative">Other authorised representative</option>
+              {isAdmin ? (
+                <>
+                  <option value="prospective_client">Prospective client / general enquiry</option>
+                  <option value="instructing_solicitor">Instructing solicitor or law firm</option>
+                  <option value="other">Other administrative enquiry</option>
+                </>
+              ) : (
+                <>
+                  <option value="family">Immediate family member</option>
+                  <option value="solicitor">Solicitor or law firm</option>
+                  <option value="representative">Other authorised representative</option>
+                </>
+              )}
             </select>
             {errors.role && <p className="text-red-600 text-sm mt-1">{errors.role}</p>}
           </div>
         </div>
 
-        {/* Client Information (if solicitor or representative) */}
-        {(formData.role === "solicitor" || formData.role === "representative") && (
+        {/* Client Information (attendance solicitor/representative only) */}
+        {!isAdmin && (formData.role === "solicitor" || formData.role === "representative") && (
           <div className="space-y-6 mb-8 border-t border-slate-200 pt-6">
             <h3 className="text-lg font-semibold text-slate-900 border-b border-slate-200 pb-2">
               Client Information
@@ -335,7 +383,7 @@ export default function ContactForm({
                 className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                   errors.clientName ? "border-red-500" : "border-slate-300"
                 }`}
-                required
+                required={!isAdmin}
               />
               {errors.clientName && (
                 <p className="text-red-600 text-sm mt-1">{errors.clientName}</p>
@@ -354,7 +402,7 @@ export default function ContactForm({
                 className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                   errors.clientDOB ? "border-red-500" : "border-slate-300"
                 }`}
-                required
+                required={!isAdmin}
               />
               {errors.clientDOB && <p className="text-red-600 text-sm mt-1">{errors.clientDOB}</p>}
             </div>
@@ -587,7 +635,7 @@ export default function ContactForm({
             <a href="/current-custody" className="text-amber-900 hover:underline font-semibold">
               current-custody qualification
             </a>{" "}
-            rather than this administrative form. Forthcoming interviews should use{" "}
+            rather than this form. Forthcoming interviews should use{" "}
             <a
               href="/start/voluntary-interview#request"
               className="text-amber-900 hover:underline font-semibold"
@@ -613,7 +661,9 @@ export default function ContactForm({
         {submitStatus === "success" && (
           <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
             <p className="text-green-800 font-medium">
-              Thank you! Your request has been submitted successfully. We will contact you shortly.
+              {isAdmin
+                ? "Thank you. Your written enquiry has been submitted. We will reply by email when we can — response times are not guaranteed."
+                : "Thank you! Your request has been submitted successfully. We will contact you shortly."}
             </p>
           </div>
         )}

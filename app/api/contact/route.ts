@@ -8,11 +8,17 @@ function isValidEmail(email: string): boolean {
 
 const MAX_FIELD_LENGTH = 2000;
 
+const ADMIN_ROLES = new Set([
+  "prospective_client",
+  "instructing_solicitor",
+  "other",
+]);
+
 export async function POST(request: NextRequest) {
   try {
     const rate = await rateLimitOk({
       ip: getClientIp(request),
-      scope: 'contact',
+      scope: "contact",
       max: 5,
       windowMs: 60_000,
     });
@@ -37,21 +43,39 @@ export async function POST(request: NextRequest) {
     const emailRaw = String(body?.email ?? "").trim();
     const email = emailRaw === "" ? null : emailRaw;
     const role = String(body?.role ?? "").trim();
-    const requestTypeLegacy = String(body?.requestType ?? "").trim();
-    const requestType =
-      requestTypeLegacy === "self" || requestTypeLegacy === "client"
-        ? requestTypeLegacy
-        : role === "solicitor" || role === "representative"
-          ? "client"
-          : role === "family"
-            ? "self"
-            : requestTypeLegacy || "self";
+    const enquiryKindRaw = String(body?.enquiryKind ?? "").trim();
     const clientName = String(body?.clientName ?? "").trim();
     const clientDOB = String(body?.clientDOB ?? "").trim();
     const policeStation = String(body?.policeStation ?? "").trim();
     const interviewDate = String(body?.interviewDate ?? "").trim();
     const interviewTime = String(body?.interviewTime ?? "").trim();
     const attendanceType = String(body?.attendanceType ?? "").trim();
+
+    const REAL_ATTENDANCE = new Set([
+      "scheduled-voluntary",
+      "pre-booked",
+      "solicitor-instruction",
+    ]);
+    // Client-supplied label only — not auth. A real attendance type forces attendance rules.
+    const isAdminEnquiry =
+      (enquiryKindRaw === "admin" || attendanceType === "admin-enquiry") &&
+      !REAL_ATTENDANCE.has(attendanceType);
+    const enquiryKind = isAdminEnquiry ? "admin" : "attendance";
+
+    const requestTypeLegacy = String(body?.requestType ?? "").trim();
+    let requestType: string;
+    if (isAdminEnquiry) {
+      // Do not map admin solicitor roles into incomplete "client" attendance mode.
+      requestType = ADMIN_ROLES.has(role) ? role : role || "prospective_client";
+    } else if (requestTypeLegacy === "self" || requestTypeLegacy === "client") {
+      requestType = requestTypeLegacy;
+    } else if (role === "solicitor" || role === "representative") {
+      requestType = "client";
+    } else if (role === "family") {
+      requestType = "self";
+    } else {
+      requestType = requestTypeLegacy || "self";
+    }
     const briefDetails = String(body?.briefDetails ?? "").trim();
     const offenceSummaryLegacy = String(body?.offenceSummary ?? "").trim();
     const offenceSummary = briefDetails || offenceSummaryLegacy;
@@ -63,39 +87,58 @@ export async function POST(request: NextRequest) {
 
     // Input length limits to prevent abuse
     const fields = [
-      name, contactNumber, emailRaw, clientName, clientDOB, policeStation,
-      interviewDate, interviewTime, attendanceType, offenceSummary, supportNeeds, contactWindowTime,
+      name,
+      contactNumber,
+      emailRaw,
+      clientName,
+      clientDOB,
+      policeStation,
+      interviewDate,
+      interviewTime,
+      attendanceType,
+      offenceSummary,
+      supportNeeds,
+      contactWindowTime,
     ];
     if (fields.some((f) => f && f.length > MAX_FIELD_LENGTH)) {
       return NextResponse.json({ error: "One or more fields exceed maximum length" }, { status: 400 });
     }
 
-    const enquiryKind = String(body?.enquiryKind ?? "").trim();
-    const isAdminEnquiry = enquiryKind === "admin";
-
     if (!name) {
       return NextResponse.json({ error: "Name is required" }, { status: 400 });
     }
-    if (!contactNumber) {
-      return NextResponse.json({ error: "Contact number is required" }, { status: 400 });
-    }
-    if (isAdminEnquiry && !email) {
-      return NextResponse.json({ error: "Email is required for written enquiries" }, { status: 400 });
+    if (isAdminEnquiry) {
+      if (!email) {
+        return NextResponse.json(
+          { error: "Email is required for written enquiries" },
+          { status: 400 },
+        );
+      }
+      if (contactNumber && contactNumber.replace(/\D/g, "").length < 10) {
+        return NextResponse.json({ error: "Please enter a valid contact number" }, { status: 400 });
+      }
+      if (role && !ADMIN_ROLES.has(role)) {
+        return NextResponse.json({ error: "Invalid role for written enquiry" }, { status: 400 });
+      }
+    } else {
+      if (!contactNumber) {
+        return NextResponse.json({ error: "Contact number is required" }, { status: 400 });
+      }
+      if (!policeStation) {
+        return NextResponse.json({ error: "Police station is required" }, { status: 400 });
+      }
+      if (!interviewDate) {
+        return NextResponse.json({ error: "Interview date is required" }, { status: 400 });
+      }
+      if (!interviewTime) {
+        return NextResponse.json({ error: "Interview time is required" }, { status: 400 });
+      }
+      if (!attendanceType) {
+        return NextResponse.json({ error: "Attendance type is required" }, { status: 400 });
+      }
     }
     if (email !== null && !isValidEmail(email)) {
       return NextResponse.json({ error: "Please enter a valid email address" }, { status: 400 });
-    }
-    if (!isAdminEnquiry && !policeStation) {
-      return NextResponse.json({ error: "Police station is required" }, { status: 400 });
-    }
-    if (!isAdminEnquiry && !interviewDate) {
-      return NextResponse.json({ error: "Interview date is required" }, { status: 400 });
-    }
-    if (!isAdminEnquiry && !interviewTime) {
-      return NextResponse.json({ error: "Interview time is required" }, { status: 400 });
-    }
-    if (!isAdminEnquiry && !attendanceType) {
-      return NextResponse.json({ error: "Attendance type is required" }, { status: 400 });
     }
     if (!offenceSummary) {
       return NextResponse.json(
@@ -106,7 +149,7 @@ export async function POST(request: NextRequest) {
     if (requestType === "client" && !isAdminEnquiry && (!clientName || !clientDOB)) {
       return NextResponse.json(
         { error: "Client name and date of birth are required when requesting for a client" },
-        { status: 400 }
+        { status: 400 },
       );
     }
     if (contactWindow === "specify" && !contactWindowTime) {
@@ -125,17 +168,18 @@ export async function POST(request: NextRequest) {
       console.log("[Contact API] Attempting to send notification email");
       emailResult = await sendContactFormNotification({
         name,
-        contactNumber,
+        contactNumber: contactNumber || (isAdminEnquiry ? "(not provided)" : ""),
         email,
         requestType,
-        clientName: clientName || null,
-        clientDOB: clientDOB || null,
-        policeStation: policeStation || (isAdminEnquiry ? "N/A — admin enquiry" : ""),
-        interviewDate: interviewDate || (isAdminEnquiry ? "N/A" : ""),
-        interviewTime: interviewTime || (isAdminEnquiry ? "N/A" : ""),
+        clientName: isAdminEnquiry ? null : clientName || null,
+        clientDOB: isAdminEnquiry ? null : clientDOB || null,
+        policeStation: isAdminEnquiry ? "" : policeStation,
+        interviewDate: isAdminEnquiry ? "" : interviewDate,
+        interviewTime: isAdminEnquiry ? "" : interviewTime,
         attendanceType: isAdminEnquiry ? "admin-enquiry" : attendanceType,
-        offenceSummary: isAdminEnquiry ? `[Admin enquiry]\n${offenceSummary}` : offenceSummary,
+        offenceSummary,
         supportNeeds: supportNeeds || null,
+        enquiryKind,
       });
       if (emailResult.success) {
         console.log("[Contact API] Notification email sent successfully");

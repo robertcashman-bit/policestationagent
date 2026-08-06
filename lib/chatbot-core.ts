@@ -38,13 +38,16 @@ function loadFAQContent() {
     const faqPath = path.join(process.cwd(), "app", "faq", "FAQContent.tsx");
     const faqContent = fs.readFileSync(faqPath, "utf8");
     const faqItems: Array<{ question: string; answer: string }> = [];
-    const faqPattern = /question:\s*['"`]([^'"`]+)['"`]\s*,\s*answer:\s*['"`]([\s\S]*?)['"`]/g;
+    // Match answer strings that may contain escaped quotes and HTML attributes.
+    const faqPattern =
+      /question:\s*(['"`])((?:(?!\1)[\s\S])*)\1\s*,\s*answer:\s*(['"`])((?:(?!\3)[\s\S])*)\3/g;
     let match;
 
     while ((match = faqPattern.exec(faqContent)) !== null) {
-      const question = match[1].trim();
-      let answer = match[2].trim();
+      const question = match[2].trim();
+      let answer = match[4].trim();
       answer = answer.replace(/\\n/g, " ").replace(/\\'/g, "'").replace(/\\"/g, '"');
+      answer = stripHTML(answer);
       if (question && answer) faqItems.push({ question, answer });
     }
     return faqItems;

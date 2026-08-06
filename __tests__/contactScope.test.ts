@@ -60,12 +60,53 @@ describe("contact config", () => {
     expect(email!.answer).not.toMatch(/01732/);
   });
 
-  it("ContactForm does not publish firm tel on admin/attendance notice", () => {
+  it("ContactForm admin variant softens phone requirement and uses distinct roles", () => {
     const form = fs.readFileSync(path.join(root, "components/ContactForm.tsx"), "utf8");
-    expect(form).toContain("/current-custody");
-    expect(form).toContain("/start/voluntary-interview");
-    expect(form).not.toMatch(/tel:\$\{PHONE_TEL\}|tel:01732/);
-    expect(form).not.toContain("PHONE_DISPLAY");
+    expect(form).toContain('variant?: "attendance" | "admin"');
+    expect(form).toContain("prospective_client");
+    expect(form).toContain("instructing_solicitor");
+    expect(form).toContain("Immediate family member");
+    expect(form).not.toContain("Family member or friend");
+    expect(form).toContain("required={!isAdmin}");
+    expect(form).toContain("Send written enquiry");
+    expect(form).toContain('enquiryKind: isAdmin ? "admin" : "attendance"');
+  });
+
+  it("FAQ accordion renders answers via FaqAnswerBody (not raw escaped HTML)", () => {
+    const accordion = fs.readFileSync(path.join(root, "components/FAQAccordion.tsx"), "utf8");
+    const body = fs.readFileSync(path.join(root, "components/FaqAnswerBody.tsx"), "utf8");
+    expect(accordion).toContain("FaqAnswerBody");
+    expect(accordion).toContain("<FaqAnswerBody answer={item.answer} />");
+    expect(accordion).not.toMatch(/<p[^>]*>\{item\.answer\}<\/p>/);
+    expect(body).not.toMatch(/dangerouslySetInnerHTML=\{/);
+    expect(body).toContain("isSafeInternalHref");
+  });
+
+  it("PoliceSignposting only claims on-page enquiry when showWrittenEnquiryHint", () => {
+    const signpost = fs.readFileSync(
+      path.join(root, "components/conversion/PoliceSignposting.tsx"),
+      "utf8",
+    );
+    expect(signpost).toContain("showWrittenEnquiryHint");
+    expect(signpost).toContain("/contact#admin-enquiry");
+    expect(signpost).toContain("#admin-enquiry");
+  });
+
+  it("contact API treats enquiryKind as triage only and makes admin phone optional", () => {
+    const route = fs.readFileSync(path.join(root, "app/api/contact/route.ts"), "utf8");
+    expect(route).toContain('enquiryKindRaw === "admin"');
+    expect(route).toContain("Email is required for written enquiries");
+    expect(route).toContain("Contact number is required");
+    expect(route).toContain("enquiryKind,");
+    expect(route).toContain("Do not map admin solicitor roles");
+    expect(route).toContain('enquiryKind = isAdminEnquiry ? "admin" : "attendance"');
+  });
+
+  it("admin email subject avoids N/A station fillers", () => {
+    const email = fs.readFileSync(path.join(root, "lib/email.ts"), "utf8");
+    expect(email).toContain("Written enquiry:");
+    expect(email).toContain('enquiryKind === "admin"');
+    expect(email).toContain("New written / administrative enquiry");
   });
 
   it("station CTA copy leads with NOT THE POLICE and has no digits", () => {

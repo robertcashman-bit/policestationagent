@@ -13,9 +13,35 @@ export interface ContactFormNotificationPayload {
   attendanceType: string;
   offenceSummary: string;
   supportNeeds: string | null;
+  /** Triage label from the form — not an auth claim. */
+  enquiryKind?: "admin" | "attendance";
 }
 
 function buildEmailBody(payload: ContactFormNotificationPayload): string {
+  const isAdmin = payload.enquiryKind === "admin";
+
+  if (isAdmin) {
+    const lines: string[] = [
+      "New written / administrative enquiry from Police Station Agent website.",
+      "",
+      "--- Enquirer ---",
+      `Name: ${payload.name}`,
+      `Email: ${payload.email ?? "(not provided)"}`,
+      `Contact number: ${payload.contactNumber}`,
+      `Role: ${payload.requestType}`,
+      "",
+      "--- Message ---",
+      payload.offenceSummary,
+    ];
+    if (payload.policeStation?.trim()) {
+      lines.push("", `Optional station context: ${payload.policeStation.trim()}`);
+    }
+    if (payload.supportNeeds?.trim()) {
+      lines.push("", "--- Support / vulnerability ---", payload.supportNeeds.trim());
+    }
+    return lines.join("\n");
+  }
+
   const lines: string[] = [
     "New contact form submission from Police Station Agent website.",
     "",
@@ -69,10 +95,15 @@ export async function sendContactFormNotification(
       const resend = new Resend(apiKey);
       const body = buildEmailBody(payload);
 
+      const isAdmin = payload.enquiryKind === "admin";
+      const subject = isAdmin
+        ? `Written enquiry: ${payload.name}`
+        : `Contact form: ${payload.name} – ${payload.policeStation} ${payload.interviewDate}`;
+
       const { data, error } = await resend.emails.send({
         from: fromEmail,
         to: [toEmail],
-        subject: `Contact form: ${payload.name} – ${payload.policeStation} ${payload.interviewDate}`,
+        subject,
         text: body,
       });
 

@@ -102,7 +102,7 @@ export const WHY_PHONE_NOT_EVERYWHERE_FAQ = {
 export const CAN_I_EMAIL_FAQ = {
   question: "Can I email you instead of calling?",
   answer:
-    "Yes — for non-urgent written / administrative enquiries only, use the form on the Contact page. Email and that form are not for emergencies, police matters, or “is my relative in custody right now?” Trace or welfare requests. Current custody and same-day interviews should use the Contact pathways — don’t wait on a written reply.",
+    "Yes — for non-urgent written / administrative enquiries only, use the form on the Contact page. Email and that form are not for emergencies, police matters, or “is my relative in custody right now?” queries, nor for trace or welfare requests. Current custody and same-day interviews should use the Contact pathways — don’t wait on a written reply.",
 } as const;
 
 export const NOT_POLICE_NOTICE =

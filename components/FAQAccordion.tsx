@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { FaqAnswerBody } from "@/components/FaqAnswerBody";
 
 interface FAQItem {
   question: string;
@@ -81,7 +82,7 @@ export default function FAQAccordion({ sections }: FAQAccordionProps) {
                   {isOpen && (
                     <div className="px-6 pb-6">
                       <div className="prose prose-sm max-w-none text-slate-800">
-                        <p className="leading-relaxed whitespace-pre-line">{item.answer}</p>
+                        <FaqAnswerBody answer={item.answer} />
                       </div>
                     </div>
                   )}

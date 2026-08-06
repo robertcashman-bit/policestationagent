@@ -59,7 +59,7 @@ export default function ContactPage() {
             subheading="Booked interview → request representation. Someone detained now → current custody check. Solicitor/firm → agency cover."
           />
 
-          <PoliceSignposting />
+          <PoliceSignposting showWrittenEnquiryHint />
 
           <section
             id="admin-enquiry"

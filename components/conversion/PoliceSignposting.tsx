@@ -3,12 +3,18 @@ import Link from "next/link";
 type Props = {
   className?: string;
   compact?: boolean;
+  /** When true, mention the Contact-page written enquiry (only accurate on /contact). */
+  showWrittenEnquiryHint?: boolean;
 };
 
 /**
  * Official police contact only — never place the solicitor number here.
  */
-export function PoliceSignposting({ className = "", compact = false }: Props) {
+export function PoliceSignposting({
+  className = "",
+  compact = false,
+  showWrittenEnquiryHint = false,
+}: Props) {
   return (
     <aside
       className={`rounded-lg border border-slate-300 bg-slate-100 p-4 ${className}`}
@@ -40,8 +46,27 @@ export function PoliceSignposting({ className = "", compact = false }: Props) {
       {!compact ? (
         <p className="text-xs text-slate-600 mt-3">
           For solicitor help with a booked interview or current custody, use the pathways on this
-          site. For non-urgent written messages, use the enquiry form further down this page. See
-          also the{" "}
+          site.
+          {showWrittenEnquiryHint ? (
+            <>
+              {" "}
+              For non-urgent written messages, use the{" "}
+              <a href="#admin-enquiry" className="underline font-medium text-slate-800">
+                enquiry form further down this page
+              </a>
+              .
+            </>
+          ) : (
+            <>
+              {" "}
+              For non-urgent written messages, use the{" "}
+              <Link href="/contact#admin-enquiry" className="underline font-medium text-slate-800">
+                Contact written enquiry
+              </Link>
+              .
+            </>
+          )}{" "}
+          See also the{" "}
           <Link href="/faq#immediate-custody-only" className="underline font-medium text-slate-800">
             FAQ
           </Link>
