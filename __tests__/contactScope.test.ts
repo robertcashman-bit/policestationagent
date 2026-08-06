@@ -35,23 +35,14 @@ describe("contact config", () => {
     expect(SERVICE_SCOPE_SHORT).toMatch(/post-release/i);
   });
 
-  it("contact page: NOT THE POLICE first, phone last after do/don't", () => {
+  it("contact page routes into three pathways without generic call CTA", () => {
     const contact = fs.readFileSync(path.join(root, "app/contact/page.tsx"), "utf8");
-    expect(contact).toContain("CONTACT_HEADLINE");
-    expect(contact).toMatch(/What we do and do not do/);
-    expect(contact).toMatch(/Independent solicitor telephone|Solicitor telephone \(last\)/);
-    expect(contact).toMatch(/Who should you contact/);
-    expect(contact).toMatch(/forthcoming police interview/i);
-    expect(contact).toContain("PHONE_DISPLAY");
-    expect(contact).toContain("CTA_OUT_OF_SCOPE");
-    // Phone section must appear after scope heading in source order
-    const scopeIdx = contact.indexOf("What we do and do not do");
-    const phoneIdx = Math.max(
-      contact.indexOf("Solicitor telephone (last)"),
-      contact.indexOf("Independent solicitor telephone"),
-    );
-    expect(scopeIdx).toBeGreaterThan(-1);
-    expect(phoneIdx).toBeGreaterThan(scopeIdx);
+    expect(contact).toMatch(/Choose the reason for contacting us/);
+    expect(contact).toContain("AudiencePathSelector");
+    expect(contact).toContain("PoliceSignposting");
+    expect(contact).not.toMatch(/tel:01732/);
+    expect(contact).not.toContain("PHONE_DISPLAY");
+    expect(contact).toMatch(/Administrative contact form/);
   });
 
   it("station CTA copy leads with NOT THE POLICE and has no digits", () => {
@@ -111,9 +102,12 @@ describe("contact config", () => {
     expect(layout).toMatch(/NOT the Police/);
   });
 
-  it("header uses custody-scoped phone CTA not generic legal advice", () => {
-    const topStrip = fs.readFileSync(path.join(root, "components/header/HeaderTopStrip.tsx"), "utf8");
-    expect(topStrip).toContain("HEADER_STRAPLINE");
-    expect(topStrip).not.toMatch(/Call Now for legal advice/i);
+  it("header uses pathway CTAs not generic legal advice call", () => {
+    const header = fs.readFileSync(path.join(root, "components/Header.tsx"), "utf8");
+    expect(header).toMatch(/Get a solicitor/);
+    expect(header).toMatch(/For solicitors/);
+    expect(header).toMatch(/NOT the police/i);
+    expect(header).not.toMatch(/tel:01732/);
+    expect(header).not.toMatch(/Call Now for legal advice/i);
   });
 });

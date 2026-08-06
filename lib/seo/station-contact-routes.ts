@@ -44,9 +44,8 @@ export function isPoliceContactIntentPath(pathname: string | null | undefined): 
     return false;
   }
 
-  if (path.startsWith("/blog/")) {
-    const slug = path.slice("/blog/".length);
-    if (isStationRiskBlogSlug(slug)) return true;
+  if (path.startsWith("/blog/") || path === "/blog") {
+    return true;
   }
 
   return (

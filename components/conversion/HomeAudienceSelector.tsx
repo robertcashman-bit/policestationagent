@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const AUDIENCE_OPTIONS = [
   {
-    href: "/start/in-custody",
+    href: "/current-custody",
     title: "Someone is in custody now",
     description: "Immediate family — instruct while they are at a Kent police station",
     iconBg: "bg-red-100 group-hover:bg-red-200",
@@ -13,7 +13,7 @@ const AUDIENCE_OPTIONS = [
     ),
   },
   {
-    href: "/start/voluntary-interview",
+    href: "/start/voluntary-interview#request",
     title: "Voluntary interview booked",
     description: "Get advice before a scheduled police interview under caution",
     iconBg: "bg-blue-100 group-hover:bg-blue-200",

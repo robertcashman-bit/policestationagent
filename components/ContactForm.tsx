@@ -222,7 +222,7 @@ export default function ContactForm({
               className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                 errors.contactNumber ? "border-red-500" : "border-slate-300"
               }`}
-              placeholder="01732 247427"
+              placeholder="Your callback number"
               required
             />
             <p className="text-xs text-slate-500 mt-1">Primary contact method</p>
@@ -516,12 +516,19 @@ export default function ContactForm({
         {/* Form Submission Disclaimer */}
         <div className="mt-6 p-4 bg-amber-50 border-l-4 border-amber-500">
           <p className="text-sm text-slate-800 font-medium">
-            Submitting this form does not replace the need to telephone for urgent matters. If
-            someone has been arrested or is currently in police custody, please telephone{" "}
-            <a href="tel:01732247427" className="text-amber-700 hover:underline font-semibold">
-              01732 247427
+            Submitting this form does not create a retainer. If someone is currently in Kent police
+            custody, use the{" "}
+            <a href="/current-custody" className="text-amber-900 hover:underline font-semibold">
+              current-custody qualification
             </a>{" "}
-            immediately.
+            rather than this administrative form. Forthcoming interviews should use{" "}
+            <a
+              href="/start/voluntary-interview#request"
+              className="text-amber-900 hover:underline font-semibold"
+            >
+              request representation
+            </a>
+            .
           </p>
         </div>
 
@@ -542,17 +549,17 @@ export default function ContactForm({
             <p className="text-green-800 font-medium">
               Thank you! Your request has been submitted successfully. We will contact you shortly.
             </p>
-            <p className="text-green-700 text-sm mt-2">
-              For urgent matters, please also call 01732 247427 immediately.
-            </p>
           </div>
         )}
 
         {submitStatus === "error" && (
           <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
             <p className="text-red-800 font-medium">
-              There was an error submitting your request. Please try again or call 01732 247427
-              immediately.
+              There was an error submitting your request. Please try again, or use the{" "}
+              <a href="/contact" className="underline font-semibold">
+                contact pathways
+              </a>
+              .
             </p>
           </div>
         )}

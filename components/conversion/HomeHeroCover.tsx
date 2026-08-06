@@ -1,75 +1,66 @@
 "use client";
 
-import Link from "next/link";
-import { ConversionCTAGroup } from "@/components/conversion/ConversionCTAGroup";
+import { AudiencePathSelector } from "@/components/conversion/AudiencePathSelector";
 
 export function HomeHeroCover() {
   return (
     <section
-      className="relative overflow-hidden bg-gradient-to-br from-blue-900 via-slate-900 to-slate-800 text-white pt-28 pb-20 md:pt-32 md:pb-24"
+      className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-950 to-slate-800 text-white pt-16 pb-16 md:pt-20 md:pb-20"
       aria-labelledby="home-hero-heading"
     >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(59,130,246,0.15),transparent_50%)]" aria-hidden="true" />
-      <div className="max-w-5xl mx-auto px-4 relative z-10 text-center">
-        <p className="text-xs uppercase tracking-wide text-white mb-3 font-semibold">
-          Kent — NOT the police
+      <div
+        className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(59,130,246,0.18),transparent_55%)]"
+        aria-hidden="true"
+      />
+      <div className="max-w-5xl mx-auto px-4 relative z-10">
+        <p className="text-xs uppercase tracking-wide text-amber-300 mb-3 font-bold">
+          Kent criminal defence solicitor — not the police
         </p>
-        <h1 id="home-hero-heading" className="text-3xl md:text-5xl font-black mb-4 leading-tight text-white">
-          Police station solicitors across Kent
+        <h1
+          id="home-hero-heading"
+          className="text-3xl md:text-5xl font-black mb-4 leading-tight text-white max-w-3xl"
+        >
+          Do you need a solicitor for a police interview?
         </h1>
-        <p className="text-lg md:text-xl text-white mb-8 max-w-3xl mx-auto">
-          Duty solicitor and voluntary interview solicitor help across Kent — free Legal Aid for
-          people in custody or booked under caution, plus police station agent cover for defence
-          firms within about 45 minutes of Maidstone. Legal services by Tuckers Solicitors LLP.
+        <p className="text-base md:text-lg text-blue-100 mb-6 max-w-3xl">
+          Independent legal representation for people in current Kent police custody or attending a
+          forthcoming voluntary interview under caution. Police station agency cover is also
+          available for criminal defence firms.
         </p>
 
-        <div className="rounded-xl bg-white p-5 md:p-6 shadow-lg max-w-xl mx-auto text-left">
-          <p className="text-slate-800 text-sm md:text-base mb-4">
-            Robert Cashman, solicitor at Tuckers Solicitors LLP. Kent-wide cover in the evenings and
-            at weekends too — including{" "}
-            <Link href="/police-station-rep-gravesend" className="font-semibold text-blue-700 hover:underline">
-              Gravesend
-            </Link>{" "}
-            and{" "}
-            <Link href="/police-station-rep-tonbridge" className="font-semibold text-blue-700 hover:underline">
-              Tonbridge
-            </Link>
-            , plus Medway, Maidstone, Canterbury and the rest of Kent.
+        <div className="rounded-xl border-2 border-amber-400/60 bg-slate-950/70 p-4 md:p-5 mb-8 max-w-3xl">
+          <p className="font-bold text-amber-200 mb-2">Important</p>
+          <p className="text-sm text-slate-100 leading-relaxed">
+            This is a private criminal defence solicitor website. It is not Kent Police or any other
+            police force.
           </p>
-          <ConversionCTAGroup layout="stacked" />
-          <nav className="mt-4 text-sm text-slate-700" aria-label="Core services">
-            <ul className="flex flex-col gap-1.5">
-              <li>
-                <Link href="/services" className="font-semibold text-blue-700 hover:underline">
-                  Police station solicitor services
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/services/police-station-representation"
-                  className="font-semibold text-blue-700 hover:underline"
-                >
-                  Police station representation (Legal Aid)
-                </Link>
-              </li>
-              <li>
-                <Link href="/for-clients" className="font-semibold text-blue-700 hover:underline">
-                  Help for clients in custody or interview
-                </Link>
-              </li>
-              <li>
-                <Link href="/freelegaladvice" className="font-semibold text-blue-700 hover:underline">
-                  Free legal advice at the police station
-                </Link>
-              </li>
-              <li>
-                Firms:{" "}
-                <Link href="/for-solicitors" className="font-semibold text-blue-700 hover:underline">
-                  police station agent cover for solicitors
-                </Link>
-              </li>
-            </ul>
-          </nav>
+          <ul className="mt-3 text-sm text-slate-100 space-y-1.5">
+            <li>
+              For an emergency, call{" "}
+              <a href="tel:999" className="font-bold text-white underline">
+                999
+              </a>
+              .
+            </li>
+            <li>
+              To report a crime, obtain a police update or make a non-emergency police enquiry, call{" "}
+              <a href="tel:101" className="font-bold text-white underline">
+                101
+              </a>{" "}
+              or use the official police service.
+            </li>
+          </ul>
+          <p className="mt-3 text-sm text-slate-200">
+            We cannot transfer calls to the police and do not provide free general legal advice by
+            telephone.
+          </p>
+        </div>
+
+        <div className="rounded-2xl bg-white p-5 md:p-6 shadow-xl text-left">
+          <AudiencePathSelector
+            heading="Choose your pathway"
+            subheading="Select the route that matches your situation. The solicitor telephone is not shown until you qualify for current custody or enter the agency page."
+          />
         </div>
       </div>
     </section>

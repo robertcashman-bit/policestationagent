@@ -171,6 +171,8 @@ describe("isPoliceContactIntentPath", () => {
     expect(isPoliceContactIntentPath("/blog/north-kent-gravesend-custody-legal-advice")).toBe(
       true,
     );
+    expect(isPoliceContactIntentPath("/blog")).toBe(true);
+    expect(isPoliceContactIntentPath("/blog/some-general-rights-guide")).toBe(true);
     expect(isPoliceContactIntentPath("/start/voluntary-interview")).toBe(false);
   });
 });
@@ -181,13 +183,14 @@ describe("stripFirmPhonesToContact", () => {
       <p>Call 01732 247427 for Tonbridge custody. Text 07535 494446 if you cannot call.</p>
       <a href="tel:01732247427">Call 01732 247427</a>
       <a href="sms:07535494446?body=help">Text 07535 494446</a>
+      <li>Telephone <strong>01732 247427</strong> — do not rely on email.</li>
     `;
     const out = stripFirmPhonesToContact(input);
     expect(out).not.toMatch(/01732/);
     expect(out).not.toMatch(/07535/);
     expect(out).not.toMatch(/tel:01732/i);
     expect(out).not.toMatch(/sms:07535/i);
-    expect(out).toContain('href="/contact"');
+    expect(out).toMatch(/voluntary-interview|current-custody|for-solicitors|Contact pathways/);
   });
 });
 
