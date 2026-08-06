@@ -10,7 +10,26 @@ export interface CampaignQueueCounts {
 export async function getCampaignQueueCounts(
   redis: Redis,
 ): Promise<CampaignQueueCounts[]> {
-  const ids = (await redis.get<string[]>('firmprospect:index')) ?? [];
+  let ids: string[] = [];
+  try {
+    const members = await redis.smembers('firmprospect:index');
+    if (Array.isArray(members) && members.length > 0) {
+      ids = members.map(String);
+    }
+  } catch {
+    // Legacy JSON array fallback below.
+  }
+  if (ids.length === 0) {
+    try {
+      const legacy = await redis.get<unknown>('firmprospect:index');
+      if (Array.isArray(legacy)) {
+        ids = legacy.filter((x): x is string => typeof x === 'string');
+      }
+    } catch {
+      ids = [];
+    }
+  }
+
   const byCampaign: Record<string, Record<string, number>> = {};
 
   for (let i = 0; i < ids.length; i += 100) {

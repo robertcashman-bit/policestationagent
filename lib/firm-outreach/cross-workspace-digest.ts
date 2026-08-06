@@ -288,6 +288,30 @@ export async function sendCrossWorkspaceOutreachDigest(opts: {
   }
 
   const data = await buildCrossWorkspaceDigestData(phase, now);
+  // #region agent log
+  fetch('http://127.0.0.1:7678/ingest/67d374d4-9332-4432-8909-cec328e5e44c', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'X-Debug-Session-Id': '610743' },
+    body: JSON.stringify({
+      sessionId: '610743',
+      hypothesisId: 'A',
+      location: 'cross-workspace-digest.ts:send',
+      message: 'digest about to send',
+      data: {
+        phase,
+        date,
+        combined: data.combined,
+        caps: data.workspaces.map((w) => ({
+          domain: w.domain,
+          sentToday: w.sentToday,
+          dailyCap: w.dailyCap,
+          readyToSend: w.readyToSend,
+        })),
+      },
+      timestamp: Date.now(),
+    }),
+  }).catch(() => {});
+  // #endregion
   const subject = buildCrossWorkspaceDigestSubject(data);
   const html = buildCrossWorkspaceDigestHtml(data);
 
