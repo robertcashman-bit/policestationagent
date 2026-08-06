@@ -88,8 +88,9 @@ export function extractQuickActions(
 }
 
 export function buildUrgentCallCta(options?: { hideDigits?: boolean }): string {
-  if (options?.hideDigits) {
-    return `\n\n**In custody or a booked interview today?** [Contact for solicitor telephone](/contact) — we are NOT the police.`;
+  // Default: pathway CTAs — never auto-publish the answering-service number.
+  if (options?.hideDigits !== false) {
+    return `\n\n**Need a solicitor?** [Request representation](/start/voluntary-interview#request) for a booked interview, or [Current custody check](/current-custody) if someone is detained now. We are NOT the police.`;
   }
   return `\n\n**In custody or a booked interview today?** Call **[${PHONE_DISPLAY}](tel:${PHONE_TEL})** now.`;
 }

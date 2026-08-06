@@ -9,11 +9,14 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getAllSlugs, getPostBySlug, formatBlogDate, generateExcerpt } from "@/lib/blog-reader";
 import { convertH1ToH2, sanitizeBlogHtml } from "@/lib/html-sanitizer";
-import { stripFirmPhonesToContact } from "@/lib/seo/strip-firm-phones";
-import { isStationRiskBlogSlug } from "@/lib/seo/station-contact-routes";
+import {
+  stripFirmPhonePlainText,
+  stripFirmPhonesToContact,
+} from "@/lib/seo/strip-firm-phones";
 import { SITE_URL } from "@/config/site";
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
+import { ContextualCTA } from "@/components/conversion/ContextualCTA";
 
 // Use ISR for blog posts - revalidate every hour
 export const revalidate = 3600; // 1 hour
@@ -40,16 +43,20 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
   }
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_URL;
+  const safeTitle = stripFirmPhonePlainText(post.metaTitle || post.title);
+  const safeDescription = stripFirmPhonePlainText(
+    post.metaDescription || generateExcerpt(post.contentHtml, 160),
+  );
 
   return {
-    title: post.metaTitle || post.title,
-    description: post.metaDescription || generateExcerpt(post.contentHtml, 160),
+    title: safeTitle,
+    description: safeDescription,
     alternates: {
       canonical: `${siteUrl}/blog/${post.slug}`,
     },
     openGraph: {
-      title: post.metaTitle || post.title,
-      description: post.metaDescription || generateExcerpt(post.contentHtml, 160),
+      title: safeTitle,
+      description: safeDescription,
       url: `${siteUrl}/blog/${post.slug}`,
       siteName: "Police Station Agent",
       type: "article",
@@ -78,8 +85,8 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
-      title: post.metaTitle || post.title,
-      description: post.metaDescription || generateExcerpt(post.contentHtml, 160),
+      title: safeTitle,
+      description: safeDescription,
     },
     robots: {
       index: true,
@@ -104,21 +111,21 @@ export default async function BlogPostPage(props: Readonly<PageProps>) {
   }
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_URL;
-  const hideFirmDigits = isStationRiskBlogSlug(post.slug);
-  const sanitizedContentHtml = hideFirmDigits
-    ? stripFirmPhonesToContact(sanitizeBlogHtml(post.contentHtml))
-    : sanitizeBlogHtml(post.contentHtml);
+  // Never publish the firm answering-service number on any blog post.
+  const sanitizedContentHtml = stripFirmPhonesToContact(
+    sanitizeBlogHtml(post.contentHtml),
+  );
+  const safeDescription = stripFirmPhonePlainText(
+    post.metaDescription || generateExcerpt(post.contentHtml, 160),
+  );
+  const safeHeadline = stripFirmPhonePlainText(post.title);
 
   // Build structured data
   const blogPostingSchema = {
     "@context": "https://schema.org",
     "@type": ["BlogPosting", "Article"],
-    headline: post.title,
-    description: hideFirmDigits
-      ? stripFirmPhonesToContact(
-          post.metaDescription || generateExcerpt(post.contentHtml, 160),
-        )
-      : post.metaDescription || generateExcerpt(post.contentHtml, 160),
+    headline: safeHeadline,
+    description: safeDescription,
     datePublished: post.date,
     dateModified: post.date,
     author: {
@@ -191,7 +198,7 @@ export default async function BlogPostPage(props: Readonly<PageProps>) {
             name: faq.q,
             acceptedAnswer: {
               "@type": "Answer",
-              text: hideFirmDigits ? stripFirmPhonesToContact(faq.a) : faq.a,
+              text: stripFirmPhonePlainText(faq.a),
             },
           })),
         }
@@ -202,7 +209,7 @@ export default async function BlogPostPage(props: Readonly<PageProps>) {
       <JsonLd data={blogPostingSchema} />
       <JsonLd data={breadcrumbSchema} />
       {faqSchema && <JsonLd data={faqSchema} />}
-      <Header forceHidePhone={hideFirmDigits} />
+      <Header forceHidePhone />
       <main className="flex-grow relative" id="main-content" role="main">
         {/* Hero Section */}
         <section className="relative bg-gradient-to-br from-slate-800 via-blue-900 to-slate-900 text-white py-16 md:py-20">
@@ -239,7 +246,7 @@ export default async function BlogPostPage(props: Readonly<PageProps>) {
                 Back to Blog
               </Link>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-white leading-tight">
-                {post.title}
+                {safeHeadline}
               </h1>
 
               {/* Featured Image */}
@@ -326,7 +333,7 @@ export default async function BlogPostPage(props: Readonly<PageProps>) {
                     <div key={faq.q} className="bg-white p-6 rounded-lg shadow">
                       <h3 className="font-semibold text-lg text-blue-900 mb-2">{faq.q}</h3>
                       <p className="text-gray-700">
-                        {hideFirmDigits ? stripFirmPhonesToContact(faq.a) : faq.a}
+                        {stripFirmPhonePlainText(faq.a)}
                       </p>
                     </div>
                   ))}
@@ -340,12 +347,21 @@ export default async function BlogPostPage(props: Readonly<PageProps>) {
               <LegalAccuracyNotice variant="box" />
             </div>
 
-            {/* Mandatory Advert Block — no firm digits on station/custody-risk posts */}
-            <BlogAdvertBlock hideDigits={hideFirmDigits} />
+            {/* Mandatory Advert Block — pathway CTAs only; never firm telephone */}
+            <BlogAdvertBlock hideDigits />
+            <ContextualCTA
+              variant={
+                /solicitor|agency|firm|freelance|cover|attendance-note/i.test(post.slug)
+                  ? "agency"
+                  : /custody|arrest|loved-one|detained|out-of-hours/i.test(post.slug)
+                    ? "custody"
+                    : "voluntary"
+              }
+            />
           </div>
         </section>
       </main>
-      <Footer forceHidePhone={hideFirmDigits} />
+      <Footer forceHidePhone />
     </div>
   );
 }

@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import Link from "next/link";
 import Image from "next/image";
 import { getAllPosts, formatBlogDate, generateExcerpt } from "@/lib/blog-reader";
+import { stripFirmPhonePlainText } from "@/lib/seo/strip-firm-phones";
 import { SITE_URL } from "@/config/site";
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
@@ -83,7 +84,7 @@ export default function BlogPage() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
       <JsonLd data={blogSchema} />
       <JsonLd data={itemListSchema} />
-      <Header />
+      <Header forceHidePhone />
       <main className="flex-grow relative" id="main-content" role="main">
         <div className="bg-slate-50 min-h-screen">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -175,7 +176,9 @@ export default function BlogPage() {
                         <Link href={`/blog/${post.slug}`}>{post.title}</Link>
                       </h3>
                       <div className="text-sm text-slate-500 mb-4 line-clamp-3 flex-grow min-h-[3rem]">
-                        {post.metaDescription || generateExcerpt(post.contentHtml, 160)}
+                        {stripFirmPhonePlainText(
+                          post.metaDescription || generateExcerpt(post.contentHtml, 160),
+                        )}
                       </div>
                       <Link
                         href={`/blog/${post.slug}`}
@@ -260,7 +263,7 @@ export default function BlogPage() {
           </div>
         </div>
       </main>
-      <Footer />
+      <Footer forceHidePhone />
     </div>
   );
 }

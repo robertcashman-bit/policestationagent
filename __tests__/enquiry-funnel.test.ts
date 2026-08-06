@@ -137,6 +137,26 @@ describe("scraped HTML phone strip", () => {
   });
 });
 
+describe("blog posts never publish firm phone", () => {
+  it("no published blog JSON contains firm voice/SMS digits", () => {
+    const dir = path.join(root, "data/blog-posts");
+    const files = fs.readdirSync(dir).filter((f) => f.endsWith(".json"));
+    expect(files.length).toBeGreaterThan(10);
+    for (const file of files) {
+      const raw = fs.readFileSync(path.join(dir, file), "utf8");
+      expect(raw, file).not.toMatch(/01732|07535|247427|494446/);
+    }
+  });
+
+  it("blog post page always strips phones at render", () => {
+    const page = fs.readFileSync(path.join(root, "app/blog/[slug]/page.tsx"), "utf8");
+    expect(page).toContain("stripFirmPhonesToContact");
+    expect(page).toContain("stripFirmPhonePlainText");
+    expect(page).toContain("forceHidePhone");
+    expect(page).not.toMatch(/isStationRiskBlogSlug/);
+  });
+});
+
 describe("custody qualification component", () => {
   it("does not reveal phone until qualified logic in source", () => {
     const src = fs.readFileSync(
