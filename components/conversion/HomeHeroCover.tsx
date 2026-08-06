@@ -29,32 +29,27 @@ export function HomeHeroCover() {
           available for criminal defence firms.
         </p>
 
-        <div className="rounded-xl border-2 border-amber-400/60 bg-slate-950/70 p-4 md:p-5 mb-8 max-w-3xl">
-          <p className="font-bold text-amber-200 mb-2">Important</p>
-          <p className="text-sm text-slate-100 leading-relaxed">
-            This is a private criminal defence solicitor website. It is not Kent Police or any other
-            police force.
+        <div className="rounded-xl border border-white/15 bg-slate-950/50 p-4 md:p-5 mb-8 max-w-3xl">
+          <p className="font-semibold text-slate-100 mb-2">Looking for the police?</p>
+          <p className="text-sm text-slate-200 leading-relaxed">
+            We’re independent criminal defence solicitors — not Kent Police. For police help use the
+            official numbers below; for solicitor help with custody or a booked interview, choose a
+            pathway underneath.
           </p>
           <ul className="mt-3 text-sm text-slate-100 space-y-1.5">
             <li>
-              For an emergency, call{" "}
+              Emergency:{" "}
               <a href="tel:999" className="font-bold text-white underline">
                 999
               </a>
-              .
             </li>
             <li>
-              To report a crime, obtain a police update or make a non-emergency police enquiry, call{" "}
+              Non-emergency police:{" "}
               <a href="tel:101" className="font-bold text-white underline">
                 101
-              </a>{" "}
-              or use the official police service.
+              </a>
             </li>
           </ul>
-          <p className="mt-3 text-sm text-slate-200">
-            We cannot transfer calls to the police and do not provide free general legal advice by
-            telephone.
-          </p>
         </div>
 
         <div className="rounded-2xl bg-white p-5 md:p-6 shadow-xl text-left">
