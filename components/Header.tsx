@@ -73,7 +73,7 @@ export default function Header({
           <div className="flex items-center gap-2">
             <Link
               href={PATH_CONTACT}
-              className="hidden sm:inline-flex items-center justify-center min-h-[44px] rounded-md bg-amber-400 hover:bg-amber-500 text-slate-900 font-extrabold text-sm px-4 shadow-md"
+              className="hidden sm:inline-flex lg:hidden items-center justify-center min-h-[44px] rounded-md bg-amber-400 hover:bg-amber-500 text-slate-900 font-extrabold text-sm px-4 shadow-md"
             >
               Get a solicitor
             </Link>
