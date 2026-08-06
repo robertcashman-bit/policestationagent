@@ -40,8 +40,9 @@ export function PoliceSignposting({ className = "", compact = false }: Props) {
       {!compact ? (
         <p className="text-xs text-slate-600 mt-3">
           For solicitor help with a booked interview or current custody, use the pathways on this
-          site. See also the{" "}
-          <Link href="/faq" className="underline font-medium text-slate-800">
+          site. For non-urgent written messages, use the enquiry form further down this page. See
+          also the{" "}
+          <Link href="/faq#immediate-custody-only" className="underline font-medium text-slate-800">
             FAQ
           </Link>
           .

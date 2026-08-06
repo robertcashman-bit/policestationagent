@@ -64,6 +64,47 @@ export const STATION_PHONE_SCOPE =
 /** Scope FAQ / can-we-help anchor */
 export const SCOPE_HELP_HREF = "/faq#immediate-custody-only";
 
+/** Soft Contact-page intro — why pathways, not a sitewide number */
+export const CONTACT_GETTING_IN_TOUCH =
+  "We’re Robert Cashman’s police-station defence practice (through Tuckers Solicitors LLP) — not Kent Police. We know a phone number feels simplest, and we do take urgent calls when someone is in custody or has a booked interview. We don’t publish that number on every page because search traffic often mistakes us for the police, and the line isn’t a free general advice service after release.";
+
+export const CONTACT_PATHWAY_PROMPT =
+  "Choose the pathway that fits you. The solicitor telephone is not listed on this page — for current custody it appears only after a short check if we can help.";
+
+/** Non-urgent admin / written enquiry on Contact — filter, not a second advice line */
+export const ADMIN_ENQUIRY_HEADING = "Non-urgent written / administrative enquiry";
+
+export const ADMIN_ENQUIRY_INTRO =
+  "Use this form for non-urgent written messages only. It is not an emergency channel, not a police contact form, and not a free general legal advice service. Response times are not guaranteed. If someone is in custody now, or has a booked interview, use the pathways above — don’t wait on this form.";
+
+export const ADMIN_ENQUIRY_CAN = [
+  "Non-urgent questions about instructing us for police-station work in Kent",
+  "Administrative messages (e.g. referring a matter, confirming you’ve already instructed us)",
+  "Clarifying whether your situation is something we cover",
+  "Solicitor/firm messages about agency cover (the agency pathway is usually faster)",
+] as const;
+
+export const ADMIN_ENQUIRY_CANNOT = [
+  "Act as Kent Police, take crime reports, or transfer calls to custody or switchboard",
+  "Confirm whether someone is in custody, find a missing person, or give welfare updates without being instructed as their solicitor",
+  "Provide free advice after release, after a past interview, or general case updates",
+  "Accept instructions from friends or colleagues for someone else (immediate family only; detainee must confirm)",
+  "Treat past arrests or “already released” matters as urgent police-station attendance",
+  "Replace 999 or 101",
+] as const;
+
+export const WHY_PHONE_NOT_EVERYWHERE_FAQ = {
+  question: "Why isn’t your phone number on every page?",
+  answer:
+    "We’re independent criminal solicitors, not the police. A number on every blog and station page draws 101-style calls and “free advice after release” enquiries we can’t help with, which delays people in live custody or with a booked interview. Use the Contact pathways that match your situation, or the non-urgent written enquiry on the Contact page for administrative messages. For police help use 999 or 101.",
+} as const;
+
+export const CAN_I_EMAIL_FAQ = {
+  question: "Can I email you instead of calling?",
+  answer:
+    "Yes — for non-urgent written / administrative enquiries only, use the form on the Contact page. Email and that form are not for emergencies, police matters, or “is my relative in custody right now?” Trace or welfare requests. Current custody and same-day interviews should use the Contact pathways — don’t wait on a written reply.",
+} as const;
+
 export const NOT_POLICE_NOTICE =
   "Independent criminal defence solicitor website — not Kent Police. For police assistance call 101, or 999 in an emergency. The solicitor contact details below are only for legal advice and representation.";
 export const SOLICITOR_PHONE_LABEL = "Independent solicitor telephone";

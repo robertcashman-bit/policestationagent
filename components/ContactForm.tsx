@@ -10,7 +10,13 @@
  */
 
 import { useState, useRef, FormEvent } from "react";
-import { PHONE_DISPLAY, PHONE_TEL, SEO_NOT_POLICE, SERVICE_SCOPE_SHORT, CTA_OUT_OF_SCOPE } from "@/config/contact";
+import Link from "next/link";
+import {
+  SEO_NOT_POLICE,
+  SERVICE_SCOPE_SHORT,
+  CTA_OUT_OF_SCOPE,
+  ADMIN_ENQUIRY_INTRO,
+} from "@/config/contact";
 
 interface FormData {
   name: string;
@@ -33,13 +39,17 @@ interface ContactFormProps {
   defaultRole?: FormData["role"];
   defaultAttendanceType?: FormData["attendanceType"];
   heading?: string;
+  /** Admin = Contact-page non-urgent written enquiry framing (no phone CTA). */
+  variant?: "attendance" | "admin";
 }
 
 export default function ContactForm({
   defaultRole = "family",
   defaultAttendanceType = "scheduled-voluntary",
   heading = "Request Police Station Solicitor Attendance",
+  variant = "attendance",
 }: ContactFormProps = {}) {
+  const isAdmin = variant === "admin";
   const [formData, setFormData] = useState<FormData>({
     name: "",
     contactNumber: "",
@@ -69,24 +79,32 @@ export default function ContactForm({
 
     if (!formData.name.trim()) newErrors.name = "Name is required";
     if (!formData.contactNumber.trim()) newErrors.contactNumber = "Contact number is required";
-    if (formData.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+    if (isAdmin) {
+      if (!formData.email.trim()) {
+        newErrors.email = "Email is required for written enquiries";
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+        newErrors.email = "Please enter a valid email address";
+      }
+    } else if (formData.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = "Please enter a valid email address";
     }
     if (!formData.role) newErrors.role = "Please select your role";
-    if ((formData.role === "solicitor" || formData.role === "representative") && !formData.clientName.trim()) {
+    if (!isAdmin && (formData.role === "solicitor" || formData.role === "representative") && !formData.clientName.trim()) {
       newErrors.clientName = "Client name is required";
     }
-    if ((formData.role === "solicitor" || formData.role === "representative") && !formData.clientDOB.trim()) {
+    if (!isAdmin && (formData.role === "solicitor" || formData.role === "representative") && !formData.clientDOB.trim()) {
       newErrors.clientDOB = "Client date of birth is required";
     }
-    if (!formData.policeStation.trim()) newErrors.policeStation = "Police station is required";
-    if (!formData.interviewDate.trim()) newErrors.interviewDate = "Interview date is required";
-    if (!formData.interviewTime.trim()) newErrors.interviewTime = "Interview time is required";
-    if (!formData.attendanceType) newErrors.attendanceType = "Please select the type of attendance request";
+    if (!isAdmin && !formData.policeStation.trim()) newErrors.policeStation = "Police station is required";
+    if (!isAdmin && !formData.interviewDate.trim()) newErrors.interviewDate = "Interview date is required";
+    if (!isAdmin && !formData.interviewTime.trim()) newErrors.interviewTime = "Interview time is required";
+    if (!isAdmin && !formData.attendanceType) newErrors.attendanceType = "Please select the type of attendance request";
     if (!formData.briefDetails.trim()) {
-      newErrors.briefDetails = "Brief details are required";
-    } else if (formData.briefDetails.length > 300) {
-      newErrors.briefDetails = "Brief details must not exceed 300 characters";
+      newErrors.briefDetails = isAdmin ? "Your message is required" : "Brief details are required";
+    } else if (formData.briefDetails.length > (isAdmin ? 2000 : 300)) {
+      newErrors.briefDetails = isAdmin
+        ? "Message must not exceed 2000 characters"
+        : "Brief details must not exceed 300 characters";
     }
     if (!formData.nonUrgentConfirmation) {
       newErrors.nonUrgentConfirmation = "You must confirm this is a non-urgent request";
@@ -115,7 +133,15 @@ export default function ContactForm({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ...formData, company: honeypotRef.current?.value ?? "" }),
+        body: JSON.stringify({
+          ...formData,
+          enquiryKind: isAdmin ? "admin" : "attendance",
+          company: honeypotRef.current?.value ?? "",
+          policeStation: formData.policeStation.trim() || (isAdmin ? "N/A — admin enquiry" : ""),
+          interviewDate: formData.interviewDate.trim() || (isAdmin ? "N/A" : ""),
+          interviewTime: formData.interviewTime.trim() || (isAdmin ? "N/A" : ""),
+          attendanceType: isAdmin ? "admin-enquiry" : formData.attendanceType,
+        }),
       });
 
       if (response.ok) {
@@ -164,20 +190,33 @@ export default function ContactForm({
         {/* Introductory Notice */}
         <div className="bg-blue-50 border-l-4 border-blue-600 p-4 mb-6">
           <h3 className="text-lg font-semibold text-slate-900 mb-2">
-            Scheduled voluntary interviews &amp; solicitor instructions only
+            {isAdmin
+              ? "Non-urgent written enquiry only"
+              : "Scheduled voluntary interviews & solicitor instructions only"}
           </h3>
           <p className="text-red-800 font-semibold text-sm mb-2">{SEO_NOT_POLICE}</p>
           <p className="text-slate-700 mb-2">{SERVICE_SCOPE_SHORT}</p>
           <p className="text-slate-700 mb-2 font-medium text-red-900">{CTA_OUT_OF_SCOPE}</p>
-          <p className="text-slate-700 mb-2">
-            This form is for <strong>scheduled</strong> voluntary (VAI) interviews or solicitor
-            attendance instructions — not general legal advice.
-          </p>
+          {isAdmin ? (
+            <p className="text-slate-700 mb-2">{ADMIN_ENQUIRY_INTRO}</p>
+          ) : (
+            <p className="text-slate-700 mb-2">
+              This form is for <strong>scheduled</strong> voluntary (VAI) interviews or solicitor
+              attendance instructions — not general legal advice.
+            </p>
+          )}
           <p className="text-slate-700 font-medium">
-            Someone in custody now? Telephone only:{" "}
-            <a href={`tel:${PHONE_TEL}`} className="text-blue-600 hover:underline font-semibold">
-              {PHONE_DISPLAY}
-            </a>
+            Someone in custody now? Use the{" "}
+            <Link href="/current-custody" className="text-blue-800 hover:underline font-semibold">
+              current custody check
+            </Link>
+            . Booked interview?{" "}
+            <Link
+              href="/start/voluntary-interview#request"
+              className="text-blue-800 hover:underline font-semibold"
+            >
+              Request representation
+            </Link>
             . Do not use this form for urgent custody.
           </p>
         </div>
@@ -233,7 +272,12 @@ export default function ContactForm({
 
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-1">
-              Email Address <span className="text-slate-500 text-xs">(Optional)</span>
+              Email Address{" "}
+              {isAdmin ? (
+                <span className="text-red-600">*</span>
+              ) : (
+                <span className="text-slate-500 text-xs">(Optional)</span>
+              )}
             </label>
             <input
               type="email"
@@ -320,7 +364,7 @@ export default function ContactForm({
         {/* Interview Details */}
         <div className="space-y-6 mb-8 border-t border-slate-200 pt-6">
           <h3 className="text-lg font-semibold text-slate-900 border-b border-slate-200 pb-2">
-            Interview Details
+            {isAdmin ? "Optional context (if relevant)" : "Interview Details"}
           </h3>
 
           <div>
@@ -328,7 +372,12 @@ export default function ContactForm({
               htmlFor="policeStation"
               className="block text-sm font-medium text-slate-700 mb-1"
             >
-              Which Police Station <span className="text-red-600">*</span>
+              Which Police Station{" "}
+              {isAdmin ? (
+                <span className="text-slate-500 text-xs">(Optional)</span>
+              ) : (
+                <span className="text-red-600">*</span>
+              )}
             </label>
             <input
               type="text"
@@ -339,105 +388,120 @@ export default function ContactForm({
                 errors.policeStation ? "border-red-500" : "border-slate-300"
               }`}
               placeholder="e.g., Medway, Maidstone, Canterbury"
-              required
+              required={!isAdmin}
             />
             {errors.policeStation && (
               <p className="text-red-600 text-sm mt-1">{errors.policeStation}</p>
             )}
           </div>
 
-          <div className="grid md:grid-cols-2 gap-4">
-            <div>
-              <label
-                htmlFor="interviewDate"
-                className="block text-sm font-medium text-slate-700 mb-1"
-              >
-                Date of Interview/Appointment <span className="text-red-600">*</span>
-              </label>
-              <input
-                type="date"
-                id="interviewDate"
-                value={formData.interviewDate}
-                onChange={(e) => setFormData({ ...formData, interviewDate: e.target.value })}
-                className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                  errors.interviewDate ? "border-red-500" : "border-slate-300"
-                }`}
-                required
-              />
-              {errors.interviewDate && (
-                <p className="text-red-600 text-sm mt-1">{errors.interviewDate}</p>
-              )}
-            </div>
+          {!isAdmin ? (
+            <>
+              <div className="grid md:grid-cols-2 gap-4">
+                <div>
+                  <label
+                    htmlFor="interviewDate"
+                    className="block text-sm font-medium text-slate-700 mb-1"
+                  >
+                    Date of Interview/Appointment <span className="text-red-600">*</span>
+                  </label>
+                  <input
+                    type="date"
+                    id="interviewDate"
+                    value={formData.interviewDate}
+                    onChange={(e) => setFormData({ ...formData, interviewDate: e.target.value })}
+                    className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                      errors.interviewDate ? "border-red-500" : "border-slate-300"
+                    }`}
+                    required
+                  />
+                  {errors.interviewDate && (
+                    <p className="text-red-600 text-sm mt-1">{errors.interviewDate}</p>
+                  )}
+                </div>
 
-            <div>
-              <label
-                htmlFor="interviewTime"
-                className="block text-sm font-medium text-slate-700 mb-1"
-              >
-                Time of Interview/Appointment <span className="text-red-600">*</span>
-              </label>
-              <input
-                type="time"
-                id="interviewTime"
-                value={formData.interviewTime}
-                onChange={(e) => setFormData({ ...formData, interviewTime: e.target.value })}
-                className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                  errors.interviewTime ? "border-red-500" : "border-slate-300"
-                }`}
-                required
-              />
-              {errors.interviewTime && (
-                <p className="text-red-600 text-sm mt-1">{errors.interviewTime}</p>
-              )}
-            </div>
-          </div>
+                <div>
+                  <label
+                    htmlFor="interviewTime"
+                    className="block text-sm font-medium text-slate-700 mb-1"
+                  >
+                    Time of Interview/Appointment <span className="text-red-600">*</span>
+                  </label>
+                  <input
+                    type="time"
+                    id="interviewTime"
+                    value={formData.interviewTime}
+                    onChange={(e) => setFormData({ ...formData, interviewTime: e.target.value })}
+                    className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                      errors.interviewTime ? "border-red-500" : "border-slate-300"
+                    }`}
+                    required
+                  />
+                  {errors.interviewTime && (
+                    <p className="text-red-600 text-sm mt-1">{errors.interviewTime}</p>
+                  )}
+                </div>
+              </div>
 
-          <div>
-            <label htmlFor="attendanceType" className="block text-sm font-medium text-slate-700 mb-1">
-              Type of attendance request <span className="text-red-600">*</span>
-            </label>
-            <select
-              id="attendanceType"
-              value={formData.attendanceType}
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  attendanceType: e.target.value as "scheduled-voluntary" | "pre-booked" | "solicitor-instruction",
-                })
-              }
-              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                errors.attendanceType ? "border-red-500" : "border-slate-300"
-              }`}
-              required
-            >
-              <option value="scheduled-voluntary">Scheduled voluntary interview</option>
-              <option value="pre-booked">Pre-booked police interview</option>
-              <option value="solicitor-instruction">Solicitor or firm instruction for police station attendance</option>
-            </select>
-            {errors.attendanceType && (
-              <p className="text-red-600 text-sm mt-1">{errors.attendanceType}</p>
-            )}
-          </div>
+              <div>
+                <label htmlFor="attendanceType" className="block text-sm font-medium text-slate-700 mb-1">
+                  Type of attendance request <span className="text-red-600">*</span>
+                </label>
+                <select
+                  id="attendanceType"
+                  value={formData.attendanceType}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      attendanceType: e.target.value as
+                        | "scheduled-voluntary"
+                        | "pre-booked"
+                        | "solicitor-instruction",
+                    })
+                  }
+                  className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    errors.attendanceType ? "border-red-500" : "border-slate-300"
+                  }`}
+                  required
+                >
+                  <option value="scheduled-voluntary">Scheduled voluntary interview</option>
+                  <option value="pre-booked">Pre-booked police interview</option>
+                  <option value="solicitor-instruction">
+                    Solicitor or firm instruction for police station attendance
+                  </option>
+                </select>
+                {errors.attendanceType && (
+                  <p className="text-red-600 text-sm mt-1">{errors.attendanceType}</p>
+                )}
+              </div>
+            </>
+          ) : null}
 
           <div>
             <label htmlFor="briefDetails" className="block text-sm font-medium text-slate-700 mb-1">
-              Brief details (e.g. interview type or police request){" "}
+              {isAdmin
+                ? "Your message"
+                : "Brief details (e.g. interview type or police request)"}{" "}
               <span className="text-red-600">*</span>
             </label>
             <textarea
               id="briefDetails"
               value={formData.briefDetails}
               onChange={(e) => setFormData({ ...formData, briefDetails: e.target.value })}
-              rows={3}
-              maxLength={300}
+              rows={isAdmin ? 6 : 3}
+              maxLength={isAdmin ? 2000 : 300}
               className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                 errors.briefDetails ? "border-red-500" : "border-slate-300"
               }`}
-              placeholder="Brief description (maximum 300 characters)..."
+              placeholder={
+                isAdmin
+                  ? "Describe your non-urgent enquiry (maximum 2000 characters)..."
+                  : "Brief description (maximum 300 characters)..."
+              }
               required
             />
             <p className="text-xs text-slate-500 mt-1">
-              {formData.briefDetails.length}/300 characters
+              {formData.briefDetails.length}/{isAdmin ? 2000 : 300} characters
             </p>
             {errors.briefDetails && (
               <p className="text-red-600 text-sm mt-1">{errors.briefDetails}</p>
@@ -482,8 +546,10 @@ export default function ContactForm({
                 required
               />
               <span className="text-sm text-slate-700">
-                I confirm this request relates to a non-urgent police station attendance and not an
-                urgent custody arrest. <span className="text-red-600">*</span>
+                {isAdmin
+                  ? "I confirm this is a non-urgent written enquiry, not current custody, not a police matter, and not a request for free advice after release."
+                  : "I confirm this request relates to a non-urgent police station attendance and not an urgent custody arrest."}{" "}
+                <span className="text-red-600">*</span>
               </span>
             </label>
             {errors.nonUrgentConfirmation && (
@@ -539,7 +605,7 @@ export default function ContactForm({
             disabled={isSubmitting}
             className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isSubmitting ? "Submitting..." : "Submit Request"}
+            {isSubmitting ? "Submitting..." : isAdmin ? "Send written enquiry" : "Submit Request"}
           </button>
         </div>
 

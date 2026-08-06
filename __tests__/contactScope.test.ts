@@ -40,9 +40,32 @@ describe("contact config", () => {
     expect(contact).toMatch(/Choose the reason for contacting us/);
     expect(contact).toContain("AudiencePathSelector");
     expect(contact).toContain("PoliceSignposting");
+    expect(contact).toContain("CONTACT_GETTING_IN_TOUCH");
+    expect(contact).toContain("ADMIN_ENQUIRY_CAN");
+    expect(contact).toContain("ADMIN_ENQUIRY_CANNOT");
+    expect(contact).toContain('variant="admin"');
     expect(contact).not.toMatch(/tel:01732/);
     expect(contact).not.toContain("PHONE_DISPLAY");
-    expect(contact).toMatch(/Administrative contact form/);
+    expect(contact).toMatch(/ADMIN_ENQUIRY_HEADING|Non-urgent written/);
+  });
+
+  it("FAQ explains why phone is not on every page and offers written enquiry", () => {
+    const why = SCOPE_FAQ_ITEMS.find((q) => /phone number on every page/i.test(q.question));
+    const email = SCOPE_FAQ_ITEMS.find((q) => /email you instead/i.test(q.question));
+    expect(why).toBeTruthy();
+    expect(why!.answer).toMatch(/Contact pathways/i);
+    expect(why!.answer).not.toMatch(/01732/);
+    expect(email).toBeTruthy();
+    expect(email!.answer).toMatch(/Contact page/i);
+    expect(email!.answer).not.toMatch(/01732/);
+  });
+
+  it("ContactForm does not publish firm tel on admin/attendance notice", () => {
+    const form = fs.readFileSync(path.join(root, "components/ContactForm.tsx"), "utf8");
+    expect(form).toContain("/current-custody");
+    expect(form).toContain("/start/voluntary-interview");
+    expect(form).not.toMatch(/tel:\$\{PHONE_TEL\}|tel:01732/);
+    expect(form).not.toContain("PHONE_DISPLAY");
   });
 
   it("station CTA copy leads with NOT THE POLICE and has no digits", () => {

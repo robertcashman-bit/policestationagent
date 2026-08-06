@@ -96,7 +96,7 @@ export default function FAQContent() {
         {
           question: "Are you available for extended hours?",
           answer:
-            "Yes, we provide extended hours service covering evenings, weekends and bank holidays. We aim to respond promptly. Attendance times depend on location, custody demand and solicitor availability. Simply call 01732 247427 and we will arrange for a qualified duty solicitor to attend the police station.",
+            "Yes, we provide extended hours service covering evenings, weekends and bank holidays. We aim to respond promptly. Attendance times depend on location, custody demand and solicitor availability. Use the <a href='/current-custody' class='text-blue-600 hover:underline font-semibold'>current custody check</a> if someone is detained now, or <a href='/start/voluntary-interview#request' class='text-blue-600 hover:underline font-semibold'>request representation</a> for a booked interview.",
         },
         {
           question: "Do you cover Legal Aid and private work?",
@@ -166,7 +166,7 @@ export default function FAQContent() {
         {
           question: "Do you provide legal advice for general queries?",
           answer:
-            "We provide legal advice specifically related to police station representation for current custody or scheduled interviews. We do not provide general legal advice by phone or email. If you need immediate police station representation in Kent, call 01732 247427.",
+            "We provide legal advice specifically related to police station representation for current custody or scheduled interviews. We do not provide general legal advice by phone or email. If you need immediate police station representation in Kent, use the <a href='/contact' class='text-blue-600 hover:underline font-semibold'>Contact pathways</a>.",
         },
         {
           question: "Can you represent me at a police station outside Kent?",
@@ -295,12 +295,12 @@ export default function FAQContent() {
         {
           question: "How do I get help if I've been arrested?",
           answer:
-            'If you have been arrested, tell the custody officer that you want legal representation and ask for "Robert Cashman" or "Tuckers Solicitors LLP - Robert Cashman". They must contact us. You can also call us directly on 01732 247427. If your phone has been taken, an immediate family member can call us on your behalf. We will attend the police station to represent you - this is completely free under Legal Aid.',
+            'If you have been arrested, tell the custody officer that you want legal representation and ask for "Robert Cashman" or "Tuckers Solicitors LLP - Robert Cashman". They must contact us. An immediate family member can also use our <a href="/current-custody" class="text-blue-600 hover:underline font-semibold">current custody check</a>. If your phone has been taken, an immediate family member can instruct on your behalf. We will attend the police station to represent you - this is completely free under Legal Aid.',
         },
         {
           question: "What if I'm asked to attend a voluntary interview?",
           answer:
-            'If you are asked to attend a voluntary interview (also called a "caution plus 3" interview), you have the right to free legal representation. Contact us on 01732 247427 and we can arrange to attend with you. It is crucial to have legal representation at voluntary interviews, as anything you say can be used in court. We will advise you on your rights and the best approach to take.',
+            'If you are asked to attend a voluntary interview (also called a "caution plus 3" interview), you have the right to free legal representation. <a href="/start/voluntary-interview#request" class="text-blue-600 hover:underline font-semibold">Request representation</a> and we can arrange to attend with you. It is crucial to have legal representation at voluntary interviews, as anything you say can be used in court. We will advise you on your rights and the best approach to take.',
         },
         {
           question: "Is advice at the police station really free?",
@@ -310,7 +310,7 @@ export default function FAQContent() {
         {
           question: "What should I do if police want to interview me?",
           answer:
-            "If police want to interview you, whether you have been arrested or invited for a voluntary interview, you should: 1) Exercise your right to free legal advice - tell them you want a solicitor, 2) Contact us on 01732 247427, 3) Do not answer any questions until you have spoken to a solicitor, 4) Remember that you have the right to remain silent. We will attend to represent you and provide expert advice throughout the process.",
+            "If police want to interview you, whether you have been arrested or invited for a voluntary interview, you should: 1) Exercise your right to free legal advice - tell them you want a solicitor, 2) Use our <a href='/contact' class='text-blue-600 hover:underline font-semibold'>Contact pathways</a>, 3) Do not answer any questions until you have spoken to a solicitor, 4) Remember that you have the right to remain silent. We will attend to represent you and provide expert advice throughout the process.",
         },
         {
           question: "Can my family contact you on my behalf?",

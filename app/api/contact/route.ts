@@ -70,31 +70,40 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "One or more fields exceed maximum length" }, { status: 400 });
     }
 
+    const enquiryKind = String(body?.enquiryKind ?? "").trim();
+    const isAdminEnquiry = enquiryKind === "admin";
+
     if (!name) {
       return NextResponse.json({ error: "Name is required" }, { status: 400 });
     }
     if (!contactNumber) {
       return NextResponse.json({ error: "Contact number is required" }, { status: 400 });
     }
+    if (isAdminEnquiry && !email) {
+      return NextResponse.json({ error: "Email is required for written enquiries" }, { status: 400 });
+    }
     if (email !== null && !isValidEmail(email)) {
       return NextResponse.json({ error: "Please enter a valid email address" }, { status: 400 });
     }
-    if (!policeStation) {
+    if (!isAdminEnquiry && !policeStation) {
       return NextResponse.json({ error: "Police station is required" }, { status: 400 });
     }
-    if (!interviewDate) {
+    if (!isAdminEnquiry && !interviewDate) {
       return NextResponse.json({ error: "Interview date is required" }, { status: 400 });
     }
-    if (!interviewTime) {
+    if (!isAdminEnquiry && !interviewTime) {
       return NextResponse.json({ error: "Interview time is required" }, { status: 400 });
     }
-    if (!attendanceType) {
+    if (!isAdminEnquiry && !attendanceType) {
       return NextResponse.json({ error: "Attendance type is required" }, { status: 400 });
     }
     if (!offenceSummary) {
-      return NextResponse.json({ error: "Brief details are required" }, { status: 400 });
+      return NextResponse.json(
+        { error: isAdminEnquiry ? "Message is required" : "Brief details are required" },
+        { status: 400 },
+      );
     }
-    if (requestType === "client" && (!clientName || !clientDOB)) {
+    if (requestType === "client" && !isAdminEnquiry && (!clientName || !clientDOB)) {
       return NextResponse.json(
         { error: "Client name and date of birth are required when requesting for a client" },
         { status: 400 }
@@ -121,11 +130,11 @@ export async function POST(request: NextRequest) {
         requestType,
         clientName: clientName || null,
         clientDOB: clientDOB || null,
-        policeStation,
-        interviewDate,
-        interviewTime,
-        attendanceType,
-        offenceSummary,
+        policeStation: policeStation || (isAdminEnquiry ? "N/A — admin enquiry" : ""),
+        interviewDate: interviewDate || (isAdminEnquiry ? "N/A" : ""),
+        interviewTime: interviewTime || (isAdminEnquiry ? "N/A" : ""),
+        attendanceType: isAdminEnquiry ? "admin-enquiry" : attendanceType,
+        offenceSummary: isAdminEnquiry ? `[Admin enquiry]\n${offenceSummary}` : offenceSummary,
         supportNeeds: supportNeeds || null,
       });
       if (emailResult.success) {

@@ -3,14 +3,25 @@ import Footer from "@/components/Footer";
 import ContactForm from "@/components/ContactForm";
 import WhoProvidesLegalService from "@/components/WhoProvidesLegalService";
 import type { Metadata } from "next";
+import Link from "next/link";
 import { SITE_DOMAIN } from "@/config/site";
-import { SEO_NOT_POLICE, SERVICE_SCOPE } from "@/config/contact";
+import {
+  SEO_NOT_POLICE,
+  SERVICE_SCOPE,
+  CONTACT_GETTING_IN_TOUCH,
+  CONTACT_PATHWAY_PROMPT,
+  ADMIN_ENQUIRY_HEADING,
+  ADMIN_ENQUIRY_INTRO,
+  ADMIN_ENQUIRY_CAN,
+  ADMIN_ENQUIRY_CANNOT,
+  SCOPE_HELP_HREF,
+} from "@/config/contact";
 import { AudiencePathSelector } from "@/components/conversion/AudiencePathSelector";
 import { PoliceSignposting } from "@/components/conversion/PoliceSignposting";
 
 export const metadata: Metadata = {
   title: "Contact | Choose Why You Are Enquiring | NOT the Police",
-  description: `${SEO_NOT_POLICE} Choose voluntary interview, current custody or agency cover. Administrative contact form for non-urgent matters only. ${SERVICE_SCOPE}`,
+  description: `${SEO_NOT_POLICE} Choose voluntary interview, current custody or agency cover. Non-urgent written enquiry for administrative messages only. ${SERVICE_SCOPE}`,
   alternates: {
     canonical: `https://${SITE_DOMAIN}/contact`,
   },
@@ -30,33 +41,59 @@ export default function ContactPage() {
       <main className="flex-grow" id="main-content" role="main">
         <div className="max-w-4xl mx-auto px-4 py-12 md:py-16 space-y-10">
           <header className="rounded-xl bg-gradient-to-br from-slate-900 to-blue-950 text-white p-6 md:p-8">
-            <h1 className="text-3xl md:text-4xl font-black mb-3">Contact</h1>
-            <p className="text-blue-100 max-w-2xl">
-              Choose the reason for contacting us. This is a private criminal defence solicitor
-              website — not Kent Police. We cannot transfer calls to the police and do not provide
-              free general legal advice by telephone.
+            <p className="text-amber-300 text-sm font-bold tracking-wide mb-2">NOT THE POLICE</p>
+            <h1 className="text-3xl md:text-4xl font-black mb-3">Getting in touch</h1>
+            <p className="text-blue-100 max-w-2xl mb-4">{CONTACT_GETTING_IN_TOUCH}</p>
+            <p className="text-blue-50 max-w-2xl text-sm md:text-base">{CONTACT_PATHWAY_PROMPT}</p>
+            <p className="text-blue-200 text-sm mt-4">
+              Why we do this: see the{" "}
+              <Link href={`${SCOPE_HELP_HREF}`} className="underline font-semibold text-white">
+                FAQ
+              </Link>
+              .
             </p>
           </header>
 
           <AudiencePathSelector
             heading="Choose the reason for contacting us"
-            subheading="Use the pathway that matches your situation. The solicitor telephone is not listed on this page."
+            subheading="Booked interview → request representation. Someone detained now → current custody check. Solicitor/firm → agency cover."
           />
 
           <PoliceSignposting />
 
           <section
-            className="rounded-xl border border-slate-200 bg-white p-5 md:p-6"
+            id="admin-enquiry"
+            className="rounded-xl border border-slate-200 bg-white p-5 md:p-6 scroll-mt-24"
             aria-labelledby="admin-form-heading"
           >
             <h2 id="admin-form-heading" className="text-xl font-black text-slate-900 mb-2">
-              Administrative contact form
+              {ADMIN_ENQUIRY_HEADING}
             </h2>
-            <p className="text-sm text-slate-600 mb-4">
-              For non-urgent administrative messages only. Not for emergencies, police enquiries,
-              free general legal advice, or current custody (use the pathways above).
-            </p>
-            <ContactForm />
+            <p className="text-sm text-slate-600 mb-5">{ADMIN_ENQUIRY_INTRO}</p>
+
+            <div className="grid md:grid-cols-2 gap-4 mb-6">
+              <div className="rounded-lg border border-emerald-200 bg-emerald-50/80 p-4">
+                <h3 className="text-sm font-bold text-emerald-950 mb-2">What this form can help with</h3>
+                <ul className="text-sm text-emerald-950 space-y-1.5 list-disc pl-4">
+                  {ADMIN_ENQUIRY_CAN.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="rounded-lg border border-red-200 bg-red-50/80 p-4">
+                <h3 className="text-sm font-bold text-red-950 mb-2">What we cannot do</h3>
+                <ul className="text-sm text-red-950 space-y-1.5 list-disc pl-4">
+                  {ADMIN_ENQUIRY_CANNOT.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <ContactForm
+              heading="Send a non-urgent written enquiry"
+              variant="admin"
+            />
           </section>
 
           <WhoProvidesLegalService />

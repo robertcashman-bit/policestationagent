@@ -1,5 +1,7 @@
 /** Shared scope / confidentiality FAQ copy — single source of truth */
 
+import { WHY_PHONE_NOT_EVERYWHERE_FAQ, CAN_I_EMAIL_FAQ } from "@/config/contact";
+
 export const SCOPE_IMMEDIATE_ONLY =
   "We handle immediate matters only: someone currently in police custody at a Kent station, or a scheduled voluntary (VAI) interview. We do not deal with arrests from yesterday, days ago, or last week — or enquiries after someone has been released.";
 
@@ -38,13 +40,21 @@ export const NOT_POLICE_FAQ_ITEMS = [
   {
     question: "Can you arrange a solicitor?",
     answer:
-      "Yes. We arrange independent criminal defence solicitors for people in current Kent police custody or with a booked voluntary (VAI) interview. Immediate family may instruct for current custody — the detainee must confirm. Call 01732 247427.",
+      "Yes. We arrange independent criminal defence solicitors for people in current Kent police custody or with a booked voluntary (VAI) interview. Immediate family may instruct for current custody — the detainee must confirm. Use the Contact pathways: current custody check if someone is detained now, or request representation for a booked interview.",
   },
 ] as const;
 
 /** Scope section FAQs — used in FAQ page, chatbot, and JSON-LD */
 export const SCOPE_FAQ_ITEMS = [
   ...NOT_POLICE_FAQ_ITEMS,
+  {
+    question: WHY_PHONE_NOT_EVERYWHERE_FAQ.question,
+    answer: WHY_PHONE_NOT_EVERYWHERE_FAQ.answer,
+  },
+  {
+    question: CAN_I_EMAIL_FAQ.question,
+    answer: CAN_I_EMAIL_FAQ.answer,
+  },
   {
     question: "I've already been interviewed or released — can you give free advice?",
     answer:
