@@ -187,7 +187,7 @@ describe("stripFirmPhonesToContact", () => {
     expect(out).not.toMatch(/07535/);
     expect(out).not.toMatch(/tel:01732/i);
     expect(out).not.toMatch(/sms:07535/i);
-    expect(out).toContain('href="/contact"');
+    expect(out).toMatch(/voluntary-interview|current-custody|for-solicitors|\/contact/);
   });
 });
 

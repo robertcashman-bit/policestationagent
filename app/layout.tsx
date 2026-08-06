@@ -160,12 +160,10 @@ const organizationSchema = {
       logo: `${siteUrl}/logo.png`,
       description:
         `${LEGAL_SERVICE_SCHEMA_DESCRIPTION} Qualified Police Station Duty Solicitor serving Kent since 2001. Representation at custody and scheduled voluntary interviews under Legal Aid via Tuckers Solicitors LLP.`,
-      telephone: "+441732247427",
       email: "robertcashman@defencelegalservices.co.uk",
       contactPoint: {
         "@type": "ContactPoint",
         contactType: "customer service",
-        telephone: "+441732247427",
         url: `${siteUrl}/contact`,
         availableLanguage: "English",
       },
@@ -376,10 +374,9 @@ const organizationSchema = {
       "@id": `${siteUrl}#localbusiness`,
       name: "Robert Cashman – Police Station Duty Solicitor (Kent)",
       description:
-        "Independent criminal defence solicitor — not affiliated with Kent Police or any police force. Police station legal representation in Kent.",
+        "Independent criminal defence solicitor — not affiliated with Kent Police or any police force. Police station legal representation in Kent. Contact via qualified enquiry pathways.",
       url: `${siteUrl}/contact`,
       image: `${siteUrl}/logo.png`,
-      telephone: "+441732247427",
       email: "robertcashman@defencelegalservices.co.uk",
       address: {
         "@type": "PostalAddress",
@@ -390,7 +387,7 @@ const organizationSchema = {
         "@type": "State",
         name: "Kent",
       },
-      priceRange: "Free under Legal Aid",
+      priceRange: "Police-station Legal Aid where eligible",
     },
     {
       "@type": "Attorney",
