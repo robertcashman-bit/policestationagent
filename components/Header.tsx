@@ -8,6 +8,11 @@ import {
   PATH_CUSTODY,
   PATH_VOLUNTARY_LANDING,
 } from "@/config/enquiry-paths";
+import {
+  CHROME_BRAND_TAGLINE,
+  CHROME_HELP_STRIP,
+  CHROME_NOT_POLICE_QUIET,
+} from "@/config/contact";
 
 const NAV = [
   { href: "/", label: "Home" },
@@ -37,14 +42,12 @@ export default function Header({
     <header className="bg-white shadow-md border-b border-slate-200/60 relative z-50">
       <div className="bg-slate-900 text-white text-xs sm:text-sm py-1.5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap items-center justify-between gap-2">
-          <p className="font-semibold tracking-wide">
-            Independent criminal defence solicitor — <span className="text-amber-300">NOT the police</span>
-          </p>
+          <p className="font-semibold tracking-wide text-slate-100">{CHROME_HELP_STRIP}</p>
           <Link
             href={PATH_AGENCY}
             className="text-amber-200 hover:text-white font-semibold underline-offset-2 hover:underline"
           >
-            For solicitors
+            For defence firms
           </Link>
         </div>
       </div>
@@ -59,8 +62,11 @@ export default function Header({
             <div className="text-lg sm:text-xl font-bold text-slate-900 leading-tight group-hover:text-blue-600 transition-colors">
               Police Station Agent
             </div>
-            <div className="text-[10px] sm:text-xs font-normal text-slate-600 leading-tight mt-0.5">
-              NOT the police — custody &amp; scheduled interviews
+            <div className="text-[10px] sm:text-xs font-normal text-slate-700 leading-tight mt-0.5">
+              {CHROME_BRAND_TAGLINE}
+            </div>
+            <div className="text-[10px] sm:text-xs font-normal text-slate-500 leading-tight">
+              {CHROME_NOT_POLICE_QUIET}
             </div>
           </Link>
 

@@ -1,6 +1,10 @@
 import Link from "next/link";
 import { getFormattedVersion, getLastUpdateDateTime } from "@/lib/version";
-import { SERVICE_SCOPE_SHORT } from "@/config/contact";
+import {
+  CHROME_HELP_STRIP,
+  CHROME_NOT_POLICE_QUIET,
+  SERVICE_SCOPE_SHORT,
+} from "@/config/contact";
 import { FOOTER_LEGAL } from "@/config/footer-links";
 import {
   PATH_AGENCY,
@@ -69,8 +73,9 @@ export default function Footer({
           <Link href="/" className="font-bold text-lg text-white hover:text-blue-300 transition-colors">
             Police Station Agent
           </Link>
-          <p className="text-sm text-sky-300 mt-1">Independent duty solicitor — NOT the police</p>
-          <p className="text-xs text-sky-400/90 mt-1 max-w-xl">{SERVICE_SCOPE_SHORT}</p>
+          <p className="text-sm text-sky-200 mt-1">{CHROME_HELP_STRIP}</p>
+          <p className="text-xs text-sky-400/90 mt-1 max-w-xl">{CHROME_NOT_POLICE_QUIET}</p>
+          <p className="text-xs text-sky-400/80 mt-1 max-w-xl">{SERVICE_SCOPE_SHORT}</p>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 py-8 border-b border-slate-800">

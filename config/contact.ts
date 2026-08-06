@@ -20,7 +20,7 @@ export function smsUrl(message: string): string {
 
 /** Shown in Google meta descriptions / snippets */
 export const SEO_NOT_POLICE =
-  "Private defence solicitor website — NOT Kent Police or any police force.";
+  "We are not the police — we are criminal defence solicitors.";
 
 /** Contact / station headline order: NOT THE POLICE first */
 export const CONTACT_HEADLINE = "NOT THE POLICE — We are criminal solicitors";
@@ -35,8 +35,22 @@ export const SERVICE_SCOPE_SHORT =
 export const CUSTODY_PHONE_CTA =
   "Telephone for current custody or a booked voluntary interview";
 
-export const HEADER_STRAPLINE =
-  "Independent solicitor — NOT the police. Kent custody and booked interviews.";
+/** Help-first site chrome (header strip / footer) — not a rejection notice */
+export const CHROME_HELP_STRIP =
+  "Criminal defence help for Kent custody and booked interviews";
+
+/** Primary brand tagline under the logo */
+export const CHROME_BRAND_TAGLINE = "Police station defence in Kent";
+
+/** Quieter disambiguation under the brand — not the loudest signal */
+export const CHROME_NOT_POLICE_QUIET = "Independent solicitor — not Kent Police";
+
+/** Homepage hero eyebrow — help-first */
+export const CHROME_HERO_EYEBROW =
+  "Criminal defence for Kent custody and booked interviews";
+
+/** @deprecated Prefer CHROME_HELP_STRIP + CHROME_NOT_POLICE_QUIET */
+export const HEADER_STRAPLINE = `${CHROME_HELP_STRIP}. ${CHROME_NOT_POLICE_QUIET}.`;
 
 /** Short CTA: who this phone line is for */
 export const CTA_WHO_CAN_CALL =

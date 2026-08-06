@@ -1,6 +1,7 @@
 "use client";
 
 import { AudiencePathSelector } from "@/components/conversion/AudiencePathSelector";
+import { CHROME_HERO_EYEBROW } from "@/config/contact";
 
 export function HomeHeroCover() {
   return (
@@ -13,8 +14,8 @@ export function HomeHeroCover() {
         aria-hidden="true"
       />
       <div className="max-w-5xl mx-auto px-4 relative z-10">
-        <p className="text-xs uppercase tracking-wide text-amber-300 mb-3 font-bold">
-          Kent criminal defence solicitor — not the police
+        <p className="text-xs uppercase tracking-wide text-amber-200/90 mb-3 font-semibold">
+          {CHROME_HERO_EYEBROW}
         </p>
         <h1
           id="home-hero-heading"

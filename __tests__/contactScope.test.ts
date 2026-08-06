@@ -11,6 +11,10 @@ import {
   CTA_OUT_OF_SCOPE,
   STATION_SOLICITOR_CTA,
   STATION_CONTACT_BUTTON,
+  CHROME_HELP_STRIP,
+  CHROME_BRAND_TAGLINE,
+  CHROME_NOT_POLICE_QUIET,
+  CHROME_HERO_EYEBROW,
 } from "../config/contact";
 import { SCOPE_FAQ_ITEMS, isOutOfScopeEnquiry } from "../config/scope-faqs";
 
@@ -18,11 +22,22 @@ const root = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 describe("contact config", () => {
   it("includes not-police and scope disclaimers", () => {
-    expect(SEO_NOT_POLICE).toMatch(/NOT.*Police/i);
+    expect(SEO_NOT_POLICE).toMatch(/not.*police/i);
+    expect(SEO_NOT_POLICE).toMatch(/criminal defence solicitors/i);
     expect(SERVICE_SCOPE).toMatch(/custody/i);
     expect(SERVICE_SCOPE).toMatch(/voluntary/i);
     expect(SERVICE_SCOPE).toMatch(/immediate family/i);
     expect(SERVICE_SCOPE).toMatch(/general legal advice/i);
+  });
+
+  it("chrome copy is help-first with quieter not-police signal", () => {
+    expect(CHROME_HELP_STRIP).toMatch(/Criminal defence help/i);
+    expect(CHROME_HELP_STRIP).toMatch(/custody/i);
+    expect(CHROME_BRAND_TAGLINE).toMatch(/Police station defence/i);
+    expect(CHROME_NOT_POLICE_QUIET).toMatch(/not Kent Police/i);
+    expect(CHROME_HERO_EYEBROW).toMatch(/Criminal defence for Kent/i);
+    expect(CHROME_HELP_STRIP).not.toMatch(/NOT the police/i);
+    expect(CHROME_BRAND_TAGLINE).not.toMatch(/NOT the police/i);
   });
 
   it("CTA copy rejects post-release free advice and police enquiries", () => {
@@ -169,9 +184,32 @@ describe("contact config", () => {
   it("header uses pathway CTAs not generic legal advice call", () => {
     const header = fs.readFileSync(path.join(root, "components/Header.tsx"), "utf8");
     expect(header).toMatch(/Get a solicitor/);
-    expect(header).toMatch(/For solicitors/);
-    expect(header).toMatch(/NOT the police/i);
+    expect(header).toMatch(/For defence firms/);
+    expect(header).toContain("CHROME_HELP_STRIP");
+    expect(header).toContain("CHROME_BRAND_TAGLINE");
+    expect(header).toContain("CHROME_NOT_POLICE_QUIET");
+    expect(header).not.toMatch(/Independent criminal defence solicitor —/);
     expect(header).not.toMatch(/tel:01732/);
     expect(header).not.toMatch(/Call Now for legal advice/i);
+  });
+
+  it("sitewide banner uses calm styling and shared not-police copy", () => {
+    const banner = fs.readFileSync(
+      path.join(root, "components/compliance/NotPoliceScopeBanner.tsx"),
+      "utf8",
+    );
+    expect(banner).toContain("SEO_NOT_POLICE");
+    expect(banner).toContain("SERVICE_SCOPE_SHORT");
+    expect(banner).toMatch(/bg-slate-100/);
+    expect(banner).not.toMatch(/text-red-800/);
+  });
+
+  it("home hero eyebrow is help-first", () => {
+    const hero = fs.readFileSync(
+      path.join(root, "components/conversion/HomeHeroCover.tsx"),
+      "utf8",
+    );
+    expect(hero).toContain("CHROME_HERO_EYEBROW");
+    expect(hero).not.toMatch(/Kent criminal defence solicitor — not the police/);
   });
 });
