@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sendContactFormNotification } from "@/lib/email";
 import { getClientIp, rateLimitOk } from "@/lib/contact-guards";
+import { isAllowedEnquiryOrigin } from "@/lib/enquiry/origin";
 
 function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -16,6 +17,10 @@ const ADMIN_ROLES = new Set([
 
 export async function POST(request: NextRequest) {
   try {
+    if (!isAllowedEnquiryOrigin(request)) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
     const rate = await rateLimitOk({
       ip: getClientIp(request),
       scope: "contact",

@@ -56,4 +56,24 @@ describe('security headers regression', () => {
       }
     }
   });
+
+  it('admin routes are no-store and noindex', async () => {
+    const config =
+      typeof nextConfig === 'object' && nextConfig.__esModule
+        ? nextConfig.default
+        : nextConfig;
+    const headersFn = config.headers ?? nextConfig.headers;
+    if (typeof headersFn !== 'function') return;
+
+    const rules: Array<{ source: string; headers: Array<{ key: string; value: string }> }> =
+      await headersFn();
+
+    const adminRule = rules.find((r) => r.source === '/admin/:path*');
+    expect(adminRule, 'admin header rule missing').toBeTruthy();
+    if (!adminRule) return;
+
+    const headerMap = Object.fromEntries(adminRule.headers.map((h) => [h.key, h.value]));
+    expect(headerMap['Cache-Control']).toMatch(/no-store/i);
+    expect(headerMap['X-Robots-Tag']).toMatch(/noindex/i);
+  });
 });
