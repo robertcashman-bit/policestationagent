@@ -2,11 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { sendContactFormNotification } from "@/lib/email";
 import { getClientIp, rateLimitOk } from "@/lib/contact-guards";
 import { isAllowedEnquiryOrigin } from "@/lib/enquiry/origin";
-import { sanitizeEnquiryAttribution } from "@/lib/enquiry/attribution";
-import {
-  detectPoliceConfusion,
-  policeConfusionPublicMessage,
-} from "@/lib/enquiry/police-confusion";
 
 function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -17,6 +12,7 @@ const MAX_FIELD_LENGTH = 2000;
 const ADMIN_ROLES = new Set([
   "prospective_client",
   "instructing_solicitor",
+  "other",
 ]);
 
 export async function POST(request: NextRequest) {
@@ -93,25 +89,6 @@ export async function POST(request: NextRequest) {
     const supportNeeds = String(body?.supportNeeds ?? "").trim();
     const nonUrgentConfirmation = Boolean(body?.nonUrgentConfirmation);
     const consent = Boolean(body?.consent);
-    const audienceIsPolice = Boolean(body?.audienceIsPolice);
-    const attribution = sanitizeEnquiryAttribution(body?.attribution);
-
-    const confusion = detectPoliceConfusion({
-      email,
-      message: offenceSummary,
-      name,
-      audienceIsPolice,
-    });
-    if (confusion) {
-      return NextResponse.json(
-        {
-          error: policeConfusionPublicMessage(confusion),
-          code: "POLICE_OR_CUSTODY_ENQUIRY",
-          reason: confusion,
-        },
-        { status: 422 },
-      );
-    }
 
     // Input length limits to prevent abuse
     const fields = [
@@ -208,7 +185,6 @@ export async function POST(request: NextRequest) {
         offenceSummary,
         supportNeeds: supportNeeds || null,
         enquiryKind,
-        attribution,
       });
       if (emailResult.success) {
         console.log("[Contact API] Notification email sent successfully");
