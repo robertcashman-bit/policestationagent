@@ -69,6 +69,7 @@
     "audit:legal": "node scripts/audit-legal-content.mjs && node scripts/audit-static-legal-pages.mjs",
     "audit:blog-images": "node scripts/audit-blog-images.mjs",
     "audit:readability": "node scripts/audit-readability.mjs",
+    "audit:deps": "npm audit --audit-level=moderate",
     "test:legal": "vitest run __tests__/legal-accuracy.test.ts __tests__/pace-references.test.ts",
     "backfill:blog-sources": "node scripts/backfill-blog-sources.mjs",
     "publish:first-12": "node scripts/publish-first-12-articles.mjs",

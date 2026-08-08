@@ -1,5 +1,6 @@
 import { stripFirmPhonesToContact } from "@/lib/seo/strip-firm-phones";
 import { disambiguateStationHtml } from "@/lib/seo/disambiguate-station-html";
+import { sanitizeScrapedHtml } from "@/lib/html-sanitizer";
 
 /** Strip embedded version badges from scraped HTML blobs. */
 const VERSION_BADGE_PATTERN =
@@ -52,5 +53,5 @@ export function normalizeScrapedHtml(
   // Separate police contact (999/101) from solicitor phone; inject not-police intro.
   out = disambiguateStationHtml(out);
 
-  return out;
+  return sanitizeScrapedHtml(out);
 }

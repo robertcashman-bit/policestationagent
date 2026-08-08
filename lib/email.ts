@@ -182,7 +182,7 @@ export async function sendMagicCode(
 ): Promise<{ success: boolean; error?: string }> {
   const client = getResendClient();
   if (!client) {
-    console.warn("[Magic code — no RESEND_API_KEY]", { email });
+    console.warn("[Magic code — no RESEND_API_KEY]", { hasRecipient: Boolean(email) });
     return { success: false, error: "RESEND_API_KEY not set" };
   }
 
@@ -199,7 +199,7 @@ export async function sendMagicCode(
     };
   }
 
-  const subject = `Your Police Station Agent admin code: ${code}`;
+  const subject = "Your Police Station Agent admin login code";
   const html = buildMagicCodeHtml(code);
   const fromCandidates = magicCodeFromCandidates();
   let lastError = "Email send failed";
@@ -224,7 +224,9 @@ export async function sendMagicCode(
 
       if (data?.id) {
         if (i > 0) {
-          console.info("[Magic code email] sent via fallback sender:", from);
+          console.info("[Magic code email] sent via fallback sender", {
+            usedFallbackSender: true,
+          });
         }
         return { success: true };
       }

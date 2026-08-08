@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { SITE_DOMAIN } from "@/config/site";
 import { getAllPosts } from "@/lib/blog-reader";
 import { REP_INDEXNOW_PATHS } from "@/lib/seo/rep-town-paths";
+import { isCronAuthorized } from "@/lib/cron-auth";
 
 const INDEXNOW_KEY =
   process.env.INDEXNOW_KEY || "655b1cdbce5c462b9fe51c4e19f92678";
@@ -215,11 +216,15 @@ export async function POST(request: Request) {
 
 /**
  * GET /api/index-now
- * Returns status and instructions
+ * Public callers receive a minimal heartbeat; detailed status requires CRON_SECRET.
  */
-export async function GET() {
+export async function GET(request: Request) {
+  if (!isCronAuthorized(request)) {
+    return NextResponse.json({ ok: true });
+  }
+
   return NextResponse.json({
-    status: "ready",
+    ok: true,
     keyUrl: `${SITE_URL}/${INDEXNOW_KEY}.txt`,
     sitemapUrl: `${SITE_URL}/sitemap.xml`,
     blogSitemapUrl: `${SITE_URL}/blog-sitemap.xml`,

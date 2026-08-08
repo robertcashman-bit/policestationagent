@@ -5,7 +5,7 @@
 
 import sanitizeHtml from 'sanitize-html';
 
-const BLOG_SANITIZE_OPTIONS: sanitizeHtml.IOptions = {
+const CONTENT_SANITIZE_OPTIONS: sanitizeHtml.IOptions = {
   allowedTags: sanitizeHtml.defaults.allowedTags.concat([
     'img',
     'h1',
@@ -21,9 +21,9 @@ const BLOG_SANITIZE_OPTIONS: sanitizeHtml.IOptions = {
     ...sanitizeHtml.defaults.allowedAttributes,
     img: ['src', 'srcset', 'alt', 'title', 'width', 'height', 'loading', 'class'],
     a: ['href', 'name', 'target', 'rel', 'class'],
-    div: ['class', 'id', 'style'],
-    span: ['class', 'style'],
-    p: ['class', 'style'],
+    div: ['class', 'id'],
+    span: ['class'],
+    p: ['class'],
     h1: ['class', 'id'],
     h2: ['class', 'id'],
     h3: ['class', 'id'],
@@ -32,10 +32,13 @@ const BLOG_SANITIZE_OPTIONS: sanitizeHtml.IOptions = {
     h6: ['class', 'id'],
     figure: ['class'],
     figcaption: ['class'],
+    ul: ['class'],
+    ol: ['class'],
+    li: ['class'],
   },
-  allowedSchemes: ['http', 'https', 'mailto', 'tel', 'data'],
+  allowedSchemes: ['http', 'https', 'mailto', 'tel'],
   allowedSchemesByTag: {
-    img: ['http', 'https', 'data'],
+    img: ['http', 'https'],
   },
 };
 
@@ -53,5 +56,11 @@ export function convertH1ToH2(html: string): string {
 export function sanitizeBlogHtml(html: string): string {
   if (!html) return html;
   const withoutH1 = convertH1ToH2(html);
-  return sanitizeHtml(withoutH1, BLOG_SANITIZE_OPTIONS);
+  return sanitizeHtml(withoutH1, CONTENT_SANITIZE_OPTIONS);
+}
+
+/** Sanitize scraped legacy HTML blobs before `dangerouslySetInnerHTML`. */
+export function sanitizeScrapedHtml(html: string): string {
+  if (!html) return html;
+  return sanitizeHtml(html, CONTENT_SANITIZE_OPTIONS);
 }
