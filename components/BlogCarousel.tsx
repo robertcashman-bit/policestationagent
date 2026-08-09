@@ -190,13 +190,13 @@ export default function BlogCarousel({
   // Loading state
   if (isLoading) {
     return (
-      <div className={`bg-gradient-to-br from-blue-50 to-white py-16 ${className}`}>
+      <div className={`bg-[var(--cream)] py-16 ${className}`}>
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center">
-            <div className="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold bg-amber-100 text-amber-800 mb-4">
+            <div className="inline-flex items-center rounded-md border border-accent/30 px-2.5 py-0.5 text-xs font-semibold bg-accent/15 text-accent-dark mb-4">
               Latest Insights
             </div>
-            <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-4">Blog Posts</h2>
+            <h2 className="font-display text-3xl md:text-4xl font-bold text-primary mb-4">Blog Posts</h2>
             <div className="animate-pulse flex justify-center">
               <div className="h-64 w-full max-w-2xl bg-slate-200 rounded-2xl"></div>
             </div>
@@ -216,7 +216,7 @@ export default function BlogCarousel({
   return (
     <section
       ref={carouselRef}
-      className={`py-16 bg-gradient-to-br from-slate-50 to-blue-50 ${className}`}
+      className={`py-16 bg-background border-t border-border-subtle ${className}`}
       onMouseEnter={pauseOnHover ? () => setIsPaused(true) : undefined}
       onMouseLeave={pauseOnHover ? () => setIsPaused(false) : undefined}
       onTouchStart={handleTouchStart}
@@ -230,14 +230,14 @@ export default function BlogCarousel({
         {/* Header */}
         <div className="flex justify-between items-end mb-10">
           <div>
-            <div className="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold bg-amber-100 text-amber-800 mb-2">
+            <div className="inline-flex items-center rounded-md border border-accent/30 px-2.5 py-0.5 text-xs font-semibold bg-accent/15 text-accent-dark mb-2">
               Latest Insights
             </div>
-            <h2 className="text-3xl md:text-4xl font-black text-slate-900">From Our Blog</h2>
+            <h2 className="font-display text-3xl md:text-4xl font-bold text-primary">From Our Blog</h2>
           </div>
           <Link
             href="/blog"
-            className="hidden md:flex items-center text-blue-600 font-semibold hover:text-blue-700 transition-colors"
+            className="hidden md:flex items-center text-primary font-semibold hover:text-accent-dark transition-colors"
           >
             View all articles
             <svg
@@ -266,7 +266,7 @@ export default function BlogCarousel({
               {/* Image - Fixed 16:9 aspect ratio with cycling fallback images */}
               <div
                 key={`image-container-${currentPost.slug}-${currentIndex}`}
-                className="relative aspect-[16/9] md:aspect-[4/3] bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center overflow-hidden"
+                className="relative aspect-[16/9] md:aspect-[4/3] bg-primary flex items-center justify-center overflow-hidden"
               >
                 <Image
                   key={`carousel-image-${currentPost.slug}-${currentIndex}`}
@@ -315,7 +315,7 @@ export default function BlogCarousel({
 
                 <Link
                   href={`/blog/${currentPost.slug}`}
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors w-fit"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary hover:bg-primary-light text-white font-medium rounded-lg transition-colors w-fit"
                 >
                   Read Article
                   <svg

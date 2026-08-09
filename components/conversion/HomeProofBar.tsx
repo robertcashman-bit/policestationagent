@@ -9,27 +9,50 @@ const PROOF_ITEMS = [
 
 export function HomeProofBar() {
   return (
-    <section className="mx-auto max-w-5xl px-4 -mt-6 md:-mt-8 relative z-20" aria-label="Experience and credentials">
-      <div className="surface-card px-4 py-5 md:px-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+    <section
+      className="relative z-10 border-b border-border-subtle bg-[var(--paper)]"
+      aria-label="Experience and credentials"
+    >
+      <div className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
+        <div className="md:grid md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.4fr)] md:items-end md:gap-10">
+          <div>
+            <p className="section-eyebrow">Established credentials</p>
+            <h2 className="mt-2 font-display text-2xl font-bold text-primary md:text-3xl">
+              Trust built in Kent custody suites
+            </h2>
+            <div className="accent-rule mt-4" aria-hidden="true" />
+          </div>
+          <p className="mt-4 max-w-measure text-sm leading-relaxed text-muted-foreground md:mt-0 md:text-base md:text-right">
+            Robert Cashman — accredited duty solicitor &amp; Higher Court Advocate via{" "}
+            <strong className="text-primary">Tuckers Solicitors LLP</strong>.{" "}
+            <Link href="/about" className="font-semibold text-primary underline-offset-2 hover:underline">
+              About Robert
+            </Link>
+            {" · "}
+            <a
+              href="#testimonials"
+              className="font-semibold text-primary underline-offset-2 hover:underline"
+            >
+              Client testimonials
+            </a>
+          </p>
+        </div>
+
+        <div className="mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-border bg-border md:grid-cols-4">
           {PROOF_ITEMS.map((item) => (
-            <div key={item.label} className="px-1">
-              <div className="font-display text-xl md:text-2xl font-bold text-primary">{item.value}</div>
-              <div className="text-xs md:text-sm text-muted-foreground mt-0.5">{item.label}</div>
+            <div
+              key={item.label}
+              className="bg-card px-4 py-6 text-center md:px-5 md:py-8"
+            >
+              <div className="font-display text-2xl font-bold tracking-tight text-primary md:text-3xl lg:text-4xl">
+                {item.value}
+              </div>
+              <div className="mt-2 text-xs font-medium uppercase tracking-[0.12em] text-muted-foreground md:text-[0.7rem]">
+                {item.label}
+              </div>
             </div>
           ))}
         </div>
-        <p className="mt-4 text-center text-sm text-foreground/80 border-t border-border pt-4">
-          Robert Cashman — accredited duty solicitor &amp; Higher Court Advocate via{" "}
-          <strong className="text-primary">Tuckers Solicitors LLP</strong>.{" "}
-          <Link href="/about" className="font-semibold text-primary hover:underline">
-            About Robert
-          </Link>
-          {" · "}
-          <a href="#testimonials" className="font-semibold text-primary hover:underline">
-            Client testimonials
-          </a>
-        </p>
       </div>
     </section>
   );

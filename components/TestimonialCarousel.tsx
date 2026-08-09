@@ -6,7 +6,6 @@ interface Testimonial {
   quote: string;
   author: string;
   location: string;
-  rating?: number;
 }
 
 interface TestimonialCarouselProps {
@@ -26,41 +25,35 @@ const testimonials: Testimonial[] = [
       "Robert helped me when I was arrested in Swanley. I was very worried but he calmed me down and got me released without charge. Excellent service.",
     author: "AK",
     location: "Swanley",
-    rating: 5,
   },
   {
     quote: "Your attendance made the difference between a prison sentence and freedom.",
     author: "MR X",
     location: "Swanley",
-    rating: 5,
   },
   {
     quote:
       "Professional, calm and extremely knowledgeable. Robert explained everything clearly and was there throughout the entire process.",
     author: "JB",
     location: "Maidstone",
-    rating: 5,
   },
   {
     quote:
       "I was terrified when the police contacted me. Robert attended quickly and handled everything professionally. Case dropped.",
     author: "TC",
     location: "Canterbury",
-    rating: 5,
   },
   {
     quote:
       "Excellent duty solicitor. Arrived within 30 minutes and gave me confidence during a very stressful time.",
     author: "DM",
     location: "Medway",
-    rating: 5,
   },
   {
     quote:
       "Robert's experience showed from the start. He knew exactly what questions to challenge and protected my rights throughout.",
     author: "SS",
     location: "Gravesend",
-    rating: 5,
   },
 ];
 
@@ -83,7 +76,6 @@ export default function TestimonialCarousel({
     setCurrentIndex(index);
   }, []);
 
-  // Auto-rotate every 5 seconds
   useEffect(() => {
     if (isPaused) return;
 
@@ -98,10 +90,9 @@ export default function TestimonialCarousel({
 
   return (
     <section
-      className="py-20 bg-gradient-to-br from-blue-900 via-indigo-800 to-purple-900 relative overflow-hidden"
+      className="relative overflow-hidden bg-primary-dark py-16 text-white md:py-20"
       onMouseEnter={pauseOnHover ? () => setIsPaused(true) : undefined}
       onMouseLeave={pauseOnHover ? () => setIsPaused(false) : undefined}
-      // Pause when keyboard users focus controls; resume when focus leaves section.
       onFocusCapture={() => setIsPaused(true)}
       onBlurCapture={(e) => {
         const nextFocused = e.relatedTarget as Node | null;
@@ -110,154 +101,94 @@ export default function TestimonialCarousel({
         }
       }}
     >
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.2),transparent_70%)]"></div>
-      </div>
-      <div className="max-w-6xl mx-auto px-4 relative z-10">
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center justify-center gap-1 mb-4">
-            {["1", "2", "3", "4", "5"].map((k) => (
-              <svg
-                key={`header-star-${k}`}
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="lucide lucide-star w-5 h-5 text-amber-400 fill-current"
-              >
-                <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path>
-              </svg>
-            ))}
-          </div>
-          <h2 className="text-3xl md:text-4xl font-black text-white mb-4">
+      <div
+        className="pointer-events-none absolute inset-0 opacity-40"
+        aria-hidden="true"
+        style={{
+          background:
+            "radial-gradient(ellipse 70% 50% at 20% 20%, rgb(201 162 39 / 0.12), transparent 55%)",
+        }}
+      />
+      <div className="relative z-10 mx-auto max-w-5xl px-4 md:px-6">
+        <div className="mb-10 max-w-measure md:mb-12">
+          <p className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-accent-light">
+            Client voices
+          </p>
+          <h2 className="mt-2 font-display text-3xl font-bold text-white md:text-4xl">
             What people in Kent say after we helped
           </h2>
-          <p className="text-lg text-blue-200 max-w-2xl mx-auto">
+          <p className="mt-3 text-base text-white/70 md:text-lg">
             Straight feedback from clients we sat with through custody and interview
           </p>
         </div>
 
-        <div className="relative">
-          <div className="rounded-xl text-card-foreground bg-white/95 backdrop-blur-sm shadow-2xl border-0 overflow-hidden min-h-[400px] flex flex-col justify-center">
-            <div className="p-8 md:p-12 relative">
-              {/* Quote Icon */}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="lucide lucide-quote w-12 h-12 text-amber-400 mb-6 opacity-50 absolute top-8 left-8"
+        <div className="relative border-t border-white/15 pt-10">
+          <p className="font-display text-6xl leading-none text-accent/40 md:text-7xl" aria-hidden="true">
+            “
+          </p>
+          <blockquote className="-mt-6 max-w-3xl font-display text-xl font-medium leading-relaxed text-white md:text-2xl lg:text-[1.75rem]">
+            {currentTestimonial.quote}
+          </blockquote>
+          <div className="mt-8 flex flex-wrap items-end justify-between gap-6 border-t border-white/10 pt-6">
+            <div>
+              <p className="text-lg font-bold text-white">{currentTestimonial.author}</p>
+              <p className="text-sm text-accent-light">from {currentTestimonial.location}</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={goToPrev}
+                className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-white/25 text-white transition-colors hover:border-accent hover:bg-white/5"
+                aria-label="Previous testimonial"
               >
-                <path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"></path>
-                <path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"></path>
-              </svg>
-
-              <div className="pt-10" style={{ opacity: 1, transform: "none" }}>
-                <div className="mb-6">
-                  {/* Star Rating */}
-                  <div className="flex items-center mb-4">
-                    {Array.from({ length: currentTestimonial.rating ?? 5 }, (_, i) => i + 1).map(
-                      (starNumber) => (
-                      <svg
-                        key={`rating-star-${starNumber}`}
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="lucide lucide-star w-5 h-5 text-amber-400 fill-current"
-                      >
-                        <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path>
-                      </svg>
-                      ),
-                    )}
-                  </div>
-
-                  {/* Quote */}
-                  <blockquote className="text-slate-800 text-xl md:text-2xl font-medium leading-relaxed mb-8">
-                    "{currentTestimonial.quote}"
-                  </blockquote>
-                </div>
-
-                {/* Author */}
-                <div className="flex items-center justify-between border-t border-slate-100 pt-6">
-                  <div>
-                    <p className="font-bold text-slate-900 text-lg">{currentTestimonial.author}</p>
-                    <p className="text-sm text-slate-600">from {currentTestimonial.location}</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Navigation Arrows */}
-              <div className="absolute bottom-8 right-8 flex items-center gap-2 z-20">
-                <button
-                  onClick={goToPrev}
-                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border bg-background shadow-sm hover:text-accent-foreground h-9 w-9 rounded-full hover:bg-blue-50 border-slate-200"
-                  aria-label="Previous testimonial"
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  aria-hidden="true"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="lucide lucide-chevron-left w-5 h-5 text-slate-600"
-                  >
-                    <path d="m15 18-6-6 6-6"></path>
-                  </svg>
-                </button>
-                <button
-                  onClick={goToNext}
-                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border bg-background shadow-sm hover:text-accent-foreground h-9 w-9 rounded-full hover:bg-blue-50 border-slate-200"
-                  aria-label="Next testimonial"
+                  <path d="m15 18-6-6 6-6" />
+                </svg>
+              </button>
+              <button
+                type="button"
+                onClick={goToNext}
+                className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-white/25 text-white transition-colors hover:border-accent hover:bg-white/5"
+                aria-label="Next testimonial"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  aria-hidden="true"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="lucide lucide-chevron-right w-5 h-5 text-slate-600"
-                  >
-                    <path d="m9 18 6-6-6-6"></path>
-                  </svg>
-                </button>
-              </div>
+                  <path d="m9 18 6-6-6-6" />
+                </svg>
+              </button>
             </div>
           </div>
 
-          {/* Dots Indicator */}
-          <div className="flex justify-center gap-2 mt-8">
+          <div className="mt-8 flex gap-2" role="tablist" aria-label="Testimonial slides">
             {testimonials.map((t, index) => (
               <button
                 key={`${t.author}-${t.location}-${index}`}
+                type="button"
                 onClick={() => goToSlide(index)}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  index === currentIndex ? "bg-amber-400 w-8" : "bg-white/20 hover:bg-white/40 w-2"
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  index === currentIndex
+                    ? "w-8 bg-accent"
+                    : "w-2 bg-white/25 hover:bg-white/45"
                 }`}
                 aria-label={`Go to testimonial ${index + 1}`}
+                aria-current={index === currentIndex ? "true" : undefined}
               />
             ))}
           </div>

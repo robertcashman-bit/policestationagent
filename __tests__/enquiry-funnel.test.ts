@@ -18,9 +18,14 @@ describe("enquiry funnel routes", () => {
       path.join(root, "components/conversion/HomeHeroCover.tsx"),
       "utf8",
     );
+    const pathway = fs.readFileSync(
+      path.join(root, "components/conversion/HomePathwaySection.tsx"),
+      "utf8",
+    );
     expect(page).not.toMatch(/tel:\$\{PHONE_TEL\}|tel:01732/);
     expect(hero).not.toMatch(/tel:01732|PHONE_TEL/);
-    expect(hero).toContain("AudiencePathSelector");
+    expect(page).toContain("HomePathwaySection");
+    expect(pathway).toContain("AudiencePathSelector");
   });
 
   it("header and sticky bar hide generic telephone", () => {

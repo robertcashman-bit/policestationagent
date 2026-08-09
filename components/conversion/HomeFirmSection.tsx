@@ -11,54 +11,76 @@ const FIRM_BULLETS = [
 export function HomeFirmSection() {
   return (
     <section
-      className="mx-auto max-w-6xl px-4 py-10"
+      className="section-pad"
       aria-labelledby="firm-cover-heading"
     >
-      <div className="rounded-2xl border-2 border-amber-200 bg-gradient-to-br from-amber-50 to-white shadow-lg p-6 md:p-8">
-        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
-          <div className="flex-1">
-            <p className="text-xs font-semibold tracking-wide text-amber-700 uppercase">
-              For criminal defence firms
-            </p>
-            <h2 id="firm-cover-heading" className="text-2xl md:text-3xl font-black text-slate-900 mt-1">
-              Police station agent cover for solicitors
-            </h2>
-            <p className="text-slate-600 mt-2 max-w-2xl">
-              Instruct Robert Cashman for reliable police station agency attendance anywhere
-              within about 45 minutes of Maidstone — custody, voluntary interviews, and
-              pre-booked attendances.
-            </p>
-            <ul className="mt-4 space-y-2">
-              {FIRM_BULLETS.map((bullet) => (
-                <li key={bullet} className="flex items-start gap-2 text-slate-700 text-sm md:text-base">
-                  <span className="text-amber-600 font-bold mt-0.5" aria-hidden="true">
-                    ✓
-                  </span>
-                  <span>{bullet}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="flex flex-col gap-3 shrink-0 md:min-w-[220px]" data-nosnippet>
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center rounded-lg bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold px-6 py-3 shadow-md transition-colors"
-              data-event="contact_click"
+      <div className="mx-auto max-w-6xl px-4 md:px-6">
+        <div className="b2b-panel relative overflow-hidden rounded-2xl border border-white/10 px-6 py-10 text-white shadow-elevated md:px-10 md:py-14">
+          <div
+            className="pointer-events-none absolute inset-y-0 right-0 hidden w-1/3 opacity-30 md:block"
+            aria-hidden="true"
+            style={{
+              backgroundImage:
+                "linear-gradient(rgb(255 255 255 / 0.04) 1px, transparent 1px), linear-gradient(90deg, rgb(255 255 255 / 0.04) 1px, transparent 1px)",
+              backgroundSize: "28px 28px",
+            }}
+          />
+          <div className="relative z-10 md:grid md:grid-cols-[1.4fr_0.85fr] md:gap-12 md:items-start">
+            <div>
+              <p className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-accent-light">
+                For criminal defence firms
+              </p>
+              <h2
+                id="firm-cover-heading"
+                className="mt-2 font-display text-3xl font-bold text-white md:text-4xl"
+              >
+                Police station agent cover for solicitors
+              </h2>
+              <p className="mt-4 max-w-measure text-base leading-relaxed text-white/75 md:text-lg">
+                Instruct Robert Cashman for reliable police station agency attendance anywhere
+                within about 45 minutes of Maidstone — custody, voluntary interviews, and
+                pre-booked attendances.
+              </p>
+              <ul className="mt-6 space-y-3">
+                {FIRM_BULLETS.map((bullet) => (
+                  <li
+                    key={bullet}
+                    className="flex items-start gap-3 text-sm text-white/85 md:text-base"
+                  >
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+                    <span>{bullet}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div
+              className="mt-8 flex flex-col gap-3 border-t border-white/15 pt-8 md:mt-0 md:border-t-0 md:border-l md:pl-10 md:pt-0"
+              data-nosnippet
             >
-              Instruct cover (Contact)
-            </Link>
-            <Link
-              href="/for-solicitors#firm-enquiry"
-              className="inline-flex items-center justify-center rounded-lg border-2 border-amber-500 bg-white hover:bg-amber-50 text-slate-900 font-bold px-6 py-3 transition-colors"
-            >
-              Firm enquiry form
-            </Link>
-            <Link
-              href="/for-solicitors"
-              className="text-center text-sm font-semibold text-blue-700 hover:underline"
-            >
-              Full firm services →
-            </Link>
+              <p className="text-xs text-white/55">
+                Professional instruction routes — telephone details are on the agency and contact
+                pages for firms.
+              </p>
+              <Link
+                href="/contact"
+                className="btn-gold"
+                data-event="contact_click"
+              >
+                Instruct cover (Contact)
+              </Link>
+              <Link
+                href="/for-solicitors#firm-enquiry"
+                className="inline-flex min-h-[44px] items-center justify-center rounded-md border border-white/30 bg-white/5 px-5 text-sm font-bold text-white transition-colors hover:bg-white/10"
+              >
+                Firm enquiry form
+              </Link>
+              <Link
+                href="/for-solicitors"
+                className="text-center text-sm font-semibold text-accent-light underline-offset-2 hover:underline"
+              >
+                Full firm services →
+              </Link>
+            </div>
           </div>
         </div>
       </div>
