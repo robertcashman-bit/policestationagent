@@ -68,6 +68,17 @@ export async function GET(request: Request) {
   const batches = Number(url.searchParams.get('batches') || 2) || 2;
   const limit = Number(url.searchParams.get('limit') || 25) || 25;
 
+  if (url.searchParams.get('resetDailyCap') === '1') {
+    const { resetDailySendCount, getDailySendCount } = await import('@/lib/firm-outreach/storage');
+    const reset = await resetDailySendCount();
+    return NextResponse.json({
+      ok: true,
+      mode: 'resetDailyCap',
+      reset,
+      dailySendCount: await getDailySendCount(reset.date),
+    });
+  }
+
   if (sendKentCorrection) {
     const dryRun = url.searchParams.get('dryRun') === '1';
     const limit = Number(url.searchParams.get('limit') || 0) || undefined;

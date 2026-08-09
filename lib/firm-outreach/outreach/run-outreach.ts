@@ -94,9 +94,11 @@ export async function runFirmOutreach(opts?: {
   }
 
   const date = new Date().toISOString().slice(0, 10);
-  const cap = opts?.limit ?? dailySendCap();
+  const dailyCap = dailySendCap();
   const alreadySent = await getDailySendCount(date);
-  const remaining = Math.max(0, cap - alreadySent);
+  const remainingToday = Math.max(0, dailyCap - alreadySent);
+  // opts.limit is a per-run ceiling, not a replacement for the daily cap.
+  const remaining = Math.min(remainingToday, opts?.limit ?? remainingToday);
   if (remaining === 0) {
     stats.elapsedMs = Date.now() - started;
     stats.skipReasons = { daily_cap: 1 };

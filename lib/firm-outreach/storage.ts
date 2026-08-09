@@ -496,6 +496,17 @@ export async function incrementDailySendCount(date: string): Promise<number> {
   return next;
 }
 
+/** Ops/bootstrap helper — clear today's campaign send counter. */
+export async function resetDailySendCount(date?: string): Promise<{ date: string; previous: number }> {
+  const kv = getKV();
+  const day = date ?? new Date().toISOString().slice(0, 10);
+  if (!kv) return { date: day, previous: 0 };
+  const key = dailySendKey(day);
+  const previous = (await kv.get<number>(key)) ?? 0;
+  await kv.del(key);
+  return { date: day, previous: typeof previous === 'number' ? previous : 0 };
+}
+
 export async function getPaidLookupCount(date: string): Promise<number> {
   const kv = getKV();
   if (!kv) return 0;
