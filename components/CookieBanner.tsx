@@ -35,11 +35,11 @@ export function CookieBanner() {
   if (!visible) return null;
 
   return (
-    <div
+    <aside
       data-hook="cookie-banner"
       className="cookie-bar-compact psr-cookie-bar fixed bottom-0 left-0 right-0 z-50 border-t border-[var(--border)] bg-white shadow-md"
       style={{ paddingBottom: 'max(0.5rem, var(--safe-area-bottom))' }}
-      role="dialog"
+      role="region"
       aria-label="Cookie consent"
     >
       <div className="mx-auto flex max-w-[var(--container-max)] flex-wrap items-center justify-between gap-2 px-[var(--container-gutter)] py-2 sm:flex-nowrap sm:px-6 lg:px-8">
@@ -66,7 +66,7 @@ export function CookieBanner() {
           </button>
         </div>
       </div>
-    </div>
+    </aside>
   );
 }
 

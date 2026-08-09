@@ -280,6 +280,7 @@ export default function Chatbot() {
         <div
           ref={panelRef}
           role="dialog"
+          aria-modal="false"
           aria-label="Help assistant"
           className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[9999] w-[calc(100vw-1.5rem)] sm:w-[min(100vw-2rem,380px)] max-w-[380px] bg-white rounded-xl shadow-2xl border border-slate-200 flex flex-col transition-all duration-300 ${isMinimized ? "h-14" : "h-[min(70vh,520px)]"}`}
         >
