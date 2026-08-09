@@ -3,6 +3,11 @@ import { isCronAuthorized } from '@/lib/cron-auth';
 import { isAllowedEnquiryOrigin } from '@/lib/enquiry/origin';
 import { sanitizeBlogHtml, sanitizeScrapedHtml } from '@/lib/html-sanitizer';
 
+/** NODE_ENV is typed read-only on ProcessEnv; Reflect.set keeps test env switching valid. */
+function setNodeEnv(value: string | undefined) {
+  Reflect.set(process.env, 'NODE_ENV', value);
+}
+
 describe('sendMagicCode email subject', () => {
   afterEach(() => {
     vi.resetModules();
@@ -43,12 +48,12 @@ describe('cron timing-safe auth', () => {
 
   afterEach(() => {
     process.env.CRON_SECRET = prevSecret;
-    process.env.NODE_ENV = prevNodeEnv;
+    setNodeEnv(prevNodeEnv);
   });
 
   it('denies when CRON_SECRET is missing in production', () => {
     delete process.env.CRON_SECRET;
-    process.env.NODE_ENV = 'production';
+    setNodeEnv('production');
     const req = new Request('http://localhost/api/cron/firm-outreach-status', {
       headers: { Authorization: 'Bearer anything' },
     });
@@ -57,7 +62,7 @@ describe('cron timing-safe auth', () => {
 
   it('rejects near-miss secrets without accepting them', () => {
     process.env.CRON_SECRET = 'test-cron-secret';
-    process.env.NODE_ENV = 'production';
+    setNodeEnv('production');
     const req = new Request('http://localhost/api/cron/firm-outreach-status', {
       headers: { Authorization: 'Bearer test-cron-secre' },
     });
@@ -66,7 +71,7 @@ describe('cron timing-safe auth', () => {
 
   it('accepts exact Bearer secret', () => {
     process.env.CRON_SECRET = 'test-cron-secret';
-    process.env.NODE_ENV = 'production';
+    setNodeEnv('production');
     const req = new Request('http://localhost/api/cron/firm-outreach-status', {
       headers: { Authorization: 'Bearer test-cron-secret' },
     });
@@ -75,7 +80,7 @@ describe('cron timing-safe auth', () => {
 
   it('accepts exact x-cron-secret header', () => {
     process.env.CRON_SECRET = 'test-cron-secret';
-    process.env.NODE_ENV = 'production';
+    setNodeEnv('production');
     const req = new Request('http://localhost/api/cron/firm-outreach-status', {
       headers: { 'x-cron-secret': 'test-cron-secret' },
     });
@@ -87,11 +92,11 @@ describe('enquiry origin checks', () => {
   const prevNodeEnv = process.env.NODE_ENV;
 
   afterEach(() => {
-    process.env.NODE_ENV = prevNodeEnv;
+    setNodeEnv(prevNodeEnv);
   });
 
   it('rejects missing Origin and Referer in production', () => {
-    process.env.NODE_ENV = 'production';
+    setNodeEnv('production');
     const req = new Request('https://www.policestationagent.com/api/contact', {
       method: 'POST',
     });
@@ -99,7 +104,7 @@ describe('enquiry origin checks', () => {
   });
 
   it('allows trusted production Origin', () => {
-    process.env.NODE_ENV = 'production';
+    setNodeEnv('production');
     const req = new Request('https://www.policestationagent.com/api/contact', {
       method: 'POST',
       headers: { Origin: 'https://www.policestationagent.com' },
@@ -108,7 +113,7 @@ describe('enquiry origin checks', () => {
   });
 
   it('allows trusted apex production Origin', () => {
-    process.env.NODE_ENV = 'production';
+    setNodeEnv('production');
     const req = new Request('https://www.policestationagent.com/api/contact', {
       method: 'POST',
       headers: { Origin: 'https://policestationagent.com' },
@@ -117,7 +122,7 @@ describe('enquiry origin checks', () => {
   });
 
   it('allows missing Origin in non-production', () => {
-    process.env.NODE_ENV = 'development';
+    setNodeEnv('development');
     const req = new Request('http://localhost:3000/api/contact', {
       method: 'POST',
     });
@@ -125,7 +130,7 @@ describe('enquiry origin checks', () => {
   });
 
   it('rejects untrusted production Origin', () => {
-    process.env.NODE_ENV = 'production';
+    setNodeEnv('production');
     const req = new Request('https://www.policestationagent.com/api/contact', {
       method: 'POST',
       headers: { Origin: 'https://evil.example' },
@@ -169,12 +174,12 @@ describe('index-now GET recon strip', () => {
   afterEach(() => {
     vi.resetModules();
     process.env.CRON_SECRET = prevSecret;
-    process.env.NODE_ENV = prevNodeEnv;
+    setNodeEnv(prevNodeEnv);
   });
 
   it('returns minimal payload without CRON_SECRET', async () => {
     process.env.CRON_SECRET = 'index-now-secret';
-    process.env.NODE_ENV = 'production';
+    setNodeEnv('production');
     const { GET } = await import('@/app/api/index-now/route');
     const res = await GET(new Request('http://localhost/api/index-now'));
     const body = await res.json();
@@ -189,14 +194,14 @@ describe('contact health GET recon strip', () => {
   afterEach(() => {
     vi.resetModules();
     process.env.CRON_SECRET = prevSecret;
-    process.env.NODE_ENV = prevNodeEnv;
+    setNodeEnv(prevNodeEnv);
     delete process.env.RESEND_API_KEY;
     delete process.env.CONTACT_FORM_TO_EMAIL;
   });
 
   it('returns minimal payload without CRON_SECRET', async () => {
     process.env.CRON_SECRET = 'health-check-secret';
-    process.env.NODE_ENV = 'production';
+    setNodeEnv('production');
     const { GET } = await import('@/app/api/contact/health/route');
     const res = await GET(new Request('http://localhost/api/contact/health'));
     const body = await res.json();
