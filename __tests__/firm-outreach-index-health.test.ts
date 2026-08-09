@@ -124,14 +124,43 @@ describe('reindexProspectStatuses batch write', () => {
 
     vi.doMock('@/lib/kv', () => ({
       getKV: () => ({
-        set: async (key: string, value: string[]) => {
-          sets.set(key, value);
+        set: async (key: string, value: unknown) => {
+          sets.set(key, value as string[]);
+        },
+        del: async (key: string) => {
+          sets.delete(key);
+        },
+        sadd: async (key: string, member: string) => {
+          const cur = sets.get(key) ?? [];
+          if (!cur.includes(member)) cur.push(member);
+          sets.set(key, cur);
+        },
+        pipeline: () => {
+          const ops: Array<() => Promise<void>> = [];
+          return {
+            sadd: (key: string, member: string) => {
+              ops.push(async () => {
+                const cur = sets.get(key) ?? [];
+                if (!cur.includes(member)) cur.push(member);
+                sets.set(key, cur);
+              });
+            },
+            exec: async () => {
+              for (const op of ops) await op();
+            },
+          };
         },
       }),
     }));
 
+    vi.doMock('@/lib/firm-outreach/kv-scan', () => ({
+      scanKeys: vi.fn().mockResolvedValue([]),
+    }));
+
     vi.doMock('@/lib/firm-outreach/storage', () => ({
       listAllProspectIds: vi.fn().mockResolvedValue(['p1', 'p2']),
+      listProspectIdsByStatus: vi.fn().mockResolvedValue([]),
+      getProspect: vi.fn(async (id: string) => prospects.get(id) ?? null),
       getProspectsByIds: vi.fn().mockResolvedValue(prospects),
       writeProspectCountsCache: vi.fn().mockResolvedValue(undefined),
     }));

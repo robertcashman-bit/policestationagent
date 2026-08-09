@@ -1,4 +1,5 @@
 import crypto from 'crypto';
+import { addToIndexSet, readIndexMembers } from '@/lib/kv-atomic';
 import { getKV, skipKVInPrerender } from '@/lib/kv';
 import { dailySendKeyForCampaign, isActiveCampaignProspect, isActiveCampaignSend, activeOutreachCampaignId } from './campaign-scope';
 import { OUTREACH_CAMPAIGN_IDS } from './site-config';
@@ -85,96 +86,36 @@ function isWrongTypeError(err: unknown): boolean {
   return /WRONGTYPE/i.test(msg);
 }
 
-/** Delete a KV key that held an unexpected Redis type; never throws. */
-async function deleteWrongTypeKey(key: string): Promise<void> {
-  const kv = getKV();
-  if (!kv) return;
-  try {
-    await kv.del(key);
-  } catch (err) {
-    console.error('[firm-outreach] failed to delete WRONGTYPE key', { key, err });
-  }
-}
-
-/**
- * Read a JSON string-array index. Recovers from Upstash WRONGTYPE
- * (e.g. key was created as a Redis List) by deleting and treating as empty.
- * Never throws.
- */
+/** Read string index — Redis SET (shared with RepUK) with legacy JSON array fallback. */
 async function readStringList(key: string): Promise<string[]> {
-  const kv = getKV();
-  if (!kv) return [];
-  try {
-    const raw = await kv.get<unknown>(key);
-    if (Array.isArray(raw)) {
-      return raw.filter((x): x is string => typeof x === 'string');
-    }
-    if (raw == null) return [];
-    // Stored as a non-array JSON value — wipe so the next write recreates a list.
-    console.warn('[firm-outreach] index key held non-array value; recreating as JSON array', {
-      key,
-      typeofRaw: typeof raw,
-    });
-    await deleteWrongTypeKey(key);
-    return [];
-  } catch (err) {
-    if (isWrongTypeError(err)) {
-      console.warn(
-        '[firm-outreach] WRONGTYPE on index key; deleting and recreating as JSON array',
-        { key },
-      );
-      await deleteWrongTypeKey(key);
-      return [];
-    }
-    console.error('[firm-outreach] readStringList failed', { key, err });
-    return [];
-  }
+  return readIndexMembers(key);
 }
 
 async function appendIndex(key: string, id: string): Promise<void> {
-  const kv = getKV();
-  if (!kv) return;
-  try {
-    const ids = await readStringList(key);
-    if (!ids.includes(id)) {
-      ids.push(id);
-      await kv.set(key, ids);
-    }
-  } catch (err) {
-    if (isWrongTypeError(err)) {
-      console.warn(
-        '[firm-outreach] WRONGTYPE on appendIndex; recreating index as JSON array',
-        { key },
-      );
-      try {
-        await deleteWrongTypeKey(key);
-        await kv.set(key, [id]);
-      } catch (recreateErr) {
-        console.error('[firm-outreach] appendIndex recreate failed', { key, recreateErr });
-      }
-      return;
-    }
-    console.error('[firm-outreach] appendIndex failed', { key, err });
-  }
+  await addToIndexSet(key, id);
 }
 
 async function removeFromIndex(key: string, id: string): Promise<void> {
   const kv = getKV();
   if (!kv) return;
   try {
-    const ids = await readStringList(key);
-    const next = ids.filter((x) => x !== id);
-    if (next.length !== ids.length) await kv.set(key, next);
-  } catch (err) {
-    if (isWrongTypeError(err)) {
-      console.warn(
-        '[firm-outreach] WRONGTYPE on removeFromIndex; deleting bad key',
-        { key },
-      );
-      await deleteWrongTypeKey(key);
-      return;
-    }
-    console.error('[firm-outreach] removeFromIndex failed', { key, err });
+    await kv.srem(key, id);
+    return;
+  } catch {
+    // Legacy JSON array — rewrite without the id, then migrate to SET.
+  }
+  const ids = await readStringList(key);
+  const next = ids.filter((x) => x !== id);
+  if (next.length === ids.length) return;
+  try {
+    await kv.del(key);
+  } catch {
+    return;
+  }
+  if (next.length > 0) {
+    const pipeline = kv.pipeline();
+    for (const member of next) pipeline.sadd(key, member);
+    await pipeline.exec();
   }
 }
 

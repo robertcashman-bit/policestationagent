@@ -1,5 +1,5 @@
 import { runFirmEnrichment } from './enrichment/run-enrich';
-import { reindexProspectStatuses } from './reindex-prospects';
+import { reindexProspectStatuses, reindexProspectStatusesChunk } from './reindex-prospects';
 import { isOutreachSendAllowed, setAdminPauseState, getOutreachPauseSummary } from './pause-state';
 import { countProspectsByStatus } from './storage';
 
@@ -11,6 +11,7 @@ export interface BootstrapOutreachResult {
   countsBefore: Record<string, number>;
   countsAfter: Record<string, number>;
   reindex?: Awaited<ReturnType<typeof reindexProspectStatuses>>;
+  reindexChunk?: Awaited<ReturnType<typeof reindexProspectStatusesChunk>>;
   batches: Awaited<ReturnType<typeof runFirmEnrichment>>[];
   totals: {
     processed: number;
@@ -34,6 +35,10 @@ export async function bootstrapOutreach(opts?: {
   reindex?: boolean;
   /** Reindex only — skip enrich batches. */
   reindexOnly?: boolean;
+  /** Time-bounded SCAN reindex pass (for serverless). */
+  reindexChunk?: boolean;
+  /** Reset chunked reindex cursor before this pass. */
+  reindexReset?: boolean;
 }): Promise<BootstrapOutreachResult> {
   const batches = opts?.batches ?? 2;
   const limit = opts?.limit ?? 25;
@@ -51,8 +56,15 @@ export async function bootstrapOutreach(opts?: {
   const pauseAfter = await getOutreachPauseSummary();
   let countsBefore = await countProspectsByStatus();
   let reindexResult: Awaited<ReturnType<typeof reindexProspectStatuses>> | undefined;
+  let reindexChunkResult: Awaited<ReturnType<typeof reindexProspectStatusesChunk>> | undefined;
 
-  if (opts?.reindex || opts?.reindexOnly) {
+  if (opts?.reindexChunk) {
+    reindexChunkResult = await reindexProspectStatusesChunk({
+      maxElapsedMs: Math.min(45_000, Math.max(5_000, deadline - Date.now())),
+      reset: opts.reindexReset,
+    });
+    countsBefore = await countProspectsByStatus();
+  } else if (opts?.reindex || opts?.reindexOnly) {
     reindexResult = await reindexProspectStatuses();
     countsBefore = await countProspectsByStatus();
   }
@@ -66,7 +78,7 @@ export async function bootstrapOutreach(opts?: {
     errors: 0,
   };
 
-  if (opts?.unpauseOnly || opts?.reindexOnly) {
+  if (opts?.unpauseOnly || opts?.reindexOnly || opts?.reindexChunk) {
     const sendAllowed = await isOutreachSendAllowed();
     const countsAfter = await countProspectsByStatus();
     return {
@@ -76,7 +88,16 @@ export async function bootstrapOutreach(opts?: {
       sendAllowed,
       countsBefore,
       countsAfter,
-      reindex: reindexResult,
+      reindex: reindexResult ?? (reindexChunkResult
+        ? {
+            scanned: reindexChunkResult.scanned,
+            byStatus: reindexChunkResult.byStatus,
+            activeByStatus: reindexChunkResult.activeByStatus,
+            indexSize: reindexChunkResult.indexSize,
+            firmIndexes: reindexChunkResult.firmIndexes,
+          }
+        : undefined),
+      reindexChunk: reindexChunkResult,
       batches: [],
       totals: emptyTotals,
     };

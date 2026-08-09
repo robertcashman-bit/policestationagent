@@ -60,6 +60,8 @@ export async function GET(request: Request) {
   const unpauseOnly = url.searchParams.get('unpause') === '1';
   const reindex = url.searchParams.get('reindex') === '1';
   const reindexOnly = url.searchParams.get('reindexOnly') === '1';
+  const reindexChunk = url.searchParams.get('reindexChunk') === '1';
+  const reindexReset = url.searchParams.get('reindexReset') === '1';
   const sendApproval = url.searchParams.get('sendApproval') === '1';
   const sendKentCorrection = url.searchParams.get('sendKentCorrection') === '1';
   const forceApproval = url.searchParams.get('force') === '1';
@@ -104,6 +106,13 @@ export async function GET(request: Request) {
     unpauseOnly,
     reindex,
     reindexOnly,
+    reindexChunk,
+    reindexReset,
   });
-  return NextResponse.json({ ok: true, mode: 'bootstrap', ...result });
+  return NextResponse.json({
+    ok: true,
+    mode: reindexChunk ? 'reindexChunk' : 'bootstrap',
+    reindexDone: result.reindexChunk?.done,
+    ...result,
+  });
 }
