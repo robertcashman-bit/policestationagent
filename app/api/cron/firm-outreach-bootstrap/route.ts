@@ -98,21 +98,27 @@ export async function GET(request: Request) {
     });
   }
 
-  const result = await bootstrapOutreach({
-    batches,
-    limit,
-    totalMaxElapsedMs: 240_000,
-    maxElapsedMs: 110_000,
-    unpauseOnly,
-    reindex,
-    reindexOnly,
-    reindexChunk,
-    reindexReset,
-  });
-  return NextResponse.json({
-    ok: true,
-    mode: reindexChunk ? 'reindexChunk' : 'bootstrap',
-    reindexDone: result.reindexChunk?.done,
-    ...result,
-  });
+  try {
+    const result = await bootstrapOutreach({
+      batches,
+      limit,
+      totalMaxElapsedMs: 240_000,
+      maxElapsedMs: 110_000,
+      unpauseOnly,
+      reindex,
+      reindexOnly,
+      reindexChunk,
+      reindexReset,
+    });
+    return NextResponse.json({
+      ok: true,
+      mode: reindexChunk ? 'reindexChunk' : 'bootstrap',
+      reindexDone: result.reindexChunk?.done,
+      ...result,
+    });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.error('[firm-outreach-bootstrap]', message);
+    return NextResponse.json({ ok: false, error: message }, { status: 500 });
+  }
 }

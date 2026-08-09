@@ -3,6 +3,7 @@
  * Uses SCAN so orphaned records survive master-index wipes.
  * Supports chunked passes for Vercel maxDuration limits.
  */
+import { addToIndexSet } from '@/lib/kv-atomic';
 import { getKV } from '@/lib/kv';
 import { isActiveCampaignProspect } from './campaign-scope';
 import { scanKeys } from './kv-scan';
@@ -120,16 +121,12 @@ async function rewriteSet(key: string, members: string[]): Promise<void> {
 }
 
 async function indexProspectRecord(p: FirmProspect): Promise<void> {
-  const kv = getKV();
-  if (!kv || typeof kv.sadd !== 'function') {
-    // Fallback path for limited clients — append via rewrite of small sets is too heavy;
-    // full reindex handles mocks.
-    return;
-  }
-  await kv.sadd(PROSPECT_INDEX, p.id);
-  await kv.sadd(statusIndexKey(p.status), p.id);
+  // Use addToIndexSet so legacy JSON-array keys (from the old WRONGTYPE wipe path)
+  // are migrated to Redis SETs instead of throwing WRONGTYPE on SADD.
+  await addToIndexSet(PROSPECT_INDEX, p.id);
+  await addToIndexSet(statusIndexKey(p.status), p.id);
   if (p.firmKey) {
-    await kv.sadd(PROSPECT_FIRM_INDEX + p.firmKey, p.id);
+    await addToIndexSet(PROSPECT_FIRM_INDEX + p.firmKey, p.id);
   }
 }
 
