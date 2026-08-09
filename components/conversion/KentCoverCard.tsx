@@ -12,18 +12,18 @@ export function KentCoverCard({ className = "" }: { className?: string }) {
       className={`max-w-3xl mx-auto px-4 ${className}`}
       data-nosnippet
     >
-      <div className="rounded-2xl border border-slate-200 bg-white shadow-sm p-6 md:p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div className="surface-card p-6 md:p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
           <h2
             id="kent-cover-card-heading"
-            className="text-xl md:text-2xl font-black text-slate-900"
+            className="font-display text-xl md:text-2xl font-bold text-primary"
           >
             Save our Kent cover card
           </h2>
-          <p className="text-slate-600 mt-1 text-sm md:text-base">
+          <p className="text-muted-foreground mt-1 text-sm md:text-base">
             Independent criminal defence solicitor for custody or a booked voluntary interview —
             not Kent Police. Telephone and SMS are on the{" "}
-            <Link href="/contact" className="font-semibold underline text-blue-800">
+            <Link href="/contact" className="font-semibold underline text-primary">
               Contact
             </Link>{" "}
             page.
@@ -33,7 +33,7 @@ export function KentCoverCard({ className = "" }: { className?: string }) {
           href="/kent-police-station-cover-card.vcf"
           download="police-station-agent-kent.vcf"
           data-event="save_cover_card"
-          className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-3 shadow shrink-0"
+          className="btn-navy shrink-0 gap-2"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

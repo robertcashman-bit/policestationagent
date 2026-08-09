@@ -17,7 +17,7 @@ export function PoliceSignposting({
 }: Props) {
   return (
     <aside
-      className={`rounded-lg border border-slate-300 bg-slate-100 p-4 ${className}`}
+      className={`surface-card bg-secondary/50 p-4 ${className}`}
       data-police-assistance="true"
       aria-label="Official police contact"
     >

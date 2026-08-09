@@ -1,5 +1,4 @@
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import PageShell from "@/components/PageShell";
 import { LocalCoverPage } from "@/components/local/LocalCoverPage";
 import { buildPageMetadata } from "@/lib/seo/page-metadata";
 import type { LocalCoverConfig } from "@/lib/seo/local-cover-data";
@@ -16,12 +15,8 @@ export function localCoverMetadata(config: LocalCoverConfig): Metadata {
 
 export function LocalCoverPageShell({ config }: { config: LocalCoverConfig }) {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col pb-16 lg:pb-0">
-      <Header forceHidePhone />
-      <main className="flex-grow" id="main-content" role="main">
-        <LocalCoverPage config={config} />
-      </main>
-      <Footer forceHidePhone />
-    </div>
+    <PageShell forceHidePhone withMobilePad>
+      <LocalCoverPage config={config} />
+    </PageShell>
   );
 }

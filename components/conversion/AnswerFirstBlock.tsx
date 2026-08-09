@@ -12,7 +12,7 @@ type Props = {
 export function AnswerFirstBlock({ title = "In brief", children, className = "" }: Props) {
   return (
     <section
-      className={`rounded-xl border border-blue-200 bg-blue-50 p-6 mb-8 ${className}`}
+      className={`surface-card border-accent/30 bg-secondary/60 p-6 mb-8 ${className}`}
       aria-labelledby="answer-first-heading"
     >
       <h2 id="answer-first-heading" className="text-lg font-bold text-slate-900 mb-2">

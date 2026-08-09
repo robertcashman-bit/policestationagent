@@ -2,7 +2,6 @@ import { JsonLd } from "@/components/JsonLd";
 import { ConversionContactOnlyCTA } from "@/components/conversion/ConversionContactOnlyCTA";
 import { GeneralLegalDisclaimer } from "@/components/conversion/GeneralLegalDisclaimer";
 import { InternalLinkHub } from "@/components/InternalLinkHub";
-import NotPoliceNotice from "@/components/compliance/NotPoliceNotice";
 import type { LocalCoverConfig } from "@/lib/seo/local-cover-data";
 import Link from "next/link";
 import { SITE_URL } from "@/config/site";
@@ -66,21 +65,22 @@ export function LocalCoverPage({ config }: Props) {
       <JsonLd data={serviceSchema} />
       <JsonLd data={breadcrumbSchema} />
 
-      <section className="bg-gradient-to-br from-[#0A2342] via-blue-900 to-indigo-900 text-white py-14">
+      <section className="hero-navy py-14 md:py-16">
         <div className="max-w-4xl mx-auto px-4">
-          <p className="text-xs uppercase tracking-wide text-white mb-2 font-semibold">
+          <p className="text-xs uppercase tracking-wide text-accent-light mb-2 font-semibold">
             Kent police station rep
           </p>
-          <h1 className="text-3xl md:text-4xl font-bold mb-4 text-white">{config.h1}</h1>
-          <NotPoliceNotice className="rounded-lg border border-amber-300/80 bg-amber-50 px-4 py-3 text-sm text-slate-800 leading-relaxed mb-4" />
-          <p className="text-white text-lg mb-6">{config.intro}</p>
-          <div className="rounded-xl bg-white p-4 shadow-lg max-w-xl" data-nosnippet>
-            <h2 className="text-base font-bold text-slate-900 mb-3">
+          <h1 className="font-display text-3xl md:text-4xl font-bold mb-4 text-white">
+            {config.h1}
+          </h1>
+          <p className="text-white/90 text-lg mb-6">{config.intro}</p>
+          <div className="surface-card p-4 shadow-elevated max-w-xl" data-nosnippet>
+            <h2 className="text-base font-bold text-foreground mb-3">
               Independent solicitor contact details
             </h2>
             <ConversionContactOnlyCTA />
-            <p className="mt-3 text-xs text-slate-600">
-              <Link href="/contact" className="font-semibold underline text-blue-800">
+            <p className="mt-3 text-xs text-muted-foreground">
+              <Link href="/contact" className="font-semibold underline text-primary">
                 {STATION_CONTACT_BUTTON}
               </Link>{" "}
               — solicitor telephone is last on that page.
@@ -90,19 +90,19 @@ export function LocalCoverPage({ config }: Props) {
       </section>
 
       <div className="max-w-4xl mx-auto px-4 py-10 space-y-10">
-        <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-          <h2 className="text-lg font-bold text-slate-900 mb-2">In brief</h2>
-          <p className="text-slate-700">{config.answerFirst}</p>
+        <section className="surface-card p-6">
+          <h2 className="text-lg font-bold text-foreground mb-2">In brief</h2>
+          <p className="text-muted-foreground">{config.answerFirst}</p>
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-slate-900 mb-3">Who this page is for</h2>
-          <p className="text-slate-700">{config.audience}</p>
+          <h2 className="text-xl font-bold text-primary mb-3">Who this page is for</h2>
+          <p className="text-muted-foreground">{config.audience}</p>
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-slate-900 mb-3">Areas covered</h2>
-          <ul className="list-disc pl-5 text-slate-700 space-y-1">
+          <h2 className="text-xl font-bold text-primary mb-3">Areas covered</h2>
+          <ul className="list-disc pl-5 text-muted-foreground space-y-1">
             {config.areas.map((a) => (
               <li key={a}>{a}</li>
             ))}
@@ -111,21 +111,21 @@ export function LocalCoverPage({ config }: Props) {
 
         {config.stations?.length ? (
           <section>
-            <h2 className="text-xl font-bold text-slate-900 mb-2">
+            <h2 className="text-xl font-bold text-primary mb-2">
               Police station location information
             </h2>
-            <p className="text-sm text-slate-600 mb-3">
+            <p className="text-sm text-muted-foreground mb-3">
               Station addresses below are for orientation only — they are not our office address.
               Numbers on this site are independent solicitor contacts, not Kent Police.
             </p>
             <ul className="space-y-3">
               {config.stations.map((s) => (
-                <li key={s.name} className="rounded-lg border border-slate-200 p-4 bg-slate-50">
-                  <p className="font-semibold text-slate-900">{s.name}</p>
-                  {s.address ? <p className="text-sm text-slate-600">{s.address}</p> : null}
-                  {s.note ? <p className="text-sm text-slate-600">{s.note}</p> : null}
+                <li key={s.name} className="surface-card p-4 bg-secondary/40">
+                  <p className="font-semibold text-foreground">{s.name}</p>
+                  {s.address ? <p className="text-sm text-muted-foreground">{s.address}</p> : null}
+                  {s.note ? <p className="text-sm text-muted-foreground">{s.note}</p> : null}
                   {s.href ? (
-                    <Link href={s.href} className="text-sm text-blue-700 font-semibold hover:underline">
+                    <Link href={s.href} className="text-sm text-primary font-semibold hover:underline">
                       Station details →
                     </Link>
                   ) : null}
@@ -136,12 +136,12 @@ export function LocalCoverPage({ config }: Props) {
         ) : null}
 
         <section>
-          <h2 className="text-xl font-bold text-slate-900 mb-4">Frequently asked questions</h2>
+          <h2 className="text-xl font-bold text-primary mb-4">Frequently asked questions</h2>
           <dl className="space-y-4">
             {config.faqs.map((f) => (
-              <div key={f.question} className="rounded-lg border border-slate-200 p-4">
-                <dt className="font-semibold text-slate-900">{f.question}</dt>
-                <dd className="mt-2 text-slate-700 text-sm">{f.answer}</dd>
+              <div key={f.question} className="surface-card p-4">
+                <dt className="font-semibold text-foreground">{f.question}</dt>
+                <dd className="mt-2 text-muted-foreground text-sm">{f.answer}</dd>
               </div>
             ))}
           </dl>

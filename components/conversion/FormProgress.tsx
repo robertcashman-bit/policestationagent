@@ -28,7 +28,7 @@ export function FormProgress({ step, total, labels, className = "" }: Props) {
         aria-label={`Form progress: step ${safeStep} of ${safeTotal}`}
       >
         <div
-          className="h-full bg-blue-700 transition-all duration-300"
+          className="h-full bg-primary transition-all duration-300"
           style={{ width: `${pct}%` }}
         />
       </div>
@@ -38,7 +38,7 @@ export function FormProgress({ step, total, labels, className = "" }: Props) {
             <li
               key={label}
               className={`text-[10px] uppercase tracking-wide text-center ${
-                i + 1 <= safeStep ? "text-blue-800 font-semibold" : "text-slate-400"
+                i + 1 <= safeStep ? "text-primary font-semibold" : "text-slate-400"
               }`}
             >
               {label}

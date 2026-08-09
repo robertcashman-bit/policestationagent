@@ -187,7 +187,8 @@ describe("contact config", () => {
     expect(header).toMatch(/For defence firms/);
     expect(header).toContain("CHROME_HELP_STRIP");
     expect(header).toContain("CHROME_BRAND_TAGLINE");
-    expect(header).toContain("CHROME_NOT_POLICE_QUIET");
+    // Single sitewide not-police lives on NotPoliceScopeBanner — not repeated in header chrome.
+    expect(header).not.toContain("CHROME_NOT_POLICE_QUIET");
     expect(header).not.toMatch(/Independent criminal defence solicitor —/);
     expect(header).not.toMatch(/tel:01732/);
     expect(header).not.toMatch(/Call Now for legal advice/i);

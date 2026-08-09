@@ -23,21 +23,18 @@ export function ConversionCTAGroup({
 
   return (
     <div className={`flex flex-wrap gap-3 ${flex} ${className}`} data-nosnippet>
-      <Link
-        href={`${PATH_VOLUNTARY}#request`}
-        className="inline-flex items-center justify-center rounded-lg bg-blue-700 px-5 py-3 text-sm font-bold text-white hover:bg-blue-800"
-      >
+      <Link href={`${PATH_VOLUNTARY}#request`} className="btn-navy text-sm px-5 py-3 rounded-lg">
         Request voluntary interview representation
       </Link>
       <Link
         href={PATH_CUSTODY}
-        className="inline-flex items-center justify-center rounded-lg bg-red-700 px-5 py-3 text-sm font-bold text-white hover:bg-red-800"
+        className="inline-flex items-center justify-center rounded-lg bg-destructive px-5 py-3 text-sm font-bold text-white hover:bg-red-800"
       >
         Current custody pathway
       </Link>
       <Link
         href={PATH_AGENCY}
-        className="inline-flex items-center justify-center rounded-lg border-2 border-amber-600 bg-amber-50 px-5 py-3 text-sm font-bold text-amber-950 hover:bg-amber-100"
+        className="inline-flex items-center justify-center rounded-lg border-2 border-accent bg-accent/10 px-5 py-3 text-sm font-bold text-accent-foreground hover:bg-accent/20"
       >
         Agency cover for solicitors
       </Link>

@@ -1,5 +1,4 @@
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import PageShell from "@/components/PageShell";
 import Link from "next/link";
 import Image from "next/image";
 import { getAllPosts, formatBlogDate, generateExcerpt } from "@/lib/blog-reader";
@@ -81,189 +80,171 @@ export default function BlogPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
+    <PageShell forceHidePhone>
       <JsonLd data={blogSchema} />
       <JsonLd data={itemListSchema} />
-      <Header forceHidePhone />
-      <main className="flex-grow relative" id="main-content" role="main">
-        <div className="bg-slate-50 min-h-screen">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            {/* Header Section */}
-            <div className="text-center mb-12">
-              <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
-                Legal Insights & <span className="text-amber-500">Advice</span>
-              </h1>
-              <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto mb-6">
-                Expert guidance on police station procedures, your rights in custody, and criminal
-                defence strategies.
-              </p>
-              <div className="flex flex-wrap justify-center gap-3">
-                <a
-                  href={`${SITE_URL}/feed.xml`}
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-colors text-sm"
-                  title="Subscribe to RSS feed"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M4 11a9 9 0 0 1 9 9"></path>
-                    <path d="M4 4a16 16 0 0 1 16 16"></path>
-                    <circle cx="5" cy="19" r="1"></circle>
-                  </svg>
-                  RSS Feed
-                </a>
+
+      <section className="hero-navy py-12 md:py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="font-display text-4xl md:text-5xl font-bold text-white mb-4">
+            Legal Insights & <span className="text-accent-light">Advice</span>
+          </h1>
+          <p className="text-lg md:text-xl text-white/85 max-w-2xl mx-auto mb-6">
+            Expert guidance on police station procedures, your rights in custody, and criminal
+            defence strategies.
+          </p>
+          <div className="flex flex-wrap justify-center gap-3">
+            <a
+              href={`${SITE_URL}/feed.xml`}
+              className="btn-gold text-sm"
+              title="Subscribe to RSS feed"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="mr-2"
+              >
+                <path d="M4 11a9 9 0 0 1 9 9"></path>
+                <path d="M4 4a16 16 0 0 1 16 16"></path>
+                <circle cx="5" cy="19" r="1"></circle>
+              </svg>
+              RSS Feed
+            </a>
+            <Link href="/feed" className="btn-ghost-light text-sm">
+              All Feeds
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {posts.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-12">
+            {posts.map((post) => (
+              <article key={post.id} className="group flex flex-col h-full surface-card overflow-hidden w-full">
                 <Link
-                  href="/feed"
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-semibold transition-colors text-sm"
+                  href={`/blog/${post.slug}`}
+                  className="block overflow-hidden relative aspect-[16/9] bg-secondary w-full"
                 >
-                  All Feeds
-                </Link>
-              </div>
-            </div>
-
-            {/* Blog Posts Grid */}
-            {posts.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-12">
-                {posts.map((post) => (
-                  <article
-                    key={post.id}
-                    className="group flex flex-col h-full bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-slate-100 w-full"
-                  >
-                    <Link
-                      href={`/blog/${post.slug}`}
-                      className="block overflow-hidden relative aspect-[16/9] bg-gradient-to-br from-slate-100 to-slate-200 w-full"
-                    >
-                      {post.featuredImage ? (
-                        <Image
-                          src={post.featuredImage}
-                          alt={post.title}
-                          fill
-                          loading="lazy"
-                          className="object-cover transform group-hover:scale-105 transition-transform duration-500"
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-100 via-slate-100 to-slate-200">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="48"
-                            height="48"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="text-slate-400"
-                          >
-                            <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
-                            <circle cx="9" cy="9" r="2"></circle>
-                            <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path>
-                          </svg>
-                        </div>
-                      )}
-                    </Link>
-                    <div className="flex flex-col flex-grow p-5">
-                      <h3 className="text-xl font-bold text-slate-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
-                        <Link href={`/blog/${post.slug}`}>{post.title}</Link>
-                      </h3>
-                      <div className="text-sm text-slate-500 mb-4 line-clamp-3 flex-grow min-h-[3rem]">
-                        {stripFirmPhonePlainText(
-                          post.metaDescription || generateExcerpt(post.contentHtml, 160),
-                        )}
-                      </div>
-                      <Link
-                        href={`/blog/${post.slug}`}
-                        className="text-sm font-medium text-blue-600 hover:text-blue-700 mt-auto inline-flex items-center gap-1 group/link"
+                  {post.featuredImage ? (
+                    <Image
+                      src={post.featuredImage}
+                      alt={post.title}
+                      fill
+                      loading="lazy"
+                      className="object-cover transform group-hover:scale-105 transition-transform duration-500"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-secondary via-muted to-border">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="48"
+                        height="48"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="text-muted-foreground"
                       >
-                        Read more
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="group-hover/link:translate-x-1 transition-transform"
-                        >
-                          <path d="M5 12h14"></path>
-                          <path d="m12 5 7 7-7 7"></path>
-                        </svg>
-                      </Link>
-                      <div className="pt-4 border-t border-slate-50 flex items-center justify-between mt-auto">
-                        <div className="flex items-center gap-2 text-xs text-slate-500">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="w-3 h-3"
-                          >
-                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                          </svg>
-                          <span>{post.author}</span>
-                        </div>
-                        <span className="text-xs text-slate-400">{formatBlogDate(post.date)}</span>
-                      </div>
+                        <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+                        <circle cx="9" cy="9" r="2"></circle>
+                        <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path>
+                      </svg>
                     </div>
-                  </article>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-16">
-                <p className="text-slate-600 text-lg">No blog posts available yet.</p>
-                <p className="text-slate-500 text-sm mt-2">Check back soon for updates.</p>
-              </div>
-            )}
-
-            {/* CTA Section */}
-            <div className="bg-slate-900 text-white py-16 md:py-24 relative overflow-hidden mt-12 rounded-xl">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(59,130,246,0.2),transparent_70%)]"></div>
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-                <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-tight">
-                  Need Legal <span className="text-amber-400">Advice?</span>
-                </h2>
-                <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed">
-                  If you&apos;ve been arrested or need police station representation, contact us
-                  immediately.
-                </p>
-                <div className="flex flex-wrap justify-center gap-4">
+                  )}
+                </Link>
+                <div className="flex flex-col flex-grow p-5">
+                  <h3 className="font-display text-xl font-bold text-foreground mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+                    <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+                  </h3>
+                  <div className="text-sm text-muted-foreground mb-4 line-clamp-3 flex-grow min-h-[3rem]">
+                    {stripFirmPhonePlainText(
+                      post.metaDescription || generateExcerpt(post.contentHtml, 160),
+                    )}
+                  </div>
                   <Link
-                    href="/contact"
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold rounded-lg transition-colors"
+                    href={`/blog/${post.slug}`}
+                    className="text-sm font-medium text-primary hover:text-primary-light mt-auto inline-flex items-center gap-1 group/link"
                   >
-                    Instruct solicitor (Contact)
+                    Read more
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="group-hover/link:translate-x-1 transition-transform"
+                    >
+                      <path d="M5 12h14"></path>
+                      <path d="m12 5 7 7-7 7"></path>
+                    </svg>
                   </Link>
-                  <Link
-                    href="/start/voluntary-interview"
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-bold rounded-lg transition-colors"
-                  >
-                    Voluntary interview help
-                  </Link>
+                  <div className="pt-4 border-t border-border flex items-center justify-between mt-auto">
+                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="w-3 h-3"
+                      >
+                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                      </svg>
+                      <span>{post.author}</span>
+                    </div>
+                    <span className="text-xs text-muted-foreground">{formatBlogDate(post.date)}</span>
+                  </div>
                 </div>
-              </div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-16">
+            <p className="text-muted-foreground text-lg">No blog posts available yet.</p>
+            <p className="text-muted-foreground text-sm mt-2">Check back soon for updates.</p>
+          </div>
+        )}
+
+        <div className="hero-navy py-16 md:py-20 relative overflow-hidden mt-4 rounded-[var(--radius-lg)]">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <h2 className="font-display text-3xl md:text-4xl font-bold mb-6 tracking-tight text-white">
+              Need Legal <span className="text-accent-light">Advice?</span>
+            </h2>
+            <p className="text-lg md:text-xl text-white/85 max-w-2xl mx-auto mb-10 leading-relaxed">
+              If you&apos;ve been arrested or need police station representation, contact us
+              immediately.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Link href="/contact" className="btn-gold">
+                Instruct solicitor (Contact)
+              </Link>
+              <Link href="/start/voluntary-interview" className="btn-ghost-light">
+                Voluntary interview help
+              </Link>
             </div>
           </div>
         </div>
-      </main>
-      <Footer forceHidePhone />
-    </div>
+      </div>
+    </PageShell>
   );
 }

@@ -1,21 +1,26 @@
 /**
- * Font optimization using next/font
- * Replaces blocking Google Fonts import
+ * Premium legal typography — Source Sans 3 (UI/body) + Source Serif 4 (display).
  */
-import { Inter } from "next/font/google";
+import { Source_Sans_3, Source_Serif_4 } from "next/font/google";
 
-export const inter = Inter({
+export const sourceSans = Source_Sans_3({
   subsets: ["latin"],
-  display: "swap", // Prevents invisible text during font load
-  variable: "--font-inter",
+  display: "swap",
+  variable: "--font-sans",
   preload: true,
-  fallback: [
-    "system-ui",
-    "-apple-system",
-    "BlinkMacSystemFont",
-    "Segoe UI",
-    "Roboto",
-    "sans-serif",
-  ], // Immediate fallback
-  adjustFontFallback: true, // Better font metrics
+  fallback: ["system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "sans-serif"],
+  adjustFontFallback: true,
 });
+
+export const sourceSerif = Source_Serif_4({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-display",
+  preload: true,
+  weight: ["400", "600", "700"],
+  fallback: ["Georgia", "Times New Roman", "serif"],
+  adjustFontFallback: true,
+});
+
+/** @deprecated Prefer sourceSans — kept for any residual imports */
+export const inter = sourceSans;

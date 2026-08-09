@@ -21,14 +21,14 @@ export function ConversionContactOnlyCTA({
       <Link
         href="/contact"
         data-event="contact_click"
-        className="inline-flex items-center justify-center rounded-lg bg-red-600 px-5 py-3 text-sm font-bold text-white hover:bg-red-700"
+        className="btn-gold px-5 py-3 text-sm"
       >
         {SOLICITOR_CONTACT_CTA}
       </Link>
       <Link
         href="/contact"
         data-event="contact_click"
-        className="inline-flex items-center justify-center rounded-lg border-2 border-[#0A2342] bg-white px-5 py-3 text-sm font-bold text-[#0A2342] hover:bg-slate-50"
+        className="inline-flex items-center justify-center rounded-md border-2 border-primary bg-card px-5 py-3 text-sm font-bold text-primary hover:bg-secondary"
       >
         Solicitor SMS (Contact)
       </Link>

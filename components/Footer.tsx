@@ -1,10 +1,6 @@
 import Link from "next/link";
 import { getFormattedVersion, getLastUpdateDateTime } from "@/lib/version";
-import {
-  CHROME_HELP_STRIP,
-  CHROME_NOT_POLICE_QUIET,
-  SERVICE_SCOPE_SHORT,
-} from "@/config/contact";
+import { CHROME_BRAND_TAGLINE, CHROME_HELP_STRIP, SERVICE_SCOPE_SHORT } from "@/config/contact";
 import { FOOTER_LEGAL } from "@/config/footer-links";
 import {
   PATH_AGENCY,
@@ -43,11 +39,16 @@ function Column({
 }) {
   return (
     <div>
-      <h2 className="text-xs uppercase tracking-wide text-sky-400 mb-3 font-semibold">{title}</h2>
+      <h2 className="text-xs uppercase tracking-[0.12em] text-accent-light mb-3 font-semibold">
+        {title}
+      </h2>
       <ul className="space-y-2 text-sm">
         {links.map((link) => (
           <li key={link.href}>
-            <Link href={link.href} className="text-sky-300 hover:text-white transition-colors">
+            <Link
+              href={link.href}
+              className="text-white/75 hover:text-accent-light transition-colors"
+            >
               {link.label}
             </Link>
           </li>
@@ -67,27 +68,35 @@ export default function Footer({
   const lastUpdate = getLastUpdateDateTime();
 
   return (
-    <footer className="bg-slate-900 text-white relative z-10">
+    <footer className="bg-primary-dark text-white relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <div className="pb-6 border-b border-slate-800">
-          <Link href="/" className="font-bold text-lg text-white hover:text-blue-300 transition-colors">
+        <div className="pb-6 border-b border-white/10">
+          <Link
+            href="/"
+            className="font-display font-bold text-lg text-white hover:text-accent-light transition-colors"
+          >
             Police Station Agent
           </Link>
-          <p className="text-sm text-sky-200 mt-1">{CHROME_HELP_STRIP}</p>
-          <p className="text-xs text-sky-400/90 mt-1 max-w-xl">{CHROME_NOT_POLICE_QUIET}</p>
-          <p className="text-xs text-sky-400/80 mt-1 max-w-xl">{SERVICE_SCOPE_SHORT}</p>
+          <p className="text-sm text-accent-light/90 mt-1">{CHROME_BRAND_TAGLINE}</p>
+          <p className="text-xs text-white/60 mt-1 max-w-xl">{CHROME_HELP_STRIP}</p>
+          <p className="text-xs text-white/50 mt-1 max-w-xl">{SERVICE_SCOPE_SHORT}</p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 py-8 border-b border-slate-800">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 py-8 border-b border-white/10">
           <Column title="Public help" links={PUBLIC_HELP} />
           <Column title="For professionals" links={PROFESSIONALS} />
           <Column title="Information" links={INFORMATION} />
           <div>
-            <h2 className="text-xs uppercase tracking-wide text-sky-400 mb-3 font-semibold">Legal</h2>
+            <h2 className="text-xs uppercase tracking-[0.12em] text-accent-light mb-3 font-semibold">
+              Legal
+            </h2>
             <ul className="space-y-2 text-sm">
               {FOOTER_LEGAL.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-sky-300 hover:text-white transition-colors">
+                  <Link
+                    href={link.href}
+                    className="text-white/75 hover:text-accent-light transition-colors"
+                  >
                     {link.label}
                   </Link>
                 </li>
@@ -96,35 +105,29 @@ export default function Footer({
           </div>
         </div>
 
-        <div className="py-5 border-b border-slate-800">
-          <p className="text-xs text-sky-200 max-w-3xl">
-            Independent criminal defence solicitor website — not Kent Police. For police assistance
-            call 101, or 999 in an emergency. We cannot transfer calls to the police and do not
-            provide free general legal advice by telephone.
+        <div className="py-5 border-b border-white/10">
+          <p className="text-xs text-white/65 max-w-3xl">
+            Independent criminal defence solicitor website. For police assistance call 101, or 999
+            in an emergency. We cannot transfer calls to the police and do not provide free general
+            legal advice by telephone.
           </p>
         </div>
 
         <div className="pt-6 text-center">
-          <div className="mb-4 max-w-3xl mx-auto p-3 bg-white/5 rounded-lg text-xs text-sky-200">
+          <div className="mb-4 max-w-3xl mx-auto p-3 bg-white/5 rounded-lg text-xs text-white/70">
             <p>
               <span className="font-semibold text-white">Robert Cashman</span> is a criminal defence
               solicitor. All legal services provided through{" "}
               <span className="font-semibold text-white">Tuckers Solicitors</span> (SRA ID: 127795).
             </p>
-            <p className="text-sky-300 mt-1">
+            <p className="text-white/55 mt-1">
               We act in relation to active police investigations and interviews. We do not provide
-              general criminal law advice or hypothetical consultations.
+              free general advice after release.
             </p>
           </div>
-          <p className="text-xs text-sky-300">
-            © {currentYear} Defence Legal Services Limited T/A Police Station Agent. Company No.
-            09900871
-          </p>
-          <p className="text-xs text-sky-400 mt-1">
-            Registered Office: Greenacre, London Road, West Kingsdown, Sevenoaks, Kent, TN15 6ER
-          </p>
-          <p className="text-xs text-sky-500 mt-2">
-            {appVersion} · Updated: {lastUpdate}
+          <p className="text-xs text-white/45">
+            © {currentYear} Police Station Agent · {appVersion}
+            {lastUpdate ? ` · Updated ${lastUpdate}` : ""}
           </p>
         </div>
       </div>

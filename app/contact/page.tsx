@@ -36,18 +36,25 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
+    <div className="min-h-screen bg-background text-foreground flex flex-col">
       <Header />
       <main className="flex-grow" id="main-content" role="main">
         <div className="max-w-4xl mx-auto px-4 py-12 md:py-16 space-y-10">
-          <header className="rounded-xl bg-gradient-to-br from-slate-900 to-blue-950 text-white p-6 md:p-8">
-            <p className="text-amber-300 text-sm font-bold tracking-wide mb-2">NOT THE POLICE</p>
-            <h1 className="text-3xl md:text-4xl font-black mb-3">Getting in touch</h1>
-            <p className="text-blue-100 max-w-2xl mb-4">{CONTACT_GETTING_IN_TOUCH}</p>
-            <p className="text-blue-50 max-w-2xl text-sm md:text-base">{CONTACT_PATHWAY_PROMPT}</p>
-            <p className="text-blue-200 text-sm mt-4">
+          <header className="hero-navy rounded-xl text-white p-6 md:p-8 shadow-elevated">
+            <p className="text-accent-light text-xs font-bold tracking-[0.14em] uppercase mb-2">
+              Contact pathways
+            </p>
+            <h1 className="font-display text-3xl md:text-4xl font-bold mb-3 text-white">
+              Getting in touch
+            </h1>
+            <p className="text-white/85 max-w-2xl mb-4">{CONTACT_GETTING_IN_TOUCH}</p>
+            <p className="text-white/75 max-w-2xl text-sm md:text-base">{CONTACT_PATHWAY_PROMPT}</p>
+            <p className="text-white/70 text-sm mt-4">
               Why we do this: see the{" "}
-              <Link href={`${SCOPE_HELP_HREF}`} className="underline font-semibold text-white">
+              <Link
+                href={`${SCOPE_HELP_HREF}`}
+                className="underline font-semibold text-accent-light hover:text-white"
+              >
                 FAQ
               </Link>
               .
@@ -63,13 +70,16 @@ export default function ContactPage() {
 
           <section
             id="admin-enquiry"
-            className="rounded-xl border border-slate-200 bg-white p-5 md:p-6 scroll-mt-24"
+            className="surface-card p-5 md:p-6 scroll-mt-24"
             aria-labelledby="admin-form-heading"
           >
-            <h2 id="admin-form-heading" className="text-xl font-black text-slate-900 mb-2">
+            <h2
+              id="admin-form-heading"
+              className="font-display text-xl font-bold text-primary mb-2"
+            >
               {ADMIN_ENQUIRY_HEADING}
             </h2>
-            <p className="text-sm text-slate-600 mb-5">{ADMIN_ENQUIRY_INTRO}</p>
+            <p className="text-sm text-muted-foreground mb-5">{ADMIN_ENQUIRY_INTRO}</p>
 
             <div className="grid md:grid-cols-2 gap-4 mb-6">
               <div className="rounded-lg border border-emerald-200 bg-emerald-50/80 p-4">

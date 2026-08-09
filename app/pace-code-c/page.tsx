@@ -1,5 +1,4 @@
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import PageShell from "@/components/PageShell";
 import Link from "next/link";
 import { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
@@ -87,35 +86,33 @@ export default function PaceCodeCPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex flex-col">
+    <PageShell forceHidePhone>
       <JsonLd data={faqSchema} />
-      <Header />
 
-      <main className="flex-grow">
-        <section className="bg-gradient-to-br from-slate-800 via-blue-900 to-slate-900 text-white py-16">
-          <div className="max-w-4xl mx-auto px-4">
-            <nav className="text-sm mb-6 text-blue-200">
-              <Link href="/" className="hover:text-white">
-                Home
-              </Link>
-              <span className="mx-2">›</span>
-              <Link href="/police-custody-rights" className="hover:text-white">
-                Custody Rights
-              </Link>
-              <span className="mx-2">›</span>
-              <span>PACE Code C</span>
-            </nav>
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              PACE Code C: Your Rights in Police Custody
-            </h1>
-            <p className="text-xl text-blue-100">
-              The rules that protect you during detention and questioning
-            </p>
-          </div>
-        </section>
+      <section className="hero-navy py-14 md:py-16">
+        <div className="max-w-4xl mx-auto px-4">
+          <nav className="text-sm mb-6 text-white/75">
+            <Link href="/" className="hover:text-white">
+              Home
+            </Link>
+            <span className="mx-2">›</span>
+            <Link href="/police-custody-rights" className="hover:text-white">
+              Custody Rights
+            </Link>
+            <span className="mx-2">›</span>
+            <span>PACE Code C</span>
+          </nav>
+          <h1 className="font-display text-4xl md:text-5xl font-bold mb-6 text-white">
+            PACE Code C: Your Rights in Police Custody
+          </h1>
+          <p className="text-xl text-white/90">
+            The rules that protect you during detention and questioning
+          </p>
+        </div>
+      </section>
 
-        <article className="max-w-4xl mx-auto px-4 py-12">
-          <div className="bg-blue-50 border-l-4 border-blue-600 p-6 mb-8 rounded-r-lg">
+      <article className="max-w-4xl mx-auto px-4 py-12">
+          <div className="bg-secondary border-l-4 border-accent p-6 mb-8 rounded-r-lg">
             <p className="text-lg font-medium text-slate-800">
               <strong>Quick Answer:</strong> PACE Code C is a Code of Practice that sets out the
               rules police must follow when you're in custody. It covers your rights to{" "}
@@ -299,81 +296,83 @@ export default function PaceCodeCPage() {
             </ol>
           </div>
 
-          <div className="bg-amber-50 border border-amber-200 rounded-lg p-6 my-8">
-            <h3 className="text-xl font-bold text-slate-900 mb-4">Key Takeaways</h3>
-            <ul className="space-y-2 text-slate-700">
+          <div className="surface-card border-accent/40 p-6 my-8">
+            <h3 className="font-display text-xl font-bold text-primary mb-4">Key Takeaways</h3>
+            <ul className="space-y-2 text-muted-foreground">
               <li className="flex items-start">
-                <span className="text-amber-600 mr-2">✓</span>
+                <span className="text-accent mr-2">✓</span>
                 <span>PACE Code C sets out the rules for your treatment in custody</span>
               </li>
               <li className="flex items-start">
-                <span className="text-amber-600 mr-2">✓</span>
+                <span className="text-accent mr-2">✓</span>
                 <span>You have the right to free legal advice at any time</span>
               </li>
               <li className="flex items-start">
-                <span className="text-amber-600 mr-2">✓</span>
+                <span className="text-accent mr-2">✓</span>
                 <span>
                   Code C includes an 8-hour continuous rest rule, and sets standards for meals and
                   drinks in custody.
                 </span>
               </li>
               <li className="flex items-start">
-                <span className="text-amber-600 mr-2">✓</span>
+                <span className="text-accent mr-2">✓</span>
                 <span>Special protections exist for young and vulnerable people</span>
               </li>
               <li className="flex items-start">
-                <span className="text-amber-600 mr-2">✓</span>
+                <span className="text-accent mr-2">✓</span>
                 <span>Breaches can lead to evidence being excluded at trial</span>
               </li>
             </ul>
           </div>
 
           <div className="my-12">
-            <h2 className="text-2xl font-bold text-slate-900 mb-6">Frequently Asked Questions</h2>
+            <h2 className="font-display text-2xl font-bold text-primary mb-6">
+              Frequently Asked Questions
+            </h2>
             <div className="space-y-6">
-              <div className="bg-white p-6 rounded-lg shadow-sm border">
-                <h3 className="font-bold text-lg text-blue-900 mb-2">What is PACE Code C?</h3>
-                <p className="text-slate-700">
+              <div className="surface-card p-6">
+                <h3 className="font-bold text-lg text-primary mb-2">What is PACE Code C?</h3>
+                <p className="text-muted-foreground">
                   PACE Code C is a Code of Practice under PACE 1984. It sets out the rules police
                   must follow when detaining and questioning suspects, including rights to legal
                   advice, rest, meals, and fair treatment.
                 </p>
               </div>
-              <div className="bg-white p-6 rounded-lg shadow-sm border">
-                <h3 className="font-bold text-lg text-blue-900 mb-2">
+              <div className="surface-card p-6">
+                <h3 className="font-bold text-lg text-primary mb-2">
                   What rights does PACE Code C give me?
                 </h3>
-                <p className="text-slate-700">
+                <p className="text-muted-foreground">
                   PACE Code C gives you the right to: free legal advice, have someone informed, see
                   the Codes of Practice, regular meals and drinks, adequate rest, medical attention,
                   and an interpreter if required.
                 </p>
               </div>
-              <div className="bg-white p-6 rounded-lg shadow-sm border">
-                <h3 className="font-bold text-lg text-blue-900 mb-2">
+              <div className="surface-card p-6">
+                <h3 className="font-bold text-lg text-primary mb-2">
                   Can police break PACE Code C rules?
                 </h3>
-                <p className="text-slate-700">
+                <p className="text-muted-foreground">
                   PACE Code C is a statutory Code of Practice. If the way evidence was obtained is
                   unfair, the court has a power to exclude it under section 78 of PACE 1984. If you
                   think rules were not followed, raise it with your solicitor.
                 </p>
               </div>
-              <div className="bg-white p-6 rounded-lg shadow-sm border">
-                <h3 className="font-bold text-lg text-blue-900 mb-2">
+              <div className="surface-card p-6">
+                <h3 className="font-bold text-lg text-primary mb-2">
                   How often must I be given rest in custody?
                 </h3>
-                <p className="text-slate-700">
+                <p className="text-muted-foreground">
                   PACE Code C provides that (except in limited circumstances) a detainee must be
                   allowed a continuous period of at least 8 hours for rest in any 24-hour period,
                   and it also sets standards for meals and drinks in custody.
                 </p>
               </div>
-              <div className="bg-white p-6 rounded-lg shadow-sm border">
-                <h3 className="font-bold text-lg text-blue-900 mb-2">
+              <div className="surface-card p-6">
+                <h3 className="font-bold text-lg text-primary mb-2">
                   Can I see a copy of PACE Code C?
                 </h3>
-                <p className="text-slate-700">
+                <p className="text-muted-foreground">
                   PACE Code C includes rules about access to the Codes. If you want to consult the
                   Codes in custody, ask the custody officer and tell your solicitor.
                 </p>
@@ -381,63 +380,56 @@ export default function PaceCodeCPage() {
             </div>
           </div>
 
-          <div className="bg-slate-900 text-white rounded-xl p-8 my-12">
-            <h3 className="text-2xl font-bold mb-4">Know Your Rights in Custody</h3>
-            <p className="text-slate-300 mb-6">
-              If you're in police custody, make sure your rights under PACE Code C are respected.
+          <div className="hero-navy rounded-[var(--radius-lg)] p-8 my-12">
+            <h3 className="font-display text-2xl font-bold mb-4 text-white">
+              Know Your Rights in Custody
+            </h3>
+            <p className="text-white/85 mb-6">
+              If you&apos;re in police custody, make sure your rights under PACE Code C are respected.
               Get legal advice as soon as possible.
             </p>
             <div className="flex flex-wrap gap-4">
-              <a
-                href="tel:01732247427"
-                className="inline-flex items-center px-6 py-3 bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold rounded-lg"
-              >
-                Call 01732 247427
-              </a>
-              <Link
-                href="/contact"
-                className="inline-flex items-center px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-bold rounded-lg"
-              >
-                Contact Online
+              <Link href="/current-custody" className="btn-gold">
+                Current custody pathway
+              </Link>
+              <Link href="/contact" className="btn-ghost-light">
+                Contact pathways
               </Link>
             </div>
           </div>
 
           <LegalReferences sources={sources} />
 
-          <div className="border-t pt-8 mt-8">
-            <h3 className="text-lg font-bold text-slate-900 mb-4">Related Topics</h3>
+          <div className="border-t border-border pt-8 mt-8">
+            <h3 className="text-lg font-bold text-primary mb-4">Related Topics</h3>
             <div className="grid md:grid-cols-2 gap-4">
               <Link
                 href="/police-custody-rights"
-                className="p-4 bg-white rounded-lg border hover:border-blue-300"
+                className="surface-card p-4 hover:border-accent transition-colors"
               >
-                <span className="font-medium text-blue-600">Your Custody Rights →</span>
+                <span className="font-medium text-primary">Your Custody Rights →</span>
               </Link>
               <Link
                 href="/custody-time-limits"
-                className="p-4 bg-white rounded-lg border hover:border-blue-300"
+                className="surface-card p-4 hover:border-accent transition-colors"
               >
-                <span className="font-medium text-blue-600">Custody Time Limits →</span>
+                <span className="font-medium text-primary">Custody Time Limits →</span>
               </Link>
               <Link
                 href="/police-interview-rights"
-                className="p-4 bg-white rounded-lg border hover:border-blue-300"
+                className="surface-card p-4 hover:border-accent transition-colors"
               >
-                <span className="font-medium text-blue-600">Interview Rights →</span>
+                <span className="font-medium text-primary">Interview Rights →</span>
               </Link>
               <Link
                 href="/appropriate-adult"
-                className="p-4 bg-white rounded-lg border hover:border-blue-300"
+                className="surface-card p-4 hover:border-accent transition-colors"
               >
-                <span className="font-medium text-blue-600">Appropriate Adults →</span>
+                <span className="font-medium text-primary">Appropriate Adults →</span>
               </Link>
             </div>
           </div>
-        </article>
-      </main>
-
-      <Footer />
-    </div>
+      </article>
+    </PageShell>
   );
 }

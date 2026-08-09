@@ -235,7 +235,7 @@ export function VoluntaryInterviewForm() {
           </p>
           <button
             type="button"
-            className="text-sm font-semibold text-blue-800 underline"
+            className="text-sm font-semibold text-primary underline"
             onClick={() => update("enquiryType", "")}
           >
             Change answer
@@ -635,7 +635,7 @@ export function VoluntaryInterviewForm() {
           <button
             type="button"
             onClick={next}
-            className="min-h-[44px] rounded-md bg-blue-700 px-5 py-2 text-sm font-bold text-white hover:bg-blue-800"
+            className="btn-navy text-sm px-5 py-2"
           >
             Continue
           </button>
@@ -643,7 +643,7 @@ export function VoluntaryInterviewForm() {
           <button
             type="submit"
             disabled={submitting}
-            className="min-h-[44px] rounded-md bg-blue-700 px-5 py-2 text-sm font-bold text-white hover:bg-blue-800 disabled:opacity-60"
+            className="btn-navy text-sm px-5 py-2 disabled:opacity-60"
           >
             {submitting ? "Submitting…" : "Submit enquiry"}
           </button>

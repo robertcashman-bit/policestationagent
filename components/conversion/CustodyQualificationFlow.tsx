@@ -46,13 +46,13 @@ function OutOfScope({
       <div className="text-sm text-slate-700 space-y-3">{children}</div>
       <PoliceSignposting compact />
       <div className="flex flex-wrap gap-3 text-sm">
-        <Link href={PATH_VOLUNTARY} className="font-semibold text-blue-800 underline">
+        <Link href={PATH_VOLUNTARY} className="font-semibold text-primary underline">
           Voluntary interview route
         </Link>
-        <Link href="/faq" className="font-semibold text-blue-800 underline">
+        <Link href="/faq" className="font-semibold text-primary underline">
           FAQ
         </Link>
-        <Link href={PATH_VOLUNTARY_LANDING} className="font-semibold text-blue-800 underline">
+        <Link href={PATH_VOLUNTARY_LANDING} className="font-semibold text-primary underline">
           Voluntary interviews
         </Link>
       </div>

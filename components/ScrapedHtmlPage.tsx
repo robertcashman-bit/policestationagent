@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import PageShell from "@/components/PageShell";
 import { StandardPaceSources } from "@/components/legal/StandardPaceSources";
 import { normalizeScrapedHtml } from "@/lib/scraped-html";
 
@@ -14,6 +13,7 @@ type Props = {
   beforeMain?: ReactNode;
   afterMain?: ReactNode;
   preprocess?: (html: string) => string;
+  forceHidePhone?: boolean;
 };
 
 /**
@@ -22,40 +22,35 @@ type Props = {
  */
 export default function ScrapedHtmlPage({
   html,
-  className = "prose prose-lg max-w-6xl mx-auto px-4 py-16",
+  className = "prose prose-lg prose-navy max-w-6xl mx-auto px-4 py-12 md:py-16",
   beforeMain,
   afterMain,
   preprocess,
+  forceHidePhone = true,
 }: Props) {
   const raw = preprocess ? preprocess(html) : html;
   const normalized = normalizeScrapedHtml(raw);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 flex flex-col">
-      {beforeMain}
-      <Header />
-      <main className="flex-grow relative" id="main-content" role="main" aria-live="polite">
-        <div className="bg-slate-50 min-h-screen">
-          <div
-            className={className}
-            dangerouslySetInnerHTML={{ __html: normalized }}
-          />
+    <PageShell forceHidePhone={forceHidePhone} beforeHeader={beforeMain} afterFooter={afterMain}>
+      <div className="bg-background min-h-full">
+        <div
+          className={className}
+          dangerouslySetInnerHTML={{ __html: normalized }}
+        />
+      </div>
+      {htmlHasPaceLegalRefs(raw) ? (
+        <div className="max-w-4xl mx-auto px-4 pb-8">
+          <StandardPaceSources />
         </div>
-        {htmlHasPaceLegalRefs(raw) ? (
-          <div className="max-w-4xl mx-auto px-4 pb-8">
-            <StandardPaceSources />
-          </div>
-        ) : null}
-      </main>
-      <Footer />
-      {afterMain}
-    </div>
+      ) : null}
+    </PageShell>
   );
 }
 
 export function ScrapedHtmlContent({
   html,
-  className = "prose prose-lg max-w-6xl mx-auto px-4 py-16",
+  className = "prose prose-lg prose-navy max-w-6xl mx-auto px-4 py-12 md:py-16",
   preprocess,
 }: {
   html: string;

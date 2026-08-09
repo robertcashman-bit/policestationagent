@@ -8,6 +8,19 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
+        display: ["var(--font-display)", "Georgia", "serif"],
+      },
+      borderRadius: {
+        sm: "var(--radius-sm)",
+        DEFAULT: "var(--radius)",
+        lg: "var(--radius-lg)",
+      },
+      boxShadow: {
+        card: "var(--shadow-card)",
+        elevated: "var(--shadow-elevated)",
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",

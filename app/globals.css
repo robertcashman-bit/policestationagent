@@ -3,54 +3,45 @@
 @tailwind utilities;
 
 :root {
-  --primary-navy: #1e293b;
-  --primary-blue: #0f172a;
-  --accent-gold: #f59e0b;
-  --accent-emerald: #10b981;
-  --warm-red: #dc2626;
-  --success-green: #059669;
-  --light-blue: #e0f2fe;
-  --soft-gray: #f8fafc;
-}
-
-body {
-  background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #f1f5f9 100%);
-  font-family:
-    var(--font-inter),
-    -apple-system,
-    BlinkMacSystemFont,
-    system-ui,
-    sans-serif;
-}
-
-.glass-effect {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-:root {
-  --background: #ffffff;
-  --foreground: #1a1a1a;
+  /* Premium navy / gold legal system */
   --primary: #0a2342;
-  --primary-dark: #08192e;
-  --primary-light: #0d2d52;
-  --accent: #cba135;
-  --accent-dark: #a8822a;
-  --accent-light: #d4b04a;
+  --primary-dark: #061628;
+  --primary-light: #123458;
+  --primary-navy: #0a2342;
+  --primary-blue: #0a2342;
+  --accent: #c9a227;
+  --accent-dark: #a3841f;
+  --accent-light: #dbb84a;
+  --accent-gold: #c9a227;
+  --accent-emerald: #0f766e;
+  --warm-red: #b91c1c;
+  --success-green: #0f766e;
+  --light-blue: #eef2f7;
+  --soft-gray: #f6f7f9;
+
+  --background: #f6f7f9;
+  --foreground: #0f172a;
   --primary-foreground: #ffffff;
-  --accent-foreground: #0f172a;
-  --secondary: #f1f5f9; /* slate-100 */
-  --secondary-foreground: #0f172a; /* slate-900 */
-  --muted: #f8fafc; /* slate-50 */
-  --muted-foreground: #475569; /* slate-600 */
+  --accent-foreground: #0a2342;
+  --secondary: #eef2f7;
+  --secondary-foreground: #0a2342;
+  --muted: #f1f5f9;
+  --muted-foreground: #475569;
   --card: #ffffff;
-  --card-foreground: #0f172a; /* slate-900 */
-  --border: #e2e8f0; /* slate-200 */
-  --input: #e2e8f0; /* slate-200 */
-  --ring: #3b82f6; /* blue-500 */
-  --destructive: #dc2626; /* red-600 */
+  --card-foreground: #0f172a;
+  --border: #d8dee8;
+  --input: #d8dee8;
+  --ring: #c9a227;
+  --destructive: #b91c1c;
   --destructive-foreground: #ffffff;
+
+  --radius-sm: 0.375rem;
+  --radius: 0.625rem;
+  --radius-lg: 0.875rem;
+  --shadow-card: 0 1px 2px rgb(10 35 66 / 0.06), 0 8px 24px rgb(10 35 66 / 0.06);
+  --shadow-elevated: 0 4px 6px rgb(10 35 66 / 0.04), 0 16px 40px rgb(10 35 66 / 0.1);
+  --prose-width: 42rem;
+
   --gray-50: #f9fafb;
   --gray-100: #f3f4f6;
   --gray-200: #e5e7eb;
@@ -59,6 +50,87 @@ body {
   --gray-700: #374151;
   --gray-800: #1f2937;
   --gray-900: #111827;
+
+  --font-inter: var(--font-sans);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+.font-display {
+  font-family: var(--font-display), Georgia, "Times New Roman", serif;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.glass-effect {
+  background: rgb(255 255 255 / 0.92);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgb(255 255 255 / 0.2);
+}
+
+/* Design-system utility primitives */
+@layer components {
+  .btn-gold {
+    @apply inline-flex min-h-[44px] items-center justify-center rounded-md bg-accent px-5 text-sm font-bold text-accent-foreground shadow-md transition-colors hover:bg-accent-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent;
+  }
+  .btn-navy {
+    @apply inline-flex min-h-[44px] items-center justify-center rounded-md bg-primary px-5 text-sm font-bold text-white shadow-md transition-colors hover:bg-primary-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent;
+  }
+  .btn-ghost-light {
+    @apply inline-flex min-h-[44px] items-center justify-center rounded-md border border-white/40 bg-white/5 px-5 text-sm font-bold text-white transition-colors hover:bg-white/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent;
+  }
+  .surface-card {
+    @apply rounded-[var(--radius-lg)] border border-border bg-card text-card-foreground shadow-[var(--shadow-card)];
+  }
+  .section-pad {
+    @apply px-4 py-12 md:py-16;
+  }
+  .hero-navy {
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 20%, rgb(201 162 39 / 0.14), transparent 55%),
+      radial-gradient(ellipse 70% 50% at 85% 75%, rgb(18 52 88 / 0.9), transparent 50%),
+      linear-gradient(155deg, #061628 0%, #0a2342 45%, #123458 100%);
+    color: #fff;
+  }
+  .hero-navy h1,
+  .hero-navy h2,
+  .hero-navy h3 {
+    color: #fff;
+  }
+  .page-shell {
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+  .prose-navy a {
+    color: var(--primary);
+  }
+  .prose-navy a:hover {
+    color: var(--accent-dark);
+  }
+  .prose-navy strong {
+    color: var(--primary-dark);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 * {
@@ -69,19 +141,18 @@ body {
 
 /* Accessibility: Enhanced focus styles for better visibility */
 *:focus-visible {
-  outline: 2px solid #3b82f6;
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
   border-radius: 2px;
 }
 
-/* Ensure all interactive elements have visible focus */
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible,
 [tabindex]:focus-visible {
-  outline: 2px solid #3b82f6;
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
@@ -125,7 +196,7 @@ div[class*="select-none"][class*="right-4"][class*="top-4"][class*="text-slate-4
   position: absolute;
   top: -40px;
   left: 0;
-  background: #3b82f6;
+  background: var(--primary);
   color: white;
   padding: 8px 16px;
   text-decoration: none;
@@ -229,7 +300,7 @@ a {
   margin-top: 0;
   margin-bottom: 0.75rem;
   font-size: clamp(1.125rem, 2vw + 0.5rem, 1.375rem);
-  color: #1e40af;
+  color: var(--primary);
 }
 
 .prose h3 {
@@ -1196,4 +1267,166 @@ article img,
 article img[class*="blur"] {
   filter: none !important;
   backdrop-filter: none !important;
+}
+
+/* ============================================
+   NAVY/GOLD LEGACY REMAPS
+   Catch remaining blue/indigo/amber shells without per-page edits.
+   Complements lib/scraped-html.ts normalizer + PageShell.
+   ============================================ */
+
+/* Outer page shells still using the old slate→blue gradient */
+.min-h-screen.bg-gradient-to-br.from-slate-50.to-blue-50,
+.min-h-screen.from-slate-50.to-blue-50,
+.bg-gradient-to-br.from-slate-50.to-blue-50,
+.bg-gradient-to-br.from-slate-50.via-blue-50.to-white {
+  background-image: none !important;
+  background-color: var(--background) !important;
+}
+
+/* Dark hero gradients → hero-navy look */
+.bg-gradient-to-br.from-blue-900.via-slate-900.to-slate-800,
+.bg-gradient-to-br.from-blue-900.via-blue-800.to-indigo-900,
+.bg-gradient-to-br.from-slate-800.via-blue-900.to-slate-900,
+.bg-gradient-to-br.from-indigo-900.via-blue-900.to-slate-900,
+.bg-gradient-to-r.from-blue-900.via-slate-900.to-slate-800,
+section.bg-gradient-to-br.from-blue-900,
+section.from-blue-900.via-slate-900,
+header.bg-gradient-to-br.from-slate-800.via-blue-900 {
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 20%, rgb(201 162 39 / 0.14), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 85% 75%, rgb(18 52 88 / 0.9), transparent 50%),
+    linear-gradient(155deg, #061628 0%, #0a2342 45%, #123458 100%) !important;
+  color: #fff !important;
+}
+
+/* Mid-blue card/CTA gradients → solid navy */
+.bg-gradient-to-r.from-blue-600.to-blue-700,
+.bg-gradient-to-br.from-blue-600.to-blue-700,
+.bg-gradient-to-r.from-blue-700.to-blue-800,
+.bg-gradient-to-r.from-indigo-600.to-blue-700,
+.bg-gradient-to-r.from-blue-500.to-indigo-600,
+.from-blue-600.to-blue-700 {
+  background-image: none !important;
+  background-color: var(--primary) !important;
+  color: #fff !important;
+}
+
+.bg-blue-800 {
+  background-color: var(--primary) !important;
+  color: #fff !important;
+}
+
+/* Soft blue callout panels → secondary navy tint */
+.bg-blue-50,
+.from-blue-50,
+.border-blue-200.bg-blue-50 {
+  background-color: var(--secondary) !important;
+}
+
+/* Blue CTA buttons → navy */
+a.bg-blue-600,
+a.bg-blue-700,
+a.bg-blue-800,
+button.bg-blue-600,
+button.bg-blue-700,
+button.bg-indigo-600,
+button.bg-indigo-700,
+.bg-blue-600,
+.bg-blue-700,
+.bg-indigo-600 {
+  background-color: var(--primary) !important;
+  color: #fff !important;
+}
+
+a.bg-blue-600:hover,
+a.bg-blue-700:hover,
+button.bg-blue-600:hover,
+button.bg-blue-700:hover,
+.hover\:bg-blue-700:hover,
+.hover\:bg-blue-800:hover {
+  background-color: var(--primary-light) !important;
+}
+
+/* Amber CTA buttons → gold */
+a.bg-amber-400,
+a.bg-amber-500,
+button.bg-amber-400,
+button.bg-amber-500,
+.bg-amber-400,
+.bg-amber-500 {
+  background-color: var(--accent) !important;
+  color: var(--accent-foreground) !important;
+}
+
+a.bg-amber-500:hover,
+button.bg-amber-500:hover,
+.hover\:bg-amber-600:hover {
+  background-color: var(--accent-dark) !important;
+}
+
+/* Blue link / heading accents → navy */
+.text-blue-600,
+.text-blue-700,
+.text-blue-800,
+.text-blue-900,
+a.text-blue-600,
+a.text-blue-700,
+a.text-blue-800,
+.prose .text-blue-600,
+.prose .text-blue-700,
+.prose .text-blue-800,
+.prose .text-blue-900 {
+  color: var(--primary) !important;
+}
+
+/* Soft blue text on dark heroes stays light */
+.hero-navy .text-blue-100,
+.hero-navy .text-blue-200,
+[class*="from-blue-900"] .text-blue-100,
+[class*="from-blue-900"] .text-blue-200,
+[class*="via-blue-900"] .text-blue-100 {
+  color: rgb(255 255 255 / 0.9) !important;
+}
+
+/* Prose scraped content: gold accents for amber highlights */
+.prose .text-amber-400,
+.prose .text-amber-500,
+.prose [class*="text-amber-400"],
+.prose [class*="text-amber-500"] {
+  color: var(--accent) !important;
+}
+
+.prose .border-blue-600,
+.prose [class*="border-blue-600"] {
+  border-color: var(--accent) !important;
+}
+
+.prose a.bg-primary,
+.prose a.btn-gold,
+.prose a.btn-navy {
+  text-decoration: none;
+}
+
+/* Ensure hero-navy text stays light despite nuclear slate overrides */
+.hero-navy,
+.hero-navy p,
+.hero-navy span,
+.hero-navy li,
+.hero-navy a:not(.btn-gold):not(.btn-navy) {
+  color: inherit;
+}
+
+.hero-navy p,
+.hero-navy .text-slate-300,
+.hero-navy [class*="text-slate-300"],
+.hero-navy [class*="text-slate-400"] {
+  color: rgb(255 255 255 / 0.88) !important;
+}
+
+.hero-navy h1,
+.hero-navy h2,
+.hero-navy h3,
+.hero-navy h4 {
+  color: #fff !important;
 }

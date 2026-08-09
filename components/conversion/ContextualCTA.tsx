@@ -23,7 +23,7 @@ const COPY: Record<
     body: "Request representation before you attend an interview under caution. Do not use this as a general legal advice line.",
     href: `${PATH_VOLUNTARY}#request`,
     button: "Request representation",
-    tone: "border-blue-200 bg-blue-50",
+    tone: "border-border bg-secondary/70",
   },
   custody: {
     title: "Someone in custody now?",
@@ -37,7 +37,7 @@ const COPY: Record<
     body: "Send professional police station attendance instructions for criminal defence firms.",
     href: PATH_AGENCY,
     button: "Request agency cover",
-    tone: "border-amber-200 bg-amber-50",
+    tone: "border-accent/40 bg-accent/10",
   },
 };
 
@@ -55,7 +55,7 @@ export function ContextualCTA({ variant, className = "", compact = false }: Prop
       <div className="flex flex-wrap gap-2">
         <Link
           href={c.href}
-          className="inline-flex items-center justify-center min-h-[44px] rounded-md bg-slate-900 px-4 py-2 text-sm font-bold text-white hover:bg-slate-800"
+          className="btn-navy text-sm px-4 py-2"
         >
           {c.button}
         </Link>

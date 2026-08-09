@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { inter } from "./fonts";
+import { sourceSans, sourceSerif } from "./fonts";
 import { SITE_URL, SITE_DOMAIN } from "@/config/site";
 import Script from "next/script";
 import { Suspense } from "react";
@@ -50,8 +50,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#1e40af" },
-    { media: "(prefers-color-scheme: dark)", color: "#1e3a8a" },
+    { media: "(prefers-color-scheme: light)", color: "#0a2342" },
+    { media: "(prefers-color-scheme: dark)", color: "#061628" },
   ],
 };
 
@@ -440,7 +440,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={`${sourceSans.variable} ${sourceSerif.variable}`}>
       <head>
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -492,7 +492,7 @@ export default function RootLayout({
         {/* Google Tag Manager — only injected when NEXT_PUBLIC_GTM_ID is set */}
         <GoogleTagManager />
       </head>
-      <body className={`${inter.className} pb-16 lg:pb-0`}>
+      <body className={`${sourceSans.className} pb-16 lg:pb-0`}>
         <GoogleTagManagerNoScript />
         <ComplianceStrip />
         <NotPoliceScopeBanner />
@@ -500,7 +500,7 @@ export default function RootLayout({
         {/* Skip to content link for accessibility */}
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-blue-600 focus:text-white focus:rounded-md focus:font-semibold focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:no-underline"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded-md focus:font-semibold focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:no-underline"
         >
           Skip to main content
         </a>

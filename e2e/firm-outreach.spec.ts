@@ -72,6 +72,15 @@ test.describe('Firm outreach smoke tests', () => {
     expect(html.toLowerCase()).toMatch(/sign in to admin/);
   });
 
+
+  test('send-approve result page renders known error states', async ({ request }) => {
+    const response = await request.get('/outreach/send-approve/result?detail=missing-token');
+    expect(response.status()).toBeLessThan(500);
+    const html = await response.text();
+    expect(html.length).toBeGreaterThan(20);
+    expect(html.toLowerCase()).toMatch(/link|token|send|unavailable|error|missing/);
+  });
+
   test('brochure GET on send-approved API returns 405', async ({ request }) => {
     const response = await request.get('/api/outreach/send-approved');
     expect(response.status()).toBe(405);
