@@ -30,12 +30,8 @@ export function getAppVersion(): string {
     return customCommit.substring(0, 7);
   }
 
-  // Fallback: build timestamp (formatted as YYYY.MM.DD)
-  const buildDate = new Date();
-  const year = buildDate.getFullYear();
-  const month = String(buildDate.getMonth() + 1).padStart(2, "0");
-  const day = String(buildDate.getDate()).padStart(2, "0");
-  return `build ${year}.${month}.${day}`;
+  // Deterministic fallback (avoid new Date() during render — causes hydration mismatches in dev)
+  return "build local";
 }
 
 /**
@@ -69,9 +65,8 @@ export function getLastUpdateDateTime(): string {
     }
   }
 
-  // Use build time as fallback
-  const buildTime = new Date();
-  return formatDateTime(buildTime);
+  // Deterministic fallback for local/dev (no live clock during render)
+  return "";
 }
 
 /**

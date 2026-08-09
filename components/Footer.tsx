@@ -77,9 +77,9 @@ export default function Footer({
           >
             Police Station Agent
           </Link>
-          <p className="text-sm text-accent-light/90 mt-1">{CHROME_BRAND_TAGLINE}</p>
-          <p className="text-xs text-white/60 mt-1 max-w-xl">{CHROME_HELP_STRIP}</p>
-          <p className="text-xs text-white/50 mt-1 max-w-xl">{SERVICE_SCOPE_SHORT}</p>
+          <p className="text-sm text-accent-light mt-1">{CHROME_BRAND_TAGLINE}</p>
+          <p className="text-xs text-white/80 mt-1 max-w-xl">{CHROME_HELP_STRIP}</p>
+          <p className="text-xs text-white/75 mt-1 max-w-xl">{SERVICE_SCOPE_SHORT}</p>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 py-8 border-b border-white/10">
@@ -106,7 +106,7 @@ export default function Footer({
         </div>
 
         <div className="py-5 border-b border-white/10">
-          <p className="text-xs text-white/65 max-w-3xl">
+          <p className="text-xs text-white/80 max-w-3xl">
             Independent criminal defence solicitor website. For police assistance call 101, or 999
             in an emergency. We cannot transfer calls to the police and do not provide free general
             legal advice by telephone.
@@ -114,18 +114,18 @@ export default function Footer({
         </div>
 
         <div className="pt-6 text-center">
-          <div className="mb-4 max-w-3xl mx-auto p-3 bg-white/5 rounded-lg text-xs text-white/70">
+          <div className="mb-4 max-w-3xl mx-auto p-3 bg-white/5 rounded-lg text-xs text-white/85">
             <p>
               <span className="font-semibold text-white">Robert Cashman</span> is a criminal defence
               solicitor. All legal services provided through{" "}
               <span className="font-semibold text-white">Tuckers Solicitors</span> (SRA ID: 127795).
             </p>
-            <p className="text-white/55 mt-1">
+            <p className="text-white/75 mt-1">
               We act in relation to active police investigations and interviews. We do not provide
               free general advice after release.
             </p>
           </div>
-          <p className="text-xs text-white/45">
+          <p className="text-xs text-white/70">
             © {currentYear} Police Station Agent · {appVersion}
             {lastUpdate ? ` · Updated ${lastUpdate}` : ""}
           </p>

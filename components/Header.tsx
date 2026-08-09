@@ -52,7 +52,7 @@ export default function Header({
             <div className="font-display text-lg sm:text-xl font-bold text-primary leading-tight group-hover:text-primary-light transition-colors">
               Police Station Agent
             </div>
-            <div className="text-[11px] sm:text-xs font-medium text-muted-foreground leading-tight mt-0.5">
+            <div className="text-[11px] sm:text-xs font-semibold text-slate-600 leading-tight mt-0.5">
               {CHROME_BRAND_TAGLINE}
             </div>
           </Link>
@@ -98,7 +98,7 @@ export default function Header({
               <Link
                 key={item.href}
                 href={item.href}
-                className="px-3 py-2 text-sm text-foreground/80 hover:text-primary font-medium rounded-md hover:bg-secondary whitespace-nowrap transition-colors"
+                className="px-3 py-2 text-sm text-slate-700 hover:text-primary font-medium rounded-md hover:bg-secondary whitespace-nowrap transition-colors"
               >
                 {item.label}
               </Link>

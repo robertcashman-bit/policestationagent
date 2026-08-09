@@ -47,9 +47,11 @@ export default function ContactPage() {
             <h1 className="font-display text-3xl md:text-4xl font-bold mb-3 text-white">
               Getting in touch
             </h1>
-            <p className="text-white/85 max-w-2xl mb-4">{CONTACT_GETTING_IN_TOUCH}</p>
-            <p className="text-white/75 max-w-2xl text-sm md:text-base">{CONTACT_PATHWAY_PROMPT}</p>
-            <p className="text-white/70 text-sm mt-4">
+            <p className="text-white max-w-2xl mb-4 leading-relaxed">{CONTACT_GETTING_IN_TOUCH}</p>
+            <p className="text-white/90 max-w-2xl text-sm md:text-base leading-relaxed">
+              {CONTACT_PATHWAY_PROMPT}
+            </p>
+            <p className="text-white/90 text-sm mt-4">
               Why we do this: see the{" "}
               <Link
                 href={`${SCOPE_HELP_HREF}`}

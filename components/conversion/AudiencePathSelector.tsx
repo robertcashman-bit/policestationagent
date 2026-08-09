@@ -31,7 +31,9 @@ export function AudiencePathSelector({
       >
         {heading}
       </h2>
-      {subheading ? <p className="text-muted-foreground text-sm mb-4">{subheading}</p> : null}
+      {subheading ? (
+        <p className="text-slate-700 text-sm mb-4 leading-relaxed">{subheading}</p>
+      ) : null}
       <div className="grid md:grid-cols-3 gap-3">
         {PATHWAY_CARDS.map((card) => {
           const isUrgent = card.accent === "red";
