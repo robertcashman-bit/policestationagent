@@ -20,6 +20,7 @@ export async function GET(request: Request) {
     skipEnrich: true,
     skipDigest: true,
     skipKentCorrection: true,
+    skipCleanup: true,
     sendLimit,
     sendDryRun,
   });

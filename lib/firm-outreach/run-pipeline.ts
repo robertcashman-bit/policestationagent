@@ -51,6 +51,8 @@ export async function runFirmOutreachPipeline(opts?: {
   skipDigest?: boolean;
   /** Skip legacy nationwide correction sends (cron route handles these separately). */
   skipKentCorrection?: boolean;
+  /** Skip non-firm email cleanup (send-only ticks should not pay this cost). */
+  skipCleanup?: boolean;
   /** Wall-clock budget for discovery + requalify (maintain cron safety). */
   maintainMaxElapsedMs?: number;
   /** Archive website HTTP checks during requalify (slow; default true). */
@@ -73,7 +75,9 @@ export async function runFirmOutreachPipeline(opts?: {
     };
   }
 
-  const cleanupResult = await cleanupNonFirmProspectEmails({ dryRun: false });
+  const cleanupResult = opts?.skipCleanup
+    ? { reset: 0, targets: [] as string[] }
+    : await cleanupNonFirmProspectEmails({ dryRun: false });
   const cleanup = { reset: cleanupResult.reset, targets: cleanupResult.targets.length };
 
   const kentCorrection =
