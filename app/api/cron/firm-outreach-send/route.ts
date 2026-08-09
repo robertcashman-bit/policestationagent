@@ -14,11 +14,14 @@ export async function GET(request: Request) {
 
   const url = new URL(request.url);
   const sendLimit = Number(url.searchParams.get('limit') || 0) || undefined;
+  const sendDryRun = url.searchParams.get('dryRun') === '1';
   const result = await runFirmOutreachPipeline({
     skipDiscovery: true,
     skipEnrich: true,
     skipDigest: true,
+    skipKentCorrection: true,
     sendLimit,
+    sendDryRun,
   });
-  return NextResponse.json({ ok: true, mode: 'send-only', ...result });
+  return NextResponse.json({ ok: true, mode: 'send-only', dryRun: sendDryRun, ...result });
 }

@@ -66,9 +66,19 @@ function nextStep(prospect: FirmProspect): number | null {
 export async function runFirmOutreach(opts?: {
   dryRun?: boolean;
   limit?: number;
-}): Promise<OutreachRunStats> {
+}): Promise<OutreachRunStats & {
+  skipReasons?: Record<string, number>;
+  candidateCounts?: { ready: number; sent: number; remaining: number; alreadySent: number };
+}> {
   const started = Date.now();
-  const stats: OutreachRunStats = {
+  const skipReasons: Record<string, number> = {};
+  const bump = (reason: string) => {
+    skipReasons[reason] = (skipReasons[reason] ?? 0) + 1;
+  };
+  const stats: OutreachRunStats & {
+    skipReasons?: Record<string, number>;
+    candidateCounts?: { ready: number; sent: number; remaining: number; alreadySent: number };
+  } = {
     queued: 0,
     sent: 0,
     skipped: 0,
@@ -79,6 +89,7 @@ export async function runFirmOutreach(opts?: {
 
   if (!opts?.dryRun && !(await isOutreachSendAllowed())) {
     stats.elapsedMs = Date.now() - started;
+    stats.skipReasons = { send_not_allowed: 1 };
     return stats;
   }
 
@@ -88,11 +99,19 @@ export async function runFirmOutreach(opts?: {
   const remaining = Math.max(0, cap - alreadySent);
   if (remaining === 0) {
     stats.elapsedMs = Date.now() - started;
+    stats.skipReasons = { daily_cap: 1 };
+    stats.candidateCounts = { ready: 0, sent: 0, remaining: 0, alreadySent };
     return stats;
   }
 
   const ready = await listProspectsByRecordStatus('ready_to_send', 2000);
   const sent = await listProspectsByRecordStatus('sent', 2000);
+  stats.candidateCounts = {
+    ready: ready.length,
+    sent: sent.length,
+    remaining,
+    alreadySent,
+  };
   const candidates = sortProspectsForSend([...ready, ...sent]);
   const emailsSentThisRun = new Set<string>();
 
@@ -102,12 +121,14 @@ export async function runFirmOutreach(opts?: {
     const step = nextStep(prospect);
     if (step === null) {
       stats.skipped++;
+      bump(prospect.status === 'ready_to_send' ? 'no_step_ready' : 'no_step_sent');
       continue;
     }
 
     const email = prospect.email?.trim();
     if (!email) {
       stats.skipped++;
+      bump('no_email');
       continue;
     }
 
@@ -116,6 +137,7 @@ export async function runFirmOutreach(opts?: {
     const qualification = qualifyProspectForOutreach(prospect);
     if (!qualification.qualified) {
       stats.skipped++;
+      bump(`unqualified:${qualification.reason ?? 'unknown'}`);
       if (prospect.status === 'ready_to_send') {
         prospect.status = resolveStatusWithQualification(prospect, 'ready_to_send');
         prospect.updatedAt = new Date().toISOString();
@@ -126,6 +148,7 @@ export async function runFirmOutreach(opts?: {
 
     if (await isSuppressed(email)) {
       stats.suppressed++;
+      bump('suppressed');
       prospect.status = 'unsubscribed';
       await saveProspect(prospect);
       continue;
@@ -137,6 +160,7 @@ export async function runFirmOutreach(opts?: {
         (await isDuplicateInitialSend(email, prospect.id)))
     ) {
       stats.skipped++;
+      bump('duplicate_email');
       if (prospect.status === 'ready_to_send') {
         await excludeProspectDuplicateEmail(prospect);
       }
@@ -145,12 +169,14 @@ export async function runFirmOutreach(opts?: {
 
     if (prospect.prospectType === 'solicitor' && (await firmRecentlyContacted(prospect))) {
       stats.skipped++;
+      bump('firm_cooldown');
       continue;
     }
 
     const validation = await validateEmailForSend(email);
     if (!validation.ok) {
       stats.skipped++;
+      bump(`validation:${validation.reason ?? 'fail'}`);
       if (prospect.status === 'ready_to_send') {
         prospect.status = validation.reason === 'no_mx' ? 'no_email' : 'discovered';
         prospect.updatedAt = new Date().toISOString();
@@ -214,6 +240,7 @@ export async function runFirmOutreach(opts?: {
   }
 
   stats.elapsedMs = Date.now() - started;
+  stats.skipReasons = skipReasons;
   if (stats.sent > 0 || stats.errors > 0) {
     const { refreshProspectStatusSnapshotCache } = await import('../storage');
     await refreshProspectStatusSnapshotCache();

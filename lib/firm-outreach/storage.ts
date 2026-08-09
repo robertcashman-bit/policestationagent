@@ -220,12 +220,17 @@ export async function listProspectIdsByStatus(status: FirmProspectStatus): Promi
 /** Active-campaign prospect ids whose stored record matches the given status. */
 export async function listProspectIdsByRecordStatus(status: FirmProspectStatus): Promise<string[]> {
   if (skipKVInPrerender()) return [];
-  const ids = [...new Set(await listAllProspectIds())];
+  // Prefer the status index as the candidate pool (fast), then verify each record.
+  // Fall back to a full master-index scan when the status index is empty after drift.
+  let ids = [...new Set(await listProspectIdsByStatus(status))];
+  if (ids.length === 0) {
+    ids = [...new Set(await listAllProspectIds())];
+  }
   if (ids.length === 0) return [];
   const map = await getProspectsByIds(ids);
   return ids.filter((id) => {
     const p = map.get(id);
-    return p && isActiveCampaignProspect(p) && p.status === status;
+    return Boolean(p && isActiveCampaignProspect(p) && p.status === status);
   });
 }
 
