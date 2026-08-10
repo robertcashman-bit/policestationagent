@@ -45,55 +45,61 @@ interface BlogCarouselProps {
   pauseOnHover?: boolean;
   showNavigation?: boolean;
   className?: string;
+  /** Server-provided posts so the carousel is never blank while fetching. */
+  initialPosts?: BlogPost[];
 }
 
 export default function BlogCarousel({
-  maxPosts = 50,
+  maxPosts = 12,
   autoRotateInterval = 5000,
   pauseOnHover = false,
   showNavigation = true,
   className = "",
+  initialPosts = [],
 }: Readonly<BlogCarouselProps>) {
-  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [posts, setPosts] = useState<BlogPost[]>(() => initialPosts.slice(0, maxPosts));
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(initialPosts.length === 0);
   const [error, setError] = useState<string | null>(null);
   const [isPaused, setIsPaused] = useState(false);
   const carouselRef = useRef<HTMLElement>(null);
   const touchStartX = useRef<number | null>(null);
   const touchEndX = useRef<number | null>(null);
 
-  // Fetch blog posts from the authoritative API - lazy load after initial render
   useEffect(() => {
-    // Delay fetch slightly to avoid blocking initial page render
-    const timeoutId = setTimeout(() => {
-      async function fetchPosts() {
-        try {
-          const res = await fetch("/api/blog/posts", {
-            // Add cache headers for better performance
-            next: { revalidate: 300 }, // Revalidate every 5 minutes
-          });
-          const data = await res.json();
+    if (initialPosts.length > 0) {
+      setIsLoading(false);
+      return;
+    }
 
-          if (data.posts && Array.isArray(data.posts)) {
-            setPosts(data.posts.slice(0, maxPosts));
-          } else {
-            setPosts([]);
-          }
-        } catch (err) {
-          console.error("[BlogCarousel] Error fetching posts:", err);
-          setError("Unable to load blog posts");
+    let cancelled = false;
+
+    async function fetchPosts() {
+      try {
+        const res = await fetch("/api/blog/posts");
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        if (cancelled) return;
+        if (data.posts && Array.isArray(data.posts)) {
+          setPosts(data.posts.slice(0, maxPosts));
+        } else {
           setPosts([]);
-        } finally {
-          setIsLoading(false);
         }
+      } catch (err) {
+        if (cancelled) return;
+        console.error("[BlogCarousel] Error fetching posts:", err);
+        setError("Unable to load blog posts");
+        setPosts([]);
+      } finally {
+        if (!cancelled) setIsLoading(false);
       }
+    }
 
-      fetchPosts();
-    }, 100); // Small delay to prioritize critical content
-
-    return () => clearTimeout(timeoutId);
-  }, [maxPosts]);
+    fetchPosts();
+    return () => {
+      cancelled = true;
+    };
+  }, [maxPosts, initialPosts.length]);
 
   // Auto-rotate carousel
   useEffect(() => {

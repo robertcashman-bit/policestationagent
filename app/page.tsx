@@ -5,6 +5,7 @@ import BlogCarousel from "@/components/BlogCarousel";
 import type { Metadata } from "next";
 import { SITE_DOMAIN } from "@/config/site";
 import { FAQPage } from "@/components/StructuredData";
+import { getPostSummaries } from "@/lib/blog-reader";
 
 import { HomeHeroCover } from "@/components/conversion/HomeHeroCover";
 import { HomePathwaySection } from "@/components/conversion/HomePathwaySection";
@@ -84,11 +85,13 @@ const faqItems = [
 ];
 
 export default function Page() {
+  const latestPosts = getPostSummaries().slice(0, 12);
+
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col">
+    <div className="min-h-screen bg-background text-foreground flex flex-col overflow-x-clip">
       <FAQPage items={faqItems} />
       <Header />
-      <main className="flex-grow relative" id="main-content" role="main" aria-live="polite">
+      <main className="flex-grow relative overflow-x-clip" id="main-content" role="main" aria-live="polite">
         <HomeHeroCover />
         <HomePathwaySection />
         <HomeProofBar />
@@ -97,7 +100,7 @@ export default function Page() {
         </div>
         <HomeCallProcess />
         <HomeGuidesBrowser />
-        <BlogCarousel />
+        <BlogCarousel initialPosts={latestPosts} maxPosts={12} />
         <KentCoverCard className="py-10" />
         <HomeFirmSection />
         <HomePriorityCoverage />

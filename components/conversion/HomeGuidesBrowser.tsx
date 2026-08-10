@@ -81,7 +81,7 @@ export function HomeGuidesBrowser() {
         </div>
 
         <div
-          className="mt-8 flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="mt-8 flex flex-wrap gap-2"
           role="tablist"
           aria-label="Guide categories"
         >
@@ -129,12 +129,12 @@ export function HomeGuidesBrowser() {
           </Link>
         ) : null}
 
-        <div className="-mx-4 mt-6 flex gap-3 overflow-x-auto px-4 pb-2 snap-x snap-mandatory md:mx-0 md:grid md:grid-cols-2 md:gap-4 md:overflow-visible md:px-0 lg:grid-cols-3">
+        <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {browse.map((guide) => (
             <Link
               key={guide.href}
               href={guide.href}
-              className="min-w-[78%] snap-start rounded-xl border border-border bg-card p-5 shadow-sm lift-hover sm:min-w-[45%] md:min-w-0"
+              className="rounded-xl border border-border bg-card p-5 shadow-sm lift-hover"
             >
               <p className="text-[0.65rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
                 {guide.category}
