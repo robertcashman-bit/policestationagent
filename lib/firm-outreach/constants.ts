@@ -18,15 +18,29 @@ const env = createOutreachEnvHelpers({
   cronEnrichBatch: 60,
   enrichMaxMs: 270_000,
   paidDailyCap: 100,
-  /** Resend free tier: 100 emails/day total (all transactional mail). */
-  dailyCap: 95,
+  /**
+   * Default when FIRM_OUTREACH_DAILY_CAP is unset.
+   * Legacy free-tier values (≤100) are treated as uncapped — set an explicit
+   * value above 100 to restore a throttle, or `0` for fully uncapped.
+   */
+  dailyCap: 5_000,
 });
 
 export const outreachEnabled = env.outreachEnabled;
 export const outreachSendEnabled = env.outreachSendEnabled;
 export const outreachPaused = env.outreachPaused;
 export const outreachRequireApproval = env.outreachRequireApproval;
-export const dailySendCap = env.dailySendCap;
+
+/** Daily outreach send ceiling (UTC day). Legacy caps ≤100 are ignored. */
+export function dailySendCap(): number {
+  const raw = process.env.FIRM_OUTREACH_DAILY_CAP?.trim();
+  if (raw === '0') return 1_000_000;
+  const n = Number(raw ?? 5_000);
+  if (!Number.isFinite(n) || n <= 0) return 5_000;
+  // Old Resend free-tier headroom (45/95/100) was blocking the ready queue.
+  if (n <= 100) return 5_000;
+  return n;
+}
 export const enrichBatchSize = env.enrichBatchSize;
 export const cronEnrichBatchSize = env.cronEnrichBatchSize;
 export const enrichMaxElapsedMs = env.enrichMaxElapsedMs;

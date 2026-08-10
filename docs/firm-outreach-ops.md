@@ -37,7 +37,7 @@ All cron routes require `Authorization: Bearer $CRON_SECRET` (Vercel adds this a
 | `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` | — | **Required** for prospect storage |
 | `CRON_SECRET` | — | Cron auth + unsubscribe token signing |
 | `FIRM_OUTREACH_COUNTY_ALLOWLIST` | _(empty — all counties)_ | Optional comma-separated county filter for discovery |
-| `FIRM_OUTREACH_DAILY_CAP` | `95` | Max outreach sends per UTC day (Resend free tier allows 100/day total including login, digest, and approval mail — leave headroom) |
+| `FIRM_OUTREACH_DAILY_CAP` | `5000` | Max outreach sends per UTC day. Use `0` for uncapped. Legacy values ≤100 are treated as uncapped (old free-tier throttle). |
 | `FIRM_OUTREACH_REQUIRE_APPROVAL` | *(unset = approval required)* | Set **`false`** on Vercel for automatic sends; set `true` for click-to-send |
 | `FIRM_OUTREACH_DIGEST_EMAIL` | `robertdavidcashman@gmail.com` | Digest + post-send confirmation recipient |
 | `FIRM_OUTREACH_CRON_ENRICH_BATCH` | `60` | Firms per cron enrich tick |

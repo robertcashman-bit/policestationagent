@@ -229,7 +229,10 @@ export function createOutreachEnvHelpers(defaults: OutreachLimitsDefaults = {}) 
       return process.env.FIRM_OUTREACH_REQUIRE_APPROVAL !== 'false';
     },
     dailySendCap(): number {
-      return Number(process.env.FIRM_OUTREACH_DAILY_CAP ?? defaults.dailyCap ?? 50) || 50;
+      const raw = process.env.FIRM_OUTREACH_DAILY_CAP?.trim();
+      // 0 = uncapped (no daily throttle).
+      if (raw === '0') return 1_000_000;
+      return Number(raw ?? defaults.dailyCap ?? 50) || 50;
     },
     enrichBatchSize(): number {
       return Number(process.env.FIRM_OUTREACH_ENRICH_BATCH ?? defaults.enrichBatch ?? 150) || 150;

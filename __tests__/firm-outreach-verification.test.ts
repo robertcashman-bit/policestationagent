@@ -128,7 +128,7 @@ describe('outreach env flags', () => {
 
   it('daily cap defaults to 50', () => {
     delete process.env.FIRM_OUTREACH_DAILY_CAP;
-    expect(dailySendCap()).toBe(95);
+    expect(dailySendCap()).toBe(5_000);
   });
 });
 
