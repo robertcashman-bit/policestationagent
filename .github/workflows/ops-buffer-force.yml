@@ -1,0 +1,83 @@
+# Manual force re-run of the RepUK Buffer daily scheduler.
+name: Ops — buffer force schedule
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type FORCE to confirm production buffer-blog-posts?force=1'
+        required: true
+        type: string
+
+jobs:
+  force-schedule:
+    if: github.event.inputs.confirm == 'FORCE'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Vercel CLI (pinned)
+        run: npm install -g vercel@41.4.0
+
+      - name: Pull production env (for CRON_SECRET)
+        run: |
+          set -euo pipefail
+          if [ -z "${{ secrets.VERCEL_TOKEN }}" ]; then
+            echo "VERCEL_TOKEN secret is not set"
+            exit 1
+          fi
+          vercel env pull .env.production --environment=production --yes --token=${{ secrets.VERCEL_TOKEN }}
+          echo "Pulled env keys:"
+          grep -E '^[A-Za-z_][A-Za-z0-9_]*=' .env.production | cut -d= -f1 | sort
+
+      - name: Trigger buffer-blog-posts?force=1
+        env:
+          CRON_SECRET_FALLBACK: ${{ secrets.CRON_SECRET }}
+        run: |
+          set -euo pipefail
+          # Prefer GitHub secret; else parse Vercel pull without `source` (values may contain $).
+          CRON_SECRET="${CRON_SECRET_FALLBACK:-}"
+          if [ -z "${CRON_SECRET}" ] && [ -f .env.production ]; then
+            CRON_SECRET=$(python3 - <<'PY'
+          from pathlib import Path
+          for line in Path(".env.production").read_text().splitlines():
+              s = line.strip()
+              if not s or s.startswith("#"):
+                  continue
+              if s.startswith("export "):
+                  s = s[len("export "):]
+              if s.startswith("CRON_SECRET="):
+                  val = s.split("=", 1)[1]
+                  if len(val) >= 2 and val[0] == val[-1] and val[0] in ("'", '"'):
+                      val = val[1:-1]
+                  print(val, end="")
+                  break
+          PY
+            )
+          fi
+          if [ -z "${CRON_SECRET}" ]; then
+            echo "CRON_SECRET missing."
+            echo "Add repository secret CRON_SECRET (same value as Vercel production),"
+            echo "or use /admin/automation → Force schedule today (live)."
+            exit 1
+          fi
+          CODE=$(curl -sS -o /tmp/buffer-force.json -w "%{http_code}" \
+            -H "Authorization: Bearer ${CRON_SECRET}" \
+            --max-time 290 \
+            "https://policestationrepuk.org/api/cron/buffer-blog-posts?force=1")
+          echo "HTTP ${CODE}"
+          cat /tmp/buffer-force.json
+          echo
+          if [ "$CODE" != "200" ]; then
+            echo "Force schedule failed"
+            exit 1
+          fi
+          if ! jq -e '.ok == true or .skipped == true' /tmp/buffer-force.json >/dev/null; then
+            echo "Unexpected response body"
+            exit 1
+          fi
+          echo "OK"

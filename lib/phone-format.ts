@@ -1,0 +1,72 @@
+/**
+ * Normalise and format UK telephone numbers for storage and display.
+ */
+
+/** Strip to digits with leading 0 (UK) for comparison. */
+export function normalizePhoneDigits(value: string): string {
+  let t = value.trim().replace(/\s+/g, '');
+  if (t.startsWith('+44')) t = '0' + t.slice(3);
+  else if (t.startsWith('0044')) t = '0' + t.slice(4);
+  return t.replace(/\D/g, '');
+}
+
+/** Convert +44 / 0044 imports to a UK display string; otherwise only trim spaces. */
+export function formatPhoneUk(value: string): string {
+  const trimmed = value.trim().replace(/\s+/g, ' ');
+  if (!trimmed) return '';
+  if (trimmed === '101') return '101';
+
+  const isInternational = trimmed.startsWith('+44') || trimmed.startsWith('0044');
+  if (!isInternational) return trimmed;
+
+  const digits = normalizePhoneDigits(trimmed);
+  if (!digits) return trimmed;
+
+  if (digits.startsWith('0800') || digits.startsWith('0808')) {
+    if (digits.length === 10) {
+      return `${digits.slice(0, 4)} ${digits.slice(4, 6)} ${digits.slice(6, 8)} ${digits.slice(8)}`;
+    }
+    return digits;
+  }
+
+  if (digits.startsWith('02') && digits.length === 11) {
+    return `${digits.slice(0, 3)} ${digits.slice(3, 7)} ${digits.slice(7)}`;
+  }
+
+  if (digits.length === 11 && digits.startsWith('0')) {
+    return `${digits.slice(0, 5)} ${digits.slice(5)}`;
+  }
+
+  if (digits.length === 10 && digits.startsWith('0')) {
+    return `${digits.slice(0, 4)} ${digits.slice(4, 7)} ${digits.slice(7)}`;
+  }
+
+  return trimmed;
+}
+
+/** Convert a UK number to E.164 (+44…) where possible; null if not a valid UK format. */
+export function toE164Uk(value: string): string | null {
+  const digits = normalizePhoneDigits(value);
+  if (!digits) return null;
+  if (digits === '101') return null; // short code, no E.164 form
+  if (/^0\d{9,10}$/.test(digits)) return `+44${digits.slice(1)}`;
+  return null;
+}
+
+export function phonesEquivalent(a: string, b: string): boolean {
+  const da = normalizePhoneDigits(a);
+  const db = normalizePhoneDigits(b);
+  return Boolean(da && db && da === db);
+}
+
+/** Reject AI prose, URLs, or non-phone content in phone fields. */
+export function isPlausibleUkPhoneField(value: string): boolean {
+  const trimmed = value.trim();
+  if (!trimmed || trimmed.length > 24) return false;
+  if (/https?:|\.police\.uk|utm_|\[|\]/i.test(trimmed)) return false;
+  const digits = normalizePhoneDigits(trimmed);
+  if (!digits) return false;
+  if (digits === '101') return true;
+  if (digits.startsWith('0800') && digits.length >= 10) return true;
+  return /^0\d{9,10}$/.test(digits);
+}

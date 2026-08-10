@@ -1,0 +1,309 @@
+import { notFound } from 'next/navigation';
+import Link from 'next/link';
+import { buildMetadata, breadcrumbSchema } from '@/lib/seo';
+import { legalDirectoryListingSchema } from '@/lib/legal-directory/schema';
+import { JsonLd } from '@/components/JsonLd';
+import { Breadcrumbs } from '@/components/Breadcrumbs';
+import { LegalDirectoryDisclaimer } from '@/components/legal-directory/LegalDirectoryDisclaimer';
+import {
+  getListingBySlug,
+  isPubliclyVisible,
+  toPublicListing,
+} from '@/lib/legal-directory/storage';
+import { LEGAL_DIRECTORY_BASE } from '@/lib/legal-directory/constants';
+import { computeListingVerification } from '@/lib/legal-directory/verification-sources';
+import {
+  formatLegalAidStatusLabel,
+  getListingTrustBadges,
+  listingTrustBadgeHeroClassName,
+} from '@/lib/legal-directory/listing-display';
+import { isUnclaimedSeededListing } from '@/lib/legal-directory/laa-seed';
+import { shouldIndexLegalListingPage } from '@/lib/legal-directory/indexing';
+import { phoneToTelHref } from '@/lib/phone';
+import { SITE_URL } from '@/lib/seo-layer/config';
+
+export const dynamic = 'force-dynamic';
+
+type Props = { params: Promise<{ slug: string }> };
+
+export async function generateMetadata({ params }: Props) {
+  const { slug } = await params;
+  const listing = await getListingBySlug(slug);
+  if (!listing || !isPubliclyVisible(listing)) {
+    return buildMetadata({
+      title: 'Listing not found',
+      description: 'This listing is not available in the public directory.',
+      path: `${LEGAL_DIRECTORY_BASE}/listing/${slug}`,
+      noIndex: true,
+    });
+  }
+  return buildMetadata({
+    title: listing.seoTitle,
+    description: listing.seoDescription || listing.description.slice(0, 160),
+    path: `${LEGAL_DIRECTORY_BASE}/listing/${listing.slug}`,
+    noIndex: !shouldIndexLegalListingPage(listing),
+  });
+}
+
+export default async function ListingProfilePage({ params }: Props) {
+  const { slug } = await params;
+  const listing = await getListingBySlug(slug);
+  if (!listing || !isPubliclyVisible(listing)) notFound();
+
+  const pub = toPublicListing(listing);
+  const specialisms = pub.specialisms.split(/[,;\n]+/).map((s) => s.trim()).filter(Boolean);
+  const verificationSources = pub.verificationSources ?? [];
+  const derivedVerification = computeListingVerification(verificationSources);
+  const unclaimed = isUnclaimedSeededListing(listing);
+
+  const breadcrumbs = breadcrumbSchema([
+    { name: 'Home', url: SITE_URL },
+    { name: 'Legal Services Directory', url: `${SITE_URL}${LEGAL_DIRECTORY_BASE}` },
+    { name: pub.businessName, url: `${SITE_URL}${LEGAL_DIRECTORY_BASE}/listing/${pub.slug}` },
+  ]);
+
+  const listingSchema = legalDirectoryListingSchema(pub);
+
+  return (
+    <>
+      <JsonLd data={breadcrumbs} />
+      <JsonLd data={listingSchema} />
+      <section className="bg-[var(--navy)] py-10">
+        <div className="page-container !py-0">
+          <Breadcrumbs
+            light
+            items={[
+              { label: 'Home', href: '/' },
+              { label: 'Legal Services Directory', href: LEGAL_DIRECTORY_BASE },
+              { label: 'Search', href: `${LEGAL_DIRECTORY_BASE}/search` },
+              { label: pub.businessName },
+            ]}
+          />
+          <h1 className="mt-3 text-h1 text-white">{pub.businessName}</h1>
+          <p className="mt-2 text-slate-300">
+            {pub.category} · {[pub.town, pub.county].filter(Boolean).join(', ')}
+          </p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {getListingTrustBadges(pub).map((badge) => (
+              <span
+                key={badge.key}
+                className={listingTrustBadgeHeroClassName(badge.variant)}
+                title={badge.title}
+              >
+                {badge.label}
+              </span>
+            ))}
+            {pub.featured && (
+              <span className="rounded-full bg-[var(--gold)]/20 px-3 py-1 text-xs font-bold text-[var(--gold)]">
+                Featured
+              </span>
+            )}
+          </div>
+        </div>
+      </section>
+
+      <div className="page-container section-pad">
+        <div className="grid gap-8 lg:grid-cols-3">
+          <div className="lg:col-span-2 space-y-6">
+            {unclaimed && (
+              <section className="card-surface border-l-4 border-[var(--gold)] bg-[var(--gold-pale)] p-6">
+                <h2 className="text-h4 text-[var(--navy)]">Is this your firm?</h2>
+                <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">
+                  This listing was created from published Legal Aid Agency data and is unclaimed.
+                  Claim it to confirm your details, add contact information, and complete the profile.
+                </p>
+                <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
+                  <strong>Not a duty solicitor register.</strong> A crime legal aid contract listed
+                  in LAA published data is not the same as membership of the national duty solicitor
+                  rota. Confirm duty arrangements and contact details with the firm or via official
+                  LAA and SRA tools before instructing.
+                </p>
+                <Link
+                  href={`${LEGAL_DIRECTORY_BASE}/claim/${pub.slug}`}
+                  className="btn-gold mt-4 inline-block no-underline"
+                >
+                  Claim this listing
+                </Link>
+              </section>
+            )}
+            <section className="card-surface p-6">
+              <h2 className="text-h3 text-[var(--navy)]">About</h2>
+              <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed text-[var(--muted)]">
+                {pub.description}
+              </p>
+            </section>
+
+            {specialisms.length > 0 && (
+              <section className="card-surface p-6">
+                <h2 className="text-h3 text-[var(--navy)]">Specialisms</h2>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {specialisms.map((s) => (
+                    <span key={s} className="rounded-full bg-[var(--gold-pale)] px-3 py-1 text-sm text-[var(--navy)]">
+                      {s}
+                    </span>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {(pub.areasCovered || pub.policeStationsCovered || pub.courtsCovered) && (
+              <section className="card-surface p-6">
+                <h2 className="text-h3 text-[var(--navy)]">Coverage</h2>
+                {pub.areasCovered && (
+                  <p className="mt-2 text-sm text-[var(--muted)]">
+                    <strong>Areas:</strong> {pub.areasCovered}
+                  </p>
+                )}
+                {pub.policeStationsCovered && (
+                  <p className="mt-2 text-sm text-[var(--muted)]">
+                    <strong>Police stations:</strong> {pub.policeStationsCovered}
+                  </p>
+                )}
+                {pub.courtsCovered && (
+                  <p className="mt-2 text-sm text-[var(--muted)]">
+                    <strong>Courts:</strong> {pub.courtsCovered}
+                  </p>
+                )}
+              </section>
+            )}
+          </div>
+
+          <aside className="space-y-4">
+            <div className="card-surface p-6">
+              <h2 className="text-h4 text-[var(--navy)]">Contact</h2>
+              {pub.contactPerson && (
+                <p className="mt-2 text-sm text-[var(--muted)]">{pub.contactPerson}</p>
+              )}
+              {pub.phone && (
+                <a href={phoneToTelHref(pub.phone)} className="btn-gold mt-4 block text-center no-underline">
+                  Call {pub.phone}
+                </a>
+              )}
+              {pub.email && (
+                <a href={`mailto:${pub.email}`} className="btn-outline mt-2 block text-center no-underline">
+                  Email
+                </a>
+              )}
+              {pub.websiteUrl && (
+                <a
+                  href={pub.websiteUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-outline mt-2 block text-center no-underline"
+                >
+                  Website
+                </a>
+              )}
+              <p className="mt-4 text-xs text-[var(--muted)]">
+                Legal Aid: {formatLegalAidStatusLabel(pub)}
+                {pub.availability24Hour ? ' · 24-hour availability' : ''}
+              </p>
+              {unclaimed ? (
+                <p className="mt-3 text-xs text-[var(--muted)]">
+                  Sourced from published Legal Aid Agency data (unclaimed). Contact details have not
+                  been confirmed by the firm.
+                  {pub.dateVerified ? (
+                    <>
+                      {' '}
+                      LAA listing checked {pub.dateVerified}
+                      {pub.sourceUrl ? (
+                        <>
+                          {' '}
+                          (
+                          <a
+                            href={pub.sourceUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="font-semibold text-[var(--gold-link)] no-underline hover:underline"
+                          >
+                            source
+                          </a>
+                          )
+                        </>
+                      ) : null}
+                      .
+                    </>
+                  ) : null}
+                </p>
+              ) : pub.verificationStatus === 'verified' && pub.dateVerified ? (
+                <p className="mt-3 text-xs text-[var(--muted)]">
+                  Listing details checked {pub.dateVerified}
+                  {pub.sourceUrl ? (
+                    <>
+                      {' '}
+                      (
+                      <a
+                        href={pub.sourceUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-semibold text-[var(--gold-link)] no-underline hover:underline"
+                      >
+                        source
+                      </a>
+                      )
+                    </>
+                  ) : null}
+                  .
+                </p>
+              ) : null}
+              {pub.verificationStatus === 'unverified' && (
+                <p className="mt-3 text-xs font-medium text-amber-800">Contact details: unverified</p>
+              )}
+            </div>
+
+            {verificationSources.length > 0 && (
+              <div className="card-surface p-6 text-sm text-[var(--muted)]">
+                <h3 className="font-semibold text-[var(--navy)]">Verification sources</h3>
+                <p className="mt-2">
+                  {unclaimed
+                    ? 'This unclaimed listing is sourced from the published Legal Aid Agency directory. The firm has not yet confirmed its contact details.'
+                    : derivedVerification.status === 'verified'
+                      ? `Confirmed against ${derivedVerification.tierACount > 0 ? 'an official register' : 'corroborating official sources'}${derivedVerification.dateVerified ? ` (checked ${derivedVerification.dateVerified})` : ''}.`
+                      : 'Submitted sources do not yet meet the threshold for verification.'}
+                </p>
+                <ul className="mt-3 space-y-2">
+                  {verificationSources.map((s, i) => (
+                    <li key={`${s.url}-${i}`}>
+                      <a
+                        href={s.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-semibold text-[var(--gold-link)] no-underline hover:underline"
+                      >
+                        {s.label}
+                      </a>
+                      {s.reference ? ` · ${s.reference}` : ''}
+                      {s.dateChecked ? ` · checked ${s.dateChecked}` : ''}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {(pub.regulatoryBody || pub.regulatoryNumber) && (
+              <div className="card-surface p-6 text-sm text-[var(--muted)]">
+                <h3 className="font-semibold text-[var(--navy)]">Regulatory</h3>
+                {pub.regulatoryBody && <p className="mt-2">{pub.regulatoryBody}</p>}
+                {pub.regulatoryNumber && <p>{pub.regulatoryNumber}</p>}
+                {pub.accreditationDetails && (
+                  <p className="mt-2 whitespace-pre-wrap">{pub.accreditationDetails}</p>
+                )}
+              </div>
+            )}
+
+            <Link
+              href={`${LEGAL_DIRECTORY_BASE}/category/${pub.categorySlug}`}
+              className="text-sm font-semibold text-[var(--gold-link)] no-underline hover:underline"
+            >
+              More in {pub.category}
+            </Link>
+          </aside>
+        </div>
+
+        <div className="mt-10">
+          <LegalDirectoryDisclaimer />
+        </div>
+      </div>
+    </>
+  );
+}

@@ -1,0 +1,281 @@
+{
+  "generatedAt": "2026-06-02T17:31:52.400Z",
+  "write": false,
+  "fetch": true,
+  "allMissing": false,
+  "forceFilter": null,
+  "targets": 40,
+  "psrPagesFound": 22,
+  "custodyAdded": 12,
+  "phoneAdded": 9,
+  "rows": [
+    {
+      "station": "Oldbury custody suite",
+      "slug": "oldbury-custody-suite",
+      "action": "no_source"
+    },
+    {
+      "station": "Bradford trafalgar house police station",
+      "slug": "bradford-trafalgar-house-police-station",
+      "action": "no_source"
+    },
+    {
+      "station": "Middlewich custody",
+      "slug": "middlewich-custody",
+      "action": "no_source"
+    },
+    {
+      "station": "Polar Park Police Station",
+      "slug": "polar-park-police-station",
+      "action": "no_source"
+    },
+    {
+      "station": "Euston Street Police Station",
+      "slug": "euston-street-police-station",
+      "action": "add_phone",
+      "number": "0116 222 2222",
+      "source": "policestationreps.com",
+      "field": "phone"
+    },
+    {
+      "station": "Northampton Criminal Justice Centre",
+      "slug": "northampton-criminal-justice-centre",
+      "action": "no_source"
+    },
+    {
+      "station": "Keyham Lane Police Station",
+      "slug": "keyham-lane-police-station",
+      "action": "add_phone",
+      "number": "0116 222 2222",
+      "source": "policestationreps.com",
+      "field": "phone"
+    },
+    {
+      "station": "Banbury Police Station",
+      "slug": "banbury-police-station",
+      "action": "add_custody",
+      "number": "0845 8 505 505",
+      "source": "https://www.policestationreps.com/Police_Stations/Banbury-Police-Station.php",
+      "field": "custodyPhone"
+    },
+    {
+      "station": "Banbury Police Station",
+      "slug": "banbury-police-station",
+      "action": "add_phone",
+      "number": "0845 8 505 505",
+      "source": "https://www.policestationreps.com/Police_Stations/Banbury-Police-Station.php",
+      "field": "phone"
+    },
+    {
+      "station": "Weekly Woods Justice Centre",
+      "slug": "weekly-woods-justice-centre",
+      "action": "no_source"
+    },
+    {
+      "station": "Kempston Police Station",
+      "slug": "kempston-police-station",
+      "action": "add_phone",
+      "number": "01234 841 212",
+      "source": "policestationreps.com",
+      "field": "phone"
+    },
+    {
+      "station": "Norwich Police Station",
+      "slug": "norwich-police-station",
+      "action": "no_source"
+    },
+    {
+      "station": "Cambridge Police Station",
+      "slug": "cambridge-police-station",
+      "action": "no_source"
+    },
+    {
+      "station": "Peterborough Police Station",
+      "slug": "peterborough-police-station",
+      "action": "add_custody",
+      "number": "0845 456 4564",
+      "source": "https://www.policestationreps.com/Police_Stations/Peterborough-Police-Station.php",
+      "field": "custodyPhone"
+    },
+    {
+      "station": "Gloucester Police Station",
+      "slug": "gloucester-police-station",
+      "action": "no_source"
+    },
+    {
+      "station": "Exeter St Davids Police Station",
+      "slug": "exeter-st-davids-police-station",
+      "action": "add_custody",
+      "number": "08452 777444",
+      "source": "https://www.policestationreps.com/Police_Stations/Exeter-Police-Station.php",
+      "field": "custodyPhone"
+    },
+    {
+      "station": "Plymouth Police Station",
+      "slug": "plymouth-police-station",
+      "action": "no_source"
+    },
+    {
+      "station": "Doncaster Police Station",
+      "slug": "doncaster-police-station",
+      "action": "add_phone",
+      "number": "07534 533 070",
+      "source": "policestationreps.com",
+      "field": "phone"
+    },
+    {
+      "station": "Preston Police Station",
+      "slug": "preston-police-station",
+      "action": "add_custody",
+      "number": "0845 125 3545",
+      "source": "https://www.policestationreps.com/Police_Stations/Preston-Police-Station.php",
+      "field": "custodyPhone"
+    },
+    {
+      "station": "Brighton Police Station",
+      "slug": "brighton-police-station",
+      "action": "no_source"
+    },
+    {
+      "station": "Leeds Police Station",
+      "slug": "leeds-police-station",
+      "action": "no_source"
+    },
+    {
+      "station": "Kings Cross Police Station",
+      "slug": "kings-cross-police-station",
+      "action": "no_source"
+    },
+    {
+      "station": "Portsmouth Central Police Station",
+      "slug": "portsmouth-central-police-station",
+      "action": "add_custody",
+      "number": "0845 045 45 45",
+      "source": "https://www.policestationreps.com/Police_Stations/Portsmouth-Central-Police-Station.php",
+      "field": "custodyPhone"
+    },
+    {
+      "station": "Crawley Police Station",
+      "slug": "crawley-police-station",
+      "action": "add_custody",
+      "number": "0845 60 70 999",
+      "source": "https://www.policestationreps.com/Police_Stations/Crawley-Police-Station.php",
+      "field": "custodyPhone"
+    },
+    {
+      "station": "Basingstoke Police Station",
+      "slug": "basingstoke-police-station",
+      "action": "no_source"
+    },
+    {
+      "station": "Tonbridge Police Station",
+      "slug": "tonbridge-police-station",
+      "action": "add_phone",
+      "number": "01622 690 690",
+      "source": "https://www.policestationreps.com/Police_Stations/Tonbridge-Police-Station.php",
+      "field": "phone"
+    },
+    {
+      "station": "Bournemouth Police Station",
+      "slug": "bournemouth-police-station",
+      "action": "no_source"
+    },
+    {
+      "station": "Staines Police Station",
+      "slug": "staines-police-station",
+      "action": "add_custody",
+      "number": "0845 125 22 22",
+      "source": "https://www.policestationreps.com/Police_Stations/Staines-Police-Station.php",
+      "field": "custodyPhone"
+    },
+    {
+      "station": "Ashford Police Station",
+      "slug": "ashford-police-station",
+      "action": "no_source"
+    },
+    {
+      "station": "Canterbury Police Station",
+      "slug": "canterbury-police-station",
+      "action": "add_phone",
+      "number": "01227 762 055",
+      "source": "https://www.policestationreps.com/Police_Stations/Canterbury-Police-Station.php",
+      "field": "phone"
+    },
+    {
+      "station": "Guildford Police Station",
+      "slug": "guildford-police-station",
+      "action": "add_custody",
+      "number": "0845 125 22 22",
+      "source": "https://www.policestationreps.com/Police_Stations/Guildford-Police-Station.php",
+      "field": "custodyPhone"
+    },
+    {
+      "station": "Maidstone Police Station",
+      "slug": "maidstone-police-station",
+      "action": "add_phone",
+      "number": "07534 533 070",
+      "source": "policestationreps.com",
+      "field": "phone"
+    },
+    {
+      "station": "Eastbourne Police Station",
+      "slug": "eastbourne-police-station",
+      "action": "add_custody",
+      "number": "0845 60 70 999",
+      "source": "https://www.policestationreps.com/Police_Stations/Eastbourne-Custody-Suite.php",
+      "field": "custodyPhone"
+    },
+    {
+      "station": "Poole Police Station",
+      "slug": "poole-police-station",
+      "action": "no_source"
+    },
+    {
+      "station": "Woking Police Station",
+      "slug": "woking-police-station",
+      "action": "add_custody",
+      "number": "0845 125 22 22",
+      "source": "https://www.policestationreps.com/Police_Stations/Woking-Police-Station.php",
+      "field": "custodyPhone"
+    },
+    {
+      "station": "Oxford Police Station",
+      "slug": "oxford-police-station",
+      "action": "no_source"
+    },
+    {
+      "station": "Slough Police Station",
+      "slug": "slough-police-station",
+      "action": "add_custody",
+      "number": "0845 8 505 505",
+      "source": "https://www.policestationreps.com/Police_Stations/Slough-Police-Station.php",
+      "field": "custodyPhone"
+    },
+    {
+      "station": "Yeovil Police Station",
+      "slug": "yeovil-police-station",
+      "action": "add_phone",
+      "number": "07534 533 070",
+      "source": "policestationreps.com",
+      "field": "phone"
+    },
+    {
+      "station": "Cheltenham Police Station",
+      "slug": "cheltenham-police-station",
+      "action": "no_source"
+    },
+    {
+      "station": "Gloucestershire Headquarters",
+      "slug": "gloucestershire-headquarters",
+      "action": "no_source"
+    },
+    {
+      "station": "Taunton Police Station",
+      "slug": "taunton-police-station",
+      "action": "add_custody",
+      "number": "0845 4567 000",
+      "source": "https://www.policestationreps.com/Police_Stations/Taunton-Police-Station.php",
+      "field": "custodyPhone"
+    }
+  ]
+}
