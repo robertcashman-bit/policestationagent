@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <rect width="32" height="32" rx="8" fill="#0B3C5D"/>
+  <path d="M16 4L6 8.5V15C6 21.08 10.28 26.73 16 28C21.72 26.73 26 21.08 26 15V8.5L16 4Z" fill="#D4AF37" opacity="0.9"/>
+  <path d="M16 6L8 9.75V15C8 20.05 11.58 24.77 16 25.93C20.42 24.77 24 20.05 24 15V9.75L16 6Z" fill="#0B3C5D"/>
+  <text x="16" y="19.5" text-anchor="middle" font-family="Arial,sans-serif" font-weight="bold" font-size="9" fill="#D4AF37">PSR</text>
+</svg>

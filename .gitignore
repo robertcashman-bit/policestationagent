@@ -1,0 +1,76 @@
+# dependencies
+node_modules/
+
+# next.js
+.next/
+out/
+
+# vercel
+.vercel/
+
+# env
+.env
+.env*.local
+.env.vercel*
+
+# build
+*.tsbuildinfo
+next-env.d.ts
+
+# testing
+test-results/
+playwright-report/
+
+# IDE
+.cursor/*
+!.cursor/environment.json
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# debug
+npm-debug.log*
+
+# scripts/ is a mix: a deterministic syllabus-alignment pipeline (versioned)
+# plus project-specific maintenance utilities that may contain hardcoded
+# tokens / personal config (kept local). Default to ignoring the directory
+# and explicitly unignore the syllabus pipeline files we DO want versioned
+# so reviewers and CI can rebuild seeds deterministically.
+scripts/*
+!scripts/build-all-questions-sql.mjs
+!scripts/build-cit-scenarios-sql.mjs
+!scripts/cit-scenarios.mjs
+!scripts/psr-handcrafted-questions.mjs
+!scripts/psr-questions-syllabus.mjs
+!scripts/psr-syllabus-modules.sql
+!scripts/resplice-all-content.mjs
+!scripts/setup.sql
+!scripts/ALL_CONTENT_COMBINED.sql
+!scripts/smoke-test-prod.mjs
+!scripts/test-lemon-checkout.mjs
+!scripts/admin/
+!scripts/admin/check-customer-access.mjs
+!scripts/admin/grant-free-month.mjs
+!scripts/qa-link-crawl.mjs
+!scripts/audit-public-copy.ts
+!scripts/submit-indexnow.mjs
+!scripts/deploy-prod.mjs
+!scripts/lib/
+!scripts/lib/google-gsc.mjs
+!scripts/sync-blog-hero-images.mjs
+!scripts/generate-guide-hero-images.mjs
+!scripts/audit/
+!scripts/audit/guides-publishing-pace.ts
+!scripts/fix-weak-distractors.mjs
+!scripts/apply-weak-distractor-rewrites.mjs
+!scripts/data/
+!scripts/data/weak-distractor-fixes.json
+!scripts/data/weak-distractor-rewrites.json
+
+COMMIT_MSG.tmp
+
+.lemon-key.tmp
+.vercel
+.env*

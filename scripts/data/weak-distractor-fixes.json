@@ -1,0 +1,39 @@
+{
+  "_comment": "Hand-reviewed distractor rewrites to remove weak absolute language (always/never/illegal/refuse completely) while keeping each option a plausible-but-wrong answer. Keyed by question id. For object-form options use letter keys; for array-form options use the option id. Only distractors are changed; correct answers are left intact.",
+  "144f0374-48f2-4833-8d19-9672a683849e": {
+    "A": "Yes — full advice can safely be given on phone disclosure alone",
+    "C": "Decline the call until you can attend in person"
+  },
+  "28fabefb-90e0-4702-ba0a-d85bb2a935c5": {
+    "A": "Only if the interviewing officer agrees to an intervention"
+  },
+  "3090c49a-7447-4eba-9bab-649779871010": {
+    "A": "It prevents the police from asking any further questions"
+  },
+  "3438a380-7b71-4186-97fa-b8d9b34a2f9c": {
+    "A": "Only where the client intends to plead guilty",
+    "C": "As the standard approach for every interview"
+  },
+  "4889cb01-b5ed-42fd-9d3e-6dcce411ae3e": {
+    "a": "It can be delayed for any offence on the investigating officer's request"
+  },
+  "4b8061cd-a927-4cc1-8399-0209c700c1e6": {
+    "D": "That they should give a full account to avoid appearing uncooperative"
+  },
+  "56009c3b-ef4f-4e3b-95ef-6c33979b9125": {
+    "D": "Avoid discussing the interview at all to prevent coaching allegations"
+  },
+  "6c24f3ea-675d-4bed-8b46-20852cdb5f3b": {
+    "A": "Whenever the detainee has been charged",
+    "D": "Only with the detainee's written consent"
+  },
+  "7b68c1e0-81a7-4657-9c4a-e4097afd9aee": {
+    "A": "You must restart the accreditation process from the beginning"
+  },
+  "a0e5384a-b090-400e-8c44-e4cf2cd2cb5d": {
+    "C": "Whether the defendant intended to cause a loss"
+  },
+  "d19dd355-d14b-4e00-89ab-1f9a64859553": {
+    "C": "The right applies only after charge, not during initial detention"
+  }
+}
