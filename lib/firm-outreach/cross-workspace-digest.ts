@@ -153,8 +153,11 @@ export function buildCrossWorkspaceDigestSubject(data: CrossWorkspaceDigestData)
   return `[Outreach digest] ${phaseShort} — no sends yet — ${data.date}`;
 }
 
+function formatCap(cap: number): string {
+  return !Number.isFinite(cap) || cap >= 10_000 ? 'unlimited' : String(cap);
+}
+
 export function buildCrossWorkspaceDigestHtml(data: CrossWorkspaceDigestData): string {
-  const cap = dailySendCap();
   const summaryRows = data.workspaces
     .map(
       (w) =>
@@ -163,8 +166,8 @@ export function buildCrossWorkspaceDigestHtml(data: CrossWorkspaceDigestData): s
           <td>${escapeHtml(w.domain)}</td>
           <td>${escapeHtml(w.fromEmail)}</td>
           <td>${w.sentToday}</td>
-          <td>${w.dailyCap}</td>
-          <td>${w.remaining}</td>
+          <td>${escapeHtml(formatCap(w.dailyCap))}</td>
+          <td>${escapeHtml(formatCap(w.remaining))}</td>
           <td>${w.readyToSend}</td>
         </tr>`,
     )
@@ -180,6 +183,10 @@ export function buildCrossWorkspaceDigestHtml(data: CrossWorkspaceDigestData): s
     )
     .join('');
 
+  const capsNote = data.workspaces
+    .map((w) => `${w.label}: ${formatCap(w.dailyCap)}`)
+    .join(' · ');
+
   return `
     <div style="font-family:system-ui,sans-serif;color:#0f172a;max-width:800px">
       <h2 style="margin:0 0 8px">Cross-workspace firm outreach digest</h2>
@@ -188,7 +195,7 @@ export function buildCrossWorkspaceDigestHtml(data: CrossWorkspaceDigestData): s
       </p>
       <ul style="margin:0 0 20px;padding-left:20px;line-height:1.6">
         <li><strong>Combined sent today:</strong> ${data.combined}</li>
-        <li><strong>Daily cap per workspace:</strong> ${cap}</li>
+        <li><strong>Daily caps:</strong> ${escapeHtml(capsNote)}</li>
       </ul>
       <h3 style="margin:0 0 8px">Summary by workspace</h3>
       <table border="1" cellpadding="6" style="border-collapse:collapse;font-size:14px;width:100%;margin-bottom:24px">
@@ -222,7 +229,11 @@ export async function buildCrossWorkspaceDigestData(
 ): Promise<CrossWorkspaceDigestData> {
   const { date } = { date: now.toISOString().slice(0, 10) };
   const creds = kvCredsFromEnv();
-  const cap = dailySendCap();
+  // PSA soft cap (legacy ≤100 treated as uncapped by dailySendCap()).
+  const psaCap = dailySendCap();
+  // REPUK production soft-cap is unlimited (FIRM_OUTREACH_DAILY_CAP unset/0).
+  // Do not project PSA's env onto the REPUK row in the digest.
+  const repukCap = Number.MAX_SAFE_INTEGER;
 
   const kv = getKV();
   const queueCounts = kv ? await getCampaignQueueCounts(kv) : [];
@@ -239,6 +250,7 @@ export async function buildCrossWorkspaceDigestData(
 
     const sends = creds ? await listOutreachSentToday(source, now) : [];
     const sentToday = sends.length;
+    const cap = ws.campaignId === REPUK_CAMPAIGN_ID ? repukCap : psaCap;
 
     workspaces.push({
       domain: ws.domain,
