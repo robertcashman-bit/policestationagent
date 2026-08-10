@@ -1,0 +1,1537 @@
+diff --git a/__tests__/buffer-image-url.test.ts b/__tests__/buffer-image-url.test.ts
+index 77dfedc..1a902cd 100644
+--- a/__tests__/buffer-image-url.test.ts
++++ b/__tests__/buffer-image-url.test.ts
+@@ -49,8 +49,11 @@ describe('buffer image-url validation', () => {
+     expect(result.ok).toBe(true);
+   });
+ 
+-  it('assertBufferPostImageReady rejects missing and oversized URLs', async () => {
+-    await expect(assertBufferPostImageReady(undefined)).rejects.toThrow(/requires a blog image URL/i);
++  it('assertBufferPostImageReady allows text-only for non-GBP; GBP still requires image', async () => {
++    await expect(assertBufferPostImageReady(undefined)).resolves.toBeUndefined();
++    await expect(
++      assertBufferPostImageReady(undefined, fetch, { channelService: 'googlebusiness' }),
++    ).rejects.toThrow(/requires a blog image URL/i);
+ 
+     const fetchMock = vi.fn().mockResolvedValue({
+       ok: true,
+@@ -63,7 +66,12 @@ describe('buffer image-url validation', () => {
+ 
+     await expect(
+       assertBufferPostImageReady('https://example.com/huge.jpg', fetchMock as unknown as typeof fetch),
+-    ).rejects.toThrow(/too large/i);
++    ).resolves.toBeUndefined();
++    await expect(
++      assertBufferPostImageReady('https://example.com/huge.jpg', fetchMock as unknown as typeof fetch, {
++        channelService: 'googlebusiness',
++      }),
++    ).rejects.toThrow(/too large|no Google Business compatible/i);
+   });
+ 
+   it('isJpegOrPngMagicBytes detects JPEG and PNG signatures', () => {
+diff --git a/__tests__/outreach-health-status.test.ts b/__tests__/outreach-health-status.test.ts
+index e42477a..fb12e56 100644
+--- a/__tests__/outreach-health-status.test.ts
++++ b/__tests__/outreach-health-status.test.ts
+@@ -91,7 +91,7 @@ describe('classifyWorkspaceHealth', () => {
+     ).toBe('LIMIT_REACHED');
+   });
+ 
+-  it('FAILED when eligible exist but scheduler stale', () => {
++  it('FAILED when eligible exist, zero accepted, and scheduler failed', () => {
+     expect(
+       classifyWorkspaceHealth({
+         capacity: cap(),
+@@ -106,6 +106,36 @@ describe('classifyWorkspaceHealth', () => {
+     ).toBe('FAILED');
+   });
+ 
++  it('does not FAILED when the reported day already accepted sends', () => {
++    expect(
++      classifyWorkspaceHealth({
++        capacity: cap(),
++        lastSchedulerOk: false,
++        lastSchedulerAgeMs: 2 * 60 * 60_000,
++        outstandingFaults: [],
++        providerAuthOk: true,
++        acceptedToday: 12,
++        temporaryFailures: 0,
++        pendingBacklog: 40,
++      }),
++    ).toBe('DEGRADED');
++  });
++
++  it('does not FAILED solely because scheduler age exceeds 45m after a send day', () => {
++    expect(
++      classifyWorkspaceHealth({
++        capacity: cap(),
++        lastSchedulerOk: true,
++        lastSchedulerAgeMs: 2 * 60 * 60_000,
++        outstandingFaults: [],
++        providerAuthOk: true,
++        acceptedToday: 8,
++        temporaryFailures: 0,
++        pendingBacklog: 20,
++      }),
++    ).toBe('HEALTHY');
++  });
++
+   it('DEGRADED with temporary failures', () => {
+     expect(
+       classifyWorkspaceHealth({
+diff --git a/app/api/cron/buffer-cross-site-report/route.ts b/app/api/cron/buffer-cross-site-report/route.ts
+index 20ca1fd..76cc288 100644
+--- a/app/api/cron/buffer-cross-site-report/route.ts
++++ b/app/api/cron/buffer-cross-site-report/route.ts
+@@ -125,6 +125,7 @@ export async function GET(request: Request) {
+           date: report.date,
+           sites: report.sites,
+           feedBreakdown: report.feedBreakdown,
++          stuckPosts: report.stuckPosts,
+         });
+         await markCrossSiteDigestSent(verifyDate);
+       }
+diff --git a/lib/buffer/email.ts b/lib/buffer/email.ts
+index 3e4d731..b670e92 100644
+--- a/lib/buffer/email.ts
++++ b/lib/buffer/email.ts
+@@ -367,6 +367,7 @@ export interface BufferCrossSiteReportEmailInput {
+     sentCount: number;
+     requiredCount: number;
+     scheduledCount?: number;
++    stuckCount?: number;
+     ok: boolean;
+     issue?: string;
+   }>;
+@@ -377,6 +378,13 @@ export interface BufferCrossSiteReportEmailInput {
+     sentCount: number;
+     requiredCount: number;
+   }>;
++  stuckPosts?: Array<{
++    id: string;
++    status: string;
++    channelService?: string;
++    hostname?: string;
++    excerpt: string;
++  }>;
+   reason?: string;
+   adminEmail?: string;
+ }
+@@ -462,12 +470,26 @@ export async function sendBufferCrossSiteFailureEmail(
+          </table>`
+       : '';
+ 
++  const stuckHtml =
++    input.stuckPosts && input.stuckPosts.length > 0
++      ? `<p style="margin:16px 0 8px;"><strong>Stuck Buffer posts (error/sending):</strong></p>
++         <ul style="margin:0 0 16px;padding-left:18px;font-size:13px;line-height:1.5;">
++           ${input.stuckPosts
++             .slice(0, 12)
++             .map(
++               (p) =>
++                 `<li><code>${escapeHtml(p.status)}</code>${p.hostname ? ` · ${escapeHtml(p.hostname)}` : ''}${p.channelService ? ` · ${escapeHtml(p.channelService)}` : ''}: ${escapeHtml(p.excerpt)}</li>`,
++             )
++             .join('')}
++         </ul>`
++      : '';
++
+   const rows = input.sites
+     .map(
+       (s) =>
+         `<tr>
+           <td style="padding:4px 8px;border-bottom:1px solid #e2e8f0;">${escapeHtml(s.hostname)}</td>
+-          <td style="padding:4px 8px;border-bottom:1px solid #e2e8f0;">${s.sentCount} / ${s.requiredCount}${s.scheduledCount != null ? ` (sched ${s.scheduledCount})` : ''}</td>
++          <td style="padding:4px 8px;border-bottom:1px solid #e2e8f0;">${s.sentCount} / ${s.requiredCount}${s.scheduledCount != null ? ` (sched ${s.scheduledCount})` : ''}${s.stuckCount ? ` · stuck ${s.stuckCount}` : ''}</td>
+           <td style="padding:4px 8px;border-bottom:1px solid #e2e8f0;">${s.ok ? 'OK' : escapeHtml(s.issue ?? 'below quota')}</td>
+         </tr>`,
+     )
+@@ -494,6 +516,7 @@ export async function sendBufferCrossSiteFailureEmail(
+         </tr></thead>
+         <tbody>${rows}</tbody>
+       </table>
++      ${stuckHtml}
+       <p style="margin:16px 0 0;color:#64748b;font-size:12px;">
+         Run <code>npm run buffer:verify-cross-site</code> and check sibling
+         <code>/api/buffer/schedule</code> crons. See <code>docs/buffer-ops.md</code>.
+diff --git a/lib/buffer/image-url.ts b/lib/buffer/image-url.ts
+index 8d6f777..d733a0c 100644
+--- a/lib/buffer/image-url.ts
++++ b/lib/buffer/image-url.ts
+@@ -289,15 +289,22 @@ export async function resolveGoogleBusinessImageUrlForPost(
+   return resolveGoogleBusinessImageUrl(post.imageUrl, fetchFn, siteUrl, post.feedId);
+ }
+ 
+-/** Validate image URL every time before scheduling — raster type, reachable, ≤ 5MB. */
++/**
++ * Validate image URL every time before scheduling — raster type, reachable, ≤ 5MB.
++ * GBP requires an image; other channels may return undefined for text-only posts.
++ */
+ export async function assertBufferPostImageReady(
+   imageUrl: string | undefined | null,
+   fetchFn: typeof fetch = fetch,
+   options?: { channelService?: BufferChannelService; feedId?: string },
+-): Promise<string> {
++): Promise<string | undefined> {
++  const requiresImage = options?.channelService === 'googlebusiness';
+   const trimmed = imageUrl?.trim();
+   if (!trimmed) {
+-    throw new BufferPostImageError('Buffer post requires a blog image URL');
++    if (requiresImage) {
++      throw new BufferPostImageError('Buffer post requires a blog image URL');
++    }
++    return undefined;
+   }
+ 
+   if (options?.channelService === 'googlebusiness') {
+@@ -309,12 +316,16 @@ export async function assertBufferPostImageReady(
+   }
+ 
+   if (!isRasterImagePath(trimmed)) {
+-    throw new BufferPostImageError('non-raster image path');
++    if (requiresImage) throw new BufferPostImageError('non-raster image path');
++    return undefined;
+   }
+ 
+   const probe = await probeBufferImageUrl(trimmed, fetchFn);
+   if (!probe.ok) {
+-    throw new BufferPostImageError(probe.reason ?? 'image validation failed');
++    if (requiresImage) {
++      throw new BufferPostImageError(probe.reason ?? 'image validation failed');
++    }
++    return undefined;
+   }
+ 
+   return trimmed;
+diff --git a/lib/buffer/verify-cross-site.ts b/lib/buffer/verify-cross-site.ts
+index dc3dcd5..aed1c52 100644
+--- a/lib/buffer/verify-cross-site.ts
++++ b/lib/buffer/verify-cross-site.ts
+@@ -15,6 +15,9 @@ export interface CrossSiteSiteReport {
+   requiredCount: number;
+   /** Buffer scheduled+sent posts with this site's hostname in text (not REPUK KV). */
+   scheduledCount?: number;
++  /** Host-matched Buffer posts stuck in error or sending for the day. */
++  stuckCount?: number;
++  stuckStatuses?: Array<'error' | 'sending'>;
+   ok: boolean;
+   issue?: string;
+ }
+@@ -25,6 +28,14 @@ export interface CrossSiteBufferReport {
+   reason?: 'missing_api_key';
+   sites: CrossSiteSiteReport[];
+   problems: CrossSiteSiteReport[];
++  /** Org-level stuck posts (error/sending) that match any target hostname. */
++  stuckPosts?: Array<{
++    id: string;
++    status: string;
++    channelService?: string;
++    hostname?: string;
++    excerpt: string;
++  }>;
+   feedBreakdown?: Array<{
+     feedId: string;
+     hostname: string;
+@@ -79,7 +90,7 @@ export async function verifyCrossSiteBufferPosts(
+   const targets = opts?.targets ?? CROSS_SITE_BUFFER_TARGETS;
+   const allChannelIds = [...new Set(targets.flatMap((t) => t.channelIds))];
+ 
+-  const [sent, scheduledOrSent] = await Promise.all([
++  const [sent, scheduledOrSent, stuckOrSending] = await Promise.all([
+     listPostsInWindow(apiKey, orgId, {
+       status: ['sent'],
+       dueAtStart: dayStart,
+@@ -92,6 +103,12 @@ export async function verifyCrossSiteBufferPosts(
+       dueAtEnd: dayEnd,
+       channelIds: allChannelIds,
+     }),
++    listPostsInWindow(apiKey, orgId, {
++      status: ['error', 'sending'],
++      dueAtStart: dayStart,
++      dueAtEnd: dayEnd,
++      channelIds: allChannelIds,
++    }),
+   ]);
+ 
+   // REPUK-only: optional KV feed breakdown for local-feed debugging (never used for siblings).
+@@ -100,6 +117,27 @@ export async function verifyCrossSiteBufferPosts(
+     ? schedulerRun.feedIds.filter((id) => id === 'policestationrepuk').length
+     : 0;
+ 
++  const hostnameForPost = (text: string): string | undefined => {
++    const match = text.match(/https?:\/\/[^\s)]+/);
++    if (!match) return undefined;
++    try {
++      return new URL(match[0]).hostname.replace(/^www\./, '');
++    } catch {
++      return undefined;
++    }
++  };
++
++  const stuckPosts = stuckOrSending.map((p) => {
++    const hostname = hostnameForPost(p.text || '');
++    return {
++      id: p.id,
++      status: p.status,
++      channelService: p.channelService,
++      hostname,
++      excerpt: (p.text || '').replace(/\s+/g, ' ').slice(0, 160),
++    };
++  });
++
+   const sites: CrossSiteSiteReport[] = targets.map((target) => {
+     const required = target.requiredPostsPerDay ?? MIN_POSTS_PER_DAY;
+     const sentCount = countSiteSentPosts(sent, target.hostname);
+@@ -109,6 +147,11 @@ export async function verifyCrossSiteBufferPosts(
+       target.id === 'policestationrepuk'
+         ? Math.max(bufferCount, repukKvScheduled)
+         : bufferCount;
++    const bare = target.hostname.replace(/^www\./, '');
++    const siteStuck = stuckPosts.filter(
++      (p) => p.hostname === bare || (p.hostname && p.hostname.endsWith(`.${bare}`)),
++    );
++    const stuckCount = siteStuck.length;
+     const ok = sentCount >= required;
+     let issue: string | undefined;
+     if (!ok) {
+@@ -116,6 +159,10 @@ export async function verifyCrossSiteBufferPosts(
+       if (scheduledCount < required) {
+         issue += `; Buffer scheduled+sent with ${target.hostname} link: ${scheduledCount}/${required} (sibling self-scheduler)`;
+       }
++      if (stuckCount > 0) {
++        const statuses = [...new Set(siteStuck.map((p) => p.status))].join('/');
++        issue += `; ${stuckCount} stuck ${statuses} post(s) with ${target.hostname} link — retry or text-only requeue`;
++      }
+     }
+     return {
+       id: target.id,
+@@ -123,6 +170,8 @@ export async function verifyCrossSiteBufferPosts(
+       sentCount,
+       requiredCount: required,
+       scheduledCount,
++      stuckCount,
++      stuckStatuses: [...new Set(siteStuck.map((p) => p.status as 'error' | 'sending'))],
+       ok,
+       issue,
+     };
+@@ -143,6 +192,7 @@ export async function verifyCrossSiteBufferPosts(
+     date: yesterday,
+     sites,
+     problems,
++    stuckPosts,
+     feedBreakdown,
+   };
+ }
+diff --git a/lib/firm-outreach/reporting/health-status.ts b/lib/firm-outreach/reporting/health-status.ts
+index 081a9b5..78f4c4b 100644
+--- a/lib/firm-outreach/reporting/health-status.ts
++++ b/lib/firm-outreach/reporting/health-status.ts
+@@ -7,6 +7,14 @@ export type WorkspaceHealthStatus =
+   | 'NO_ELIGIBLE_LEADS'
+   | 'LIMIT_REACHED';
+ 
++/**
++ * Classify workspace health for the daily outreach report.
++ *
++ * FAILED for “eligible but cannot send” only when the reported London day had
++ * zero accepted provider sends AND a real outage reason (provider auth,
++ * scheduler failure, capacity blocked). Do not FAILED when yesterday accepted > 0,
++ * backlog remains after a successful batch, or worker status is expected skipped.
++ */
+ export function classifyWorkspaceHealth(input: {
+   capacity: OutreachCapacity;
+   lastSchedulerOk: boolean;
+@@ -21,13 +29,34 @@ export function classifyWorkspaceHealth(input: {
+     return 'FAILED';
+   }
+ 
++  const hardCapacityBlock =
++    input.capacity.limitingFactor === 'sending_disabled' ||
++    input.capacity.limitingFactor === 'dry_run';
++
++  if (hardCapacityBlock) {
++    return 'FAILED';
++  }
++
++  const realOutage =
++    !input.lastSchedulerOk ||
++    input.outstandingFaults.some(
++      (f) =>
++        f.includes('RESEND') ||
++        f.toLowerCase().includes('auth') ||
++        f.toLowerCase().includes('domain') ||
++        f.includes('campaign send unhealthy'),
++    );
++
++  // Eligible leads with capacity but zero accepted sends + real outage → FAILED.
++  // Do NOT treat "last worker > 45m before 07:00 report" as a standalone FAILED
++  // when the reported day already had accepted provider sends.
+   if (
+     input.capacity.sendingEnabled &&
+     !input.capacity.dryRun &&
+     input.capacity.eligibleUnsent > 0 &&
+     input.capacity.effectiveAvailableCapacity > 0 &&
+-    (!input.lastSchedulerOk ||
+-      (input.lastSchedulerAgeMs != null && input.lastSchedulerAgeMs > 45 * 60_000))
++    input.acceptedToday <= 0 &&
++    realOutage
+   ) {
+     return 'FAILED';
+   }
+@@ -49,18 +78,14 @@ export function classifyWorkspaceHealth(input: {
+     return 'NO_ELIGIBLE_LEADS';
+   }
+ 
+-  if (
+-    input.capacity.limitingFactor === 'sending_disabled' ||
+-    input.capacity.limitingFactor === 'dry_run'
+-  ) {
+-    return 'FAILED';
+-  }
+-
+   if (
+     input.temporaryFailures > 0 ||
+     input.pendingBacklog > 50 ||
+     input.outstandingFaults.length > 0 ||
+-    !input.lastSchedulerOk
++    !input.lastSchedulerOk ||
++    (input.lastSchedulerAgeMs != null &&
++      input.lastSchedulerAgeMs > 45 * 60_000 &&
++      input.acceptedToday <= 0)
+   ) {
+     return 'DEGRADED';
+   }
+diff --git a/packages/buffer-engine/dist/client.d.ts b/packages/buffer-engine/dist/client.d.ts
+index 4d29143..763be69 100644
+--- a/packages/buffer-engine/dist/client.d.ts
++++ b/packages/buffer-engine/dist/client.d.ts
+@@ -53,6 +53,8 @@ export declare function createScheduledBufferPost(apiKey: string, input: {
+     imageAlt?: string;
+     feedId?: string;
+     siteUrl: string;
++    /** When true, skip image attach even if imageUrl is provided (text-only retry). */
++    forceTextOnly?: boolean;
+ }): Promise<CreatedBufferPost>;
+ export declare function listPostsInWindow(apiKey: string, organizationId: string, input: {
+     status: Array<'scheduled' | 'sent' | 'error' | 'draft' | 'sending' | 'needs_approval'>;
+diff --git a/packages/buffer-engine/dist/client.d.ts.map b/packages/buffer-engine/dist/client.d.ts.map
+index 30ad7f1..9c2e469 100644
+--- a/packages/buffer-engine/dist/client.d.ts.map
++++ b/packages/buffer-engine/dist/client.d.ts.map
+@@ -1 +1 @@
+-{"version":3,"file":"client.d.ts","sourceRoot":"","sources":["../src/client.ts"],"names":[],"mappings":"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"}
+\ No newline at end of file
++{"version":3,"file":"client.d.ts","sourceRoot":"","sources":["../src/client.ts"],"names":[],"mappings":"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"}
+\ No newline at end of file
+diff --git a/packages/buffer-engine/dist/client.js b/packages/buffer-engine/dist/client.js
+index f05dd76..18b91f5 100644
+--- a/packages/buffer-engine/dist/client.js
++++ b/packages/buffer-engine/dist/client.js
+@@ -118,10 +118,15 @@ function postMetadataForService(service, url) {
+     return undefined;
+ }
+ async function createScheduledBufferPost(apiKey, input) {
+-    const validatedImageUrl = await (0, image_url_1.assertBufferPostImageReady)(input.imageUrl, input.siteUrl, fetch, {
+-        channelService: input.channelService,
+-        feedId: input.feedId,
+-    });
++    const validatedImageUrl = input.forceTextOnly
++        ? undefined
++        : await (0, image_url_1.assertBufferPostImageReady)(input.imageUrl, input.siteUrl, fetch, {
++            channelService: input.channelService,
++            feedId: input.feedId,
++        });
++    if (input.channelService === 'googlebusiness' && !validatedImageUrl?.trim()) {
++        throw new Error('createPost failed: Google Business requires a JPEG/PNG image');
++    }
+     const metadata = postMetadataForService(input.channelService, input.url);
+     const text = input.channelService === 'googlebusiness'
+         ? (0, google_business_text_1.sanitizeGoogleBusinessPostText)(input.text)
+diff --git a/packages/buffer-engine/dist/image-url.d.ts b/packages/buffer-engine/dist/image-url.d.ts
+index 40d8b19..5d290c8 100644
+--- a/packages/buffer-engine/dist/image-url.d.ts
++++ b/packages/buffer-engine/dist/image-url.d.ts
+@@ -33,10 +33,18 @@ export declare function bufferImageRejectReason(input: {
+ }): string | undefined;
+ export declare function probeBufferImageUrl(url: string, fetchFn?: typeof fetch, siteUrl?: string): Promise<BufferImageProbeResult>;
+ export declare function resolveBufferImageUrl(candidates: Array<string | undefined | null>, fetchFn?: typeof fetch, siteUrl?: string): Promise<string | undefined>;
++/**
++ * Validate a Buffer image URL before scheduling.
++ * Google Business always requires a reachable JPEG/PNG.
++ * LinkedIn/X/Facebook may return `undefined` (text-only) when the image is
++ * missing or fails validation — callers should proceed with empty assets.
++ */
+ export declare function assertBufferPostImageReady(imageUrl: string | undefined | null, siteUrl: string, fetchFn?: typeof fetch, options?: {
+     channelService?: BufferChannelService;
+     feedId?: string;
+-}): Promise<string>;
++}): Promise<string | undefined>;
++/** True when Buffer rejected the attached media / image validation failed. */
++export declare function isBufferMediaError(message: string): boolean;
+ export declare function hydratePostImagesForBuffer(posts: Array<{
+     feedId: string;
+     slug: string;
+diff --git a/packages/buffer-engine/dist/image-url.d.ts.map b/packages/buffer-engine/dist/image-url.d.ts.map
+index b00bd3e..00ee859 100644
+--- a/packages/buffer-engine/dist/image-url.d.ts.map
++++ b/packages/buffer-engine/dist/image-url.d.ts.map
+@@ -1 +1 @@
+-{"version":3,"file":"image-url.d.ts","sourceRoot":"","sources":["../src/image-url.ts"],"names":[],"mappings":"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"}
+\ No newline at end of file
++{"version":3,"file":"image-url.d.ts","sourceRoot":"","sources":["../src/image-url.ts"],"names":[],"mappings":"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"}
+\ No newline at end of file
+diff --git a/packages/buffer-engine/dist/image-url.js b/packages/buffer-engine/dist/image-url.js
+index 949eb29..b8614c3 100644
+--- a/packages/buffer-engine/dist/image-url.js
++++ b/packages/buffer-engine/dist/image-url.js
+@@ -17,6 +17,7 @@ exports.bufferImageRejectReason = bufferImageRejectReason;
+ exports.probeBufferImageUrl = probeBufferImageUrl;
+ exports.resolveBufferImageUrl = resolveBufferImageUrl;
+ exports.assertBufferPostImageReady = assertBufferPostImageReady;
++exports.isBufferMediaError = isBufferMediaError;
+ exports.hydratePostImagesForBuffer = hydratePostImagesForBuffer;
+ const node_fs_1 = require("node:fs");
+ const node_path_1 = require("node:path");
+@@ -322,23 +323,43 @@ async function resolveBufferImageUrl(candidates, fetchFn, siteUrl) {
+     }
+     return undefined;
+ }
++/**
++ * Validate a Buffer image URL before scheduling.
++ * Google Business always requires a reachable JPEG/PNG.
++ * LinkedIn/X/Facebook may return `undefined` (text-only) when the image is
++ * missing or fails validation — callers should proceed with empty assets.
++ */
+ async function assertBufferPostImageReady(imageUrl, siteUrl, fetchFn = fetch, options) {
++    const requiresImage = options?.channelService === 'googlebusiness';
+     const trimmed = imageUrl?.trim();
+-    if (!trimmed)
+-        throw new BufferPostImageError('Buffer post requires a blog image URL');
++    if (!trimmed) {
++        if (requiresImage)
++            throw new BufferPostImageError('Buffer post requires a blog image URL');
++        return undefined;
++    }
+     if (options?.channelService === 'googlebusiness') {
+         const resolved = await resolveGoogleBusinessImageUrl(trimmed, fetchFn, siteUrl, options.feedId);
+         if (!resolved)
+             throw new BufferPostImageError('no Google Business compatible JPEG/PNG image');
+         return resolved;
+     }
+-    if (!isRasterImagePath(trimmed))
+-        throw new BufferPostImageError('non-raster image path');
++    if (!isRasterImagePath(trimmed)) {
++        if (requiresImage)
++            throw new BufferPostImageError('non-raster image path');
++        return undefined;
++    }
+     const probe = await probeBufferImageUrl(trimmed, fetchFn, siteUrl);
+-    if (!probe.ok)
+-        throw new BufferPostImageError(probe.reason ?? 'image validation failed');
++    if (!probe.ok) {
++        if (requiresImage)
++            throw new BufferPostImageError(probe.reason ?? 'image validation failed');
++        return undefined;
++    }
+     return trimmed;
+ }
++/** True when Buffer rejected the attached media / image validation failed. */
++function isBufferMediaError(message) {
++    return /file size limit|unsupported content-type|image exceeds|image validation failed|image too large|non-raster image path|requires a blog image url|google business requires|no google business compatible|magic-byte check failed|gbp preflight failed|cannot contain phone numbers|issue with the attached media|connection timing out|file being too large|attached media or link|unable to process.*media|media.*failed|stuck processing/i.test(message);
++}
+ async function hydratePostImagesForBuffer(posts, siteUrl, fetchFn = fetch) {
+     const fallbacks = buildGoogleBusinessFeedFallbacks(siteUrl);
+     for (const post of posts) {
+diff --git a/packages/buffer-engine/dist/scheduler.d.ts.map b/packages/buffer-engine/dist/scheduler.d.ts.map
+index 650b82f..c5ad19b 100644
+--- a/packages/buffer-engine/dist/scheduler.d.ts.map
++++ b/packages/buffer-engine/dist/scheduler.d.ts.map
+@@ -1 +1 @@
+-{"version":3,"file":"scheduler.d.ts","sourceRoot":"","sources":["../src/scheduler.ts"],"names":[],"mappings":"AAgBA,OAAO,KAAK,EACV,mBAAmB,EACnB,eAAe,EACf,cAAc,EAGf,MAAM,SAAS,CAAC;AA4EjB,wBAAsB,sBAAsB,CAC1C,OAAO,EAAE,mBAAmB,EAC5B,OAAO,GAAE,eAAoB,GAC5B,OAAO,CAAC,cAAc,CAAC,CAwXzB"}
+\ No newline at end of file
++{"version":3,"file":"scheduler.d.ts","sourceRoot":"","sources":["../src/scheduler.ts"],"names":[],"mappings":"AAgBA,OAAO,KAAK,EACV,mBAAmB,EACnB,eAAe,EACf,cAAc,EAGf,MAAM,SAAS,CAAC;AA4EjB,wBAAsB,sBAAsB,CAC1C,OAAO,EAAE,mBAAmB,EAC5B,OAAO,GAAE,eAAoB,GAC5B,OAAO,CAAC,cAAc,CAAC,CA8XzB"}
+\ No newline at end of file
+diff --git a/packages/buffer-engine/dist/scheduler.js b/packages/buffer-engine/dist/scheduler.js
+index e0887b7..f60e9cd 100644
+--- a/packages/buffer-engine/dist/scheduler.js
++++ b/packages/buffer-engine/dist/scheduler.js
+@@ -279,19 +279,22 @@ async function runSiteBufferScheduler(adapter, options = {}) {
+                     continue;
+                 }
+                 const text = (0, scheduler_core_1.buildSchedulablePostTextForService)(post, channel.service);
+-                const imageUrlForChannel = channel.service === 'googlebusiness'
++                const primaryImage = channel.service === 'googlebusiness'
+                     ? (post.googleBusinessImageUrl ?? post.imageUrl)
+                     : post.imageUrl;
+-                const createdPost = await createScheduledBufferPostWithRetry(apiKey, {
++                const fallbackImage = adapter.mediaFallbackImageUrl?.trim() ||
++                    (0, image_url_1.googleBusinessFeedFallbackUrl)(adapter.siteId, adapter.siteUrl);
++                const createdPost = await createScheduledBufferPostWithMediaFallback(apiKey, {
+                     channelId: channel.id,
+                     channelService: channel.service,
+                     text,
+                     dueAt,
+                     url: post.url,
+-                    imageUrl: imageUrlForChannel,
++                    imageUrl: primaryImage,
+                     imageAlt: post.imageAlt,
+                     feedId: post.feedId,
+                     siteUrl: adapter.siteUrl,
++                    fallbackImageUrl: fallbackImage,
+                 });
+                 await (0, idempotency_1.finalizeBufferPostIdempotency)(kv, idemKey, createdPost.id);
+                 created.push({
+@@ -329,10 +332,10 @@ async function runSiteBufferScheduler(adapter, options = {}) {
+                         // ignore
+                     }
+                 }
+-                errors.push({
+-                    slug: post.slug,
+-                    error: err instanceof Error ? err.message : String(err),
+-                });
++                const message = err instanceof Error ? err.message : String(err);
++                errors.push({ slug: post.slug, error: message });
++                // Media / per-slug failures should not abort remaining day slots.
++                console.warn(`[buffer-engine:${adapter.siteId}] Skipping ${post.slug} on ${channel.service}: ${message}`);
+             }
+         }
+         if (created.length === 0) {
+@@ -386,6 +389,49 @@ async function createScheduledBufferPostWithRetry(apiKey, input, maxAttempts = 6
+     }
+     throw lastError;
+ }
++/**
++ * Schedule with resilience: primary image → site fallback → text-only (non-GBP).
++ * GBP still requires a valid image after fallback.
++ */
++async function createScheduledBufferPostWithMediaFallback(apiKey, input) {
++    const { fallbackImageUrl, ...base } = input;
++    const isGbp = base.channelService === 'googlebusiness';
++    try {
++        return await createScheduledBufferPostWithRetry(apiKey, base);
++    }
++    catch (err) {
++        const message = err instanceof Error ? err.message : String(err);
++        if (!(0, image_url_1.isBufferMediaError)(message))
++            throw err;
++        const primary = base.imageUrl?.trim();
++        const fallback = fallbackImageUrl?.trim();
++        if (fallback && fallback !== primary) {
++            try {
++                console.warn(`[buffer-engine] Media error for ${base.feedId}/${base.channelService}; retrying with fallback image`);
++                return await createScheduledBufferPostWithRetry(apiKey, {
++                    ...base,
++                    imageUrl: fallback,
++                });
++            }
++            catch (fallbackErr) {
++                const fallbackMsg = fallbackErr instanceof Error ? fallbackErr.message : String(fallbackErr);
++                if (isGbp || !(0, image_url_1.isBufferMediaError)(fallbackMsg))
++                    throw fallbackErr;
++            }
++        }
++        else if (isGbp) {
++            throw err;
++        }
++        if (isGbp)
++            throw err;
++        console.warn(`[buffer-engine] Media error for ${base.feedId}/${base.channelService}; retrying text-only`);
++        return createScheduledBufferPostWithRetry(apiKey, {
++            ...base,
++            imageUrl: undefined,
++            forceTextOnly: true,
++        });
++    }
++}
+ /**
+  * Before reporting failure, check KV run record and Buffer API for posts already
+  * scheduled for this day — cooldown exhaustion is not a failure when the day is covered.
+diff --git a/packages/buffer-engine/dist/types.d.ts b/packages/buffer-engine/dist/types.d.ts
+index 1f104e2..b6926ca 100644
+--- a/packages/buffer-engine/dist/types.d.ts
++++ b/packages/buffer-engine/dist/types.d.ts
+@@ -80,6 +80,11 @@ export interface BufferEngineAdapter {
+     kv?: BufferKV | null;
+     /** Directory for corrected images (defaults to process.cwd()/public). */
+     publicDir?: string;
++    /**
++     * Absolute public JPEG/PNG used when a post image fails Buffer media checks.
++     * Prefer a first-party hosted default under /images/buffer/gbp/.
++     */
++    mediaFallbackImageUrl?: string;
+ }
+ export interface SiteBufferEnvConfig {
+     apiKey: string | null;
+diff --git a/packages/buffer-engine/dist/types.d.ts.map b/packages/buffer-engine/dist/types.d.ts.map
+index c37e635..3681083 100644
+--- a/packages/buffer-engine/dist/types.d.ts.map
++++ b/packages/buffer-engine/dist/types.d.ts.map
+@@ -1 +1 @@
+-{"version":3,"file":"types.d.ts","sourceRoot":"","sources":["../src/types.ts"],"names":[],"mappings":"AAAA,MAAM,MAAM,oBAAoB,GAAG,SAAS,GAAG,UAAU,GAAG,gBAAgB,GAAG,UAAU,CAAC;AAE1F,MAAM,WAAW,mBAAmB;IAClC,EAAE,EAAE,MAAM,CAAC;IACX,OAAO,EAAE,oBAAoB,CAAC;CAC/B;AAED,gDAAgD;AAChD,MAAM,WAAW,eAAe;IAC9B,MAAM,EAAE,MAAM,CAAC;IACf,IAAI,EAAE,MAAM,CAAC;IACb,KAAK,EAAE,MAAM,CAAC;IACd,OAAO,EAAE,MAAM,CAAC;IAChB,GAAG,EAAE,MAAM,CAAC;IACZ,QAAQ,CAAC,EAAE,MAAM,CAAC;IAClB,oEAAoE;IACpE,sBAAsB,CAAC,EAAE,MAAM,CAAC;IAChC,QAAQ,CAAC,EAAE,MAAM,CAAC;CACnB;AAED,MAAM,WAAW,mBAAmB;IAClC,IAAI,EAAE,MAAM,CAAC;IACb,MAAM,EAAE,MAAM,CAAC;IACf,WAAW,EAAE,MAAM,CAAC;IACpB,SAAS,EAAE,MAAM,CAAC;IAClB,WAAW,EAAE,MAAM,CAAC;IACpB,YAAY,EAAE,MAAM,GAAG,IAAI,CAAC;CAC7B;AAED,MAAM,WAAW,eAAe;IAC9B,IAAI,EAAE,MAAM,CAAC;IACb,MAAM,CAAC,EAAE,MAAM,CAAC;IAChB,WAAW,EAAE,MAAM,CAAC;CACrB;AAED,MAAM,WAAW,kBAAkB;IACjC,IAAI,EAAE,MAAM,CAAC;IACb,WAAW,EAAE,MAAM,CAAC;IACpB,OAAO,EAAE,MAAM,EAAE,CAAC;IAClB,KAAK,EAAE,MAAM,EAAE,CAAC;IAChB,OAAO,CAAC,EAAE,MAAM,EAAE,CAAC;IACnB,QAAQ,EAAE,MAAM,EAAE,CAAC;IACnB,MAAM,EAAE,MAAM,EAAE,CAAC;CAClB;AAED,wDAAwD;AACxD,MAAM,WAAW,QAAQ;IACvB,GAAG,CAAC,CAAC,EAAE,GAAG,EAAE,MAAM,GAAG,OAAO,CAAC,CAAC,GAAG,IAAI,CAAC,CAAC;IACvC,GAAG,CAAC,GAAG,EAAE,MAAM,EAAE,KAAK,EAAE,OAAO,EAAE,OAAO,CAAC,EAAE;QAAE,EAAE,CAAC,EAAE,MAAM,CAAC;QAAC,EAAE,CAAC,EAAE,OAAO,CAAA;KAAE,GAAG,OAAO,CAAC,OAAO,CAAC,CAAC;IAC5F,GAAG,CAAC,CAAC,GAAG,EAAE,MAAM,GAAG,OAAO,CAAC,OAAO,CAAC,CAAC;CACrC;AAED,MAAM,WAAW,oBAAoB;IACnC,kDAAkD;IAClD,SAAS,EAAE,MAAM,CAAC;IAClB,2EAA2E;IAC3E,UAAU,EAAE,MAAM,CAAC;IACnB,WAAW,EAAE,YAAY,GAAG,WAAW,CAAC;IACxC,KAAK,EAAE,MAAM,CAAC;CACf;AAED,MAAM,WAAW,oBAAoB;IACnC,IAAI,EAAE,MAAM,CAAC;IACb,cAAc,CAAC,EAAE,MAAM,CAAC;IACxB,OAAO,CAAC,EAAE,OAAO,KAAK,CAAC;CACxB;AAED,wDAAwD;AACxD,MAAM,WAAW,mBAAmB;IAClC,yEAAyE;IACzE,MAAM,EAAE,MAAM,CAAC;IACf,OAAO,EAAE,MAAM,CAAC;IAChB,qDAAqD;IACrD,mBAAmB,IAAI,OAAO,CAAC,eAAe,EAAE,CAAC,GAAG,eAAe,EAAE,CAAC;IACtE;;;OAGG;IACH,kBAAkB,CAAC,CAAC,KAAK,EAAE;QACzB,IAAI,EAAE,MAAM,CAAC;QACb,UAAU,EAAE,MAAM,CAAC;QACnB,SAAS,EAAE,MAAM,CAAC;QAClB,WAAW,EAAE,YAAY,GAAG,WAAW,CAAC;KACzC,GAAG,OAAO,CAAC,IAAI,CAAC,CAAC;IAClB,uEAAuE;IACvE,EAAE,CAAC,EAAE,QAAQ,GAAG,IAAI,CAAC;IACrB,yEAAyE;IACzE,SAAS,CAAC,EAAE,MAAM,CAAC;CACpB;AAED,MAAM,WAAW,mBAAmB;IAClC,MAAM,EAAE,MAAM,GAAG,IAAI,CAAC;IACtB,cAAc,EAAE,MAAM,CAAC;IACvB,QAAQ,EAAE,mBAAmB,EAAE,CAAC;IAChC,WAAW,EAAE,MAAM,CAAC;IACpB,QAAQ,EAAE,MAAM,CAAC;IACjB,UAAU,EAAE,MAAM,CAAC;IACnB,YAAY,EAAE,MAAM,CAAC;IACrB,QAAQ,EAAE,MAAM,CAAC;IACjB,eAAe,EAAE,MAAM,CAAC;IACxB,2EAA2E;IAC3E,eAAe,EAAE,MAAM,CAAC;CACzB;AAED,MAAM,WAAW,eAAe;IAC9B,GAAG,CAAC,EAAE,IAAI,CAAC;IACX,KAAK,CAAC,EAAE,OAAO,CAAC;IAChB,MAAM,CAAC,EAAE,OAAO,CAAC;IACjB,kBAAkB,CAAC,EAAE,OAAO,CAAC;IAC7B,KAAK,CAAC,EAAE,MAAM,EAAE,CAAC;IACjB,KAAK,CAAC,EAAE,MAAM,CAAC;CAChB;AAED,MAAM,WAAW,cAAc;IAC7B,EAAE,EAAE,OAAO,CAAC;IACZ,OAAO,CAAC,EAAE,OAAO,CAAC;IAClB,kFAAkF;IAClF,UAAU,CAAC,EAAE,OAAO,CAAC;IACrB,oEAAoE;IACpE,iBAAiB,CAAC,EAAE,MAAM,CAAC;IAC3B,MAAM,CAAC,EAAE,MAAM,CAAC;IAChB,IAAI,CAAC,EAAE,MAAM,CAAC;IACd,MAAM,CAAC,EAAE,OAAO,CAAC;IACjB,KAAK,CAAC,EAAE,KAAK,CAAC;QACZ,MAAM,EAAE,MAAM,CAAC;QACf,IAAI,EAAE,MAAM,CAAC;QACb,MAAM,EAAE,MAAM,CAAC;QACf,SAAS,EAAE,MAAM,CAAC;QAClB,cAAc,EAAE,MAAM,CAAC;QACvB,KAAK,EAAE,MAAM,GAAG,IAAI,CAAC;QACrB,KAAK,EAAE,MAAM,CAAC;QACd,QAAQ,CAAC,EAAE,MAAM,CAAC;KACnB,CAAC,CAAC;IACH,SAAS,CAAC,EAAE,KAAK,CAAC;QAChB,MAAM,EAAE,MAAM,CAAC;QACf,IAAI,EAAE,MAAM,CAAC;QACb,WAAW,CAAC,EAAE,MAAM,CAAC;QACrB,WAAW,CAAC,EAAE,MAAM,CAAC;QACrB,MAAM,EAAE,MAAM,CAAC;KAChB,CAAC,CAAC;IACH,MAAM,CAAC,EAAE,KAAK,CAAC;QAAE,IAAI,EAAE,MAAM,CAAC;QAAC,KAAK,EAAE,MAAM,CAAA;KAAE,CAAC,CAAC;CACjD;AAED,MAAM,WAAW,YAAY;IAC3B,EAAE,EAAE,OAAO,CAAC;IACZ,IAAI,EAAE,MAAM,CAAC;IACb,cAAc,EAAE,MAAM,CAAC;IACvB,aAAa,EAAE,MAAM,CAAC;IACtB,SAAS,EAAE,MAAM,CAAC;IAClB,MAAM,EAAE,MAAM,EAAE,CAAC;CAClB;AAED,MAAM,WAAW,cAAc;IAC7B,EAAE,EAAE,OAAO,CAAC;IACZ,IAAI,EAAE,MAAM,CAAC;IACb,SAAS,EAAE,MAAM,CAAC;IAClB,aAAa,EAAE,MAAM,CAAC;IACtB,eAAe,EAAE,MAAM,CAAC;IACxB,MAAM,EAAE,MAAM,EAAE,CAAC;CAClB"}
+\ No newline at end of file
++{"version":3,"file":"types.d.ts","sourceRoot":"","sources":["../src/types.ts"],"names":[],"mappings":"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"}
+\ No newline at end of file
+diff --git a/packages/buffer-engine/package-lock.json b/packages/buffer-engine/package-lock.json
+index 7aa8d3d..55e377e 100644
+--- a/packages/buffer-engine/package-lock.json
++++ b/packages/buffer-engine/package-lock.json
+@@ -141,9 +141,6 @@
+       "cpu": [
+         "arm"
+       ],
+-      "libc": [
+-        "glibc"
+-      ],
+       "license": "LGPL-3.0-or-later",
+       "optional": true,
+       "os": [
+@@ -160,9 +157,6 @@
+       "cpu": [
+         "arm64"
+       ],
+-      "libc": [
+-        "glibc"
+-      ],
+       "license": "LGPL-3.0-or-later",
+       "optional": true,
+       "os": [
+@@ -179,9 +173,6 @@
+       "cpu": [
+         "ppc64"
+       ],
+-      "libc": [
+-        "glibc"
+-      ],
+       "license": "LGPL-3.0-or-later",
+       "optional": true,
+       "os": [
+@@ -198,9 +189,6 @@
+       "cpu": [
+         "riscv64"
+       ],
+-      "libc": [
+-        "glibc"
+-      ],
+       "license": "LGPL-3.0-or-later",
+       "optional": true,
+       "os": [
+@@ -217,9 +205,6 @@
+       "cpu": [
+         "s390x"
+       ],
+-      "libc": [
+-        "glibc"
+-      ],
+       "license": "LGPL-3.0-or-later",
+       "optional": true,
+       "os": [
+@@ -236,9 +221,6 @@
+       "cpu": [
+         "x64"
+       ],
+-      "libc": [
+-        "glibc"
+-      ],
+       "license": "LGPL-3.0-or-later",
+       "optional": true,
+       "os": [
+@@ -255,9 +237,6 @@
+       "cpu": [
+         "arm64"
+       ],
+-      "libc": [
+-        "musl"
+-      ],
+       "license": "LGPL-3.0-or-later",
+       "optional": true,
+       "os": [
+@@ -274,9 +253,6 @@
+       "cpu": [
+         "x64"
+       ],
+-      "libc": [
+-        "musl"
+-      ],
+       "license": "LGPL-3.0-or-later",
+       "optional": true,
+       "os": [
+@@ -293,9 +269,6 @@
+       "cpu": [
+         "arm"
+       ],
+-      "libc": [
+-        "glibc"
+-      ],
+       "license": "Apache-2.0",
+       "optional": true,
+       "os": [
+@@ -318,9 +291,6 @@
+       "cpu": [
+         "arm64"
+       ],
+-      "libc": [
+-        "glibc"
+-      ],
+       "license": "Apache-2.0",
+       "optional": true,
+       "os": [
+@@ -343,9 +313,6 @@
+       "cpu": [
+         "ppc64"
+       ],
+-      "libc": [
+-        "glibc"
+-      ],
+       "license": "Apache-2.0",
+       "optional": true,
+       "os": [
+@@ -368,9 +335,6 @@
+       "cpu": [
+         "riscv64"
+       ],
+-      "libc": [
+-        "glibc"
+-      ],
+       "license": "Apache-2.0",
+       "optional": true,
+       "os": [
+@@ -393,9 +357,6 @@
+       "cpu": [
+         "s390x"
+       ],
+-      "libc": [
+-        "glibc"
+-      ],
+       "license": "Apache-2.0",
+       "optional": true,
+       "os": [
+@@ -418,9 +379,6 @@
+       "cpu": [
+         "x64"
+       ],
+-      "libc": [
+-        "glibc"
+-      ],
+       "license": "Apache-2.0",
+       "optional": true,
+       "os": [
+@@ -443,9 +401,6 @@
+       "cpu": [
+         "arm64"
+       ],
+-      "libc": [
+-        "musl"
+-      ],
+       "license": "Apache-2.0",
+       "optional": true,
+       "os": [
+@@ -468,9 +423,6 @@
+       "cpu": [
+         "x64"
+       ],
+-      "libc": [
+-        "musl"
+-      ],
+       "license": "Apache-2.0",
+       "optional": true,
+       "os": [
+@@ -691,9 +643,6 @@
+         "arm64"
+       ],
+       "dev": true,
+-      "libc": [
+-        "glibc"
+-      ],
+       "license": "MIT",
+       "optional": true,
+       "os": [
+@@ -711,9 +660,6 @@
+         "arm64"
+       ],
+       "dev": true,
+-      "libc": [
+-        "musl"
+-      ],
+       "license": "MIT",
+       "optional": true,
+       "os": [
+@@ -731,9 +677,6 @@
+         "ppc64"
+       ],
+       "dev": true,
+-      "libc": [
+-        "glibc"
+-      ],
+       "license": "MIT",
+       "optional": true,
+       "os": [
+@@ -751,9 +694,6 @@
+         "s390x"
+       ],
+       "dev": true,
+-      "libc": [
+-        "glibc"
+-      ],
+       "license": "MIT",
+       "optional": true,
+       "os": [
+@@ -771,9 +711,6 @@
+         "x64"
+       ],
+       "dev": true,
+-      "libc": [
+-        "glibc"
+-      ],
+       "license": "MIT",
+       "optional": true,
+       "os": [
+@@ -791,9 +728,6 @@
+         "x64"
+       ],
+       "dev": true,
+-      "libc": [
+-        "musl"
+-      ],
+       "license": "MIT",
+       "optional": true,
+       "os": [
+@@ -1285,9 +1219,6 @@
+         "arm64"
+       ],
+       "dev": true,
+-      "libc": [
+-        "glibc"
+-      ],
+       "license": "MPL-2.0",
+       "optional": true,
+       "os": [
+@@ -1309,9 +1240,6 @@
+         "arm64"
+       ],
+       "dev": true,
+-      "libc": [
+-        "musl"
+-      ],
+       "license": "MPL-2.0",
+       "optional": true,
+       "os": [
+@@ -1333,9 +1261,6 @@
+         "x64"
+       ],
+       "dev": true,
+-      "libc": [
+-        "glibc"
+-      ],
+       "license": "MPL-2.0",
+       "optional": true,
+       "os": [
+@@ -1357,9 +1282,6 @@
+         "x64"
+       ],
+       "dev": true,
+-      "libc": [
+-        "musl"
+-      ],
+       "license": "MPL-2.0",
+       "optional": true,
+       "os": [
+diff --git a/packages/buffer-engine/robertcashman-buffer-engine-1.0.0.tgz b/packages/buffer-engine/robertcashman-buffer-engine-1.0.0.tgz
+index cdbd85f..74f0b6b 100644
+Binary files a/packages/buffer-engine/robertcashman-buffer-engine-1.0.0.tgz and b/packages/buffer-engine/robertcashman-buffer-engine-1.0.0.tgz differ
+diff --git a/packages/buffer-engine/src/client.ts b/packages/buffer-engine/src/client.ts
+index 483b628..392cf0b 100644
+--- a/packages/buffer-engine/src/client.ts
++++ b/packages/buffer-engine/src/client.ts
+@@ -182,12 +182,20 @@ export async function createScheduledBufferPost(
+     imageAlt?: string;
+     feedId?: string;
+     siteUrl: string;
++    /** When true, skip image attach even if imageUrl is provided (text-only retry). */
++    forceTextOnly?: boolean;
+   },
+ ): Promise<CreatedBufferPost> {
+-  const validatedImageUrl = await assertBufferPostImageReady(input.imageUrl, input.siteUrl, fetch, {
+-    channelService: input.channelService,
+-    feedId: input.feedId,
+-  });
++  const validatedImageUrl = input.forceTextOnly
++    ? undefined
++    : await assertBufferPostImageReady(input.imageUrl, input.siteUrl, fetch, {
++        channelService: input.channelService,
++        feedId: input.feedId,
++      });
++
++  if (input.channelService === 'googlebusiness' && !validatedImageUrl?.trim()) {
++    throw new Error('createPost failed: Google Business requires a JPEG/PNG image');
++  }
+ 
+   const metadata = postMetadataForService(input.channelService, input.url);
+   const text =
+diff --git a/packages/buffer-engine/src/image-url-media.test.ts b/packages/buffer-engine/src/image-url-media.test.ts
+new file mode 100644
+index 0000000..afa85f9
+--- /dev/null
++++ b/packages/buffer-engine/src/image-url-media.test.ts
+@@ -0,0 +1,48 @@
++import { describe, it, expect, vi, afterEach } from 'vitest';
++import { assertBufferPostImageReady, isBufferMediaError } from './image-url';
++
++describe('assertBufferPostImageReady text-only soft path', () => {
++  afterEach(() => {
++    vi.unstubAllGlobals();
++  });
++
++  it('returns undefined for missing image on non-GBP channels', async () => {
++    await expect(
++      assertBufferPostImageReady(undefined, 'https://example.com', fetch, {
++        channelService: 'twitter',
++      }),
++    ).resolves.toBeUndefined();
++  });
++
++  it('still requires an image for Google Business', async () => {
++    await expect(
++      assertBufferPostImageReady(undefined, 'https://example.com', fetch, {
++        channelService: 'googlebusiness',
++      }),
++    ).rejects.toThrow(/requires a blog image URL/i);
++  });
++
++  it('returns undefined when non-GBP image probe fails', async () => {
++    const fetchMock = vi.fn().mockResolvedValue({
++      ok: false,
++      status: 404,
++      headers: new Headers(),
++    });
++    await expect(
++      assertBufferPostImageReady(
++        'https://example.com/missing.jpg',
++        'https://example.com',
++        fetchMock as unknown as typeof fetch,
++        { channelService: 'linkedin' },
++      ),
++    ).resolves.toBeUndefined();
++  });
++});
++
++describe('isBufferMediaError', () => {
++  it('detects Buffer media failure messages', () => {
++    expect(isBufferMediaError('issue with the attached media')).toBe(true);
++    expect(isBufferMediaError('image validation failed')).toBe(true);
++    expect(isBufferMediaError('rate limited')).toBe(false);
++  });
++});
+diff --git a/packages/buffer-engine/src/image-url.ts b/packages/buffer-engine/src/image-url.ts
+index 9800a55..cc6fb60 100644
+--- a/packages/buffer-engine/src/image-url.ts
++++ b/packages/buffer-engine/src/image-url.ts
+@@ -368,14 +368,24 @@ export async function resolveBufferImageUrl(
+   return undefined;
+ }
+ 
++/**
++ * Validate a Buffer image URL before scheduling.
++ * Google Business always requires a reachable JPEG/PNG.
++ * LinkedIn/X/Facebook may return `undefined` (text-only) when the image is
++ * missing or fails validation — callers should proceed with empty assets.
++ */
+ export async function assertBufferPostImageReady(
+   imageUrl: string | undefined | null,
+   siteUrl: string,
+   fetchFn: typeof fetch = fetch,
+   options?: { channelService?: BufferChannelService; feedId?: string },
+-): Promise<string> {
++): Promise<string | undefined> {
++  const requiresImage = options?.channelService === 'googlebusiness';
+   const trimmed = imageUrl?.trim();
+-  if (!trimmed) throw new BufferPostImageError('Buffer post requires a blog image URL');
++  if (!trimmed) {
++    if (requiresImage) throw new BufferPostImageError('Buffer post requires a blog image URL');
++    return undefined;
++  }
+ 
+   if (options?.channelService === 'googlebusiness') {
+     const resolved = await resolveGoogleBusinessImageUrl(trimmed, fetchFn, siteUrl, options.feedId);
+@@ -383,14 +393,27 @@ export async function assertBufferPostImageReady(
+     return resolved;
+   }
+ 
+-  if (!isRasterImagePath(trimmed)) throw new BufferPostImageError('non-raster image path');
++  if (!isRasterImagePath(trimmed)) {
++    if (requiresImage) throw new BufferPostImageError('non-raster image path');
++    return undefined;
++  }
+ 
+   const probe = await probeBufferImageUrl(trimmed, fetchFn, siteUrl);
+-  if (!probe.ok) throw new BufferPostImageError(probe.reason ?? 'image validation failed');
++  if (!probe.ok) {
++    if (requiresImage) throw new BufferPostImageError(probe.reason ?? 'image validation failed');
++    return undefined;
++  }
+ 
+   return trimmed;
+ }
+ 
++/** True when Buffer rejected the attached media / image validation failed. */
++export function isBufferMediaError(message: string): boolean {
++  return /file size limit|unsupported content-type|image exceeds|image validation failed|image too large|non-raster image path|requires a blog image url|google business requires|no google business compatible|magic-byte check failed|gbp preflight failed|cannot contain phone numbers|issue with the attached media|connection timing out|file being too large|attached media or link|unable to process.*media|media.*failed|stuck processing/i.test(
++    message,
++  );
++}
++
+ export async function hydratePostImagesForBuffer(
+   posts: Array<{ feedId: string; slug: string; imageUrl?: string; googleBusinessImageUrl?: string }>,
+   siteUrl: string,
+diff --git a/packages/buffer-engine/src/scheduler.ts b/packages/buffer-engine/src/scheduler.ts
+index 85c489e..e0058df 100644
+--- a/packages/buffer-engine/src/scheduler.ts
++++ b/packages/buffer-engine/src/scheduler.ts
+@@ -24,7 +24,7 @@ import type {
+ import { pickBanditSchedulablePosts, computePoolCoverage } from './bandit';
+ import { countSitePostsInBufferForDay } from './reconcile';
+ import { ensureCompliantPostImage } from './image-corrector';
+-import { hydratePostImagesForBuffer } from './image-url';
++import { hydratePostImagesForBuffer, isBufferMediaError, googleBusinessFeedFallbackUrl } from './image-url';
+ import {
+   claimSchedulerRun,
+   getRecentSlugEntries,
+@@ -371,21 +371,25 @@ export async function runSiteBufferScheduler(
+       }
+ 
+       const text = buildSchedulablePostTextForService(post, channel.service);
+-      const imageUrlForChannel =
++      const primaryImage =
+         channel.service === 'googlebusiness'
+           ? (post.googleBusinessImageUrl ?? post.imageUrl)
+           : post.imageUrl;
++      const fallbackImage =
++        adapter.mediaFallbackImageUrl?.trim() ||
++        googleBusinessFeedFallbackUrl(adapter.siteId, adapter.siteUrl);
+ 
+-      const createdPost = await createScheduledBufferPostWithRetry(apiKey, {
++      const createdPost = await createScheduledBufferPostWithMediaFallback(apiKey, {
+         channelId: channel.id,
+         channelService: channel.service,
+         text,
+         dueAt,
+         url: post.url,
+-        imageUrl: imageUrlForChannel,
++        imageUrl: primaryImage,
+         imageAlt: post.imageAlt,
+         feedId: post.feedId,
+         siteUrl: adapter.siteUrl,
++        fallbackImageUrl: fallbackImage,
+       });
+ 
+       await finalizeBufferPostIdempotency(kv, idemKey, createdPost.id);
+@@ -425,10 +429,12 @@ export async function runSiteBufferScheduler(
+           // ignore
+         }
+       }
+-      errors.push({
+-        slug: post.slug,
+-        error: err instanceof Error ? err.message : String(err),
+-      });
++      const message = err instanceof Error ? err.message : String(err);
++      errors.push({ slug: post.slug, error: message });
++      // Media / per-slug failures should not abort remaining day slots.
++      console.warn(
++        `[buffer-engine:${adapter.siteId}] Skipping ${post.slug} on ${channel.service}: ${message}`,
++      );
+     }
+   }
+ 
+@@ -496,6 +502,55 @@ async function createScheduledBufferPostWithRetry(
+   throw lastError;
+ }
+ 
++/**
++ * Schedule with resilience: primary image → site fallback → text-only (non-GBP).
++ * GBP still requires a valid image after fallback.
++ */
++async function createScheduledBufferPostWithMediaFallback(
++  apiKey: string,
++  input: Parameters<typeof createScheduledBufferPost>[1] & { fallbackImageUrl?: string },
++): Promise<Awaited<ReturnType<typeof createScheduledBufferPost>>> {
++  const { fallbackImageUrl, ...base } = input;
++  const isGbp = base.channelService === 'googlebusiness';
++
++  try {
++    return await createScheduledBufferPostWithRetry(apiKey, base);
++  } catch (err) {
++    const message = err instanceof Error ? err.message : String(err);
++    if (!isBufferMediaError(message)) throw err;
++
++    const primary = base.imageUrl?.trim();
++    const fallback = fallbackImageUrl?.trim();
++    if (fallback && fallback !== primary) {
++      try {
++        console.warn(
++          `[buffer-engine] Media error for ${base.feedId}/${base.channelService}; retrying with fallback image`,
++        );
++        return await createScheduledBufferPostWithRetry(apiKey, {
++          ...base,
++          imageUrl: fallback,
++        });
++      } catch (fallbackErr) {
++        const fallbackMsg = fallbackErr instanceof Error ? fallbackErr.message : String(fallbackErr);
++        if (isGbp || !isBufferMediaError(fallbackMsg)) throw fallbackErr;
++      }
++    } else if (isGbp) {
++      throw err;
++    }
++
++    if (isGbp) throw err;
++
++    console.warn(
++      `[buffer-engine] Media error for ${base.feedId}/${base.channelService}; retrying text-only`,
++    );
++    return createScheduledBufferPostWithRetry(apiKey, {
++      ...base,
++      imageUrl: undefined,
++      forceTextOnly: true,
++    });
++  }
++}
++
+ /**
+  * Before reporting failure, check KV run record and Buffer API for posts already
+  * scheduled for this day — cooldown exhaustion is not a failure when the day is covered.
+diff --git a/packages/buffer-engine/src/types.ts b/packages/buffer-engine/src/types.ts
+index bc7171c..8eb4a3d 100644
+--- a/packages/buffer-engine/src/types.ts
++++ b/packages/buffer-engine/src/types.ts
+@@ -86,6 +86,11 @@ export interface BufferEngineAdapter {
+   kv?: BufferKV | null;
+   /** Directory for corrected images (defaults to process.cwd()/public). */
+   publicDir?: string;
++  /**
++   * Absolute public JPEG/PNG used when a post image fails Buffer media checks.
++   * Prefer a first-party hosted default under /images/buffer/gbp/.
++   */
++  mediaFallbackImageUrl?: string;
+ }
+ 
+ export interface SiteBufferEnvConfig {
+diff --git a/packages/firm-outreach-core/dist/enrichment/email-extract.d.ts.map b/packages/firm-outreach-core/dist/enrichment/email-extract.d.ts.map
+index f291596..9076b22 100644
+--- a/packages/firm-outreach-core/dist/enrichment/email-extract.d.ts.map
++++ b/packages/firm-outreach-core/dist/enrichment/email-extract.d.ts.map
+@@ -1 +1 @@
+-{"version":3,"file":"email-extract.d.ts","sourceRoot":"","sources":["../../src/enrichment/email-extract.ts"],"names":[],"mappings":"AAQA,OAAO,KAAK,EAAmB,iBAAiB,EAAE,MAAM,UAAU,CAAC;AAInE,wBAAgB,qBAAqB,CAAC,IAAI,EAAE,MAAM,GAAG,MAAM,EAAE,CAW5D;AAED,wBAAgB,mBAAmB,CACjC,KAAK,EAAE,MAAM,EACb,IAAI,EAAE;IACJ,YAAY,EAAE,MAAM,GAAG,WAAW,CAAC;IACnC,UAAU,CAAC,EAAE,MAAM,CAAC;IACpB,QAAQ,CAAC,EAAE,MAAM,CAAC;IAClB,OAAO,CAAC,EAAE,MAAM,CAAC;IACjB,QAAQ,CAAC,EAAE,MAAM,CAAC;CACnB,GACA,MAAM,CAiDR;AAED,wBAAgB,aAAa,CAC3B,UAAU,EAAE,MAAM,EAAE,EACpB,IAAI,EAAE,UAAU,CAAC,OAAO,mBAAmB,CAAC,CAAC,CAAC,CAAC,GAC9C,iBAAiB,GAAG,IAAI,CAa1B;AAED,wBAAgB,oBAAoB,CAAC,MAAM,EAAE,MAAM,GAAG,MAAM,EAAE,CAG7D"}
+\ No newline at end of file
++{"version":3,"file":"email-extract.d.ts","sourceRoot":"","sources":["../../src/enrichment/email-extract.ts"],"names":[],"mappings":"AAQA,OAAO,KAAK,EAAmB,iBAAiB,EAAE,MAAM,UAAU,CAAC;AAInE,wBAAgB,qBAAqB,CAAC,IAAI,EAAE,MAAM,GAAG,MAAM,EAAE,CAW5D;AAED,wBAAgB,mBAAmB,CACjC,KAAK,EAAE,MAAM,EACb,IAAI,EAAE;IACJ,YAAY,EAAE,MAAM,GAAG,WAAW,CAAC;IACnC,UAAU,CAAC,EAAE,MAAM,CAAC;IACpB,QAAQ,CAAC,EAAE,MAAM,CAAC;IAClB,OAAO,CAAC,EAAE,MAAM,CAAC;IACjB,QAAQ,CAAC,EAAE,MAAM,CAAC;CACnB,GACA,MAAM,CA8CR;AAED,wBAAgB,aAAa,CAC3B,UAAU,EAAE,MAAM,EAAE,EACpB,IAAI,EAAE,UAAU,CAAC,OAAO,mBAAmB,CAAC,CAAC,CAAC,CAAC,GAC9C,iBAAiB,GAAG,IAAI,CAa1B;AAED,wBAAgB,oBAAoB,CAAC,MAAM,EAAE,MAAM,GAAG,MAAM,EAAE,CAG7D"}
+\ No newline at end of file
+diff --git a/packages/firm-outreach-core/dist/enrichment/email-extract.js b/packages/firm-outreach-core/dist/enrichment/email-extract.js
+index 0b8068b..c2b959c 100644
+--- a/packages/firm-outreach-core/dist/enrichment/email-extract.js
++++ b/packages/firm-outreach-core/dist/enrichment/email-extract.js
+@@ -50,12 +50,9 @@ function scoreEmailCandidate(email, opts) {
+         score -= 25;
+     }
+     else if (siteDomain) {
+-        // Firm's own website domain is known, but this address is on neither it nor
+-        // a free/ISP provider — most likely a third-party address scraped from the
+-        // page (footer, badge, widget). Heavily penalise so an on-domain or free
+-        // address always wins; keep it positive only so a genuine alternate-domain
+-        // firm email can still be used as a last resort when nothing better exists.
+-        score -= 35;
++        // Hard reject: known firm website + off-domain email that is not an
++        // allowlisted UK ISP / free mailbox.
++        return 0;
+     }
+     if (opts.surname && localBase.includes(opts.surname.toLowerCase().slice(0, 4))) {
+         score += 25;
+diff --git a/packages/firm-outreach-core/dist/enrichment/validator.d.ts b/packages/firm-outreach-core/dist/enrichment/validator.d.ts
+index f9603d8..376addc 100644
+--- a/packages/firm-outreach-core/dist/enrichment/validator.d.ts
++++ b/packages/firm-outreach-core/dist/enrichment/validator.d.ts
+@@ -9,4 +9,12 @@ export declare function validateEmailForSend(email: string): Promise<{
+     reason?: string;
+ }>;
+ export declare function isFreeEmailDomain(email: string): boolean;
++/**
++ * True when a prospect email is safe to keep in the ready queue.
++ * Rejects rejected free-mail domains and hard firm↔email domain mismatches.
++ */
++export declare function isSendableReadyProspect(prospect: {
++    email?: string | null;
++    websiteUrl?: string | null;
++}): boolean;
+ //# sourceMappingURL=validator.d.ts.map
+\ No newline at end of file
+diff --git a/packages/firm-outreach-core/dist/enrichment/validator.d.ts.map b/packages/firm-outreach-core/dist/enrichment/validator.d.ts.map
+index 9ff5945..4290bcf 100644
+--- a/packages/firm-outreach-core/dist/enrichment/validator.d.ts.map
++++ b/packages/firm-outreach-core/dist/enrichment/validator.d.ts.map
+@@ -1 +1 @@
+-{"version":3,"file":"validator.d.ts","sourceRoot":"","sources":["../../src/enrichment/validator.ts"],"names":[],"mappings":"AA4BA,kFAAkF;AAClF,wBAAgB,oBAAoB,CAAC,KAAK,EAAE,MAAM,GAAG,OAAO,CAM3D;AAED,yDAAyD;AACzD,wBAAgB,wBAAwB,CAAC,KAAK,EAAE,MAAM,GAAG,OAAO,CAY/D;AAED,wBAAgB,kBAAkB,CAAC,KAAK,EAAE,MAAM,GAAG,OAAO,CAGzD;AAED,wBAAsB,WAAW,CAAC,KAAK,EAAE,MAAM,GAAG,OAAO,CAAC,OAAO,CAAC,CASjE;AAED,wBAAsB,oBAAoB,CAAC,KAAK,EAAE,MAAM,GAAG,OAAO,CAAC;IACjE,EAAE,EAAE,OAAO,CAAC;IACZ,MAAM,CAAC,EAAE,MAAM,CAAC;CACjB,CAAC,CAMD;AAED,wBAAgB,iBAAiB,CAAC,KAAK,EAAE,MAAM,GAAG,OAAO,CAGxD"}
+\ No newline at end of file
++{"version":3,"file":"validator.d.ts","sourceRoot":"","sources":["../../src/enrichment/validator.ts"],"names":[],"mappings":"AAkCA,kFAAkF;AAClF,wBAAgB,oBAAoB,CAAC,KAAK,EAAE,MAAM,GAAG,OAAO,CAM3D;AAED,yDAAyD;AACzD,wBAAgB,wBAAwB,CAAC,KAAK,EAAE,MAAM,GAAG,OAAO,CAa/D;AAED,wBAAgB,kBAAkB,CAAC,KAAK,EAAE,MAAM,GAAG,OAAO,CAGzD;AAED,wBAAsB,WAAW,CAAC,KAAK,EAAE,MAAM,GAAG,OAAO,CAAC,OAAO,CAAC,CASjE;AAED,wBAAsB,oBAAoB,CAAC,KAAK,EAAE,MAAM,GAAG,OAAO,CAAC;IACjE,EAAE,EAAE,OAAO,CAAC;IACZ,MAAM,CAAC,EAAE,MAAM,CAAC;CACjB,CAAC,CAMD;AAED,wBAAgB,iBAAiB,CAAC,KAAK,EAAE,MAAM,GAAG,OAAO,CAGxD;AAED;;;GAGG;AACH,wBAAgB,uBAAuB,CAAC,QAAQ,EAAE;IAChD,KAAK,CAAC,EAAE,MAAM,GAAG,IAAI,CAAC;IACtB,UAAU,CAAC,EAAE,MAAM,GAAG,IAAI,CAAC;CAC5B,GAAG,OAAO,CAmBV"}
+\ No newline at end of file
+diff --git a/packages/firm-outreach-core/dist/enrichment/validator.js b/packages/firm-outreach-core/dist/enrichment/validator.js
+index c04015b..7eda420 100644
+--- a/packages/firm-outreach-core/dist/enrichment/validator.js
++++ b/packages/firm-outreach-core/dist/enrichment/validator.js
+@@ -9,6 +9,7 @@ exports.isValidEmailFormat = isValidEmailFormat;
+ exports.hasMxRecord = hasMxRecord;
+ exports.validateEmailForSend = validateEmailForSend;
+ exports.isFreeEmailDomain = isFreeEmailDomain;
++exports.isSendableReadyProspect = isSendableReadyProspect;
+ const promises_1 = __importDefault(require("dns/promises"));
+ const shared_constants_1 = require("../shared-constants");
+ const normalize_1 = require("../normalize");
+@@ -60,6 +61,8 @@ function isPlausibleOutreachEmail(email) {
+         return false;
+     if (isNonFirmEmailDomain(norm))
+         return false;
++    if (shared_constants_1.REJECTED_OUTREACH_EMAIL_DOMAINS.has(domain))
++        return false;
+     return true;
+ }
+ function isValidEmailFormat(email) {
+@@ -92,3 +95,26 @@ function isFreeEmailDomain(email) {
+     const domain = (0, normalize_1.normalizeEmail)(email).split('@')[1];
+     return shared_constants_1.FREE_EMAIL_DOMAINS.has(domain);
+ }
++/**
++ * True when a prospect email is safe to keep in the ready queue.
++ * Rejects rejected free-mail domains and hard firm↔email domain mismatches.
++ */
++function isSendableReadyProspect(prospect) {
++    const email = prospect.email?.trim();
++    if (!email || !isPlausibleOutreachEmail(email))
++        return false;
++    const domain = (0, normalize_1.normalizeEmail)(email).split('@')[1];
++    if (!domain)
++        return false;
++    const siteDomain = (0, normalize_1.domainFromUrl)(prospect.websiteUrl);
++    if (!siteDomain)
++        return true;
++    const emailRegistrable = (0, normalize_1.registrableDomain)(domain) ?? domain;
++    const onFirmDomain = emailRegistrable === siteDomain || domain === siteDomain || domain.endsWith(`.${siteDomain}`);
++    if (onFirmDomain)
++        return true;
++    if (shared_constants_1.FREE_EMAIL_DOMAINS.has(domain) && !shared_constants_1.REJECTED_OUTREACH_EMAIL_DOMAINS.has(domain)) {
++        return true;
++    }
++    return false;
++}
+diff --git a/packages/firm-outreach-core/dist/reconcile-ready-status.d.ts b/packages/firm-outreach-core/dist/reconcile-ready-status.d.ts
+index 71ba290..d4227f3 100644
+--- a/packages/firm-outreach-core/dist/reconcile-ready-status.d.ts
++++ b/packages/firm-outreach-core/dist/reconcile-ready-status.d.ts
+@@ -6,7 +6,7 @@ export declare function prospectHasInitialSend(prospect: Pick<FirmProspect, 'las
+  * ready_to_send + lastEmailAt is a stale index state: the initial send already happened
+  * but status was not moved to sent. That blocks the morning cron from picking new firms.
+  */
+-export declare function reconcileReadyProspectStatus(prospect: Pick<FirmProspect, 'status' | 'lastEmailAt' | 'sequenceStep' | 'email'>): FirmProspectStatus | null;
++export declare function reconcileReadyProspectStatus(prospect: Pick<FirmProspect, 'status' | 'lastEmailAt' | 'sequenceStep' | 'email' | 'websiteUrl'>): FirmProspectStatus | null;
+ /** True when a sent prospect is due for follow-up step 1 (day 7). */
+ export declare function isDueForFollowUpStep1(prospect: Pick<FirmProspect, 'sequenceStep' | 'lastEmailAt' | 'waLinkClickedAt' | 'joinedWhatsAppAt' | 'status'>): boolean;
+ export { daysSince, sequenceStepOf };
+diff --git a/packages/firm-outreach-core/dist/reconcile-ready-status.d.ts.map b/packages/firm-outreach-core/dist/reconcile-ready-status.d.ts.map
+index 2a9127c..fae045a 100644
+--- a/packages/firm-outreach-core/dist/reconcile-ready-status.d.ts.map
++++ b/packages/firm-outreach-core/dist/reconcile-ready-status.d.ts.map
+@@ -1 +1 @@
+-{"version":3,"file":"reconcile-ready-status.d.ts","sourceRoot":"","sources":["../src/reconcile-ready-status.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,SAAS,EAAkB,cAAc,EAAE,MAAM,cAAc,CAAC;AAEzE,OAAO,KAAK,EAAE,YAAY,EAAE,kBAAkB,EAAE,MAAM,SAAS,CAAC;AAEhE,+EAA+E;AAC/E,wBAAgB,sBAAsB,CACpC,QAAQ,EAAE,IAAI,CAAC,YAAY,EAAE,aAAa,GAAG,cAAc,CAAC,GAC3D,OAAO,CAIT;AAED;;;GAGG;AACH,wBAAgB,4BAA4B,CAC1C,QAAQ,EAAE,IAAI,CAAC,YAAY,EAAE,QAAQ,GAAG,aAAa,GAAG,cAAc,GAAG,OAAO,CAAC,GAChF,kBAAkB,GAAG,IAAI,CAa3B;AAED,qEAAqE;AACrE,wBAAgB,qBAAqB,CACnC,QAAQ,EAAE,IAAI,CACZ,YAAY,EACZ,cAAc,GAAG,aAAa,GAAG,iBAAiB,GAAG,kBAAkB,GAAG,QAAQ,CACnF,GACA,OAAO,CAYT;AAED,OAAO,EAAE,SAAS,EAAE,cAAc,EAAE,CAAC"}
+\ No newline at end of file
++{"version":3,"file":"reconcile-ready-status.d.ts","sourceRoot":"","sources":["../src/reconcile-ready-status.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,SAAS,EAAkB,cAAc,EAAE,MAAM,cAAc,CAAC;AAEzE,OAAO,KAAK,EAAE,YAAY,EAAE,kBAAkB,EAAE,MAAM,SAAS,CAAC;AAEhE,+EAA+E;AAC/E,wBAAgB,sBAAsB,CACpC,QAAQ,EAAE,IAAI,CAAC,YAAY,EAAE,aAAa,GAAG,cAAc,CAAC,GAC3D,OAAO,CAIT;AAED;;;GAGG;AACH,wBAAgB,4BAA4B,CAC1C,QAAQ,EAAE,IAAI,CAAC,YAAY,EAAE,QAAQ,GAAG,aAAa,GAAG,cAAc,GAAG,OAAO,GAAG,YAAY,CAAC,GAC/F,kBAAkB,GAAG,IAAI,CAgB3B;AAED,qEAAqE;AACrE,wBAAgB,qBAAqB,CACnC,QAAQ,EAAE,IAAI,CACZ,YAAY,EACZ,cAAc,GAAG,aAAa,GAAG,iBAAiB,GAAG,kBAAkB,GAAG,QAAQ,CACnF,GACA,OAAO,CAYT;AAED,OAAO,EAAE,SAAS,EAAE,cAAc,EAAE,CAAC"}
+\ No newline at end of file
+diff --git a/packages/firm-outreach-core/dist/reconcile-ready-status.js b/packages/firm-outreach-core/dist/reconcile-ready-status.js
+index b7653b1..e71d3d7 100644
+--- a/packages/firm-outreach-core/dist/reconcile-ready-status.js
++++ b/packages/firm-outreach-core/dist/reconcile-ready-status.js
+@@ -28,6 +28,9 @@ function reconcileReadyProspectStatus(prospect) {
+     if (email && !(0, validator_1.isPlausibleOutreachEmail)(email)) {
+         return 'discovered';
+     }
++    if (email && !(0, validator_1.isSendableReadyProspect)(prospect)) {
++        return 'discovered';
++    }
+     return null;
+ }
+ /** True when a sent prospect is due for follow-up step 1 (day 7). */
+diff --git a/packages/firm-outreach-core/dist/shared-constants.d.ts b/packages/firm-outreach-core/dist/shared-constants.d.ts
+index 232ef06..f186911 100644
+--- a/packages/firm-outreach-core/dist/shared-constants.d.ts
++++ b/packages/firm-outreach-core/dist/shared-constants.d.ts
+@@ -2,6 +2,8 @@ export declare const CONTACT_PATHS: readonly ["/", "/contact", "/contact-us", "/
+ export declare const REJECTED_EMAIL_LOCALS: Set<string>;
+ export declare const PREFERRED_EMAIL_LOCALS: Record<string, number>;
+ export declare const FREE_EMAIL_DOMAINS: Set<string>;
++/** Free-mail / consumer domains that must never be outreach targets. */
++export declare const REJECTED_OUTREACH_EMAIL_DOMAINS: Set<string>;
+ /** Operator inboxes — must never be selected as a firm/solicitor outreach target. */
+ export declare const OPERATOR_OUTREACH_EMAILS: Set<string>;
+ /**
+diff --git a/packages/firm-outreach-core/dist/shared-constants.d.ts.map b/packages/firm-outreach-core/dist/shared-constants.d.ts.map
+index c394d2c..a6b8643 100644
+--- a/packages/firm-outreach-core/dist/shared-constants.d.ts.map
++++ b/packages/firm-outreach-core/dist/shared-constants.d.ts.map
+@@ -1 +1 @@
+-{"version":3,"file":"shared-constants.d.ts","sourceRoot":"","sources":["../src/shared-constants.ts"],"names":[],"mappings":"AAAA,eAAO,MAAM,aAAa,2HAShB,CAAC;AAEX,eAAO,MAAM,qBAAqB,aAchC,CAAC;AAEH,eAAO,MAAM,sBAAsB,EAAE,MAAM,CAAC,MAAM,EAAE,MAAM,CAezD,CAAC;AAEF,eAAO,MAAM,kBAAkB,aA+B7B,CAAC;AAEH,qFAAqF;AACrF,eAAO,MAAM,wBAAwB,aAGnC,CAAC;AAEH;;;;;GAKG;AACH,eAAO,MAAM,sBAAsB,aAyFjC,CAAC;AAEH,eAAO,MAAM,sBAAsB,UAKlC,CAAC;AAEF,eAAO,MAAM,iBAAiB,yIAQpB,CAAC;AAEX,eAAO,MAAM,mBAAmB,kEAItB,CAAC;AAEX,gEAAgE;AAChE,eAAO,MAAM,wBAAwB,kIAqB3B,CAAC;AAEX,MAAM,WAAW,sBAAsB;IACrC,QAAQ,CAAC,EAAE,MAAM,CAAC;IAClB,WAAW,CAAC,EAAE,MAAM,CAAC;IACrB,eAAe,CAAC,EAAE,MAAM,CAAC;IACzB,aAAa,CAAC,EAAE,MAAM,CAAC;IACvB,WAAW,CAAC,EAAE,MAAM,CAAC;IACrB,YAAY,CAAC,EAAE,MAAM,CAAC;IACtB,eAAe,CAAC,EAAE,MAAM,EAAE,GAAG,IAAI,CAAC;CACnC;AAED,wBAAgB,wBAAwB,CAAC,QAAQ,GAAE,sBAA2B;uBAIvD,OAAO;sBAGR,OAAO;2BAGF,OAAO;IAO9B;;;OAGG;+BACwB,OAAO;IAOlC;;;OAGG;oBACa,MAAM;uBAeH,MAAM;2BAGF,MAAM;yBAKR,MAAM;0BAKL,MAAM;oBAKZ,MAAM;uBAGH,MAAM,EAAE,GAAG,IAAI;EASrC"}
+\ No newline at end of file
++{"version":3,"file":"shared-constants.d.ts","sourceRoot":"","sources":["../src/shared-constants.ts"],"names":[],"mappings":"AAAA,eAAO,MAAM,aAAa,2HAShB,CAAC;AAEX,eAAO,MAAM,qBAAqB,aAchC,CAAC;AAEH,eAAO,MAAM,sBAAsB,EAAE,MAAM,CAAC,MAAM,EAAE,MAAM,CAezD,CAAC;AAEF,eAAO,MAAM,kBAAkB,aA+B7B,CAAC;AAEH,wEAAwE;AACxE,eAAO,MAAM,+BAA+B,aAQ1C,CAAC;AAEH,qFAAqF;AACrF,eAAO,MAAM,wBAAwB,aAGnC,CAAC;AAEH;;;;;GAKG;AACH,eAAO,MAAM,sBAAsB,aAyFjC,CAAC;AAEH,eAAO,MAAM,sBAAsB,UAKlC,CAAC;AAEF,eAAO,MAAM,iBAAiB,yIAQpB,CAAC;AAEX,eAAO,MAAM,mBAAmB,kEAItB,CAAC;AAEX,gEAAgE;AAChE,eAAO,MAAM,wBAAwB,kIAqB3B,CAAC;AAEX,MAAM,WAAW,sBAAsB;IACrC,QAAQ,CAAC,EAAE,MAAM,CAAC;IAClB,WAAW,CAAC,EAAE,MAAM,CAAC;IACrB,eAAe,CAAC,EAAE,MAAM,CAAC;IACzB,aAAa,CAAC,EAAE,MAAM,CAAC;IACvB,WAAW,CAAC,EAAE,MAAM,CAAC;IACrB,YAAY,CAAC,EAAE,MAAM,CAAC;IACtB,eAAe,CAAC,EAAE,MAAM,EAAE,GAAG,IAAI,CAAC;CACnC;AAED,wBAAgB,wBAAwB,CAAC,QAAQ,GAAE,sBAA2B;uBAIvD,OAAO;sBAGR,OAAO;2BAGF,OAAO;IAO9B;;;OAGG;+BACwB,OAAO;IAOlC;;;OAGG;oBACa,MAAM;uBAeH,MAAM;2BAGF,MAAM;yBAKR,MAAM;0BAKL,MAAM;oBAKZ,MAAM;uBAGH,MAAM,EAAE,GAAG,IAAI;EASrC"}
+\ No newline at end of file
+diff --git a/packages/firm-outreach-core/dist/shared-constants.js b/packages/firm-outreach-core/dist/shared-constants.js
+index f728c96..7e24669 100644
+--- a/packages/firm-outreach-core/dist/shared-constants.js
++++ b/packages/firm-outreach-core/dist/shared-constants.js
+@@ -1,6 +1,6 @@
+ "use strict";
+ Object.defineProperty(exports, "__esModule", { value: true });
+-exports.NON_EW_POSTCODE_PREFIXES = exports.COMPETITOR_KEYWORDS = exports.CRIMINAL_KEYWORDS = exports.EXCLUDED_FIRM_PATTERNS = exports.NON_FIRM_EMAIL_DOMAINS = exports.OPERATOR_OUTREACH_EMAILS = exports.FREE_EMAIL_DOMAINS = exports.PREFERRED_EMAIL_LOCALS = exports.REJECTED_EMAIL_LOCALS = exports.CONTACT_PATHS = void 0;
++exports.NON_EW_POSTCODE_PREFIXES = exports.COMPETITOR_KEYWORDS = exports.CRIMINAL_KEYWORDS = exports.EXCLUDED_FIRM_PATTERNS = exports.NON_FIRM_EMAIL_DOMAINS = exports.OPERATOR_OUTREACH_EMAILS = exports.REJECTED_OUTREACH_EMAIL_DOMAINS = exports.FREE_EMAIL_DOMAINS = exports.PREFERRED_EMAIL_LOCALS = exports.REJECTED_EMAIL_LOCALS = exports.CONTACT_PATHS = void 0;
+ exports.createOutreachEnvHelpers = createOutreachEnvHelpers;
+ exports.CONTACT_PATHS = [
+     '/',
+@@ -75,6 +75,16 @@ exports.FREE_EMAIL_DOMAINS = new Set([
+     'ntlworld.com',
+     'blueyonder.co.uk',
+ ]);
++/** Free-mail / consumer domains that must never be outreach targets. */
++exports.REJECTED_OUTREACH_EMAIL_DOMAINS = new Set([
++    'abv.bg',
++    'mail.ru',
++    'yandex.ru',
++    'yandex.com',
++    'qq.com',
++    '163.com',
++    '126.com',
++]);
+ /** Operator inboxes — must never be selected as a firm/solicitor outreach target. */
+ exports.OPERATOR_OUTREACH_EMAILS = new Set([
+     'robertdavidcashman@gmail.com',
+diff --git a/packages/firm-outreach-core/src/enrichment/email-extract.ts b/packages/firm-outreach-core/src/enrichment/email-extract.ts
+index 598fab3..d7deb63 100644
+--- a/packages/firm-outreach-core/src/enrichment/email-extract.ts
++++ b/packages/firm-outreach-core/src/enrichment/email-extract.ts
+@@ -57,12 +57,9 @@ export function scoreEmailCandidate(
+     if (opts.prospectType === 'solicitor') return 0;
+     score -= 25;
+   } else if (siteDomain) {
+-    // Firm's own website domain is known, but this address is on neither it nor
+-    // a free/ISP provider — most likely a third-party address scraped from the
+-    // page (footer, badge, widget). Heavily penalise so an on-domain or free
+-    // address always wins; keep it positive only so a genuine alternate-domain
+-    // firm email can still be used as a last resort when nothing better exists.
+-    score -= 35;
++    // Hard reject: known firm website + off-domain email that is not an
++    // allowlisted UK ISP / free mailbox.
++    return 0;
+   }
+ 
+   if (opts.surname && localBase.includes(opts.surname.toLowerCase().slice(0, 4))) {
+diff --git a/packages/firm-outreach-core/src/enrichment/validator.ts b/packages/firm-outreach-core/src/enrichment/validator.ts
+index 1a722cd..37b203b 100644
+--- a/packages/firm-outreach-core/src/enrichment/validator.ts
++++ b/packages/firm-outreach-core/src/enrichment/validator.ts
+@@ -1,6 +1,12 @@
+ import dns from 'dns/promises';
+-import { FREE_EMAIL_DOMAINS, NON_FIRM_EMAIL_DOMAINS, OPERATOR_OUTREACH_EMAILS, REJECTED_EMAIL_LOCALS } from '../shared-constants';
+-import { normalizeEmail, registrableDomain } from '../normalize';
++import {
++  FREE_EMAIL_DOMAINS,
++  NON_FIRM_EMAIL_DOMAINS,
++  OPERATOR_OUTREACH_EMAILS,
++  REJECTED_EMAIL_LOCALS,
++  REJECTED_OUTREACH_EMAIL_DOMAINS,
++} from '../shared-constants';
++import { domainFromUrl, normalizeEmail, registrableDomain } from '../normalize';
+ 
+ const RFC5322 =
+   /^[a-z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+$/i;
+@@ -47,6 +53,7 @@ export function isPlausibleOutreachEmail(email: string): boolean {
+   if (JUNK_EMAIL_DOMAIN_PATTERNS.some((re) => re.test(domain))) return false;
+   if (OPERATOR_OUTREACH_EMAILS.has(norm)) return false;
+   if (isNonFirmEmailDomain(norm)) return false;
++  if (REJECTED_OUTREACH_EMAIL_DOMAINS.has(domain)) return false;
+   return true;
+ }
+ 
+@@ -81,3 +88,31 @@ export function isFreeEmailDomain(email: string): boolean {
+   const domain = normalizeEmail(email).split('@')[1];
+   return FREE_EMAIL_DOMAINS.has(domain);
+ }
++
++/**
++ * True when a prospect email is safe to keep in the ready queue.
++ * Rejects rejected free-mail domains and hard firm↔email domain mismatches.
++ */
++export function isSendableReadyProspect(prospect: {
++  email?: string | null;
++  websiteUrl?: string | null;
++}): boolean {
++  const email = prospect.email?.trim();
++  if (!email || !isPlausibleOutreachEmail(email)) return false;
++
++  const domain = normalizeEmail(email).split('@')[1];
++  if (!domain) return false;
++
++  const siteDomain = domainFromUrl(prospect.websiteUrl);
++  if (!siteDomain) return true;
++
++  const emailRegistrable = registrableDomain(domain) ?? domain;
++  const onFirmDomain =
++    emailRegistrable === siteDomain || domain === siteDomain || domain.endsWith(`.${siteDomain}`);
++  if (onFirmDomain) return true;
++
++  if (FREE_EMAIL_DOMAINS.has(domain) && !REJECTED_OUTREACH_EMAIL_DOMAINS.has(domain)) {
++    return true;
++  }
++  return false;
++}
+diff --git a/packages/firm-outreach-core/src/reconcile-ready-status.ts b/packages/firm-outreach-core/src/reconcile-ready-status.ts
+index 0d17a14..a122a4b 100644
+--- a/packages/firm-outreach-core/src/reconcile-ready-status.ts
++++ b/packages/firm-outreach-core/src/reconcile-ready-status.ts
+@@ -1,5 +1,5 @@
+ import { daysSince, dueForFollowUp, sequenceStepOf } from './email-jobs';
+-import { isPlausibleOutreachEmail } from './enrichment/validator';
++import { isPlausibleOutreachEmail, isSendableReadyProspect } from './enrichment/validator';
+ import type { FirmProspect, FirmProspectStatus } from './types';
+ 
+ /** Whether an initial outreach email was already recorded on this prospect. */
+@@ -16,7 +16,7 @@ export function prospectHasInitialSend(
+  * but status was not moved to sent. That blocks the morning cron from picking new firms.
+  */
+ export function reconcileReadyProspectStatus(
+-  prospect: Pick<FirmProspect, 'status' | 'lastEmailAt' | 'sequenceStep' | 'email'>,
++  prospect: Pick<FirmProspect, 'status' | 'lastEmailAt' | 'sequenceStep' | 'email' | 'websiteUrl'>,
+ ): FirmProspectStatus | null {
+   if (prospect.status !== 'ready_to_send') return null;
+ 
+@@ -28,6 +28,9 @@ export function reconcileReadyProspectStatus(
+   if (email && !isPlausibleOutreachEmail(email)) {
+     return 'discovered';
+   }
++  if (email && !isSendableReadyProspect(prospect)) {
++    return 'discovered';
++  }
+ 
+   return null;
+ }
+diff --git a/packages/firm-outreach-core/src/shared-constants.ts b/packages/firm-outreach-core/src/shared-constants.ts
+index b234293..960920d 100644
+--- a/packages/firm-outreach-core/src/shared-constants.ts
++++ b/packages/firm-outreach-core/src/shared-constants.ts
+@@ -75,6 +75,17 @@ export const FREE_EMAIL_DOMAINS = new Set([
+   'blueyonder.co.uk',
+ ]);
+ 
++/** Free-mail / consumer domains that must never be outreach targets. */
++export const REJECTED_OUTREACH_EMAIL_DOMAINS = new Set([
++  'abv.bg',
++  'mail.ru',
++  'yandex.ru',
++  'yandex.com',
++  'qq.com',
++  '163.com',
++  '126.com',
++]);
++
+ /** Operator inboxes — must never be selected as a firm/solicitor outreach target. */
+ export const OPERATOR_OUTREACH_EMAILS = new Set([
+   'robertdavidcashman@gmail.com',
