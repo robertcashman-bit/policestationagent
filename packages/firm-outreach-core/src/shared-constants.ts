@@ -63,6 +63,14 @@ export const FREE_EMAIL_DOMAINS = new Set([
   'gmx.co.uk',
   'protonmail.com',
   'proton.me',
+  // International free-mail — never a UK criminal-defence firm contact
+  'abv.bg',
+  'mail.ru',
+  'yandex.ru',
+  'yandex.com',
+  'qq.com',
+  '163.com',
+  '126.com',
   // UK ISP mailboxes commonly used by small firms — legitimate, not off-domain
   'btconnect.com',
   'btinternet.com',
@@ -73,6 +81,17 @@ export const FREE_EMAIL_DOMAINS = new Set([
   'virginmedia.com',
   'ntlworld.com',
   'blueyonder.co.uk',
+]);
+
+/** Free-mail / consumer domains that must never be outreach targets. */
+export const REJECTED_OUTREACH_EMAIL_DOMAINS = new Set([
+  'abv.bg',
+  'mail.ru',
+  'yandex.ru',
+  'yandex.com',
+  'qq.com',
+  '163.com',
+  '126.com',
 ]);
 
 /** Operator inboxes — must never be selected as a firm/solicitor outreach target. */

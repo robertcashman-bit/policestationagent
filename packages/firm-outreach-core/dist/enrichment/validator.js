@@ -60,6 +60,8 @@ function isPlausibleOutreachEmail(email) {
         return false;
     if (isNonFirmEmailDomain(norm))
         return false;
+    if (shared_constants_1.REJECTED_OUTREACH_EMAIL_DOMAINS.has(domain))
+        return false;
     return true;
 }
 function isValidEmailFormat(email) {

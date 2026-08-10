@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NON_EW_POSTCODE_PREFIXES = exports.COMPETITOR_KEYWORDS = exports.CRIMINAL_KEYWORDS = exports.EXCLUDED_FIRM_PATTERNS = exports.NON_FIRM_EMAIL_DOMAINS = exports.OPERATOR_OUTREACH_EMAILS = exports.FREE_EMAIL_DOMAINS = exports.PREFERRED_EMAIL_LOCALS = exports.REJECTED_EMAIL_LOCALS = exports.CONTACT_PATHS = void 0;
+exports.NON_EW_POSTCODE_PREFIXES = exports.COMPETITOR_KEYWORDS = exports.CRIMINAL_KEYWORDS = exports.EXCLUDED_FIRM_PATTERNS = exports.NON_FIRM_EMAIL_DOMAINS = exports.OPERATOR_OUTREACH_EMAILS = exports.REJECTED_OUTREACH_EMAIL_DOMAINS = exports.FREE_EMAIL_DOMAINS = exports.PREFERRED_EMAIL_LOCALS = exports.REJECTED_EMAIL_LOCALS = exports.CONTACT_PATHS = void 0;
 exports.createOutreachEnvHelpers = createOutreachEnvHelpers;
 exports.CONTACT_PATHS = [
     '/',
@@ -64,6 +64,14 @@ exports.FREE_EMAIL_DOMAINS = new Set([
     'gmx.co.uk',
     'protonmail.com',
     'proton.me',
+    // International free-mail — never a UK criminal-defence firm contact
+    'abv.bg',
+    'mail.ru',
+    'yandex.ru',
+    'yandex.com',
+    'qq.com',
+    '163.com',
+    '126.com',
     // UK ISP mailboxes commonly used by small firms — legitimate, not off-domain
     'btconnect.com',
     'btinternet.com',
@@ -74,6 +82,16 @@ exports.FREE_EMAIL_DOMAINS = new Set([
     'virginmedia.com',
     'ntlworld.com',
     'blueyonder.co.uk',
+]);
+/** Free-mail / consumer domains that must never be outreach targets. */
+exports.REJECTED_OUTREACH_EMAIL_DOMAINS = new Set([
+    'abv.bg',
+    'mail.ru',
+    'yandex.ru',
+    'yandex.com',
+    'qq.com',
+    '163.com',
+    '126.com',
 ]);
 /** Operator inboxes — must never be selected as a firm/solicitor outreach target. */
 exports.OPERATOR_OUTREACH_EMAILS = new Set([

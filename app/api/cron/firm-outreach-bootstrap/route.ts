@@ -29,6 +29,59 @@ export async function GET(request: Request) {
     return NextResponse.json({ ok: true, mode: 'cleanupBadEmails', cleanup });
   }
 
+  if (url.searchParams.get('excludeEmails') === '1') {
+    const dryRun = url.searchParams.get('dryRun') !== '0';
+    const reason =
+      url.searchParams.get('reason')?.trim() || 'email_firm_mismatch_or_bad_contact';
+    const emails = (url.searchParams.get('emails') || '')
+      .split(/[,;\s]+/)
+      .map((e) => e.trim().toLowerCase())
+      .filter(Boolean);
+    if (emails.length === 0) {
+      return NextResponse.json(
+        { ok: false, error: 'emails query param required (comma-separated)' },
+        { status: 400 },
+      );
+    }
+    const { listSendsForEmail, getProspect, addSuppression } = await import(
+      '@/lib/firm-outreach/storage'
+    );
+    const { excludeProspect } = await import('@/lib/firm-outreach/outreach/admin-actions');
+    const results: Array<{
+      email: string;
+      prospectIds: string[];
+      excluded: number;
+      suppressed: boolean;
+      dryRun: boolean;
+    }> = [];
+    for (const email of emails) {
+      const sends = await listSendsForEmail(email);
+      const prospectIds = [...new Set(sends.map((s) => s.prospectId).filter(Boolean))];
+      let excluded = 0;
+      for (const prospectId of prospectIds) {
+        const prospect = await getProspect(prospectId);
+        if (!prospect) continue;
+        if (dryRun) {
+          if (prospect.status !== 'excluded') excluded++;
+          continue;
+        }
+        const r = await excludeProspect(prospectId, reason);
+        if (r.ok) excluded++;
+      }
+      if (!dryRun) {
+        await addSuppression(email, 'manual');
+      }
+      results.push({
+        email,
+        prospectIds,
+        excluded,
+        suppressed: !dryRun,
+        dryRun,
+      });
+    }
+    return NextResponse.json({ ok: true, mode: 'excludeEmails', dryRun, reason, results });
+  }
+
   if (url.searchParams.get('setupResendWebhook') === '1') {
     const { configureResendOutreachWebhook } = await import(
       '@/lib/firm-outreach/resend-webhook-setup'
