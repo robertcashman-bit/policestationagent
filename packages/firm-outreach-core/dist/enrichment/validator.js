@@ -9,6 +9,7 @@ exports.isValidEmailFormat = isValidEmailFormat;
 exports.hasMxRecord = hasMxRecord;
 exports.validateEmailForSend = validateEmailForSend;
 exports.isFreeEmailDomain = isFreeEmailDomain;
+exports.isSendableReadyProspect = isSendableReadyProspect;
 const promises_1 = __importDefault(require("dns/promises"));
 const shared_constants_1 = require("../shared-constants");
 const normalize_1 = require("../normalize");
@@ -93,4 +94,29 @@ async function validateEmailForSend(email) {
 function isFreeEmailDomain(email) {
     const domain = (0, normalize_1.normalizeEmail)(email).split('@')[1];
     return shared_constants_1.FREE_EMAIL_DOMAINS.has(domain);
+}
+/**
+ * True when a prospect email is safe to keep in the ready queue.
+ * Rejects rejected free-mail domains and hard firm↔email domain mismatches
+ * (off-domain addresses that are not allowlisted UK ISP/free mailboxes).
+ */
+function isSendableReadyProspect(prospect) {
+    const email = prospect.email?.trim();
+    if (!email || !isPlausibleOutreachEmail(email))
+        return false;
+    const domain = (0, normalize_1.normalizeEmail)(email).split('@')[1];
+    if (!domain)
+        return false;
+    const siteDomain = (0, normalize_1.domainFromUrl)(prospect.websiteUrl);
+    if (!siteDomain)
+        return true;
+    const emailRegistrable = (0, normalize_1.registrableDomain)(domain) ?? domain;
+    const onFirmDomain = emailRegistrable === siteDomain || domain === siteDomain || domain.endsWith(`.${siteDomain}`);
+    if (onFirmDomain)
+        return true;
+    // Allowlisted personal/ISP domains only (rejected free-mail already filtered above).
+    if (shared_constants_1.FREE_EMAIL_DOMAINS.has(domain) && !shared_constants_1.REJECTED_OUTREACH_EMAIL_DOMAINS.has(domain)) {
+        return true;
+    }
+    return false;
 }

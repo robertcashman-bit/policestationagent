@@ -7,6 +7,8 @@ import { join } from 'node:path';
 
 const SITE_ID = 'policestationagent';
 const OVERRIDES_PATH = join(process.cwd(), 'data', 'buffer-image-overrides.json');
+/** Always-on public raster fallback for Buffer media resilience. */
+const MEDIA_FALLBACK_IMAGE = `${SITE_URL.replace(/\/$/, '')}/images/buffer/gbp/policestationagent-default.jpg`;
 
 function kvAdapter(): BufferKV | null {
   const redis = getKV();
@@ -51,6 +53,7 @@ export function createPsaBufferAdapter(): BufferEngineAdapter {
     siteId: SITE_ID,
     siteUrl: SITE_URL,
     kv: kvAdapter(),
+    mediaFallbackImageUrl: MEDIA_FALLBACK_IMAGE,
     getSchedulablePosts(): SchedulablePost[] {
       const overrides = loadImageOverrides();
       return getAllPosts().map((post) => ({
@@ -59,7 +62,7 @@ export function createPsaBufferAdapter(): BufferEngineAdapter {
         title: post.title,
         excerpt: (post.metaDescription ?? '').trim(),
         url: `${SITE_URL}/blog/${post.slug}`,
-        imageUrl: overrides[post.slug] ?? absImage(post.featuredImage),
+        imageUrl: overrides[post.slug] ?? absImage(post.featuredImage) ?? MEDIA_FALLBACK_IMAGE,
         imageAlt: post.featuredImageAlt ?? post.title,
       }));
     },

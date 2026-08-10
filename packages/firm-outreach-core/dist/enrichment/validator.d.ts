@@ -9,4 +9,13 @@ export declare function validateEmailForSend(email: string): Promise<{
     reason?: string;
 }>;
 export declare function isFreeEmailDomain(email: string): boolean;
+/**
+ * True when a prospect email is safe to keep in the ready queue.
+ * Rejects rejected free-mail domains and hard firm↔email domain mismatches
+ * (off-domain addresses that are not allowlisted UK ISP/free mailboxes).
+ */
+export declare function isSendableReadyProspect(prospect: {
+    email?: string | null;
+    websiteUrl?: string | null;
+}): boolean;
 //# sourceMappingURL=validator.d.ts.map

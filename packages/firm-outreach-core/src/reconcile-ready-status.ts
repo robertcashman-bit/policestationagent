@@ -1,4 +1,4 @@
-import { isPlausibleOutreachEmail } from './enrichment/validator';
+import { isPlausibleOutreachEmail, isSendableReadyProspect } from './enrichment/validator';
 import type { FirmProspect, FirmProspectStatus } from './types';
 
 const FOLLOWUP_DAY_1 = 7;
@@ -18,7 +18,7 @@ export function prospectHasInitialSend(prospect: Pick<FirmProspect, 'lastEmailAt
  * but status was not moved to sent. That blocks the morning cron from picking new firms.
  */
 export function reconcileReadyProspectStatus(
-  prospect: Pick<FirmProspect, 'status' | 'lastEmailAt' | 'sequenceStep' | 'email'>,
+  prospect: Pick<FirmProspect, 'status' | 'lastEmailAt' | 'sequenceStep' | 'email' | 'websiteUrl'>,
 ): FirmProspectStatus | null {
   if (prospect.status !== 'ready_to_send') return null;
 
@@ -28,6 +28,9 @@ export function reconcileReadyProspectStatus(
 
   const email = prospect.email?.trim();
   if (email && !isPlausibleOutreachEmail(email)) {
+    return 'discovered';
+  }
+  if (email && !isSendableReadyProspect(prospect)) {
     return 'discovered';
   }
 

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getFormattedVersion, getLastUpdateDateTime } from "@/lib/version";
 import { CHROME_BRAND_TAGLINE, CHROME_HELP_STRIP, SERVICE_SCOPE_SHORT } from "@/config/contact";
-import { FOOTER_LEGAL } from "@/config/footer-links";
+import { FOOTER_LEGAL, FOOTER_NETWORK_LINKS } from "@/config/footer-links";
 import {
   PATH_AGENCY,
   PATH_CONTACT,
@@ -35,7 +35,7 @@ function Column({
   links,
 }: {
   title: string;
-  links: { href: string; label: string }[];
+  links: { href: string; label: string; external?: boolean }[];
 }) {
   return (
     <div>
@@ -45,12 +45,23 @@ function Column({
       <ul className="space-y-2 text-sm">
         {links.map((link) => (
           <li key={link.href}>
-            <Link
-              href={link.href}
-              className="text-white/75 hover:text-accent-light transition-colors"
-            >
-              {link.label}
-            </Link>
+            {link.external ? (
+              <a
+                href={link.href}
+                className="text-white/75 hover:text-accent-light transition-colors"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                {link.label}
+              </a>
+            ) : (
+              <Link
+                href={link.href}
+                className="text-white/75 hover:text-accent-light transition-colors"
+              >
+                {link.label}
+              </Link>
+            )}
           </li>
         ))}
       </ul>
@@ -82,10 +93,11 @@ export default function Footer({
           <p className="text-xs text-white/75 mt-1 max-w-xl">{SERVICE_SCOPE_SHORT}</p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 py-8 border-b border-white/10">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-8 py-8 border-b border-white/10">
           <Column title="Public help" links={PUBLIC_HELP} />
           <Column title="For professionals" links={PROFESSIONALS} />
           <Column title="Information" links={INFORMATION} />
+          <Column title="Network" links={FOOTER_NETWORK_LINKS} />
           <div>
             <h2 className="text-xs uppercase tracking-[0.12em] text-accent-light mb-3 font-semibold">
               Legal

@@ -6,7 +6,7 @@ import {
   REJECTED_EMAIL_LOCALS,
   REJECTED_OUTREACH_EMAIL_DOMAINS,
 } from '../shared-constants';
-import { normalizeEmail, registrableDomain } from '../normalize';
+import { domainFromUrl, normalizeEmail, registrableDomain } from '../normalize';
 
 const RFC5322 =
   /^[a-z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+$/i;
@@ -87,4 +87,34 @@ export async function validateEmailForSend(email: string): Promise<{
 export function isFreeEmailDomain(email: string): boolean {
   const domain = normalizeEmail(email).split('@')[1];
   return FREE_EMAIL_DOMAINS.has(domain);
+}
+
+/**
+ * True when a prospect email is safe to keep in the ready queue.
+ * Rejects rejected free-mail domains and hard firm↔email domain mismatches
+ * (off-domain addresses that are not allowlisted UK ISP/free mailboxes).
+ */
+export function isSendableReadyProspect(prospect: {
+  email?: string | null;
+  websiteUrl?: string | null;
+}): boolean {
+  const email = prospect.email?.trim();
+  if (!email || !isPlausibleOutreachEmail(email)) return false;
+
+  const domain = normalizeEmail(email).split('@')[1];
+  if (!domain) return false;
+
+  const siteDomain = domainFromUrl(prospect.websiteUrl);
+  if (!siteDomain) return true;
+
+  const emailRegistrable = registrableDomain(domain) ?? domain;
+  const onFirmDomain =
+    emailRegistrable === siteDomain || domain === siteDomain || domain.endsWith(`.${siteDomain}`);
+  if (onFirmDomain) return true;
+
+  // Allowlisted personal/ISP domains only (rejected free-mail already filtered above).
+  if (FREE_EMAIL_DOMAINS.has(domain) && !REJECTED_OUTREACH_EMAIL_DOMAINS.has(domain)) {
+    return true;
+  }
+  return false;
 }

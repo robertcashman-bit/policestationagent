@@ -28,6 +28,9 @@ function reconcileReadyProspectStatus(prospect) {
     if (email && !(0, validator_1.isPlausibleOutreachEmail)(email)) {
         return 'discovered';
     }
+    if (email && !(0, validator_1.isSendableReadyProspect)(prospect)) {
+        return 'discovered';
+    }
     return null;
 }
 /** True when a sent prospect is due for follow-up step 1 (day 7). */

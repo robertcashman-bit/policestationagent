@@ -50,12 +50,9 @@ function scoreEmailCandidate(email, opts) {
         score -= 25;
     }
     else if (siteDomain) {
-        // Firm's own website domain is known, but this address is on neither it nor
-        // a free/ISP provider — most likely a third-party address scraped from the
-        // page (footer, badge, widget). Heavily penalise so an on-domain or free
-        // address always wins; keep it positive only so a genuine alternate-domain
-        // firm email can still be used as a last resort when nothing better exists.
-        score -= 35;
+        // Hard reject: known firm website + off-domain email that is not an
+        // allowlisted UK ISP / free mailbox (e.g. Public Defender → buchananco).
+        return 0;
     }
     if (opts.surname && localBase.includes(opts.surname.toLowerCase().slice(0, 4))) {
         score += 25;
