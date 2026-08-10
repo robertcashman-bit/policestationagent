@@ -1,0 +1,47 @@
+# Custody Note
+
+> Desktop app for freelance police station representatives and criminal solicitors. LAA-compliant custody notes, time recording, firm billing, and PDF export.
+
+## About
+
+Custody Note is a Windows desktop application designed for freelance police station representatives and criminal solicitors who attend police stations on behalf of defence firms across England and Wales. It provides structured, LAA-compliant custody notes, automatic time recording, multi-firm billing, and one-click PDF export.
+
+## Key pages
+
+- Home: https://custodynote.com
+- How it works: https://custodynote.com/how-it-works
+- Pricing: https://custodynote.com/pricing
+- Download: https://custodynote.com/download
+- Free trial: https://custodynote.com/trial
+- Cloud Backup: https://custodynote.com/cloud-backup
+- Support: https://custodynote.com/support
+- Contact: https://custodynote.com/contact
+- Changelog: https://custodynote.com/changelog
+
+## Pricing
+
+- Standard: £29/month or £290/year (save £58)
+- Standard + Cloud Backup: £39/month or £390/year (save £78)
+- 30-day free trial included, no credit card required
+
+## Core features
+
+- Attendance notes, telephone advice (INVB), and Quick Capture
+- Multi-firm tracking and billing with disbursements and VAT
+- LAA outcome codes, stage reached, and fee codes
+- PACE review tracking (1st, 2nd, 3rd reviews)
+- Case details with offence picker and disclosure fields
+- PDF export for firms, clients, and courts
+- Works fully offline at any police station
+- Encrypted cloud backup with AWS Object Lock (optional add-on)
+
+## System requirements
+
+- Windows 10 or Windows 11
+- 4 GB RAM minimum (8 GB recommended)
+- 200 MB free disk space
+- Internet required only for licence validation and cloud backup
+
+## Optional: extended info
+
+See https://custodynote.com/llms-full.txt for the full product description.

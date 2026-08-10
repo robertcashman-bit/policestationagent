@@ -1,0 +1,35 @@
+{
+  "name": "custody-note-website",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.1000.0",
+    "@aws-sdk/client-sts": "^3.1000.0",
+    "@robertcashman/buffer-engine": "file:vendor/buffer-engine.tgz",
+    "@vercel/analytics": "^1.6.1",
+    "@vercel/kv": "^0.2.0",
+    "@vercel/speed-insights": "^1.3.1",
+    "next": "^14.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "resend": "^6.9.3",
+    "stripe": "^14.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.4.18",
+    "eslint": "^8",
+    "eslint-config-next": "^14.2.0",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  }
+}

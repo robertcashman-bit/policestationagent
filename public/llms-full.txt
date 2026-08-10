@@ -1,0 +1,110 @@
+# Custody Note – Full Product Description
+
+> Desktop app for freelance police station representatives and criminal solicitors. LAA-compliant custody notes, time recording, firm billing, and PDF export.
+
+## What is Custody Note?
+
+Custody Note is a Windows desktop application built specifically for freelance police station representatives and criminal solicitors who attend police stations on behalf of defence firms across England and Wales. It replaces paper-based and Word-document workflows with a structured, digital system that meets Legal Aid Agency (LAA) compliance requirements.
+
+The app runs entirely on the user's machine and works offline — no internet connection is needed at the police station. Data stays on the user's device unless they opt in to encrypted cloud backup.
+
+## Who is it for?
+
+- Freelance police station representatives (accredited and probationary)
+- Freelance criminal solicitors attending police stations
+- Duty solicitors covering for criminal defence firms
+- Representatives and solicitors billing multiple instructing firms
+
+## Features
+
+### Attendance, Telephone Advice & Quick Capture
+Record in-person attendances and telephone advice (INVB) from one home screen. Quick Capture lets users grab initial case details the moment they get the call — client name, station, firm, offence — before heading out.
+
+### Firm Tracking & Billing
+Log which firm instructed each case. Track disbursements with VAT treatment, time recording, and LAA fee codes so users can bill every firm accurately. Filter records by firm for invoicing.
+
+### LAA Compliance
+LAA outcome codes, stage reached, and fee codes are built in. Structured notes and time records meet Legal Aid Agency and audit requirements. The app generates records that are ready for LAA billing and peer review.
+
+### Custody Record & PACE
+Track 1st, 2nd, and 3rd PACE review times — both due and actual — with notes. Arrest and detention details, welfare, and vulnerability are tracked in one place.
+
+### Case & Disclosure
+Client details, offence picker with type-ahead search, disclosure notes, and OIC (Officer in Case) fields. Reasons for advice and sufficient benefit test (LAA) are built in.
+
+### PDF Export & Offline
+Export notes to professional PDF documents for firms, clients, and courts. The app runs on the user's machine and works fully offline at any police station with no internet needed.
+
+### Encrypted Cloud Backup (optional add-on)
+Cloud Backup encrypts the user's database on their machine using AES-256-GCM and uploads it to Amazon Web Services S3 in the London (eu-west-2) region. AWS S3 Object Lock in Compliance mode prevents anyone — including AWS administrators — from deleting or modifying backups for 90 days. Each subscriber has isolated storage with scoped, temporary credentials.
+
+## Pricing
+
+| Plan | Monthly | Annual |
+|------|---------|--------|
+| Standard | £29/month | £290/year (save £58) |
+| Standard + Cloud Backup | £39/month | £390/year (save £78) |
+
+- 30-day free trial included with all features, no credit card required
+- No per-seat charges, no hidden fees
+- Cancel any time from the Stripe dashboard
+
+## System Requirements
+
+- Windows 10 or Windows 11
+- 4 GB RAM minimum (8 GB recommended)
+- 200 MB free disk space
+- Internet required only for licence validation and cloud backup uploads
+
+## How It Works
+
+1. **Quick Capture** — Grab case details the moment you get the call
+2. **Attend & Record** — Full attendance notes, PACE reviews, and time recording at the station
+3. **Export PDF** — Generate a professional custody note with one click
+4. **Bill the Firm** — Track each firm separately with accurate time and disbursements
+
+## Cloud Backup Technical Details
+
+- **Encryption**: AES-256-GCM, key derived from the user's licence key
+- **Storage**: AWS S3, London region (eu-west-2), UK data residency
+- **Immutability**: S3 Object Lock Compliance mode, 90-day retention
+- **Isolation**: Per-subscriber hashed storage prefix, scoped temporary credentials (15-minute TTL)
+- **Transit**: TLS 1.2+ enforced by bucket policy
+- **Backup frequency**: Every 2 minutes (local); cloud upload on each local backup
+
+## Frequently Asked Questions
+
+### Can I use Custody Note offline?
+Yes. The app works fully offline. Internet is only needed for licence validation and cloud backup uploads.
+
+### What happens after the 30-day trial?
+Your data is preserved. You need to subscribe to continue using the app. Without a subscription, the app becomes read-only.
+
+### Can you read my backed-up data?
+No. Data is encrypted on your machine before upload. The server only ever sees ciphertext.
+
+### Can another subscriber see my data?
+No. Each subscriber has a unique, hashed storage prefix. Credentials are scoped to only allow access to your own data.
+
+### Where is my data stored?
+Cloud backups are stored in AWS S3, London region (eu-west-2). Data never leaves the United Kingdom.
+
+### Can I switch between plans?
+Yes. Upgrade to Cloud Backup or downgrade to Standard at any time. Changes take effect at your next billing date.
+
+### Can I cancel anytime?
+Yes. No lock-in periods. Cancel from your Stripe dashboard.
+
+## Links
+
+- Website: https://custodynote.com
+- Pricing: https://custodynote.com/pricing
+- Free trial: https://custodynote.com/trial
+- Download: https://custodynote.com/download
+- Cloud Backup: https://custodynote.com/cloud-backup
+- How it works: https://custodynote.com/how-it-works
+- Support: https://custodynote.com/support
+- Contact: https://custodynote.com/contact
+- Changelog: https://custodynote.com/changelog
+- Privacy: https://custodynote.com/privacy
+- Terms: https://custodynote.com/terms
