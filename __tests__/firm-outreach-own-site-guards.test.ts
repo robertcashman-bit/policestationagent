@@ -3,7 +3,10 @@ import {
   isOwnSiteUrl,
   OWN_SITE_DOMAINS,
 } from '@/lib/firm-outreach/enrichment/website-discovery';
-import { isPlausibleOutreachEmail } from '@/lib/firm-outreach/enrichment/validator';
+import {
+  isPlausibleOutreachEmail,
+  isSendableReadyProspect,
+} from '@/lib/firm-outreach/enrichment/validator';
 import { scoreEmailCandidate } from '@/lib/firm-outreach/enrichment/email-extract';
 
 describe('isOwnSiteUrl', () => {
@@ -64,6 +67,34 @@ describe('scoreEmailCandidate free-email handling', () => {
       forename: 'Jane',
     });
     expect(score).toBeGreaterThan(50);
+  });
+
+  it('hard-rejects off-domain firm emails that are not allowlisted free/ISP mail', () => {
+    const score = scoreEmailCandidate('info@buchananco.co.uk', {
+      prospectType: 'firm',
+      websiteUrl: 'https://publicdefender.co.uk',
+    });
+    expect(score).toBe(0);
+  });
+
+  it('rejects international free-mail domains like abv.bg', () => {
+    expect(isPlausibleOutreachEmail('dita_ag@abv.bg')).toBe(false);
+    expect(isPlausibleOutreachEmail('user@mail.ru')).toBe(false);
+  });
+
+  it('marks hard firm↔email mismatches as not sendable-ready', () => {
+    expect(
+      isSendableReadyProspect({
+        email: 'info@buchananco.co.uk',
+        websiteUrl: 'https://publicdefender.co.uk',
+      }),
+    ).toBe(false);
+    expect(
+      isSendableReadyProspect({
+        email: 'info@publicdefender.co.uk',
+        websiteUrl: 'https://publicdefender.co.uk',
+      }),
+    ).toBe(true);
   });
 });
 

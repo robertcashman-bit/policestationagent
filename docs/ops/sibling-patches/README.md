@@ -40,7 +40,22 @@ git push -u origin cursor/workspace-error-fixes-571e
    /api/cron/firm-outreach-bootstrap?excludeEmails=1&dryRun=0&emails=dita_ag@abv.bg,...
    /api/cron/firm-outreach-bootstrap?cleanupBadEmails=1&allStatuses=1&dryRun=0
    ```
-4. Resend `psrtrain.com`: SPF MX/TXT for `send` are verified; **DKIM TXT `resend._domainkey` is failed/missing** — add the DKIM record from Resend then re-run verify
+4. Resend `psrtrain.com`: SPF for `send` is verified, but **DKIM is stale**. Live DNS `resend._domainkey.psrtrain.com` has an old key; Resend currently expects:
+
+   ```
+   Name: resend._domainkey
+   Type: TXT
+   Value: p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCsb/DaA5AObH+0zKxaXqKEzD4p5vzp0DOorQCAPtZEuC2zeVO4x0rwXYnNWGnyMbwYE4Tu8MPSmLGjRk4bMbDFWNI/P4Rouww+MlrAVlulrRHuwv4vqzEcfyUiS6PTvbRYmDnpb5DoLHzXccwVJcHGHkvT+YYLRgv02hYb0sZ8dQIDAQAB
+   ```
+
+   Also align `send` MX to `feedback-smtp.us-east-1.amazonses.com` (DNS currently points at eu-west-1). Then re-run Resend verify.
+
 5. PSR Train Vercel env: `GOOGLE_SERVICE_ACCOUNT_JSON`, `GSC_SITE_URL=sc-domain:psrtrain.com`, `GA4_PROPERTY_ID`
 6. Rotate GitHub PATs: `CustodyNote droid GH_PAT`, `psrtrain-push`
 7. REPUK `Ops — production source guard` is cancelling on schedule (~20m); confirm concurrency/timeout, re-run if still red on master
+8. After PSA deploy, cleanup bad contacts:
+
+   ```
+   /api/cron/firm-outreach-bootstrap?excludeEmails=1&dryRun=0&emails=dita_ag@abv.bg,info@abrahamsolicitors.co.uk
+   /api/cron/firm-outreach-bootstrap?cleanupBadEmails=1&allStatuses=1&dryRun=0
+   ```
