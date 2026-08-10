@@ -14,21 +14,13 @@ export function HomeHeroCover() {
         className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/55 to-transparent"
         aria-hidden="true"
       />
-      <div
-        className="pointer-events-none absolute -right-24 top-1/4 h-72 w-72 rounded-full border border-accent/15 md:h-96 md:w-96"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute -right-8 top-[28%] h-48 w-48 rounded-full border border-white/10 md:h-64 md:w-64"
-        aria-hidden="true"
-      />
 
       <div className="relative z-10 mx-auto w-full max-w-6xl px-4 md:px-6">
         <p className="font-display text-[1.85rem] font-bold leading-tight tracking-tight text-white sm:text-4xl md:text-5xl lg:text-display-lg animate-fade-up">
           Police Station Agent
         </p>
         <div className="accent-rule mt-4 origin-left animate-accent-draw" aria-hidden="true" />
-        <p className="mt-5 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-accent-light sm:tracking-[0.18em]">
+        <p className="mt-5 max-w-full text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-accent-light sm:tracking-[0.16em]">
           {CHROME_HERO_EYEBROW}
         </p>
         <h1

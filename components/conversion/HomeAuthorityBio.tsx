@@ -13,7 +13,7 @@ export function HomeAuthorityBio() {
       className="section-pad bg-background"
       aria-labelledby="authority-bio-heading"
     >
-      <div className="mx-auto max-w-6xl overflow-hidden rounded-2xl border border-border bg-primary-dark text-white shadow-elevated md:grid md:grid-cols-2">
+      <div className="mx-auto max-w-6xl overflow-hidden rounded-2xl border border-border bg-primary-dark text-white shadow-elevated md:grid md:grid-cols-2 max-md:mx-0">
         <div className="p-8 md:p-12 lg:p-14">
           <p className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-accent-light">
             Robert Cashman

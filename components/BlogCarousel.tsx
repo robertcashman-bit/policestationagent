@@ -45,55 +45,64 @@ interface BlogCarouselProps {
   pauseOnHover?: boolean;
   showNavigation?: boolean;
   className?: string;
+  /** Server-provided posts so the carousel is never blank while fetching. */
+  initialPosts?: BlogPost[];
 }
 
 export default function BlogCarousel({
-  maxPosts = 50,
+  maxPosts = 12,
   autoRotateInterval = 5000,
   pauseOnHover = false,
   showNavigation = true,
   className = "",
+  initialPosts = [],
 }: Readonly<BlogCarouselProps>) {
-  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [posts, setPosts] = useState<BlogPost[]>(() => initialPosts.slice(0, maxPosts));
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(initialPosts.length === 0);
   const [error, setError] = useState<string | null>(null);
   const [isPaused, setIsPaused] = useState(false);
   const carouselRef = useRef<HTMLElement>(null);
   const touchStartX = useRef<number | null>(null);
   const touchEndX = useRef<number | null>(null);
 
-  // Fetch blog posts from the authoritative API - lazy load after initial render
+  // Fetch blog posts from the authoritative API - skip when server already supplied posts
   useEffect(() => {
-    // Delay fetch slightly to avoid blocking initial page render
-    const timeoutId = setTimeout(() => {
-      async function fetchPosts() {
-        try {
-          const res = await fetch("/api/blog/posts", {
-            // Add cache headers for better performance
-            next: { revalidate: 300 }, // Revalidate every 5 minutes
-          });
-          const data = await res.json();
+    if (initialPosts.length > 0) {
+      setIsLoading(false);
+      return;
+    }
 
-          if (data.posts && Array.isArray(data.posts)) {
-            setPosts(data.posts.slice(0, maxPosts));
-          } else {
-            setPosts([]);
-          }
-        } catch (err) {
-          console.error("[BlogCarousel] Error fetching posts:", err);
-          setError("Unable to load blog posts");
+    let cancelled = false;
+
+    async function fetchPosts() {
+      try {
+        const res = await fetch("/api/blog/posts");
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+
+        if (cancelled) return;
+
+        if (data.posts && Array.isArray(data.posts)) {
+          setPosts(data.posts.slice(0, maxPosts));
+        } else {
           setPosts([]);
-        } finally {
-          setIsLoading(false);
         }
+      } catch (err) {
+        if (cancelled) return;
+        console.error("[BlogCarousel] Error fetching posts:", err);
+        setError("Unable to load blog posts");
+        setPosts([]);
+      } finally {
+        if (!cancelled) setIsLoading(false);
       }
+    }
 
-      fetchPosts();
-    }, 100); // Small delay to prioritize critical content
-
-    return () => clearTimeout(timeoutId);
-  }, [maxPosts]);
+    fetchPosts();
+    return () => {
+      cancelled = true;
+    };
+  }, [maxPosts, initialPosts.length]);
 
   // Auto-rotate carousel
   useEffect(() => {
@@ -259,14 +268,14 @@ export default function BlogCarousel({
         </div>
 
         {/* Carousel */}
-        <div className="relative">
+        <div className="relative overflow-hidden">
           {/* Main Card */}
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-100 transition-all duration-500">
             <div className="grid md:grid-cols-2 gap-0">
               {/* Image - Fixed 16:9 aspect ratio with cycling fallback images */}
               <div
                 key={`image-container-${currentPost.slug}-${currentIndex}`}
-                className="relative aspect-[16/9] md:aspect-[4/3] bg-primary flex items-center justify-center overflow-hidden"
+                className="relative aspect-[16/9] md:aspect-[4/3] bg-secondary flex items-center justify-center overflow-hidden"
               >
                 <Image
                   key={`carousel-image-${currentPost.slug}-${currentIndex}`}
@@ -281,7 +290,7 @@ export default function BlogCarousel({
               </div>
 
               {/* Content */}
-              <div className="p-8 md:p-10 flex flex-col justify-center">
+              <div className="flex min-w-0 flex-col justify-center p-6 sm:p-8 md:p-10">
                 {currentPost.date && (
                   <div className="flex items-center gap-2 text-sm text-slate-500 mb-4">
                     <svg
@@ -305,17 +314,19 @@ export default function BlogCarousel({
                   </div>
                 )}
 
-                <h3 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4 line-clamp-2">
+                <h3 className="mb-4 line-clamp-2 break-words text-xl font-bold text-slate-900 sm:text-2xl md:text-3xl">
                   {currentPost.title}
                 </h3>
 
                 {currentPost.metaDescription && (
-                  <p className="text-slate-600 mb-6 line-clamp-3">{currentPost.metaDescription}</p>
+                  <p className="mb-6 line-clamp-3 break-words text-slate-600">
+                    {currentPost.metaDescription}
+                  </p>
                 )}
 
                 <Link
                   href={`/blog/${currentPost.slug}`}
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary hover:bg-primary-light text-white font-medium rounded-lg transition-colors w-fit"
+                  className="inline-flex w-fit max-w-full items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3 font-medium text-white transition-colors hover:bg-primary-light"
                 >
                   Read Article
                   <svg
@@ -338,12 +349,12 @@ export default function BlogCarousel({
             </div>
           </div>
 
-          {/* Navigation Arrows */}
+          {/* Nav below card on mobile; overlaid on desktop */}
           {showNavigation && posts.length > 1 && (
-            <>
+            <div className="mt-4 flex items-center justify-center gap-3 md:pointer-events-none md:absolute md:inset-y-0 md:left-0 md:right-0 md:mt-0">
               <button
                 onClick={goToPrev}
-                className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110"
+                className="flex h-10 w-10 items-center justify-center rounded-md border border-border bg-white shadow-sm transition-colors hover:bg-secondary md:pointer-events-auto md:absolute md:left-3 md:top-1/2 md:-translate-y-1/2 md:shadow-lg"
                 aria-label="Previous post"
               >
                 <svg
@@ -363,7 +374,7 @@ export default function BlogCarousel({
               </button>
               <button
                 onClick={goToNext}
-                className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110"
+                className="flex h-10 w-10 items-center justify-center rounded-md border border-border bg-white shadow-sm transition-colors hover:bg-secondary md:pointer-events-auto md:absolute md:right-3 md:top-1/2 md:-translate-y-1/2 md:shadow-lg"
                 aria-label="Next post"
               >
                 <svg
@@ -381,7 +392,7 @@ export default function BlogCarousel({
                   <path d="m9 18 6-6-6-6" />
                 </svg>
               </button>
-            </>
+            </div>
           )}
         </div>
 
