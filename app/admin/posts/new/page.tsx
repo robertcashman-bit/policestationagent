@@ -136,7 +136,7 @@ export default function NewPostPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="bg-[#0A2342] text-white px-6 py-2 rounded hover:bg-[#08192e] disabled:opacity-50"
+                className="bg-[#2563eb] text-white px-6 py-2 rounded hover:bg-[#1d4ed8] disabled:opacity-50"
               >
                 {loading ? "Creating..." : "Create Post"}
               </button>

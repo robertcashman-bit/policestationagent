@@ -51,7 +51,7 @@ export default function SolicitorContactBlock({
           <Link
             href="/contact"
             data-event="contact_click"
-            className="inline-flex items-center justify-center rounded-lg border-2 border-[#0A2342] bg-white px-5 py-3 text-sm font-bold text-[#0A2342] hover:bg-slate-50"
+            className="inline-flex items-center justify-center rounded-lg border-2 border-[#2563eb] bg-white px-5 py-3 text-sm font-bold text-[#2563eb] hover:bg-slate-50"
           >
             Solicitor SMS (Contact)
           </Link>
@@ -70,7 +70,7 @@ export default function SolicitorContactBlock({
             href={`sms:${SMS_TEL}`}
             data-event="sms_click"
             aria-label={SOLICITOR_SMS_ARIA}
-            className="inline-flex items-center justify-center rounded-lg border-2 border-[#0A2342] bg-white px-5 py-3 text-sm font-bold text-[#0A2342] hover:bg-slate-50"
+            className="inline-flex items-center justify-center rounded-lg border-2 border-[#2563eb] bg-white px-5 py-3 text-sm font-bold text-[#2563eb] hover:bg-slate-50"
           >
             {SOLICITOR_SMS_LABEL} — {SMS_DISPLAY}
           </a>

@@ -50,14 +50,14 @@ export function AdminShell({ active, adminEmail, title, description, children }:
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
             <p className="text-xs font-bold uppercase tracking-widest text-amber-600">Admin</p>
-            <h1 className="text-2xl font-bold text-[#0A2342]">{title}</h1>
+            <h1 className="text-2xl font-bold text-[#2563eb]">{title}</h1>
             {description ? <p className="mt-2 max-w-3xl text-sm text-gray-600">{description}</p> : null}
           </div>
           <div className="flex flex-wrap items-center gap-3 text-sm">
             <p className="text-gray-600">
-              Signed in as <strong className="text-[#0A2342]">{adminEmail}</strong>
+              Signed in as <strong className="text-[#2563eb]">{adminEmail}</strong>
             </p>
-            <Link href="/" className="font-medium text-gray-700 hover:text-[#0A2342] hover:underline">
+            <Link href="/" className="font-medium text-gray-700 hover:text-[#2563eb] hover:underline">
               View site
             </Link>
             <button
@@ -82,8 +82,8 @@ export function AdminShell({ active, adminEmail, title, description, children }:
                 href={item.href}
                 className={`rounded-lg px-4 py-2 text-sm font-semibold no-underline transition-colors ${
                   activeNav
-                    ? 'bg-[#0A2342] text-white'
-                    : 'border border-gray-200 bg-white text-[#0A2342] hover:border-[#0A2342]/40'
+                    ? 'bg-[#2563eb] text-white'
+                    : 'border border-gray-200 bg-white text-[#2563eb] hover:border-[#2563eb]/40'
                 }`}
                 aria-current={activeNav ? 'page' : undefined}
               >

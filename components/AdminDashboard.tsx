@@ -166,7 +166,7 @@ export default function AdminDashboard({ embedded = false }: { embedded?: boolea
             onClick={() => setActiveTab(tab.id as any)}
             className={`px-6 py-3 border-b-2 font-medium text-sm whitespace-nowrap ${
               activeTab === tab.id
-                ? "border-[#0A2342] text-[#0A2342]"
+                ? "border-[#2563eb] text-[#2563eb]"
                 : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
             }`}
           >
@@ -185,7 +185,7 @@ export default function AdminDashboard({ embedded = false }: { embedded?: boolea
                   <h2 className="text-xl font-semibold">Blog Posts</h2>
                   <Link
                     href="/admin/posts/new"
-                    className="bg-[#0A2342] text-white px-4 py-2 rounded hover:bg-[#08192e]"
+                    className="bg-[#2563eb] text-white px-4 py-2 rounded hover:bg-[#1d4ed8]"
                   >
                     New Post
                   </Link>
@@ -213,7 +213,7 @@ export default function AdminDashboard({ embedded = false }: { embedded?: boolea
                           <div className="flex space-x-2">
                             <Link
                               href={`/admin/posts/${post.id}/edit`}
-                              className="text-[#0A2342] hover:text-[#08192e]"
+                              className="text-[#2563eb] hover:text-[#1d4ed8]"
                             >
                               Edit
                             </Link>
@@ -248,7 +248,7 @@ export default function AdminDashboard({ embedded = false }: { embedded?: boolea
                   <h2 className="text-xl font-semibold">Police Stations</h2>
                   <button
                     onClick={() => alert("Add new station form coming soon. Use API for now.")}
-                    className="bg-[#0A2342] text-white px-4 py-2 rounded hover:bg-[#08192e]"
+                    className="bg-[#2563eb] text-white px-4 py-2 rounded hover:bg-[#1d4ed8]"
                   >
                     New Station
                   </button>
@@ -274,7 +274,7 @@ export default function AdminDashboard({ embedded = false }: { embedded?: boolea
                             <Link
                               href={`/police-stations/${station.slug}`}
                               target="_blank"
-                              className="text-[#0A2342] hover:text-[#08192e]"
+                              className="text-[#2563eb] hover:text-[#1d4ed8]"
                             >
                               View
                             </Link>
@@ -294,7 +294,7 @@ export default function AdminDashboard({ embedded = false }: { embedded?: boolea
                   <h2 className="text-xl font-semibold">Services</h2>
                   <button
                     onClick={() => alert("Add new service form coming soon. Use API for now.")}
-                    className="bg-[#0A2342] text-white px-4 py-2 rounded hover:bg-[#08192e]"
+                    className="bg-[#2563eb] text-white px-4 py-2 rounded hover:bg-[#1d4ed8]"
                   >
                     New Service
                   </button>
@@ -317,7 +317,7 @@ export default function AdminDashboard({ embedded = false }: { embedded?: boolea
                             <Link
                               href={`/services/${service.slug}`}
                               target="_blank"
-                              className="text-[#0A2342] hover:text-[#08192e]"
+                              className="text-[#2563eb] hover:text-[#1d4ed8]"
                             >
                               View
                             </Link>
@@ -352,12 +352,12 @@ export default function AdminDashboard({ embedded = false }: { embedded?: boolea
                       name="file"
                       accept=".xml"
                       required
-                      className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-50 file:text-[#0A2342] hover:file:bg-gray-100"
+                      className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-50 file:text-[#2563eb] hover:file:bg-gray-100"
                     />
                   </div>
                   <button
                     type="submit"
-                    className="bg-[#0A2342] text-white px-6 py-2 rounded hover:bg-[#08192e]"
+                    className="bg-[#2563eb] text-white px-6 py-2 rounded hover:bg-[#1d4ed8]"
                   >
                     Import
                   </button>
@@ -388,7 +388,7 @@ export default function AdminDashboard({ embedded = false }: { embedded?: boolea
                   <button
                     onClick={handleEnhance}
                     disabled={enhanceLoading || !enhanceContent.trim()}
-                    className="bg-[#0A2342] text-white px-6 py-2 rounded hover:bg-[#08192e] disabled:opacity-50"
+                    className="bg-[#2563eb] text-white px-6 py-2 rounded hover:bg-[#1d4ed8] disabled:opacity-50"
                   >
                     {enhanceLoading ? "Analyzing..." : "Analyze Content"}
                   </button>
@@ -513,7 +513,7 @@ export default function AdminDashboard({ embedded = false }: { embedded?: boolea
                     <a
                       href="/sitemap.xml"
                       target="_blank"
-                      className="text-[#0A2342] hover:text-[#08192e] text-sm"
+                      className="text-[#2563eb] hover:text-[#1d4ed8] text-sm"
                     >
                       View Full Sitemap
                     </a>
@@ -541,15 +541,15 @@ export default function AdminDashboard({ embedded = false }: { embedded?: boolea
       <nav className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <h1 className="text-2xl font-bold text-[#0A2342]">Admin Dashboard</h1>
+            <h1 className="text-2xl font-bold text-[#2563eb]">Admin Dashboard</h1>
             <div className="flex items-center space-x-4">
               <Link
                 href="/admin/firm-outreach"
-                className="text-[#0A2342] font-medium hover:underline"
+                className="text-[#2563eb] font-medium hover:underline"
               >
                 Firm outreach
               </Link>
-              <Link href="/" className="text-gray-700 hover:text-[#0A2342]">
+              <Link href="/" className="text-gray-700 hover:text-[#2563eb]">
                 View Site
               </Link>
               <button

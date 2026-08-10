@@ -41,7 +41,7 @@ export default function RouteAwareSmsLink({
           data-event="contact_click"
           className={
             className ||
-            "flex flex-col items-center justify-center gap-0.5 py-2.5 text-[#0A2342]"
+            "flex flex-col items-center justify-center gap-0.5 py-2.5 text-[#2563eb]"
           }
           aria-label="Solicitor SMS — see Contact page"
         >
@@ -79,7 +79,7 @@ export default function RouteAwareSmsLink({
         data-event="sms_click"
         className={
           className ||
-          "flex flex-col items-center justify-center gap-0.5 py-2.5 text-[#0A2342]"
+          "flex flex-col items-center justify-center gap-0.5 py-2.5 text-[#2563eb]"
         }
         aria-label={SOLICITOR_SMS_ARIA}
       >

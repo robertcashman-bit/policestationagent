@@ -5,7 +5,7 @@ import Link from "next/link";
 export function MobileStickyContactBar() {
   return (
     <div
-      className="fixed bottom-0 left-0 right-0 z-50 border-t border-primary/20 bg-primary text-white lg:hidden shadow-[0_-4px_20px_rgb(6_22_40/0.25)]"
+      className="fixed bottom-0 left-0 right-0 z-50 border-t border-primary/20 bg-primary text-white lg:hidden shadow-[0_-4px_20px_rgb(29_78_216/0.25)]"
       style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
       aria-label="Enquiry pathways"
     >

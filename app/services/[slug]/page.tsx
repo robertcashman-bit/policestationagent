@@ -59,7 +59,7 @@ export default async function ServicePage(props: PageProps) {
       <Header />
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="bg-[#0A2342] text-white py-12">
+        <section className="bg-[#2563eb] text-white py-12">
           <div className="container-custom">
             <Link
               href="/services"
@@ -96,7 +96,7 @@ export default async function ServicePage(props: PageProps) {
                   />
                 </div>
               ) : (
-                <div className="bg-gray-50 p-8 rounded-xl mb-12 border-l-4 border-[#0A2342]">
+                <div className="bg-gray-50 p-8 rounded-xl mb-12 border-l-4 border-[#2563eb]">
                   <p className="text-gray-700 leading-relaxed text-lg">
                     We provide professional {service.title.toLowerCase()} services. Our experienced
                     team is here to help you navigate your legal matters with expertise and care.
@@ -104,14 +104,14 @@ export default async function ServicePage(props: PageProps) {
                 </div>
               )}
 
-              <div className="bg-[#0A2342] text-white p-6 rounded-lg">
+              <div className="bg-[#2563eb] text-white p-6 rounded-lg">
                 <h2 className="text-xl font-semibold mb-4">Interested in This Service?</h2>
                 <p className="text-gray-200 mb-4">
                   Contact us to discuss how we can help with your legal needs.
                 </p>
                 <Link
                   href="/contact"
-                  className="bg-white text-[#0A2342] px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition inline-block"
+                  className="bg-white text-[#2563eb] px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition inline-block"
                 >
                   Contact Us
                 </Link>

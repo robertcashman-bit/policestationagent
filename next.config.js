@@ -148,16 +148,10 @@ const nextConfig = {
         destination: "/voluntary-interviews",
         permanent: true,
       },
-      {
-        source: "/Privacy",
-        destination: "/privacy",
-        permanent: true,
-      },
-      {
-        source: "/FAQ",
-        destination: "/faq",
-        permanent: true,
-      },
+      // NOTE: Do NOT add case-only redirects like /FAQ→/faq or /Privacy→/privacy
+      // here. On macOS APFS (case-insensitive) Next matches them against the
+      // lowercase route and creates a 308 self-redirect loop. Case folding is
+      // handled in middleware.ts instead.
       // Redirect legacy criminaldefencekent blog routes to correct /blog routes
       {
         source: "/criminaldefencekent/blog/:slug*",
@@ -468,60 +462,93 @@ const nextConfig = {
   },
   // Headers for cache control, security, and performance
   async headers() {
+    const isProd = process.env.NODE_ENV === "production";
+    // Long-lived immutable cache breaks Turbopack HMR in local dev (stale CSS).
+    const staticAssetCache = isProd
+      ? "public, max-age=31536000, immutable"
+      : "no-store, max-age=0, must-revalidate";
+    // Dev: allow Cursor Simple Browser iframes; never send HSTS on http://localhost
+    // (Safari caches HSTS and then fails opening https://localhost with no TLS).
+    const frameAncestors = isProd ? "'self'" : "*";
+    const connectSrc = isProd
+      ? "'self' https:"
+      : "'self' https: http://127.0.0.1:* http://localhost:* ws: wss:";
+    const csp = [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-eval' 'unsafe-inline'",
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+      "font-src 'self' https://fonts.gstatic.com data:",
+      "img-src 'self' data: https: blob:",
+      `connect-src ${connectSrc}`,
+      `frame-ancestors ${frameAncestors}`,
+      "frame-src 'self'",
+      "object-src 'none'",
+      "base-uri 'self'",
+      "form-action 'self'",
+      ...(isProd ? ["upgrade-insecure-requests"] : []),
+    ].join("; ");
+
+    const securityHeaders = [
+      {
+        key: "X-DNS-Prefetch-Control",
+        value: "on",
+      },
+      {
+        key: "X-Content-Type-Options",
+        value: "nosniff",
+      },
+      ...(isProd
+        ? [
+            {
+              key: "X-Frame-Options",
+              value: "SAMEORIGIN",
+            },
+          ]
+        : []),
+      {
+        key: "Referrer-Policy",
+        value: "strict-origin-when-cross-origin",
+      },
+      {
+        key: "Permissions-Policy",
+        // Allow geolocation for the nearest-station finder (same origin only).
+        value: "camera=(), microphone=(), geolocation=(self)",
+      },
+      ...(isProd
+        ? [
+            {
+              key: "Strict-Transport-Security",
+              value: "max-age=31536000; includeSubDomains; preload",
+            },
+          ]
+        : []),
+      {
+        key: "Content-Security-Policy",
+        // NOTE: 'unsafe-inline'/'unsafe-eval' in script-src are required by
+        // Next.js's runtime/hydration and inline JSON-LD.
+        value: csp,
+      },
+      {
+        key: "Cross-Origin-Opener-Policy",
+        value: "same-origin-allow-popups",
+      },
+      {
+        key: "Cross-Origin-Embedder-Policy",
+        value: "unsafe-none",
+      },
+    ];
+
     return [
       {
         source: "/(.*)",
-        headers: [
-          {
-            key: "X-DNS-Prefetch-Control",
-            value: "on",
-          },
-          {
-            key: "X-Content-Type-Options",
-            value: "nosniff",
-          },
-          {
-            key: "X-Frame-Options",
-            value: "SAMEORIGIN",
-          },
-          {
-            key: "Referrer-Policy",
-            value: "strict-origin-when-cross-origin",
-          },
-          {
-            key: "Permissions-Policy",
-            // Allow geolocation for the nearest-station finder (same origin only).
-            value: "camera=(), microphone=(), geolocation=(self)",
-          },
-          {
-            key: "Strict-Transport-Security",
-            value: "max-age=31536000; includeSubDomains; preload",
-          },
-          {
-            key: "Content-Security-Policy",
-            // NOTE: 'unsafe-inline'/'unsafe-eval' in script-src are required by
-            // Next.js's runtime/hydration and inline JSON-LD. object-src 'none'
-            // and the explicit base-uri/form-action/frame-ancestors keep the
-            // policy restrictive for the highest-impact injection vectors.
-            value:
-              "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; connect-src 'self' https:; frame-ancestors 'self'; frame-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests;",
-          },
-          {
-            key: "Cross-Origin-Opener-Policy",
-            value: "same-origin-allow-popups",
-          },
-          {
-            key: "Cross-Origin-Embedder-Policy",
-            value: "unsafe-none",
-          },
-        ],
+        headers: securityHeaders,
       },
       {
         source: "/fonts/(.*)",
         headers: [
           {
             key: "Cache-Control",
-            value: "public, max-age=31536000, immutable",
+            value: staticAssetCache,
           },
         ],
       },
@@ -558,7 +585,7 @@ const nextConfig = {
         headers: [
           {
             key: "Cache-Control",
-            value: "public, max-age=31536000, immutable",
+            value: staticAssetCache,
           },
         ],
       },

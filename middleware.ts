@@ -29,6 +29,18 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
+  // Canonicalise mixed-case paths (e.g. /FAQ, /Privacy, /Cookies) to lowercase.
+  // Must live here — not in next.config redirects — because case-only redirects
+  // like /FAQ→/faq loop on case-insensitive filesystems (macOS APFS).
+  if (/[A-Z]/.test(pathname)) {
+    const lower = pathname.toLowerCase();
+    if (lower !== pathname) {
+      const url = request.nextUrl.clone();
+      url.pathname = lower;
+      return NextResponse.redirect(url, 308);
+    }
+  }
+
   // Remove port if present (e.g., "localhost:3000" → "localhost")
   const host = hostname.split(":")[0].toLowerCase();
 

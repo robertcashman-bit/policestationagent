@@ -79,7 +79,7 @@ export function AdminMagicLoginForm({ kvConfigured = true }: { kvConfigured?: bo
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="mx-auto w-full max-w-md rounded-xl border border-gray-200 bg-white p-8 shadow-sm">
         <p className="text-xs font-bold uppercase tracking-widest text-amber-600">Admin</p>
-        <h1 className="mt-1 text-2xl font-bold text-[#0A2342]">Sign in to admin</h1>
+        <h1 className="mt-1 text-2xl font-bold text-[#2563eb]">Sign in to admin</h1>
         <p className="mt-2 text-sm text-gray-600">
           Enter your admin email and we&rsquo;ll send a one-time login code.
         </p>
@@ -102,14 +102,14 @@ export function AdminMagicLoginForm({ kvConfigured = true }: { kvConfigured?: bo
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 outline-none focus:border-[#0A2342] focus:ring-2 focus:ring-[#0A2342]/20"
+                className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 outline-none focus:border-[#2563eb] focus:ring-2 focus:ring-[#2563eb]/20"
               />
             </div>
             {error && <p className="text-sm text-red-600">{error}</p>}
             <button
               type="submit"
               disabled={busy}
-              className="w-full rounded-lg bg-[#0A2342] py-3 text-sm font-semibold text-white hover:bg-[#08192e] disabled:opacity-60"
+              className="w-full rounded-lg bg-[#2563eb] py-3 text-sm font-semibold text-white hover:bg-[#1d4ed8] disabled:opacity-60"
             >
               {busy ? 'Sending…' : 'Send login code'}
             </button>
@@ -138,14 +138,14 @@ export function AdminMagicLoginForm({ kvConfigured = true }: { kvConfigured?: bo
                 value={otp}
                 onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
                 placeholder="000000"
-                className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2.5 text-center font-mono text-lg tracking-[0.3em] outline-none focus:border-[#0A2342] focus:ring-2 focus:ring-[#0A2342]/20"
+                className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2.5 text-center font-mono text-lg tracking-[0.3em] outline-none focus:border-[#2563eb] focus:ring-2 focus:ring-[#2563eb]/20"
               />
             </div>
             {error && <p className="text-sm text-red-600">{error}</p>}
             <button
               type="submit"
               disabled={busy}
-              className="w-full rounded-lg bg-[#0A2342] py-3 text-sm font-semibold text-white hover:bg-[#08192e] disabled:opacity-60"
+              className="w-full rounded-lg bg-[#2563eb] py-3 text-sm font-semibold text-white hover:bg-[#1d4ed8] disabled:opacity-60"
             >
               {busy ? 'Verifying…' : 'Verify code'}
             </button>
@@ -153,7 +153,7 @@ export function AdminMagicLoginForm({ kvConfigured = true }: { kvConfigured?: bo
               type="button"
               onClick={handleResendCode}
               disabled={busy}
-              className="w-full rounded-lg border border-[#0A2342] bg-white py-3 text-sm font-semibold text-[#0A2342] hover:bg-slate-50 disabled:opacity-60"
+              className="w-full rounded-lg border border-[#2563eb] bg-white py-3 text-sm font-semibold text-[#2563eb] hover:bg-slate-50 disabled:opacity-60"
             >
               {busy ? 'Sending…' : 'Send a new code'}
             </button>
@@ -165,7 +165,7 @@ export function AdminMagicLoginForm({ kvConfigured = true }: { kvConfigured?: bo
                 setError('');
               }}
               disabled={busy}
-              className="w-full text-center text-sm font-medium text-[#0A2342] hover:underline disabled:opacity-60"
+              className="w-full text-center text-sm font-medium text-[#2563eb] hover:underline disabled:opacity-60"
             >
               Use a different email
             </button>

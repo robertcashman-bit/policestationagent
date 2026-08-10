@@ -161,12 +161,12 @@ function magicCodeFromCandidates(): string[] {
 function buildMagicCodeHtml(code: string): string {
   return `
         <div style="font-family:sans-serif;max-width:480px;margin:0 auto;padding:20px">
-          <h2 style="color:#0A2342;margin-bottom:8px">Your admin login code</h2>
+          <h2 style="color:#2563eb;margin-bottom:8px">Your admin login code</h2>
           <p style="color:#475569;font-size:14px;margin-bottom:20px">
             Use this code to sign in to the Police Station Agent admin area. It expires in 10 minutes.
           </p>
           <div style="background:#f8fafc;border:2px solid #e2e8f0;border-radius:8px;padding:24px;text-align:center;margin-bottom:20px">
-            <span style="font-family:monospace;font-size:32px;letter-spacing:0.3em;font-weight:bold;color:#0A2342">${escapeHtml(code)}</span>
+            <span style="font-family:monospace;font-size:32px;letter-spacing:0.3em;font-weight:bold;color:#2563eb">${escapeHtml(code)}</span>
           </div>
           <p style="color:#94a3b8;font-size:12px">
             If you didn&rsquo;t request this code, you can safely ignore this email.

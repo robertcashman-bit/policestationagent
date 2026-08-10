@@ -173,9 +173,9 @@ const SUMMARY_TIMEOUT_MS = 60_000;
 const FULL_TIMEOUT_MS = 25_000;
 
 const BTN_PRIMARY =
-  'inline-flex items-center justify-center rounded-lg bg-[#0A2342] px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#0d2d54] disabled:opacity-50';
+  'inline-flex items-center justify-center rounded-lg bg-[#2563eb] px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#1d4ed8] disabled:opacity-50';
 const BTN_OUTLINE =
-  'inline-flex items-center justify-center rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-xs font-semibold text-[#0A2342] hover:bg-gray-50 disabled:opacity-50';
+  'inline-flex items-center justify-center rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-xs font-semibold text-[#2563eb] hover:bg-gray-50 disabled:opacity-50';
 const BTN_DANGER =
   'inline-flex items-center justify-center rounded-lg border border-red-200 bg-white px-3 py-1.5 text-xs font-semibold text-red-700 hover:bg-red-50 disabled:opacity-50';
 
@@ -729,7 +729,7 @@ export function FirmOutreachDashboard() {
       <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h2 className="text-sm font-bold text-[#0A2342]">Pipeline controls</h2>
+            <h2 className="text-sm font-bold text-[#2563eb]">Pipeline controls</h2>
             <p className="text-xs text-gray-500 mt-1">
               Manual runs for discovery, enrichment, and send queue. County:{' '}
               {cfg?.countyAllowlist?.join(', ') ?? 'kent'} · cap {data.dailyCap}/day
@@ -855,7 +855,7 @@ export function FirmOutreachDashboard() {
       {recentSends.length > 0 ? (
         <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
           <div className="flex flex-wrap items-center justify-between gap-2 border-b border-gray-200 pb-3">
-            <h2 className="text-sm font-bold text-[#0A2342]">Recent sends</h2>
+            <h2 className="text-sm font-bold text-[#2563eb]">Recent sends</h2>
             <button
               type="button"
               onClick={() => setTab('all')}
@@ -867,7 +867,7 @@ export function FirmOutreachDashboard() {
           <ul className="mt-3 divide-y divide-gray-200">
             {recentSends.map((r) => (
               <li key={r.sendId} className="flex flex-wrap items-baseline gap-x-3 gap-y-1 py-2 text-sm">
-                <span className="font-semibold text-[#0A2342]">{r.firmName}</span>
+                <span className="font-semibold text-[#2563eb]">{r.firmName}</span>
                 <span className="font-mono text-xs text-gray-500">{r.email}</span>
                 <span className="text-xs text-gray-500 truncate max-w-md" title={r.subject}>
                   {r.subject}
@@ -902,8 +902,8 @@ export function FirmOutreachDashboard() {
             onClick={() => setTab(t.id)}
             className={`rounded-lg px-3 py-1.5 text-sm font-semibold transition-colors ${
               tab === t.id
-                ? 'bg-[#0A2342] text-white'
-                : 'bg-white text-[#0A2342] border border-gray-200 hover:border-[#0A2342]'
+                ? 'bg-[#2563eb] text-white'
+                : 'bg-white text-[#2563eb] border border-gray-200 hover:border-[#2563eb]'
             }`}
           >
             {tabLabel(t.id, t.label, s)}
@@ -934,7 +934,7 @@ export function FirmOutreachDashboard() {
       ) : tab === 'ready' ? (
         <div className="overflow-x-auto rounded-xl border border-gray-200 bg-white shadow-sm">
           <div className="border-b border-gray-200 px-4 py-3 space-y-3">
-            <h2 className="text-sm font-bold text-[#0A2342]">
+            <h2 className="text-sm font-bold text-[#2563eb]">
               Ready to send ({data.report.readyToSendProspects?.length ?? 0}
               {s.readyToSend > (data.report.readyToSendProspects?.length ?? 0)
                 ? ` of ${s.readyToSend} total`
@@ -1027,11 +1027,11 @@ export function FirmOutreachDashboard() {
                           disabled={!canSend}
                         />
                       </td>
-                      <td className="px-4 py-3 font-mono text-sm text-[#0A2342]">
+                      <td className="px-4 py-3 font-mono text-sm text-[#2563eb]">
                         {r.email ?? '—'}
                       </td>
                       <td className="px-4 py-3">
-                        <p className="font-semibold text-[#0A2342]">{r.firmName}</p>
+                        <p className="font-semibold text-[#2563eb]">{r.firmName}</p>
                         {r.contactName ? (
                           <p className="text-xs text-gray-500">{r.contactName}</p>
                         ) : null}
@@ -1088,7 +1088,7 @@ export function FirmOutreachDashboard() {
         </div>
       ) : tab === 'excluded' ? (
         <div className="overflow-x-auto rounded-xl border border-gray-200 bg-white shadow-sm">
-          <h2 className="border-b border-gray-200 px-4 py-3 text-sm font-bold text-[#0A2342]">
+          <h2 className="border-b border-gray-200 px-4 py-3 text-sm font-bold text-[#2563eb]">
             Excluded prospects ({data.report.excludedProspects?.length ?? 0}
             {s.excluded > (data.report.excludedProspects?.length ?? 0)
               ? ` of ${s.excluded} total`
@@ -1120,7 +1120,7 @@ export function FirmOutreachDashboard() {
                   return (
                     <tr key={r.prospectId} className="hover:bg-slate-50/80">
                       <td className="px-4 py-3">
-                        <p className="font-semibold text-[#0A2342]">{r.firmName}</p>
+                        <p className="font-semibold text-[#2563eb]">{r.firmName}</p>
                         {r.contactName ? (
                           <p className="text-xs text-gray-500">{r.contactName}</p>
                         ) : null}
@@ -1213,7 +1213,7 @@ export function FirmOutreachDashboard() {
                 filteredSends.map((r) => (
                   <tr key={r.sendId} className="hover:bg-slate-50/80">
                     <td className="px-4 py-3">
-                      <p className="font-semibold text-[#0A2342]">{r.firmName}</p>
+                      <p className="font-semibold text-[#2563eb]">{r.firmName}</p>
                       {r.contactName ? (
                         <p className="text-xs text-gray-500">{r.contactName}</p>
                       ) : null}
@@ -1275,12 +1275,12 @@ export function FirmOutreachDashboard() {
       ) : null}
 
       <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-        <h2 className="text-lg font-bold text-[#0A2342]">Pipeline queue</h2>
+        <h2 className="text-lg font-bold text-[#2563eb]">Pipeline queue</h2>
         <dl className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
           {Object.entries(data.counts).map(([status, count]) => (
             <div key={status} className="flex justify-between text-sm">
               <dt className="text-gray-500">{status}</dt>
-              <dd className="font-semibold text-[#0A2342]">{count}</dd>
+              <dd className="font-semibold text-[#2563eb]">{count}</dd>
             </div>
           ))}
         </dl>
@@ -1301,7 +1301,7 @@ function StatCard({
   return (
     <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
       <p className="text-xs font-bold uppercase tracking-wider text-gray-500">{label}</p>
-      <p className="mt-1 text-2xl font-extrabold text-[#0A2342]">{value}</p>
+      <p className="mt-1 text-2xl font-extrabold text-[#2563eb]">{value}</p>
       {hint ? <p className="mt-0.5 text-xs font-semibold text-amber-600">{hint}</p> : null}
     </div>
   );
@@ -1320,7 +1320,7 @@ function ActivityTable({
 }) {
   return (
     <div className="overflow-x-auto rounded-xl border border-gray-200 bg-white shadow-sm">
-      <h2 className="border-b border-gray-200 px-4 py-3 text-sm font-bold text-[#0A2342]">
+      <h2 className="border-b border-gray-200 px-4 py-3 text-sm font-bold text-[#2563eb]">
         {title}
       </h2>
       {rows.length === 0 ? (

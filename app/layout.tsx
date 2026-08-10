@@ -50,8 +50,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#0a2342" },
-    { media: "(prefers-color-scheme: dark)", color: "#061628" },
+    { media: "(prefers-color-scheme: light)", color: "#2563eb" },
+    { media: "(prefers-color-scheme: dark)", color: "#1e40af" },
   ],
 };
 
@@ -468,6 +468,35 @@ export default function RootLayout({
           /* Critical above-fold styles */
           header{position:relative;z-index:50}
         `,
+          }}
+        />
+        {/* Brand palette lock — beats stale CSSOM in Cursor Simple Browser */}
+        <style
+          id="brand-palette"
+          dangerouslySetInnerHTML={{
+            __html: `
+:root{
+  --primary:#2563eb;--primary-dark:#1d4ed8;--primary-mid:#1e40af;--primary-light:#3b82f6;--primary-soft:#60a5fa;
+  --primary-navy:#2563eb;--primary-blue:#2563eb;--navy:#2563eb;--navy-light:#3b82f6;
+  --background:#eff6ff;--foreground:#0f172a;--secondary:#dbeafe;--secondary-foreground:#1e3a8a;
+  --muted:#dbeafe;--muted-foreground:#334155;--border:#bfdbfe;--ring:#2563eb;
+  --accent:#c9a227;--accent-light:#e8c84a;--accent-on-dark:#e8c84a;
+}
+.hero-navy{
+  background:
+    radial-gradient(ellipse 70% 55% at 15% 15%,rgb(201 162 39 / .16),transparent 55%),
+    radial-gradient(ellipse 60% 45% at 90% 80%,rgb(30 64 175 / .85),transparent 55%),
+    linear-gradient(160deg,#1e3a8a 0%,#1e40af 28%,#2563eb 58%,#3b82f6 100%)!important;
+  color:#fff!important;
+}
+.b2b-panel{
+  background:
+    radial-gradient(ellipse 60% 50% at 90% 10%,rgb(201 162 39 / .12),transparent 55%),
+    linear-gradient(145deg,#1e3a8a 0%,#1e40af 40%,#2563eb 100%)!important;
+}
+.bg-primary,.bg-primary-dark{background-color:#2563eb!important;color:#fff!important}
+footer.bg-primary-dark{background-color:#1d4ed8!important;color:#fff!important}
+`,
           }}
         />
         {/* DNS prefetch for external resources - early connection establishment */}

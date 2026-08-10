@@ -59,7 +59,7 @@ export default function Page() {
       <JsonLd data={serviceSchema} />
       <Header />
       <main id="main-content" role="main" className="flex-grow">
-        <section className="bg-[#0A2342] text-white py-14">
+        <section className="bg-[#2563eb] text-white py-14">
           <div className="max-w-3xl mx-auto px-4">
             <h1 className="text-3xl md:text-4xl font-bold mb-4">
               DSCC and Custody Record Support for Solicitors

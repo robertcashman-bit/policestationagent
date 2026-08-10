@@ -102,19 +102,19 @@ export function AdminOverview() {
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <div className="rounded-lg border bg-white p-4">
             <p className="text-xs uppercase tracking-wide text-gray-500">Ready to send</p>
-            <p className="mt-1 text-2xl font-bold text-[#0A2342]">{counts.ready_to_send ?? 0}</p>
+            <p className="mt-1 text-2xl font-bold text-[#2563eb]">{counts.ready_to_send ?? 0}</p>
           </div>
           <div className="rounded-lg border bg-white p-4">
             <p className="text-xs uppercase tracking-wide text-gray-500">Sent today</p>
-            <p className="mt-1 text-2xl font-bold text-[#0A2342]">{summary?.sentToday ?? 0}</p>
+            <p className="mt-1 text-2xl font-bold text-[#2563eb]">{summary?.sentToday ?? 0}</p>
           </div>
           <div className="rounded-lg border bg-white p-4">
             <p className="text-xs uppercase tracking-wide text-gray-500">Total sends</p>
-            <p className="mt-1 text-2xl font-bold text-[#0A2342]">{summary?.totalSends ?? 0}</p>
+            <p className="mt-1 text-2xl font-bold text-[#2563eb]">{summary?.totalSends ?? 0}</p>
           </div>
           <div className="rounded-lg border bg-white p-4">
             <p className="text-xs uppercase tracking-wide text-gray-500">Daily cap</p>
-            <p className="mt-1 text-2xl font-bold text-[#0A2342]">{data?.dailyCap ?? '—'}</p>
+            <p className="mt-1 text-2xl font-bold text-[#2563eb]">{data?.dailyCap ?? '—'}</p>
           </div>
         </div>
       </section>
@@ -124,25 +124,25 @@ export function AdminOverview() {
         <div className="flex flex-wrap gap-3">
           <Link
             href="/admin/firm-outreach"
-            className="rounded-lg bg-[#0A2342] px-4 py-2 text-sm font-semibold text-white hover:bg-[#08192e]"
+            className="rounded-lg bg-[#2563eb] px-4 py-2 text-sm font-semibold text-white hover:bg-[#1d4ed8]"
           >
             Open firm outreach
           </Link>
           <Link
             href="/admin/content"
-            className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-[#0A2342] hover:bg-gray-50"
+            className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-[#2563eb] hover:bg-gray-50"
           >
             Manage content
           </Link>
           <Link
             href="/admin/blog-generator"
-            className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-[#0A2342] hover:bg-gray-50"
+            className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-[#2563eb] hover:bg-gray-50"
           >
             Blog generator
           </Link>
           <Link
             href="/admin/police-confusion"
-            className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-[#0A2342] hover:bg-gray-50"
+            className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-[#2563eb] hover:bg-gray-50"
           >
             Police confusion
           </Link>
