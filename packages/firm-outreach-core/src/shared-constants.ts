@@ -1,0 +1,320 @@
+export const CONTACT_PATHS = [
+  '/',
+  '/contact',
+  '/contact-us',
+  '/about',
+  '/about-us',
+  '/criminal-law',
+  '/police-station',
+  '/criminal-defence',
+] as const;
+
+export const REJECTED_EMAIL_LOCALS = new Set([
+  'noreply',
+  'no-reply',
+  'donotreply',
+  'careers',
+  'recruitment',
+  'jobs',
+  'privacy',
+  'gdpr',
+  'accounts',
+  'addressaccounts',
+  'billing',
+  'newsletter',
+  'marketing',
+]);
+
+export const PREFERRED_EMAIL_LOCALS: Record<string, number> = {
+  police: 30,
+  custody: 30,
+  crime: 30,
+  criminal: 30,
+  duty: 30,
+  stations: 30,
+  station: 25,
+  info: 20,
+  enquiries: 20,
+  enquiry: 20,
+  reception: 20,
+  contact: 20,
+  admin: 15,
+  office: 15,
+};
+
+export const FREE_EMAIL_DOMAINS = new Set([
+  'gmail.com',
+  'googlemail.com',
+  'hotmail.com',
+  'hotmail.co.uk',
+  'outlook.com',
+  'live.com',
+  'live.co.uk',
+  'msn.com',
+  'yahoo.com',
+  'yahoo.co.uk',
+  'icloud.com',
+  'me.com',
+  'mac.com',
+  'aol.com',
+  'aol.co.uk',
+  'mail.com',
+  'gmx.com',
+  'gmx.co.uk',
+  'protonmail.com',
+  'proton.me',
+  // UK ISP mailboxes commonly used by small firms — legitimate, not off-domain
+  'btconnect.com',
+  'btinternet.com',
+  'btopenworld.com',
+  'talktalk.net',
+  'tiscali.co.uk',
+  'sky.com',
+  'virginmedia.com',
+  'ntlworld.com',
+  'blueyonder.co.uk',
+]);
+
+/** Operator inboxes — must never be selected as a firm/solicitor outreach target. */
+export const OPERATOR_OUTREACH_EMAILS = new Set([
+  'robertdavidcashman@gmail.com',
+  'robertcashman@defencelegalservices.co.uk',
+]);
+
+/**
+ * Registrable domains that appear in firm website footers, badges, widgets,
+ * directories, review sites, CDNs and analytics — never a firm's own contact
+ * address. Crawled emails on these are rejected outright so we don't outreach
+ * to e.g. support@crunchbase.com or contact@thegoodsolicitorguide.com.
+ */
+export const NON_FIRM_EMAIL_DOMAINS = new Set([
+  // Legal directories / review / lead-gen sites
+  'thegoodsolicitorguide.com',
+  'threebestrated.co.uk',
+  'reviewsolicitors.co.uk',
+  'review-solicitors.co.uk',
+  'solicitors.co.uk',
+  'yell.com',
+  'yelp.com',
+  'trustpilot.com',
+  'feefo.com',
+  'legaladvice2u.co.uk',
+  'crunchbase.com',
+  'clutch.co',
+  // Regulators / ombudsman / professional bodies (appear in firm footers)
+  'legalombudsman.org.uk',
+  'sra.org.uk',
+  'lawsociety.org.uk',
+  // PR / marketing / font foundries seen in crawled pages
+  'inkedpr.com',
+  'indiantypefoundry.com',
+  // Site builders / hosting / CDNs / analytics / fonts
+  'wix.com',
+  'wixpress.com',
+  'squarespace.com',
+  'wordpress.com',
+  'automattic.com',
+  'godaddy.com',
+  'cloudflare.com',
+  'sentry.io',
+  'latofonts.com',
+  'fontawesome.com',
+  'googleapis.com',
+  'gstatic.com',
+  'google.com',
+  'gravatar.com',
+  'schema.org',
+  'w3.org',
+  'sentry.wixpress.com',
+  // Generic placeholders
+  'example.com',
+  'example.org',
+  'domain.com',
+  'email.com',
+  'yourdomain.com',
+  'mysite.com',
+  'yoursite.com',
+  'sentry-next.wixpress.com',
+  // Directory / listing / scraper hosts (crawler picks up crime@ on wrong domain)
+  'tiktok.com',
+  'endole.co.uk',
+  'expertini.com',
+  'getsurrey.co.uk',
+  'smenews.digital',
+  'wheree.com',
+  'cylex-uk.co.uk',
+  'rocketreach.co',
+  'leadquest.co.uk',
+  'legal-pages.co.uk',
+  '192.com',
+  'findsolicitor.co.uk',
+  'criminaljusticehub.org.uk',
+  'docsity.com',
+  // UK / major press & media (crawlers pick crime@ / feedback@ from news pages)
+  'thetimes.com',
+  'thetimes.co.uk',
+  'telegraph.co.uk',
+  'theguardian.com',
+  'guardian.co.uk',
+  'bbc.co.uk',
+  'bbc.com',
+  'dailymail.co.uk',
+  'mailonsunday.co.uk',
+  'independent.co.uk',
+  'ft.com',
+  'reuters.com',
+  'bloomberg.com',
+  'sky.com',
+  'news.sky.com',
+  'channel4.com',
+  'itv.com',
+  'mirror.co.uk',
+  'express.co.uk',
+  'thesun.co.uk',
+  'standard.co.uk',
+  'economist.com',
+  'lawgazette.co.uk',
+  'legalfutures.co.uk',
+  'solicitorsjournal.com',
+]);
+
+export const EXCLUDED_FIRM_PATTERNS = [
+  /public defender service/i,
+  /^pds\b/i,
+  /crown prosecution/i,
+  /^cps\b/i,
+];
+
+export const CRIMINAL_KEYWORDS = [
+  'police station',
+  'custody',
+  'criminal defence',
+  'criminal defense',
+  'duty solicitor',
+  'legal aid crime',
+  'crime department',
+] as const;
+
+export const COMPETITOR_KEYWORDS = [
+  'police station agency',
+  'cover agency',
+  'rep agency',
+] as const;
+
+/** Scotland, NI, IoM, Channel Islands — not England & Wales. */
+export const NON_EW_POSTCODE_PREFIXES = [
+  'AB',
+  'BT',
+  'DD',
+  'DG',
+  'EH',
+  'FK',
+  'G',
+  'GY',
+  'HS',
+  'IM',
+  'IV',
+  'JE',
+  'KA',
+  'KW',
+  'KY',
+  'ML',
+  'PA',
+  'PH',
+  'TD',
+  'ZE',
+] as const;
+
+export interface OutreachLimitsDefaults {
+  dailyCap?: number;
+  enrichBatch?: number;
+  cronEnrichBatch?: number;
+  cronSendBatch?: number;
+  enrichMaxMs?: number;
+  paidDailyCap?: number;
+  countyAllowlist?: string[] | null;
+}
+
+export function createOutreachEnvHelpers(defaults: OutreachLimitsDefaults = {}) {
+  const countyDefault = defaults.countyAllowlist;
+
+  return {
+    outreachEnabled(): boolean {
+      return process.env.FIRM_OUTREACH_ENABLED !== 'false';
+    },
+    outreachPaused(): boolean {
+      return process.env.FIRM_OUTREACH_PAUSED === 'true';
+    },
+    outreachSendEnabled(): boolean {
+      return (
+        process.env.FIRM_OUTREACH_ENABLED !== 'false' &&
+        process.env.FIRM_OUTREACH_SEND_ENABLED !== 'false' &&
+        process.env.FIRM_OUTREACH_PAUSED !== 'true'
+      );
+    },
+    /**
+     * Auto-send by default (matches production recommendation).
+     * Set FIRM_OUTREACH_REQUIRE_APPROVAL=true for click-to-send approval emails.
+     */
+    outreachRequireApproval(): boolean {
+      const raw = process.env.FIRM_OUTREACH_REQUIRE_APPROVAL?.trim().toLowerCase();
+      if (raw === undefined || raw === '') return false;
+      if (['1', 'true', 'yes', 'on'].includes(raw)) return true;
+      if (['0', 'false', 'no', 'off'].includes(raw)) return false;
+      return false;
+    },
+    /**
+     * Soft outreach daily cap. Unset / 0 / off / unlimited = no soft cap
+     * (Resend budget still binds via getGlobalResendQuotaRemaining).
+     * Legacy free-tier values (≤100, e.g. 45) are also treated as unlimited.
+     */
+    dailySendCap(): number {
+      const raw = process.env.FIRM_OUTREACH_DAILY_CAP?.trim();
+      if (
+        raw === undefined ||
+        raw === '' ||
+        raw === '0' ||
+        ['off', 'none', 'unlimited', 'false', 'no'].includes(raw.toLowerCase())
+      ) {
+        return Number.MAX_SAFE_INTEGER;
+      }
+      const n = Number(raw);
+      if (Number.isFinite(n) && n > 0) {
+        // Old free-tier headroom must not throttle the ready queue.
+        if (n <= 100) return Number.MAX_SAFE_INTEGER;
+        return Math.floor(n);
+      }
+      // Invalid explicit value — fall back to configured default, not unlimited.
+      return Number(defaults.dailyCap ?? 50) || 50;
+    },
+    enrichBatchSize(): number {
+      return Number(process.env.FIRM_OUTREACH_ENRICH_BATCH ?? defaults.enrichBatch ?? 150) || 150;
+    },
+    cronEnrichBatchSize(): number {
+      return (
+        Number(process.env.FIRM_OUTREACH_CRON_ENRICH_BATCH ?? defaults.cronEnrichBatch ?? 10) || 10
+      );
+    },
+    cronSendBatchSize(): number {
+      return (
+        Number(process.env.FIRM_OUTREACH_CRON_SEND_BATCH ?? defaults.cronSendBatch ?? 25) || 25
+      );
+    },
+    enrichMaxElapsedMs(): number {
+      return (
+        Number(process.env.FIRM_OUTREACH_ENRICH_MAX_MS ?? defaults.enrichMaxMs ?? 90_000) || 90_000
+      );
+    },
+    paidDailyCap(): number {
+      return Number(process.env.FIRM_OUTREACH_PAID_DAILY_CAP ?? defaults.paidDailyCap ?? 50) || 50;
+    },
+    countyAllowlist(): string[] | null {
+      const raw = process.env.FIRM_OUTREACH_COUNTY_ALLOWLIST?.trim();
+      if (!raw) return countyDefault ?? null;
+      return raw
+        .split(/[,;]/)
+        .map((s) => s.trim().toLowerCase())
+        .filter(Boolean);
+    },
+  };
+}

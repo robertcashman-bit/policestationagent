@@ -1,0 +1,95 @@
+# Firm outreach production kick — MANUAL ONLY during stabilization.
+#
+# Previously auto-kicked outreach crons after CI. Use workflow_dispatch with
+# an explicit SHA when outreach code has been verified locally and in preview.
+name: Firm outreach production kick
+
+on:
+  workflow_dispatch:
+    inputs:
+      sha:
+        description: 'Git commit SHA that was verified (for audit trail)'
+        required: true
+        type: string
+      confirm_kick:
+        description: 'Type KICK to confirm production outreach kick'
+        required: true
+        type: string
+
+jobs:
+  kick:
+    if: github.event.inputs.confirm_kick == 'KICK'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install Vercel CLI (pinned)
+        run: npm install -g vercel@41.4.0
+
+      - name: Pull production env
+        run: |
+          if [ -n "${{ secrets.VERCEL_TOKEN }}" ]; then
+            vercel env pull .env.production --environment=production --yes --token=${{ secrets.VERCEL_TOKEN }}
+          else
+            echo "VERCEL_TOKEN not set — using GitHub secrets for cron auth only"
+          fi
+
+      - name: Requalify + enrich kick on production
+        env:
+          # Prefer GH secret — Vercel Sensitive vars often pull empty.
+          CRON_SECRET_FALLBACK: ${{ secrets.CRON_SECRET }}
+          BOOTSTRAP_FALLBACK: ${{ secrets.FIRM_OUTREACH_BOOTSTRAP_SECRET }}
+        run: |
+          set -euo pipefail
+          CRON_SECRET="${CRON_SECRET_FALLBACK:-}"
+          FIRM_OUTREACH_BOOTSTRAP_SECRET="${BOOTSTRAP_FALLBACK:-}"
+          if [ -z "${CRON_SECRET}" ] && [ -f .env.production ]; then
+            CRON_SECRET=$(python3 - <<'PY'
+          from pathlib import Path
+          for line in Path(".env.production").read_text().splitlines():
+              s = line.strip()
+              if not s or s.startswith("#"):
+                  continue
+              if s.startswith("export "):
+                  s = s[len("export "):]
+              if s.startswith("CRON_SECRET="):
+                  val = s.split("=", 1)[1]
+                  if len(val) >= 2 and val[0] == val[-1] and val[0] in ("'", '"'):
+                      val = val[1:-1]
+                  print(val, end="")
+                  break
+          PY
+            )
+          fi
+          if [ -z "${FIRM_OUTREACH_BOOTSTRAP_SECRET}" ] && [ -f .env.production ]; then
+            FIRM_OUTREACH_BOOTSTRAP_SECRET=$(python3 - <<'PY'
+          from pathlib import Path
+          for line in Path(".env.production").read_text().splitlines():
+              s = line.strip()
+              if not s or s.startswith("#"):
+                  continue
+              if s.startswith("export "):
+                  s = s[len("export "):]
+              if s.startswith("FIRM_OUTREACH_BOOTSTRAP_SECRET="):
+                  val = s.split("=", 1)[1]
+                  if len(val) >= 2 and val[0] == val[-1] and val[0] in ("'", '"'):
+                      val = val[1:-1]
+                  print(val, end="")
+                  break
+          PY
+            )
+          fi
+          echo "auth cron_len=${#CRON_SECRET} bootstrap_len=${#FIRM_OUTREACH_BOOTSTRAP_SECRET}"
+          export CRON_SECRET FIRM_OUTREACH_BOOTSTRAP_SECRET
+          export FIRM_OUTREACH_KICK_BASE_URL="https://policestationrepuk.org"
+          export VERCEL_TOKEN="${{ secrets.VERCEL_TOKEN }}"
+          export FIRM_OUTREACH_KICK_COMMIT_SHA="${{ github.event.inputs.sha }}"
+          node scripts/firm-outreach-production-kick.mjs

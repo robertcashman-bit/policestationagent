@@ -1,0 +1,241 @@
+# Firm outreach — operations
+
+Automated WhatsApp invitation emails to qualified criminal defence firms. Admin dashboard: `/admin/firm-outreach`.
+
+**Reliability architecture** (durable job queue, idempotency, retries, caps): see [firm-outreach-reliability.md](./firm-outreach-reliability.md).
+
+## Cron schedule (UTC)
+
+Cost-aware schedule in `vercel.json` (see also `docs/outreach-system.md`):
+
+| Time | Route | What runs |
+|------|-------|-----------|
+| `03:00` | `/api/cron/firm-outreach-pipeline/maintain` | LAA + DSCC + discovery + Kent→PSA sync + requalify |
+| `07:00` / `14:00` | `/api/cron/firm-outreach-enrich` | Enrich only |
+| `09:15` | `/api/cron/firm-outreach-bootstrap` | Ops bootstrap / kick helper |
+| `09:30` | `/api/cron/firm-outreach-pipeline/full` | Auto-send (or approval email) |
+| `12:00` / `16:00` | `/api/cron/firm-outreach-send` | Send-only (job-first drain) |
+| `17:00` | `/api/cron/firm-outreach-digest` | Digest / approval reminder |
+| — | `/api/cron/firm-outreach-status` | Config + queue + job health |
+
+Manual approval email (one per London day unless `--force` or reminder cron):
+
+```bash
+npm run firm-outreach:send-approval-email
+npm run firm-outreach:send-approval-email -- --force
+curl -H "Authorization: Bearer $CRON_SECRET" \
+  "https://policestationrepuk.org/api/cron/firm-outreach-pipeline/full?force=1"
+```
+
+All cron routes require `Authorization: Bearer $CRON_SECRET` (Vercel adds this automatically).
+
+## Environment variables
+
+| Variable | Default | Purpose |
+|----------|---------|---------|
+| `RESEND_API_KEY` | — | **Required** for sends and digest |
+| `KV_REST_API_URL` / `KV_REST_API_TOKEN` | — | **Required** for prospect storage |
+| `CRON_SECRET` | — | Cron auth + unsubscribe token signing |
+| `FIRM_OUTREACH_DAILY_CAP` | unlimited | Soft max outreach sends per UTC day. Unset / `0` / `off` / `unlimited` = no soft cap. Legacy values ≤100 (e.g. `45`) are treated as unlimited. Set an explicit value above 100 to throttle. Resend budget still binds. |
+| `FIRM_OUTREACH_FIRM_COOLDOWN_DAYS` | `90` | Solicitor firm-level cooldown. Production kick may temporarily set `0` to flush backlog — restore to `90` afterward. |
+| `FIRM_OUTREACH_DIGEST_EMAIL` | `robertdavidcashman@gmail.com` | Approval + confirmation email recipient |
+| `FIRM_OUTREACH_REQUIRE_APPROVAL` | *(unset = auto-send)* | Default **auto-send** at 09:30/14:30/18:30 UTC. Set `true` for click-to-send approval emails |
+| `ADMIN_DECISION_TOKEN_SECRET` | — | Signs Ready to send links (or falls back to `CRON_SECRET`) |
+| `RESEND_WEBHOOK_SECRET` | — | Resend webhook signing secret (from configure script) |
+| `FIRM_OUTREACH_CRON_ENRICH_BATCH` | `60` | Firms per cron enrich tick |
+| `FIRM_OUTREACH_ENRICH_BATCH` | `150` | Firms per local/manual enrich run |
+| `FIRM_OUTREACH_ENRICH_MAX_MS` | `270000` | Stop enrich before serverless timeout |
+| `SERPER_API_KEY` | — | Google search to resolve firm websites when SRA has none |
+| `HUNTER_API_KEY` | — | Paid domain email lookup after crawl fails (2nd pass) |
+| `FIRM_OUTREACH_PAID_DAILY_CAP` | `100` | Max Hunter lookups per UTC day |
+| `FIRM_OUTREACH_SEND_ENABLED` | enabled | Set `false` to disable automated sends |
+| `FIRM_OUTREACH_PAUSED` | off | Set `true` to pause all sends |
+| `FIRM_OUTREACH_ENABLED` | enabled | Set `false` to skip entire pipeline |
+
+## Production env verification
+
+Confirmed present on Vercel production (via env pull):
+
+- `RESEND_API_KEY` — sends and digest
+- `KV_REST_API_URL` / `KV_REST_API_TOKEN` — prospect storage
+- `CRON_SECRET` — cron auth
+
+Recommended to set explicitly (otherwise code defaults apply):
+
+- `FIRM_OUTREACH_DIGEST_EMAIL=robertdavidcashman@gmail.com`
+- `RESEND_WEBHOOK_SECRET` — set via `node scripts/resend-configure-webhook.mjs`
+- `FIRM_OUTREACH_CRON_ENRICH_BATCH=50`
+- `FIRM_OUTREACH_DAILY_CAP=0` (or leave unset) for unlimited soft daily cap
+
+**Auto-send (default):** `FIRM_OUTREACH_REQUIRE_APPROVAL` unset/`false` means crons send automatically at 09:30/14:30/18:30 UTC. Set `FIRM_OUTREACH_REQUIRE_APPROVAL=true` for click-to-send (approval email + Confirm).
+
+- `FIRM_OUTREACH_REQUIRE_APPROVAL=true` (optional — click-to-send)
+- `SERPER_API_KEY` — resolves firm websites via Google when SRA lookup has no URL
+- `HUNTER_API_KEY` — Hunter.io fallback when website crawl finds no email
+- `FIRM_OUTREACH_PAID_DAILY_CAP=100` — Hunter lookups per day (default 100)
+
+## Resend webhook
+
+Register automatically (idempotent) and sync `RESEND_WEBHOOK_SECRET` to Vercel when `VERCEL_TOKEN` + `VERCEL_PROJECT_ID` are set:
+
+```bash
+node scripts/resend-configure-webhook.mjs
+# force re-upsert secret even if lengths already match:
+node scripts/resend-configure-webhook.mjs --sync-secret
+```
+
+The firm-outreach production kick also:
+- re-enables the Resend webhook if Resend auto-disabled it after failures
+- syncs the signing secret to Vercel and redeploys when it drifts
+- POSTs a signed probe (must return 200) before flush
+- backfills delivery/bounce status via Resend `emails.get` for sends missed while the webhook was down
+
+Or manually in the Resend dashboard:
+
+- **URL:** `https://policestationrepuk.org/api/webhooks/resend`
+- **Events:** `email.delivered`, `email.opened`, `email.clicked`, `email.bounced`, `email.complained`
+- Copy the endpoint **signing secret** into Vercel production `RESEND_WEBHOOK_SECRET`, then redeploy.
+
+Updates the admin Send log with delivery/open/click/bounce status. Webhook matching uses `resendMessageId` first, then falls back to the newest in-flight send for that email across **all** campaigns (`whatsapp_invite_v1` and `agent_cover_kent_v1`).
+
+**PSA (`policestationagent.com`):** every send path must persist `resendMessageId` from Resend (`send.resendMessageId = result.messageId`). Without it, agent-cover sends stay stuck at `sent` in KV. RepUK logs a console warning when a send is saved without it.
+
+## Resend sending domains
+
+Outreach uses Resend. Only **verified** domains can send.
+
+| Campaign | Preferred from | Until PSA domain verified |
+|----------|----------------|---------------------------|
+| `whatsapp_invite_v1` | `FIRM_OUTREACH_FROM_EMAIL` or `PoliceStationRepUK <noreply@policestationrepuk.org>` | — |
+| `agent_cover_kent_v1` | `FIRM_OUTREACH_PSA_FROM_EMAIL` or `Police Station Agent <noreply@policestationagent.com>` | **Auto-fallback** to `Police Station Agent <noreply@policestationrepuk.org>` |
+
+**Permanent auto-fix:** before each batch, the send path resolves from-address against Resend verified domains. If `policestationagent.com` is not verified, PSA emails send from the verified RepUK domain automatically (content and links remain PSA). On a Resend domain error, the send retries once with the verified fallback.
+
+**Both campaigns auto-send:** cron/pipeline/`send-approved` call `runFirmOutreachAllCampaigns` so `whatsapp_invite_v1` **and** `agent_cover_kent_v1` flush their `ready_to_send` queues (each with its own daily cap). Until PSA domain verification, agent-cover still sends via the RepUK fallback from-address.
+
+**Verify PSA domain (optional but preferred):** Resend dashboard → Domains → add `policestationagent.com` (DNS records). Then set on Vercel:
+
+```bash
+FIRM_OUTREACH_PSA_FROM_EMAIL=Police Station Agent <noreply@policestationagent.com>
+```
+
+Unset production blockers: `FIRM_OUTREACH_DRY_RUN`, `FIRM_OUTREACH_PAUSED`, `FIRM_OUTREACH_SEND_ENABLED=false`, and prefer `FIRM_OUTREACH_REQUIRE_APPROVAL` unset/`false` for auto-send.
+
+**Health check:** `GET /api/cron/firm-outreach-status` (with `CRON_SECRET`) reports `sendHealthy`, `sendBlockers`, and `campaignSendHealth` per campaign.
+
+**Production kick (GitHub Actions):**
+- **Auto:** after a successful **Deploy to Vercel (production)** on `master`, if the deployed SHA touches firm-outreach paths (or this kick workflow), Actions pulls prod env and runs status → requalify/enrich → optional send flush.
+- **Manual:** workflow **Firm outreach production kick** → `workflow_dispatch` with `sha=<full commit SHA>` and `confirm_kick=KICK`.
+- **Auth:** kick loads `CRON_SECRET` / `FIRM_OUTREACH_BOOTSTRAP_SECRET` via Vercel env API `decrypt=true` (same pattern as custody ops). `vercel env pull` often returns empty sensitive values. Status and send routes accept cron Bearer **or** `x-firm-outreach-bootstrap-secret`. If both secrets are empty, kick provisions `FIRM_OUTREACH_BOOTSTRAP_SECRET` on production and redeploys. If `FIRM_OUTREACH_REQUIRE_APPROVAL=true`, kick sets it to `false` and redeploys so send can flush.
+
+Kick steps: status → **pre-flight email probes** (RepUK + PSA) → send flush 1 + 1b → requalify → seed/enrich PSA agent-cover → enrich RepUK → send flush 2 (`/api/cron/firm-outreach-send?limit=150`) for both campaigns. Confirm probe `ok:true` and `sendByCampaign.agent_cover_kent_v1` in the kick log (or empty queue). Scheduled send crons also flush both campaigns (10:00 / 12:00 / 14:30 / 16:00 / 18:30 / 20:00 UTC).
+
+**Resend budget:** soft app ceiling via `FIRM_OUTREACH_RESEND_DAILY_LIMIT`. Unset defaults to **100/day** (minus headroom 10 → **90** outreach sends). On paid Resend plans with no daily quota, set `FIRM_OUTREACH_RESEND_DAILY_LIMIT=unlimited` (or `0` / `off`) so both campaigns share no soft daily Resend budget. Rate limits (≈10 req/s) and monthly plan quotas still apply at Resend.
+
+**Probe route:** `GET /api/cron/firm-outreach-probe` (cron/bootstrap auth) sends one operator-only test email per campaign to `FIRM_OUTREACH_DIGEST_EMAIL`, after checking `policestationrepuk.com` / `.org` and `policestationagent.com` are reachable. PSA prefers `noreply@policestationagent.com` and falls back to the verified RepUK domain when that domain is not on Resend.
+
+## Manual commands
+
+```bash
+# Check KV queue and timing
+npm run firm-outreach:admin-smoke
+
+# Verify repo + production HTTP (set CRON_SECRET for status route)
+npm run firm-outreach:verify
+npm run firm-outreach:verify -- --url=https://policestationrepuk.org
+
+# Enrich locally (large batch — run 2–3× per week while backlog is large)
+npx tsx scripts/firm-outreach-enrich.ts --limit=150
+
+# Reset bad emails / directory websites (both campaigns)
+npx tsx scripts/firm-outreach-cleanup-non-firm-emails.ts --dry-run
+CAMPAIGN_ID=agent_cover_kent_v1 npx tsx scripts/firm-outreach-cleanup-non-firm-emails.ts --apply
+
+# Import lead_engine ready_to_send.csv into KV (after npm run lead-engine:auto)
+npx tsx scripts/firm-outreach-import-lead-engine.ts --dry-run
+npx tsx scripts/firm-outreach-import-lead-engine.ts
+
+# PSA agent-cover Kent campaign (policestationagent.com)
+npx tsx scripts/firm-outreach-build-brochure-pdf.ts
+npx tsx scripts/firm-outreach-seed-agent-cover-kent.ts --apply
+npx tsx scripts/firm-outreach-enrich.ts --campaign=agent_cover_kent_v1 --limit=150
+CAMPAIGN_ID=agent_cover_kent_v1 npx tsx scripts/firm-outreach-cleanup-non-firm-emails.ts --apply
+npx tsx scripts/firm-outreach-send.ts --campaign=agent_cover_kent_v1 --apply --limit=5
+
+# Send approval email locally
+npm run firm-outreach:send-approval-email
+
+# Send locally (dry-run by default) — bypasses approval flow
+npx tsx scripts/firm-outreach-send.ts
+npx tsx scripts/firm-outreach-send.ts --apply --limit=50
+
+# Full pipeline locally
+npm run firm-outreach:auto
+npm run firm-outreach:maintain
+
+# Requalify prospects after rule changes
+npm run firm-outreach:requalify
+```
+
+## WhatsApp join workflow
+
+1. Firm receives invitation email with **Join on WhatsApp** button.
+2. Click redirects via `/go/whatsapp-firm?ref=…` → WhatsApp to **07535 494446** with pre-filled message.
+3. You verify and add them to the group on WhatsApp.
+4. In admin Send log, click **Mark joined** — stops follow-ups and suppresses future outreach to that address.
+
+## Daily approval email (Ready to send)
+
+When `FIRM_OUTREACH_REQUIRE_APPROVAL=true`:
+
+1. **09:30 UTC** — email to `FIRM_OUTREACH_DIGEST_EMAIL` with a **Ready to send** button and queue summary.
+2. You click the button → confirmation page → **Confirm — Ready to send** sends from the ready queue (soft daily cap when set above 100; otherwise unlimited aside from Resend budget).
+3. **Confirmation email** lists sent count and receipts.
+4. **17:00 UTC** — reminder if you have not yet reached today's cap.
+5. Afternoon send crons **no-op** (approval Confirm is the only send path).
+
+**Production default:** auto-send (approval off) — 09:30, 14:30, and 18:30 UTC crons send automatically. Quality gates (LAA/DSCC qualification, dedupe, suppression) still apply.
+
+**Verify on Vercel:** Project → Settings → Environment Variables → Production → ensure `FIRM_OUTREACH_DRY_RUN` is unset/`0`, and `FIRM_OUTREACH_ENABLED` / `FIRM_OUTREACH_SEND_ENABLED` are not `false`.
+
+Links are prefetch-safe: the email button only opens a preview; sends happen on POST confirm.
+
+## Lead engine import (RepUK)
+
+Manual import uses production KV via Vercel env pull in CI (no separate GitHub KV secrets required when `VERCEL_TOKEN` is configured).
+
+Post-deploy kick (requalify junk + 2 enrich batches) runs automatically after green CI on `master` via [firm-outreach-kick.yml](.github/workflows/firm-outreach-kick.yml).
+
+Manual import (e.g. from a downloaded artifact):
+
+```bash
+bash -c 'set -a; source .env.vercel.production; set +a; \
+  npx tsx scripts/firm-outreach-import-lead-engine.ts --file=path/to/ready_to_send.csv'
+```
+
+Or use `scripts/firm-outreach-run-prod.mjs` after sourcing production env. Import dedupes against existing sends and skips guessed emails unless `--include-guessed`.
+
+## Legacy daily digest
+
+When approval is disabled, the old digest still runs after auto-send. When approval is enabled, use the confirmation email after each approved batch instead.
+
+## Email discovery pipeline
+
+Enrichment for each firm runs in order:
+
+1. **SRA org register** — SRA number + website (if listed)
+2. **Serper search** — Google for firm homepage when SRA has no website (`SERPER_API_KEY`)
+3. **Website crawl** — contact / criminal-law pages for public emails
+4. **Hunter.io** — domain search when crawl finds nothing (`HUNTER_API_KEY`, daily cap)
+
+Guessed emails (`info@domain` via MX check) are used only when crawl/Hunter fail; lead_engine import skips `guessed` rows unless `--include-guessed`.
+
+## Reliability notes
+
+- Enrichment uses status indexes (`discovered` / `no_email`) and a sliding scan window — LAA firms without email are prioritised each tick.
+- Enrichment cursor does not advance on timeout with zero processed firms; otherwise it rotates through the pool window.
+- Cron enrich uses batches of **60** (default) with a 270s wall-clock guard to stay within Vercel's 300s function limit.
+- **Eight** enrich crons per day (05/06/07/08/10/12/14/18 UTC) plus send-only top-ups at 14:30 and 18:30 UTC.
+- Nightly maintain requalify downgrades `ready_to_send` rows with implausible emails or failed MX checks (batch-limited).
+- Local ops: `bash -c 'set -a; source .env.vercel.production; set +a; npx tsx scripts/firm-outreach-run-prod.mjs enrich --limit=150'` (dotenv cannot parse `.env.vercel.production`; use bash `source` or inline env).
+- Duplicate initial sends to the same email address are blocked across automated and admin paths.

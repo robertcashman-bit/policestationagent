@@ -1,0 +1,236 @@
+# One-shot: diagnose skip reasons and optionally send firm outreach on production.
+name: Ops — firm outreach send now
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type SEND to allow live sends (otherwise dry-run preview only)'
+        required: true
+        type: string
+      limit:
+        description: 'Max emails this run'
+        required: false
+        default: '45'
+        type: string
+
+jobs:
+  send-now:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel@41.4.0
+
+      - name: Pull production env (flags + fallback secrets)
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          if [ -z "${VERCEL_TOKEN:-}" ]; then
+            echo "VERCEL_TOKEN missing — cannot pull production env"
+            exit 1
+          fi
+          vercel env pull .env.production --environment=production --yes --token="$VERCEL_TOKEN"
+          echo "Pulled env keys:"
+          grep -E '^[A-Za-z_][A-Za-z0-9_]*=' .env.production | cut -d= -f1 | sort
+
+      - name: Diagnose + optional send
+        env:
+          LIMIT: ${{ github.event.inputs.limit }}
+          CONFIRM: ${{ github.event.inputs.confirm }}
+          # Prefer GitHub secret. Vercel Sensitive env vars often pull as empty keys.
+          CRON_SECRET_FALLBACK: ${{ secrets.CRON_SECRET }}
+          BOOTSTRAP_FALLBACK: ${{ secrets.FIRM_OUTREACH_BOOTSTRAP_SECRET }}
+        run: |
+          set -euo pipefail
+          # Resolve auth like ops-buffer-force: GH secret first, then Vercel pull parse.
+          CRON_SECRET="${CRON_SECRET_FALLBACK:-}"
+          BOOTSTRAP_SECRET="${BOOTSTRAP_FALLBACK:-}"
+          if [ -z "${CRON_SECRET}" ] && [ -f .env.production ]; then
+            CRON_SECRET=$(python3 - <<'PY'
+          from pathlib import Path
+          for line in Path(".env.production").read_text().splitlines():
+              s = line.strip()
+              if not s or s.startswith("#"):
+                  continue
+              if s.startswith("export "):
+                  s = s[len("export "):]
+              if s.startswith("CRON_SECRET="):
+                  val = s.split("=", 1)[1]
+                  if len(val) >= 2 and val[0] == val[-1] and val[0] in ("'", '"'):
+                      val = val[1:-1]
+                  print(val, end="")
+                  break
+          PY
+            )
+          fi
+          if [ -z "${BOOTSTRAP_SECRET}" ] && [ -f .env.production ]; then
+            BOOTSTRAP_SECRET=$(python3 - <<'PY'
+          from pathlib import Path
+          for line in Path(".env.production").read_text().splitlines():
+              s = line.strip()
+              if not s or s.startswith("#"):
+                  continue
+              if s.startswith("export "):
+                  s = s[len("export "):]
+              if s.startswith("FIRM_OUTREACH_BOOTSTRAP_SECRET="):
+                  val = s.split("=", 1)[1]
+                  if len(val) >= 2 and val[0] == val[-1] and val[0] in ("'", '"'):
+                      val = val[1:-1]
+                  print(val, end="")
+                  break
+          PY
+            )
+          fi
+          echo "auth cron_len=${#CRON_SECRET} bootstrap_len=${#BOOTSTRAP_SECRET}"
+          if [ -z "${CRON_SECRET}" ] && [ -z "${BOOTSTRAP_SECRET}" ]; then
+            echo "No CRON_SECRET or FIRM_OUTREACH_BOOTSTRAP_SECRET."
+            echo "Add repository secret CRON_SECRET (same value as Vercel production)."
+            echo "Note: vercel env pull often returns empty for Sensitive env vars."
+            exit 1
+          fi
+
+          export CRON_SECRET BOOTSTRAP_SECRET
+          # Load non-secret flags from pull without overriding resolved secrets.
+          if [ -f .env.production ]; then
+            while IFS= read -r line || [ -n "$line" ]; do
+              case "$line" in
+                ''|\#*) continue ;;
+                export\ *) line="${line#export }" ;;
+              esac
+              case "$line" in
+                CRON_SECRET=*|FIRM_OUTREACH_BOOTSTRAP_SECRET=*) continue ;;
+                FIRM_OUTREACH_*|*=*)
+                  key="${line%%=*}"
+                  case "$key" in
+                    FIRM_OUTREACH_*)
+                      val="${line#*=}"
+                      if [ "${#val}" -ge 2 ]; then
+                        q="${val:0:1}"
+                        if [ "$q" = '"' ] || [ "$q" = "'" ]; then
+                          if [ "${val: -1}" = "$q" ]; then
+                            val="${val:1:${#val}-2}"
+                          fi
+                        fi
+                      fi
+                      export "$key=$val"
+                      ;;
+                  esac
+                  ;;
+              esac
+            done < .env.production
+          fi
+
+          node <<'NODE'
+          const secret = (process.env.CRON_SECRET || '').trim();
+          const bootstrap = (process.env.BOOTSTRAP_SECRET || '').trim();
+          const headers = secret
+            ? { Authorization: `Bearer ${secret}`, 'x-cron-secret': secret }
+            : { 'x-firm-outreach-bootstrap-secret': bootstrap };
+          const base = 'https://policestationrepuk.org';
+          const limit = Number(process.env.LIMIT || 45) || 45;
+          const confirm = process.env.CONFIRM || '';
+          console.log(
+            'flags',
+            JSON.stringify({
+              requireApproval: process.env.FIRM_OUTREACH_REQUIRE_APPROVAL || null,
+              sendEnabled: process.env.FIRM_OUTREACH_SEND_ENABLED || null,
+              paused: process.env.FIRM_OUTREACH_PAUSED || null,
+              dailyCap: process.env.FIRM_OUTREACH_DAILY_CAP || null,
+            }),
+          );
+
+          async function hit(path) {
+            const r = await fetch(base + path, { headers });
+            const text = await r.text();
+            let json;
+            try { json = JSON.parse(text); } catch { json = { raw: text.slice(0, 800) }; }
+            return { status: r.status, json };
+          }
+
+          (async () => {
+            const status = await hit('/api/cron/firm-outreach-status');
+            console.log('status', status.status);
+            console.log(JSON.stringify({
+              requireApproval: status.json?.config?.requireApproval ?? status.json?.requireApproval,
+              sendAllowed: status.json?.config?.sendAllowed ?? status.json?.sendAllowed,
+              sendHealthy: status.json?.config?.sendHealthy ?? status.json?.sendHealthy,
+              sendBlockers: status.json?.config?.sendBlockers ?? status.json?.sendBlockers,
+              dailyCap: status.json?.config?.dailyCap ?? status.json?.dailyCap,
+              queue: status.json?.queue,
+              counts: status.json?.counts,
+              error: status.json?.error,
+            }, null, 2));
+            if (status.status !== 200) process.exit(1);
+
+            const previewRes = await hit('/api/cron/firm-outreach-bootstrap?dryRunPreview=1&limit=80');
+            console.log('preview', previewRes.status);
+            const p = previewRes.json?.preview || previewRes.json;
+            const rows = p?.preview || [];
+            console.log(JSON.stringify({
+              error: previewRes.json?.error,
+              sentToday: p?.sentToday,
+              remaining: p?.remaining,
+              dailyCap: p?.dailyCap,
+              resendQuota: p?.resendQuotaRemaining,
+              skipReasons: p?.skipReasons,
+              wouldSend: rows.filter((r) => r.wouldSend).length,
+              sampleWould: rows.filter((r) => r.wouldSend).slice(0, 10),
+              sampleSkip: rows.filter((r) => !r.wouldSend).slice(0, 20).map((r) => ({
+                firm: r.firmName, reason: r.skipReason, status: r.status,
+              })),
+            }, null, 2));
+            if (previewRes.status !== 200) process.exit(1);
+
+            if (confirm !== 'SEND') {
+              console.log('Dry-run only (confirm was not SEND)');
+              return;
+            }
+
+            if (status.json?.config?.requireApproval === true || status.json?.requireApproval === true) {
+              console.error('FIRM_OUTREACH_REQUIRE_APPROVAL=true — cron send is a no-op; use Ready to send approval link');
+              process.exit(1);
+            }
+
+            const requalify = await hit('/api/cron/firm-outreach-bootstrap?requalifyOnly=1');
+            console.log('requalify', requalify.status, JSON.stringify({
+              mode: requalify.json?.mode,
+              requalify: requalify.json?.requalify,
+              countsBefore: requalify.json?.countsBefore,
+              countsAfter: requalify.json?.countsAfter,
+              error: requalify.json?.error,
+            }));
+
+            const send = await hit(`/api/cron/firm-outreach-send?limit=${limit}`);
+            console.log('send', send.status, JSON.stringify({
+              mode: send.json?.mode,
+              skipped: send.json?.skipped,
+              reason: send.json?.reason,
+              send: send.json?.send,
+              elapsedMs: send.json?.elapsedMs,
+              error: send.json?.error,
+            }, null, 2));
+            if (send.status !== 200) process.exit(1);
+            if (send.json?.skipped && send.json?.mode === 'approval-required') {
+              process.exit(1);
+            }
+
+            const after = await hit('/api/cron/firm-outreach-status');
+            console.log('after', after.status, JSON.stringify({
+              queue: after.json?.queue,
+              sentToday: after.json?.queue?.sentToday,
+            }, null, 2));
+          })().catch((err) => {
+            console.error(err);
+            process.exit(1);
+          });
+          NODE

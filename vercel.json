@@ -1,0 +1,165 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "policestationrepuk.com" }],
+      "destination": "https://policestationrepuk.org/$1",
+      "statusCode": 301
+    },
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "www.policestationrepuk.com" }],
+      "destination": "https://policestationrepuk.org/$1",
+      "statusCode": 301
+    },
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "www.policestationrepuk.org" }],
+      "destination": "https://policestationrepuk.org/$1",
+      "statusCode": 301
+    },
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "policestationrepukdirectory.com" }],
+      "destination": "https://policestationrepuk.org/$1",
+      "statusCode": 301
+    },
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "www.policestationrepukdirectory.com" }],
+      "destination": "https://policestationrepuk.org/$1",
+      "statusCode": 301
+    }
+  ],
+  "ignoreCommand": "bash scripts/vercel-ignore-non-bit.sh",
+  "crons": [
+    {
+      "path": "/api/cron/reverification-sweep",
+      "schedule": "0 3 * * *"
+    },
+    {
+      "path": "/api/cron/sync-dscc-register",
+      "schedule": "0 2 * * *"
+    },
+    {
+      "path": "/api/cron/regulatory-verify",
+      "schedule": "0 4 * * *"
+    },
+    {
+      "path": "/api/cron/indexnow",
+      "schedule": "30 5 * * *"
+    },
+    {
+      "path": "/api/cron/custody-number-discovery",
+      "schedule": "0 6 * * *"
+    },
+    {
+      "path": "/api/cron/custody-discovery-digest",
+      "schedule": "0 19 * * *"
+    },
+    {
+      "path": "/api/cron/custody-discovery-outstanding",
+      "schedule": "15 19 * * *"
+    },
+    {
+      "path": "/api/cron/custody-discovery-ai-review",
+      "schedule": "30 9 * * *"
+    },
+    {
+      "path": "/api/cron/custody-discovery-queue-reprocess",
+      "schedule": "0 4 * * *"
+    },
+    {
+      "path": "/api/cron/custody-approved-recheck",
+      "schedule": "45 2 * * *"
+    },
+    {
+      "path": "/api/cron/station-contact-health",
+      "schedule": "0 4 * * 1"
+    },
+    {
+      "path": "/api/cron/station-contact-research",
+      "schedule": "30 5 * * 2"
+    },
+    {
+      "path": "/api/cron/buffer-blog-posts",
+      "schedule": "5 5 * * *"
+    },
+    {
+      "path": "/api/cron/buffer-verify",
+      "schedule": "35 5 * * *"
+    },
+    {
+      "path": "/api/cron/buffer-selftest",
+      "schedule": "0 6 * * 1"
+    },
+    {
+      "path": "/api/cron/buffer-weekly-report",
+      "schedule": "0 8 * * 1"
+    },
+    {
+      "path": "/api/cron/buffer-daily-report",
+      "schedule": "30 4 * * *"
+    },
+    {
+      "path": "/api/cron/automation-healthcheck",
+      "schedule": "15 7 * * *"
+    },
+    {
+      "path": "/api/cron/automation-watchdog",
+      "schedule": "20 */6 * * *"
+    },
+    {
+      "path": "/api/cron/traffic-digest",
+      "schedule": "0 7 * * 1"
+    },
+    {
+      "path": "/api/cron/editorial-audit",
+      "schedule": "0 17 * * 1"
+    },
+    {
+      "path": "/api/cron/firm-outreach-pipeline/maintain",
+      "schedule": "0 3 * * *"
+    },
+    {
+      "path": "/api/cron/firm-outreach-enrich",
+      "schedule": "0 7 * * *"
+    },
+    {
+      "path": "/api/cron/firm-outreach-enrich",
+      "schedule": "0 14 * * *"
+    },
+    {
+      "path": "/api/cron/firm-outreach-pipeline/full",
+      "schedule": "30 9 * * *"
+    },
+    {
+      "path": "/api/cron/firm-outreach-bootstrap",
+      "schedule": "15 9 * * *"
+    },
+    {
+      "path": "/api/cron/firm-outreach-psa-sync",
+      "schedule": "45 11 * * *"
+    },
+    {
+      "path": "/api/cron/firm-outreach-psa-sync",
+      "schedule": "45 15 * * *"
+    },
+    {
+      "path": "/api/cron/firm-outreach-send",
+      "schedule": "*/15 * * * *"
+    },
+    {
+      "path": "/api/cron/firm-outreach-autoheal",
+      "schedule": "5,20,35,50 * * * *"
+    },
+    {
+      "path": "/api/cron/firm-outreach-daily-report",
+      "schedule": "0 6,7 * * *"
+    },
+    {
+      "path": "/api/cron/firm-outreach-digest",
+      "schedule": "0 17 * * *"
+    }
+  ]
+}
