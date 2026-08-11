@@ -1,0 +1,99 @@
+# Deploy permanent RepUK outreach fixes to policestationrepuk-new production.
+# Uses this repo's VERCEL_TOKEN/ORG secrets against the RepUK Vercel project.
+# Source tree: sibling/repuk/* orphan snapshot (full Policestationrepuk checkout).
+name: Deploy REPUK outreach fix
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - '.github/workflows/deploy-repuk-outreach-fix.yml'
+      - 'ops/repuk-deploy-ref'
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-repuk-outreach-fix
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      # policestationrepuk-new (see Policestationrepuk/docs/deploy.md)
+      VERCEL_PROJECT_ID: prj_lZ0zL8uq5cBDFosKovyF0n8FmlCn
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+    steps:
+      - name: Require Vercel secrets
+        run: |
+          missing=0
+          for name in VERCEL_TOKEN VERCEL_ORG_ID; do
+            if [ -z "${!name}" ]; then
+              echo "Missing secret: $name"
+              missing=1
+            fi
+          done
+          if [ "$missing" -ne 0 ]; then
+            exit 1
+          fi
+
+      - name: Read RepUK deploy ref
+        id: ref
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: ops/repuk-deploy-ref
+          sparse-checkout-cone-mode: false
+
+      - name: Resolve sibling ref
+        id: resolve
+        run: |
+          REF="$(tr -d '[:space:]' < ops/repuk-deploy-ref)"
+          if [ -z "$REF" ]; then
+            echo "ops/repuk-deploy-ref is empty"
+            exit 1
+          fi
+          echo "ref=$REF" >> "$GITHUB_OUTPUT"
+          echo "Deploying RepUK from $REF"
+
+      - name: Checkout RepUK sibling snapshot
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.resolve.outputs.ref }}
+          fetch-depth: 1
+          path: repuk
+
+      - name: Verify permanent fixes present
+        working-directory: repuk
+        run: |
+          grep -q 'acceptedToday === 0' lib/firm-outreach/reporting/health-status.ts
+          grep -q 'emailsAcceptedByProvider === 0' lib/firm-outreach/reporting/build-daily-report.ts
+          grep -q 'n <= 100' lib/firm-outreach/constants.ts
+          echo "Fix markers OK"
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel@latest
+
+      - name: Pull Vercel project settings (production)
+        working-directory: repuk
+        run: vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+
+      - name: Deploy RepUK to production
+        working-directory: repuk
+        run: |
+          for attempt in 1 2 3; do
+            echo "Deploy attempt $attempt/3"
+            if vercel deploy --prod --yes --token="$VERCEL_TOKEN"; then
+              exit 0
+            fi
+            if [ "$attempt" -lt 3 ]; then
+              echo "Deploy failed; retrying in 30s..."
+              sleep 30
+            fi
+          done
+          exit 1
