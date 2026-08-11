@@ -15,13 +15,21 @@ import {
   SEO_NOT_POLICE,
   SERVICE_SCOPE_SHORT,
   CTA_OUT_OF_SCOPE,
+  POLICE_OIC_BLOCK_HEADING,
+  POLICE_OIC_BLOCK_BODY,
 } from "@/config/contact";
+import { getEnquiryAttributionForSubmit } from "@/lib/enquiry/attribution-client";
+import {
+  detectPoliceConfusion,
+  policeConfusionPublicMessage,
+} from "@/lib/enquiry/police-confusion";
+import { AnalyticsEvents } from "@/lib/analytics";
 
 interface FormData {
   name: string;
   contactNumber: string;
   email: string;
-  role: "family" | "solicitor" | "representative" | "prospective_client" | "instructing_solicitor" | "other";
+  role: "family" | "solicitor" | "representative" | "prospective_client" | "instructing_solicitor";
   clientName: string;
   clientDOB: string;
   policeStation: string;
@@ -74,6 +82,9 @@ export default function ContactForm({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
+  /** Admin form gate: police/OIC must self-identify before the form is shown. */
+  const [audienceGate, setAudienceGate] = useState<"unset" | "police" | "defence">("unset");
+  const [blockMessage, setBlockMessage] = useState<string | null>(null);
 
   const validate = (): boolean => {
     const newErrors: Partial<Record<keyof FormData, string>> = {};
@@ -136,8 +147,26 @@ export default function ContactForm({
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    setBlockMessage(null);
+
+    if (isAdmin && audienceGate !== "defence") {
+      setBlockMessage(POLICE_OIC_BLOCK_BODY);
+      return;
+    }
 
     if (!validate()) {
+      return;
+    }
+
+    const confusion = detectPoliceConfusion({
+      email: formData.email,
+      message: formData.briefDetails,
+      name: formData.name,
+      audienceIsPolice: audienceGate === "police",
+    });
+    if (confusion) {
+      setBlockMessage(policeConfusionPublicMessage(confusion));
+      setSubmitStatus("error");
       return;
     }
 
@@ -145,6 +174,7 @@ export default function ContactForm({
     setSubmitStatus("idle");
 
     try {
+      const attribution = getEnquiryAttributionForSubmit();
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
@@ -158,11 +188,14 @@ export default function ContactForm({
           interviewDate: formData.interviewDate.trim(),
           interviewTime: formData.interviewTime.trim(),
           attendanceType: isAdmin ? "admin-enquiry" : formData.attendanceType,
+          audienceIsPolice: audienceGate === "police",
+          attribution,
         }),
       });
 
       if (response.ok) {
         setSubmitStatus("success");
+        AnalyticsEvents.contactPageSubmit();
         // Reset form
         setFormData({
           name: "",
@@ -181,6 +214,18 @@ export default function ContactForm({
           consent: false,
         });
       } else {
+        let serverMessage: string | null = null;
+        try {
+          const data = (await response.json()) as { error?: string; code?: string };
+          if (data?.code === "POLICE_OR_CUSTODY_ENQUIRY" && data.error) {
+            serverMessage = data.error;
+          } else if (data?.error) {
+            serverMessage = data.error;
+          }
+        } catch {
+          /* ignore JSON parse errors */
+        }
+        if (serverMessage) setBlockMessage(serverMessage);
         setSubmitStatus("error");
       }
     } catch (error) {
@@ -190,6 +235,27 @@ export default function ContactForm({
       setIsSubmitting(false);
     }
   };
+
+  if (isAdmin && audienceGate === "police") {
+    return (
+      <div className="bg-white rounded-xl border border-red-200 shadow-lg p-6 md:p-8">
+        <div className="rounded-lg border border-red-300 bg-red-50 p-5">
+          <h3 className="text-lg font-bold text-red-950 mb-2">{POLICE_OIC_BLOCK_HEADING}</h3>
+          <p className="text-sm text-red-950 leading-relaxed mb-4">{POLICE_OIC_BLOCK_BODY}</p>
+          <p className="text-sm text-red-900 font-medium">
+            Emergency: 999 · Non-emergency police: 101 · Force custody directory: use internal systems
+          </p>
+          <button
+            type="button"
+            className="mt-4 text-sm font-semibold text-blue-800 underline"
+            onClick={() => setAudienceGate("unset")}
+          >
+            I made a mistake — I am not contacting you as police
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
@@ -208,7 +274,7 @@ export default function ContactForm({
         <div className="bg-blue-50 border-l-4 border-blue-600 p-4 mb-6">
           <h3 className="text-lg font-semibold text-slate-900 mb-2">
             {isAdmin
-              ? "Non-urgent written enquiry only"
+              ? "Non-urgent written enquiry — defence clients & firms only"
               : "Scheduled voluntary interviews & solicitor instructions only"}
           </h3>
           <p className="text-red-800 font-semibold text-sm mb-2">{SEO_NOT_POLICE}</p>
@@ -216,8 +282,8 @@ export default function ContactForm({
           {isAdmin ? (
             <p className="text-slate-700 mb-2 font-medium text-red-900">
               We are NOT the police and cannot help with police enquiries, crime reports, custody
-              status checks, or free advice after release. For police assistance use 999 or 101.
-              Email is the primary channel; phone is optional for a callback.
+              suite contact details, FP/DNA chase requests, custody status checks, or free advice
+              after release. For police assistance use 999 or 101.
             </p>
           ) : (
             <>
@@ -244,7 +310,48 @@ export default function ContactForm({
           </p>
         </div>
 
-        <h2 className="text-2xl font-bold text-slate-900 mb-6">{heading}</h2>
+        {isAdmin && audienceGate === "unset" ? (
+          <div
+            className="mb-8 rounded-lg border border-amber-300 bg-amber-50 p-5"
+            data-testid="admin-audience-gate"
+          >
+            <h2 className="text-xl font-bold text-slate-900 mb-2">Before you continue</h2>
+            <p className="text-sm text-slate-800 mb-4 leading-relaxed">
+              Are you contacting us as a police officer, OIC, or to request custody suite / FP / DNA
+              contact details?
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <button
+                type="button"
+                className="inline-flex justify-center rounded-lg border border-red-300 bg-white px-4 py-3 text-sm font-bold text-red-900 hover:bg-red-50"
+                onClick={() => setAudienceGate("police")}
+              >
+                Yes — police / custody enquiry
+              </button>
+              <button
+                type="button"
+                className="inline-flex justify-center rounded-lg bg-blue-800 px-4 py-3 text-sm font-bold text-white hover:bg-blue-900"
+                onClick={() => setAudienceGate("defence")}
+              >
+                No — defence client or instructing solicitor
+              </button>
+            </div>
+          </div>
+        ) : null}
+
+        {blockMessage ? (
+          <div className="mb-6 rounded-lg border border-red-300 bg-red-50 p-4" role="alert">
+            <p className="text-sm font-semibold text-red-950 mb-1">{POLICE_OIC_BLOCK_HEADING}</p>
+            <p className="text-sm text-red-950 leading-relaxed">{blockMessage}</p>
+          </div>
+        ) : null}
+
+        {isAdmin && audienceGate !== "defence" ? null : (
+          <h2 className="text-2xl font-bold text-slate-900 mb-6">{heading}</h2>
+        )}
+
+        {isAdmin && audienceGate !== "defence" ? null : (
+          <>
 
         {/* Requestor Information */}
         <div className="space-y-6 mb-8">
@@ -348,9 +455,8 @@ export default function ContactForm({
             >
               {isAdmin ? (
                 <>
-                  <option value="prospective_client">Prospective client / general enquiry</option>
+                  <option value="prospective_client">Prospective client / defence enquiry</option>
                   <option value="instructing_solicitor">Instructing solicitor or law firm</option>
-                  <option value="other">Other administrative enquiry</option>
                 </>
               ) : (
                 <>
@@ -595,7 +701,7 @@ export default function ContactForm({
               />
               <span className="text-sm text-slate-700">
                 {isAdmin
-                  ? "I confirm this is a non-urgent written enquiry, not current custody, not a police matter, and not a request for free advice after release."
+                  ? "I confirm this is a non-urgent written enquiry from a defence client or instructing solicitor — not a police/OIC matter, not a request for custody suite contact details, and not free advice after release."
                   : "I confirm this request relates to a non-urgent police station attendance and not an urgent custody arrest."}{" "}
                 <span className="text-red-600">*</span>
               </span>
@@ -668,7 +774,7 @@ export default function ContactForm({
           </div>
         )}
 
-        {submitStatus === "error" && (
+        {submitStatus === "error" && !blockMessage && (
           <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
             <p className="text-red-800 font-medium">
               There was an error submitting your request. Please try again, or use the{" "}
@@ -678,6 +784,8 @@ export default function ContactForm({
               .
             </p>
           </div>
+        )}
+          </>
         )}
       </div>
     </form>

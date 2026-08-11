@@ -86,26 +86,33 @@ export const CONTACT_PATHWAY_PROMPT =
   "Choose the pathway that fits you. The solicitor telephone is not listed on this page — for current custody it appears only after a short check if we can help.";
 
 /** Non-urgent admin / written enquiry on Contact — filter, not a second advice line */
-export const ADMIN_ENQUIRY_HEADING = "Non-urgent written / administrative enquiry";
+export const ADMIN_ENQUIRY_HEADING = "Non-urgent written enquiry (defence clients & firms only)";
 
 export const ADMIN_ENQUIRY_INTRO =
-  "Use this form for non-urgent written messages only. It is not an emergency channel, not a police contact form, and not a free general legal advice service. Response times are not guaranteed. If someone is in custody now, or has a booked interview, use the pathways above — don’t wait on this form.";
+  "Use this form for non-urgent written messages from prospective clients or instructing solicitors only. It is not an emergency channel, not a police or custody contact form, and not a free general legal advice service. Police officers and OICs must use 101 or force systems — we cannot supply custody suite numbers or FP/DNA chase contacts. Response times are not guaranteed.";
 
 export const ADMIN_ENQUIRY_CAN = [
-  "Non-urgent questions about instructing us for police-station work in Kent",
+  "Non-urgent questions about instructing us for police-station defence work in Kent",
   "Administrative messages (e.g. referring a matter, confirming you’ve already instructed us)",
-  "Clarifying whether your situation is something we cover",
+  "Clarifying whether your situation is something we cover as defence solicitors",
   "Solicitor/firm messages about agency cover (the agency pathway is usually faster)",
 ] as const;
 
 export const ADMIN_ENQUIRY_CANNOT = [
-  "Act as Kent Police, take crime reports, or transfer calls to custody or switchboard",
+  "Act as Kent Police or any force, take crime reports, or transfer calls to custody or switchboard",
+  "Provide custody suite telephone numbers, emails, or FP/DNA chase contacts for police/OICs",
   "Confirm whether someone is in custody, find a missing person, or give welfare updates without being instructed as their solicitor",
   "Provide free advice after release, after a past interview, or general case updates",
   "Accept instructions from friends or colleagues for someone else (immediate family only; detainee must confirm)",
   "Treat past arrests or “already released” matters as urgent police-station attendance",
   "Replace 999 or 101",
 ] as const;
+
+/** Shown when a police/OIC visitor self-identifies or is blocked by keyword checks */
+export const POLICE_OIC_BLOCK_HEADING = "Police / custody enquiries — wrong website";
+
+export const POLICE_OIC_BLOCK_BODY =
+  "Police Station Agent is an independent criminal defence solicitor website. We are NOT the police and NOT a custody suite. We cannot help with OIC enquiries, custody status, FP/DNA outstanding samples, or force switchboard transfers. Use 101 (or 999 in an emergency), or your force’s internal custody directory.";
 
 export const WHY_PHONE_NOT_EVERYWHERE_FAQ = {
   question: "Why isn’t your phone number on every page?",

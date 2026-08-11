@@ -7,9 +7,10 @@ import { LegalReferences, Ref, type LegalSource } from "@/components/LegalRefere
 import { SITE_DOMAIN } from "@/config/site";
 
 export const metadata: Metadata = {
-  title: "DNA & Fingerprints at Police Station: Your Rights UK Information | Independent Criminal Defence Solicitors",
+  title:
+    "DNA & Fingerprints Rights at the Police Station | Defence Solicitor Guide (NOT the Police)",
   description:
-    "Fingerprints and samples at the police station: what PACE says about fingerprints, intimate samples, and non-intimate samples (England & Wales). Sources included.",
+    "Independent criminal defence guide — NOT a police or custody contact page. What PACE says about fingerprints and samples in England & Wales. We cannot provide custody suite phone numbers or FP/DNA chase contacts for police.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/dna-fingerprints-police-station`,
   },
@@ -107,15 +108,28 @@ export default function DNAFingerprintsPolicePage() {
               <span>DNA & Fingerprints</span>
             </nav>
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              DNA & Fingerprints at the Police Station
+              DNA &amp; Fingerprints Rights — Defence Solicitor Guide
             </h1>
             <p className="text-xl text-blue-100">
-              Your rights regarding biometric samples and data retention
+              Your rights regarding biometric samples and data retention — for detainees and families,
+              not a police custody directory
             </p>
           </div>
         </section>
 
         <article className="max-w-4xl mx-auto px-4 py-12">
+          <div className="bg-red-50 border-l-4 border-red-600 p-5 mb-6 rounded-r-lg">
+            <p className="text-sm font-bold text-red-950 mb-1">
+              We are NOT the police and NOT a custody suite
+            </p>
+            <p className="text-sm text-red-950 leading-relaxed">
+              This page is defence rights information only. We cannot provide custody suite telephone
+              numbers, emails, or FP/DNA chase contacts for police officers or OICs. For police or
+              custody assistance use <strong>101</strong> (or <strong>999</strong> in an emergency),
+              or your force&apos;s internal directory.
+            </p>
+          </div>
+
           <div className="bg-blue-50 border-l-4 border-blue-600 p-6 mb-8 rounded-r-lg">
             <p className="text-lg font-medium text-slate-800">
               <strong>Quick Answer:</strong> PACE sets out rules for taking fingerprints (s.61) and
@@ -296,23 +310,24 @@ export default function DNAFingerprintsPolicePage() {
           <LegalReferences sources={sources} />
 
           <div className="bg-slate-900 text-white rounded-xl p-8 my-12">
-            <h3 className="text-2xl font-bold mb-4">Questions About DNA & Fingerprints?</h3>
-            <p className="text-slate-300 mb-6">
-              If you have concerns about samples taken at the police station or need help applying
-              for deletion, I can advise.
+            <h3 className="text-2xl font-bold mb-4">Need a defence solicitor?</h3>
+            <p className="text-slate-300 mb-4">
+              If you or a family member needs advice about samples in custody or a booked interview,
+              use the correct pathway below. Police / OIC enquiries for custody contact details
+              should use 101 — not this website.
             </p>
             <div className="flex flex-wrap gap-4">
-              <a
-                href="tel:01732247427"
+              <Link
+                href="/current-custody"
                 className="inline-flex items-center px-6 py-3 bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold rounded-lg"
               >
-                Call 01732 247427
-              </a>
+                Someone in custody now
+              </Link>
               <Link
-                href="/contact"
+                href="/start/voluntary-interview#request"
                 className="inline-flex items-center px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-bold rounded-lg"
               >
-                Contact Online
+                Booked interview — request representation
               </Link>
             </div>
           </div>

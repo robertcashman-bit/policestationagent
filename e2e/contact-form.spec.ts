@@ -14,7 +14,10 @@ test.describe("Contact form", () => {
     await page.goto(CONTACT_URL);
     await page.waitForLoadState("networkidle");
 
-    const form = page.locator("#admin-enquiry form");
+    const section = page.locator("#admin-enquiry");
+    await section.getByRole("button", { name: /defence client or instructing solicitor/i }).click();
+
+    const form = section.locator("form");
     await form.getByLabel(/your name/i).fill("E2E Test User");
     await form.getByLabel(/email address/i).fill("e2e-test@example.com");
     await form.locator("#role").selectOption("prospective_client");
@@ -25,5 +28,15 @@ test.describe("Contact form", () => {
     await form.getByRole("button", { name: /send written enquiry/i }).click();
 
     await expect(page.getByText(SUCCESS_MESSAGE)).toBeVisible({ timeout: 10000 });
+  });
+
+  test("Police / OIC gate blocks the admin form", async ({ page }) => {
+    await page.goto(CONTACT_URL);
+    await page.waitForLoadState("networkidle");
+
+    const section = page.locator("#admin-enquiry");
+    await section.getByRole("button", { name: /police \/ custody enquiry/i }).click();
+    await expect(section.getByText(/Police \/ custody enquiries — wrong website/i)).toBeVisible();
+    await expect(section.locator("form")).toHaveCount(0);
   });
 });
