@@ -198,6 +198,24 @@ h3,
   transform: translateY(-3px);
   box-shadow: var(--shadow-elevated);
 }
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-up {
+  animation: fade-up 0.45s ease-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up {
+    animation: none;
+  }
+}
 .accent-rule {
   height: 1px;
   width: 3rem;

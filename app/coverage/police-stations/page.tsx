@@ -64,6 +64,14 @@ export default function PoliceStationsPage() {
               <p className="text-xl text-blue-100">
                 Independent information about police stations and custody facilities across Kent and Medway — not an official police directory
               </p>
+              <p className="mt-6">
+                <Link
+                  href="/resources/kent-police-station-map"
+                  className="inline-flex items-center rounded-lg bg-white/15 px-4 py-2 text-sm font-semibold text-white ring-1 ring-white/40 transition hover:bg-white/25"
+                >
+                  View distances map from West Kingsdown →
+                </Link>
+              </p>
             </div>
           </div>
         </section>

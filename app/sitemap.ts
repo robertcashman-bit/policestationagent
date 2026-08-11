@@ -333,6 +333,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.85,
     },
     {
+      url: `${baseUrl}/resources/kent-police-station-map`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.85,
+    },
+    {
       url: `${baseUrl}/link-to-us`,
       lastModified: new Date(),
       changeFrequency: "monthly",

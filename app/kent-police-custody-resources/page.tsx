@@ -98,6 +98,24 @@ export default function KentPoliceCustodyResourcesPage() {
             </ul>
           </section>
 
+          <section className="mb-10 rounded-xl border border-blue-200 bg-white p-6 shadow-sm">
+            <h2 className="text-2xl font-bold text-slate-900 mb-2">Kent police station map</h2>
+            <p className="text-slate-700 mb-4">
+              Interactive map of custody suites and major stations from our West Kingsdown base,
+              with approximate distances and drive times.
+            </p>
+            <Link
+              href="/resources/kent-police-station-map"
+              className="inline-flex items-center rounded-md bg-blue-700 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-800"
+            >
+              Open the Kent station map
+            </Link>
+            <span className="mx-2 text-slate-400">·</span>
+            <Link href="/coverage" className="text-sm font-semibold text-blue-700 hover:underline">
+              Full coverage page
+            </Link>
+          </section>
+
           <section className="mb-10">
             <h2 className="text-2xl font-bold text-slate-900 mb-4">Kent custody suites</h2>
             <p className="text-slate-700 mb-4">

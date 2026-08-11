@@ -8,7 +8,7 @@ import { RESOURCE_HUB_PATH } from "@/config/link-authority";
 export const metadata: Metadata = {
   title: "Resources | Link-Friendly Legal Guides | Police Station Agent",
   description:
-    "Free resources on police station rights in Kent — printable PACE guide, custody hub, press information, and link-to-us copy.",
+    "Free resources on police station rights in Kent — printable PACE guide, Kent station map, custody hub, press information, and link-to-us copy.",
   alternates: { canonical: `https://${SITE_DOMAIN}/resources` },
 };
 
@@ -22,6 +22,12 @@ const resources = [
     href: "/resources/pace-rights-guide",
     title: "PACE rights at the police station (printable)",
     description: "Plain English summary for printing or sharing.",
+  },
+  {
+    href: "/resources/kent-police-station-map",
+    title: "Kent police station & custody map",
+    description:
+      "Distances and drive times from West Kingsdown across Kent stations — printable quick reference.",
   },
   {
     href: "/link-to-us",
