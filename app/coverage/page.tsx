@@ -101,22 +101,22 @@ export default function Page() {
                 Police Station Agent provides accredited representation at all Kent custody suites
                 and major voluntary interview police stations.
               </p>
-              <div className="mt-8 flex flex-wrap justify-center gap-3">
+              <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:flex-wrap sm:items-center">
                 <Link
                   href="/coverage/police-stations"
-                  className="inline-flex items-center rounded-lg bg-white px-6 py-3 font-semibold text-primary transition hover:bg-accent-light"
+                  className="inline-flex items-center justify-center rounded-lg bg-white px-6 py-3 font-semibold text-primary transition hover:bg-accent-light"
                 >
                   View Police Stations
                 </Link>
                 <Link
                   href="/coverage/areas"
-                  className="inline-flex items-center rounded-lg border border-white/40 bg-white/10 px-6 py-3 font-semibold text-white backdrop-blur-sm transition hover:bg-white/20"
+                  className="inline-flex items-center justify-center rounded-lg border border-white/40 bg-white/10 px-6 py-3 font-semibold text-white backdrop-blur-sm transition hover:bg-white/20"
                 >
                   View Areas
                 </Link>
                 <Link
                   href="/resources/kent-police-station-map"
-                  className="inline-flex items-center rounded-lg border border-accent/50 bg-accent/15 px-6 py-3 font-semibold text-accent-light transition hover:bg-accent/25"
+                  className="inline-flex items-center justify-center rounded-lg border border-accent/50 bg-accent/15 px-6 py-3 font-semibold text-accent-light transition hover:bg-accent/25"
                 >
                   Station map
                 </Link>

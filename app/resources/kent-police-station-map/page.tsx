@@ -65,7 +65,7 @@ export default function KentPoliceStationMapPage() {
             </p>
           </div>
           <div className="print:hidden">
-            <PrintButton />
+            <PrintButton className="rounded-lg bg-slate-800 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-900" />
           </div>
         </div>
 
