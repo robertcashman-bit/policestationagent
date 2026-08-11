@@ -12,21 +12,20 @@ import {
 import LinkToUsPanel from "@/components/LinkToUsPanel";
 import { InternalLinkHub } from "@/components/InternalLinkHub";
 import { RIGHTS_HUB, INTERVIEW_HUB } from "@/config/internal-link-hubs";
-import { PHONE_DISPLAY, PHONE_TEL } from "@/config/contact";
 
 const LAST_UPDATED = "2026-05-30";
 
 export const metadata: Metadata = {
-  title: "Kent Police Custody & Interview Resources | Free Guide",
+  title: "Kent Custody Rights Resource Hub | Defence Solicitor Guide (NOT the Police)",
   description:
-    "Free, sourced guide to police station rights in Kent: PACE Code C, custody limits, RUI, voluntary interviews, and what to do if someone is arrested. Link-friendly resource hub.",
+    "Independent criminal defence resource hub — NOT Kent Police. Free, sourced guides on PACE rights, custody time limits, RUI and voluntary interviews in Kent. Not a custody suite contact directory.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}${RESOURCE_HUB_PATH}`,
   },
   openGraph: {
-    title: "Kent Police Custody & Interview Resources",
+    title: "Kent Custody Rights Resource Hub | NOT the Police",
     description:
-      "Neutral explainer hub for Kent custody rights — PACE, time limits, RUI, and family guidance.",
+      "Defence solicitor explainer hub for Kent custody rights — PACE, time limits, RUI, and family guidance. Not a police contact page.",
     url: RESOURCE_HUB_URL,
     type: "website",
   },
@@ -35,9 +34,9 @@ export const metadata: Metadata = {
 const webPageSchema = {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  name: "Kent Police Custody & Interview Resources",
+  name: "Kent Custody Rights Resource Hub — Independent Defence Solicitors",
   description:
-    "Free guide to police station rights and procedures in Kent, with links to detailed explainers.",
+    "Independent criminal defence guide to police station rights and procedures in Kent. Not affiliated with Kent Police.",
   url: RESOURCE_HUB_URL,
   dateModified: LAST_UPDATED,
   inLanguage: "en-GB",
@@ -53,11 +52,21 @@ export default function KentPoliceCustodyResourcesPage() {
         <div className="max-w-4xl mx-auto px-4 py-16">
           <p className="text-sm text-slate-500 mb-2">Last updated: {LAST_UPDATED}</p>
           <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-4">
-            Kent Police Custody &amp; Interview Resources
+            Kent Custody Rights Resource Hub
           </h1>
+          <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6">
+            <p className="text-sm font-bold text-red-950 mb-1">
+              Independent defence solicitors — NOT Kent Police
+            </p>
+            <p className="text-sm text-red-950 leading-relaxed">
+              This is not a custody suite contact directory. We cannot supply custody telephone
+              numbers, emails, or FP/DNA chase contacts for police officers. For police assistance
+              use 101 or 999.
+            </p>
+          </div>
           <p className="text-lg text-slate-700 mb-6 leading-relaxed">
-            A free, neutral index of explainers about police station rights and procedures in Kent.
-            Sources include{" "}
+            A free index of explainers about police station rights and procedures in Kent, written
+            for detainees, families and defence practitioners. Sources include{" "}
             <a
               href="https://www.gov.uk/arrested-your-rights"
               className="text-blue-600 underline"
@@ -116,18 +125,26 @@ export default function KentPoliceCustodyResourcesPage() {
           </section>
 
           <section className="bg-amber-50 border border-amber-200 rounded-xl p-6">
-            <h2 className="text-lg font-bold text-slate-900 mb-2">Need representation now?</h2>
+            <h2 className="text-lg font-bold text-slate-900 mb-2">Need defence representation?</h2>
             <p className="text-slate-700 text-sm mb-3">
               Immediate custody and scheduled voluntary interviews only — immediate family may
-              instruct. Not for past arrests or general enquiries.{" "}
+              instruct. Not for past arrests, police/OIC enquiries, or general advice.{" "}
               <Link href="/faq#immediate-custody-only" className="text-blue-600 underline">
                 Read scope FAQ
               </Link>
               .
             </p>
-            <a href={`tel:${PHONE_TEL}`} className="font-bold text-blue-800">
-              {PHONE_DISPLAY}
-            </a>
+            <div className="flex flex-col sm:flex-row gap-3 text-sm font-semibold">
+              <Link href="/current-custody" className="text-blue-800 underline">
+                Someone in custody now
+              </Link>
+              <Link href="/start/voluntary-interview#request" className="text-blue-800 underline">
+                Booked interview — request representation
+              </Link>
+              <Link href="/for-solicitors" className="text-blue-800 underline">
+                Solicitors — agency cover
+              </Link>
+            </div>
           </section>
 
           <div className="mt-10 space-y-8">

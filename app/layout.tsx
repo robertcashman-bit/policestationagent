@@ -11,6 +11,7 @@ import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { GoogleTagManager, GoogleTagManagerNoScript } from "@/components/GoogleTagManager";
 import { MobileStickyContactBar } from "@/components/conversion/MobileStickyContactBar";
 import { ConversionEventListener } from "@/components/conversion/ConversionEventListener";
+import { EnquiryAttributionTracker } from "@/components/EnquiryAttributionTracker";
 import InternalLinkInterceptor from "@/components/InternalLinkInterceptor";
 import ComplianceStrip from "@/components/compliance/ComplianceStrip";
 import NotPoliceScopeBanner from "@/components/compliance/NotPoliceScopeBanner";
@@ -538,6 +539,9 @@ footer.bg-primary-dark{background-color:#1d4ed8!important;color:#fff!important}
         <CookieBanner />
         <Suspense fallback={null}>
           <GoogleAnalytics />
+        </Suspense>
+        <Suspense fallback={null}>
+          <EnquiryAttributionTracker />
         </Suspense>
         {/* Chatbot Assistant — deferred until interaction or idle */}
         <LazyChatbot />

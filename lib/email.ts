@@ -1,4 +1,8 @@
 import { Resend } from "resend";
+import {
+  formatAttributionForEmail,
+  type EnquiryAttribution,
+} from "@/lib/enquiry/attribution";
 
 export interface ContactFormNotificationPayload {
   name: string;
@@ -15,6 +19,7 @@ export interface ContactFormNotificationPayload {
   supportNeeds: string | null;
   /** Triage label from the form — not an auth claim. */
   enquiryKind?: "admin" | "attendance";
+  attribution?: EnquiryAttribution | null;
 }
 
 function buildEmailBody(payload: ContactFormNotificationPayload): string {
@@ -38,6 +43,9 @@ function buildEmailBody(payload: ContactFormNotificationPayload): string {
     }
     if (payload.supportNeeds?.trim()) {
       lines.push("", "--- Support / vulnerability ---", payload.supportNeeds.trim());
+    }
+    if (payload.attribution) {
+      lines.push("", formatAttributionForEmail(payload.attribution));
     }
     return lines.join("\n");
   }
@@ -69,6 +77,10 @@ function buildEmailBody(payload: ContactFormNotificationPayload): string {
 
   if (payload.supportNeeds?.trim()) {
     lines.push("", "--- Support / vulnerability ---", payload.supportNeeds.trim());
+  }
+
+  if (payload.attribution) {
+    lines.push("", formatAttributionForEmail(payload.attribution));
   }
 
   return lines.join("\n");

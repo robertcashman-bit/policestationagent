@@ -82,6 +82,9 @@ describe("contact config", () => {
     expect(form).toContain("instructing_solicitor");
     expect(form).toContain("Immediate family member");
     expect(form).not.toContain("Family member or friend");
+    expect(form).not.toContain("Other administrative enquiry");
+    expect(form).toContain("admin-audience-gate");
+    expect(form).toContain("POLICE_OR_CUSTODY_ENQUIRY");
     expect(form).toContain("required={!isAdmin}");
     expect(form).toContain("Send written enquiry");
     expect(form).toContain('enquiryKind: isAdmin ? "admin" : "attendance"');
@@ -115,6 +118,9 @@ describe("contact config", () => {
     expect(route).toContain("enquiryKind,");
     expect(route).toContain("Do not map admin solicitor roles");
     expect(route).toContain('enquiryKind = isAdminEnquiry ? "admin" : "attendance"');
+    expect(route).toContain("detectPoliceConfusion");
+    expect(route).toContain("POLICE_OR_CUSTODY_ENQUIRY");
+    expect(route).toContain("sanitizeEnquiryAttribution");
   });
 
   it("admin email subject avoids N/A station fillers", () => {
