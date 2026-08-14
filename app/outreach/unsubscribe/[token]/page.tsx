@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { addSuppression, getProspectByEmail, saveProspect } from '@/lib/firm-outreach/storage';
+import { unsubscribeOutreachContact } from '@/lib/firm-outreach/storage';
 import { verifyUnsubscribeToken } from '@/lib/firm-outreach/outreach/unsubscribe-token';
 import type { Metadata } from 'next';
 
@@ -39,13 +39,7 @@ export default async function UnsubscribePage({
     );
   }
 
-  await addSuppression(payload.email, 'unsubscribe');
-  const prospect = await getProspectByEmail(payload.email);
-  if (prospect) {
-    prospect.status = 'unsubscribed';
-    prospect.updatedAt = new Date().toISOString();
-    await saveProspect(prospect);
-  }
+  await unsubscribeOutreachContact(payload.email);
 
   return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
