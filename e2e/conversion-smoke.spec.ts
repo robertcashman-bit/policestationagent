@@ -14,11 +14,10 @@ const KENT_PAGES = [
 test.describe('Conversion smoke — desktop', () => {
   test('homepage audience selector visible above the fold', async ({ page }) => {
     await page.goto('/');
-    const selector = page.getByRole('heading', { name: 'Who are you?' });
-    await expect(selector).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Choose your pathway' })).toBeVisible();
     await expect(page.getByRole('link', { name: /someone is in custody now/i })).toBeVisible();
     await expect(page.getByRole('link', { name: /voluntary interview booked/i })).toBeVisible();
-    await expect(page.getByRole('link', { name: /law firm needing cover/i })).toBeVisible();
+    await expect(page.getByRole('link', { name: /solicitor needing agent cover/i })).toBeVisible();
   });
 
   test('homepage proof bar and firm section present', async ({ page }) => {
@@ -49,68 +48,65 @@ test.describe('Conversion smoke — desktop', () => {
     expect(appConsoleErrors).toHaveLength(0);
   });
 
-  test('for-solicitors firm enquiry form reachable', async ({ page }) => {
-    await page.goto('/for-solicitors#firm-enquiry');
-    await expect(page.locator('#firm-enquiry')).toBeVisible();
-    await expect(page.getByRole('heading', { name: /firm enquiry/i })).toBeVisible();
-    await expect(page.locator('form')).toBeVisible();
+  test('for-solicitors agency instructions form reachable', async ({ page }) => {
+    await page.goto('/for-solicitors#agency-instructions');
+    await expect(page.locator('#agency-instructions')).toBeVisible();
+    await expect(page.getByRole('heading', { name: /Send agency instructions|agency/i }).first()).toBeVisible();
+    await expect(page.locator('#agency-instructions form')).toBeVisible();
+    await expect(page.locator('a[href="tel:01732247427"]').first()).toBeVisible();
   });
 
-  test('firm enquiry form POSTs to /api/contact and shows success', async ({ page }) => {
-    // Intercept the contact API so the test never hits real email/storage.
-    let postBody: Record<string, unknown> | null = null;
+  test('agency instructions form POSTs to /api/enquiry/agency and shows success', async ({ page }) => {
     let postMethod: string | null = null;
-    await page.route('**/api/contact', async (route) => {
+    let postedFirm = '';
+    await page.route('**/api/enquiry/agency', async (route) => {
       const request = route.request();
       postMethod = request.method();
-      try {
-        postBody = request.postDataJSON();
-      } catch {
-        postBody = null;
-      }
+      const data = request.postDataBuffer();
+      postedFirm = data?.toString('utf8') ?? '';
       await route.fulfill({
         status: 200,
         contentType: 'application/json',
-        body: JSON.stringify({ success: true }),
+        body: JSON.stringify({ success: true, reference: 'AGY-SMOKE' }),
       });
     });
 
-    await page.goto('/for-solicitors#firm-enquiry');
+    await page.goto('/for-solicitors#agency-instructions');
+    const form = page.locator('#agency-instructions form');
+    await form.getByLabel(/Firm name/i).fill('Smoke Test LLP');
+    await form.getByLabel(/Instructing solicitor/i).fill('Test Solicitor');
+    await form.getByLabel(/Work email/i).fill('smoke@example-llp.co.uk');
+    await form.getByLabel(/Direct telephone/i).fill('02071234567');
+    await form.getByRole('button', { name: 'Continue' }).click();
+    await form.getByLabel(/Client name/i).fill('Test Client');
+    await form.getByLabel(/Police station/i).fill('Maidstone');
+    await form.getByLabel(/Alleged offence/i).fill('Smoke agency cover request.');
+    await form.getByRole('button', { name: 'Continue' }).click();
+    for (const label of [
+      /firm has authority to provide this information/i,
+      /subject to conflict and availability checks/i,
+      /No attendance is accepted until expressly confirmed/i,
+      /responsible for funding authority/i,
+      /Rates and terms have been reviewed/i,
+    ]) {
+      await form.getByText(label).click();
+    }
+    await form.getByRole('button', { name: /Send instructions/i }).click();
 
-    const form = page.locator('#firm-enquiry form');
-    await form.locator('#name').fill('Test Solicitor');
-    await form.locator('#contactNumber').fill('01732 247427');
-    // Solicitor role is the default on this page, so client fields are shown.
-    await form.locator('#clientName').fill('Test Client');
-    await form.locator('#clientDOB').fill('1990-01-01');
-    await form.locator('#policeStation').fill('Maidstone');
-    await form.locator('#interviewDate').fill('2030-01-01');
-    await form.locator('#interviewTime').fill('10:00');
-    await form.locator('#briefDetails').fill('Firm cover request for a scheduled voluntary interview.');
-    // Two required confirmation checkboxes (non-urgent + consent).
-    await form.locator('input[type="checkbox"]').nth(0).check();
-    await form.locator('input[type="checkbox"]').nth(1).check();
-
-    await form.getByRole('button', { name: /submit request/i }).click();
-
-    // The POST must have fired with the firm-instruction defaults intact.
     await expect.poll(() => postMethod).toBe('POST');
-    expect(postBody).toMatchObject({
-      role: 'solicitor',
-      attendanceType: 'solicitor-instruction',
-      name: 'Test Solicitor',
-      policeStation: 'Maidstone',
-    });
-    await expect(page.getByText(/your request has been submitted successfully/i)).toBeVisible();
+    expect(postedFirm).toMatch(/Smoke Test LLP/);
+    expect(postedFirm).toMatch(/Maidstone/);
+    await expect(page.getByText(/Instructions received for review/i)).toBeVisible();
   });
 
-  test('testimonials section appears near top (before blog carousel)', async ({ page }) => {
+  test('homepage shows pathway selector before secondary marketing content', async ({ page }) => {
     await page.goto('/');
-    const testimonials = page.locator('#testimonials');
-    await expect(testimonials).toBeVisible();
-    await expect(
-      page.getByRole('heading', { name: /trusted by clients across kent/i }).first(),
-    ).toBeVisible();
+    const pathway = page.getByRole('heading', { name: 'Choose your pathway' });
+    await expect(pathway).toBeVisible();
+    // Pathway block should appear in the first viewport / hero — not buried below the fold only.
+    const box = await pathway.boundingBox();
+    expect(box).toBeTruthy();
+    expect(box!.y).toBeLessThan(900);
   });
 
   test('homepage exposes LegalService and LocalBusiness JSON-LD', async ({ page }) => {
@@ -152,11 +148,14 @@ test.describe('Conversion smoke — desktop', () => {
   });
 
   for (const path of KENT_PAGES) {
-    test(`Kent page loads with CTA: ${path}`, async ({ page }) => {
+    test(`Kent page loads with contact/pathway CTA (no firm tel): ${path}`, async ({ page }) => {
       const response = await page.goto(path);
       expect(response?.status()).toBeLessThan(400);
-      const telLink = page.locator('a[href^="tel:"]').first();
-      await expect(telLink).toBeVisible();
+      const main = page.locator('#main-content');
+      await expect(main).toBeVisible();
+      // Local covers must not publish the firm voice line — route via Contact.
+      await expect(page.locator('a[href="tel:01732247427"]')).toHaveCount(0);
+      await expect(main.getByRole('link', { name: /Contact|what we do/i }).first()).toBeVisible();
     });
   }
 });
@@ -191,31 +190,39 @@ test.describe('Accessibility (axe — serious/critical only)', () => {
 });
 
 test.describe('Conversion smoke — mobile viewport', () => {
-  test('sticky mobile CTA visible on homepage', async ({ page }) => {
+  test('sticky mobile pathway bar visible on homepage', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/');
-    const callBtn = page.locator('a[data-event="call_click"]').last();
-    const textBtn = page.locator('a[data-event="sms_click"]').last();
-    await expect(callBtn).toBeVisible();
-    await expect(textBtn).toBeVisible();
-    await expect(callBtn).toHaveText(/call/i);
-    await expect(textBtn).toHaveText(/text/i);
+    const bar = page.getByLabel('Enquiry pathways');
+    await expect(bar).toBeVisible();
+    await expect(bar.getByRole('link', { name: /Voluntary/i })).toBeVisible();
+    await expect(bar.getByRole('link', { name: /Custody/i })).toBeVisible();
+    await expect(bar.getByRole('link', { name: /Solicitors/i })).toBeVisible();
+    await expect(bar.locator('a[href^="tel:"]')).toHaveCount(0);
+    await expect(bar.locator('a[href^="sms:"]')).toHaveCount(0);
   });
 
-  test('sticky mobile CTA shows full phone and text numbers', async ({ page }) => {
+  test('sticky mobile pathways link to canonical routes', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/');
-    const callBtn = page.locator('a[data-event="call_click"]').last();
-    const textBtn = page.locator('a[data-event="sms_click"]').last();
-    await expect(callBtn).toContainText('01732 247427');
-    await expect(textBtn).toContainText('07535 494446');
-    await expect(callBtn).toHaveAttribute('href', 'tel:01732247427');
-    await expect(textBtn).toHaveAttribute('href', 'sms:07535494446');
+    const bar = page.getByLabel('Enquiry pathways');
+    await expect(bar.getByRole('link', { name: /Voluntary/i })).toHaveAttribute(
+      'href',
+      '/start/voluntary-interview#request',
+    );
+    await expect(bar.getByRole('link', { name: /Custody/i })).toHaveAttribute(
+      'href',
+      '/current-custody',
+    );
+    await expect(bar.getByRole('link', { name: /Solicitors/i })).toHaveAttribute(
+      'href',
+      '/for-solicitors',
+    );
   });
 
   test('audience selector visible on mobile', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/');
-    await expect(page.getByRole('heading', { name: 'Who are you?' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Choose your pathway' })).toBeVisible();
   });
 });
