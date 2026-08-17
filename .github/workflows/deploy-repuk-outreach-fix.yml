@@ -66,9 +66,13 @@ jobs:
       - name: Verify permanent fixes present
         working-directory: repuk
         run: |
+          # Historical health / reporting guards
           grep -q 'acceptedToday === 0' lib/firm-outreach/reporting/health-status.ts
           grep -q 'emailsAcceptedByProvider === 0' lib/firm-outreach/reporting/build-daily-report.ts
-          grep -q 'n <= 100' lib/firm-outreach/constants.ts
+          # Agent-cover / PSA-branded outreach must stay permanently disabled
+          grep -q 'AGENT_COVER_EMAILS_DISABLED = true' lib/firm-outreach/agent-cover-emails-disabled.ts
+          grep -q "OUTREACH_SEND_CAMPAIGN_IDS = \\['whatsapp_invite_v1'\\]" lib/firm-outreach/site-config.ts
+          grep -q 'areAgentCoverEmailsDisabled' lib/firm-outreach/outreach/send.ts
           echo "Fix markers OK"
 
       - name: Setup Node
