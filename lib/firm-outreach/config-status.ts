@@ -2,11 +2,13 @@ import { existsSync } from 'fs';
 import { getKV } from '@/lib/kv';
 import { BROCHURE_PUBLIC_PATH } from './brochure/load-attachment';
 import { countyAllowlist, dailySendCap, outreachEnabled, outreachRequireApproval } from './constants';
+import { arePsaOutreachEmailsDisabled } from './outreach-emails-disabled';
 import { getOutreachPauseSummary, isOutreachSendAllowed } from './pause-state';
 
 export async function getOutreachConfigStatus() {
   const pause = await getOutreachPauseSummary();
   const sendAllowed = await isOutreachSendAllowed();
+  const permanentlyDisabled = arePsaOutreachEmailsDisabled();
 
   return {
     kvConfigured: Boolean(getKV()),
@@ -15,6 +17,7 @@ export async function getOutreachConfigStatus() {
     dryRun: process.env.FIRM_OUTREACH_DRY_RUN === 'true',
     outreachEnabled: outreachEnabled(),
     sendEnabledEnv: process.env.FIRM_OUTREACH_SEND_ENABLED !== 'false',
+    permanentlyDisabled,
     sendAllowed,
     fromEmail: process.env.FIRM_OUTREACH_FROM_EMAIL?.trim() || null,
     digestEmail: process.env.FIRM_OUTREACH_DIGEST_EMAIL?.trim() || null,

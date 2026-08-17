@@ -1,6 +1,10 @@
 import { Resend } from 'resend';
 import { SITE_URL } from '@/config/site';
 import { loadBrochureAttachment } from '../brochure/load-attachment';
+import {
+  PSA_OUTREACH_EMAILS_DISABLED_REASON,
+  arePsaOutreachEmailsDisabled,
+} from '../outreach-emails-disabled';
 import { buildOutreachEmailHtml, OUTREACH_CONTACT_EMAIL, subjectForStep } from './templates';
 import { issueUnsubscribeToken } from './unsubscribe-token';
 import type { FirmProspect } from '../types';
@@ -28,6 +32,12 @@ export async function sendOutreachEmail(opts: {
   if (!email) return { ok: false, subject: '', error: 'no_email' };
 
   const subject = subjectForStep(opts.prospect, opts.step);
+
+  if (arePsaOutreachEmailsDisabled() && !opts.dryRun) {
+    console.warn('[firm-outreach blocked]', PSA_OUTREACH_EMAILS_DISABLED_REASON, email);
+    return { ok: false, subject, error: 'psa_outreach_emails_disabled' };
+  }
+
   const token = issueUnsubscribeToken(email);
   const unsubscribeUrl = `${SITE_URL}/outreach/unsubscribe/${encodeURIComponent(token)}`;
   const html = buildOutreachEmailHtml({

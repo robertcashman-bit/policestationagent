@@ -101,6 +101,7 @@ interface OutreachConfig {
   dryRun: boolean;
   outreachEnabled: boolean;
   sendEnabledEnv: boolean;
+  permanentlyDisabled?: boolean;
   sendAllowed: boolean;
   fromEmail: string | null;
   digestEmail: string | null;
@@ -708,6 +709,11 @@ export function FirmOutreachDashboard() {
   if (cfg && !cfg.resendConfigured) configWarnings.push('RESEND_API_KEY is not set — emails cannot send.');
   if (cfg && !cfg.brochureExists) configWarnings.push('Brochure PDF missing from public/outreach/.');
   if (cfg?.dryRun) configWarnings.push('FIRM_OUTREACH_DRY_RUN=true — sends are simulated.');
+  if (cfg?.permanentlyDisabled) {
+    configWarnings.push(
+      'PSA firm outreach emails are permanently disabled. Policestationrepuk outreach continues separately.',
+    );
+  }
   if (cfg && !cfg.sendEnabledEnv) configWarnings.push('FIRM_OUTREACH_SEND_ENABLED=false — automated sends disabled.');
   if (cfg?.envPaused) configWarnings.push('FIRM_OUTREACH_PAUSED=true in env — override via Vercel to resume.');
   if (cfg && !cfg.cronConfigured) configWarnings.push('CRON_SECRET not set — cron routes will reject.');

@@ -10,6 +10,10 @@ import {
   emptyOutreachActivityReport,
 } from '@/lib/firm-outreach/outreach/activity-report';
 import {
+  PSA_OUTREACH_EMAILS_DISABLED_REASON,
+  arePsaOutreachEmailsDisabled,
+} from '@/lib/firm-outreach/outreach-emails-disabled';
+import {
   getOutreachPauseSummary,
   setAdminPauseState,
 } from '@/lib/firm-outreach/pause-state';
@@ -24,6 +28,16 @@ import {
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 120;
+
+function outreachEmailsDisabledResponse() {
+  return NextResponse.json(
+    {
+      error: 'psa_outreach_emails_disabled',
+      message: PSA_OUTREACH_EMAILS_DISABLED_REASON,
+    },
+    { status: 409 },
+  );
+}
 
 async function buildStatusPayload(scope: 'summary' | 'full') {
   const config = await getOutreachConfigStatus();
@@ -159,6 +173,9 @@ export async function POST(request: Request) {
       if (!getKV()) {
         return NextResponse.json({ error: 'KV not configured' }, { status: 503 });
       }
+      if (arePsaOutreachEmailsDisabled() && body.paused === false) {
+        return outreachEmailsDisabledResponse();
+      }
       if (process.env.FIRM_OUTREACH_PAUSED === 'true') {
         return NextResponse.json(
           {
@@ -168,7 +185,12 @@ export async function POST(request: Request) {
           { status: 409 },
         );
       }
-      await setAdminPauseState(Boolean(body.paused));
+      try {
+        await setAdminPauseState(Boolean(body.paused));
+      } catch (err) {
+        const message = err instanceof Error ? err.message : String(err);
+        return NextResponse.json({ error: message }, { status: 409 });
+      }
       const pause = await getOutreachPauseSummary();
       const config = await getOutreachConfigStatus();
       return NextResponse.json({ ok: true, pause, sendEnabled: config.sendAllowed });
@@ -215,6 +237,9 @@ export async function POST(request: Request) {
     }
 
     if (body.action === 'run_send') {
+      if (arePsaOutreachEmailsDisabled() && !body.dryRun) {
+        return outreachEmailsDisabledResponse();
+      }
       if (!getKV()) {
         return NextResponse.json({ error: 'KV not configured' }, { status: 503 });
       }
@@ -257,11 +282,16 @@ export async function POST(request: Request) {
         sendDryRun: body.dryRun,
         forceLaaRefresh: body.forceLaaRefresh,
         skipDigest: true,
+        // Permanent PSA kill-switch: never send prospect emails from this site.
+        skipSend: arePsaOutreachEmailsDisabled() || undefined,
       });
       return NextResponse.json({ ok: true, pipeline: result, dryRun: Boolean(body.dryRun) });
     }
 
     if (body.action === 'send_kent_corrections') {
+      if (arePsaOutreachEmailsDisabled() && !body.dryRun) {
+        return outreachEmailsDisabledResponse();
+      }
       if (!getKV()) {
         return NextResponse.json({ error: 'KV not configured' }, { status: 503 });
       }
@@ -306,6 +336,9 @@ export async function POST(request: Request) {
     }
 
     if (body.action === 'bulk_send' && Array.isArray(body.prospectIds) && body.prospectIds.length > 0) {
+      if (arePsaOutreachEmailsDisabled() && !body.dryRun) {
+        return outreachEmailsDisabledResponse();
+      }
       const ids = body.prospectIds.map((id) => id.trim()).filter(Boolean);
       const result = await bulkSendProspects(ids, {
         dryRun: body.dryRun,
@@ -322,12 +355,19 @@ export async function POST(request: Request) {
     }
 
     if (body.action === 'manual_send' && body.prospectId?.trim()) {
+      if (arePsaOutreachEmailsDisabled() && !body.dryRun) {
+        return outreachEmailsDisabledResponse();
+      }
       const result = await manualSendProspect(body.prospectId.trim(), {
         dryRun: body.dryRun,
       });
       if (!result.ok) {
         const status =
-          result.error === 'not_found' ? 404 : result.error === 'suppressed' ? 409 : 400;
+          result.error === 'not_found'
+            ? 404
+            : result.error === 'suppressed' || result.error === 'psa_outreach_emails_disabled'
+              ? 409
+              : 400;
         return NextResponse.json({ error: result.error }, { status });
       }
       return NextResponse.json({

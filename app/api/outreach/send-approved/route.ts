@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { outreachSendEnabled } from '@/lib/firm-outreach/constants';
+import { arePsaOutreachEmailsDisabled } from '@/lib/firm-outreach/outreach-emails-disabled';
 import { notifyOutreachBatchSent } from '@/lib/firm-outreach/outreach/send-confirmation-email';
 import {
   finalizeSendApproval,
@@ -59,7 +60,7 @@ export async function POST(request: Request) {
     return redirectToResult(request, { detail });
   }
 
-  if (!outreachSendEnabled()) {
+  if (arePsaOutreachEmailsDisabled() || !outreachSendEnabled()) {
     await releaseSendApprovalClaim(approvalRef);
     return redirectToResult(request, { detail: 'send-disabled' });
   }

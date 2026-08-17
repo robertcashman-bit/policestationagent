@@ -1,0 +1,14 @@
+---
+description: PSA firm outreach emails are permanently off — never re-enable without an explicit user request. RepUK outreach stays on.
+alwaysApply: true
+---
+
+# Firm outreach emails — Police Station Agent
+
+**Do not send firm outreach emails from `policestationagent`.**
+
+- Permanent kill-switch: `lib/firm-outreach/outreach-emails-disabled.ts` (`PSA_OUTREACH_EMAILS_DISABLED = true`)
+- Prospect/firm sends (cron, admin manual/bulk, Kent corrections, approval links) must stay blocked
+- **Policestationrepuk** firm outreach remains active — do not disable that site
+- Do not set `FIRM_OUTREACH_FORCE_SEND=true` or flip the kill-switch to `false` unless the user explicitly asks to resume PSA outreach
+- Owner digests (to Rob) may still run; emails **to firms** must not

@@ -1,6 +1,10 @@
 import { dailySendCap } from '../constants';
 import { computeProspectPriority } from '../enrichment/scorer';
 import { normalizeEmail } from '../normalize';
+import {
+  PSA_OUTREACH_EMAILS_DISABLED_REASON,
+  arePsaOutreachEmailsDisabled,
+} from '../outreach-emails-disabled';
 import { resolveStatusWithQualification } from '../qualification';
 import {
   createSendRecord,
@@ -89,6 +93,10 @@ export async function manualSendProspect(
   prospectId: string,
   opts?: ManualSendOptions,
 ): Promise<AdminActionResult<{ subject: string; messageId?: string; dryRun: boolean }>> {
+  if (arePsaOutreachEmailsDisabled() && !opts?.dryRun) {
+    return { ok: false, error: 'psa_outreach_emails_disabled' };
+  }
+
   const prospect = await getProspect(prospectId);
   if (!prospect) return { ok: false, error: 'not_found' };
 
@@ -170,6 +178,19 @@ export async function bulkSendProspects(
   opts?: { dryRun?: boolean; limit?: number; respectDailyCap?: boolean },
 ): Promise<BulkSendResult> {
   const dryRun = opts?.dryRun ?? false;
+  if (arePsaOutreachEmailsDisabled() && !dryRun) {
+    return {
+      sent: 0,
+      skipped: prospectIds.length,
+      errors: 0,
+      results: prospectIds.map((prospectId) => ({
+        prospectId,
+        ok: false,
+        error: 'psa_outreach_emails_disabled',
+      })),
+    };
+  }
+
   const respectDailyCap = opts?.respectDailyCap ?? true;
   const date = new Date().toISOString().slice(0, 10);
   const cap = dailySendCap();

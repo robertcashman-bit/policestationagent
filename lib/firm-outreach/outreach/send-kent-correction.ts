@@ -1,6 +1,10 @@
 import { Resend } from 'resend';
 import { SITE_URL } from '@/config/site';
 import { loadBrochureAttachment } from '../brochure/load-attachment';
+import {
+  PSA_OUTREACH_EMAILS_DISABLED_REASON,
+  arePsaOutreachEmailsDisabled,
+} from '../outreach-emails-disabled';
 import type { FirmProspect } from '../types';
 import { buildKentCorrectionEmailHtml, KENT_CORRECTION_SUBJECT, OUTREACH_CONTACT_EMAIL } from './templates';
 import { issueUnsubscribeToken } from './unsubscribe-token';
@@ -27,6 +31,12 @@ export async function sendKentCorrectionEmail(opts: {
   if (!email) return { ok: false, subject: '', error: 'no_email' };
 
   const subject = KENT_CORRECTION_SUBJECT;
+
+  if (arePsaOutreachEmailsDisabled() && !opts.dryRun) {
+    console.warn('[firm-outreach kent-correction blocked]', PSA_OUTREACH_EMAILS_DISABLED_REASON, email);
+    return { ok: false, subject, error: 'psa_outreach_emails_disabled' };
+  }
+
   const token = issueUnsubscribeToken(email);
   const unsubscribeUrl = `${SITE_URL}/outreach/unsubscribe/${encodeURIComponent(token)}`;
   const html = buildKentCorrectionEmailHtml({ prospect: opts.prospect, unsubscribeUrl });
