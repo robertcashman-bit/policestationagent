@@ -1,0 +1,296 @@
+# Keep production on robertcashman-bit/Policestationrepuk master.
+#
+# The droid mirror runs "Ops — production outreach hold" every ~5 minutes and
+# re-promotes d79d2c6 onto the same Vercel project. This guard out-holds that
+# race: re-link to bit, promote tip, soak/re-promote for ~12 minutes, then run
+# outreach inventory + bounded send while the alias is ours.
+name: Ops — production source guard
+
+on:
+  schedule:
+    # Every 3 minutes — overlaps droid hold (:02/:07/…) windows.
+    - cron: '*/3 * * * *'
+  push:
+    branches: [master, main]
+    paths:
+      - '.github/workflows/ops-production-source-guard.yml'
+      - 'scripts/vercel-ignore-non-bit.sh'
+      - 'scripts/ops-wait-prod-bit-and-send.mjs'
+      - 'vercel.json'
+  workflow_dispatch:
+
+concurrency:
+  group: production-source-guard
+  # Do not cancel an in-flight hold — that is the whole point.
+  cancel-in-progress: false
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      actions: write
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_SCOPE: robert-cashmans-projects
+      BIT_ORG: robertcashman-bit
+      BIT_REPO: Policestationrepuk
+      BIT_REPO_ID: '1185472756'
+      BASE_URL: https://policestationrepuk.org
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel@41.4.0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Require secrets
+        run: |
+          if [ -z "${VERCEL_TOKEN:-}" ] || [ -z "${VERCEL_ORG_ID:-}" ] || [ -z "${VERCEL_PROJECT_ID:-}" ]; then
+            echo "VERCEL_TOKEN / VERCEL_ORG_ID / VERCEL_PROJECT_ID required"
+            exit 1
+          fi
+
+      - name: Resolve tip + ensure bit git link
+        id: prep
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          TIP=$(gh api "repos/${BIT_ORG}/${BIT_REPO}/commits/master" --jq .sha)
+          TIP_SHORT="${TIP:0:7}"
+          echo "tip=${TIP}" >> "$GITHUB_OUTPUT"
+          echo "tip_short=${TIP_SHORT}" >> "$GITHUB_OUTPUT"
+          echo "Bit master tip: ${TIP_SHORT}"
+
+          proj=$(curl -sS \
+            "https://api.vercel.com/v9/projects/${VERCEL_PROJECT_ID}?teamId=${VERCEL_ORG_ID}" \
+            -H "Authorization: Bearer ${VERCEL_TOKEN}")
+          LINK_ORG=$(echo "$proj" | jq -r '.link.org // .link.repoOwner // empty')
+          LINK_REPO=$(echo "$proj" | jq -r '.link.repo // .link.repoName // empty')
+          echo "Vercel git link: ${LINK_ORG}/${LINK_REPO}"
+          echo "$proj" | jq '{name, productionBranch, link: .link}'
+
+          if [ "$LINK_ORG" != "$BIT_ORG" ] || [ "$LINK_REPO" != "$BIT_REPO" ]; then
+            echo "Re-linking project to ${BIT_ORG}/${BIT_REPO}"
+            curl -sS -w "\nHTTP %{http_code}\n" -X DELETE \
+              "https://api.vercel.com/v9/projects/${VERCEL_PROJECT_ID}/link?teamId=${VERCEL_ORG_ID}" \
+              -H "Authorization: Bearer ${VERCEL_TOKEN}" || true
+            linked=false
+            for body in \
+              "{\"type\":\"github\",\"org\":\"${BIT_ORG}\",\"repo\":\"${BIT_REPO}\"}" \
+              "{\"type\":\"github\",\"repo\":\"${BIT_ORG}/${BIT_REPO}\"}" \
+              "{\"type\":\"github\",\"repoId\":${BIT_REPO_ID}}"; do
+              resp=$(curl -sS -w "\nHTTP %{http_code}\n" -X POST \
+                "https://api.vercel.com/v9/projects/${VERCEL_PROJECT_ID}/link?teamId=${VERCEL_ORG_ID}" \
+                -H "Authorization: Bearer ${VERCEL_TOKEN}" \
+                -H "Content-Type: application/json" \
+                -d "$body")
+              echo "$resp"
+              if echo "$resp" | tail -1 | grep -qE 'HTTP (200|201)'; then
+                linked=true
+                break
+              fi
+            done
+            if [ "$linked" != "true" ]; then
+              echo "Git link failed — grant Vercel GitHub app access to ${BIT_ORG}/${BIT_REPO}"
+              exit 1
+            fi
+            curl -sS -X PATCH \
+              "https://api.vercel.com/v9/projects/${VERCEL_PROJECT_ID}?teamId=${VERCEL_ORG_ID}" \
+              -H "Authorization: Bearer ${VERCEL_TOKEN}" \
+              -H "Content-Type: application/json" \
+              -d '{"productionBranch":"master"}' | jq '{name, productionBranch, link}'
+          fi
+
+      - name: Promote tip and hold against droid reclaim
+        id: hold
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          set -euo pipefail
+          TIP="${{ steps.prep.outputs.tip }}"
+          TIP_SHORT="${{ steps.prep.outputs.tip_short }}"
+          API="https://api.vercel.com"
+          AUTH="Authorization: Bearer ${VERCEL_TOKEN}"
+          HOLD_SECS=720
+          STABLE_NEEDED=90
+          sent_flag=0
+
+          find_url() {
+            curl -sS "${API}/v6/deployments?projectId=${VERCEL_PROJECT_ID}&teamId=${VERCEL_ORG_ID}&limit=40" \
+              -H "${AUTH}" \
+              | jq -r --arg sha "$TIP" '.deployments[] | select(.meta.githubCommitSha == $sha) | .url' \
+              | head -1
+          }
+
+          ensure_ready_url() {
+            # Logs go to stderr; only the final https URL is printed on stdout.
+            URL="$(find_url || true)"
+            if [ -z "$URL" ]; then
+              echo "No deployment for ${TIP}; triggering git production build" >&2
+              RESP=$(curl -sS -X POST "${API}/v13/deployments?teamId=${VERCEL_ORG_ID}" \
+                -H "${AUTH}" \
+                -H "Content-Type: application/json" \
+                -d "{\"name\":\"policestationrepuk-new\",\"project\":\"${VERCEL_PROJECT_ID}\",\"target\":\"production\",\"gitSource\":{\"type\":\"github\",\"repoId\":${BIT_REPO_ID},\"ref\":\"master\",\"sha\":\"${TIP}\"}}")
+              echo "$RESP" | jq '{id, url, readyState, error: .error}' >&2 || true
+              URL=$(echo "$RESP" | jq -r '.url // empty')
+            fi
+            if [ -z "$URL" ]; then
+              echo "Failed to locate/trigger deployment" >&2
+              return 1
+            fi
+            DEPLOY_URL="https://${URL#https://}"
+            HOST="${DEPLOY_URL#https://}"
+            for i in $(seq 1 40); do
+              STATE=$(curl -sS "${API}/v13/deployments/${HOST}?teamId=${VERCEL_ORG_ID}" \
+                -H "${AUTH}" | jq -r '.readyState // "UNKNOWN"')
+              echo "deployment state=${STATE}" >&2
+              if [ "$STATE" = "READY" ]; then
+                printf '%s\n' "$DEPLOY_URL"
+                return 0
+              fi
+              if [ "$STATE" = "ERROR" ] || [ "$STATE" = "CANCELED" ]; then
+                echo "Deployment failed: ${STATE}" >&2
+                return 1
+              fi
+              sleep 15
+            done
+            echo "Timed out waiting for READY" >&2
+            return 1
+          }
+
+          promote() {
+            local url="$1"
+            set +e
+            promo_out=$(vercel promote "$url" --yes --scope="$VERCEL_SCOPE" --timeout=15m --token="$VERCEL_TOKEN" 2>&1)
+            promo_code=$?
+            set -e
+            echo "$promo_out"
+            if [ "$promo_code" -ne 0 ] && ! echo "$promo_out" | grep -qi 'already the current production'; then
+              return "$promo_code"
+            fi
+            return 0
+          }
+
+          DEPLOY_URL="$(ensure_ready_url)"
+          echo "Holding ${DEPLOY_URL} as production for ${HOLD_SECS}s (want ${TIP_SHORT})"
+          promote "$DEPLOY_URL"
+
+          # Immediate Buffer sibling heal — do not wait for 90s soak / outreach.
+          if [ -n "${CRON_SECRET:-}" ]; then
+            echo "== early /api/cron/buffer-sibling-repair =="
+            code=$(curl -sS -m 290 -o /tmp/early-sibling.json -w '%{http_code}' \
+              -H "Authorization: Bearer ${CRON_SECRET}" \
+              -H "x-cron-secret: ${CRON_SECRET}" \
+              "$BASE_URL/api/cron/buffer-sibling-repair" || echo 000)
+            echo "HTTP $code"
+            python3 -c 'import json;d=json.load(open("/tmp/early-sibling.json")); print({k:d.get(k) for k in ("ok","date","expected","actual","error")}); print("repairs", [{k:r.get(k) for k in ("kind","target","attempted","verified","summary")} for r in (d.get("repairs") or [])])' || head -c 800 /tmp/early-sibling.json
+            echo
+          else
+            echo "CRON_SECRET missing — skip early sibling repair"
+          fi
+
+          start=$(date +%s)
+          stable_since=0
+          outreach_done=0
+          while [ $(( $(date +%s) - start )) -lt "$HOLD_SECS" ]; do
+            CODE=$(curl -sS -o /tmp/health.json -w "%{http_code}" "$BASE_URL/api/health" || echo "000")
+            VER=$(jq -r '.version // empty' /tmp/health.json 2>/dev/null || true)
+            AH=$(curl -sS -o /dev/null -w "%{http_code}" "$BASE_URL/api/cron/firm-outreach-autoheal" || echo 000)
+            echo "hold t=$(( $(date +%s) - start ))s health=${CODE} version=${VER} autoheal=${AH}"
+
+            if [ "$CODE" = "200" ] && [ "$VER" = "$TIP_SHORT" ] && [ "$AH" != "404" ]; then
+              if [ "$stable_since" -eq 0 ]; then
+                stable_since=$(date +%s)
+              fi
+              stable_for=$(( $(date +%s) - stable_since ))
+              if [ "$stable_for" -ge "$STABLE_NEEDED" ] && [ "$outreach_done" -eq 0 ]; then
+                echo "stable_for=${stable_for}s — running outreach inventory + send window"
+                echo "stable=true" >> "$GITHUB_OUTPUT"
+                echo "ready_for_send=true" >> "$GITHUB_OUTPUT"
+                outreach_done=1
+                # Break early into send step; continue hold after via next scheduled run.
+                exit 0
+              fi
+            else
+              stable_since=0
+              echo "Drift/missing autoheal — re-promoting bit tip"
+              promote "$DEPLOY_URL" || true
+            fi
+            sleep 20
+          done
+
+          VER=$(curl -sS "$BASE_URL/api/health" | jq -r '.version // empty')
+          if [ "$VER" = "$TIP_SHORT" ]; then
+            echo "stable=true" >> "$GITHUB_OUTPUT"
+            echo "ready_for_send=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "Could not hold production on ${TIP_SHORT} (last=${VER})"
+          echo "stable=false" >> "$GITHUB_OUTPUT"
+          exit 1
+
+      - name: Inventory kick + bounded dual-campaign send
+        if: steps.hold.outputs.ready_for_send == 'true'
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          FIRM_OUTREACH_BOOTSTRAP_SECRET: ${{ secrets.FIRM_OUTREACH_BOOTSTRAP_SECRET }}
+          WANT_TIP: ${{ steps.prep.outputs.tip_short }}
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          cron = (os.environ.get('CRON_SECRET') or '').strip()
+          boot = (os.environ.get('FIRM_OUTREACH_BOOTSTRAP_SECRET') or '').strip()
+          Path('/tmp/outreach-bootstrap.secret').write_text(boot + '\n')
+          Path('/tmp/outreach-cron.secret').write_text(cron + '\n')
+          print(f'auth cron_len={len(cron)} bootstrap_len={len(boot)}')
+          if not cron and not boot:
+              raise SystemExit('Missing CRON_SECRET / FIRM_OUTREACH_BOOTSTRAP_SECRET')
+          PY
+
+          export CRON_SECRET FIRM_OUTREACH_BOOTSTRAP_SECRET
+
+          AUTH_HEADER=()
+          if [ -n "${CRON_SECRET}" ]; then
+            AUTH_HEADER=(-H "Authorization: Bearer ${CRON_SECRET}" -H "x-cron-secret: ${CRON_SECRET}")
+          else
+            AUTH_HEADER=(-H "x-firm-outreach-bootstrap-secret: ${FIRM_OUTREACH_BOOTSTRAP_SECRET}")
+          fi
+
+          # Heal Buffer sibling quotas FIRST — outreach inventory can burn the job timeout.
+          echo "== /api/cron/buffer-sibling-repair =="
+          code=$(curl -sS -m 290 -o /tmp/step.json -w '%{http_code}' "${AUTH_HEADER[@]}" \
+            "$BASE_URL/api/cron/buffer-sibling-repair" || echo 000)
+          echo "HTTP $code"
+          python3 -c 'import json;d=json.load(open("/tmp/step.json")); print({k:d.get(k) for k in ("ok","date","expected","actual","resolvedIncidents","error")}); print("repairs", [{k:r.get(k) for k in ("kind","target","attempted","verified","summary")} for r in (d.get("repairs") or [])])' || head -c 800 /tmp/step.json
+          echo
+
+          # Fast path: already stable; script still re-checks briefly then sends.
+          MAX_WAIT_MS=120000 node scripts/ops-wait-prod-bit-and-send.mjs \
+            --tip="${WANT_TIP}" --limit=45 | tee /tmp/outreach-send-window.log
+
+          for path in \
+            '/api/cron/firm-outreach-psa-sync?limit=300' \
+            '/api/cron/firm-outreach-discovery' \
+            '/api/cron/firm-outreach-bootstrap?seedAgentCover=1&campaignId=agent_cover_kent_v1&batches=2&limit=60' \
+            '/api/cron/firm-outreach-send?limit=45'
+          do
+            echo "== $path =="
+            code=$(curl -sS -m 180 -o /tmp/step.json -w '%{http_code}' "${AUTH_HEADER[@]}" "$BASE_URL$path" || echo 000)
+            echo "HTTP $code"
+            python3 -c 'import json;d=json.load(open("/tmp/step.json")); print({k:d.get(k) for k in ("ok","mode","accepted","skipped","reason","error")}); s=d.get("send") or {}; print({k:s.get(k) for k in ("accepted","sent","queued","skipReasons","runId")})' || head -c 400 /tmp/step.json
+            echo
+          done
+
+          curl -sS "$BASE_URL/api/health"
+          echo

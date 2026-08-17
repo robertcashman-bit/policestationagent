@@ -1,0 +1,608 @@
+import Image from 'next/image';
+import Link from 'next/link';
+import { Breadcrumbs } from '@/components/Breadcrumbs';
+import {
+  CUSTODYNOTE_BRAND_NAME,
+  CUSTODYNOTE_DOWNLOAD_CTA,
+  CUSTODYNOTE_DOWNLOAD_HREF,
+  CUSTODYNOTE_CHECKLIST_HREF,
+  CUSTODYNOTE_TOOLS_HREF,
+  CUSTODYNOTE_APPS_DETAIL,
+  CUSTODYNOTE_APPS_LINE,
+  CUSTODYNOTE_DOWNLOAD_APPS_CTA,
+  CUSTODYNOTE_FREE_LABEL,
+  CUSTODYNOTE_BETA_REASON,
+  CUSTODYNOTE_PLATFORM_LINE,
+  CUSTODYNOTE_PRICING_HREF,
+  CUSTODYNOTE_SHORT_DESCRIPTION,
+  CUSTODYNOTE_TAGLINE,
+  CUSTODYNOTE_VERSION,
+} from '@/lib/custodynote-promo';
+import { buildMetadata } from '@/lib/seo';
+
+export const metadata = buildMetadata({
+  title: `${CUSTODYNOTE_BRAND_NAME} — Free during beta | Police station attendance notes`,
+  description:
+    `${CUSTODYNOTE_BRAND_NAME}: PACE-aligned desktop software for criminal solicitors and accredited police station reps — structured custody, voluntary and telephone notes, PDF export, LAA billing fields, offline-first. ${CUSTODYNOTE_PLATFORM_LINE}. ${CUSTODYNOTE_FREE_LABEL} — ${CUSTODYNOTE_BETA_REASON}`,
+  path: '/CustodyNote',
+});
+
+const CUSTODYNOTE_PRICING = CUSTODYNOTE_PRICING_HREF;
+const CUSTODYNOTE_DOWNLOAD = CUSTODYNOTE_DOWNLOAD_HREF;
+const APP_VERSION = CUSTODYNOTE_VERSION;
+
+const RECORD_TYPES = [
+  {
+    name: 'Attendance',
+    subtitle: 'Full attendance form',
+    desc: 'Complete police station attendance record with all 16 sections — from arrival through to billing.',
+    detail: '16 sections',
+  },
+  {
+    name: 'Telephone Advice',
+    subtitle: 'INVB / Telephone',
+    desc: 'Streamlined form for telephone advice sessions with LAA code support built in.',
+    detail: 'LAA code support',
+  },
+  {
+    name: 'Quick Capture',
+    subtitle: 'Grab details on the go',
+    desc: 'Rapid note-taking when you need to capture essential details quickly.',
+    detail: 'Fast entry',
+  },
+];
+
+const FEATURE_CARDS = [
+  {
+    name: 'Structured records',
+    desc: 'Purpose-built workflows for full attendances, telephone advice, and rapid note capture so you are not adapting generic Word templates mid-job.',
+  },
+  {
+    name: 'PDF-ready output',
+    desc: 'Turn working notes into a clean PDF record you can save, print, or send to the instructing firm without another rewrite.',
+  },
+  {
+    name: 'Billing and firm admin',
+    desc: 'Keep fee codes, time recording, declarations, and firm-level billing details together with the case record instead of splitting them across apps.',
+  },
+];
+
+const SCREENSHOTS = [
+  {
+    src: '/images/custodynote/custodynote-app-dashboard.png',
+    title: 'Dashboard — one screen, every workflow',
+    desc: 'Launch a Custody Attendance, Voluntary Attendance, Telephone Advice, Quick Capture, or Quick Email — all from the main dashboard.',
+  },
+  {
+    src: '/images/custodynote/cn-attendance-form.png',
+    title: 'Case Reference & Arrival',
+    desc: 'Section 1 of 16: structured fields for attendance type, file reference, instruction details, and arrival time — with every section just one tab away.',
+  },
+  {
+    src: '/images/custodynote/cn-custody-record.png',
+    title: 'Custody Record',
+    desc: 'Section 3: capture custody number, custody record review, and client details from the custody record — all structured and searchable.',
+  },
+] as const;
+
+const EXTRA_SCREENSHOTS = [
+  {
+    src: '/images/custodynote/cn-disclosure.png',
+    title: 'Offences & Disclosure',
+    desc: 'Section 4: matter type selection, offence details, date qualifiers, and mode of trial — mapped to LAA requirements.',
+  },
+  {
+    src: '/images/custodynote/cn-interview.png',
+    title: 'Consultation checklist',
+    desc: 'Section 6: structured compliance checklist for conflict checks, confidentiality, free representation advice, client welfare, and custody record review.',
+  },
+] as const;
+
+const FORM_SECTIONS = [
+  'Case Reference & Arrival',
+  'Journey to Station',
+  'Custody Record',
+  'Offences',
+  'Disclosure & Evidence',
+  'Consultation',
+  'Interview',
+  'Outcome',
+  'Time Recording & Fees',
+  'LAA Declaration',
+  'Admin & Billing',
+  'Consents & Retainer',
+  'Third Party Authority',
+  'Authorities',
+  'Communications Log',
+  'Supervisor Review',
+];
+
+const LAA_FEATURES = [
+  'LAA outcome codes, stage reached & fee codes built in',
+  'Structured notes mapped to LAA requirements',
+  'Sufficient benefit test',
+  'PACE reviews (1st / 2nd / 3rd)',
+  'Fee rates updated to 2025 — £320 fixed fee, £650 escape',
+  'DSCC PIN included in PDF export',
+  'Client and fee earner declarations',
+  'Automatic escape fee detection',
+  'Editable fee rates',
+  'Local encrypted backup of all records',
+];
+
+const SECURITY_FEATURES = [
+  {
+    title: 'Encrypted Backup',
+    desc: 'All records are encrypted at rest and in transit. Your client data is protected at every stage.',
+  },
+  {
+    title: 'Fully Offline',
+    desc: 'Works without internet — perfect for police station custody areas with no signal. No connection required.',
+  },
+  {
+    title: 'Your Data, Your Machine',
+    desc: 'Records stay on your device. No cloud dependency required. You control where your data lives.',
+  },
+  {
+    title: 'Cloud backup available',
+    desc: 'Optional cloud backup is available alongside the core app, while the main workflow remains fully usable on your own machine.',
+  },
+];
+
+const BILLING_FEATURES = [
+  {
+    title: 'Firm Tracking & Billing',
+    desc: 'Track which firm instructed you and manage billing per firm. See at a glance what you are owed.',
+  },
+  {
+    title: 'Bill Every Firm Accurately',
+    desc: 'Automatic time tracking and fee calculation based on LAA rates. No more spreadsheets or guesswork.',
+  },
+  {
+    title: 'Reports & Analytics',
+    desc: 'Generate reports for your attendances, earnings, and firm breakdown. Understand your business at a glance.',
+  },
+  {
+    title: 'Save Hours Every Week',
+    desc: 'Structured forms mean less time writing up notes and more time for clients. One form, one workflow.',
+  },
+  {
+    title: 'PDF Export',
+    desc: 'Export attendance records as professional PDF documents — ready to send to firms or archive.',
+  },
+];
+
+const PRICING_FEATURES = [
+  'Full attendance notes with all 16 sections',
+  'Telephone advice & quick capture modes',
+  'LAA-ready with built-in codes & declarations',
+  'Secure & offline — works without internet',
+  'PDF export with DSCC PIN',
+  'Firm tracking & billing',
+  'Reports & analytics',
+  'Local encrypted backup included',
+];
+
+export default function CustodyNotePage() {
+  return (
+    <>
+      <section className="bg-[var(--navy)] py-10 sm:py-14">
+        <div className="page-container !py-0">
+          <Breadcrumbs
+            light
+            items={[
+              { label: 'Home', href: '/' },
+              { label: CUSTODYNOTE_BRAND_NAME },
+            ]}
+          />
+          <div className="mb-4 mt-3 flex flex-wrap items-center gap-2">
+            <span className="inline-flex items-center rounded-full border border-white bg-[var(--navy-light)] px-3 py-1 text-xs font-medium text-white">
+              Available Now
+            </span>
+            <span className="inline-flex items-center rounded-full border border-white bg-[var(--navy-light)] px-3 py-1 text-xs font-medium text-white">
+              Windows PC &amp; Mac
+            </span>
+            <span className="inline-flex items-center rounded-full bg-green-600 px-3 py-1 text-xs font-bold uppercase tracking-wide text-white">
+              {CUSTODYNOTE_FREE_LABEL}
+            </span>
+          </div>
+
+          <h1 className="text-h1 text-white">
+            {CUSTODYNOTE_TAGLINE}
+          </h1>
+
+          <p className="mt-3 max-w-2xl text-lg leading-relaxed text-white">
+            {CUSTODYNOTE_BRAND_NAME} is {CUSTODYNOTE_APPS_LINE.toLowerCase()} for criminal defence solicitors
+            and accredited police station representatives. {CUSTODYNOTE_SHORT_DESCRIPTION} Disclosure →
+            advice → interview → outcome in one structured record — offline at the custody desk, PDF for
+            the firm file, LAA-oriented billing fields built in.
+          </p>
+
+          <div className="mt-6 flex flex-wrap items-center gap-3">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-white bg-[var(--navy-light)] px-3 py-1.5 text-xs font-medium text-white">
+              <span className="text-green-300">✓</span> Supports LAA codes
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-white bg-[var(--navy-light)] px-3 py-1.5 text-xs font-medium text-white">
+              <span className="text-green-300">✓</span> Works offline
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-white bg-[var(--navy-light)] px-3 py-1.5 text-xs font-medium text-white">
+              <span className="text-green-300">✓</span> Encrypted backup
+            </span>
+          </div>
+
+          <div className="mt-8 rounded-[var(--radius-lg)] border-2 border-[var(--gold)] bg-[var(--navy-light)] p-5">
+            <p className="text-sm font-semibold uppercase tracking-wider text-[var(--gold)]">
+              Public beta — free while we test
+            </p>
+            <p className="mt-2 text-2xl font-extrabold text-white sm:text-3xl">
+              {CUSTODYNOTE_FREE_LABEL}
+            </p>
+            <p className="mt-2 text-sm text-white/85">
+              {CUSTODYNOTE_BETA_REASON} No credit card required.
+            </p>
+          </div>
+
+          <div className="mt-8 flex flex-wrap gap-3">
+            <a
+              href={CUSTODYNOTE_DOWNLOAD}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-gold inline-flex min-h-[44px] items-center no-underline"
+            >
+              {CUSTODYNOTE_DOWNLOAD_CTA} →
+            </a>
+            <a
+              href={CUSTODYNOTE_PRICING}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-outline inline-flex min-h-[44px] items-center !border-white !text-white no-underline hover:!bg-white hover:!text-[var(--navy)]"
+            >
+              View Pricing
+            </a>
+          </div>
+          <p className="mt-3 text-xs text-slate-300">
+            {CUSTODYNOTE_PLATFORM_LINE} · {CUSTODYNOTE_FREE_LABEL} · v{APP_VERSION}
+          </p>
+
+          <div className="mt-6 rounded-[var(--radius-lg)] border border-[var(--gold)]/40 bg-[var(--gold)]/10 p-4 sm:p-5">
+            <p className="text-xs font-bold uppercase tracking-widest text-[var(--gold)]">
+              Download
+            </p>
+            <p className="mt-2 text-sm font-semibold text-white">{CUSTODYNOTE_APPS_LINE}</p>
+            <p className="mt-1 text-xs leading-relaxed text-white/90">
+              {CUSTODYNOTE_APPS_DETAIL} {CUSTODYNOTE_FREE_LABEL} on both platforms — {CUSTODYNOTE_BETA_REASON}
+            </p>
+            <a
+              href={CUSTODYNOTE_DOWNLOAD_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-3 inline-flex min-h-[40px] items-center rounded-lg bg-[var(--gold)] px-4 py-2 text-xs font-bold text-[var(--navy)] no-underline transition-colors hover:bg-[var(--gold-hover)]"
+            >
+              {CUSTODYNOTE_DOWNLOAD_APPS_CTA} →
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <div className="page-container">
+
+      <section className="mb-14">
+        <h2 className="text-h2 mb-2 text-[var(--navy)]">The actual app — see it before you try it</h2>
+        <p className="mb-6 max-w-2xl text-[var(--muted)]">
+          Real screenshots from the Custody Note desktop app. Every section is purpose-built for police station work — not adapted from a generic template.
+        </p>
+        <div className="grid gap-5 lg:grid-cols-3">
+          {SCREENSHOTS.map((shot) => (
+            <article
+              key={shot.title}
+              className="overflow-hidden rounded-[var(--radius-lg)] border border-[var(--card-border)] bg-[var(--card-bg)] shadow-[var(--card-shadow)]"
+            >
+              <div className="border-b border-[var(--card-border)] bg-slate-50 p-3">
+                <Image
+                  src={shot.src}
+                  alt={shot.title}
+                  width={1536}
+                  height={960}
+                  className="h-auto w-full rounded-[var(--radius)] border border-slate-200"
+                />
+              </div>
+              <div className="p-5">
+                <h3 className="font-semibold text-[var(--navy)]">{shot.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{shot.desc}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+        <div className="mt-5 grid gap-5 sm:grid-cols-2">
+          {EXTRA_SCREENSHOTS.map((shot) => (
+            <article
+              key={shot.title}
+              className="overflow-hidden rounded-[var(--radius-lg)] border border-[var(--card-border)] bg-[var(--card-bg)] shadow-[var(--card-shadow)]"
+            >
+              <div className="border-b border-[var(--card-border)] bg-slate-50 p-3">
+                <Image
+                  src={shot.src}
+                  alt={shot.title}
+                  width={1536}
+                  height={960}
+                  className="h-auto w-full rounded-[var(--radius)] border border-slate-200"
+                />
+              </div>
+              <div className="p-5">
+                <h3 className="font-semibold text-[var(--navy)]">{shot.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{shot.desc}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* 3 Record Types */}
+      <section className="mb-14">
+        <h2 className="text-h2 mb-2 text-[var(--navy)]">3 record types</h2>
+        <p className="mb-6 max-w-2xl text-[var(--muted)]">
+          Choose the right form for the job. Each record type is designed for a specific workflow.
+        </p>
+        <div className="grid gap-4 sm:grid-cols-3">
+          {RECORD_TYPES.map((rt) => (
+            <div
+              key={rt.name}
+              className="group flex flex-col rounded-[var(--radius-lg)] border border-[var(--card-border)] bg-[var(--card-bg)] p-6 shadow-[var(--card-shadow)] transition-all hover:-translate-y-0.5 hover:border-[var(--gold)]/40 hover:shadow-[var(--card-shadow-hover)]"
+            >
+              <div className="mb-3 flex items-center justify-between">
+                <h3 className="text-lg font-semibold text-[var(--navy)]">{rt.name}</h3>
+                <span className="rounded-full bg-[var(--gold)]/10 px-2.5 py-0.5 text-xs font-medium text-[var(--gold-link)]">
+                  {rt.detail}
+                </span>
+              </div>
+              <p className="mb-2 text-sm font-medium text-[var(--navy)]">{rt.subtitle}</p>
+              <p className="flex-1 text-sm leading-relaxed text-[var(--muted)]">{rt.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* One app for attendances, advice & billing */}
+      <section className="mb-14">
+        <h2 className="text-h2 mb-2 text-[var(--navy)]">
+          One app for attendances, advice &amp; billing
+        </h2>
+        <p className="mb-6 max-w-2xl text-[var(--muted)]">
+          Stop juggling spreadsheets, Word documents, handwritten notes, and separate billing files.
+          Custody Note brings the working note and the finished record into a single workflow.
+        </p>
+        <div className="grid gap-4 sm:grid-cols-3">
+          {FEATURE_CARDS.map((fc) => (
+            <div
+              key={fc.name}
+              className="rounded-[var(--radius-lg)] border border-[var(--card-border)] bg-[var(--card-bg)] p-6 shadow-[var(--card-shadow)]"
+            >
+              <h3 className="text-base font-semibold text-[var(--navy)]">{fc.name}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{fc.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 16 sections */}
+      <section className="mb-14">
+        <div className="rounded-[var(--radius-lg)] border border-[var(--card-border)] bg-[var(--card-bg)] p-8 shadow-[var(--card-shadow)]">
+          <h2 className="text-h2 text-center text-[var(--navy)]">
+            16 sections. One form. No switching.
+          </h2>
+          <p className="mx-auto mt-3 max-w-2xl text-center text-[var(--muted)]">
+            Every aspect of a police station attendance covered in a single, logical flow — from
+            initial instructions through to billing and supervisor review.
+          </p>
+          <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {FORM_SECTIONS.map((section, i) => (
+              <div
+                key={section}
+                className="flex items-start gap-3 rounded-[var(--radius)] border border-[var(--card-border)] bg-[var(--background)] p-3"
+              >
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--gold)]/10 text-xs font-bold text-[var(--gold-link)]">
+                  {i + 1}
+                </span>
+                <span className="text-sm font-medium text-[var(--navy)]">{section}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* LAA record-keeping */}
+      <section className="mb-14">
+        <h2 className="text-h2 mb-2 text-[var(--navy)]">
+          Designed to support LAA record-keeping
+        </h2>
+        <p className="mb-6 max-w-2xl text-[var(--muted)]">
+          {CUSTODYNOTE_BRAND_NAME} captures the information you need for Legal Aid Agency compliance. Every field
+          is mapped to LAA requirements so your records are audit-ready from day one.
+        </p>
+        <div className="grid gap-3 sm:grid-cols-2">
+          {LAA_FEATURES.map((feature) => (
+            <div
+              key={feature}
+              className="flex items-start gap-3 rounded-[var(--radius)] border border-[var(--card-border)] bg-[var(--card-bg)] p-4 shadow-[var(--card-shadow)]"
+            >
+              <span className="mt-0.5 text-green-600">✓</span>
+              <span className="text-sm text-[var(--navy)]">{feature}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Security */}
+      <section className="mb-14">
+        <h2 className="text-h2 mb-2 text-[var(--navy)]">
+          Your records are too important to risk
+        </h2>
+        <p className="mb-6 max-w-2xl text-[var(--muted)]">
+          Client records demand the highest levels of security. {CUSTODYNOTE_BRAND_NAME} is built with data
+          protection at its core.
+        </p>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {SECURITY_FEATURES.map((f) => (
+            <div
+              key={f.title}
+              className="rounded-[var(--radius-lg)] border border-[var(--card-border)] bg-[var(--card-bg)] p-6 shadow-[var(--card-shadow)]"
+            >
+              <h3 className="font-semibold text-[var(--navy)]">{f.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Why Freelance Reps Use Custody Note */}
+      <section className="mb-14">
+        <h2 className="text-h2 mb-2 text-[var(--navy)]">
+          Why Freelance Reps Use Custody Note
+        </h2>
+        <p className="mb-6 max-w-2xl text-[var(--muted)]">
+          Less admin, more organised records, more time for clients.
+        </p>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {BILLING_FEATURES.map((f) => (
+            <div
+              key={f.title}
+              className="group flex flex-col rounded-[var(--radius-lg)] border border-[var(--card-border)] bg-[var(--card-bg)] p-6 shadow-[var(--card-shadow)] transition-all hover:-translate-y-0.5 hover:border-[var(--gold)]/40 hover:shadow-[var(--card-shadow-hover)]"
+            >
+              <h3 className="font-semibold text-[var(--navy)]">{f.title}</h3>
+              <p className="mt-2 flex-1 text-sm leading-relaxed text-[var(--muted)]">{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Free resources — linkable from firms & training */}
+      <section className="mb-14">
+        <div className="rounded-[var(--radius-lg)] border border-[var(--card-border)] bg-[var(--card-bg)] p-8 shadow-[var(--card-shadow)]">
+          <h2 className="text-h2 text-[var(--navy)]">Free resources (no signup)</h2>
+          <p className="mt-2 max-w-2xl text-sm text-[var(--muted)]">
+            Custody Note publishes free checklists and templates for criminal defence
+            professionals — safe to link from firm intranets and training materials.
+          </p>
+          <ul className="mt-5 space-y-2 text-sm">
+            <li>
+              <a
+                href={CUSTODYNOTE_CHECKLIST_HREF}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-[var(--gold-link)] hover:underline"
+              >
+                Police station attendance checklist (UK) — printable
+              </a>
+            </li>
+            <li>
+              <a
+                href={CUSTODYNOTE_TOOLS_HREF}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-[var(--gold-link)] hover:underline"
+              >
+                All free tools &amp; templates on custodynote.com
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      {/* Simple Pricing */}
+      <section className="mb-14">
+        <div className="rounded-[var(--radius-lg)] border border-[var(--card-border)] bg-[var(--card-bg)] p-8 shadow-[var(--card-shadow)] sm:p-10">
+          <h2 className="text-h2 text-center text-[var(--navy)]">Free during beta</h2>
+          <p className="mx-auto mt-3 max-w-2xl text-center text-[var(--muted)]">
+            {CUSTODYNOTE_BETA_REASON} Download and use structured attendance notes on real jobs —
+            we&apos;ll wire payments up after beta.
+          </p>
+          <div className="mx-auto mt-8 max-w-md">
+            <div className="rounded-[var(--radius-lg)] border-2 border-[var(--gold)]/40 bg-[var(--gold)]/5 p-6">
+              <p className="mb-1 text-center text-xs font-bold uppercase tracking-wider text-[var(--gold-link)]">
+                Public beta
+              </p>
+              <p className="text-center text-3xl font-extrabold text-[var(--navy)]">
+                {CUSTODYNOTE_FREE_LABEL}
+              </p>
+              <p className="mt-2 text-center text-sm text-[var(--muted)]">
+                No credit card · {CUSTODYNOTE_BETA_REASON}
+              </p>
+              <ul className="mt-6 space-y-3">
+                {PRICING_FEATURES.map((pf) => (
+                  <li key={pf} className="flex items-start gap-2 text-sm text-[var(--navy)]">
+                    <span className="mt-0.5 text-green-600">✓</span>
+                    {pf}
+                  </li>
+                ))}
+              </ul>
+              <a
+                href={CUSTODYNOTE_DOWNLOAD}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-gold mt-6 flex min-h-[44px] items-center justify-center no-underline"
+              >
+                Download Free →
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Bottom CTA */}
+      <section className="mb-14 rounded-[var(--radius-lg)] bg-[var(--navy)] p-8 text-center sm:p-10">
+        <h2 className="text-h2 text-white">Ready to try {CUSTODYNOTE_BRAND_NAME}?</h2>
+        <p className="mx-auto mt-3 max-w-xl text-slate-300">
+          {CUSTODYNOTE_BETA_REASON} Download {CUSTODYNOTE_BRAND_NAME} free today — no credit card.
+          Paid Pro is planned after beta.
+        </p>
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+          <a
+            href={CUSTODYNOTE_DOWNLOAD}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-gold inline-flex min-h-[44px] items-center no-underline"
+          >
+            Download Free →
+          </a>
+          <a
+            href={CUSTODYNOTE_PRICING}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-outline inline-flex min-h-[44px] items-center !border-white !text-white no-underline hover:!bg-white hover:!text-[var(--navy)]"
+          >
+            Why it&apos;s free →
+          </a>
+        </div>
+        <p className="mt-3 text-xs text-[var(--muted)]">
+          {CUSTODYNOTE_FREE_LABEL} · No credit card to start · {CUSTODYNOTE_PLATFORM_LINE} · v{APP_VERSION}
+        </p>
+      </section>
+
+      {/* Related */}
+      <section className="grid gap-4 sm:grid-cols-3">
+        <Link
+          href="/directory"
+          className="rounded-[var(--radius)] border border-[var(--card-border)] bg-[var(--card-bg)] p-5 no-underline shadow-[var(--card-shadow)] transition-colors hover:border-[var(--gold)]/40"
+        >
+          <p className="font-medium text-[var(--navy)]">Find a Rep</p>
+          <p className="mt-1 text-sm text-[var(--muted)]">Browse accredited representatives</p>
+        </Link>
+        <Link
+          href="/register"
+          className="rounded-[var(--radius)] border border-[var(--card-border)] bg-[var(--card-bg)] p-5 no-underline shadow-[var(--card-shadow)] transition-colors hover:border-[var(--gold)]/40"
+        >
+          <p className="font-medium text-[var(--navy)]">Register Free</p>
+          <p className="mt-1 text-sm text-[var(--muted)]">Join the directory</p>
+        </Link>
+        <Link
+          href="/FormsLibrary"
+          className="rounded-[var(--radius)] border border-[var(--card-border)] bg-[var(--card-bg)] p-5 no-underline shadow-[var(--card-shadow)] transition-colors hover:border-[var(--gold)]/40"
+        >
+          <p className="font-medium text-[var(--navy)]">Forms Library</p>
+          <p className="mt-1 text-sm text-[var(--muted)]">CRM &amp; LAA forms</p>
+        </Link>
+      </section>
+    </div>
+    </>
+  );
+}

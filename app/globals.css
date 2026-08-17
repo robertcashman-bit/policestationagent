@@ -1,0 +1,637 @@
+@import "tailwindcss";
+
+:root {
+  /* Brand navy — deep, saturated, authoritative blue */
+  --navy: #1e3a8a;
+  --navy-light: #1d4ed8;
+  --navy-mid: #2563eb;
+  --navy-surface: #3b82f6;
+  /* Brand gold — bright, solid yellow for CTAs and accents */
+  --gold: #facc15;
+  --gold-hover: #eab308;
+  --gold-link: #92400e; /* WCAG AA ~6.2:1 on white — for link text on light backgrounds */
+  --gold-light: #fef9c3;
+  --gold-pale: #fefce8;
+
+  --ink: #0f172a;
+  --background: #ffffff;
+  --foreground: #0f172a;
+  --primary: #1e3a8a;
+  --primary-hover: #172554;
+  --accent: #facc15;
+  --accent-hover: #eab308;
+  --accent-soft: #fef9c3;
+  --blue-accent: #1e3a8a;
+  --blue-hover: #172554;
+  --muted: #334155;
+  --link: #1e3a8a;
+  --link-hover: #172554;
+  --link-visited: #6b2f6d;
+  --header-link: #ffffff;
+  --header-link-hover: #facc15;
+  --footer-link: #ffffff;
+  --footer-link-hover: #facc15;
+  --breadcrumb-on-dark: #ffffff;
+  --breadcrumb-link-on-dark: #ffffff;
+  --breadcrumb-active-on-dark: #facc15;
+  --legal-on-dark: #ffffff;
+  --border: #94a3b8;
+  --card-bg: #ffffff;
+  --card-border: #cbd5e1;
+  --card-shadow: 0 2px 4px 0 rgb(0 0 0 / 0.08), 0 1px 2px -1px rgb(0 0 0 / 0.06);
+  --card-shadow-hover: 0 8px 20px -4px rgb(0 0 0 / 0.15), 0 4px 8px -2px rgb(0 0 0 / 0.08);
+  --radius: 0.5rem;
+  --radius-lg: 0.5rem;
+  --section-gap: 1.75rem;
+  --container-max: 72rem;
+  --container-gutter: clamp(0.875rem, 3.5vw, 1.25rem);
+  --section-pad-y: 3rem;
+  --section-pad-y-sm: 3.5rem;
+  --section-pad-compact-y: 2.375rem;
+  --section-pad-compact-y-sm: 2.75rem;
+  /* Slightly tighter on narrow phones; still generous on tablet/desktop */
+  --hero-pad-y: clamp(2rem, 4.5vw, 4.125rem);
+  --hero-max-inner: 40.5rem;
+  --space-hero-stack: 1rem;
+  --space-hero-stack-lg: 1.5rem;
+  --card-padding: 1.5rem;
+  --focus-ring: 0 0 0 2px var(--background), 0 0 0 4px var(--navy), 0 0 0 6px var(--gold);
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-left: env(safe-area-inset-left, 0px);
+  --safe-area-right: env(safe-area-inset-right, 0px);
+  --header-compact-height: 2.5rem;
+  --header-touch-compact: 2.25rem;
+  --site-chrome-offset: 3.5rem;
+  --chrome-touch-drawer: 2.75rem;
+  --cookie-bar-height: 2.75rem;
+  --fab-size: 3.5rem;
+  --fixed-bottom-base: calc(1rem + var(--safe-area-bottom));
+  --fixed-bottom-raised: calc(4rem + var(--safe-area-bottom));
+}
+
+html {
+  overflow-x: clip;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-ink: var(--ink);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-navy: var(--navy);
+  --color-navy-light: var(--navy-light);
+  --color-navy-mid: var(--navy-mid);
+  --color-gold: var(--gold);
+  --color-gold-hover: var(--gold-hover);
+  --color-gold-light: var(--gold-light);
+  --color-blue-accent: var(--blue-accent);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  line-height: 1.625;
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: -0.011em;
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+  overflow-x: clip;
+}
+
+/* Fixed FABs / cookie bar — respect iPhone home indicator and notched edges */
+.fixed-ui-bottom {
+  position: fixed;
+  bottom: var(--fixed-bottom-base);
+}
+.fixed-ui-bottom-raised {
+  position: fixed;
+  bottom: var(--fixed-bottom-raised);
+}
+.fixed-ui-left {
+  position: fixed;
+  left: calc(0.75rem + var(--safe-area-left));
+}
+.fixed-ui-right {
+  position: fixed;
+  right: calc(0.75rem + var(--safe-area-right));
+}
+@media (min-width: 640px) {
+  .fixed-ui-left {
+    left: calc(1rem + var(--safe-area-left));
+  }
+  .fixed-ui-right {
+    right: calc(1rem + var(--safe-area-right));
+  }
+}
+
+/* Compact sticky header — shrinks after scroll past promo threshold */
+.site-header.header-compact .header-row {
+  padding-top: 0.125rem;
+  padding-bottom: 0.125rem;
+}
+
+/* Cookie bar — sync FAB offset when bar is visible */
+body.cookie-bar-visible {
+  --fixed-bottom-raised: calc(
+    var(--cookie-bar-height) + var(--fab-size) + 0.5rem + var(--safe-area-bottom)
+  );
+}
+
+/* Promo banners — collapse on scroll, expand via restore bar */
+.promo-banner-stack-inner {
+  display: grid;
+  transition:
+    grid-template-rows 200ms ease,
+    opacity 200ms ease;
+}
+.promo-banner-stack-inner.is-expanded {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+.promo-banner-stack-inner.is-collapsed {
+  grid-template-rows: 0fr;
+  opacity: 0;
+  pointer-events: none;
+}
+.promo-banner-stack-content {
+  overflow: hidden;
+  min-height: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-header.header-compact .header-row {
+    transition: none;
+  }
+  .promo-banner-stack-inner {
+    transition: none;
+  }
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: 0.75rem 1.5rem;
+  background: var(--gold);
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 0.875rem;
+  border-radius: 0 0 var(--radius) 0;
+  text-decoration: none;
+}
+.skip-link:focus { left: 0; }
+
+/* Visually hidden heading for landmarks (footer, etc.) — WCAG / Lighthouse */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible,
+summary:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: 4px;
+}
+
+/* Hero — rich gradient navy (optimised: single layer, no pseudo-element for faster LCP). */
+.hero-gradient-source {
+  background: linear-gradient(135deg, var(--navy) 0%, #152e6e 40%, var(--navy-light) 100%);
+}
+
+/* Force all text on navy surfaces to be white */
+[class*='bg-[var(--navy)]'] .text-slate-200,
+[class*='bg-[var(--navy)]'] .text-slate-300,
+[class*='bg-[var(--navy)]'] .text-slate-400,
+[class*='bg-[var(--navy)]'] .text-slate-500,
+[class*='bg-[var(--navy)]'] .text-slate-600 {
+  color: #ffffff !important;
+}
+
+footer .text-slate-300,
+footer .text-slate-400,
+footer .text-slate-500,
+footer .text-slate-600 {
+  color: #ffffff !important;
+}
+
+.hero-band {
+  padding-top: var(--section-pad-compact-y);
+  padding-bottom: var(--section-pad-compact-y);
+}
+@media (min-width: 640px) {
+  .hero-band {
+    padding-top: calc(var(--section-pad-y) * 0.82);
+    padding-bottom: calc(var(--section-pad-y) * 0.82);
+  }
+}
+
+@keyframes home-recent-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.home-recent-marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 0.75rem;
+  animation: home-recent-marquee 45s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-recent-marquee-track {
+    animation: none;
+  }
+}
+
+.group:hover .home-recent-marquee-track {
+  animation-play-state: paused;
+}
+
+.site-shell-main {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+}
+
+@media (max-width: 767px) {
+  .site-shell-main {
+    /* Room for help chat + optional cookie bar without obscuring footer CTAs */
+    padding-bottom: calc(2.75rem + var(--safe-area-bottom));
+  }
+  body.cookie-bar-visible .site-shell-main {
+    padding-bottom: calc(
+      var(--cookie-bar-height) + 2.75rem + var(--safe-area-bottom)
+    );
+  }
+}
+
+.site-shell-main > * {
+  width: 100%;
+  min-width: 0;
+}
+
+.page-container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--container-gutter);
+  padding-right: var(--container-gutter);
+  /* Narrow viewports: less vertical chrome so content isn’t pushed down */
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+/* Admin tables and action panels need more horizontal room than public pages. */
+.admin-container {
+  width: 100%;
+  max-width: min(100%, 100rem);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--container-gutter);
+  padding-right: var(--container-gutter);
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+@media (min-width: 640px) {
+  .admin-container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 2.875rem;
+    padding-bottom: 2.875rem;
+  }
+}
+@media (min-width: 1024px) {
+  .admin-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+}
+
+@media (min-width: 640px) {
+  :root {
+    --site-chrome-offset: 4rem;
+  }
+}
+
+.scroll-mt-station-results {
+  scroll-margin-top: calc(var(--site-chrome-offset) + 3.5rem);
+}
+
+@media (min-width: 1024px) {
+  .scroll-mt-station-results {
+    scroll-margin-top: calc(var(--site-chrome-offset) + 1rem);
+  }
+}
+
+/* Wide directory table layout — mirrors admin-container width. */
+.directory-container {
+  width: 100%;
+  max-width: min(100%, 100rem);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--container-gutter);
+  padding-right: var(--container-gutter);
+}
+@media (min-width: 640px) {
+  .directory-container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+@media (min-width: 1024px) {
+  .directory-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Rep verification audit table — horizontal scroll with pinned columns */
+.admin-audit-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  background: white;
+}
+
+.admin-audit-table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.admin-audit-sticky-left {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: white;
+  box-shadow: 2px 0 6px rgba(15, 23, 42, 0.06);
+}
+
+.admin-audit-sticky-left-2 {
+  position: sticky;
+  left: 4.5rem;
+  z-index: 2;
+  background: white;
+  box-shadow: 2px 0 6px rgba(15, 23, 42, 0.06);
+}
+
+.admin-audit-sticky-right {
+  position: sticky;
+  right: 0;
+  z-index: 2;
+  background: white;
+  box-shadow: -4px 0 8px rgba(15, 23, 42, 0.08);
+}
+
+.admin-audit-sticky-right-2 {
+  position: sticky;
+  right: 6.5rem;
+  z-index: 2;
+  background: white;
+  box-shadow: -4px 0 8px rgba(15, 23, 42, 0.08);
+}
+
+.admin-audit-table thead .admin-audit-sticky-left,
+.admin-audit-table thead .admin-audit-sticky-left-2,
+.admin-audit-table thead .admin-audit-sticky-right,
+.admin-audit-table thead .admin-audit-sticky-right-2 {
+  background: rgb(248 250 252);
+}
+
+.admin-audit-table tbody tr.bg-emerald-50\/20 .admin-audit-sticky-left,
+.admin-audit-table tbody tr.bg-emerald-50\/20 .admin-audit-sticky-left-2,
+.admin-audit-table tbody tr.bg-emerald-50\/20 .admin-audit-sticky-right,
+.admin-audit-table tbody tr.bg-emerald-50\/20 .admin-audit-sticky-right-2 {
+  background: rgb(236 253 245 / 0.5);
+}
+
+@media (min-width: 640px) {
+  .page-container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 2.875rem;
+    padding-bottom: 2.875rem;
+  }
+}
+@media (min-width: 1024px) {
+  .page-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+}
+
+.section-pad {
+  padding-top: var(--section-pad-y);
+  padding-bottom: var(--section-pad-y);
+}
+@media (min-width: 640px) {
+  .section-pad {
+    padding-top: var(--section-pad-y-sm);
+    padding-bottom: var(--section-pad-y-sm);
+  }
+}
+
+.section-pad-compact {
+  padding-top: var(--section-pad-compact-y);
+  padding-bottom: var(--section-pad-compact-y);
+}
+@media (min-width: 640px) {
+  .section-pad-compact {
+    padding-top: var(--section-pad-compact-y-sm);
+    padding-bottom: var(--section-pad-compact-y-sm);
+  }
+}
+
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
+}
+
+.card-surface {
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  box-shadow: var(--card-shadow);
+  padding: var(--card-padding);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+.card-surface:hover {
+  box-shadow: var(--card-shadow-hover);
+  border-color: var(--gold);
+  transform: translateY(-1px);
+}
+
+.ad-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  border-radius: 9999px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+h1, .text-h1 {
+  font-size: clamp(1.8125rem, 4vw, 2.5rem);
+  font-weight: 800;
+  letter-spacing: -0.022em;
+  line-height: 1.11;
+}
+h2, .text-h2 {
+  font-size: clamp(1.21875rem, 2.65vw, 1.5625rem);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.24;
+  margin-top: var(--section-gap);
+  margin-bottom: 0.5rem;
+}
+h3, .text-h3 {
+  font-size: clamp(1.0625rem, 2vw, 1.1875rem);
+  font-weight: 700;
+  line-height: 1.32;
+  margin-top: 1.25rem;
+  margin-bottom: 0.4rem;
+}
+h4, .text-h4 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-top: 1.25rem;
+  margin-bottom: 0.375rem;
+}
+
+p {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose-sm { line-height: 1.65; }
+
+/* .content-section moved to styles/prose.css — imported only by pages that need it */
+
+@layer base {
+  a {
+    color: var(--link);
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+  }
+  a:hover {
+    color: var(--link-hover);
+  }
+}
+
+/* Button styles */
+.btn-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.625rem 1.375rem;
+  background: var(--gold);
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 0.875rem;
+  line-height: 1.25;
+  border-radius: var(--radius);
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(15, 27, 45, 0.1);
+  transition: background-color 0.15s ease, box-shadow 0.15s ease, color 0.15s ease;
+}
+.btn-gold:hover {
+  background: var(--gold-hover);
+  color: var(--ink);
+  text-decoration: none;
+  box-shadow: 0 2px 6px rgba(15, 27, 45, 0.12);
+}
+.btn-navy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.625rem 1.375rem;
+  background: var(--navy);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.875rem;
+  line-height: 1.25;
+  border-radius: var(--radius);
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(15, 27, 45, 0.18);
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+.btn-navy:hover {
+  background: var(--navy-light);
+  color: #fff;
+  text-decoration: none;
+}
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.625rem 1.375rem;
+  background: transparent;
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 0.875rem;
+  line-height: 1.25;
+  border-radius: var(--radius);
+  text-decoration: none;
+  border: 2px solid var(--border);
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.btn-outline:hover {
+  border-color: var(--navy);
+  color: var(--navy);
+  text-decoration: none;
+}
+
+@media (pointer: coarse) {
+  .btn-gold,
+  .btn-navy,
+  .btn-outline,
+  header nav a,
+  /* Exclude .psr-share-mini so the compact header share button is not forced
+     to the 44px tap-target floor on phones; its size is set in JSX. */
+  header button[aria-label]:not(.psr-share-mini),
+  footer a {
+    min-height: 44px;
+  }
+}
+
+/* .wiki-prose moved to styles/prose.css — imported only by pages that need it */

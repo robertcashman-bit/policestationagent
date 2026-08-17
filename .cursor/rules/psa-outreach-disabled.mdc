@@ -1,0 +1,12 @@
+---
+description: PSA firm outreach is off; keep RepUK firm outreach running.
+alwaysApply: true
+---
+
+# Cross-site firm outreach
+
+- **policestationagent** firm outreach emails are permanently disabled (`PSA_OUTREACH_EMAILS_DISABLED` in that repo).
+- **agent_cover_kent_v1** sends from this Policestationrepuk deployment are also permanently disabled (`AGENT_COVER_EMAILS_DISABLED` / `OUTREACH_SEND_CAMPAIGN_IDS`).
+- **Policestationrepuk** WhatsApp / firm invite outreach (`whatsapp_invite_v1`) must keep running.
+- Do not set `FIRM_OUTREACH_FORCE_AGENT_COVER_SEND=true` or re-add agent_cover to send/probe/kick paths unless the user explicitly asks to resume Agent-branded outreach.
+- If an agent task mentions “stop outreach”, confirm which site. Default for PSA / agent-cover = already off; default for RepUK WhatsApp = leave on unless the user names RepUK WhatsApp.

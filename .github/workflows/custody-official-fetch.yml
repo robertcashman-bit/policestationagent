@@ -1,0 +1,49 @@
+name: Custody official fetch
+
+on:
+  schedule:
+    - cron: '0 3 * * 0'
+  workflow_dispatch:
+
+jobs:
+  fetch-official-custody:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - force: devon-cornwall
+            script: scripts/fetch-devon-cornwall-custody.ts
+            json: data/devon-cornwall-custody-numbers.json
+            report: data/reports/devon-cornwall-custody-fetch.json
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Chromium
+        run: npx playwright install chromium --with-deps
+
+      - name: Fetch official custody numbers (${{ matrix.force }})
+        run: npx tsx ${{ matrix.script }} --write
+
+      - name: Upload custody JSON artifact (${{ matrix.force }})
+        uses: actions/upload-artifact@v4
+        with:
+          name: custody-official-${{ matrix.force }}
+          path: |
+            ${{ matrix.json }}
+            ${{ matrix.report }}
+          if-no-files-found: warn
+
+      - name: Summary
+        run: |
+          echo "Official custody JSON written for ${{ matrix.force }}."
+          echo "Cron seed-json ingests data/*-custody-numbers.json automatically — no manual CSV step."

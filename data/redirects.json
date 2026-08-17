@@ -1,0 +1,104 @@
+[
+  {
+    "from": "/police-station-rep-registration",
+    "to": "/Register",
+    "statusCode": 301,
+    "notes": "Audit fix: Missing legacy route mapping"
+  },
+  {
+    "from": "/reps",
+    "to": "/Directory",
+    "statusCode": 301,
+    "notes": "Audit fix: Common directory alias"
+  },
+  {
+    "from": "/post/*",
+    "to": "https://policestationrepuk.org/Blog",
+    "statusCode": 301,
+    "notes": "Legacy /post/ → on-site Blog index"
+  },
+  {
+    "from": "/news/*",
+    "to": "https://policestationrepuk.org/Blog",
+    "statusCode": 301,
+    "notes": "Legacy /news/ → on-site Blog index"
+  },
+  {
+    "from": "/posts/*",
+    "to": "https://policestationrepuk.org/Blog",
+    "statusCode": 301,
+    "notes": "Legacy /posts/ → on-site Blog index"
+  },
+  {
+    "from": "/blog/*",
+    "to": "https://policestationrepuk.org/Blog",
+    "statusCode": 301,
+    "notes": "Legacy /blog/* pattern (see next.config + middleware for slug routing)"
+  },
+  {
+    "from": "/article/*",
+    "to": "https://policestationrepuk.org/Blog",
+    "statusCode": 301,
+    "notes": "Legacy /article/ → on-site Blog index"
+  },
+  {
+    "from": "/blog-1/*",
+    "to": "https://policestationrepuk.org/Blog",
+    "statusCode": 301,
+    "notes": "Legacy /blog-1/ → on-site Blog index"
+  },
+  {
+    "from": "/articles/*",
+    "to": "https://policestationrepuk.org/Blog",
+    "statusCode": 301,
+    "notes": "Legacy /articles/ → on-site Blog index"
+  },
+  {
+    "from": "/new-blog/*",
+    "to": "https://policestationrepuk.org/Blog",
+    "statusCode": 301,
+    "notes": "Legacy /new-blog/ → on-site Blog index"
+  },
+  {
+    "from": "/blog-old/*",
+    "to": "https://policestationrepuk.org/Blog",
+    "statusCode": 301,
+    "notes": "Legacy /blog-old/ → on-site Blog index"
+  },
+  {
+    "from": "/LegalLinks",
+    "to": "/Resources",
+    "statusCode": 301,
+    "notes": "Renamed page from LegalLinks to Resources for better SEO and clarity"
+  },
+  {
+    "from": "/forces",
+    "to": "/Forces",
+    "statusCode": 301,
+    "notes": "Ensure lowercase forces redirects to proper case for SEO consistency"
+  },
+  {
+    "from": "/register",
+    "to": "/Register",
+    "statusCode": 301,
+    "notes": "Ensure lowercase register redirects to proper case for SEO consistency"
+  },
+  {
+    "from": "/directory",
+    "to": "/Directory",
+    "statusCode": 301,
+    "notes": "Ensure lowercase directory redirects to proper case for SEO consistency"
+  },
+  {
+    "from": "/google03385fbe80cfcd6b.html",
+    "to": "/google03385fbe80cfcd6b",
+    "statusCode": 302,
+    "notes": "Temporary mapping for Google HTML verification file to SPA route."
+  },
+  {
+    "from": "/BlogPostPage",
+    "to": "/Blog",
+    "statusCode": 301,
+    "notes": "Legacy blog entry → on-site Blog index (editorial blog on policestationrepuk.org)"
+  }
+]

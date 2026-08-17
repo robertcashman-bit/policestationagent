@@ -1,0 +1,53 @@
+{
+  "generatedAt": "2026-04-03T11:54:47.680Z",
+  "base": "https://policestationrepuk.org",
+  "sitemap": {
+    "totalInSitemap": 1605,
+    "checked": 500,
+    "failures": []
+  },
+  "internalLinksFromSample": {
+    "pagesSampled": 20,
+    "uniqueInternalPaths": 333,
+    "pathsChecked": 300,
+    "failures": [],
+    "pageFetchErrors": []
+  },
+  "forms": {
+    "register": {
+      "status": 200,
+      "json": {
+        "ok": true,
+        "id": "registration-2026-04-03T11-54-46-178Z-iggsv7"
+      },
+      "verdict": "PASS"
+    },
+    "contact": {
+      "status": 200,
+      "json": {
+        "ok": true,
+        "id": "contact-2026-04-03T11-54-46-473Z-os4bkx",
+        "message": "Thank you — your enquiry has been received."
+      },
+      "verdict": "PASS"
+    },
+    "leadMagnet": {
+      "status": 200,
+      "json": {
+        "ok": true,
+        "id": "lead-magnet-2026-04-03T11-54-46-959Z-59qurv",
+        "message": "Thank you — check your inbox."
+      },
+      "verdict": "PASS"
+    },
+    "stationUpdate": {
+      "status": 200,
+      "json": {
+        "ok": true,
+        "id": "station-update-2026-04-03T11-54-47-849Z-bbshu2",
+        "message": "Thank you — your suggestion has been received and will be reviewed."
+      },
+      "verdict": "PASS"
+    }
+  }
+}

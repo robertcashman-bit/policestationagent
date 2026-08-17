@@ -1,0 +1,108 @@
+import Image from 'next/image';
+import Link from 'next/link';
+import {
+  CUSTODYNOTE_APPS_DETAIL,
+  CUSTODYNOTE_APPS_LINE,
+  CUSTODYNOTE_BRAND_NAME,
+  CUSTODYNOTE_BETA_REASON,
+  CUSTODYNOTE_DOWNLOAD_APPS_CTA,
+  CUSTODYNOTE_FREE_LABEL,
+  CUSTODYNOTE_PROMO_PRICE_LINE,
+  CUSTODYNOTE_PRICING_HREF,
+  CUSTODYNOTE_TAGLINE,
+  CUSTODYNOTE_TRIAL_HREF,
+} from '@/lib/custodynote-promo';
+import { AdvertisementLabel } from './AdvertisementLabel';
+
+export function HomeCustodyNote() {
+  return (
+    <section
+      className="relative overflow-hidden bg-gradient-to-br from-[var(--navy)] via-[#152e6e] to-[var(--navy)]"
+      aria-label={`${CUSTODYNOTE_BRAND_NAME} — promoted product`}
+    >
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(250,204,21,0.08),transparent_60%)]" />
+      <div className="section-pad relative">
+        <div className="page-container !py-0">
+          <div className="mx-auto max-w-3xl text-center">
+            <AdvertisementLabel variant="dark" label="Featured product" />
+
+            <h2 className="text-h2 mt-4 text-white">{CUSTODYNOTE_BRAND_NAME}</h2>
+            <p className="mt-1 text-base font-medium text-[var(--gold)]">
+              {CUSTODYNOTE_APPS_LINE}
+            </p>
+            <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-white/90">
+              {CUSTODYNOTE_TAGLINE}. Disclosure → advice → interview → outcome in one structured
+              record — offline at the custody desk, PDF for the firm file, LAA-oriented billing
+              fields. {CUSTODYNOTE_APPS_DETAIL}
+            </p>
+
+            <div className="mx-auto mt-8 grid max-w-xl gap-3 sm:grid-cols-3">
+              {[
+                { icon: '🔒', label: 'AES-256 encrypted' },
+                { icon: '📴', label: 'Works offline' },
+                { icon: '📄', label: 'Instant PDF + LAA fields' },
+              ].map((f) => (
+                <div key={f.label} className="rounded-lg border border-white/15 bg-white/5 px-4 py-3">
+                  <span className="text-lg" aria-hidden>{f.icon}</span>
+                  <p className="mt-1 text-xs font-semibold text-white">{f.label}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-8 rounded-xl border-2 border-[var(--gold)]/40 bg-[var(--gold)]/10 px-6 py-5">
+              <p className="text-xs font-bold uppercase tracking-wider text-[var(--gold)]">
+                {CUSTODYNOTE_PROMO_PRICE_LINE}
+              </p>
+              <p className="mt-2 text-2xl font-extrabold leading-tight text-white sm:text-3xl">
+                {CUSTODYNOTE_FREE_LABEL}
+              </p>
+              <p className="mt-1 text-sm text-white/80">
+                {CUSTODYNOTE_BETA_REASON} No credit card required.
+              </p>
+            </div>
+
+            <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+              <Link
+                href={CUSTODYNOTE_TRIAL_HREF}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-gold w-full sm:w-auto"
+              >
+                {CUSTODYNOTE_DOWNLOAD_APPS_CTA} →
+              </Link>
+              <Link
+                href="/CustodyNote"
+                className="btn-outline w-full !border-white/40 !text-white hover:!border-[var(--gold)] hover:!text-[var(--gold)] sm:w-auto"
+              >
+                See how it works
+              </Link>
+              <Link
+                href={CUSTODYNOTE_PRICING_HREF}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-outline w-full !border-white/40 !text-white hover:!border-[var(--gold)] hover:!text-[var(--gold)] sm:w-auto"
+              >
+                View pricing →
+              </Link>
+            </div>
+
+            <div className="mt-8 overflow-hidden rounded-xl border border-white/10 shadow-2xl">
+              <Image
+                src="/images/custodynote/custodynote-app-dashboard.png"
+                alt="Custody Note desktop app dashboard — Custody Attendance, Voluntary Attendance, Telephone Advice and Quick Capture workflows"
+                width={1536}
+                height={960}
+                className="h-auto w-full"
+              />
+            </div>
+
+            <p className="mt-5 text-xs text-white/60">
+              {CUSTODYNOTE_BRAND_NAME} is developed by Defence Legal Services Ltd. This is a promoted product —
+              not part of the directory service.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

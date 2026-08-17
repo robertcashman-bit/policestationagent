@@ -1,0 +1,34 @@
+{
+  "sourceOfTruth": "lib/site-navigation.ts",
+  "derivedFrom": [
+    "docs/live-site-map.json (navigation.primary)",
+    "data/page-content.json homepage links + footer headings for sections"
+  ],
+  "header": {
+    "primary": [
+      { "href": "/", "text": "Home" },
+      { "href": "/Blog", "text": "Blog" },
+      { "href": "/CustodyNote", "text": "Custody Note" },
+      { "href": "/Directory", "text": "Find a Rep" },
+      { "href": "/Register", "text": "Join the Directory (Free)" },
+      { "href": "/StationsDirectory", "text": "Station Numbers" },
+      { "href": "/FormsLibrary", "text": "Forms" },
+      { "href": "/Resources", "text": "Resources" },
+      { "href": "/Contact", "text": "Contact Us" },
+      { "href": "/About", "text": "About" }
+    ],
+    "layout": "Brand (home link) first; desktop nav wraps flush right; mobile Menu + drawer with same 10 links + Join CTA",
+    "shareStrip": "Share this directory with colleagues"
+  },
+  "footer": {
+    "columns": [
+      "Directories",
+      "For Representatives",
+      "Tools & Resources",
+      "Community",
+      "Legal"
+    ],
+    "utilityRow": ["Share Directory", "Top", "Sitemap → /functions/sitemap", "RSS Feed → /functions/rss", "Cookie Settings"],
+    "regulatoryTitle": "Regulatory Notice"
+  }
+}
