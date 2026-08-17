@@ -81,7 +81,9 @@ export async function runFirmOutreachPipeline(opts?: {
   const cleanup = { reset: cleanupResult.reset, targets: cleanupResult.targets.length };
 
   const kentCorrection =
-    opts?.skipKentCorrection || opts?.sendDryRun
+    opts?.skipKentCorrection ||
+    opts?.sendDryRun ||
+    !(await isOutreachSendAllowed())
       ? undefined
       : await runPendingKentCorrections({ limit: dailySendCap() });
 
