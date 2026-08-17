@@ -1,6 +1,10 @@
 import { NextResponse } from 'next/server';
 import { isCronAuthorized } from '@/lib/cron-auth';
 import { outreachRequireApproval } from '@/lib/firm-outreach/constants';
+import {
+  PSA_OUTREACH_EMAILS_DISABLED_REASON,
+  arePsaOutreachEmailsDisabled,
+} from '@/lib/firm-outreach/outreach-emails-disabled';
 import { sendOutreachApprovalRequestEmail } from '@/lib/firm-outreach/outreach/approval-request-email';
 import { runFirmOutreachPipeline } from '@/lib/firm-outreach/run-pipeline';
 
@@ -12,6 +16,16 @@ export const maxDuration = 300;
 export async function GET(request: Request) {
   if (!isCronAuthorized(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  if (arePsaOutreachEmailsDisabled()) {
+    return NextResponse.json({
+      ok: true,
+      mode: 'send-disabled',
+      skipped: true,
+      reason: 'psa_outreach_emails_disabled',
+      message: PSA_OUTREACH_EMAILS_DISABLED_REASON,
+    });
   }
 
   const url = new URL(request.url);

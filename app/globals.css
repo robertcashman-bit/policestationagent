@@ -245,6 +245,15 @@ h3,
 .pathway-panel {
   background: linear-gradient(180deg, #ffffff 0%, var(--cream) 100%);
 }
+/* Mobile sticky pathway bar — applied by MobileStickyContactBar when visible */
+body.has-mobile-sticky-bar {
+  padding-bottom: 4rem;
+}
+@media (min-width: 1024px) {
+  body.has-mobile-sticky-bar {
+    padding-bottom: 0;
+  }
+}
 .b2b-panel {
   background:
     radial-gradient(ellipse 60% 50% at 90% 10%, rgb(201 162 39 / 0.12), transparent 55%),

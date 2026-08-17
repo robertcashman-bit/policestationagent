@@ -39,6 +39,21 @@ describe("enquiry funnel routes", () => {
     expect(sticky).toContain("current-custody");
     expect(sticky).toContain("voluntary-interview");
     expect(sticky).toContain("for-solicitors");
+    // Homepage suppresses sticky chrome so pathway CTAs are unobstructed
+    expect(sticky).toContain('HIDE_STICKY_PATHS');
+    expect(sticky).toMatch(/"\/"/);
+  });
+
+  it("home hero has no competing CTA row", () => {
+    const hero = fs.readFileSync(
+      path.join(root, "components/conversion/HomeHeroCover.tsx"),
+      "utf8",
+    );
+    expect(hero).toMatch(/999/);
+    expect(hero).toMatch(/101/);
+    expect(hero).not.toMatch(/Find representation/);
+    expect(hero).not.toMatch(/View coverage/);
+    expect(hero).not.toMatch(/PATH_CONTACT/);
   });
 
   it("agency page shows professional telephone", () => {

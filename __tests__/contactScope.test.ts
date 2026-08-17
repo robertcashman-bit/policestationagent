@@ -56,6 +56,9 @@ describe("contact config", () => {
     expect(contact).toContain("AudiencePathSelector");
     expect(contact).toContain("PoliceSignposting");
     expect(contact).toContain("CONTACT_GETTING_IN_TOUCH");
+    expect(contact).toContain("CONTACT_PUBLIC_ROUTE");
+    expect(contact).toContain("CONTACT_SOLICITOR_ROUTE");
+    expect(contact).toContain("CONTACT_RESPONSE_EXPECTATION");
     expect(contact).toContain("ADMIN_ENQUIRY_CAN");
     expect(contact).toContain("ADMIN_ENQUIRY_CANNOT");
     expect(contact).toContain('variant="admin"');

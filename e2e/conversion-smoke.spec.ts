@@ -12,13 +12,17 @@ const KENT_PAGES = [
 ];
 
 test.describe('Conversion smoke — desktop', () => {
-  test('homepage audience selector visible above the fold', async ({ page }) => {
+  test('homepage pathway centrepiece is the first-screen job', async ({ page }) => {
     await page.goto('/');
-    const selector = page.getByRole('heading', { name: 'Who are you?' });
-    await expect(selector).toBeVisible();
+    const pathways = page.getByLabel('Enquiry pathways');
+    await expect(pathways).toBeVisible();
+    await expect(page.getByRole('heading', { name: /three routes\. one clear next step/i })).toBeVisible();
     await expect(page.getByRole('link', { name: /someone is in custody now/i })).toBeVisible();
     await expect(page.getByRole('link', { name: /voluntary interview booked/i })).toBeVisible();
-    await expect(page.getByRole('link', { name: /law firm needing cover/i })).toBeVisible();
+    await expect(page.getByRole('link', { name: /solicitor needing agent cover/i })).toBeVisible();
+    // Competing hero CTAs removed — pathways are the job
+    await expect(page.getByRole('link', { name: /^find representation$/i })).toHaveCount(0);
+    await expect(page.getByRole('link', { name: /^view coverage$/i })).toHaveCount(0);
   });
 
   test('homepage proof bar and firm section present', async ({ page }) => {
@@ -191,31 +195,32 @@ test.describe('Accessibility (axe — serious/critical only)', () => {
 });
 
 test.describe('Conversion smoke — mobile viewport', () => {
-  test('sticky mobile CTA visible on homepage', async ({ page }) => {
+  test('homepage hides sticky pathway bar so primary pathway buttons are unobstructed', async ({
+    page,
+  }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/');
-    const callBtn = page.locator('a[data-event="call_click"]').last();
-    const textBtn = page.locator('a[data-event="sms_click"]').last();
-    await expect(callBtn).toBeVisible();
-    await expect(textBtn).toBeVisible();
-    await expect(callBtn).toHaveText(/call/i);
-    await expect(textBtn).toHaveText(/text/i);
+    await expect(page.getByLabel('Enquiry pathways').first()).toBeVisible();
+    // Sticky duplicate is suppressed on home — pathways in-page are the job
+    await expect(page.locator('[aria-label="Enquiry pathways"].fixed')).toHaveCount(0);
   });
 
-  test('sticky mobile CTA shows full phone and text numbers', async ({ page }) => {
+  test('sticky pathway bar appears on inner pages without phone digits', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto('/');
-    const callBtn = page.locator('a[data-event="call_click"]').last();
-    const textBtn = page.locator('a[data-event="sms_click"]').last();
-    await expect(callBtn).toContainText('01732 247427');
-    await expect(textBtn).toContainText('07535 494446');
-    await expect(callBtn).toHaveAttribute('href', 'tel:01732247427');
-    await expect(textBtn).toHaveAttribute('href', 'sms:07535494446');
+    await page.goto('/faq');
+    const sticky = page.locator('[aria-label="Enquiry pathways"].fixed');
+    await expect(sticky).toBeVisible();
+    await expect(sticky.getByRole('link', { name: /interview/i })).toBeVisible();
+    await expect(sticky.getByRole('link', { name: /custody/i })).toBeVisible();
+    await expect(sticky.getByRole('link', { name: /solicitors/i })).toBeVisible();
+    await expect(sticky.locator('a[href^="tel:"]')).toHaveCount(0);
   });
 
-  test('audience selector visible on mobile', async ({ page }) => {
+  test('pathway centrepiece visible on mobile', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/');
-    await expect(page.getByRole('heading', { name: 'Who are you?' })).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: /three routes\. one clear next step/i }),
+    ).toBeVisible();
   });
 });

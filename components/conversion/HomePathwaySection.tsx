@@ -1,10 +1,11 @@
 import { AudiencePathSelector } from "@/components/conversion/AudiencePathSelector";
 
-/** Homepage pathway centrepiece — same routes/events as compact selector. */
+/** Homepage first-screen job — three pathways immediately under the compact hero. */
 export function HomePathwaySection() {
   return (
     <section
-      className="relative pathway-panel section-seam-from-navy border-b border-border-subtle py-14 md:py-20"
+      id="pathways"
+      className="relative pathway-panel section-seam-from-navy border-b border-border-subtle pt-8 pb-12 md:pt-10 md:pb-16 scroll-mt-4"
       aria-label="Enquiry pathways"
     >
       <AudiencePathSelector

@@ -85,12 +85,25 @@ export const CONTACT_GETTING_IN_TOUCH =
 export const CONTACT_PATHWAY_PROMPT =
   "Choose the pathway that fits you. The solicitor telephone is not listed on this page — for current custody it appears only after a short check if we can help.";
 
+/** Public vs solicitor contact split — Contact page */
+export const CONTACT_PUBLIC_ROUTE =
+  "Members of the public or immediate family: use voluntary interview (booked VAI) or current custody. Friends/colleagues cannot instruct for someone else.";
+
+export const CONTACT_SOLICITOR_ROUTE =
+  "Instructing solicitors and defence firms: use the solicitor cover pathway (or the agency page). Do not use the public custody form for firm instructions.";
+
+/**
+ * Soft response expectation — not a service-level guarantee.
+ * Aligns with ADMIN_ENQUIRY_INTRO (“Response times are not guaranteed”).
+ */
+export const CONTACT_RESPONSE_EXPECTATION =
+  "What to expect: custody and booked-interview pathways — we aim to respond promptly during working hours when we can help. Solicitor cover — the agency page / firm WhatsApp is usually fastest. Non-urgent written enquiries — we aim to reply within 1–2 working days. Response times are not guaranteed.";
+
 /** Non-urgent admin / written enquiry on Contact — filter, not a second advice line */
 export const ADMIN_ENQUIRY_HEADING = "Non-urgent written enquiry (defence clients & firms only)";
 
 export const ADMIN_ENQUIRY_INTRO =
   "Use this form for non-urgent written messages from prospective clients or instructing solicitors only. It is not an emergency channel, not a police or custody contact form, and not a free general legal advice service. Police officers and OICs must use 101 or force systems — we cannot supply custody suite numbers or FP/DNA chase contacts. Response times are not guaranteed.";
-
 export const ADMIN_ENQUIRY_CAN = [
   "Non-urgent questions about instructing us for police-station defence work in Kent",
   "Administrative messages (e.g. referring a matter, confirming you’ve already instructed us)",
