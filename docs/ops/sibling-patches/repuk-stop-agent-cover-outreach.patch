@@ -1,0 +1,533 @@
+From ffb57836fddcf2de963ae4eea9e822dd6363a887 Mon Sep 17 00:00:00 2001
+From: Cursor Agent <cursoragent@cursor.com>
+Date: Mon, 17 Aug 2026 18:09:08 +0000
+Subject: [PATCH] fix: permanently stop agent_cover / PSA-branded outreach
+ sends
+
+RepUK dual-campaign cron was still emailing firms as Police Station Agent
+(agent_cover_kent_v1). Gate sends at send.ts + runFirmOutreach, send only
+whatsapp_invite_v1, remove psa-sync crons, and skip agent-cover probes/kick.
+---
+ .cursor/rules/psa-outreach-disabled.mdc       |  8 ++-
+ __tests__/agent-cover-emails-disabled.test.ts | 46 +++++++++++++
+ .../firm-outreach-dual-campaign-send.test.ts  | 16 ++---
+ app/api/cron/firm-outreach-psa-sync/route.ts  | 20 ++++--
+ .../agent-cover-emails-disabled.ts            | 19 +++++
+ lib/firm-outreach/outreach/probe-send.ts      | 69 ++-----------------
+ lib/firm-outreach/outreach/run-outreach.ts    | 33 +++++++--
+ lib/firm-outreach/outreach/send.ts            | 31 +++++++--
+ lib/firm-outreach/production-kick.ts          |  8 +--
+ lib/firm-outreach/run-pipeline.ts             |  4 +-
+ lib/firm-outreach/site-config.ts              | 12 +++-
+ vercel.json                                   |  8 ---
+ 12 files changed, 165 insertions(+), 109 deletions(-)
+ create mode 100644 __tests__/agent-cover-emails-disabled.test.ts
+ create mode 100644 lib/firm-outreach/agent-cover-emails-disabled.ts
+
+diff --git a/.cursor/rules/psa-outreach-disabled.mdc b/.cursor/rules/psa-outreach-disabled.mdc
+index 4edd1d4..af6fac0 100644
+--- a/.cursor/rules/psa-outreach-disabled.mdc
++++ b/.cursor/rules/psa-outreach-disabled.mdc
+@@ -5,6 +5,8 @@ alwaysApply: true
+ 
+ # Cross-site firm outreach
+ 
+-- **policestationagent** firm outreach emails are permanently disabled. Never re-enable them from this repo or sibling patches.
+-- **Policestationrepuk** firm outreach (WhatsApp / firm invites) must keep running.
+-- If an agent task mentions “stop outreach”, confirm which site. Default for PSA = already off; default for RepUK = leave on unless the user names RepUK.
++- **policestationagent** firm outreach emails are permanently disabled (`PSA_OUTREACH_EMAILS_DISABLED` in that repo).
++- **agent_cover_kent_v1** sends from this Policestationrepuk deployment are also permanently disabled (`AGENT_COVER_EMAILS_DISABLED` / `OUTREACH_SEND_CAMPAIGN_IDS`).
++- **Policestationrepuk** WhatsApp / firm invite outreach (`whatsapp_invite_v1`) must keep running.
++- Do not set `FIRM_OUTREACH_FORCE_AGENT_COVER_SEND=true` or re-add agent_cover to send/probe/kick paths unless the user explicitly asks to resume Agent-branded outreach.
++- If an agent task mentions “stop outreach”, confirm which site. Default for PSA / agent-cover = already off; default for RepUK WhatsApp = leave on unless the user names RepUK WhatsApp.
+diff --git a/__tests__/agent-cover-emails-disabled.test.ts b/__tests__/agent-cover-emails-disabled.test.ts
+new file mode 100644
+index 0000000..eebc921
+--- /dev/null
++++ b/__tests__/agent-cover-emails-disabled.test.ts
+@@ -0,0 +1,46 @@
++import { describe, expect, it } from 'vitest';
++import {
++  AGENT_COVER_EMAILS_DISABLED,
++  areAgentCoverEmailsDisabled,
++} from '@/lib/firm-outreach/agent-cover-emails-disabled';
++import { AGENT_COVER_KENT_CAMPAIGN_ID } from '@/lib/firm-outreach/campaign-scope';
++import { OUTREACH_SEND_CAMPAIGN_IDS } from '@/lib/firm-outreach/site-config';
++import { sendOutreachEmail } from '@/lib/firm-outreach/outreach/send';
++import type { FirmProspect } from '@/lib/firm-outreach/types';
++
++describe('agent_cover email kill-switch', () => {
++  it('is permanently disabled by default', () => {
++    expect(AGENT_COVER_EMAILS_DISABLED).toBe(true);
++    delete process.env.FIRM_OUTREACH_FORCE_AGENT_COVER_SEND;
++    expect(areAgentCoverEmailsDisabled()).toBe(true);
++  });
++
++  it('excludes agent_cover from live send campaign list', () => {
++    expect(OUTREACH_SEND_CAMPAIGN_IDS).toEqual(['whatsapp_invite_v1']);
++    expect(OUTREACH_SEND_CAMPAIGN_IDS).not.toContain(AGENT_COVER_KENT_CAMPAIGN_ID);
++  });
++
++  it('blocks live agent_cover sendOutreachEmail calls', async () => {
++    delete process.env.FIRM_OUTREACH_FORCE_AGENT_COVER_SEND;
++    delete process.env.FIRM_OUTREACH_DRY_RUN;
++    const prospect = {
++      id: 'fop_agent_block_test',
++      firmKey: 'test-firm',
++      firmName: 'Test Firm LLP',
++      prospectType: 'firm',
++      status: 'ready_to_send',
++      sequenceStep: 1,
++      sources: ['laa'],
++      priorityScore: 10,
++      campaignId: AGENT_COVER_KENT_CAMPAIGN_ID,
++      enrichAttempts: 0,
++      createdAt: new Date().toISOString(),
++      updatedAt: new Date().toISOString(),
++      email: 'test@example-firm.co.uk',
++    } as FirmProspect;
++
++    const result = await sendOutreachEmail({ prospect, step: 1, dryRun: false });
++    expect(result.ok).toBe(false);
++    expect(result.error).toBe('agent_cover_emails_disabled');
++  });
++});
+diff --git a/__tests__/firm-outreach-dual-campaign-send.test.ts b/__tests__/firm-outreach-dual-campaign-send.test.ts
+index fda8b16..9ce7894 100644
+--- a/__tests__/firm-outreach-dual-campaign-send.test.ts
++++ b/__tests__/firm-outreach-dual-campaign-send.test.ts
+@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+ import { AGENT_COVER_KENT_CAMPAIGN_ID } from '@/lib/firm-outreach/campaign-scope';
+ import {
+   FIRM_OUTREACH_CAMPAIGN_ID,
+-  OUTREACH_CAMPAIGN_IDS,
++  OUTREACH_SEND_CAMPAIGN_IDS,
+ } from '@/lib/firm-outreach/site-config';
+ import { psaSendReserve } from '@/lib/firm-outreach/send-quota-split';
+ 
+@@ -26,7 +26,7 @@ vi.mock('@/lib/firm-outreach/outreach/run-outreach', async (importOriginal) => {
+       maxElapsedMs?: number;
+       campaignIds?: readonly string[];
+     }) => {
+-      const campaignIds = opts?.campaignIds ?? OUTREACH_CAMPAIGN_IDS;
++      const campaignIds = opts?.campaignIds ?? OUTREACH_SEND_CAMPAIGN_IDS;
+       const byCampaign: Record<string, unknown> = {};
+       for (const campaignId of campaignIds) {
+         byCampaign[campaignId] = await mockRunFirmOutreach({
+@@ -208,7 +208,7 @@ describe('runFirmOutreachPipeline dual-campaign send', () => {
+     }));
+   });
+ 
+-  it('invokes runFirmOutreach for both PSA and RepUK campaign IDs', async () => {
++  it('invokes runFirmOutreach for WhatsApp only (agent_cover send disabled)', async () => {
+     const { runFirmOutreachPipeline } = await import('@/lib/firm-outreach/run-pipeline');
+     const result = await runFirmOutreachPipeline({
+       skipDiscovery: true,
+@@ -223,13 +223,9 @@ describe('runFirmOutreachPipeline dual-campaign send', () => {
+     const campaignIds = mockRunFirmOutreach.mock.calls.map(
+       (c) => (c[0] as { campaignId?: string }).campaignId,
+     );
+-    expect(campaignIds).toContain(AGENT_COVER_KENT_CAMPAIGN_ID);
+     expect(campaignIds).toContain(FIRM_OUTREACH_CAMPAIGN_ID);
+-
+-    // PSA first (daily reserve / Kent cover priority)
+-    expect(campaignIds[0]).toBe(AGENT_COVER_KENT_CAMPAIGN_ID);
+-    expect(result.agentCoverSend?.sent).toBe(5);
+-    // `send` is the combined stats across both campaigns
+-    expect(result.send.sent).toBe(25);
++    expect(campaignIds).not.toContain(AGENT_COVER_KENT_CAMPAIGN_ID);
++    expect(result.agentCoverSend).toBeUndefined();
++    expect(result.send.sent).toBe(20);
+   });
+ });
+diff --git a/app/api/cron/firm-outreach-psa-sync/route.ts b/app/api/cron/firm-outreach-psa-sync/route.ts
+index 5864023..63a982c 100644
+--- a/app/api/cron/firm-outreach-psa-sync/route.ts
++++ b/app/api/cron/firm-outreach-psa-sync/route.ts
+@@ -1,5 +1,9 @@
+ import { NextResponse } from 'next/server';
+ import { isOutreachBootstrapAuthorized } from '@/lib/cron-auth';
++import {
++  AGENT_COVER_EMAILS_DISABLED_REASON,
++  areAgentCoverEmailsDisabled,
++} from '@/lib/firm-outreach/agent-cover-emails-disabled';
+ import { AGENT_COVER_KENT_CAMPAIGN_ID } from '@/lib/firm-outreach/campaign-scope';
+ import { selectOutreachCandidates } from '@/lib/firm-outreach/outreach/candidate-selection';
+ import { reviveAgentCoverKentReady } from '@/lib/firm-outreach/revive-agent-cover-ready';
+@@ -11,16 +15,24 @@ export const maxDuration = 300;
+ 
+ /**
+  * Kent→PSA inventory sync + revive stuck send_failed / soft exclusions.
+- * Runs before send crons so agent_cover_kent_v1 is not starved when maintain 504s.
+- *
+- * Time budget must be large enough to walk past already-cloned RepUK head rows
+- * and create new PSA ready inventory (25s previously truncated after ~100 scans).
++ * Agent-cover sends are permanently disabled; this route is a no-op while the
++ * kill-switch is on (kept for manual ops / future resume).
+  */
+ export async function GET(request: Request) {
+   if (!isOutreachBootstrapAuthorized(request)) {
+     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+   }
+ 
++  if (areAgentCoverEmailsDisabled()) {
++    return NextResponse.json({
++      ok: true,
++      mode: 'psa-sync',
++      skipped: true,
++      reason: 'agent_cover_emails_disabled',
++      message: AGENT_COVER_EMAILS_DISABLED_REASON,
++    });
++  }
++
+   const url = new URL(request.url);
+   const limitRaw = Number(url.searchParams.get('limit') || 400);
+   const limit = Number.isFinite(limitRaw) && limitRaw > 0 ? Math.min(800, limitRaw) : 400;
+diff --git a/lib/firm-outreach/agent-cover-emails-disabled.ts b/lib/firm-outreach/agent-cover-emails-disabled.ts
+new file mode 100644
+index 0000000..3de4c16
+--- /dev/null
++++ b/lib/firm-outreach/agent-cover-emails-disabled.ts
+@@ -0,0 +1,19 @@
++/**
++ * Permanent stop for Police Station Agent / agent_cover_kent_v1 emails
++ * sent from the Policestationrepuk deployment (shared KV dual-campaign).
++ *
++ * WhatsApp invite outreach (whatsapp_invite_v1) must keep running.
++ * Do not flip this to false without an explicit product decision.
++ *
++ * Escape hatch (emergency only): FIRM_OUTREACH_FORCE_AGENT_COVER_SEND=true
++ */
++export const AGENT_COVER_EMAILS_DISABLED = true;
++
++export const AGENT_COVER_EMAILS_DISABLED_REASON =
++  'Police Station Agent (agent_cover_kent_v1) outreach emails are permanently disabled (2026-08-17). WhatsApp / RepUK firm outreach remains active.';
++
++/** True when agent-cover / PSA-branded firm emails must not be sent from this app. */
++export function areAgentCoverEmailsDisabled(): boolean {
++  if (process.env.FIRM_OUTREACH_FORCE_AGENT_COVER_SEND === 'true') return false;
++  return AGENT_COVER_EMAILS_DISABLED;
++}
+diff --git a/lib/firm-outreach/outreach/probe-send.ts b/lib/firm-outreach/outreach/probe-send.ts
+index 0fb6e53..bb44bdb 100644
+--- a/lib/firm-outreach/outreach/probe-send.ts
++++ b/lib/firm-outreach/outreach/probe-send.ts
+@@ -1,17 +1,11 @@
+ /**
+- * Pre-flight Resend probes for both outreach brands/sites:
+- * - policestationrepuk.com / .org → whatsapp_invite_v1
+- * - policestationagent.com → agent_cover_kent_v1
+- * Sends one operator-only test email per campaign so we confirm
+- * from-address resolution before flushing live firm mail.
++ * Pre-flight Resend probes for RepUK WhatsApp outreach.
++ * Police Station Agent / agent_cover_kent_v1 probes are permanently disabled.
+  */
+ import { COMMUNITY_EMAIL } from '@/lib/site-navigation';
+-import { AGENT_COVER_KENT_CAMPAIGN_ID } from '../campaign-scope';
+ import { getEmailProvider } from '../email-provider';
+ import { FIRM_OUTREACH_CAMPAIGN_ID } from '../site-config';
+ import {
+-  DEFAULT_PSA_FROM_FALLBACK,
+-  DEFAULT_PSA_FROM_PREFERRED,
+   fetchResendVerifiedDomains,
+   parseFromAddressDomain,
+   resolveOutreachFromAddress,
+@@ -110,14 +104,11 @@ export async function runOutreachSendProbes(opts?: {
+         process.env.FIRM_OUTREACH_FROM_EMAIL?.trim() ||
+         `PoliceStationRepUK <noreply@${VERIFIED_FALLBACK_DOMAIN}>`,
+     },
+-    {
+-      campaignId: AGENT_COVER_KENT_CAMPAIGN_ID,
+-      site: 'policestationagent.com',
+-      preferredFrom:
+-        process.env.FIRM_OUTREACH_PSA_FROM_EMAIL?.trim() || DEFAULT_PSA_FROM_PREFERRED,
+-    },
+   ];
+ 
++  // Police Station Agent / agent_cover probes are permanently disabled.
++  // Do not re-add AGENT_COVER_KENT_CAMPAIGN_ID here without an explicit product decision.
++
+   const probes: CampaignProbeResult[] = [];
+ 
+   for (const c of campaigns) {
+@@ -170,60 +161,14 @@ export async function runOutreachSendProbes(opts?: {
+       continue;
+     }
+ 
+-    // PSA: match live send.ts — retry once with DEFAULT_PSA_FROM_FALLBACK
+-    // (not resolveFromAddressForCampaign, which can re-pick the preferred
+-    // domain when Resend still lists it as verified).
+-    if (
+-      c.campaignId === AGENT_COVER_KENT_CAMPAIGN_ID &&
+-      resolved.from !== DEFAULT_PSA_FROM_FALLBACK
+-    ) {
+-      const fallbackFrom = DEFAULT_PSA_FROM_FALLBACK;
+-      const fallbackDomain =
+-        parseFromAddressDomain(fallbackFrom) ?? VERIFIED_FALLBACK_DOMAIN;
+-      const retry = await provider.send({
+-        from: fallbackFrom,
+-        to,
+-        replyTo: COMMUNITY_EMAIL,
+-        subject: `[probe] ${c.campaignId} send check (fallback)`,
+-        html: probeHtml({
+-          campaignId: c.campaignId,
+-          site: c.site,
+-          from: fallbackFrom,
+-          domain: fallbackDomain,
+-          usedFallback: true,
+-        }),
+-        headers: {
+-          'X-Firm-Outreach-Probe': `${c.campaignId}:fallback`,
+-        },
+-      });
+-      if (retry.ok) {
+-        probes.push({
+-          ...base,
+-          ok: true,
+-          resolvedFrom: fallbackFrom,
+-          resolvedDomain: fallbackDomain,
+-          usedFallback: true,
+-          messageId: retry.providerMessageId,
+-        });
+-        continue;
+-      }
+-      probes.push({
+-        ...base,
+-        ok: false,
+-        error: retry.error ?? result.error ?? 'provider_error',
+-      });
+-      continue;
+-    }
+-
+     probes.push({ ...base, ok: false, error: result.error ?? 'provider_error' });
+   }
+ 
+   const ok =
+     blockers.length === 0 &&
+-    probes.length === 2 &&
++    probes.length >= 1 &&
+     probes.every((p) => p.ok) &&
+-    (repukCom || repukOrg) &&
+-    (psaApex || psaWww);
++    (repukCom || repukOrg);
+ 
+   return {
+     ok,
+diff --git a/lib/firm-outreach/outreach/run-outreach.ts b/lib/firm-outreach/outreach/run-outreach.ts
+index 4bef049..8d83757 100644
+--- a/lib/firm-outreach/outreach/run-outreach.ts
++++ b/lib/firm-outreach/outreach/run-outreach.ts
+@@ -4,7 +4,11 @@ import {
+   retryDelayMs,
+   validateOutreachEnv,
+ } from '@robertcashman/firm-outreach-core';
+-import { activeOutreachCampaignId } from '../campaign-scope';
++import { activeOutreachCampaignId, AGENT_COVER_KENT_CAMPAIGN_ID } from '../campaign-scope';
++import {
++  AGENT_COVER_EMAILS_DISABLED_REASON,
++  areAgentCoverEmailsDisabled,
++} from '../agent-cover-emails-disabled';
+ import { dailySendCap, outreachSendEnabled } from '../constants';
+ import { isPlausibleOutreachEmail, validateEmailForSend } from '../enrichment/validator';
+ import {
+@@ -22,7 +26,7 @@ import {
+   qualifyProspectForOutreach,
+   resolveStatusWithQualification,
+ } from '../qualification';
+-import { OUTREACH_CAMPAIGN_IDS } from '../site-config';
++import { OUTREACH_SEND_CAMPAIGN_IDS } from '../site-config';
+ import {
+   addSuppression,
+   createSendRecord,
+@@ -202,6 +206,21 @@ export async function runFirmOutreach(opts?: {
+     return finish(0, 0, dailySendCap());
+   }
+ 
++  if (
++    campaignId === AGENT_COVER_KENT_CAMPAIGN_ID &&
++    areAgentCoverEmailsDisabled() &&
++    !opts?.dryRun
++  ) {
++    recordSkip(stats, 'send_disabled');
++    stats.skippedReason = 'agent_cover_emails_disabled';
++    structuredRunLog('warn', 'outreach.run.agent_cover_disabled', {
++      runId,
++      campaignId,
++      reason: AGENT_COVER_EMAILS_DISABLED_REASON,
++    });
++    return finish(0, 0, dailySendCap());
++  }
++
+   if (!outreachSendEnabled() || !(await isOutreachSendAllowed())) {
+     recordSkip(stats, 'send_disabled');
+     return finish(0, 0, dailySendCap());
+@@ -837,7 +856,8 @@ export function mergeOutreachRunStats(
+ }
+ 
+ /**
+- * Send for every shared KV campaign (RepUK WhatsApp + PSA agent-cover).
++ * Send for every allowed live campaign (RepUK WhatsApp only).
++ * agent_cover_kent_v1 is permanently excluded from send runs.
+  * Each campaign keeps its own daily cap / queue; stats are returned per campaign and combined.
+  */
+ export async function runFirmOutreachAllCampaigns(opts?: {
+@@ -849,9 +869,12 @@ export async function runFirmOutreachAllCampaigns(opts?: {
+   byCampaign: Record<string, OutreachRunStats>;
+   combined: OutreachRunStats;
+ }> {
+-  const requestedIds = opts?.campaignIds ?? OUTREACH_CAMPAIGN_IDS;
++  const requestedIds = opts?.campaignIds ?? OUTREACH_SEND_CAMPAIGN_IDS;
++  const sendableIds = areAgentCoverEmailsDisabled()
++    ? requestedIds.filter((id) => id !== AGENT_COVER_KENT_CAMPAIGN_ID)
++    : requestedIds;
+   const date = new Date().toISOString().slice(0, 10);
+-  const campaignIds = await orderCampaignsByFewestSendsToday(requestedIds, (id) =>
++  const campaignIds = await orderCampaignsByFewestSendsToday(sendableIds, (id) =>
+     getDailySendCount(date, id),
+   );
+   const byCampaign: Record<string, OutreachRunStats> = {};
+diff --git a/lib/firm-outreach/outreach/send.ts b/lib/firm-outreach/outreach/send.ts
+index 7776d47..5809d1d 100644
+--- a/lib/firm-outreach/outreach/send.ts
++++ b/lib/firm-outreach/outreach/send.ts
+@@ -1,6 +1,10 @@
+ import { isRetryableProviderError } from '@robertcashman/firm-outreach-core';
+ import { SITE_URL } from '@/lib/seo-layer/config';
+ import { COMMUNITY_EMAIL } from '@/lib/site-navigation';
++import {
++  AGENT_COVER_EMAILS_DISABLED_REASON,
++  areAgentCoverEmailsDisabled,
++} from '../agent-cover-emails-disabled';
+ import { AGENT_COVER_KENT_CAMPAIGN_ID } from '../campaign-scope';
+ import { loadBrochureAttachment } from '../brochure/load-attachment';
+ import { getEmailProvider } from '../email-provider';
+@@ -55,6 +59,26 @@ export async function sendOutreachEmail(opts: {
+   if (!email) return { ok: false, subject: '', error: 'no_email' };
+ 
+   const subject = subjectForStep(opts.prospect, opts.step);
++
++  const dryRunEnv = process.env.FIRM_OUTREACH_DRY_RUN?.trim().toLowerCase();
++  const envDryRun = dryRunEnv !== undefined && ['1', 'true', 'yes', 'on'].includes(dryRunEnv);
++  if (opts.dryRun || envDryRun) {
++    console.info('[firm-outreach dry-run]', email, subject);
++    return { ok: true, subject, messageId: 'dry-run' };
++  }
++
++  if (
++    opts.prospect.campaignId === AGENT_COVER_KENT_CAMPAIGN_ID &&
++    areAgentCoverEmailsDisabled()
++  ) {
++    console.warn(
++      '[firm-outreach agent-cover blocked]',
++      AGENT_COVER_EMAILS_DISABLED_REASON,
++      email,
++    );
++    return { ok: false, subject, error: 'agent_cover_emails_disabled', retryable: false };
++  }
++
+   const token = issueUnsubscribeToken(email);
+   const unsubscribeUrl = `${unsubscribeBaseUrl(opts.prospect)}/outreach/unsubscribe/${encodeURIComponent(token)}`;
+   const html = buildOutreachEmailHtml({
+@@ -68,13 +92,6 @@ export async function sendOutreachEmail(opts: {
+     unsubscribeUrl,
+   });
+ 
+-  const dryRunEnv = process.env.FIRM_OUTREACH_DRY_RUN?.trim().toLowerCase();
+-  const envDryRun = dryRunEnv !== undefined && ['1', 'true', 'yes', 'on'].includes(dryRunEnv);
+-  if (opts.dryRun || envDryRun) {
+-    console.info('[firm-outreach dry-run]', email, subject);
+-    return { ok: true, subject, messageId: 'dry-run' };
+-  }
+-
+   const provider = getEmailProvider();
+   const config = await provider.validateConfiguration();
+   if (!config.configured) {
+diff --git a/lib/firm-outreach/production-kick.ts b/lib/firm-outreach/production-kick.ts
+index 806760f..33b13ff 100644
+--- a/lib/firm-outreach/production-kick.ts
++++ b/lib/firm-outreach/production-kick.ts
+@@ -116,7 +116,7 @@ export const DEFAULT_PRODUCTION_KICK_STEPS: KickStep[] = [
+   },
+   {
+     path: '/api/cron/firm-outreach-send?limit=150',
+-    label: 'Send flush 1 (whatsapp_invite_v1 + agent_cover_kent_v1)',
++    label: 'Send flush 1 (whatsapp_invite_v1 only — agent_cover disabled)',
+   },
+   // Immediate second pass while Resend quota remains — large ready queues (200+)
+   // often leave capacity after flush 1 finishes early on skips/suppressions.
+@@ -146,12 +146,6 @@ export const DEFAULT_PRODUCTION_KICK_STEPS: KickStep[] = [
+     label: 'Pipeline maintain (requalify + inventory)',
+     optional: true,
+   },
+-  // PSA: seed Kent + larger enrich so agent_cover gains ready firm inboxes.
+-  {
+-    path: '/api/cron/firm-outreach-bootstrap?seedAgentCover=1&campaignId=agent_cover_kent_v1&batches=3&limit=80',
+-    label: 'Seed + enrich PSA agent-cover Kent',
+-    optional: true,
+-  },
+   // RepUK: larger enrich batches to surface firm-type emails before flush.
+   {
+     path: '/api/cron/firm-outreach-bootstrap?batches=1&limit=80',
+diff --git a/lib/firm-outreach/run-pipeline.ts b/lib/firm-outreach/run-pipeline.ts
+index 31265ee..2c055ae 100644
+--- a/lib/firm-outreach/run-pipeline.ts
++++ b/lib/firm-outreach/run-pipeline.ts
+@@ -165,10 +165,10 @@ export async function runFirmOutreachPipeline(opts?: {
+             skipped.skippedReason = 'overlap';
+             return skipped;
+           }
+-          // Send both RepUK WhatsApp invites and PSA agent-cover Kent emails.
++          // Send WhatsApp invites only — agent_cover_kent_v1 is permanently disabled.
+           const multi = await runFirmOutreachAllCampaigns({
+             limit: opts?.sendLimit,
+-            // Leave headroom under Vercel maxDuration=300s for both campaigns.
++            // Leave headroom under Vercel maxDuration=300s.
+             maxElapsedMs: 280_000,
+           });
+           sendByCampaign = multi.byCampaign;
+diff --git a/lib/firm-outreach/site-config.ts b/lib/firm-outreach/site-config.ts
+index 028ce09..a640b5f 100644
+--- a/lib/firm-outreach/site-config.ts
++++ b/lib/firm-outreach/site-config.ts
+@@ -4,8 +4,18 @@ export const FIRM_OUTREACH_UA =
+ 
+ export const FIRM_OUTREACH_CAMPAIGN_ID = 'whatsapp_invite_v1';
+ 
+-/** All outreach campaigns sharing this KV (PSA first so Kent cover uses daily reserve). */
++/**
++ * All campaigns that may exist in shared KV (inventory / admin / metrics).
++ * agent_cover_kent_v1 remains listed so historical records resolve, but it is
++ * excluded from live sends via OUTREACH_SEND_CAMPAIGN_IDS.
++ */
+ export const OUTREACH_CAMPAIGN_IDS = [
+   'agent_cover_kent_v1',
+   'whatsapp_invite_v1',
+ ] as const;
++
++/**
++ * Campaigns allowed to send live firm emails from this deployment.
++ * Agent-cover / Police Station Agent branded mail is permanently disabled.
++ */
++export const OUTREACH_SEND_CAMPAIGN_IDS = ['whatsapp_invite_v1'] as const;
+diff --git a/vercel.json b/vercel.json
+index 06f1b89..3c5ddd4 100644
+--- a/vercel.json
++++ b/vercel.json
+@@ -141,14 +141,6 @@
+       "path": "/api/cron/firm-outreach-bootstrap",
+       "schedule": "15 9 * * *"
+     },
+-    {
+-      "path": "/api/cron/firm-outreach-psa-sync",
+-      "schedule": "45 11 * * *"
+-    },
+-    {
+-      "path": "/api/cron/firm-outreach-psa-sync",
+-      "schedule": "45 15 * * *"
+-    },
+     {
+       "path": "/api/cron/firm-outreach-send",
+       "schedule": "*/15 * * * *"
+-- 
+2.43.0
+
