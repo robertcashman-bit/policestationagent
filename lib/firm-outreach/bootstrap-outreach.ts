@@ -1,5 +1,6 @@
 import { runFirmEnrichment } from './enrichment/run-enrich';
 import { reindexProspectStatuses, reindexProspectStatusesChunk } from './reindex-prospects';
+import { arePsaOutreachEmailsDisabled } from './outreach-emails-disabled';
 import { isOutreachSendAllowed, setAdminPauseState, getOutreachPauseSummary } from './pause-state';
 import { countProspectsByStatus } from './storage';
 
@@ -48,7 +49,13 @@ export async function bootstrapOutreach(opts?: {
   const pauseBefore = await getOutreachPauseSummary();
   let unpaused = false;
 
-  if (pauseBefore.effectivePaused && !pauseBefore.envPaused) {
+  // Never clear pause while PSA prospect emails are permanently disabled.
+  if (
+    pauseBefore.effectivePaused &&
+    !pauseBefore.envPaused &&
+    !arePsaOutreachEmailsDisabled() &&
+    !pauseBefore.permanentlyDisabled
+  ) {
     await setAdminPauseState(false);
     unpaused = true;
   }
