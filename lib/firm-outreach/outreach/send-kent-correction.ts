@@ -32,7 +32,12 @@ export async function sendKentCorrectionEmail(opts: {
 
   const subject = KENT_CORRECTION_SUBJECT;
 
-  if (arePsaOutreachEmailsDisabled() && !opts.dryRun) {
+  if (opts.dryRun || process.env.FIRM_OUTREACH_DRY_RUN === 'true') {
+    console.info('[firm-outreach kent-correction dry-run]', email, subject);
+    return { ok: true, subject, messageId: 'dry-run' };
+  }
+
+  if (arePsaOutreachEmailsDisabled()) {
     console.warn('[firm-outreach kent-correction blocked]', PSA_OUTREACH_EMAILS_DISABLED_REASON, email);
     return { ok: false, subject, error: 'psa_outreach_emails_disabled' };
   }
@@ -40,11 +45,6 @@ export async function sendKentCorrectionEmail(opts: {
   const token = issueUnsubscribeToken(email);
   const unsubscribeUrl = `${SITE_URL}/outreach/unsubscribe/${encodeURIComponent(token)}`;
   const html = buildKentCorrectionEmailHtml({ prospect: opts.prospect, unsubscribeUrl });
-
-  if (opts.dryRun || process.env.FIRM_OUTREACH_DRY_RUN === 'true') {
-    console.info('[firm-outreach kent-correction dry-run]', email, subject);
-    return { ok: true, subject, messageId: 'dry-run' };
-  }
 
   const client = getResend();
   if (!client) {

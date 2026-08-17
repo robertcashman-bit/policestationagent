@@ -33,7 +33,19 @@ export async function sendOutreachEmail(opts: {
 
   const subject = subjectForStep(opts.prospect, opts.step);
 
-  if (arePsaOutreachEmailsDisabled() && !opts.dryRun) {
+  if (opts.dryRun || process.env.FIRM_OUTREACH_DRY_RUN === 'true') {
+    const token = issueUnsubscribeToken(email);
+    const unsubscribeUrl = `${SITE_URL}/outreach/unsubscribe/${encodeURIComponent(token)}`;
+    buildOutreachEmailHtml({
+      prospect: opts.prospect,
+      step: opts.step,
+      unsubscribeUrl,
+    });
+    console.info('[firm-outreach dry-run]', email, subject);
+    return { ok: true, subject, messageId: 'dry-run' };
+  }
+
+  if (arePsaOutreachEmailsDisabled()) {
     console.warn('[firm-outreach blocked]', PSA_OUTREACH_EMAILS_DISABLED_REASON, email);
     return { ok: false, subject, error: 'psa_outreach_emails_disabled' };
   }
@@ -45,11 +57,6 @@ export async function sendOutreachEmail(opts: {
     step: opts.step,
     unsubscribeUrl,
   });
-
-  if (opts.dryRun || process.env.FIRM_OUTREACH_DRY_RUN === 'true') {
-    console.info('[firm-outreach dry-run]', email, subject);
-    return { ok: true, subject, messageId: 'dry-run' };
-  }
 
   const client = getResend();
   if (!client) {

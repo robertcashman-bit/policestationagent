@@ -197,6 +197,7 @@ describe('sendOutreachEmail dry-run and missing resend', () => {
     vi.resetModules();
     delete process.env.FIRM_OUTREACH_DRY_RUN;
     delete process.env.RESEND_API_KEY;
+    delete process.env.FIRM_OUTREACH_FORCE_SEND;
   });
 
   it('dry-run does not require Resend', async () => {
@@ -208,10 +209,22 @@ describe('sendOutreachEmail dry-run and missing resend', () => {
   });
 
   it('returns no_resend when API key missing', async () => {
+    process.env.FIRM_OUTREACH_FORCE_SEND = 'true';
+    delete process.env.FIRM_OUTREACH_DRY_RUN;
+    delete process.env.RESEND_API_KEY;
     const { sendOutreachEmail } = await import('@/lib/firm-outreach/outreach/send');
     const result = await sendOutreachEmail({ prospect, step: 0 });
     expect(result.ok).toBe(false);
     expect(result.error).toBe('no_resend');
+  });
+
+  it('blocks live sends when PSA outreach kill-switch is on', async () => {
+    delete process.env.FIRM_OUTREACH_FORCE_SEND;
+    delete process.env.FIRM_OUTREACH_DRY_RUN;
+    const { sendOutreachEmail } = await import('@/lib/firm-outreach/outreach/send');
+    const result = await sendOutreachEmail({ prospect, step: 0 });
+    expect(result.ok).toBe(false);
+    expect(result.error).toBe('psa_outreach_emails_disabled');
   });
 
   it('returns no_email when prospect has no email', async () => {

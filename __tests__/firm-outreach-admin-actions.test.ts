@@ -36,6 +36,12 @@ vi.mock('@/lib/firm-outreach/constants', () => ({
   dailySendCap: () => 30,
 }));
 
+vi.mock('@/lib/firm-outreach/outreach-emails-disabled', () => ({
+  PSA_OUTREACH_EMAILS_DISABLED: false,
+  PSA_OUTREACH_EMAILS_DISABLED_REASON: 'mocked off for unit tests',
+  arePsaOutreachEmailsDisabled: () => false,
+}));
+
 function excludedProspect(overrides: Partial<FirmProspect> = {}): FirmProspect {
   return {
     id: 'fop_ex1',

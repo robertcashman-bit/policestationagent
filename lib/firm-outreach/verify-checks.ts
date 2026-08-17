@@ -223,7 +223,6 @@ export function checkProspectCountsCache(rootDir = process.cwd()): RepoCheckResu
 }
 
 export const EXPECTED_CRON_ROUTES = [
-  '/api/cron/firm-outreach-kent-corrections',
   '/api/cron/firm-outreach-pipeline/maintain',
   '/api/cron/firm-outreach-enrich',
   '/api/cron/firm-outreach-pipeline/full',
@@ -233,8 +232,11 @@ export const EXPECTED_CRON_ROUTES = [
 
 export const VERIFY_CRON_ROUTES = ['/api/cron/firm-outreach-status'] as const;
 
+/** Routes kept for manual/legacy use but not scheduled (PSA prospect sends are off). */
 export const LEGACY_CRON_ROUTES = [
   '/api/cron/firm-outreach-send',
+  '/api/cron/firm-outreach-kick',
+  '/api/cron/firm-outreach-kent-corrections',
   '/api/cron/firm-outreach-discovery',
 ] as const;
 
@@ -374,9 +376,23 @@ export function checkVercelCronConfig(vercelJson: {
   });
   const sendOnlyCronCount = paths.filter((p) => p === '/api/cron/firm-outreach-send').length;
   results.push({
-    name: 'vercel_cron_send_only_four_times_daily',
-    ok: sendOnlyCronCount === 4,
-    detail: `count=${sendOnlyCronCount}`,
+    name: 'vercel_cron_send_only_disabled',
+    ok: sendOnlyCronCount === 0,
+    detail: `count=${sendOnlyCronCount} (PSA prospect send crons must stay off)`,
+  });
+  const kentCorrectionCronCount = paths.filter(
+    (p) => p === '/api/cron/firm-outreach-kent-corrections',
+  ).length;
+  results.push({
+    name: 'vercel_cron_kent_corrections_disabled',
+    ok: kentCorrectionCronCount === 0,
+    detail: `count=${kentCorrectionCronCount}`,
+  });
+  const kickCronCount = paths.filter((p) => p === '/api/cron/firm-outreach-kick').length;
+  results.push({
+    name: 'vercel_cron_kick_disabled',
+    ok: kickCronCount === 0,
+    detail: `count=${kickCronCount}`,
   });
   results.push({
     name: 'vercel_cron_cross_digest_morning',

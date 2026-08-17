@@ -30,6 +30,12 @@ vi.mock('@/lib/firm-outreach/constants', () => ({
   outreachSendEnabled: () => true,
 }));
 
+vi.mock('@/lib/firm-outreach/outreach-emails-disabled', () => ({
+  PSA_OUTREACH_EMAILS_DISABLED: false,
+  PSA_OUTREACH_EMAILS_DISABLED_REASON: 'mocked off for unit tests',
+  arePsaOutreachEmailsDisabled: () => false,
+}));
+
 const ENV = process.env;
 
 describe('outreach send-approved route', () => {
