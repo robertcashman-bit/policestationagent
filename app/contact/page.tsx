@@ -10,6 +10,9 @@ import {
   SERVICE_SCOPE,
   CONTACT_GETTING_IN_TOUCH,
   CONTACT_PATHWAY_PROMPT,
+  CONTACT_PUBLIC_ROUTE,
+  CONTACT_SOLICITOR_ROUTE,
+  CONTACT_RESPONSE_EXPECTATION,
   ADMIN_ENQUIRY_HEADING,
   ADMIN_ENQUIRY_INTRO,
   ADMIN_ENQUIRY_CAN,
@@ -62,6 +65,35 @@ export default function ContactPage() {
               .
             </p>
           </header>
+
+          <section
+            className="grid gap-4 md:grid-cols-2"
+            aria-label="Who should contact us and how"
+          >
+            <div className="rounded-xl border border-border bg-card p-5">
+              <h2 className="font-display text-lg font-bold text-primary">
+                Public &amp; family
+              </h2>
+              <p className="mt-2 text-sm leading-relaxed text-slate-700">
+                {CONTACT_PUBLIC_ROUTE}
+              </p>
+            </div>
+            <div className="rounded-xl border border-accent/40 bg-accent/5 p-5">
+              <h2 className="font-display text-lg font-bold text-primary">
+                Solicitors &amp; firms
+              </h2>
+              <p className="mt-2 text-sm leading-relaxed text-slate-700">
+                {CONTACT_SOLICITOR_ROUTE}
+              </p>
+            </div>
+          </section>
+
+          <p
+            className="rounded-lg border border-border-subtle bg-secondary/60 px-4 py-3 text-sm leading-relaxed text-slate-700"
+            role="note"
+          >
+            {CONTACT_RESPONSE_EXPECTATION}
+          </p>
 
           <AudiencePathSelector
             heading="Choose the reason for contacting us"

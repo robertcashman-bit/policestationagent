@@ -522,7 +522,7 @@ footer.bg-primary-dark{background-color:#1d4ed8!important;color:#fff!important}
         {/* Google Tag Manager — only injected when NEXT_PUBLIC_GTM_ID is set */}
         <GoogleTagManager />
       </head>
-      <body className={`${sourceSans.className} pb-16 lg:pb-0`}>
+      <body className={sourceSans.className}>
         <GoogleTagManagerNoScript />
         <ComplianceStrip />
         <NotPoliceScopeBanner />
