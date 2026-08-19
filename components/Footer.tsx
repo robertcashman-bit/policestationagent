@@ -125,7 +125,7 @@ export default function Footer({
               free general advice after release.
             </p>
           </div>
-          <p className="text-xs text-white/70" title={`Build ${appVersion}`}>
+          <p className="text-xs text-white/70" title={appVersion}>
             © {currentYear} Police Station Agent
             {lastUpdate ? ` · Updated ${lastUpdate}` : ""}
           </p>
