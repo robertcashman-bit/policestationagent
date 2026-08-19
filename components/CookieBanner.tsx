@@ -37,17 +37,19 @@ export function CookieBanner() {
 
   if (!visible) return null;
 
-  /* On homepage, dock as a compact left card so pathway CTAs stay clear. */
+  /* On homepage, dock as a compact bottom bar that stays clear of pathway cards
+     and never fights the chat FAB (chat hides while cookie-bar-visible). */
   if (isHome) {
     return (
       <div
         data-hook="cookie-banner"
-        className="cookie-bar-compact psr-cookie-bar fixed bottom-3 left-3 z-50 max-w-[min(22rem,calc(100vw-5.5rem))] rounded-lg border border-border bg-card text-foreground shadow-md"
+        className="cookie-bar-compact psr-cookie-bar fixed bottom-0 left-0 right-0 z-50 border-t border-border bg-card text-foreground shadow-md"
+        style={{ paddingBottom: 'max(0.5rem, var(--safe-area-bottom))' }}
         role="dialog"
         aria-label="Cookie consent"
       >
-        <div className="flex flex-col gap-2 p-3">
-          <p className="text-xs leading-snug text-muted-foreground">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-3 py-2 sm:px-4">
+          <p className="min-w-0 flex-1 text-xs leading-snug text-muted-foreground">
             <span className="font-bold text-primary">Cookies.</span> Essential only —{' '}
             <Link
               href="/Cookies"
@@ -57,17 +59,17 @@ export function CookieBanner() {
             </Link>
             .
           </p>
-          <div className="flex items-center gap-2">
+          <div className="flex shrink-0 items-center gap-2">
             <Link
               href="/Cookies"
-              className="inline-flex h-8 flex-1 items-center justify-center rounded-md border border-border px-2 text-xs font-semibold text-primary no-underline hover:border-accent"
+              className="inline-flex h-9 items-center justify-center rounded-md border border-border px-3 text-xs font-semibold text-primary no-underline hover:border-accent"
             >
               Manage
             </Link>
             <button
               type="button"
               onClick={accept}
-              className="inline-flex h-8 flex-1 items-center justify-center rounded-md bg-primary px-3 text-xs font-semibold text-white hover:bg-primary-light"
+              className="inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 text-xs font-semibold text-white hover:bg-primary-light"
             >
               Accept
             </button>

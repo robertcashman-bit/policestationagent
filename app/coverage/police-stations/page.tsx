@@ -47,12 +47,12 @@ export default function PoliceStationsPage() {
       <BreadcrumbList items={breadcrumbItems} />
       <Header forceHidePhone />
       <main className="flex-grow relative" id="main-content" role="main" aria-live="polite">
-        <section className="bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white py-16">
+        <section className="hero-navy text-white py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">
               <Link 
                 href="/coverage" 
-                className="inline-flex items-center gap-2 text-blue-100 hover:text-white mb-6 transition-colors"
+                className="inline-flex items-center gap-2 text-white/85 hover:text-white mb-6 transition-colors"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-left w-5 h-5">
                   <path d="m12 19-7-7 7-7"></path>
@@ -60,8 +60,8 @@ export default function PoliceStationsPage() {
                 </svg>
                 Back to Coverage
               </Link>
-              <h1 className="text-4xl md:text-5xl font-bold mb-4">Kent Police Station Information</h1>
-              <p className="text-xl text-blue-100">
+              <h1 className="text-4xl md:text-5xl font-bold mb-4 text-white">Kent Police Station Information</h1>
+              <p className="text-xl text-white/90">
                 Independent information about police stations and custody facilities across Kent and Medway — not an official police directory
               </p>
               <p className="mt-6">

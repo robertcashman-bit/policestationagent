@@ -29,13 +29,13 @@ export default function Page() {
       <Header />
       <main className="flex-grow relative" id="main-content" role="main" aria-live="polite">
         <div className="bg-gradient-to-br from-slate-50 to-blue-50">
-          <section className="bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 text-white py-20">
+          <section className="hero-navy text-white py-20">
             <div className="max-w-4xl mx-auto px-4 text-center">
               <div className="inline-flex items-center rounded-md border px-2.5 py-0.5 transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent shadow hover:bg-primary/80 bg-amber-400 text-slate-900 mb-6 text-sm font-bold">
                 Our Services
               </div>
-              <h1 className="text-4xl md:text-5xl font-black mb-6">What We Do</h1>
-              <p className="text-xl text-blue-100 mb-8">
+              <h1 className="text-4xl md:text-5xl font-black mb-6 text-white">What We Do</h1>
+              <p className="text-xl text-white/90 mb-8">
                 Expert police station representation and criminal defence services across Kent
               </p>
             </div>

@@ -28,6 +28,10 @@ export default function LazyChatbot() {
   const isHome = pathname === "/" || pathname === "";
   const [loadChat, setLoadChat] = useState(false);
   const [homeReady, setHomeReady] = useState(!isHome);
+  const [cookieBlocking, setCookieBlocking] = useState(() => {
+    if (typeof document === "undefined") return false;
+    return document.body.classList.contains("cookie-bar-visible");
+  });
 
   const activate = useCallback(() => {
     setLoadChat(true);
@@ -49,7 +53,24 @@ export default function LazyChatbot() {
   }, [isHome]);
 
   useEffect(() => {
-    if (isAdmin || loadChat || !homeReady) return;
+    /* Never let Chat sit on top of the cookie Accept control. */
+    const syncCookieGate = () => {
+      const accepted =
+        typeof localStorage !== "undefined" && localStorage.getItem("cookies-accepted") === "true";
+      setCookieBlocking(!accepted || document.body.classList.contains("cookie-bar-visible"));
+    };
+    syncCookieGate();
+    const observer = new MutationObserver(syncCookieGate);
+    observer.observe(document.body, { attributes: true, attributeFilter: ["class"] });
+    window.addEventListener("storage", syncCookieGate);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("storage", syncCookieGate);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isAdmin || loadChat || !homeReady || cookieBlocking) return;
 
     const onInteraction = () => setLoadChat(true);
     const options: AddEventListenerOptions = { passive: true, once: true };
@@ -63,10 +84,10 @@ export default function LazyChatbot() {
         window.removeEventListener(eventName, onInteraction);
       }
     };
-  }, [loadChat, isAdmin, homeReady]);
+  }, [loadChat, isAdmin, homeReady, cookieBlocking]);
 
   if (isAdmin) return null;
-  if (!homeReady) return null;
+  if (!homeReady || cookieBlocking) return null;
 
   if (loadChat) {
     return <Chatbot />;

@@ -165,6 +165,17 @@ describe('HTML sanitizer', () => {
     expect(clean).toContain('class="key-takeaways"');
     expect(clean).toContain('Key takeaways');
   });
+
+  it('keeps section gradient classes and Lucide SVG icons in scraped HTML', () => {
+    const dirty = `<section class="py-20 bg-gradient-to-br from-blue-900 via-indigo-800 to-purple-900 text-white"><h2 class="text-white">Trusted by Clients Across Kent</h2><div class="w-16 h-16 bg-blue-100"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-award w-8 h-8"><path d="m15.477 12.89 1.515 8.526"></path><circle cx="12" cy="8" r="6"></circle></svg></div></section>`;
+    const clean = sanitizeScrapedHtml(dirty);
+    expect(clean).toMatch(/<section[^>]*class="/);
+    expect(clean).toMatch(/from-blue-900|hero-navy/);
+    expect(clean).toContain('<svg');
+    expect(clean).toContain('<path');
+    expect(clean).toContain('<circle');
+    expect(clean).toContain('Trusted by Clients Across Kent');
+  });
 });
 
 describe('index-now GET recon strip', () => {
