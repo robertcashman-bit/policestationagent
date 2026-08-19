@@ -1,4 +1,5 @@
 import Script from "next/script";
+import { ROBERT_CASHMAN_PHOTO_URL } from "@/config/site";
 
 interface PersonSchemaProps {
   name?: string;
@@ -6,6 +7,7 @@ interface PersonSchemaProps {
   description?: string;
   knowsAbout?: string[];
   areaServed?: string;
+  image?: string;
 }
 
 /**
@@ -29,6 +31,7 @@ export function PersonSchema({
     "Kent Police Stations",
   ],
   areaServed = "Kent",
+  image = ROBERT_CASHMAN_PHOTO_URL,
 }: PersonSchemaProps) {
   const schema = {
     "@context": "https://schema.org",
@@ -36,6 +39,7 @@ export function PersonSchema({
     name: name,
     jobTitle: jobTitle,
     description: description,
+    image: image,
     worksFor: {
       "@type": "LegalService",
       name: "Police Station Agent",
