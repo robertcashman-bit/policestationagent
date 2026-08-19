@@ -2,14 +2,14 @@ import ScrapedHtmlPage from "@/components/ScrapedHtmlPage";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Extended Hours Police Station Representation | Police Station Agent",
+  title: "Extended Hours Police Station Representation",
   description:
     "Professional legal representation available when others aren't - evenings, weekends, and bank holidays. Available during extended hours across Kent.",
   alternates: {
     canonical: "https://policestationagent.com/extendedhours",
   },
   openGraph: {
-    title: "Extended Hours Police Station Representation | Police Station Agent",
+    title: "Extended Hours Police Station Representation",
     description:
       "Professional legal representation available when others aren't - evenings, weekends, and bank holidays. Available during extended hours across Kent.",
     type: "website",

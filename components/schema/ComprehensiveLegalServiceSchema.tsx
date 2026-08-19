@@ -27,10 +27,10 @@ export function ComprehensiveLegalServiceSchema({
   serviceType,
   areaServed = "Kent",
   jurisdiction = "England & Wales",
-  phone = "+441732247427",
+  phone,
   url = SITE_URL,
 }: ComprehensiveLegalServiceSchemaProps) {
-  const schema = {
+  const schema: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "LegalService",
     name: serviceName,
@@ -53,13 +53,17 @@ export function ComprehensiveLegalServiceSchema({
     jurisdiction: jurisdiction,
     serviceType: serviceType,
     category: "Legal Services",
-    availableChannel: {
+  };
+
+  // Do not publish firm telephone in indexable JSON-LD by default (police-confusion risk).
+  if (phone) {
+    schema.availableChannel = {
       "@type": "ServiceChannel",
       serviceType: "Telephone",
       servicePhone: phone,
       availableLanguage: "English",
-    },
-  };
+    };
+  }
 
   return (
     <Script

@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   title:
     "Police Station Solicitor in Kent | Police Station Representation (Legal Aid)",
   description:
-    "Police station representation in Kent: free legal advice at the police station under Legal Aid, interview representation, and guidance on bail and next steps. Call 01732 247427.",
+    "Police station representation in Kent: free legal advice at the police station under Legal Aid, interview representation, and guidance on bail and next steps.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/services/police-station-representation`,
   },
@@ -56,7 +56,7 @@ export default function PoliceStationRepresentationPage() {
     {
       question: "What's the difference between a qualified solicitor and a police station agent?",
       answer:
-        "A qualified solicitor is a fully trained legal professional who has completed the Legal Practice Course and training contract. A police station agent (accredited representative) is a non-solicitor who has passed the Police Station Qualification. Robert Cashman is a qualified solicitor with 35+ years experience and Higher Court Advocate status — not just an agent — providing expert independent legal advice.",
+        "A qualified solicitor is a fully trained legal professional who has completed the Legal Practice Course and training contract. A police station agent (accredited representative) is a non-solicitor who has passed the Police Station Qualification. Robert Cashman is a qualified solicitor with 30+ years experience and Higher Court Advocate status — not just an agent — providing expert independent legal advice.",
     },
   ];
 
@@ -88,17 +88,17 @@ export default function PoliceStationRepresentationPage() {
               </p>
               <h2 className="text-xl font-bold text-slate-900 mb-3">When You Should Use It</h2>
               <p className="text-slate-700 mb-4">
-                You should use this service immediately upon arrest or when contacted by police for a voluntary interview. Do not answer police questions without legal advice. Call 01732 247427 during extended hours for prompt assistance. This service operates in England & Wales under PACE 1984, PACE Code C, and Legal Aid Agency regulations.
+                You should use this service immediately upon arrest or when contacted by police for a voluntary interview. Do not answer police questions without legal advice. during extended hours for prompt assistance. This service operates in England & Wales under PACE 1984, PACE Code C, and Legal Aid Agency regulations.
               </p>
               <h2 className="text-xl font-bold text-slate-900 mb-3">Professional Status</h2>
               <p className="text-slate-700">
-                Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795). Robert Cashman is a qualified solicitor and accredited duty solicitor with 35+ years experience, 21,000+ cases, and Higher Court Advocate status. He is regulated by the Solicitors Regulation Authority (SRA) and operates under SRA standards.
+                Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795). Robert Cashman is a qualified solicitor and accredited duty solicitor with 30+ years experience, 21,000+ cases, and Higher Court Advocate status. He is regulated by the Solicitors Regulation Authority (SRA) and operates under SRA standards.
               </p>
             </div>
             <p className="lead text-xl text-slate-700 mb-8">
               Expert police station representation by qualified solicitor. FREE legal advice under
               Legal Aid at all Kent custody suites. Independent Defence Solicitor & Higher Court
-              Advocate Robert Cashman - 35+ years experience, 21,000+ cases.
+              Advocate Robert Cashman - 30+ years experience, 21,000+ cases.
             </p>
             <div className="bg-green-50 border border-green-200 rounded-xl px-6 py-4 mb-8">
               <p className="text-green-800 font-medium text-sm m-0">

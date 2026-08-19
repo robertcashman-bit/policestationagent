@@ -5,14 +5,14 @@ import { LegalReferences, Ref, type LegalSource } from "@/components/LegalRefere
 import { SITE_DOMAIN } from "@/config/site";
 
 export const metadata: Metadata = {
-  title: "Vulnerable Adults in Custody | Special Protections | Police Station Agent",
+  title: "Vulnerable Adults in Custody | Special Protections",
   description:
     "Special protections for vulnerable adults in police custody. Learn about appropriate adults, mental health assessments, and your rights under PACE Code C.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/vulnerable-adults-in-custody`,
   },
   openGraph: {
-    title: "Vulnerable Adults in Custody | Special Protections | Police Station Agent",
+    title: "Vulnerable Adults in Custody | Special Protections",
     description:
       "Special protections for vulnerable adults in police custody. Learn about appropriate adults, mental health assessments, and your rights under PACE Code C.",
     url: `https://${SITE_DOMAIN}/vulnerable-adults-in-custody`,

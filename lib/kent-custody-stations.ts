@@ -1,7 +1,7 @@
 /** Kent custody suites linked from the resource hub */
 export const KENT_CUSTODY_STATIONS = [
   { name: "Medway", href: "/medway-police-station" },
-  { name: "Maidstone", href: "/maidstone-police-station" },
+  { name: "Maidstone (VAI only)", href: "/maidstone-police-station" },
   { name: "North Kent (Gravesend)", href: "/police-station-rep-gravesend" },
   { name: "Canterbury", href: "/canterbury-police-station" },
   { name: "Tonbridge", href: "/police-station-rep-tonbridge" },

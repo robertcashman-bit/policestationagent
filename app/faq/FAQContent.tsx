@@ -76,12 +76,12 @@ export default function FAQContent() {
         {
           question: "What qualifications do your representatives have?",
           answer:
-            "Our representatives are fully accredited police station representatives, qualified under the Police Station Accreditation Scheme. Robert Cashman is a qualified solicitor with over 35 years of experience, a Higher Court Advocate, and an accredited duty solicitor. All our representatives are properly trained and accredited to provide police station representation.",
+            "Our representatives are fully accredited police station representatives, qualified under the Police Station Accreditation Scheme. Robert Cashman is a qualified solicitor with over 30 years of experience, a Higher Court Advocate, and an accredited duty solicitor. All our representatives are properly trained and accredited to provide police station representation.",
         },
         {
           question: "What is a police station duty solicitor?",
           answer:
-            "A police station duty solicitor is a qualified solicitor accredited by the Law Society to provide FREE legal advice at police stations under Legal Aid. Robert Cashman is both a qualified solicitor and an Accredited Duty Solicitor with Higher Court Advocate status, providing expert representation at all Kent custody suites including Medway, Maidstone, Canterbury, and Gravesend.",
+            "A police station duty solicitor is a qualified solicitor accredited by the Law Society to provide FREE legal advice at police stations under Legal Aid. Robert Cashman is both a qualified solicitor and an Accredited Duty Solicitor with Higher Court Advocate status, providing expert representation at all Kent custody suites including Medway, Canterbury, and Gravesend. Maidstone custody is closed (voluntary interviews only).",
         },
         {
           question: "How does a duty solicitor protect your rights in Kent custody suites?",
@@ -106,7 +106,7 @@ export default function FAQContent() {
         {
           question: "Which police stations do you cover?",
           answer:
-            "We cover all police stations and custody suites across Kent, including: Medway, Maidstone, Gravesend, Canterbury, Tonbridge, Folkestone, Ashford, Sittingbourne, Margate, Dover, Sevenoaks, and all other Kent custody facilities. Travel times vary by location - typically 15-30 minutes for nearby stations, up to 60-75 minutes for stations in East Kent.",
+            "We cover all police stations and custody suites across Kent, including: Medway, Gravesend, Canterbury, Tonbridge, Folkestone, Ashford, Sittingbourne, Margate, Dover, and other Kent custody facilities. Maidstone custody is closed — voluntary interviews only. Travel times vary by location - typically 15-30 minutes for nearby stations, up to 60-75 minutes for stations in East Kent.",
         },
       ],
     },
@@ -305,7 +305,7 @@ export default function FAQContent() {
         {
           question: "Is advice at the police station really free?",
           answer:
-            "Yes, legal advice at the police station is completely free under Legal Aid, regardless of your income or savings. This is a statutory right under the Police and Criminal Evidence Act 1984 (PACE). There is no means test for police station advice - it is available to everyone. The police pay the Legal Aid Agency, who then pay us, so there is no cost to you.",
+            "Yes, legal advice at the police station is completely free under Legal Aid, regardless of your income or savings. This is a statutory right under the Police and Criminal Evidence Act 1984 (PACE). There is no means test for police station advice - it is available to everyone. Legal Aid is publicly funded, so there is no cost to you for police station advice.",
         },
         {
           question: "What should I do if police want to interview me?",

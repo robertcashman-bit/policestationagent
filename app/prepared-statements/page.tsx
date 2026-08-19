@@ -8,19 +8,14 @@ import { SITE_DOMAIN } from "@/config/site";
 import {
   CTA_OUT_OF_SCOPE,
   CTA_WHO_CAN_CALL,
-  PHONE_DISPLAY,
-  PHONE_TEL,
-  SCOPE_HELP_HREF,
-} from "@/config/contact";
+  SCOPE_HELP_HREF } from "@/config/contact";
 
 export const metadata: Metadata = {
   title: "Prepared Statements in Police Interviews: A Complete Guide",
   description:
     "A prepared statement lets you put your account on record while avoiding police questioning. Learn when to use one and how they protect against adverse inferences.",
   alternates: {
-    canonical: `https://${SITE_DOMAIN}/prepared-statements`,
-  },
-};
+    canonical: `https://${SITE_DOMAIN}/prepared-statements` } };
 
 export default function PreparedStatementsPage() {
   const sources: LegalSource[] = [
@@ -28,8 +23,7 @@ export default function PreparedStatementsPage() {
       id: "cjpoa-s34",
       label:
         "Criminal Justice and Public Order Act 1994 s.34 (inferences from failure to mention facts)",
-      href: "https://www.legislation.gov.uk/ukpga/1994/33/section/34",
-    },
+      href: "https://www.legislation.gov.uk/ukpga/1994/33/section/34" },
   ];
 
   const faqSchema = {
@@ -41,43 +35,32 @@ export default function PreparedStatementsPage() {
         name: "What is a prepared statement in a police interview?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: 'A prepared statement is a written document, prepared with your solicitor, that sets out your account of events. It is read out at the start of a police interview, after which you answer "no comment" to questions. It puts your defence on record while avoiding the risks of live questioning.',
-        },
-      },
+          text: 'A prepared statement is a written document, prepared with your solicitor, that sets out your account of events. It is read out at the start of a police interview, after which you answer "no comment" to questions. It puts your defence on record while avoiding the risks of live questioning.' } },
       {
         "@type": "Question",
         name: "Does a prepared statement protect against adverse inferences?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "A prepared statement may reduce the risk of adverse inferences if it clearly mentions the facts you later rely on. However, whether an adverse inference can be drawn depends on the circumstances and the court.",
-        },
-      },
+          text: "A prepared statement may reduce the risk of adverse inferences if it clearly mentions the facts you later rely on. However, whether an adverse inference can be drawn depends on the circumstances and the court." } },
       {
         "@type": "Question",
         name: "When should I use a prepared statement?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "A prepared statement is useful when: you have a clear account to give but want to avoid police questioning, you need to put facts on record to prevent adverse inferences, the disclosure is limited, or you want to control exactly what information is provided.",
-        },
-      },
+          text: "A prepared statement is useful when: you have a clear account to give but want to avoid police questioning, you need to put facts on record to prevent adverse inferences, the disclosure is limited, or you want to control exactly what information is provided." } },
       {
         "@type": "Question",
         name: "Can police ask questions after a prepared statement?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: 'Yes, police can still ask questions after you read your prepared statement. You can answer "no comment" to these questions. The interview will continue, but you\'ve already put your key points on record.',
-        },
-      },
+          text: 'Yes, police can still ask questions after you read your prepared statement. You can answer "no comment" to these questions. The interview will continue, but you\'ve already put your key points on record.' } },
       {
         "@type": "Question",
         name: "Who writes the prepared statement?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "The prepared statement is drafted by your solicitor based on your instructions. It should accurately reflect your account while being carefully worded to avoid inadvertent admissions or inconsistencies.",
-        },
-      },
-    ],
-  };
+          text: "The prepared statement is drafted by your solicitor based on your instructions. It should accurately reflect your account while being carefully worded to avoid inadvertent admissions or inconsistencies." } },
+    ] };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex flex-col">
@@ -344,10 +327,10 @@ export default function PreparedStatementsPage() {
             <p className="text-slate-400 text-sm mb-6">{CTA_OUT_OF_SCOPE}</p>
             <div className="flex flex-wrap gap-4">
               <a
-                href={`tel:${PHONE_TEL}`}
+                href="/current-custody"
                 className="inline-flex items-center px-6 py-3 bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold rounded-lg"
               >
-                Call {PHONE_DISPLAY}
+                Contact pathways
               </a>
               <Link
                 href={SCOPE_HELP_HREF}

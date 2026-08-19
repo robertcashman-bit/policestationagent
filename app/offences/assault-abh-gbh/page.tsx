@@ -10,7 +10,7 @@ const baseUrl = `https://${SITE_DOMAIN}`;
 export const metadata: Metadata = {
   title: "Assault ABH GBH | Police Station Representation Kent | Legal Aid",
   description:
-    "Expert police station representation for assault, ABH, and GBH allegations across Kent. Free legal advice under Legal Aid. Early advice before interview is important. Call 01732 247427.",
+    "Expert police station representation for assault, ABH, and GBH allegations across Kent. Free legal advice under Legal Aid. Early advice before interview is important.",
   alternates: {
     canonical: "https://policestationagent.com/offences/assault-abh-gbh",
   },
@@ -353,7 +353,6 @@ export default function AssaultABHGBHPage() {
                   href="tel:01732247427"
                   className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-lg font-bold transition-colors bg-amber-400 hover:bg-amber-500 text-slate-900 px-8 py-4 rounded-full shadow-xl"
                 >
-                  Call 01732 247427
                 </a>
                 <Link
                   href="/contact"

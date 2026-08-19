@@ -2,14 +2,14 @@ import ScrapedHtmlPage from "@/components/ScrapedHtmlPage";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Agency Terms of Attendance | Police Station Agent",
+  title: "Agency Terms of Attendance",
   description: "Comprehensive terms and conditions for solicitor agency instructions.",
   keywords: undefined,
   alternates: {
     canonical: "https://policestationagent.com/attendanceterms",
   },
   openGraph: {
-    title: "Agency Terms of Attendance | Police Station Agent",
+    title: "Agency Terms of Attendance",
     description: "Comprehensive terms and conditions for solicitor agency instructions.",
     type: "website",
     url: "https://policestationagent.com/attendanceterms",

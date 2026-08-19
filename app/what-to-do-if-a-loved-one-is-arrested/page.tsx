@@ -5,14 +5,14 @@ import { SITE_DOMAIN } from "@/config/site";
 import { LegalReferences, Ref, type LegalSource } from "@/components/LegalReferences";
 
 export const metadata: Metadata = {
-  title: "What to Do If a Loved One is Arrested | Family Guide | Police Station Agent",
+  title: "What to Do If a Loved One is Arrested | Family Guide",
   description:
     "Practical guide for families when a loved one is arrested in Kent. Learn what to do, your rights, and how to get immediate legal representation.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/what-to-do-if-a-loved-one-is-arrested`,
   },
   openGraph: {
-    title: "What to Do If a Loved One is Arrested | Family Guide | Police Station Agent",
+    title: "What to Do If a Loved One is Arrested | Family Guide",
     description:
       "Practical guide for families when a loved one is arrested in Kent. Learn what to do and how to get immediate legal representation.",
     url: `https://${SITE_DOMAIN}/what-to-do-if-a-loved-one-is-arrested`,

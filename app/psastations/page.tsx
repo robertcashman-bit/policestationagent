@@ -2,14 +2,14 @@ import ScrapedHtmlPage from "@/components/ScrapedHtmlPage";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Kent Police Station Coverage | Police Station Agent",
+  title: "Kent Police Station Coverage",
   description:
     "Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795) at all major police stations and custody suites across Kent and Medway, including extended hours.",
   alternates: {
     canonical: "https://policestationagent.com/psastations",
   },
   openGraph: {
-    title: "Kent Police Station Coverage | Police Station Agent",
+    title: "Kent Police Station Coverage",
     description:
       "Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795) at all major police stations and custody suites across Kent and Medway, including extended hours.",
     type: "website",

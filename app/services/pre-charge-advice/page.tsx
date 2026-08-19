@@ -13,56 +13,45 @@ import { LLMContentBlock } from "@/components/LLMContentBlock";
 import {
   CTA_OUT_OF_SCOPE,
   CTA_WHO_CAN_CALL,
-  PHONE_DISPLAY,
-  PHONE_TEL,
   SCOPE_HELP_HREF,
-  SEO_NOT_POLICE,
-} from "@/config/contact";
+  SEO_NOT_POLICE } from "@/config/contact";
 
 export const metadata: Metadata = {
   title: "Police Interview Advice Solicitor Kent | Pre-Charge Advice | Custody & VAI",
   description:
     `${SEO_NOT_POLICE} Police interview advice for current Kent custody or a booked voluntary interview. FREE Legal Aid at the station where eligible — not free post-release phone advice.`,
   alternates: {
-    canonical: `https://${SITE_DOMAIN}/services/pre-charge-advice`,
-  },
+    canonical: `https://${SITE_DOMAIN}/services/pre-charge-advice` },
   openGraph: {
     title: "Police Interview Advice Solicitor Kent | Custody & Booked VAI",
     description:
       "Expert police interview advice for Kent custody and booked voluntary interviews. FREE under Legal Aid at the station where eligible.",
     url: `https://${SITE_DOMAIN}/services/pre-charge-advice`,
     siteName: "Police Station Agent",
-    type: "website",
-  },
-};
+    type: "website" } };
 
 export default function PreChargeAdvicePage() {
   const faqItems = [
     {
       question: "What is pre‑charge advice?",
       answer:
-        "Pre‑charge advice is legal advice and representation given before the police or CPS make a charging decision. It often involves reviewing evidence, advising on interview strategy, and making written representations to prevent charge or narrow allegations where appropriate.",
-    },
+        "Pre‑charge advice is legal advice and representation given before the police or CPS make a charging decision. It often involves reviewing evidence, advising on interview strategy, and making written representations to prevent charge or narrow allegations where appropriate." },
     {
       question: "When is the best time to get pre‑charge advice?",
       answer:
-        "As early as possible—ideally before a police interview. Our telephone line is for current Kent custody or a booked voluntary interview. Work after release outside the police station is not free Legal Aid phone advice and may need a private appointment with a criminal defence firm.",
-    },
+        "As early as possible—ideally before a police interview. Our telephone line is for current Kent custody or a booked voluntary interview. Work after release outside the police station is not free Legal Aid phone advice and may need a private appointment with a criminal defence firm." },
     {
       question: "Can a solicitor speak to the police or CPS for me before I am charged?",
       answer:
-        "Where we are instructed for current custody or a booked interview, we can make appropriate representations as part of that attendance. Speculative post-release calls for free status updates or case advice are outside our phone intake.",
-    },
+        "Where we are instructed for current custody or a booked interview, we can make appropriate representations as part of that attendance. Speculative post-release calls for free status updates or case advice are outside our phone intake." },
     {
       question: "Is pre‑charge advice free at the police station?",
       answer:
-        "Legal advice at the police station (custody or booked voluntary interview) is free under Legal Aid where eligible. Work outside the police station after release is not free phone advice via this line.",
-    },
+        "Legal advice at the police station (custody or booked voluntary interview) is free under Legal Aid where eligible. Work outside the police station after release is not free phone advice via this line." },
     {
       question: "Do you cover pre‑charge advice across Kent?",
       answer:
-        "Yes. We cover Kent custody suites and voluntary interview locations, including Medway, Maidstone, Canterbury, Gravesend and surrounding areas.",
-    },
+        "Yes. We cover Kent custody suites and voluntary interview locations, including Medway, Maidstone, Canterbury, Gravesend and surrounding areas." },
   ];
 
   return (
@@ -136,10 +125,10 @@ export default function PreChargeAdvicePage() {
               <p className="text-slate-600 text-sm mb-4">{CTA_OUT_OF_SCOPE}</p>
               <div className="flex flex-col sm:flex-row gap-3">
                 <a
-                  href={`tel:${PHONE_TEL}`}
+                  href="/current-custody"
                   className="inline-flex items-center justify-center rounded-md bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-3"
                 >
-                  Call {PHONE_DISPLAY}
+                  Contact pathways
                 </a>
                 <a
                   href={SCOPE_HELP_HREF}

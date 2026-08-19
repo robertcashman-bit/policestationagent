@@ -9,14 +9,14 @@ import { KENT_MAP_BASE, KENT_MAP_STATIONS } from "@/lib/kent-station-map-data";
 import { BreadcrumbList } from "@/components/StructuredData";
 
 export const metadata: Metadata = {
-  title: "Kent Police Station Map | Distances from West Kingsdown | Police Station Agent",
+  title: "Kent Police Station Map | Distances from West Kingsdown",
   description:
     "Quick-reference map of Kent police stations and custody suites from West Kingsdown (TN15). Distances, typical drive times, and links to station pages. Printable resource for defence work.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/resources/kent-police-station-map`,
   },
   openGraph: {
-    title: "Kent Police Station & Custody Map | Police Station Agent",
+    title: "Kent Police Station & Custody Map",
     description:
       "Distances and drive times from West Kingsdown across Kent custody suites and major police stations.",
     url: `${SITE_URL}/resources/kent-police-station-map`,

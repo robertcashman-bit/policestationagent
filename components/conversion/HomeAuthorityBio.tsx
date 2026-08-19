@@ -4,7 +4,7 @@ const CREDENTIALS = [
   { title: "Practice Director", detail: "Major Legal Aid Practice" },
   { title: "Duty Solicitor", detail: "Police Station Specialist" },
   { title: "Higher Court Advocate", detail: "Crown Court advocacy" },
-  { title: "35+ years", detail: "Criminal defence experience" },
+  { title: "30+ years", detail: "Criminal defence experience" },
 ] as const;
 
 export function HomeAuthorityBio() {
@@ -26,7 +26,7 @@ export function HomeAuthorityBio() {
           </h2>
           <div className="accent-rule mt-4 bg-accent" aria-hidden="true" />
           <p className="mt-5 max-w-measure text-base leading-relaxed text-white/80 md:text-lg">
-            With over 35 years of criminal law experience, including roles as Practice Director and
+            With over 30 years of criminal law experience, including roles as Practice Director and
             Higher Court Advocate, I specialise exclusively in police station representation.
           </p>
           <dl className="mt-8 grid gap-3 sm:grid-cols-2">

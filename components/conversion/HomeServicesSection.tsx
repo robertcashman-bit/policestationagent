@@ -19,7 +19,7 @@ const SERVICES = [
     cta: "Agency cover for firms",
     description:
       "Reliable duty solicitor services for criminal law firms. Comprehensive notes and competitive rates.",
-    points: ["Detailed attendance notes", "Competitive fixed rates", "35 years experience"],
+    points: ["Detailed attendance notes", "Competitive fixed rates", "30+ years experience"],
     emphasis: "accent" as const,
   },
   {

@@ -6,7 +6,7 @@ import { SITE_DOMAIN } from "@/config/site";
 import { RESOURCE_HUB_PATH } from "@/config/link-authority";
 
 export const metadata: Metadata = {
-  title: "Resources | Link-Friendly Legal Guides | Police Station Agent",
+  title: "Resources | Link-Friendly Legal Guides",
   description:
     "Free resources on police station rights in Kent — printable PACE guide, Kent station map, custody hub, press information, and link-to-us copy.",
   alternates: { canonical: `https://${SITE_DOMAIN}/resources` },

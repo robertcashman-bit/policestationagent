@@ -7,7 +7,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Private Client Criminal Defence Kent | Director-Level Representation | Tuckers Solicitors LLP",
   description:
-    "Private client criminal defence in Kent with director-level representation by Robert Cashman. Enhanced service from police station through Crown Court. Fixed-fee packages available. SRA-regulated. Call 01732 247427.",
+    "Private client criminal defence in Kent with director-level representation by Robert Cashman. Enhanced service from police station through Crown Court. Fixed-fee packages available. SRA-regulated.",
   alternates: {
     canonical: "https://policestationagent.com/privatecrime",
   },

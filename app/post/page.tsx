@@ -9,14 +9,14 @@ import { SITE_DOMAIN } from "@/config/site";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Blog Post | Police Station Agent",
+  title: "Blog Post",
   description:
     "Read our latest articles on police station representation, legal rights, and criminal defence in Kent.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/post`,
   },
   openGraph: {
-    title: "Blog Post | Police Station Agent",
+    title: "Blog Post",
     description:
       "Read our latest articles on police station representation, legal rights, and criminal defence in Kent.",
     url: `https://${SITE_DOMAIN}/post`,

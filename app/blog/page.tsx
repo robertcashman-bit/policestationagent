@@ -11,7 +11,7 @@ import { JsonLd } from "@/components/JsonLd";
 export const revalidate = 3600; // 1 hour
 
 export const metadata: Metadata = {
-  title: "Blog | Police Station Agent",
+  title: "Blog",
   description:
     "Expert legal insights on police station representation, criminal defence procedures, and your rights in custody. Authored by Robert Cashman.",
   alternates: {
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Blog | Police Station Agent",
+    title: "Blog",
     description:
       "Expert legal insights on police station representation, criminal defence procedures, and your rights in custody. Authored by Robert Cashman.",
     url: `${SITE_URL}/blog`,

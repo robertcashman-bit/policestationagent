@@ -30,7 +30,7 @@ export default function FAQAccordion() {
       question: "Why should I pay privately if police station advice is free?",
       answer: `<p>While Legal Aid provides excellent free representation, private funding offers several advantages:</p>
 <ul>
-<li><strong>Named senior solicitor:</strong> Where possible, representation by Robert Cashman — a solicitor with 35+ years of experience — rather than whoever is on the duty rota. If Robert cannot attend, Tuckers Solicitors LLP will arrange an alternative suitably qualified representative.</li>
+<li><strong>Named senior solicitor:</strong> Where possible, representation by Robert Cashman — a solicitor with 30+ years of experience — rather than whoever is on the duty rota. If Robert cannot attend, Tuckers Solicitors LLP will arrange an alternative suitably qualified representative.</li>
 <li><strong>Continuity:</strong> The same solicitor will handle your case from police station through to court if needed</li>
 <li><strong>Proactive approach:</strong> More time can be spent on pre-charge engagement and case preparation</li>
 <li><strong>Flexibility:</strong> Greater flexibility in communication and meeting arrangements</li>

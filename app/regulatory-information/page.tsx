@@ -5,7 +5,7 @@ import { SITE_DOMAIN } from "@/config/site";
 import { REGULATORY_LINKS, REPUK_PROFILE_URL } from "@/config/link-authority";
 
 export const metadata: Metadata = {
-  title: "Regulatory Information | Police Station Agent",
+  title: "Regulatory Information",
   description:
     "Regulatory information about Defence Legal Services Ltd t/a Police Station Agent and Tuckers Solicitors LLP.",
   alternates: { canonical: `https://${SITE_DOMAIN}/regulatory-information` },

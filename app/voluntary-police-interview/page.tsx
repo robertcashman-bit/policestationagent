@@ -11,7 +11,7 @@ import { StandardPaceSources } from "@/components/legal/StandardPaceSources";
 export const metadata: Metadata = {
   title: "Voluntary Police Interview Solicitor | Legal Advice Before Attendance (Kent)",
   description:
-    "Voluntary police interview (caution) legal advice before attendance. Free legal advice at the police station under Legal Aid. Kent coverage. Call 01732 247427.",
+    "Voluntary police interview (caution) legal advice before attendance. Free legal advice at the police station under Legal Aid. Kent coverage.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/voluntary-police-interview`,
   },

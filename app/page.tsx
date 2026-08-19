@@ -64,7 +64,7 @@ const faqItems = [
   {
     question: "Which police stations do you cover in Kent?",
     answer:
-      "We cover all Kent custody suites including Medway (Gillingham), Maidstone, North Kent (Gravesend), Canterbury, Tonbridge, Folkestone, Ashford, Sittingbourne, Margate, Dover, Sevenoaks, and Tunbridge Wells.",
+      "We cover Kent custody suites including Medway (Gillingham), North Kent (Gravesend), Canterbury, Tonbridge, Folkestone, Ashford, Sittingbourne, Margate, Dover, Sevenoaks, and Tunbridge Wells. Maidstone custody is closed — voluntary interviews only.",
   },
   {
     question: "Are police station solicitors independent of the police?",
@@ -74,7 +74,7 @@ const faqItems = [
   {
     question: "What is the difference between a qualified solicitor and a police station rep?",
     answer:
-      "A qualified solicitor is a fully trained legal professional who has completed the Legal Practice Course and training contract. A police station rep (accredited representative) is a non-solicitor who has passed the Police Station Qualification. Robert Cashman is a qualified solicitor with 35+ years experience — not just an accredited representative — providing expert independent legal advice at all Kent police stations.",
+      "A qualified solicitor is a fully trained legal professional who has completed the Legal Practice Course and training contract. A police station rep (accredited representative) is a non-solicitor who has passed the Police Station Qualification. Robert Cashman is a qualified solicitor with 30+ years experience — not just an accredited representative — providing expert independent legal advice at all Kent police stations.",
   },
   {
     question:

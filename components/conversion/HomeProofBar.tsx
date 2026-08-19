@@ -1,9 +1,9 @@
 import Link from "next/link";
 
 const PROOF_ITEMS = [
-  { value: "35+", label: "Years experience" },
+  { value: "30+", label: "Years experience" },
   { value: "21,000+", label: "Clients helped" },
-  { value: "100%", label: "Kent custody suites" },
+  { value: "Extended", label: "Hours cover" },
   { value: "SRA 127795", label: "Tuckers Solicitors LLP" },
 ] as const;
 

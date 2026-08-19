@@ -7,7 +7,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Solicitors: Police Station Agent Cover | Within 45 mins of Maidstone",
   description:
-    "Police station agent cover for solicitors — attendance within about 45 minutes of Maidstone. Custody and voluntary interview attendances. Competitive rates. Call 01732 247427.",
+    "Police station agent cover for solicitors — attendance within about 45 minutes of Maidstone. Custody and voluntary interview attendances. Competitive rates.",
   alternates: {
     canonical: "https://policestationagent.com/start/solicitors-agent-cover",
   },

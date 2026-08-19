@@ -49,14 +49,14 @@ const faqSchema = {
 export const metadata: Metadata = {
   title: "Police Interview Rights Kent | Your Rights During Questioning | PACE Code C",
   description:
-    "Know your rights during a police interview in Kent. FREE solicitor advice at Maidstone, Medway, Canterbury, Folkestone. PACE Code C explained. Call 01732 247427.",
+    "Know your rights during a police interview in Kent. FREE solicitor advice at Maidstone, Medway, Canterbury, Folkestone. PACE Code C explained.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/police-interview-rights`,
   },
   openGraph: {
     title: "Police Interview Rights Kent | Your Rights During Questioning | PACE Code C",
     description:
-      "Know your rights during a police interview in Kent. FREE solicitor advice at Maidstone, Medway, Canterbury, Folkestone. PACE Code C explained. Call 01732 247427.",
+      "Know your rights during a police interview in Kent. FREE solicitor advice at Maidstone, Medway, Canterbury, Folkestone. PACE Code C explained.",
     type: "website",
     url: `https://${SITE_DOMAIN}/police-interview-rights`,
     siteName: "Police Station Agent",

@@ -10,19 +10,14 @@ import { SITE_DOMAIN } from "@/config/site";
 import {
   CTA_OUT_OF_SCOPE,
   CTA_WHO_CAN_CALL,
-  PHONE_DISPLAY,
-  PHONE_TEL,
-  SCOPE_HELP_HREF,
-} from "@/config/contact";
+  SCOPE_HELP_HREF } from "@/config/contact";
 
 export const metadata: Metadata = {
   title: "Police Bail Explained: Conditions, Time Limits & Your Rights UK",
   description:
     "Police bail is release with conditions while an investigation continues. Learn what bail is, what happens if you breach conditions, and how pre-charge bail time limits work (England & Wales).",
   alternates: {
-    canonical: `https://${SITE_DOMAIN}/police-bail-explained`,
-  },
-};
+    canonical: `https://${SITE_DOMAIN}/police-bail-explained` } };
 
 export default function PoliceBailExplainedPage() {
   const sources: LegalSource[] = [
@@ -30,39 +25,32 @@ export default function PoliceBailExplainedPage() {
       id: "pace-47zb",
       label:
         "Police and Criminal Evidence Act 1984 (PACE) s.47ZB (applicable bail period: initial limit)",
-      href: "https://www.legislation.gov.uk/ukpga/1984/60/section/47ZB",
-    },
+      href: "https://www.legislation.gov.uk/ukpga/1984/60/section/47ZB" },
     {
       id: "pace-47zd",
       label: "PACE s.47ZD (extension of initial limit in standard cases; relevant officer)",
-      href: "https://www.legislation.gov.uk/ukpga/1984/60/section/47ZD",
-    },
+      href: "https://www.legislation.gov.uk/ukpga/1984/60/section/47ZD" },
     {
       id: "pace-47zf",
       label: "PACE s.47ZF (first extension by magistrates’ court)",
-      href: "https://www.legislation.gov.uk/ukpga/1984/60/section/47ZF",
-    },
+      href: "https://www.legislation.gov.uk/ukpga/1984/60/section/47ZF" },
     {
       id: "pace-47zg",
       label: "PACE s.47ZG (subsequent extensions by magistrates’ court)",
-      href: "https://www.legislation.gov.uk/ukpga/1984/60/section/47ZG",
-    },
+      href: "https://www.legislation.gov.uk/ukpga/1984/60/section/47ZG" },
     {
       id: "pace-47zj",
       label:
         "PACE s.47ZJ (late court applications; bail period treated as extended until determined)",
-      href: "https://www.legislation.gov.uk/ukpga/1984/60/section/47ZJ",
-    },
+      href: "https://www.legislation.gov.uk/ukpga/1984/60/section/47ZJ" },
     {
       id: "pace-46a",
       label: "PACE s.46A (arrest for failure to answer bail / suspected breach of bail conditions)",
-      href: "https://www.legislation.gov.uk/ukpga/1984/60/section/46A",
-    },
+      href: "https://www.legislation.gov.uk/ukpga/1984/60/section/46A" },
     {
       id: "cps-bail",
       label: "Crown Prosecution Service (CPS) prosecution guidance: Bail",
-      href: "https://www.cps.gov.uk/prosecution-guidance/bail",
-    },
+      href: "https://www.cps.gov.uk/prosecution-guidance/bail" },
   ];
 
   const faqSchema = {
@@ -74,43 +62,32 @@ export default function PoliceBailExplainedPage() {
         name: "What is police bail?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Police bail is when you are released from custody with conditions while the investigation continues. You must return to the police station on a specified date. Bail can include conditions like not contacting certain people or staying away from certain locations.",
-        },
-      },
+          text: "Police bail is when you are released from custody with conditions while the investigation continues. You must return to the police station on a specified date. Bail can include conditions like not contacting certain people or staying away from certain locations." } },
       {
         "@type": "Question",
         name: "How long does police bail last?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Pre-charge police bail time limits depend on the type of case. Under PACE, the initial “applicable bail period” is generally 3 months from the bail start date, with different rules for certain designated/regulatory cases. Bail can be extended under PACE, including (in some circumstances) by a court.",
-        },
-      },
+          text: "Pre-charge police bail time limits depend on the type of case. Under PACE, the initial “applicable bail period” is generally 3 months from the bail start date, with different rules for certain designated/regulatory cases. Bail can be extended under PACE, including (in some circumstances) by a court." } },
       {
         "@type": "Question",
         name: "What happens if I breach police bail conditions?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Police can arrest you if they reasonably suspect you have broken pre-charge bail conditions, and you may be taken back to a police station. What happens next depends on your case and the investigation.",
-        },
-      },
+          text: "Police can arrest you if they reasonably suspect you have broken pre-charge bail conditions, and you may be taken back to a police station. What happens next depends on your case and the investigation." } },
       {
         "@type": "Question",
         name: "What is the difference between bail and RUI?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Police bail usually involves conditions and a return date. RUI is release without bail (typically without bail conditions).",
-        },
-      },
+          text: "Police bail usually involves conditions and a return date. RUI is release without bail (typically without bail conditions)." } },
       {
         "@type": "Question",
         name: "Can I challenge police bail conditions?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "You can ask the police to vary bail conditions, and you can get a solicitor to make representations for you. The route to challenge conditions depends on whether it is police bail or court bail.",
-        },
-      },
-    ],
-  };
+          text: "You can ask the police to vary bail conditions, and you can get a solicitor to make representations for you. The route to challenge conditions depends on whether it is police bail or court bail." } },
+    ] };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex flex-col">
@@ -411,10 +388,10 @@ export default function PoliceBailExplainedPage() {
             <p className="text-slate-400 text-sm mb-6">{CTA_OUT_OF_SCOPE}</p>
             <div className="flex flex-wrap gap-4">
               <a
-                href={`tel:${PHONE_TEL}`}
+                href="/current-custody"
                 className="inline-flex items-center px-6 py-3 bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold rounded-lg"
               >
-                Call {PHONE_DISPLAY}
+                Contact pathways
               </a>
               <Link
                 href={SCOPE_HELP_HREF}

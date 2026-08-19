@@ -5,14 +5,14 @@ import type { Metadata } from "next";
 import { SITE_DOMAIN, SITE_URL } from "@/config/site";
 
 export const metadata: Metadata = {
-  title: "What We Do | Police Station Agent - Expert Legal Representation Kent",
+  title: "What We Do — Expert Legal Representation Kent",
   description:
     "Expert police station representation and criminal defence services across Kent. FREE legal advice under Legal Aid, extended hours availability, voluntary interviews, and agent cover within about 45 minutes of Maidstone.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/what-we-do`,
   },
   openGraph: {
-    title: "What We Do | Police Station Agent",
+    title: "What We Do",
     description:
       "Expert police station representation and criminal defence services across Kent. FREE legal advice under Legal Aid, extended hours availability.",
     url: `https://${SITE_DOMAIN}/what-we-do`,
@@ -312,7 +312,7 @@ export default function Page() {
                     </svg>
                   </div>
                   <h2 className="text-2xl font-bold text-slate-900 mb-4">
-                    extended hours Emergency Service
+                    Extended hours emergency service
                   </h2>
                   <p className="text-slate-600 leading-relaxed mb-4">
                     We understand that arrests and police interviews can happen at any time. That's
@@ -407,7 +407,7 @@ export default function Page() {
                     <h3 className="font-bold text-slate-900 mb-2">West Kent</h3>
                     <ul className="space-y-1 text-slate-600 text-sm">
                       <li>Tonbridge</li>
-                      <li>Maidstone</li>
+                      <li>Maidstone (VAI only — custody closed)</li>
                       <li>Sevenoaks</li>
                       <li>Tunbridge Wells</li>
                     </ul>
@@ -483,7 +483,7 @@ export default function Page() {
                         d="M5 13l4 4L19 7"
                       ></path>
                     </svg>
-                    <span>35 years experience & 21,000+ cases</span>
+                    <span>30+ years experience & 21,000+ cases</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <svg
@@ -532,7 +532,7 @@ export default function Page() {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <a
-                    href="tel:01732247427"
+                    href="/contact"
                     className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 text-white shadow h-12 rounded-md px-8 bg-red-600 hover:bg-red-700 font-bold"
                   >
                     <svg
@@ -549,7 +549,7 @@ export default function Page() {
                     >
                       <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
                     </svg>
-                    Call: 01732 247427
+                    Contact pathways
                   </a>
                   <a
                     href="/contact"

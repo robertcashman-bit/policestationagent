@@ -7,27 +7,21 @@ import { BreadcrumbList } from "@/components/StructuredData";
 import {
   CTA_OUT_OF_SCOPE,
   CTA_WHO_CAN_CALL,
-  PHONE_DISPLAY,
-  PHONE_TEL,
-  SCOPE_HELP_HREF,
-} from "@/config/contact";
+  SCOPE_HELP_HREF } from "@/config/contact";
 
 export const metadata: Metadata = {
   title: "Offences We Deal With | Police Station Representation in Kent",
   description:
-    "Offence types we regularly deal with at the police station, and how early legal advice works before interview. Kent police station representation. Call 01732 247427.",
+    "Offence types we regularly deal with at the police station, and how early legal advice works before interview. Kent police station representation.",
   alternates: {
-    canonical: `https://${SITE_DOMAIN}/offences-we-deal-with`,
-  },
+    canonical: `https://${SITE_DOMAIN}/offences-we-deal-with` },
   openGraph: {
     title: "Offences We Deal With | Police Station Representation in Kent",
     description:
       "Offence types we regularly deal with at the police station, plus guidance on interviews, bail and RUI. Kent coverage.",
     url: `https://${SITE_DOMAIN}/offences-we-deal-with`,
     siteName: "Police Station Agent",
-    type: "website",
-  },
-};
+    type: "website" } };
 
 const baseUrl = `https://${SITE_DOMAIN}`;
 
@@ -457,10 +451,10 @@ export default function OffencesWeDealWithPage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a
-                  href={`tel:${PHONE_TEL}`}
+                  href="/current-custody"
                   className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-lg font-bold transition-colors bg-amber-400 hover:bg-amber-500 text-slate-900 px-8 py-4 rounded-full shadow-xl"
                 >
-                  Call {PHONE_DISPLAY}
+                  Contact pathways
                 </a>
                 <Link
                   href={SCOPE_HELP_HREF}
