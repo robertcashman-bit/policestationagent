@@ -5,14 +5,14 @@ import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Accessibility Statement | Police Station Agent",
+  title: "Accessibility Statement",
   description:
     "Our commitment to making Police Station Agent accessible to everyone, including those with disabilities.",
   alternates: {
     canonical: "https://policestationagent.com/accessibility",
   },
   openGraph: {
-    title: "Accessibility Statement | Police Station Agent",
+    title: "Accessibility Statement",
     description:
       "Our commitment to making Police Station Agent accessible to everyone, including those with disabilities.",
     url: "https://policestationagent.com/accessibility",

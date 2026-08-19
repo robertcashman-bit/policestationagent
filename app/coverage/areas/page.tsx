@@ -5,7 +5,7 @@ import type { Metadata } from 'next';
 import { BreadcrumbList } from '@/components/StructuredData';
 
 export const metadata: Metadata = {
-  title: "Areas Covered - Coverage | Police Station Agent",
+  title: "Areas Covered - Coverage",
   description: "Criminal defence representation across Kent areas including Medway, East Kent, West Kent, North Kent, and Mid Kent. Information about police station coverage by area.",
   alternates: {
     canonical: "https://policestationagent.com/coverage/areas",

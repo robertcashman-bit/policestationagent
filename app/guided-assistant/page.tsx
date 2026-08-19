@@ -2,13 +2,13 @@ import ScrapedHtmlPage from "@/components/ScrapedHtmlPage";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Police Station Agent | Police Station Agent",
+  title: "Police Station Agent",
   description: "v4.4.0 — 12/12/2025",
   alternates: {
     canonical: "https://policestationagent.com/guided-assistant",
   },
   openGraph: {
-    title: "Police Station Agent | Police Station Agent",
+    title: "Police Station Agent",
     description: "v4.4.0 — 12/12/2025",
     url: "https://policestationagent.com/guided-assistant",
     siteName: "Police Station Agent",

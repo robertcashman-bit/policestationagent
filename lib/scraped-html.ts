@@ -4,10 +4,14 @@ import { sanitizeScrapedHtml } from "@/lib/html-sanitizer";
 
 /** Strip embedded version badges from scraped HTML blobs. */
 const VERSION_BADGE_PATTERN =
-  /<div[^>]*class="[^"]*fixed[^"]*right-3[^"]*top-4[^"]*"[^>]*aria-hidden="true"[^>]*>v[\d.]+ — \d{1,2}\/\d{1,2}\/\d{4}<\/div>/gi;
+  /<div[^>]*class="[^"]*fixed[^"]*right-3[^"]*top-4[^"]*"[^>]*aria-hidden="true"[^>]*>v[\d.]+(?:\s*[—–-]\s*)\d{1,2}\/\d{1,2}\/\d{4}<\/div>/gi;
 
 const VERSION_BADGE_INLINE_PATTERN =
-  /<span[^>]*class="[^"]*text-\[10px\][^"]*text-slate-400[^"]*"[^>]*>v[\d.]+ — \d{1,2}\/\d{1,2}\/\d{4}<\/span>/gi;
+  /<(?:span|p)[^>]*(?:text-\[10px\]|text-xs)[^>]*text-(?:slate|gray)-[45]00[^>]*>\s*v[\d.]+(?:\s*[—–-]\s*)\d{1,2}\/\d{1,2}\/\d{4}\s*<\/(?:span|p)>/gi;
+
+/** Footer / body version stamps such as `v5.0.0 - 12/12/2025` */
+const VERSION_STAMP_LOOSE_PATTERN =
+  /<(?:p|span|div)[^>]*>\s*v\d+(?:\.\d+)+(?:\s*[—–-]\s*)\d{1,2}\/\d{1,2}\/\d{4}\s*<\/(?:p|span|div)>/gi;
 
 /**
  * Rewrite legacy blue/purple/amber utility classes to navy/gold design-system classes.
@@ -95,6 +99,7 @@ export function normalizeScrapedHtml(
   let out = html;
   out = out.replaceAll(VERSION_BADGE_PATTERN, "");
   out = out.replaceAll(VERSION_BADGE_INLINE_PATTERN, "");
+  out = out.replaceAll(VERSION_STAMP_LOOSE_PATTERN, "");
 
   // Legacy scraped pages embed green WhatsApp buttons — convert away from WA
   out = out.replace(/href="https:\/\/wa\.me\/[^"]*"/gi, 'href="/contact"');

@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: 'Admin | Police Station Agent',
+  title: 'Admin',
   description: 'Admin overview — firm outreach, content, and blog tools.',
   robots: { index: false, follow: false },
 };

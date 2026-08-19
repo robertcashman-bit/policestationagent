@@ -13,30 +13,46 @@ function escapeXml(value: string): string {
     .replace(/'/g, "&apos;");
 }
 
-export function GET() {
-  const urls = getAllPosts()
-    .map((post) => {
-      const loc = `${SITE_URL}/blog/${post.slug}`;
-      const lastmod = new Date(post.date || Date.now()).toISOString();
-
-      return [
-        "  <url>",
-        `    <loc>${escapeXml(loc)}</loc>`,
-        `    <lastmod>${lastmod}</lastmod>`,
-        "    <changefreq>weekly</changefreq>",
-        "    <priority>0.75</priority>",
-        "  </url>",
-      ].join("\n");
-    })
-    .join("\n");
-
+function emptySitemap(): Response {
   return new Response(
-    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`,
+    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n</urlset>\n`,
     {
       headers: {
         "Content-Type": "application/xml; charset=utf-8",
-        "Cache-Control": "public, max-age=3600, s-maxage=3600",
+        "Cache-Control": "public, max-age=300, s-maxage=300",
       },
-    }
+    },
   );
+}
+
+export function GET() {
+  try {
+    const urls = getAllPosts()
+      .map((post) => {
+        const loc = `${SITE_URL}/blog/${post.slug}`;
+        const lastmod = new Date(post.date || Date.now()).toISOString();
+
+        return [
+          "  <url>",
+          `    <loc>${escapeXml(loc)}</loc>`,
+          `    <lastmod>${lastmod}</lastmod>`,
+          "    <changefreq>weekly</changefreq>",
+          "    <priority>0.75</priority>",
+          "  </url>",
+        ].join("\n");
+      })
+      .join("\n");
+
+    return new Response(
+      `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`,
+      {
+        headers: {
+          "Content-Type": "application/xml; charset=utf-8",
+          "Cache-Control": "public, max-age=3600, s-maxage=3600",
+        },
+      },
+    );
+  } catch {
+    return emptySitemap();
+  }
 }

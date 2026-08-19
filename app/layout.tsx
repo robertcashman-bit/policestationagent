@@ -399,7 +399,7 @@ const organizationSchema = {
         "@id": `${siteUrl}#legalservice`,
       },
       description:
-        "Qualified solicitor and accredited duty solicitor with Higher Rights of Audience (Criminal). Providing expert police station representation across Kent since 2001. 35+ years experience, 21,000+ cases.",
+        "Qualified solicitor and accredited duty solicitor with Higher Rights of Audience (Criminal). Providing expert police station representation across Kent. 30+ years experience, 21,000+ cases.",
       knowsAbout: [
         "Criminal Defence",
         "Police Station Representation",

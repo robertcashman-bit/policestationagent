@@ -5,14 +5,14 @@ import type { Metadata } from "next";
 import NearestStationFinder from "@/components/NearestStationFinder";
 
 export const metadata: Metadata = {
-  title: "Police Station Coverage Kent & Medway | Robert Cashman | Police Station Agent",
+  title: "Police Station Coverage Kent & Medway | Robert Cashman",
   description:
     "Comprehensive police station representation across all Kent custody suites - Canterbury, Folkestone, Tonbridge, Medway, Gravesend. Extended hours duty solicitor coverage for police interviews.",
   alternates: {
     canonical: "https://policestationagent.com/areas",
   },
   openGraph: {
-    title: "Police Station Coverage Kent & Medway | Robert Cashman | Police Station Agent",
+    title: "Police Station Coverage Kent & Medway | Robert Cashman",
     description:
       "Comprehensive police station representation across all Kent custody suites - Canterbury, Folkestone, Tonbridge, Medway, Gravesend. Extended hours duty solicitor coverage for police interviews.",
     url: "https://policestationagent.com/areas",

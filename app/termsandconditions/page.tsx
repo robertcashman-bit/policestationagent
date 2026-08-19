@@ -5,14 +5,14 @@ import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Website Terms of Use | Police Station Agent",
+  title: "Website Terms of Use",
   description:
     "Legally binding terms of use for the Police Station Agent website. Please read carefully.",
   alternates: {
     canonical: "https://policestationagent.com/termsandconditions",
   },
   openGraph: {
-    title: "Website Terms of Use | Police Station Agent",
+    title: "Website Terms of Use",
     description:
       "Legally binding terms of use for the Police Station Agent website. Please read carefully.",
     url: "https://policestationagent.com/termsandconditions",

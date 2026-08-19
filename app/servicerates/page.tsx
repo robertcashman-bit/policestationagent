@@ -2,7 +2,7 @@ import ScrapedHtmlPage from "@/components/ScrapedHtmlPage";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Agency Service Rates & Fees | Police Station Agent",
+  title: "Agency Service Rates & Fees",
   description:
     "Official schedule of agency fees for police station attendance, including bell-backs and mileage.",
   keywords: undefined,
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     canonical: "https://policestationagent.com/servicerates",
   },
   openGraph: {
-    title: "Agency Service Rates & Fees | Police Station Agent",
+    title: "Agency Service Rates & Fees",
     description:
       "Official schedule of agency fees for police station attendance, including bell-backs and mileage.",
     type: "website",

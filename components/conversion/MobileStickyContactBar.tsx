@@ -10,7 +10,7 @@ const HIDE_STICKY_PATHS = new Set(["/", ""]);
 export function MobileStickyContactBar() {
   const pathname = usePathname() || "/";
   const path = pathname.replace(/\/$/, "") || "/";
-  const hidden = HIDE_STICKY_PATHS.has(path);
+  const hidden = HIDE_STICKY_PATHS.has(path) || path === "/admin" || path.startsWith("/admin/");
 
   useEffect(() => {
     document.body.classList.toggle("has-mobile-sticky-bar", !hidden);

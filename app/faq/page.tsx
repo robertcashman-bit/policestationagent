@@ -20,14 +20,14 @@ import { InternalLinkHub } from "@/components/InternalLinkHub";
 import { RIGHTS_HUB, STATIONS_HUB } from "@/config/internal-link-hubs";
 
 export const metadata: Metadata = {
-  title: "FAQ - Frequently Asked Questions | Police Station Agent",
+  title: "FAQ — Frequently Asked Questions",
   description:
     "Police station representation FAQ for Kent. Immediate custody only, who can instruct, confidentiality, legal aid, and when we can help — not past arrests or general enquiries.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/faq`,
   },
   openGraph: {
-    title: "FAQ - Frequently Asked Questions | Police Station Agent",
+    title: "FAQ — Frequently Asked Questions",
     description:
       "Police station representation FAQ for Kent. Immediate custody only, who can instruct, confidentiality, legal aid, and when we can help — not past arrests or general enquiries.",
     type: "website",

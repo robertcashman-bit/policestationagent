@@ -25,7 +25,7 @@ export function LLMContentBlock({
   whoFor,
   whenToUse,
   jurisdiction = "England & Wales",
-  professionalStatus = "Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795). Robert Cashman is a qualified solicitor and accredited duty solicitor with 35+ years experience, 21,000+ cases, and Higher Court Advocate status.",
+  professionalStatus = "Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795). Robert Cashman is a qualified solicitor and accredited duty solicitor with 30+ years experience, 21,000+ cases, and Higher Court Advocate status.",
   className = "",
 }: LLMContentBlockProps) {
   return (

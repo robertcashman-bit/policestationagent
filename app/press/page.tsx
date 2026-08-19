@@ -6,7 +6,7 @@ import { SITE_DOMAIN } from "@/config/site";
 import { AUTHORITY_NAP, RESOURCE_HUB_URL } from "@/config/link-authority";
 
 export const metadata: Metadata = {
-  title: "Press & Media | Police Station Agent",
+  title: "Press & Media",
   description:
     "Robert Cashman — accredited duty solicitor, Kent police station representation. Expert commentary on PACE, custody, and voluntary interviews.",
   alternates: { canonical: `https://${SITE_DOMAIN}/press` },
@@ -28,7 +28,7 @@ export default function PressPage() {
       <main className="flex-grow max-w-4xl mx-auto px-4 py-16" id="main-content">
         <h1 className="text-4xl font-black text-slate-900 mb-4">Press &amp; media</h1>
         <p className="text-lg text-slate-700 mb-8">
-          Robert Cashman is an accredited duty solicitor with over 35 years&apos; criminal law
+          Robert Cashman is an accredited duty solicitor with over 30+ years&apos; criminal law
           experience, providing police station representation in Kent via Tuckers Solicitors LLP
           (SRA ID 127795).
         </p>

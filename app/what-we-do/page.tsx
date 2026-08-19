@@ -5,14 +5,14 @@ import type { Metadata } from "next";
 import { SITE_DOMAIN, SITE_URL } from "@/config/site";
 
 export const metadata: Metadata = {
-  title: "What We Do | Police Station Agent - Expert Legal Representation Kent",
+  title: "What We Do — Expert Legal Representation Kent",
   description:
     "Expert police station representation and criminal defence services across Kent. FREE legal advice under Legal Aid, extended hours availability, voluntary interviews, and agent cover within about 45 minutes of Maidstone.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/what-we-do`,
   },
   openGraph: {
-    title: "What We Do | Police Station Agent",
+    title: "What We Do",
     description:
       "Expert police station representation and criminal defence services across Kent. FREE legal advice under Legal Aid, extended hours availability.",
     url: `https://${SITE_DOMAIN}/what-we-do`,
@@ -312,7 +312,7 @@ export default function Page() {
                     </svg>
                   </div>
                   <h2 className="text-2xl font-bold text-slate-900 mb-4">
-                    extended hours Emergency Service
+                    Extended hours emergency service
                   </h2>
                   <p className="text-slate-600 leading-relaxed mb-4">
                     We understand that arrests and police interviews can happen at any time. That's
@@ -407,7 +407,7 @@ export default function Page() {
                     <h3 className="font-bold text-slate-900 mb-2">West Kent</h3>
                     <ul className="space-y-1 text-slate-600 text-sm">
                       <li>Tonbridge</li>
-                      <li>Maidstone</li>
+                      <li>Maidstone (VAI only — custody closed)</li>
                       <li>Sevenoaks</li>
                       <li>Tunbridge Wells</li>
                     </ul>
@@ -483,7 +483,7 @@ export default function Page() {
                         d="M5 13l4 4L19 7"
                       ></path>
                     </svg>
-                    <span>35 years experience & 21,000+ cases</span>
+                    <span>30+ years experience & 21,000+ cases</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <svg

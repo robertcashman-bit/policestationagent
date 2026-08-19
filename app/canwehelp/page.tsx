@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { buildPageMetadata } from "@/lib/seo/page-metadata";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Can We Help You? | Interactive Guide | Police Station Agent",
+  title: "Can We Help You? | Interactive Guide",
   path: "/canwehelp",
   description:
     "Interactive guide: immediate custody and scheduled interviews only. Immediate family may instruct — not friends, past arrests, or missing-person enquiries.",

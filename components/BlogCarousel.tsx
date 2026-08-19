@@ -395,10 +395,7 @@ export default function BlogCarousel({
         {posts.length > 1 && (
           <div className="mt-6">
             {/* Counter and progress bar for many posts */}
-            <div className="flex items-center justify-center gap-4">
-              <span className="text-sm font-medium text-slate-600">
-                {currentIndex + 1} of {posts.length}
-              </span>
+            <div className="flex items-center justify-center gap-4" aria-hidden="true">
               <div className="flex-1 max-w-xs h-1 bg-slate-200 rounded-full overflow-hidden">
                 <div
                   className="h-full bg-blue-600 transition-all duration-300 ease-out"

@@ -5,14 +5,14 @@ import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Cookies Policy | Police Station Agent",
+  title: "Cookies Policy",
   description:
     "Learn how Police Station Agent uses cookies to improve your experience and protect your privacy.",
   alternates: {
     canonical: "https://policestationagent.com/cookies",
   },
   openGraph: {
-    title: "Cookies Policy | Police Station Agent",
+    title: "Cookies Policy",
     description:
       "Learn how Police Station Agent uses cookies to improve your experience and protect your privacy.",
     url: "https://policestationagent.com/cookies",

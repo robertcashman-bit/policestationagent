@@ -5,14 +5,14 @@ import { LegalReferences, Ref, type LegalSource } from "@/components/LegalRefere
 import { SITE_DOMAIN } from "@/config/site";
 
 export const metadata: Metadata = {
-  title: "Preparing for Police Interview | Expert Guide | Police Station Agent",
+  title: "Preparing for Police Interview | Expert Guide",
   description:
     "How to prepare for a police interview. Expert advice on your rights, what to expect, and why legal representation is essential. Free extended hours advice available.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/preparing-for-police-interview`,
   },
   openGraph: {
-    title: "Preparing for Police Interview | Expert Guide | Police Station Agent",
+    title: "Preparing for Police Interview | Expert Guide",
     description:
       "How to prepare for a police interview. Expert advice on your rights, what to expect, and why legal representation is essential.",
     url: `https://${SITE_DOMAIN}/preparing-for-police-interview`,

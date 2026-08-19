@@ -6,14 +6,14 @@ import type { Metadata } from "next";
 import { StandardPaceSources } from "@/components/legal/StandardPaceSources";
 
 export const metadata: Metadata = {
-  title: "Voluntary Police Interview Solicitor | Police Station Agent",
+  title: "Voluntary Police Interview Solicitor",
   description:
     "Invited for a voluntary interview? It is not an informal chat. You need a solicitor. We provide free, expert representation for voluntary interviews in Kent.",
   alternates: {
     canonical: "https://policestationagent.com/servicesvoluntaryinterviews",
   },
   openGraph: {
-    title: "Voluntary Police Interview Solicitor | Police Station Agent",
+    title: "Voluntary Police Interview Solicitor",
     description:
       "Invited for a voluntary interview? It is not an informal chat. You need a solicitor. We provide free, expert representation for voluntary interviews in Kent.",
     url: "https://policestationagent.com/servicesvoluntaryinterviews",

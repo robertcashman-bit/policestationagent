@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
 const Chatbot = dynamic(() => import("./Chatbot"), {
@@ -22,6 +23,8 @@ const ACTIVATION_EVENTS: Array<keyof WindowEventMap> = [
 ];
 
 export default function LazyChatbot() {
+  const pathname = usePathname() || "/";
+  const isAdmin = pathname === "/admin" || pathname.startsWith("/admin/");
   const [loadChat, setLoadChat] = useState(false);
 
   const activate = useCallback(() => {
@@ -29,7 +32,7 @@ export default function LazyChatbot() {
   }, []);
 
   useEffect(() => {
-    if (loadChat) return;
+    if (isAdmin || loadChat) return;
 
     const onInteraction = () => setLoadChat(true);
     const options: AddEventListenerOptions = { passive: true, once: true };
@@ -43,7 +46,9 @@ export default function LazyChatbot() {
         window.removeEventListener(eventName, onInteraction);
       }
     };
-  }, [loadChat]);
+  }, [loadChat, isAdmin]);
+
+  if (isAdmin) return null;
 
   if (loadChat) {
     return <Chatbot />;

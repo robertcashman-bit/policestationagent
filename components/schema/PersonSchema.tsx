@@ -20,7 +20,7 @@ interface PersonSchemaProps {
 export function PersonSchema({
   name = "Robert Cashman",
   jobTitle = "Accredited Duty Solicitor",
-  description = "Qualified solicitor and accredited duty solicitor with 35+ years experience in police station representation. Higher Court Advocate qualified to practice in the Crown Court.",
+  description = "Qualified solicitor and accredited duty solicitor with 30+ years experience in police station representation. Higher Court Advocate qualified to practice in the Crown Court.",
   knowsAbout = [
     "Police Station Representation",
     "Criminal Defence",

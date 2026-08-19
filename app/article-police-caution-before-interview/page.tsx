@@ -8,14 +8,14 @@ import { FAQPage } from "@/components/StructuredData";
 import { StandardPaceSources } from "@/components/legal/StandardPaceSources";
 
 export const metadata: Metadata = {
-  title: "The Police Caution Before Interview | Police Station Agent",
+  title: "The Police Caution Before Interview",
   description:
     "Understanding the police caution and what it means for your rights during a police interview. Expert legal guidance from Police Station Agent.",
   alternates: {
     canonical: `${SITE_URL}/article-police-caution-before-interview`,
   },
   openGraph: {
-    title: "The Police Caution Before Interview | Police Station Agent",
+    title: "The Police Caution Before Interview",
     description:
       "Understanding the police caution and what it means for your rights during a police interview. Expert legal guidance from Police Station Agent.",
     type: "article",

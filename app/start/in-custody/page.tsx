@@ -26,9 +26,9 @@ export default function InCustodyPage() {
             Has someone been arrested and taken to a police station?
           </h1>
           <p className="text-white/90">
-            This page uses the same qualification pathway as{" "}
+            This page uses the same qualification pathway as our{" "}
             <Link href="/current-custody" className="font-semibold text-accent-light underline">
-              /current-custody
+              current custody check
             </Link>
             . The solicitor telephone is only shown after you qualify.
           </p>

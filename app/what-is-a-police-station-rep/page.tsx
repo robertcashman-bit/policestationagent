@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     canonical: "https://policestationagent.com/what-is-a-police-station-rep",
   },
   openGraph: {
-    title: "What Is A Police Station Rep? | Police Station Agent",
+    title: "What Is A Police Station Rep?",
     description:
       "Learn about police station representatives and their crucial role in protecting your rights during police interviews in Kent.",
     url: "https://policestationagent.com/what-is-a-police-station-rep",

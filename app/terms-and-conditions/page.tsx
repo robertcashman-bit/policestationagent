@@ -4,14 +4,14 @@ import type { Metadata } from "next";
 import { SITE_DOMAIN } from "@/config/site";
 
 export const metadata: Metadata = {
-  title: "Terms and Conditions | Police Station Agent",
+  title: "Terms and Conditions",
   description:
     "Terms and conditions for Police Station Agent services. Legal information about our police station representation services across Kent.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/terms-and-conditions`,
   },
   openGraph: {
-    title: "Terms and Conditions | Police Station Agent",
+    title: "Terms and Conditions",
     description: "Terms and conditions for Police Station Agent services.",
     url: `https://${SITE_DOMAIN}/terms-and-conditions`,
     siteName: "Police Station Agent",

@@ -41,7 +41,7 @@ const PRIORITY_STATIONS = [
 ] as const;
 
 const SECONDARY_STATIONS = [
-  { name: "Maidstone", x: 171.8, y: 153.6, label: "right" as LabelSide },
+  { name: "Maidstone (VAI)", x: 171.8, y: 153.6, label: "right" as LabelSide },
   { name: "Sittingbourne", x: 237.3, y: 109.6, label: "top" as LabelSide },
   { name: "Canterbury", x: 344.7, y: 147.3, label: "top" as LabelSide },
   { name: "Margate", x: 439.6, y: 78.7, label: "left" as LabelSide },
@@ -53,7 +53,6 @@ const SECONDARY_STATIONS = [
 ] as const;
 
 const CHIPS = [
-  "Maidstone",
   "Canterbury",
   "Folkestone",
   "Ashford",
@@ -262,7 +261,6 @@ function KentCoverageMap({ className = "" }: { className?: string }) {
           <span className="inline-block h-2.5 w-2.5 rounded-full bg-[#2563eb]" aria-hidden="true" />
           Also covering
         </span>
-        <span className="text-slate-400">OSM county boundary · station pins by location</span>
       </div>
     </div>
   );
@@ -282,10 +280,10 @@ export function HomePriorityCoverage() {
               Kent police station cover
             </h2>
             <p className="section-lede">
-              We attend all Kent custody suites and voluntary interview locations. Regular
+              We attend Kent custody suites and voluntary interview locations. Regular
               extended-hours cover at North Kent (Gravesend) and Tonbridge — two of the
-              county&apos;s main 24-hour custody facilities — alongside Medway, Maidstone,
-              Canterbury and the rest of Kent.
+              county&apos;s main 24-hour custody facilities — alongside Medway, Canterbury
+              and the rest of Kent. Maidstone custody is closed (voluntary interviews only).
             </p>
             <div className="relative mx-auto mt-8 max-w-xl lg:mx-0 lg:max-w-none">
               <KentCoverageMap />
