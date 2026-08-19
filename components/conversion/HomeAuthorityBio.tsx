@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ROBERT_CASHMAN_PHOTO_PATH } from "@/config/site";
 
 const CREDENTIALS = [
   { title: "Practice Director", detail: "Major Legal Aid Practice" },
@@ -47,17 +48,16 @@ export function HomeAuthorityBio() {
             About Robert Cashman
           </Link>
         </div>
-        <div className="relative min-h-[280px] md:min-h-full">
-          {/* Extensionless legacy asset — keep <img> for compatibility */}
+        <div className="relative min-h-[280px] bg-black md:min-h-full">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/images/photo-1589829545856-d10d557cf95f"
-            alt="Robert Cashman - Criminal Defence Solicitor Kent"
+            src={ROBERT_CASHMAN_PHOTO_PATH}
+            alt="Robert Cashman, criminal defence solicitor"
             width={800}
-            height={600}
+            height={800}
             loading="lazy"
             decoding="async"
-            className="absolute inset-0 h-full w-full object-cover"
+            className="absolute inset-0 h-full w-full object-cover object-top"
           />
           <div
             className="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary-dark/50 via-transparent to-transparent md:bg-gradient-to-l"
