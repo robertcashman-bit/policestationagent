@@ -1,23 +1,7 @@
 /**
- * HEADER COMPLIANCE STRIP COMPONENT
- *
- * Appears on every page, above nav, desktop + mobile.
- * Links to regulatory information page/section.
+ * @deprecated SRA line is merged into NotPoliceScopeBanner (single slim trust bar).
+ * Kept as a no-op so any stale imports do not render a second header bar.
  */
-
-import Link from "next/link";
-
 export default function ComplianceStrip() {
-  return (
-    <div className="bg-primary-dark text-white text-xs py-1.5 px-4">
-      <div className="max-w-7xl mx-auto text-center">
-        <Link
-          href="/regulatory-information"
-          className="text-white underline transition-opacity hover:opacity-90"
-        >
-          Legal services provided by Tuckers Solicitors LLP (SRA ID: 127795).
-        </Link>
-      </div>
-    </div>
-  );
+  return null;
 }

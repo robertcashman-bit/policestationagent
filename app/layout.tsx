@@ -13,7 +13,6 @@ import { MobileStickyContactBar } from "@/components/conversion/MobileStickyCont
 import { ConversionEventListener } from "@/components/conversion/ConversionEventListener";
 import { EnquiryAttributionTracker } from "@/components/EnquiryAttributionTracker";
 import InternalLinkInterceptor from "@/components/InternalLinkInterceptor";
-import ComplianceStrip from "@/components/compliance/ComplianceStrip";
 import NotPoliceScopeBanner from "@/components/compliance/NotPoliceScopeBanner";
 import ContactLinkGuard from "@/components/compliance/ContactLinkGuard";
 import { SEO_NOT_POLICE, SERVICE_SCOPE_SHORT, LEGAL_SERVICE_SCHEMA_DESCRIPTION } from "@/config/contact";
@@ -524,7 +523,6 @@ footer.bg-primary-dark{background-color:#1d4ed8!important;color:#fff!important}
       </head>
       <body className={sourceSans.className}>
         <GoogleTagManagerNoScript />
-        <ComplianceStrip />
         <NotPoliceScopeBanner />
         <ContactLinkGuard />
         {/* Skip to content link for accessibility */}

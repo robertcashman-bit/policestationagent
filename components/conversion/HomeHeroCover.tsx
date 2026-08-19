@@ -1,15 +1,15 @@
 "use client";
 
-import { CHROME_HERO_EYEBROW } from "@/config/contact";
+import { AudiencePathSelector } from "@/components/conversion/AudiencePathSelector";
 
 /**
- * Compact hero: brand + framing only.
- * Three pathways are the first-screen job in HomePathwaySection — no competing CTAs here.
+ * First-screen job: short identity, one calm sentence, three pathways — no scroll.
+ * Brand lives in the header; do not repeat it as a giant hero wordmark.
  */
 export function HomeHeroCover() {
   return (
     <section
-      className="relative overflow-hidden hero-navy text-white pt-10 pb-8 md:pt-14 md:pb-10"
+      className="relative overflow-hidden hero-navy text-white pt-4 pb-5 sm:pt-5 sm:pb-6 md:pt-6 md:pb-8"
       aria-labelledby="home-hero-heading"
     >
       <div
@@ -17,40 +17,35 @@ export function HomeHeroCover() {
         aria-hidden="true"
       />
 
-      <div className="relative z-10 mx-auto w-full max-w-6xl px-4 md:px-6">
-        <p className="font-display text-[1.85rem] font-bold leading-tight tracking-tight text-white sm:text-4xl md:text-5xl animate-fade-up">
-          Police Station Agent
-        </p>
-        <div className="accent-rule mt-3 origin-left animate-accent-draw" aria-hidden="true" />
-        <p className="mt-4 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-accent-light sm:tracking-[0.18em]">
-          {CHROME_HERO_EYEBROW}
+      <div className="relative z-10 mx-auto w-full max-w-6xl px-3 sm:px-4 md:px-6">
+        <p className="text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-accent-light sm:text-[0.7rem]">
+          Criminal defence solicitor · Kent
         </p>
         <h1
           id="home-hero-heading"
-          className="mt-2 max-w-measure font-display text-[1.45rem] font-bold leading-[1.15] text-white sm:text-3xl md:text-4xl"
+          className="mt-1 max-w-measure font-display text-[1.25rem] font-bold leading-tight text-white sm:text-2xl md:text-[1.75rem]"
         >
           Police station representation when it matters
         </h1>
-        <p className="mt-3 max-w-measure text-sm leading-relaxed text-white/85 md:text-base">
-          Fast, experienced criminal defence for current Kent custody and forthcoming voluntary
-          interviews under caution — plus reliable agency cover for defence firms.
+        <p className="mt-1.5 max-w-2xl text-sm leading-snug text-white/85 sm:text-[0.95rem]">
+          Choose your route for current Kent custody, a booked voluntary interview, or solicitor
+          agency cover. Need the police? Use{" "}
+          <a href="tel:999" className="font-bold text-accent-light underline underline-offset-2">
+            999
+          </a>{" "}
+          or{" "}
+          <a href="tel:101" className="font-bold text-accent-light underline underline-offset-2">
+            101
+          </a>
+          .
         </p>
 
-        <div className="mt-6 max-w-xl border-l-2 border-accent/50 pl-4 md:pl-5">
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-light">
-            Need the police?
-          </p>
-          <p className="mt-1.5 text-sm leading-relaxed text-white/80">
-            This site is for solicitor representation. For official police assistance use{" "}
-            <a href="tel:999" className="font-bold text-accent-light underline underline-offset-2">
-              999
-            </a>{" "}
-            or{" "}
-            <a href="tel:101" className="font-bold text-accent-light underline underline-offset-2">
-              101
-            </a>
-            — then choose a pathway if you need a defence solicitor.
-          </p>
+        <div id="pathways" className="mt-4 scroll-mt-2 sm:mt-5">
+          <AudiencePathSelector
+            variant="firstScreen"
+            heading="Three routes. One clear next step."
+            subheading="Pick the route that matches your situation."
+          />
         </div>
       </div>
     </section>

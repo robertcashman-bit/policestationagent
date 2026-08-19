@@ -25,14 +25,31 @@ const ACTIVATION_EVENTS: Array<keyof WindowEventMap> = [
 export default function LazyChatbot() {
   const pathname = usePathname() || "/";
   const isAdmin = pathname === "/admin" || pathname.startsWith("/admin/");
+  const isHome = pathname === "/" || pathname === "";
   const [loadChat, setLoadChat] = useState(false);
+  const [homeReady, setHomeReady] = useState(!isHome);
 
   const activate = useCallback(() => {
     setLoadChat(true);
   }, []);
 
   useEffect(() => {
-    if (isAdmin || loadChat) return;
+    if (!isHome) {
+      setHomeReady(true);
+      return;
+    }
+    /* Keep the homepage first screen clear of the chat FAB until the visitor scrolls. */
+    setHomeReady(false);
+    const onScroll = () => {
+      if (window.scrollY > 120) setHomeReady(true);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [isHome]);
+
+  useEffect(() => {
+    if (isAdmin || loadChat || !homeReady) return;
 
     const onInteraction = () => setLoadChat(true);
     const options: AddEventListenerOptions = { passive: true, once: true };
@@ -46,9 +63,10 @@ export default function LazyChatbot() {
         window.removeEventListener(eventName, onInteraction);
       }
     };
-  }, [loadChat, isAdmin]);
+  }, [loadChat, isAdmin, homeReady]);
 
   if (isAdmin) return null;
+  if (!homeReady) return null;
 
   if (loadChat) {
     return <Chatbot />;
@@ -58,7 +76,7 @@ export default function LazyChatbot() {
     <button
       type="button"
       onClick={activate}
-      className="fixed bottom-6 right-6 z-50 flex items-center gap-2 rounded-full bg-blue-700 px-4 py-3 text-sm font-semibold text-white shadow-lg hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+      className="fixed bottom-6 right-4 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-blue-700 text-white shadow-lg hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:bottom-6 sm:right-6"
       aria-label="Open chat assistant"
     >
       <svg
@@ -75,7 +93,6 @@ export default function LazyChatbot() {
       >
         <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
       </svg>
-      Chat
     </button>
   );
 }

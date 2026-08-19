@@ -25,7 +25,10 @@ describe("enquiry funnel routes", () => {
     expect(page).not.toMatch(/tel:\$\{PHONE_TEL\}|tel:01732/);
     expect(hero).not.toMatch(/tel:01732|PHONE_TEL/);
     expect(page).toContain("HomePathwaySection");
-    expect(pathway).toContain("AudiencePathSelector");
+    expect(hero).toContain("AudiencePathSelector");
+    expect(hero).toContain('id="pathways"');
+    // Pathways render in the hero first screen; section export kept for compatibility.
+    expect(pathway).toMatch(/return null|HomeHeroCover/);
   });
 
   it("header and sticky bar hide generic telephone", () => {
@@ -44,16 +47,20 @@ describe("enquiry funnel routes", () => {
     expect(sticky).toMatch(/"\/"/);
   });
 
-  it("home hero has no competing CTA row", () => {
+  it("home hero has no competing CTA row and hosts pathways", () => {
     const hero = fs.readFileSync(
       path.join(root, "components/conversion/HomeHeroCover.tsx"),
       "utf8",
     );
     expect(hero).toMatch(/999/);
     expect(hero).toMatch(/101/);
+    expect(hero).toContain("AudiencePathSelector");
+    expect(hero).toContain("firstScreen");
     expect(hero).not.toMatch(/Find representation/);
     expect(hero).not.toMatch(/View coverage/);
     expect(hero).not.toMatch(/PATH_CONTACT/);
+    // Brand lives in the header — no giant hero wordmark repeat.
+    expect(hero).not.toMatch(/>\s*Police Station Agent\s*</);
   });
 
   it("agency page shows professional telephone", () => {
