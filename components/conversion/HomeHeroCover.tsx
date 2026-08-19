@@ -9,7 +9,7 @@ import { AudiencePathSelector } from "@/components/conversion/AudiencePathSelect
 export function HomeHeroCover() {
   return (
     <section
-      className="relative overflow-hidden hero-navy text-white pt-4 pb-5 sm:pt-5 sm:pb-6 md:pt-6 md:pb-8"
+      className="relative overflow-hidden hero-navy text-white pt-3 pb-4 sm:pt-4 sm:pb-5 md:pt-6 md:pb-8"
       aria-labelledby="home-hero-heading"
     >
       <div
@@ -40,7 +40,7 @@ export function HomeHeroCover() {
           .
         </p>
 
-        <div id="pathways" className="mt-4 scroll-mt-2 sm:mt-5">
+        <div id="pathways" className="mt-3 scroll-mt-2 sm:mt-4 md:mt-5">
           <AudiencePathSelector
             variant="firstScreen"
             heading="Three routes. One clear next step."

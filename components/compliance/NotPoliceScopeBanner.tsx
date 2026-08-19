@@ -23,8 +23,8 @@ export default function NotPoliceScopeBanner() {
           ·
         </span>
         <span>
-          <strong className="font-semibold text-white">{SEO_NOT_POLICE}</strong>{" "}
-          <span className="text-white/75">{SERVICE_SCOPE_SHORT}</span>
+          <strong className="font-semibold text-white">{SEO_NOT_POLICE}</strong>
+          <span className="hidden text-white/75 sm:inline"> {SERVICE_SCOPE_SHORT}</span>
         </span>
       </div>
     </div>
