@@ -25,6 +25,10 @@ const DESIGN_CLASS_REMAPS: Array<[RegExp, string]> = [
   [/bg-gradient-to-r\s+from-blue-900\s+via-slate-900\s+to-slate-800/gi, "hero-navy"],
   [/bg-gradient-to-br\s+from-indigo-900\s+via-blue-900\s+to-slate-900/gi, "hero-navy"],
   [/bg-gradient-to-br\s+from-purple-900\s+via-indigo-900\s+to-blue-900/gi, "hero-navy"],
+  [/bg-gradient-to-br\s+from-blue-900\s+via-indigo-800\s+to-purple-900/gi, "hero-navy"],
+  [/bg-gradient-to-r\s+from-slate-900\s+to-blue-900/gi, "hero-navy"],
+  [/bg-gradient-to-br\s+from-slate-900\s+to-blue-900/gi, "hero-navy"],
+  [/bg-gradient-to-br\s+from-blue-600\s+via-blue-700\s+to-blue-800/gi, "hero-navy"],
   // Mid-blue CTA/card gradients → navy
   [/bg-gradient-to-r\s+from-blue-600\s+to-blue-700/gi, "bg-primary"],
   [/bg-gradient-to-br\s+from-blue-600\s+to-blue-700/gi, "bg-primary"],

@@ -21,8 +21,8 @@ type Props = {
   heading?: string;
   subheading?: string;
   headingId?: string;
-  /** Centrepiece density for homepage; compact for contact and embeds */
-  variant?: "compact" | "centrepiece";
+  /** Centrepiece density for homepage; compact for contact; firstScreen for above-the-fold */
+  variant?: "compact" | "centrepiece" | "firstScreen";
 };
 
 export function AudiencePathSelector({
@@ -33,11 +33,28 @@ export function AudiencePathSelector({
   variant = "compact",
 }: Props) {
   const isCentrepiece = variant === "centrepiece";
+  const isFirstScreen = variant === "firstScreen";
 
   return (
     <section className={className} aria-labelledby={headingId}>
-      <div className={isCentrepiece ? "mx-auto max-w-6xl px-4 md:px-6" : undefined}>
-        {isCentrepiece ? (
+      <div className={isCentrepiece || isFirstScreen ? "mx-auto max-w-6xl" : undefined}>
+        {isFirstScreen ? (
+          <div className="mb-2 flex items-end justify-between gap-3 sm:mb-3 md:mb-4">
+            <div>
+              <h2
+                id={headingId}
+                className="font-display text-sm font-bold text-white sm:text-base md:text-lg"
+              >
+                {heading}
+              </h2>
+              {subheading ? (
+                <p className="mt-0.5 hidden text-xs text-white/70 sm:block sm:text-sm">
+                  {subheading}
+                </p>
+              ) : null}
+            </div>
+          </div>
+        ) : isCentrepiece ? (
           <div className="mb-8 md:mb-10 md:flex md:items-end md:justify-between md:gap-8">
             <div className="max-w-measure-wide">
               <p className="section-eyebrow">Choose your pathway</p>
@@ -57,7 +74,7 @@ export function AudiencePathSelector({
           <>
             <h2
               id={headingId}
-              className="font-display text-lg font-bold text-primary md:text-xl mb-1"
+              className="mb-1 font-display text-lg font-bold text-primary md:text-xl"
             >
               {heading}
             </h2>
@@ -69,14 +86,70 @@ export function AudiencePathSelector({
 
         <div
           className={
-            isCentrepiece
-              ? "grid gap-4 md:grid-cols-3 md:gap-5 md:items-stretch"
-              : "grid gap-3 md:grid-cols-3"
+            isFirstScreen
+              ? "grid gap-1.5 sm:gap-2 md:grid-cols-3 md:gap-3 md:items-stretch"
+              : isCentrepiece
+                ? "grid gap-4 md:grid-cols-3 md:gap-5 md:items-stretch"
+                : "grid gap-3 md:grid-cols-3"
           }
         >
-          {PATHWAY_CARDS.map((card, index) => {
+          {PATHWAY_CARDS.map((card) => {
             const isUrgent = card.accent === "red";
             const isFirm = card.accent === "amber";
+
+            if (isFirstScreen) {
+              return (
+                <Link
+                  key={card.id}
+                  href={card.href}
+                  onClick={() => trackPathway(card.id)}
+                  data-event={card.event}
+                  className={`group flex min-h-[48px] items-center gap-2.5 rounded-lg border bg-white px-3 py-2.5 text-left shadow-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent md:min-h-0 md:flex-col md:items-stretch md:p-4 ${
+                    isUrgent
+                      ? "border-destructive/40 hover:border-destructive"
+                      : isFirm
+                        ? "border-accent/50 hover:border-accent"
+                        : "border-white/80 hover:border-primary/40"
+                  }`}
+                >
+                  <div className="min-w-0 flex-1">
+                    <p
+                      className={`text-[0.62rem] font-semibold uppercase tracking-[0.12em] ${
+                        isUrgent
+                          ? "text-destructive"
+                          : isFirm
+                            ? "text-accent-dark"
+                            : "text-primary/70"
+                      }`}
+                    >
+                      {SHORT_LABELS[card.id]}
+                    </p>
+                    <h3 className="mt-0.5 font-display text-[0.95rem] font-bold leading-snug text-primary md:text-base">
+                      {card.title}
+                    </h3>
+                    <p className="mt-1 hidden text-xs leading-snug text-muted-foreground md:block">
+                      {card.description}
+                    </p>
+                  </div>
+                  <span
+                    className={`inline-flex shrink-0 items-center justify-center rounded-md px-2.5 py-1.5 text-[0.7rem] font-bold md:mt-3 md:min-h-[40px] md:w-full md:px-3 md:text-sm ${
+                      isUrgent
+                        ? "bg-destructive text-white group-hover:bg-red-800"
+                        : isFirm
+                          ? "bg-accent text-accent-foreground group-hover:bg-accent-dark"
+                          : "bg-primary text-white group-hover:bg-primary-light"
+                    }`}
+                  >
+                    <span className="md:hidden" aria-hidden="true">
+                      →
+                    </span>
+                    <span className="hidden md:inline">{card.button}</span>
+                    <span className="sr-only md:hidden">{card.button}</span>
+                  </span>
+                </Link>
+              );
+            }
+
             return (
               <Link
                 key={card.id}
@@ -84,9 +157,7 @@ export function AudiencePathSelector({
                 onClick={() => trackPathway(card.id)}
                 data-event={card.event}
                 className={`group relative flex flex-col overflow-hidden rounded-xl border bg-card lift-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
-                  isCentrepiece
-                    ? `p-5 md:p-6 shadow-card ${index === 1 ? "md:mt-6" : index === 2 ? "md:mt-3" : ""}`
-                    : "p-4 shadow-sm"
+                  isCentrepiece ? "p-5 shadow-card md:p-6" : "p-4 shadow-sm"
                 } ${
                   isUrgent
                     ? "border-destructive/35 hover:border-destructive"
@@ -133,7 +204,7 @@ export function AudiencePathSelector({
                 </div>
                 <p
                   className={`mt-3 flex-1 text-muted-foreground ${
-                    isCentrepiece ? "text-sm md:text-[0.95rem] leading-relaxed" : "text-xs md:text-sm"
+                    isCentrepiece ? "text-sm leading-relaxed md:text-[0.95rem]" : "text-xs md:text-sm"
                   }`}
                 >
                   {card.description}

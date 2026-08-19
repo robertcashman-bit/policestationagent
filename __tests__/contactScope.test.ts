@@ -193,33 +193,35 @@ describe("contact config", () => {
   it("header uses pathway CTAs not generic legal advice call", () => {
     const header = fs.readFileSync(path.join(root, "components/Header.tsx"), "utf8");
     expect(header).toMatch(/Get a solicitor/);
-    expect(header).toMatch(/For defence firms/);
-    expect(header).toContain("CHROME_HELP_STRIP");
     expect(header).toContain("CHROME_BRAND_TAGLINE");
-    // Single sitewide not-police lives on NotPoliceScopeBanner — not repeated in header chrome.
+    // Help strip removed so first screen keeps pathway room; not-police is the slim trust bar.
+    expect(header).not.toContain("CHROME_HELP_STRIP");
     expect(header).not.toContain("CHROME_NOT_POLICE_QUIET");
     expect(header).not.toMatch(/Independent criminal defence solicitor —/);
     expect(header).not.toMatch(/tel:01732/);
     expect(header).not.toMatch(/Call Now for legal advice/i);
   });
 
-  it("sitewide banner uses calm styling and shared not-police copy", () => {
+  it("sitewide banner is one slim trust line with SRA and not-police copy", () => {
     const banner = fs.readFileSync(
       path.join(root, "components/compliance/NotPoliceScopeBanner.tsx"),
       "utf8",
     );
     expect(banner).toContain("SEO_NOT_POLICE");
     expect(banner).toContain("SERVICE_SCOPE_SHORT");
-    expect(banner).toMatch(/bg-slate-100/);
+    expect(banner).toMatch(/SRA 127795/);
+    expect(banner).toMatch(/Tuckers Solicitors LLP/);
     expect(banner).not.toMatch(/text-red-800/);
   });
 
-  it("home hero eyebrow is help-first", () => {
+  it("home hero is compact and help-first without brand wordmark", () => {
     const hero = fs.readFileSync(
       path.join(root, "components/conversion/HomeHeroCover.tsx"),
       "utf8",
     );
-    expect(hero).toContain("CHROME_HERO_EYEBROW");
+    expect(hero).toMatch(/Police station representation when it matters/);
+    expect(hero).toContain("AudiencePathSelector");
     expect(hero).not.toMatch(/Kent criminal defence solicitor — not the police/);
+    expect(hero).not.toMatch(/>\s*Police Station Agent\s*</);
   });
 });

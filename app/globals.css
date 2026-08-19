@@ -1328,7 +1328,9 @@ html body main p.text-slate-600 {
     [class*="text-gray-600"],
     p,
     li
-  ) {
+  ):not([class*="text-destructive"]):not([class*="text-accent"]):not([class*="text-primary"]):not(
+    [class*="text-white"]
+  ):not([class*="text-muted"]) {
   color: #1e293b !important;
 }
 
@@ -1718,9 +1720,105 @@ a.text-blue-800,
   color: rgb(255 255 255 / 0.88) !important;
 }
 
+/* Light pathway cards: keep label/CTA utilities (undo white p force). */
+.hero-navy a.bg-white p,
+.hero-navy .bg-white p,
+.hero-navy .bg-card p,
+.hero-navy [class*="bg-white"] > p,
+.hero-navy [class*="bg-white"] p {
+  color: var(--primary) !important;
+}
+.hero-navy a.bg-white p[class*="text-destructive"],
+.hero-navy .bg-white p[class*="text-destructive"],
+.hero-navy [class*="bg-white"] p[class*="text-destructive"] {
+  color: var(--destructive) !important;
+}
+.hero-navy a.bg-white p[class*="text-accent"],
+.hero-navy .bg-white p[class*="text-accent"],
+.hero-navy [class*="bg-white"] p[class*="text-accent"] {
+  color: var(--accent-dark) !important;
+}
+.hero-navy a.bg-white [class*="text-white"],
+.hero-navy .bg-white [class*="text-white"] {
+  color: #fff !important;
+}
+
 .hero-navy h1,
 .hero-navy h2,
 .hero-navy h3,
 .hero-navy h4 {
   color: #fff !important;
+}
+
+/*
+ * Readable headings on dark blue/navy heroes and bands.
+ * Global `h1 { color: var(--primary) }` otherwise paints navy-on-navy.
+ * Do NOT blanket-force white on span/a — that paints homepage pathway
+ * cards (white surfaces inside the hero) invisible.
+ * Body copy on dark bands should use text-white / text-white/90 utilities.
+ * IMPORTANT: only match dark stops (6–9), never light shells like to-blue-50.
+ */
+:is(
+  .hero-navy,
+  .bg-primary,
+  .bg-primary-dark,
+  .bg-slate-900,
+  .bg-slate-800,
+  [class*="from-blue-6"],
+  [class*="from-blue-7"],
+  [class*="from-blue-8"],
+  [class*="from-blue-9"],
+  [class*="via-blue-7"],
+  [class*="via-blue-8"],
+  [class*="via-blue-9"],
+  [class*="from-indigo-7"],
+  [class*="from-indigo-8"],
+  [class*="from-indigo-9"],
+  [class*="from-slate-8"],
+  [class*="from-slate-9"],
+  [class*="from-primary"]
+)
+  :is(h1, h2, h3, h4, h5, h6):not([class*="text-amber"]):not([class*="text-accent"]) {
+  color: #fff !important;
+}
+
+/* Gold / amber accents stay visible on dark bands (not inside white cards). */
+:is(
+  .hero-navy,
+  .bg-slate-900,
+  .bg-slate-800,
+  [class*="from-blue-8"],
+  [class*="from-blue-9"],
+  [class*="from-slate-9"]
+)
+  :is([class*="text-amber"], [class*="text-accent"], .text-accent-light):not(.bg-white *):not(.bg-card *):not(
+    [class*="bg-white"] *
+  ) {
+  color: var(--accent-light) !important;
+}
+
+/*
+ * White pathway / feature cards nested in dark heroes keep dark headings.
+ * Extra :not()s raise specificity above the white-heading rule above.
+ */
+:is(
+  .hero-navy,
+  .bg-primary,
+  .bg-primary-dark,
+  .bg-slate-900,
+  .bg-slate-800,
+  [class*="from-blue-6"],
+  [class*="from-blue-7"],
+  [class*="from-blue-8"],
+  [class*="from-blue-9"],
+  [class*="from-indigo-8"],
+  [class*="from-indigo-9"],
+  [class*="from-slate-8"],
+  [class*="from-slate-9"]
+)
+  :is(.bg-white, .bg-card, .surface-card, [class*="bg-white"])
+  :is(h1, h2, h3, h4, h5, h6):not([class*="text-white"]):not([class*="text-amber"]):not(
+    [class*="text-accent"]
+  ) {
+  color: var(--primary) !important;
 }
