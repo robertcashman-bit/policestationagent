@@ -15,7 +15,7 @@ import { InternalLinkHub } from "@/components/InternalLinkHub";
 export const metadata: Metadata = {
   title: "Solicitor for Police Interview Kent | FREE Legal Advice | Your Rights Under PACE",
   description:
-    "Solicitor for police interview in Kent. FREE legal advice under Legal Aid and PACE 1984. Expert representation at all Kent police stations. Understand your rights, what happens during interview, and why legal advice is essential. Call 01732 247427.",
+    "Solicitor for police interview in Kent. FREE legal advice under Legal Aid and PACE 1984. Expert representation at all Kent police stations. Understand your rights, what happens during interview, and why legal advice is essential.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/police-station-interviews-kent-rights`,
   },

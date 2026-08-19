@@ -55,7 +55,7 @@ export default function PressPage() {
         <section className="space-y-2 text-slate-700">
           <p>
             <strong>Telephone:</strong>{" "}
-            <a href={`tel:${AUTHORITY_NAP.phoneTel}`}>{AUTHORITY_NAP.phone}</a> (custody /
+            <a href="/current-custody">Current custody check</a> (custody /
             interviews only)
           </p>
           <p>

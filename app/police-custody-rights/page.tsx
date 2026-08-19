@@ -41,14 +41,14 @@ const faqSchema = {
 export const metadata: Metadata = {
   title: "Police Custody Rights Kent | Your PACE 1984 Rights Explained | FREE Legal Advice",
   description:
-    "Know your rights in Kent police custody under PACE 1984. FREE legal advice at Maidstone, Medway, Canterbury, Folkestone. Section 58 right to a solicitor. Call 01732 247427.",
+    "Know your rights in Kent police custody under PACE 1984. FREE legal advice at Maidstone, Medway, Canterbury, Folkestone. Section 58 right to a solicitor.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/police-custody-rights`,
   },
   openGraph: {
     title: "Police Custody Rights Kent | Your PACE 1984 Rights Explained | FREE Legal Advice",
     description:
-      "Know your rights in Kent police custody under PACE 1984. FREE legal advice at Maidstone, Medway, Canterbury, Folkestone. Section 58 right to a solicitor. Call 01732 247427.",
+      "Know your rights in Kent police custody under PACE 1984. FREE legal advice at Maidstone, Medway, Canterbury, Folkestone. Section 58 right to a solicitor.",
     type: "website",
     url: `https://${SITE_DOMAIN}/police-custody-rights`,
     siteName: "Police Station Agent",

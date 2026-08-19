@@ -13,55 +13,44 @@ import { LLMContentBlock } from "@/components/LLMContentBlock";
 import {
   CTA_OUT_OF_SCOPE,
   CTA_WHO_CAN_CALL,
-  PHONE_DISPLAY,
-  PHONE_TEL,
-  SCOPE_HELP_HREF,
-} from "@/config/contact";
+  SCOPE_HELP_HREF } from "@/config/contact";
 
 export const metadata: Metadata = {
   title: "Duty Solicitor Police Station Kent | Bail Applications | FREE Legal Aid",
   description:
-    "Duty solicitor police station services in Kent. Expert bail applications, police bail advice, court bail, and bail condition variations. FREE under Legal Aid. Qualified duty solicitor. Call 01732 247427.",
+    "Duty solicitor police station services in Kent. Expert bail applications, police bail advice, court bail, and bail condition variations. FREE under Legal Aid. Qualified duty solicitor.",
   alternates: {
-    canonical: `https://${SITE_DOMAIN}/services/bail-applications`,
-  },
+    canonical: `https://${SITE_DOMAIN}/services/bail-applications` },
   openGraph: {
     title: "Duty Solicitor Police Station Kent | Bail Applications | FREE",
     description:
       "Expert duty solicitor services for bail applications in Kent. FREE legal advice under Legal Aid for police bail, court bail, and bail condition variations.",
     url: `https://${SITE_DOMAIN}/services/bail-applications`,
     siteName: "Police Station Agent",
-    type: "website",
-  },
-};
+    type: "website" } };
 
 export default function BailApplicationsPage() {
   const faqItems = [
     {
       question: "What is police bail?",
       answer:
-        "Police bail is when you are released from the police station while the investigation continues, usually with conditions and a return date. If conditions are unreasonable, they may be challenged.",
-    },
+        "Police bail is when you are released from the police station while the investigation continues, usually with conditions and a return date. If conditions are unreasonable, they may be challenged." },
     {
       question: "What is a bail application?",
       answer:
-        "A bail application is a request for release on bail—either from the police or the court—often with proposed conditions. It can also include applications to vary or remove conditions.",
-    },
+        "A bail application is a request for release on bail—either from the police or the court—often with proposed conditions. It can also include applications to vary or remove conditions." },
     {
       question: "Can bail conditions be changed?",
       answer:
-        "Yes. Depending on the stage of the case, conditions can sometimes be varied or removed. The right approach depends on whether you are on police bail, court bail, or subject to other restrictions.",
-    },
+        "Yes. Depending on the stage of the case, conditions can sometimes be varied or removed. The right approach depends on whether you are on police bail, court bail, or subject to other restrictions." },
     {
       question: "What if I am released under investigation (RUI) instead of bail?",
       answer:
-        "RUI means there may be no bail conditions and no fixed return date, but the investigation continues. You still need strategic advice about evidence, interviews, and any future steps by police or CPS.",
-    },
+        "RUI means there may be no bail conditions and no fixed return date, but the investigation continues. You still need strategic advice about evidence, interviews, and any future steps by police or CPS." },
     {
       question: "Do you cover bail work across Kent?",
       answer:
-        "Yes. We advise on bail and bail conditions connected to Kent custody suites and courts, including Medway, Maidstone, Canterbury, Gravesend and surrounding areas.",
-    },
+        "Yes. We advise on bail and bail conditions connected to Kent custody suites and courts, including Medway, Maidstone, Canterbury, Gravesend and surrounding areas." },
   ];
 
   return (
@@ -139,10 +128,10 @@ export default function BailApplicationsPage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
                 <a
-                  href={`tel:${PHONE_TEL}`}
+                  href="/current-custody"
                   className="inline-flex items-center justify-center rounded-md bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-3"
                 >
-                  Call {PHONE_DISPLAY}
+                  Contact pathways
                 </a>
                 <a
                   href="/contact"

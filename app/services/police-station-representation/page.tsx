@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   title:
     "Police Station Solicitor in Kent | Police Station Representation (Legal Aid)",
   description:
-    "Police station representation in Kent: free legal advice at the police station under Legal Aid, interview representation, and guidance on bail and next steps. Call 01732 247427.",
+    "Police station representation in Kent: free legal advice at the police station under Legal Aid, interview representation, and guidance on bail and next steps.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/services/police-station-representation`,
   },
@@ -88,7 +88,7 @@ export default function PoliceStationRepresentationPage() {
               </p>
               <h2 className="text-xl font-bold text-slate-900 mb-3">When You Should Use It</h2>
               <p className="text-slate-700 mb-4">
-                You should use this service immediately upon arrest or when contacted by police for a voluntary interview. Do not answer police questions without legal advice. Call 01732 247427 during extended hours for prompt assistance. This service operates in England & Wales under PACE 1984, PACE Code C, and Legal Aid Agency regulations.
+                You should use this service immediately upon arrest or when contacted by police for a voluntary interview. Do not answer police questions without legal advice. during extended hours for prompt assistance. This service operates in England & Wales under PACE 1984, PACE Code C, and Legal Aid Agency regulations.
               </p>
               <h2 className="text-xl font-bold text-slate-900 mb-3">Professional Status</h2>
               <p className="text-slate-700">

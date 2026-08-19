@@ -353,7 +353,6 @@ export default function AdverseInferencePage() {
                 href="tel:01732247427"
                 className="inline-flex items-center px-6 py-3 bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold rounded-lg"
               >
-                Call 01732 247427
               </a>
               <Link
                 href="/contact"

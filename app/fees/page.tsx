@@ -10,7 +10,7 @@ import { StandardPaceSources } from "@/components/legal/StandardPaceSources";
 export const metadata: Metadata = {
   title: "Legal Aid at the Police Station & Fees | Kent Police Station Solicitor",
   description:
-    "Plain-English guidance on free legal advice at the police station (Legal Aid) and when private fees may apply. Kent police station representation. Call 01732 247427.",
+    "Plain-English guidance on free legal advice at the police station (Legal Aid) and when private fees may apply. Kent police station representation. Use Contact pathways.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/fees`,
   },

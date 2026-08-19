@@ -2,12 +2,9 @@
 
 import { useEffect } from 'react';
 import Link from 'next/link';
-import { PHONE_DISPLAY, PHONE_TEL } from '@/config/contact';
-
 export default function Error({
   error,
-  reset,
-}: {
+  reset }: {
   error: Error & { digest?: string };
   reset: () => void;
 }) {
@@ -27,8 +24,8 @@ export default function Error({
           <h1 className="text-3xl font-bold text-slate-900 mb-4">Something went wrong</h1>
           <p className="text-slate-600 mb-8">
             We could not load this page. If you need urgent police station advice, call{' '}
-            <a href={`tel:${PHONE_TEL}`} className="text-blue-700 font-semibold hover:underline">
-              {PHONE_DISPLAY}
+            <a href="/current-custody" className="text-blue-700 font-semibold hover:underline">
+              {"Contact pathways"}
             </a>
             .
           </p>

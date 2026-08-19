@@ -5,36 +5,29 @@ import { buildPageMetadata } from "@/lib/seo/page-metadata";
 import { FAQPage } from "@/components/StructuredData";
 import { InternalLinkHub } from "@/components/InternalLinkHub";
 import { RIGHTS_HUB } from "@/config/internal-link-hubs";
-import { PHONE_DISPLAY, PHONE_TEL } from "@/config/contact";
-
 export const metadata: Metadata = buildPageMetadata({
   title: "Booking In Procedure in Kent | What Happens at the Police Station",
   path: "/booking-in-procedure-in-kent",
   description:
-    "Understanding the booking in procedure at Kent police stations. Learn what happens when you arrive, your rights, and what to expect during the custody process.",
-});
+    "Understanding the booking in procedure at Kent police stations. Learn what happens when you arrive, your rights, and what to expect during the custody process." });
 
 const BOOKING_IN_FAQ = [
   {
     question: "What is the booking-in procedure at a Kent police station?",
     answer:
-      "Booking-in is the process when you arrive at custody. The custody officer records your detention, explains your rights, and authorises detention if necessary under PACE Code C.",
-  },
+      "Booking-in is the process when you arrive at custody. The custody officer records your detention, explains your rights, and authorises detention if necessary under PACE Code C." },
   {
     question: "What rights must the custody officer explain during booking-in?",
     answer:
-      "You must be told your right to free legal advice, to have someone informed of your arrest, and to consult the PACE Codes of Practice. Medical attention must be arranged if needed.",
-  },
+      "You must be told your right to free legal advice, to have someone informed of your arrest, and to consult the PACE Codes of Practice. Medical attention must be arranged if needed." },
   {
     question: "Can I request a solicitor during booking-in?",
     answer:
-      "Yes. Request legal advice as soon as possible. The custody officer must allow you to consult a solicitor in private and should not interview you about the offence until you have had that opportunity unless you waive the right.",
-  },
+      "Yes. Request legal advice as soon as possible. The custody officer must allow you to consult a solicitor in private and should not interview you about the offence until you have had that opportunity unless you waive the right." },
   {
     question: "What happens to my property during booking-in?",
     answer:
-      "Your belongings are searched and logged. Items that could be used to harm yourself or others are removed for safekeeping and recorded on the custody record.",
-  },
+      "Your belongings are searched and logged. Items that could be used to harm yourself or others are removed for safekeeping and recorded on the custody record." },
 ];
 
 export default function Page() {
@@ -169,10 +162,10 @@ export default function Page() {
                 <strong>
                   Call us immediately on{" "}
                   <a
-                    href={`tel:${PHONE_TEL}`}
+                    href="/current-custody"
                     className="text-blue-600 hover:text-blue-800 font-semibold"
                   >
-                    {PHONE_DISPLAY}
+                    {"Contact pathways"}
                   </a>
                 </strong>{" "}
                 to arrange representation.

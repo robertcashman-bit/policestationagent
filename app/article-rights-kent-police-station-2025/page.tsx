@@ -7,14 +7,14 @@ import { StandardPaceSources } from "@/components/legal/StandardPaceSources";
 export const metadata: Metadata = {
   title: "Your Rights in a Kent Police Station (2026 Guide) | Expert Legal Advice",
   description:
-    "Complete 2026 guide to your legal rights at Kent police stations. PACE rights, free legal advice, detention limits explained by accredited duty solicitor. Call 01732 247427.",
+    "Complete 2026 guide to your legal rights at Kent police stations. PACE rights, free legal advice, detention limits explained by accredited duty solicitor.",
   alternates: {
     canonical: "https://policestationagent.com/article-rights-kent-police-station-2025",
   },
   openGraph: {
     title: "Your Rights in a Kent Police Station (2026 Guide) | Expert Legal Advice",
     description:
-      "Complete 2026 guide to your legal rights at Kent police stations. PACE rights, free legal advice, detention limits explained by accredited duty solicitor. Call 01732 247427.",
+      "Complete 2026 guide to your legal rights at Kent police stations. PACE rights, free legal advice, detention limits explained by accredited duty solicitor.",
     type: "website",
     url: "https://policestationagent.com/article-rights-kent-police-station-2025",
   },

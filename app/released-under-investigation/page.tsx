@@ -9,32 +9,25 @@ import { SITE_DOMAIN } from "@/config/site";
 import {
   CTA_OUT_OF_SCOPE,
   CTA_WHO_CAN_CALL,
-  PHONE_DISPLAY,
-  PHONE_TEL,
-  SCOPE_HELP_HREF,
-} from "@/config/contact";
+  SCOPE_HELP_HREF } from "@/config/contact";
 
 export const metadata: Metadata = {
   title: "Released Under Investigation (RUI): What It Means & How Long It Lasts",
   description:
     "Released under investigation (RUI) is commonly used to describe being released without bail while an investigation continues. What to do next, with sources for core rights.",
   alternates: {
-    canonical: `https://${SITE_DOMAIN}/released-under-investigation`,
-  },
-};
+    canonical: `https://${SITE_DOMAIN}/released-under-investigation` } };
 
 export default function ReleasedUnderInvestigationPage() {
   const sources: LegalSource[] = [
     {
       id: "pace-s58",
       label: "Police and Criminal Evidence Act 1984 (PACE) s.58 (right to legal advice)",
-      href: "https://www.legislation.gov.uk/ukpga/1984/60/section/58",
-    },
+      href: "https://www.legislation.gov.uk/ukpga/1984/60/section/58" },
     {
       id: "govuk-arrested",
       label: "GOV.UK: Arrested? Your rights",
-      href: "https://www.gov.uk/arrested-your-rights",
-    },
+      href: "https://www.gov.uk/arrested-your-rights" },
   ];
 
   const faqSchema = {
@@ -46,43 +39,32 @@ export default function ReleasedUnderInvestigationPage() {
         name: "What does Released Under Investigation (RUI) mean?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Released Under Investigation (RUI) is commonly used to describe being released without bail while an investigation continues.",
-        },
-      },
+          text: "Released Under Investigation (RUI) is commonly used to describe being released without bail while an investigation continues." } },
       {
         "@type": "Question",
         name: "How long can Released Under Investigation last?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Investigation timescales vary widely depending on the case. Get advice on your specific situation and ask for updates.",
-        },
-      },
+          text: "Investigation timescales vary widely depending on the case. Get advice on your specific situation and ask for updates." } },
       {
         "@type": "Question",
         name: "What is the difference between RUI and bail?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Police bail can include conditions and return dates. RUI is commonly used to describe release without bail while an investigation continues.",
-        },
-      },
+          text: "Police bail can include conditions and return dates. RUI is commonly used to describe release without bail while an investigation continues." } },
       {
         "@type": "Question",
         name: "Can I travel abroad while Released Under Investigation?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Get legal advice before making travel plans. Your circumstances may change quickly depending on the investigation.",
-        },
-      },
+          text: "Get legal advice before making travel plans. Your circumstances may change quickly depending on the investigation." } },
       {
         "@type": "Question",
         name: "What happens after being Released Under Investigation?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Possible outcomes include no further action, further interview, bail, or charge. Take advice on your specific case.",
-        },
-      },
-    ],
-  };
+          text: "Possible outcomes include no further action, further interview, bail, or charge. Take advice on your specific case." } },
+    ] };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex flex-col">
@@ -314,10 +296,10 @@ export default function ReleasedUnderInvestigationPage() {
             <p className="text-slate-400 text-sm mb-6">{CTA_OUT_OF_SCOPE}</p>
             <div className="flex flex-wrap gap-4">
               <a
-                href={`tel:${PHONE_TEL}`}
+                href="/current-custody"
                 className="inline-flex items-center px-6 py-3 bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold rounded-lg"
               >
-                Call {PHONE_DISPLAY}
+                Contact pathways
               </a>
               <Link
                 href={SCOPE_HELP_HREF}

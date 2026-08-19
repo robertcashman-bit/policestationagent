@@ -7,14 +7,14 @@ import { StandardPaceSources } from "@/components/legal/StandardPaceSources";
 export const metadata: Metadata = {
   title: "Arrested in Kent? What to Do | FREE Immediate Legal Advice | PACE Rights",
   description:
-    "Just been arrested in Kent? Know your PACE 1984 rights. Request a FREE solicitor immediately. Don't answer questions without legal advice. Call 01732 247427 - Ask for Robert Cashman, Tuckers Duty Solicitor.",
+    "Just been arrested in Kent? Know your PACE 1984 rights. Request a FREE solicitor immediately. Don't answer questions without legal advice. - Ask for Robert Cashman, Tuckers Duty Solicitor.",
   alternates: {
     canonical: "https://policestationagent.com/arrested-what-to-do",
   },
   openGraph: {
     title: "Arrested in Kent? What to Do | FREE Immediate Legal Advice | PACE Rights",
     description:
-      "Just been arrested in Kent? Know your PACE 1984 rights. Request a FREE solicitor immediately. Don't answer questions without legal advice. Call 01732 247427 - Ask for Robert Cashman, Tuckers Duty Solicitor.",
+      "Just been arrested in Kent? Know your PACE 1984 rights. Request a FREE solicitor immediately. Don't answer questions without legal advice. - Ask for Robert Cashman, Tuckers Duty Solicitor.",
     type: "website",
     url: "https://policestationagent.com/arrested-what-to-do",
   },

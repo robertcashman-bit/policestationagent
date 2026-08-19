@@ -7,14 +7,14 @@ import { StandardPaceSources } from "@/components/legal/StandardPaceSources";
 export const metadata: Metadata = {
   title: "What Happens During Interview Under Caution? | Kent Police Station Guide",
   description:
-    "Expert guide to police interviews under caution in Kent. What to expect, your rights, how to prepare. FREE legal advice available. Call 01732 247427.",
+    "Expert guide to police interviews under caution in Kent. What to expect, your rights, how to prepare. FREE legal advice available.",
   alternates: {
     canonical: "https://policestationagent.com/article-interview-under-caution",
   },
   openGraph: {
     title: "What Happens During Interview Under Caution? | Kent Police Station Guide",
     description:
-      "Expert guide to police interviews under caution in Kent. What to expect, your rights, how to prepare. FREE legal advice available. Call 01732 247427.",
+      "Expert guide to police interviews under caution in Kent. What to expect, your rights, how to prepare. FREE legal advice available.",
     type: "website",
     url: "https://policestationagent.com/article-interview-under-caution",
   },

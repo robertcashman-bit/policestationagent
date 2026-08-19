@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Urgent Police Station Help | Has Someone Been Arrested? | extended hours Free Advice",
   description:
-    "Emergency Help: Has a friend or family member been arrested in Kent? You can instruct a solicitor on their behalf. Call 01732 247427 immediately for extended hours FREE legal representation.",
+    "Emergency Help: Has a friend or family member been arrested in Kent? You can instruct a solicitor on their behalf. immediately for extended hours FREE legal representation.",
   keywords: undefined,
   alternates: {
     canonical: "https://policestationagent.com/arrestednow",
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Urgent Police Station Help | Has Someone Been Arrested? | extended hours Free Advice",
     description:
-      "Emergency Help: Has a friend or family member been arrested in Kent? You can instruct a solicitor on their behalf. Call 01732 247427 immediately for extended hours FREE legal representation.",
+      "Emergency Help: Has a friend or family member been arrested in Kent? You can instruct a solicitor on their behalf. immediately for extended hours FREE legal representation.",
     type: "website",
     url: "https://policestationagent.com/arrestednow",
   },
