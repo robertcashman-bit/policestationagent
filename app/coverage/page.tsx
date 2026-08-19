@@ -58,9 +58,9 @@ const VOLUNTARY_STATIONS = [
   { href: "/margate-psa-station", title: "Margate Police Station" },
   { href: "/sevenoaks-psa-station", title: "Sevenoaks Police Station" },
   { href: "/sittingbourne-psa-station", title: "Sittingbourne Police Station" },
-  { href: "/swanley-psa-station", title: "Swanley Police Station" },
+  { href: "/swanley-psa-station", title: "Swanley (VAI / local cover)" },
   { href: "/tunbridge-wells-psa-station", title: "Tunbridge Wells Police Station" },
-  { href: "/bluewater-psa-station", title: "Bluewater Police Station" },
+  { href: "/bluewater-psa-station", title: "Bluewater area (VAI / local cover)" },
 ] as const;
 
 export default function Page() {

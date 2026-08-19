@@ -31,7 +31,7 @@ const SERVICES = [
       "You deal with a senior solicitor directly — we stay involved from first call to the end of the case.",
     points: [
       "Dedicated senior solicitor",
-      "Police station to Crown Court",
+      "Police station first; court via Tuckers if charged",
       "Fixed fee packages available",
     ],
     emphasis: "muted" as const,
@@ -47,11 +47,11 @@ export function HomeServicesSection() {
         <div className="max-w-measure-wide">
           <p className="section-eyebrow">How we can help</p>
           <h2 id="home-services-heading" className="section-title mt-2">
-            Police station and court help
+            Police station help first
           </h2>
           <p className="section-lede">
-            Someone with you at the police station, in court when you need it, and extra support if
-            you instruct privately.
+            Someone with you at the police station — and, if charged, court via Tuckers Solicitors
+            LLP — plus extra support if you instruct privately.
           </p>
         </div>
 

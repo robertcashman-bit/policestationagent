@@ -176,7 +176,7 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
       "Police station rep in Swanley, Kent for voluntary interviews and Kent custody attendance. Instructions from criminal defence firms. NOT Kent Police For police assistance call 101 or 999.",
     h1: "Police Station Rep in Swanley, Kent",
     answerFirst:
-      "In brief: a police station rep in Swanley includes representation at Swanley police station for voluntary interviews and attendance at Kent custody suites when required.",
+      "In brief: a police station rep in Swanley covers voluntary interviews at Swanley police station (VAI / local cover — not a main Kent custody suite) and attendance at real Kent custody suites when required.",
     intro:
       "Swanley police station handles many voluntary interviews for north-west Kent. We provide cover for instructing firms and advice for clients.",
     areas: ["Swanley", "Hextable", "North West Kent"],
@@ -600,30 +600,39 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
   bluewater: {
     slug: "police-station-rep-bluewater",
     town: "Bluewater",
-    title: "Police Station Rep Bluewater | Kent",
+    title: "Police Station Rep Bluewater Area | Kent",
     metaDescription:
-      "Police station rep in Bluewater, Kent for voluntary interviews and north Kent custody attendance. Solicitor instructions welcome. NOT Kent Police For police assistance call 101 or 999.",
-    h1: "Police Station Rep in Bluewater, Kent",
+      "Police station rep for the Bluewater area, Kent — local/VAI cover and attendance at nearest real custody suites (North Kent Gravesend / Dartford area). NOT a Bluewater custody suite. NOT Kent Police For police assistance call 101 or 999.",
+    h1: "Police Station Rep for the Bluewater Area, Kent",
     answerFirst:
-      "In brief: a police station rep in Bluewater covers voluntary interviews locally and custody attendance at north Kent suites including Gravesend and Medway when required.",
+      "In brief: Bluewater is not a Kent custody suite. Local cover here means voluntary interviews in the Bluewater / Greenhithe / Dartford area, with custody attendance at the nearest real suites — typically North Kent (Gravesend) and, where operational demand requires, other Kent suites such as Medway.",
     intro:
-      "Bluewater area police stations handle voluntary interviews for north-west Kent. Criminal defence firms can instruct cover; clients can request advice for custody or booked interviews.",
+      "Bluewater shopping-centre area is local coverage for north-west Kent, not a custody suite. Criminal defence firms can instruct cover for nearby voluntary interviews; clients needing custody representation are usually dealt with at North Kent (Gravesend) or another designated Kent suite.",
     areas: ["Bluewater", "Greenhithe", "North Kent", "Dartford"],
     stations: [
       {
-        name: "Bluewater police station",
-        address: "Bluewater, Kent",
-        note: "Voluntary interviews",
+        name: "North Kent (Gravesend) custody",
+        address: "Thames Way, Northfleet DA11 8BD",
+        note: "Nearest main 24-hour custody for Bluewater-area arrests",
+      },
+      {
+        name: "Dartford / Bluewater area (local cover)",
+        note: "VAI / local coverage — Bluewater is not a Kent custody suite",
       },
     ],
     audience: "Solicitors instructing cover and clients in the Bluewater area.",
     faqs: [
       {
+        question: "Is Bluewater a Kent custody suite?",
+        answer:
+          "No. Bluewater is not a Kent custody suite. This page is local/VAI coverage for the Bluewater area. Custody interviews are normally at North Kent (Gravesend) or another Kent suite depending on operational demand.",
+      },
+      {
         question: "Do you attend voluntary interviews near Bluewater?",
         answer: "Yes, subject to availability. Instruct with interview time and client details.",
       },
       {
-        question: "Which custody suite serves Bluewater arrests?",
+        question: "Which custody suite serves Bluewater-area arrests?",
         answer:
           "Arrests may be taken to North Kent (Gravesend) or Medway custody depending on operational demand.",
       },

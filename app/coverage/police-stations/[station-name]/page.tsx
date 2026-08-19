@@ -167,8 +167,8 @@ function getCustodyExplanation(custodyType: string): string {
       return 'This police station operates a 24-hour custody suite. Individuals who are arrested may be brought here for booking, detention, and interview. The custody suite is staffed around the clock to process arrests and conduct interviews under the Police and Criminal Evidence Act 1984 (PACE).';
     case 'Voluntary Interviews Only':
       return 'This police station conducts voluntary interviews only. The custody suite is not operational for arrests. Individuals may be invited to attend voluntarily for a police interview under caution. Voluntary interviews are conducted under the Police and Criminal Evidence Act 1984 (PACE) Code C.';
-    case 'Tactical Operations Base':
-      return 'This facility is used for tactical operations and is not a public-facing custody suite. It is not used for routine arrests or voluntary interviews.';
+      case 'Tactical Operations Base':
+      return 'This facility is used for tactical operations. It is not a public-facing Kent custody suite and is not used for routine arrests or booked voluntary interviews.';
     default:
       return '';
   }
@@ -332,14 +332,42 @@ export default async function PoliceStationPage(props: PageProps) {
               </div>
             )}
 
+            {station.custodyType === 'Tactical Operations Base' && (
+              <div className="bg-slate-100 p-8 rounded-xl mb-8 border border-slate-300">
+                <h2 className="text-2xl font-bold mb-4 text-slate-800">Not a public custody or VAI venue</h2>
+                <p className="text-slate-700 leading-relaxed mb-4">
+                  {station.name} is a tactical operations base. It is not a public-facing Kent custody suite and is not used for routine arrests or booked voluntary interviews. You should not expect to be “arrested at {station.name}” or invited there for a public VAI in the way you would at an operational station.
+                </p>
+                <p className="text-slate-700 leading-relaxed mb-4">
+                  If someone from the {station.areaCovered} area is arrested or booked for interview, that will normally be at a real operational Kent suite (for example Medway or another designated custody/VAI location depending on police demand). Legal advice is arranged for those operational venues — not as if {station.name} were itself a public custody suite.
+                </p>
+                <p className="text-slate-700 leading-relaxed text-sm italic">
+                  Station typing here reflects published operational use for public guidance and may change with Kent Police arrangements.
+                </p>
+              </div>
+            )}
+
             <div className="bg-slate-50 p-8 rounded-xl mb-8 border border-slate-200">
               <h2 className="text-2xl font-bold mb-4 text-slate-800">Legal Representation</h2>
-              <p className="text-slate-700 leading-relaxed mb-4">
-                If you are arrested or invited to attend a voluntary interview at {station.name} Police Station, you have the right to free legal advice under the Legal Aid scheme. A duty solicitor can be arranged to attend the station to provide advice and representation.
-              </p>
-              <p className="text-slate-700 leading-relaxed text-sm italic mb-4">
-                Legal Aid is available for police station representation regardless of your financial circumstances. The duty solicitor scheme ensures access to legal advice during police interviews.
-              </p>
+              {station.custodyType === 'Tactical Operations Base' ? (
+                <>
+                  <p className="text-slate-700 leading-relaxed mb-4">
+                    Because {station.name} is not a public custody or voluntary-interview venue, police-station legal advice for people in the {station.areaCovered} area is arranged at the operational suite where the person is actually detained or booked — not at {station.name} itself.
+                  </p>
+                  <p className="text-slate-700 leading-relaxed text-sm italic mb-4">
+                    Legal Aid remains available for police station representation at operational Kent suites regardless of financial circumstances, under the duty solicitor scheme.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p className="text-slate-700 leading-relaxed mb-4">
+                    If you are arrested or invited to attend a voluntary interview at {station.name} Police Station, you have the right to free legal advice under the Legal Aid scheme. A duty solicitor can be arranged to attend the station to provide advice and representation.
+                  </p>
+                  <p className="text-slate-700 leading-relaxed text-sm italic mb-4">
+                    Legal Aid is available for police station representation regardless of your financial circumstances. The duty solicitor scheme ensures access to legal advice during police interviews.
+                  </p>
+                </>
+              )}
               <div className="mt-6">
                 <Link
                   href={`/coverage/areas/${areaLink}`}
@@ -379,8 +407,16 @@ export default async function PoliceStationPage(props: PageProps) {
             </div>
             
             <SolicitorHelpCTA
-              heading={`Need a solicitor at ${station.name} Police Station?`}
-              description={`Independent legal representation at ${station.name} Police Station under Legal Aid where eligible. We are not the police and cannot transfer calls to custody.`}
+              heading={
+                station.custodyType === 'Tactical Operations Base'
+                  ? `Need a solicitor for a Kent custody or VAI matter near ${station.areaCovered}?`
+                  : `Need a solicitor at ${station.name} Police Station?`
+              }
+              description={
+                station.custodyType === 'Tactical Operations Base'
+                  ? `${station.name} is not a public custody or VAI venue. Independent legal representation is arranged at the operational Kent suite where the person is actually detained or booked. We are not the police and cannot transfer calls to custody.`
+                  : `Independent legal representation at ${station.name} Police Station under Legal Aid where eligible. We are not the police and cannot transfer calls to custody.`
+              }
               noSnippetPhone
             />
           </div>
