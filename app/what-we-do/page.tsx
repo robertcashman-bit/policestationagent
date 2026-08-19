@@ -416,12 +416,15 @@ export default function Page() {
                     <h3 className="font-bold text-slate-900 mb-2">North Kent</h3>
                     <ul className="space-y-1 text-slate-600 text-sm">
                       <li>Medway</li>
-                      <li>Gravesend</li>
-                      <li>Swanley</li>
-                      <li>Bluewater</li>
+                      <li>Gravesend (North Kent custody)</li>
                       <li>Sittingbourne</li>
                       <li>Ashford</li>
-                      <li>Coldharbour</li>
+                      <li>Swanley (VAI / local cover — not a custody suite)</li>
+                      <li>
+                        Bluewater (local cover — not a custody suite; nearest North Kent /
+                        Dartford area)
+                      </li>
+                      <li>Coldharbour (VAI / local cover — not a custody suite)</li>
                     </ul>
                   </div>
                 </div>

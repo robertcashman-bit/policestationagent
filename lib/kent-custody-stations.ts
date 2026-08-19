@@ -1,7 +1,7 @@
 /** Kent custody suites linked from the resource hub */
 export const KENT_CUSTODY_STATIONS = [
   { name: "Medway", href: "/medway-police-station" },
-  { name: "Maidstone (VAI only)", href: "/maidstone-police-station" },
+  { name: "Maidstone (VAI only — custody closed)", href: "/maidstone-police-station" },
   { name: "North Kent (Gravesend)", href: "/police-station-rep-gravesend" },
   { name: "Canterbury", href: "/canterbury-police-station" },
   { name: "Tonbridge", href: "/police-station-rep-tonbridge" },
@@ -11,10 +11,16 @@ export const KENT_CUSTODY_STATIONS = [
   { name: "Margate", href: "/margate-police-station" },
   { name: "Dover", href: "/dover-police-station" },
   { name: "Sevenoaks", href: "/sevenoaks-police-station" },
-  { name: "Swanley", href: "/swanley-police-station" },
+  { name: "Swanley (VAI / local cover — not a custody suite)", href: "/swanley-police-station" },
   { name: "Tunbridge Wells", href: "/tunbridge-wells-police-station" },
-  { name: "Bluewater", href: "/bluewater-police-station" },
-  { name: "Coldharbour", href: "/coldharbour-police-station" },
+  {
+    name: "Bluewater (local cover — not a custody suite; nearest North Kent / Dartford area)",
+    href: "/bluewater-police-station",
+  },
+  {
+    name: "Coldharbour (VAI / local cover — not a custody suite)",
+    href: "/coldharbour-police-station",
+  },
 ] as const;
 
 export const AUTHORITY_RESOURCE_LINKS = [

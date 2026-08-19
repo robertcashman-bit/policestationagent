@@ -34,10 +34,10 @@ const stations = [
   { href: "/tunbridge-wells-police-station", label: "Tunbridge Wells Police Station" },
   { href: "/sevenoaks-police-station", label: "Sevenoaks Police Station" },
   { href: "/sittingbourne-police-station", label: "Sittingbourne Police Station" },
-  { href: "/swanley-police-station", label: "Swanley Police Station" },
+  { href: "/swanley-police-station", label: "Swanley (VAI / local cover)" },
   { href: "/margate-police-station", label: "Margate Police Station" },
-  { href: "/bluewater-police-station", label: "Bluewater Police Station" },
-  { href: "/coldharbour-police-station", label: "Coldharbour Police Station" },
+  { href: "/bluewater-police-station", label: "Bluewater area (VAI / local cover)" },
+  { href: "/coldharbour-police-station", label: "Coldharbour (VAI / local cover)" },
 ];
 
 const solicitorsByTown = [
