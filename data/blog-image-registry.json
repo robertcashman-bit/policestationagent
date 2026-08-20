@@ -228,5 +228,9 @@
     "featured": "/blog-images/dna-fingerprints-police-station-kent-featured.jpg",
     "alt": "DNA and fingerprints at Kent police stations",
     "copyFrom": "/blog-images/drug-allegations-police-stage-featured.jpg"
+  },
+  "police-want-to-speak-to-me": {
+    "featured": "/blog-images/police-want-to-speak-to-me-featured.png",
+    "alt": "Professional desk with UK legal branding — advice when the police want to speak to you"
   }
 }
