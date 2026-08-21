@@ -1,10 +1,10 @@
 # Firm outreach emails — Police Station Agent
 
-**Do not send firm outreach emails from `policestationagent`.**
+**Do not send firm outreach emails or Kent-agent digests from `policestationagent`.**
 
 - Permanent kill-switch: `lib/firm-outreach/outreach-emails-disabled.ts` (`PSA_OUTREACH_EMAILS_DISABLED = true`)
 - Prospect/firm sends (cron, admin manual/bulk, Kent corrections, approval links) must stay blocked
-- **Policestationrepuk** WhatsApp / firm invite outreach remains active — do not disable that site
+- Owner digests / approval reminders for Kent agent cover (`agent_cover_kent_v1`) must stay blocked — including `/api/cron/firm-outreach-digest` (removed from `vercel.json` schedule; route is a no-op)
+- **Policestationrepuk** WhatsApp / firm invite outreach + its own digests remain active — do not disable that site
 - **Also:** RepUK historically sent `agent_cover_kent_v1` (Police Station Agent–branded) mail via its dual-campaign cron (`*/15`). That path is killed in Policestationrepuk (`AGENT_COVER_EMAILS_DISABLED` / `OUTREACH_SEND_CAMPAIGN_IDS`)
 - Do not set `FIRM_OUTREACH_FORCE_SEND=true` or flip the kill-switch to `false` unless the user explicitly asks to resume PSA outreach
-- Owner digests (to Rob) may still run; emails **to firms** must not
