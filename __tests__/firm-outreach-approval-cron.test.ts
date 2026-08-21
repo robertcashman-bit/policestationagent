@@ -5,7 +5,7 @@ import { GET as digestGet } from '@/app/api/cron/firm-outreach-digest/route';
 const mockPipeline = vi.fn();
 const mockApprovalEmail = vi.fn();
 const mockDigest = vi.fn();
-const mockArePsaOutreachEmailsDisabled = vi.fn(() => false);
+const mockArePsaOutreachEmailsDisabled = vi.fn(() => true);
 
 vi.mock('@/lib/firm-outreach/run-pipeline', () => ({
   runFirmOutreachPipeline: (...args: unknown[]) => mockPipeline(...args),
@@ -33,7 +33,7 @@ describe('firm-outreach approval crons', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     process.env = { ...ENV, CRON_SECRET: 'cron-test', FIRM_OUTREACH_REQUIRE_APPROVAL: 'true' };
-    mockArePsaOutreachEmailsDisabled.mockReturnValue(false);
+    mockArePsaOutreachEmailsDisabled.mockReturnValue(true);
     mockPipeline.mockResolvedValue({ skipped: false, send: { sent: 0 } });
     mockApprovalEmail.mockResolvedValue({ sent: true, date: '2026-06-13' });
     mockDigest.mockResolvedValue({ sent: true, date: '2026-06-13' });
@@ -50,7 +50,6 @@ describe('firm-outreach approval crons', () => {
     });
 
     it('short-circuits when PSA outreach emails are disabled', async () => {
-      mockArePsaOutreachEmailsDisabled.mockReturnValue(true);
       const res = await fullGet(
         new Request('http://localhost/api/cron/firm-outreach-pipeline/full', {
           headers: { authorization: 'Bearer cron-test' },
@@ -65,7 +64,8 @@ describe('firm-outreach approval crons', () => {
       expect(mockApprovalEmail).not.toHaveBeenCalled();
     });
 
-    it('auto-sends when approval is disabled', async () => {
+    it('auto-sends when approval is disabled and kill-switch is off', async () => {
+      mockArePsaOutreachEmailsDisabled.mockReturnValue(false);
       process.env.FIRM_OUTREACH_REQUIRE_APPROVAL = 'false';
       mockPipeline.mockResolvedValue({ skipped: false, send: { sent: 12 } });
       const res = await fullGet(
@@ -82,7 +82,8 @@ describe('firm-outreach approval crons', () => {
       expect(mockApprovalEmail).not.toHaveBeenCalled();
     });
 
-    it('sends approval email without auto-send when approval required', async () => {
+    it('sends approval email without auto-send when approval required and kill-switch off', async () => {
+      mockArePsaOutreachEmailsDisabled.mockReturnValue(false);
       const res = await fullGet(
         new Request('http://localhost/api/cron/firm-outreach-pipeline/full', {
           headers: { authorization: 'Bearer cron-test' },
@@ -97,7 +98,8 @@ describe('firm-outreach approval crons', () => {
       expect(mockApprovalEmail).toHaveBeenCalledOnce();
     });
 
-    it('passes force=1 to approval email', async () => {
+    it('passes force=1 to approval email when kill-switch off', async () => {
+      mockArePsaOutreachEmailsDisabled.mockReturnValue(false);
       await fullGet(
         new Request('http://localhost/api/cron/firm-outreach-pipeline/full?force=1', {
           headers: { authorization: 'Bearer cron-test' },
@@ -108,7 +110,23 @@ describe('firm-outreach approval crons', () => {
   });
 
   describe('firm-outreach-digest', () => {
-    it('sends approval reminder when approval required', async () => {
+    it('is a permanent no-op while PSA outreach emails are disabled', async () => {
+      const res = await digestGet(
+        new Request('http://localhost/api/cron/firm-outreach-digest', {
+          headers: { authorization: 'Bearer cron-test' },
+        }),
+      );
+      expect(res.status).toBe(200);
+      const json = await res.json();
+      expect(json.mode).toBe('digest-disabled');
+      expect(json.skipped).toBe(true);
+      expect(json.reason).toBe('psa_outreach_emails_disabled');
+      expect(mockApprovalEmail).not.toHaveBeenCalled();
+      expect(mockDigest).not.toHaveBeenCalled();
+    });
+
+    it('sends approval reminder when approval required and kill-switch off', async () => {
+      mockArePsaOutreachEmailsDisabled.mockReturnValue(false);
       const res = await digestGet(
         new Request('http://localhost/api/cron/firm-outreach-digest', {
           headers: { authorization: 'Bearer cron-test' },
@@ -127,6 +145,7 @@ describe('firm-outreach legacy digest cron', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     process.env = { ...ENV, CRON_SECRET: 'cron-test', FIRM_OUTREACH_REQUIRE_APPROVAL: 'false' };
+    mockArePsaOutreachEmailsDisabled.mockReturnValue(true);
     mockDigest.mockResolvedValue({ sent: true, date: '2026-06-13' });
   });
 
@@ -134,7 +153,19 @@ describe('firm-outreach legacy digest cron', () => {
     process.env = { ...ENV };
   });
 
-  it('runs legacy digest when approval disabled', async () => {
+  it('does not run legacy digest while kill-switch is on', async () => {
+    const res = await digestGet(
+      new Request('http://localhost/api/cron/firm-outreach-digest', {
+        headers: { authorization: 'Bearer cron-test' },
+      }),
+    );
+    const json = await res.json();
+    expect(json.mode).toBe('digest-disabled');
+    expect(mockDigest).not.toHaveBeenCalled();
+  });
+
+  it('runs legacy digest when approval disabled and kill-switch off', async () => {
+    mockArePsaOutreachEmailsDisabled.mockReturnValue(false);
     const res = await digestGet(
       new Request('http://localhost/api/cron/firm-outreach-digest', {
         headers: { authorization: 'Bearer cron-test' },

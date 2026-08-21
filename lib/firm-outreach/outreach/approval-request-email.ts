@@ -1,6 +1,10 @@
 import { Resend } from 'resend';
 import { SITE_URL } from '@/config/site';
 import { dailySendCap } from '../constants';
+import {
+  PSA_OUTREACH_EMAILS_DISABLED_REASON,
+  arePsaOutreachEmailsDisabled,
+} from '../outreach-emails-disabled';
 import { getDailySendCount } from '../storage';
 import { buildOutreachActivityReport } from './activity-report';
 import { outreachNotifyEmail } from './notify-recipient';
@@ -45,6 +49,12 @@ export async function sendOutreachApprovalRequestEmail(opts?: {
 }): Promise<OutreachApprovalRequestResult> {
   const date = outreachApprovalDate();
   const to = outreachNotifyEmail();
+
+  // Permanent stop: PSA approval / "ready to send" owner emails are off with the kill-switch.
+  if (arePsaOutreachEmailsDisabled()) {
+    console.info('[firm-outreach approval email blocked]', PSA_OUTREACH_EMAILS_DISABLED_REASON);
+    return { sent: false, reason: 'psa_outreach_emails_disabled', date };
+  }
 
   if (!opts?.force && !opts?.reminder && (await wasOutreachApprovalEmailSent(date))) {
     return { sent: false, reason: 'already_sent_today', date };

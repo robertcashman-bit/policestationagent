@@ -1,5 +1,9 @@
 import { Resend } from 'resend';
 import { dailySendCap } from '../constants';
+import {
+  PSA_OUTREACH_EMAILS_DISABLED_REASON,
+  arePsaOutreachEmailsDisabled,
+} from '../outreach-emails-disabled';
 import { getDailySendCount } from '../storage';
 import type {
   DiscoveryRunStats,
@@ -134,6 +138,14 @@ export async function sendDailyOutreachDigest(opts?: {
   };
 }): Promise<DailyOutreachDigestResult> {
   const date = outreachDigestDate();
+
+  // Permanent stop: Kent agent-cover owner digests must not leave this app
+  // (RepUK sibling sends its own digest). force= does not override the kill-switch.
+  if (arePsaOutreachEmailsDisabled()) {
+    console.info('[firm-outreach digest blocked]', PSA_OUTREACH_EMAILS_DISABLED_REASON);
+    return { sent: false, reason: 'psa_outreach_emails_disabled', date };
+  }
+
   if (!opts?.force && (await wasOutreachDigestSent(date))) {
     return { sent: false, reason: 'already_sent_today', date };
   }

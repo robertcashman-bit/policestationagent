@@ -226,14 +226,14 @@ export const EXPECTED_CRON_ROUTES = [
   '/api/cron/firm-outreach-pipeline/maintain',
   '/api/cron/firm-outreach-enrich',
   '/api/cron/firm-outreach-pipeline/full',
-  '/api/cron/firm-outreach-digest',
   '/api/cron/firm-outreach-cross-digest',
 ] as const;
 
 export const VERIFY_CRON_ROUTES = ['/api/cron/firm-outreach-status'] as const;
 
-/** Routes kept for manual/legacy use but not scheduled (PSA prospect sends are off). */
+/** Routes kept for manual/legacy use but not scheduled (PSA prospect sends + Kent digest are off). */
 export const LEGACY_CRON_ROUTES = [
+  '/api/cron/firm-outreach-digest',
   '/api/cron/firm-outreach-send',
   '/api/cron/firm-outreach-kick',
   '/api/cron/firm-outreach-kent-corrections',
@@ -379,6 +379,12 @@ export function checkVercelCronConfig(vercelJson: {
     name: 'vercel_cron_send_only_disabled',
     ok: sendOnlyCronCount === 0,
     detail: `count=${sendOnlyCronCount} (PSA prospect send crons must stay off)`,
+  });
+  const kentDigestCronCount = paths.filter((p) => p === '/api/cron/firm-outreach-digest').length;
+  results.push({
+    name: 'vercel_cron_kent_digest_disabled',
+    ok: kentDigestCronCount === 0,
+    detail: `count=${kentDigestCronCount} (Kent agent-cover owner digest must stay off — RepUK owns digests)`,
   });
   const kentCorrectionCronCount = paths.filter(
     (p) => p === '/api/cron/firm-outreach-kent-corrections',

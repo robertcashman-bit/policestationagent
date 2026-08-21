@@ -2,6 +2,8 @@
 
 Automated agent-cover invitation emails to qualified criminal defence firms across England & Wales.
 
+> **2026-08-21:** Police Station Agent prospect sends and the Kent agent-cover owner digest are **permanently disabled** in this repo (`PSA_OUTREACH_EMAILS_DISABLED`). Firm outreach and digests continue from **Policestationrepuk**. Discovery/enrich/maintain crons may still run for admin visibility only.
+
 **Admin URL:** https://www.policestationagent.com/admin  
 **Sign in:** Enter `robertdavidcashman@gmail.com` → receive 6-digit code by email → verify.
 
@@ -20,11 +22,10 @@ Requires **Upstash Redis** (sessions + prospect data) and **RESEND_API_KEY** (lo
 | `12:00` | `/api/cron/firm-outreach-enrich` | Enrich only (~60 firms, ~270s max) |
 | `14:00` | `/api/cron/firm-outreach-enrich` | Enrich only (~60 firms, ~270s max) |
 | `18:00` | `/api/cron/firm-outreach-enrich` | Enrich only (~60 firms, ~270s max) |
-| `09:30` | `/api/cron/firm-outreach-pipeline/full` | Auto-send ready queue (up to daily cap) |
-| `14:30` | `/api/cron/firm-outreach-send` | Send-only top-up (no digest) |
-| `18:30` | `/api/cron/firm-outreach-send` | Send-only top-up (no digest) |
-| `*/15` | `/api/cron/firm-outreach-kent-corrections` | **Auto-send Kent correction emails** for legacy nationwide initial sends (until queue empty) |
-| `17:00` | `/api/cron/firm-outreach-digest` | Digest backup if morning run did not send one |
+| `09:30` | `/api/cron/firm-outreach-pipeline/full` | No-op while PSA kill-switch is on (was auto-send / approval) |
+| ~~`14:30` / `18:30`~~ | ~~`/api/cron/firm-outreach-send`~~ | **Removed from schedule** — PSA prospect sends permanently off |
+| ~~`*/15`~~ | ~~`/api/cron/firm-outreach-kent-corrections`~~ | **Removed from schedule** — Kent corrections permanently off |
+| ~~`17:00`~~ | ~~`/api/cron/firm-outreach-digest`~~ | **Removed from schedule** — Kent agent-cover owner digest permanently off (RepUK owns digests) |
 
 All cron routes require `Authorization: Bearer $CRON_SECRET` (Vercel adds this automatically).
 
@@ -90,8 +91,7 @@ FIRM_OUTREACH_BOOTSTRAP_SECRET=... npx tsx scripts/firm-outreach-audit-today.ts
 
 - Enrichment uses active-campaign record status and a sliding scan window — LAA firms without email are prioritised each tick.
 - Cron enrich uses batches of **60** (default) with a 270s wall-clock guard.
-- **Eight** enrich crons per day (05/06/07/08/10/12/14/18 UTC) plus send-only top-ups at 14:30 and 18:30 UTC.
+- Enrich crons remain scheduled; PSA send/digest/kent-correction crons are **not** scheduled while the kill-switch is on.
 - Nightly maintain requalify downgrades `ready_to_send` rows with implausible emails or failed MX checks (batch-limited).
-- Post-deploy kick: first enrich cron after each production deploy runs requalify + 2 enrich batches (`maybeRunPostDeployKick`, keyed by `VERCEL_DEPLOYMENT_ID`). Daily backup at 09:15 UTC → `/api/cron/firm-outreach-kick`.
-- Optional GitHub Actions [firm-outreach-kick.yml](.github/workflows/firm-outreach-kick.yml) if `CRON_SECRET` or `FIRM_OUTREACH_BOOTSTRAP_SECRET` is set in repo secrets; otherwise it skips without failing.
-- **Verify on Vercel:** confirm `FIRM_OUTREACH_REQUIRE_APPROVAL=false` if you want automatic sends at 09:30/14:30/18:30 UTC.
+- Post-deploy kick and send approval flows remain gated by `PSA_OUTREACH_EMAILS_DISABLED`.
+- **Do not** set `FIRM_OUTREACH_FORCE_SEND=true` unless deliberately resuming PSA outreach.

@@ -31,6 +31,7 @@ vi.mock('resend', () => ({
 describe('sendOutreachApprovalRequestEmail', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    delete process.env.FIRM_OUTREACH_FORCE_SEND;
     process.env.RESEND_API_KEY = 're_test';
     process.env.FIRM_OUTREACH_DIGEST_EMAIL = 'robertdavidcashman@gmail.com';
     mockWasSent.mockResolvedValue(false);
@@ -58,7 +59,20 @@ describe('sendOutreachApprovalRequestEmail', () => {
     mockResendSend.mockResolvedValue({ data: { id: 'msg_1' } });
   });
 
-  it('sends approval email with Ready to send button', async () => {
+  it('is blocked by the PSA kill-switch and never calls Resend', async () => {
+    vi.resetModules();
+    const { sendOutreachApprovalRequestEmail } = await import(
+      '@/lib/firm-outreach/outreach/approval-request-email'
+    );
+    const result = await sendOutreachApprovalRequestEmail();
+    expect(result.sent).toBe(false);
+    expect(result.reason).toBe('psa_outreach_emails_disabled');
+    expect(mockResendSend).not.toHaveBeenCalled();
+    expect(mockIssueToken).not.toHaveBeenCalled();
+  });
+
+  it('sends approval email with Ready to send button when FORCE_SEND escape is on', async () => {
+    process.env.FIRM_OUTREACH_FORCE_SEND = 'true';
     vi.resetModules();
     const { sendOutreachApprovalRequestEmail } = await import(
       '@/lib/firm-outreach/outreach/approval-request-email'
@@ -75,7 +89,8 @@ describe('sendOutreachApprovalRequestEmail', () => {
     expect(mockMarkSent).toHaveBeenCalledWith('2026-06-13');
   });
 
-  it('skips when approval email already sent', async () => {
+  it('skips when approval email already sent (FORCE_SEND escape)', async () => {
+    process.env.FIRM_OUTREACH_FORCE_SEND = 'true';
     mockWasSent.mockResolvedValue(true);
     vi.resetModules();
     const { sendOutreachApprovalRequestEmail } = await import(
@@ -86,7 +101,8 @@ describe('sendOutreachApprovalRequestEmail', () => {
     expect(result.reason).toBe('already_sent_today');
   });
 
-  it('skips when readyCount is zero', async () => {
+  it('skips when readyCount is zero (FORCE_SEND escape)', async () => {
+    process.env.FIRM_OUTREACH_FORCE_SEND = 'true';
     mockBuildReport.mockResolvedValue({
       report: {
         summary: { readyToSend: 0, sentToday: 0 },
