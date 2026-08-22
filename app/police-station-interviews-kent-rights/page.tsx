@@ -545,11 +545,7 @@ export default function Page() {
                           <h3 class="text-3xl md:text-4xl font-black text-white mb-4">Need Legal Advice at a Kent Police Station?</h3>
                           <p class="text-xl text-red-100 mb-8 max-w-2xl mx-auto">FREE legal advice available during extended hours at all Kent police stations. Get a solicitor for prompt assistance.</p>
                           <div class="flex flex-col sm:flex-row justify-center gap-4">
-                            <div class="flex flex-col sm:flex-row gap-2 justify-center my-2" data-solicitor-contact="true" data-nosnippet>
-<a href="/start/voluntary-interview#request" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-bold shadow h-10 px-6 bg-blue-800 text-white hover:bg-blue-900">Request representation</a>
-<a href="/current-custody" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-bold shadow h-10 px-6 bg-red-700 text-white hover:bg-red-800">Current custody check</a>
-<a href="/for-solicitors" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-bold shadow h-10 px-6 bg-amber-500 text-slate-900 hover:bg-amber-400">Agency cover</a>
-</div></div>
+                            <div class="flex flex-col sm:flex-row gap-2 justify-center my-2" data-solicitor-contact="true" data-nosnippet><a href="/start/voluntary-interview#request" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-bold shadow h-10 px-6 bg-blue-800 text-white hover:bg-blue-900">Request representation</a><a href="/current-custody" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-bold shadow h-10 px-6 bg-red-700 text-white hover:bg-red-800">Current custody check</a><a href="/for-solicitors" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-bold shadow h-10 px-6 bg-amber-500 text-slate-900 hover:bg-amber-400">Agency cover</a></div></div>
                         </div>
                       </div>
                     </section>

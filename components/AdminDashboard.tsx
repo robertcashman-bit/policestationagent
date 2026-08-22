@@ -40,18 +40,6 @@ export default function AdminDashboard({ embedded = false }: { embedded?: boolea
   const [enhanceLoading, setEnhanceLoading] = useState(false);
   const [sitemapPreview, setSitemapPreview] = useState<string>("");
 
-  useEffect(() => {
-    if (activeTab === "posts") {
-      fetchPosts();
-    } else if (activeTab === "stations") {
-      fetchStations();
-    } else if (activeTab === "services") {
-      fetchServices();
-    } else if (activeTab === "sitemap") {
-      fetchSitemap();
-    }
-  }, [activeTab]);
-
   const fetchPosts = async () => {
     try {
       const response = await fetch("/api/admin/posts");
@@ -105,6 +93,19 @@ export default function AdminDashboard({ embedded = false }: { embedded?: boolea
       console.error("Failed to fetch sitemap:", error);
     }
   };
+
+  useEffect(() => {
+    if (activeTab === "posts") {
+      void fetchPosts();
+    } else if (activeTab === "stations") {
+      void fetchStations();
+    } else if (activeTab === "services") {
+      void fetchServices();
+    } else if (activeTab === "sitemap") {
+      void fetchSitemap();
+    }
+  }, [activeTab]);
+
 
   const handleEnhance = async () => {
     if (!enhanceContent.trim()) return;
