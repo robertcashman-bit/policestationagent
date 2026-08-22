@@ -1,28 +1,30 @@
 "use client";
 
 import { useEffect } from "react";
-import { PHONE_TEL, SMS_DISPLAY, SMS_TEL } from "@/config/contact";
 
 /**
- * Legacy HTML pages embed wa.me links. Replace with SMS/call so CTAs stay readable
- * without editing every static HTML blob.
+ * Legacy HTML pages may still embed wa.me links.
+ * Rewrite them to Contact pathways — never inject firm tel/sms digits into the DOM.
  */
 export default function ContactLinkGuard() {
   useEffect(() => {
     const patch = () => {
       document.querySelectorAll<HTMLAnchorElement>('a[href*="wa.me"]').forEach((a) => {
+        a.href = "/contact";
+        a.removeAttribute("target");
+        a.removeAttribute("rel");
+        a.setAttribute("title", "Contact pathways — telephone and SMS are not published as digits");
+        a.setAttribute("aria-label", "Contact pathways");
         const label = a.textContent?.trim() || "";
-        if (/call|telephone|01732/i.test(label)) {
-          a.href = `tel:${PHONE_TEL}`;
-          return;
+        if (/whatsapp|call|telephone|text|sms|01732|07535/i.test(label) || !label) {
+          a.textContent = "Contact pathways";
         }
-        a.href = `sms:${SMS_TEL}`;
-        a.setAttribute("title", `Text ${SMS_DISPLAY} if unable to call`);
-        a.setAttribute("aria-label", `Text ${SMS_DISPLAY} if unable to call`);
-        if (/whatsapp/i.test(label)) {
-          a.textContent = `Text ${SMS_DISPLAY}`;
-        }
-        a.classList.remove("bg-green-600", "bg-green-500", "hover:bg-green-700", "hover:bg-green-600");
+        a.classList.remove(
+          "bg-green-600",
+          "bg-green-500",
+          "hover:bg-green-700",
+          "hover:bg-green-600",
+        );
         a.classList.add("bg-red-600", "hover:bg-red-700", "text-white");
       });
     };

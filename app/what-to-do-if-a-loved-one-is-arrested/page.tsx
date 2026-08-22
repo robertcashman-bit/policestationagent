@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import Link from "next/link";
 import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 import { SITE_DOMAIN } from "@/config/site";
@@ -195,13 +196,10 @@ export default function Page() {
               </p>
               <p className="mb-4">
                 <strong>
-                  Call us now on{" "}
-                  <a
-                    href="tel:01732247427"
-                    className="text-blue-600 hover:text-blue-800 font-semibold"
-                  >
-                    01732 247427
-                  </a>
+                  Use the{" "}
+                  <Link href="/contact" className="text-blue-600 hover:text-blue-800 font-semibold">
+                    Contact pathways
+                  </Link>
                 </strong>{" "}
                 for prompt assistance.
               </p>

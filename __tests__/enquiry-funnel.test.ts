@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { isPhoneAllowlistPath, PATHWAY_CARDS } from "../config/enquiry-paths";
+import { isPhoneAllowlistPath, PATHWAY_CARDS, PHONE_ALLOWLIST_PATHS } from "../config/enquiry-paths";
 import { sanitizeAnalyticsParams } from "../lib/analytics";
 import { validateUploadFile } from "../lib/enquiry/uploads";
 import { createEnquiryReference } from "../lib/enquiry/reference";
@@ -63,10 +63,13 @@ describe("enquiry funnel routes", () => {
     expect(hero).not.toMatch(/>\s*Police Station Agent\s*</);
   });
 
-  it("agency page shows professional telephone", () => {
+  it("agency page uses form and Contact pathways without publishing telephone digits", () => {
     const page = fs.readFileSync(path.join(root, "app/for-solicitors/page.tsx"), "utf8");
-    expect(page).toContain("PHONE_TEL");
+    expect(page).not.toContain("PHONE_TEL");
+    expect(page).not.toContain("PHONE_DISPLAY");
+    expect(page).not.toMatch(/tel:01732|01732247427/);
     expect(page).toContain("AgencyInstructionForm");
+    expect(page).toMatch(/Contact pathways/);
     expect(page).toMatch(/Solicitor and law-firm instructions/);
   });
 
@@ -100,12 +103,13 @@ describe("enquiry funnel routes", () => {
 });
 
 describe("phone allowlist", () => {
-  it("allows agency paths and hides general pages", () => {
-    expect(isPhoneAllowlistPath("/for-solicitors")).toBe(true);
-    expect(isPhoneAllowlistPath("/servicerates")).toBe(true);
+  it("never allowlists public paths for firm telephone digits", () => {
+    expect(isPhoneAllowlistPath("/for-solicitors")).toBe(false);
+    expect(isPhoneAllowlistPath("/servicerates")).toBe(false);
     expect(isPhoneAllowlistPath("/")).toBe(false);
     expect(isPhoneAllowlistPath("/blog/foo")).toBe(false);
     expect(isPhoneAllowlistPath("/voluntary-interviews")).toBe(false);
+    expect(PHONE_ALLOWLIST_PATHS).toHaveLength(0);
   });
 });
 

@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import Link from "next/link";
 import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 import { SITE_DOMAIN } from "@/config/site";
@@ -90,7 +91,7 @@ export default function Page() {
                 <p>For any questions about these terms, please contact us:</p>
                 <ul className="list-disc list-inside space-y-2 mt-4">
                   <li>Email: robertcashman@defencelegalservices.co.uk</li>
-                  <li>Phone: 01732 247427</li>
+                  <li>Telephone and SMS: use the <Link href="/contact" className="text-blue-600 hover:underline font-semibold">Contact pathways</Link> (not published as digits on this page)</li>
                 </ul>
               </section>
 

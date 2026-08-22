@@ -1,18 +1,11 @@
 import Link from "next/link";
 import {
-  PHONE_DISPLAY,
-  PHONE_TEL,
-  SMS_DISPLAY,
-  SMS_TEL,
   SOLICITOR_CONTACT_CTA,
   SOLICITOR_PHONE_LABEL,
-  SOLICITOR_SMS_ARIA,
-  SOLICITOR_SMS_LABEL,
-  SOLICITOR_TEL_ARIA,
 } from "@/config/contact";
 
 type Props = {
-  /** When true, link to /contact instead of publishing tel/sms digits. */
+  /** Kept for API compatibility — digits are never published. */
   hideDigits?: boolean;
   /** Suppress snippet extraction around this block. */
   noSnippet?: boolean;
@@ -21,14 +14,15 @@ type Props = {
 };
 
 /**
- * Labelled independent-solicitor CTAs (never presented as police contact).
+ * Labelled independent-solicitor CTAs — Contact pathways only (no indexable digits).
  */
 export default function SolicitorContactBlock({
-  hideDigits = false,
+  hideDigits: _hideDigits = true,
   noSnippet = false,
   className = "",
   heading = "Independent solicitor contact details",
 }: Props) {
+  void _hideDigits;
   return (
     <div
       className={className || "rounded-xl bg-white p-4 shadow-lg max-w-xl"}
@@ -38,44 +32,24 @@ export default function SolicitorContactBlock({
       <h2 className="text-base font-bold text-slate-900 mb-2">{heading}</h2>
       <p className="text-xs text-slate-600 mb-3">
         {SOLICITOR_PHONE_LABEL} — legal representation enquiries only. Not a police number.
+        Telephone and SMS are on the Contact page pathways (not published as digits here).
       </p>
-      {hideDigits ? (
-        <div className="flex flex-wrap gap-3">
-          <Link
-            href="/contact"
-            data-event="contact_click"
-            className="inline-flex items-center justify-center rounded-lg bg-red-600 px-5 py-3 text-sm font-bold text-white hover:bg-red-700"
-          >
-            {SOLICITOR_CONTACT_CTA}
-          </Link>
-          <Link
-            href="/contact"
-            data-event="contact_click"
-            className="inline-flex items-center justify-center rounded-lg border-2 border-[#2563eb] bg-white px-5 py-3 text-sm font-bold text-[#2563eb] hover:bg-slate-50"
-          >
-            Solicitor SMS (Contact)
-          </Link>
-        </div>
-      ) : (
-        <div className="flex flex-wrap gap-3">
-          <a
-            href={`tel:${PHONE_TEL}`}
-            data-event="call_click"
-            aria-label={SOLICITOR_TEL_ARIA}
-            className="inline-flex items-center justify-center rounded-lg bg-red-600 px-5 py-3 text-sm font-bold text-white hover:bg-red-700"
-          >
-            Call independent solicitor — {PHONE_DISPLAY}
-          </a>
-          <a
-            href={`sms:${SMS_TEL}`}
-            data-event="sms_click"
-            aria-label={SOLICITOR_SMS_ARIA}
-            className="inline-flex items-center justify-center rounded-lg border-2 border-[#2563eb] bg-white px-5 py-3 text-sm font-bold text-[#2563eb] hover:bg-slate-50"
-          >
-            {SOLICITOR_SMS_LABEL} — {SMS_DISPLAY}
-          </a>
-        </div>
-      )}
+      <div className="flex flex-wrap gap-3">
+        <Link
+          href="/contact"
+          data-event="contact_click"
+          className="inline-flex items-center justify-center rounded-lg bg-red-600 px-5 py-3 text-sm font-bold text-white hover:bg-red-700"
+        >
+          {SOLICITOR_CONTACT_CTA}
+        </Link>
+        <Link
+          href="/contact"
+          data-event="contact_click"
+          className="inline-flex items-center justify-center rounded-lg border-2 border-[#2563eb] bg-white px-5 py-3 text-sm font-bold text-[#2563eb] hover:bg-slate-50"
+        >
+          Solicitor SMS (Contact)
+        </Link>
+      </div>
     </div>
   );
 }

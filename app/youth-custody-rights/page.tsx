@@ -335,11 +335,12 @@ export default function YouthCustodyRightsPage() {
               immediate legal assistance at any Kent police station.
             </p>
             <div className="flex flex-wrap gap-4">
-              <a
-                href="tel:01732247427"
+              <Link
+                href="/contact"
                 className="inline-flex items-center px-6 py-3 bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold rounded-lg"
               >
-              </a>
+              Contact pathways
+              </Link>
               <Link
                 href="/contact"
                 className="inline-flex items-center px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-bold rounded-lg"

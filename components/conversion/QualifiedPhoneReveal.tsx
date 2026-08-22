@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { PHONE_DISPLAY, PHONE_TEL } from "@/config/contact";
 import { FunnelEvents } from "@/lib/analytics";
 
@@ -19,9 +19,17 @@ type Props = {
   className?: string;
 };
 
+/**
+ * Post-qualification custody phone reveal.
+ * Digits are only injected after client mount (not in the initial SSR HTML for the pathway page).
+ * Contact page itself never prints digits in indexable HTML.
+ */
 export function QualifiedPhoneReveal({ className = "" }: Props) {
+  const [ready, setReady] = useState(false);
+
   useEffect(() => {
     FunnelEvents.custodyPhoneReveal();
+    setReady(true);
   }, []);
 
   return (
@@ -37,15 +45,19 @@ export function QualifiedPhoneReveal({ className = "" }: Props) {
         Legal representation enquiries only. This number is not Kent Police, cannot transfer you to
         a police station and cannot provide custody updates or general legal advice.
       </p>
-      <a
-        href={`tel:${PHONE_TEL}`}
-        onClick={() => FunnelEvents.custodyPhoneClick()}
-        data-event="custody_phone_click"
-        className="inline-flex items-center justify-center gap-2 min-h-[48px] rounded-lg bg-red-700 hover:bg-red-800 text-white font-black text-lg px-6 py-3"
-        aria-label={`Call solicitor for current custody — ${PHONE_DISPLAY}`}
-      >
-        Call {PHONE_DISPLAY}
-      </a>
+      {ready ? (
+        <a
+          href={`tel:${PHONE_TEL}`}
+          onClick={() => FunnelEvents.custodyPhoneClick()}
+          data-event="custody_phone_click"
+          className="inline-flex items-center justify-center gap-2 min-h-[48px] rounded-lg bg-red-700 hover:bg-red-800 text-white font-black text-lg px-6 py-3"
+          aria-label="Call solicitor for current custody"
+        >
+          Call {PHONE_DISPLAY}
+        </a>
+      ) : (
+        <p className="text-sm font-semibold text-slate-700">Preparing secure call option…</p>
+      )}
       <p className="text-xs text-slate-600 mt-2">
         Ask for Robert Cashman / Tuckers Solicitors LLP. Legal representation enquiries only — not
         a general advice line.

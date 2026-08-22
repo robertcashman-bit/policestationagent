@@ -134,7 +134,7 @@ Write a comprehensive, SEO-optimized blog article for PoliceStationAgent.com abo
    - Robert Cashman, qualified Duty Solicitor with Higher Rights of Audience (Criminal)
    - Covers all ${location} custody suites including Medway, Maidstone, Canterbury, and Gravesend
    - Available 9am to late, including weekends and bank holidays
-   - Phone: 01732 247427
+   - Phone: <a href="/contact" class="font-semibold underline text-blue-800" data-solicitor-contact="true" data-nosnippet>Contact pathways</a>
 
 ${
   includeInternalLinks
@@ -353,7 +353,7 @@ ${
 </p>
 
 <p>
-  <strong>Call 01732 247427</strong> for prompt assistance.
+  <strong><a href="/contact" class="font-semibold underline text-blue-800" data-solicitor-contact="true" data-nosnippet>Contact pathways</a></strong> for prompt assistance.
 </p>
 ` + generateAdvertBlock();
 
@@ -419,14 +419,15 @@ function generateAdvertBlock(): string {
        class="inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 font-semibold">
       Email for Police Station Representation
     </a>
-    <a href="sms:07535494446?body=I need a duty solicitor" 
-       class="inline-flex items-center justify-center px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 font-semibold">
-      Send SMS to Request a Duty Solicitor
-    </a>
+    <div class="flex flex-col sm:flex-row gap-2 justify-center my-2" data-solicitor-contact="true" data-nosnippet>
+<a href="/start/voluntary-interview#request" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-bold shadow h-10 px-6 bg-blue-800 text-white hover:bg-blue-900">Request representation</a>
+<a href="/current-custody" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-bold shadow h-10 px-6 bg-red-700 text-white hover:bg-red-800">Current custody check</a>
+<a href="/for-solicitors" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-bold shadow h-10 px-6 bg-amber-500 text-slate-900 hover:bg-amber-400">Agency cover</a>
+</div>
   </div>
   
   <p class="text-sm text-slate-600 mt-4">
-    <strong>Call 01732 247427</strong> - Available from 9am to late, including evenings, weekends, and bank holidays.
+    <strong><a href="/contact" class="font-semibold underline text-blue-800" data-solicitor-contact="true" data-nosnippet>Contact pathways</a></strong> - Available from 9am to late, including evenings, weekends, and bank holidays.
   </p>
 </div>
 `;

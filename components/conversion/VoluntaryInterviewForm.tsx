@@ -3,7 +3,6 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { FunnelEvents } from "@/lib/analytics";
-import { PHONE_DISPLAY, PHONE_TEL } from "@/config/contact";
 import { PATH_CUSTODY } from "@/config/enquiry-paths";
 import { FormProgress } from "@/components/conversion/FormProgress";
 import { SecureFileUpload } from "@/components/conversion/SecureFileUpload";
@@ -213,12 +212,12 @@ export function VoluntaryInterviewForm() {
             Optional follow-up for active interview representation only — not Kent Police and not a
             general legal advice line.
           </p>
-          <a
-            href={`tel:${PHONE_TEL}`}
+          <Link
+            href="/contact"
             className="inline-flex items-center justify-center min-h-[44px] rounded-md bg-slate-900 px-4 py-2 text-sm font-bold text-white"
           >
-            Call {PHONE_DISPLAY}
-          </a>
+            Contact pathways
+          </Link>
         </div>
       </div>
     );
