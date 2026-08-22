@@ -543,15 +543,13 @@ export default function Page() {
                       <div class="rounded-xl bg-gradient-to-r from-red-600 to-red-800 text-white shadow-2xl border-0">
                         <div class="p-8 md:p-12 text-center">
                           <h3 class="text-3xl md:text-4xl font-black text-white mb-4">Need Legal Advice at a Kent Police Station?</h3>
-                          <p class="text-xl text-red-100 mb-8 max-w-2xl mx-auto">FREE legal advice available during extended hours at all Kent police stations. Call now for prompt assistance.</p>
+                          <p class="text-xl text-red-100 mb-8 max-w-2xl mx-auto">FREE legal advice available during extended hours at all Kent police stations. Get a solicitor for prompt assistance.</p>
                           <div class="flex flex-col sm:flex-row justify-center gap-4">
-                            <a href="tel:01732247427" class="inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-10 rounded-md px-8 bg-white text-red-600 hover:bg-red-50 font-black text-lg shadow-xl flex items-center gap-2">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone w-6 h-6"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> Call: 01732 247427
-                            </a>
-                            <a href="sms:07535494446?text=I need police station advice" class="inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow h-10 rounded-md px-8 bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg flex items-center gap-2">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle w-6 h-6"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg> Text: 07535 494446
-                            </a>
-                          </div>
+                            <div class="flex flex-col sm:flex-row gap-2 justify-center my-2" data-solicitor-contact="true" data-nosnippet>
+<a href="/start/voluntary-interview#request" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-bold shadow h-10 px-6 bg-blue-800 text-white hover:bg-blue-900">Request representation</a>
+<a href="/current-custody" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-bold shadow h-10 px-6 bg-red-700 text-white hover:bg-red-800">Current custody check</a>
+<a href="/for-solicitors" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-bold shadow h-10 px-6 bg-amber-500 text-slate-900 hover:bg-amber-400">Agency cover</a>
+</div></div>
                         </div>
                       </div>
                     </section>

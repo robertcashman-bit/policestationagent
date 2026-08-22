@@ -3,7 +3,6 @@
  */
 
 import { isOutOfScopeEnquiry } from "@/config/scope-faqs";
-import { PHONE_DISPLAY, PHONE_TEL } from "@/config/contact";
 
 function escapeHtml(text: string): string {
   return text
@@ -88,11 +87,9 @@ export function extractQuickActions(
 }
 
 export function buildUrgentCallCta(options?: { hideDigits?: boolean }): string {
-  // Default: pathway CTAs — never auto-publish the answering-service number.
-  if (options?.hideDigits !== false) {
-    return `\n\n**Need a solicitor?** [Request representation](/start/voluntary-interview#request) for a booked interview, or [Current custody check](/current-custody) if someone is detained now. We are NOT the police.`;
-  }
-  return `\n\n**In custody or a booked interview today?** Call **[${PHONE_DISPLAY}](tel:${PHONE_TEL})** now.`;
+  // Never auto-publish the answering-service number in chatbot replies.
+  void options;
+  return `\n\n**Need a solicitor?** [Request representation](/start/voluntary-interview#request) for a booked interview, or [Current custody check](/current-custody) if someone is detained now. We are NOT the police. Telephone and SMS are on the Contact pathways — not published as digits in chat.`;
 }
 
 export function generateFollowUpQuestions(

@@ -6,15 +6,10 @@ export const PATH_CUSTODY = "/current-custody";
 export const PATH_AGENCY = "/for-solicitors";
 export const PATH_CONTACT = "/contact";
 
-/** Routes where firm telephone may appear without custody qualification */
-export const PHONE_ALLOWLIST_PATHS = [
-  "/for-solicitors",
-  "/forsolicitors",
-  "/repcover",
-  "/start/solicitors-agent-cover",
-  "/servicerates",
-  "/attendanceterms",
-] as const;
+/** Routes where firm telephone may appear without custody qualification.
+ * Empty: never publish firm digits in indexable HTML — Contact pathways only.
+ */
+export const PHONE_ALLOWLIST_PATHS = [] as const;
 
 export function isPhoneAllowlistPath(pathname: string | null | undefined): boolean {
   if (!pathname) return false;

@@ -2,7 +2,6 @@ import PageShell from "@/components/PageShell";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SITE_DOMAIN } from "@/config/site";
-import { PHONE_DISPLAY, PHONE_TEL } from "@/config/contact";
 import { AgencyInstructionForm } from "@/components/conversion/AgencyInstructionForm";
 import { AuthorBio } from "@/components/E-E-A-T/AuthorBio";
 import { RegulatoryReferences } from "@/components/E-E-A-T/RegulatoryReferences";
@@ -44,7 +43,7 @@ const SERVICES = [
 
 export default function ForSolicitorsPage() {
   return (
-    <PageShell forceHidePhone={false}>
+    <PageShell forceHidePhone>
       <PersonSchema />
       <section className="hero-navy py-12 md:py-16">
         <div className="max-w-5xl mx-auto px-4 text-center">
@@ -63,14 +62,14 @@ export default function ForSolicitorsPage() {
             <a href="#agency-instructions" className="btn-gold min-h-[48px] px-6">
               Send agency instructions
             </a>
-            <a
-              href={`tel:${PHONE_TEL}`}
-              data-event="agency_phone_click"
+            <Link
+              href="/contact"
+              data-event="agency_contact_click"
               className="btn-ghost-light min-h-[48px] px-6"
-              aria-label={`Call agency line ${PHONE_DISPLAY}`}
+              aria-label="Agency cover via Contact pathways"
             >
-              Call agency line
-            </a>
+              Contact pathways
+            </Link>
             <Link
               href="/servicerates"
               className="inline-flex items-center justify-center min-h-[48px] rounded-md border-2 border-white/50 px-6 py-3 font-bold text-white hover:bg-white/10"
@@ -79,7 +78,8 @@ export default function ForSolicitorsPage() {
             </Link>
           </div>
           <p className="mt-3 text-sm text-white/75">
-            Solicitor and law-firm instructions — {PHONE_DISPLAY}. Not a public legal advice line.
+            Solicitor and law-firm instructions — use the form below or Contact pathways. Telephone
+            and SMS are not published as digits on this page. Not a public legal advice line.
           </p>
         </div>
       </section>

@@ -327,11 +327,12 @@ export default function SexualOffencesPage() {
                 We cover police stations across Kent and can attend voluntary interviews and custody interviews subject to availability and conflicts.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a
-                  href="tel:01732247427"
+                <Link
+                  href="/contact"
                   className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-lg font-bold transition-colors bg-amber-400 hover:bg-amber-500 text-slate-900 px-8 py-4 rounded-full shadow-xl"
                 >
-                </a>
+                Contact pathways
+                </Link>
                 <Link
                   href="/contact"
                   className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-lg font-bold transition-colors border-2 border-white text-white hover:bg-white/10 px-8 py-4 rounded-full shadow-xl"

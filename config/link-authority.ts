@@ -1,12 +1,12 @@
-import { PHONE_DISPLAY, PHONE_TEL } from "@/config/contact";
 import { SITE_URL } from "@/config/site";
 import { CUSTODYNOTE_PROMO_PRICE_LINE, CUSTODYNOTE_SITE } from "@/lib/custodynote-promo";
 
 export const AUTHORITY_NAP = {
   name: "Robert Cashman – Police Station Duty Solicitor (Kent)",
   brand: "Police Station Agent",
-  phone: PHONE_DISPLAY,
-  phoneTel: PHONE_TEL,
+  /** Digits intentionally omitted from public NAP — use Contact pathways. */
+  phone: "Contact pathways (/contact)",
+  phoneTel: "/contact",
   email: "robertcashman@defencelegalservices.co.uk",
   url: SITE_URL,
   area: "Kent",

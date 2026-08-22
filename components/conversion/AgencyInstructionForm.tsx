@@ -3,7 +3,6 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { FunnelEvents } from "@/lib/analytics";
-import { PHONE_DISPLAY, PHONE_TEL } from "@/config/contact";
 import { FormProgress } from "@/components/conversion/FormProgress";
 import { SecureFileUpload } from "@/components/conversion/SecureFileUpload";
 
@@ -227,18 +226,19 @@ export function AgencyInstructionForm() {
             express confirmation.
           </p>
         </div>
-        <a
-          href={`tel:${PHONE_TEL}`}
+        <Link
+          href="/contact"
           onClick={() => FunnelEvents.agencyPhoneClick()}
-          data-event="agency_phone_click"
+          data-event="agency_contact_click"
           className="inline-flex items-center justify-center min-h-[44px] rounded-md border-2 border-slate-800 px-4 py-2 text-sm font-bold text-slate-900 hover:bg-amber-50 shrink-0"
-          aria-label={`Call agency line ${PHONE_DISPLAY}`}
+          aria-label="Agency cover via Contact pathways"
         >
-          Agency line {PHONE_DISPLAY}
-        </a>
+          Contact pathways
+        </Link>
       </div>
       <p className="text-xs text-slate-600">
-        Solicitor and law-firm instructions — {PHONE_DISPLAY}. Not a public legal advice line.
+        Solicitor and law-firm instructions — use this form or Contact pathways. Telephone and SMS
+        are not published as digits here. Not a public legal advice line.
       </p>
 
       <FormProgress step={step} total={3} labels={STEPS} />

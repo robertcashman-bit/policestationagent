@@ -1,12 +1,7 @@
-import {
-  CUSTODY_PHONE_CTA,
-  HEADER_STRAPLINE,
-  PHONE_DISPLAY,
-  PHONE_TEL,
-} from "@/config/contact";
+import { HEADER_STRAPLINE } from "@/config/contact";
 import RouteAwarePhoneLink from "@/components/compliance/RouteAwarePhoneLink";
 
-/** Server-rendered top strip — phone digits hidden on station routes. */
+/** Server-rendered top strip — never publishes firm telephone digits. */
 export default function HeaderTopStrip({
   forceHideDigits = false,
 }: {
@@ -23,5 +18,3 @@ export default function HeaderTopStrip({
     </div>
   );
 }
-
-export { CUSTODY_PHONE_CTA, PHONE_DISPLAY, PHONE_TEL };

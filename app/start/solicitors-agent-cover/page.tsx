@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function SolicitorsAgentCoverPage() {
   return (
-    <PageShell forceHidePhone={false}>
+    <PageShell forceHidePhone>
       <div className="max-w-4xl mx-auto px-4 py-12 md:py-16">
             <section className="hero-navy py-14 md:py-16 rounded-[var(--radius-lg)] mb-8" aria-labelledby="page-title">
               <div className="max-w-3xl mx-auto text-center px-4">
