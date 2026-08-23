@@ -1,6 +1,5 @@
 import { Resend } from 'resend';
 import { getKV } from '@/lib/kv';
-import { dailySendCap } from './constants';
 import {
   listOutreachSentToday,
   type OutreachDomainSource,
@@ -16,9 +15,11 @@ export type CrossDigestPhase = 'morning' | 'evening';
 
 const DEDUP_PREFIX = 'firmoutreach:cross-digest:sent:';
 
+/** Operator digest always uses RepUK branding (never PSA From-name on RepUK domain). */
 const DIGEST_FROM_EMAIL =
-  process.env.FIRM_OUTREACH_FROM_EMAIL?.trim() ||
-  'Police Station Agent <noreply@policestationagent.com>';
+  process.env.FIRM_OUTREACH_DIGEST_FROM_EMAIL?.trim() ||
+  process.env.FIRM_OUTREACH_REPUK_FROM_EMAIL?.trim() ||
+  'PoliceStationRepUK <noreply@policestationrepuk.org>';
 
 export const CROSS_DIGEST_WORKSPACES = [
   {
@@ -26,12 +27,15 @@ export const CROSS_DIGEST_WORKSPACES = [
     campaignId: REPUK_CAMPAIGN_ID,
     fromEmail: 'PoliceStationRepUK <noreply@policestationrepuk.org>',
     label: 'PoliceStationRepUK',
+    liveSend: true as const,
   },
   {
     domain: 'policestationagent.com',
     campaignId: PSA_CAMPAIGN_ID,
     fromEmail: 'Police Station Agent <noreply@policestationagent.com>',
     label: 'Police Station Agent',
+    /** PSA Kent-cover firm email is permanently off — not a live send workspace. */
+    liveSend: false as const,
   },
 ] as const;
 
@@ -40,6 +44,7 @@ export interface WorkspaceDigestRow {
   campaignId: string;
   fromEmail: string;
   label: string;
+  liveSend: boolean;
   sentToday: number;
   dailyCap: number;
   remaining: number;
@@ -147,10 +152,14 @@ function renderSendsTable(rows: OutreachSentRecord[]): string {
 
 export function buildCrossWorkspaceDigestSubject(data: CrossWorkspaceDigestData): string {
   const phaseShort = data.phase === 'morning' ? 'Morning' : 'End of day';
+  const live = data.workspaces.filter((w) => w.liveSend);
   if (data.combined > 0) {
-    return `[Outreach digest] ${phaseShort} — ${data.combined} sent across ${data.workspaces.length} workspaces — ${data.date}`;
+    return `[Outreach digest] ${phaseShort} — PoliceStationRepUK ${data.combined} sent — ${data.date}`;
   }
-  return `[Outreach digest] ${phaseShort} — no sends yet — ${data.date}`;
+  if (live[0] && live[0].readyToSend > 0) {
+    return `[Outreach digest] ${phaseShort} — PoliceStationRepUK ${live[0].readyToSend} ready — ${data.date}`;
+  }
+  return `[Outreach digest] ${phaseShort} — PoliceStationRepUK — ${data.date}`;
 }
 
 function formatCap(cap: number): string {
@@ -158,7 +167,10 @@ function formatCap(cap: number): string {
 }
 
 export function buildCrossWorkspaceDigestHtml(data: CrossWorkspaceDigestData): string {
-  const summaryRows = data.workspaces
+  const live = data.workspaces.filter((w) => w.liveSend);
+  const disabled = data.workspaces.filter((w) => !w.liveSend);
+
+  const summaryRows = live
     .map(
       (w) =>
         `<tr>
@@ -173,7 +185,7 @@ export function buildCrossWorkspaceDigestHtml(data: CrossWorkspaceDigestData): s
     )
     .join('');
 
-  const workspaceSections = data.workspaces
+  const workspaceSections = live
     .map(
       (w) => `
       <h3>${escapeHtml(w.label)} (${escapeHtml(w.domain)}) — ${w.sentToday} sent today</h3>
@@ -183,21 +195,30 @@ export function buildCrossWorkspaceDigestHtml(data: CrossWorkspaceDigestData): s
     )
     .join('');
 
-  const capsNote = data.workspaces
-    .map((w) => `${w.label}: ${formatCap(w.dailyCap)}`)
-    .join(' · ');
+  const capsNote = live.map((w) => `${w.label}: ${formatCap(w.dailyCap)}`).join(' · ');
+
+  const disabledNote = disabled
+    .map(
+      (w) =>
+        `<p style="margin:0 0 8px;color:#64748b;font-size:13px;">
+          <strong>${escapeHtml(w.label)}</strong> email send is permanently disabled
+          (not a live send workspace — no cap / ready queue reported).
+        </p>`,
+    )
+    .join('');
 
   return `
     <div style="font-family:system-ui,sans-serif;color:#0f172a;max-width:800px">
-      <h2 style="margin:0 0 8px">Cross-workspace firm outreach digest</h2>
+      <h2 style="margin:0 0 8px">PoliceStationRepUK firm outreach digest</h2>
       <p style="margin:0 0 16px;line-height:1.5">
         <strong>${escapeHtml(data.phaseLabel)}</strong> · ${escapeHtml(data.date)} (UTC)
       </p>
       <ul style="margin:0 0 20px;padding-left:20px;line-height:1.6">
-        <li><strong>Combined sent today:</strong> ${data.combined}</li>
-        <li><strong>Daily caps:</strong> ${escapeHtml(capsNote)}</li>
+        <li><strong>RepUK sent today:</strong> ${data.combined}</li>
+        <li><strong>Daily cap:</strong> ${escapeHtml(capsNote || 'unlimited')}</li>
       </ul>
-      <h3 style="margin:0 0 8px">Summary by workspace</h3>
+      ${disabledNote}
+      <h3 style="margin:0 0 8px">Live send workspace</h3>
       <table border="1" cellpadding="6" style="border-collapse:collapse;font-size:14px;width:100%;margin-bottom:24px">
         <thead>
           <tr style="background:#f1f5f9">
@@ -215,8 +236,6 @@ export function buildCrossWorkspaceDigestHtml(data: CrossWorkspaceDigestData): s
       <h3 style="margin:0 0 12px">Recipients today</h3>
       ${workspaceSections}
       <p style="margin-top:16px;font-size:12px;color:#64748b">
-        <a href="https://www.policestationagent.com/admin/firm-outreach">PSA admin</a>
-        ·
         <a href="https://policestationrepuk.org/admin/firm-outreach">REPUK admin</a>
       </p>
     </div>
@@ -229,10 +248,7 @@ export async function buildCrossWorkspaceDigestData(
 ): Promise<CrossWorkspaceDigestData> {
   const { date } = { date: now.toISOString().slice(0, 10) };
   const creds = kvCredsFromEnv();
-  // PSA soft cap (legacy ≤100 treated as uncapped by dailySendCap()).
-  const psaCap = dailySendCap();
-  // REPUK production soft-cap is unlimited (FIRM_OUTREACH_DAILY_CAP unset/0).
-  // Do not project PSA's env onto the REPUK row in the digest.
+  // RepUK soft-cap is unlimited (unset/0). Never project a PSA env cap onto RepUK.
   const repukCap = Number.MAX_SAFE_INTEGER;
 
   const kv = getKV();
@@ -244,28 +260,44 @@ export async function buildCrossWorkspaceDigestData(
   const workspaces: WorkspaceDigestRow[] = [];
 
   for (const ws of CROSS_DIGEST_WORKSPACES) {
+    if (!ws.liveSend) {
+      workspaces.push({
+        domain: ws.domain,
+        campaignId: ws.campaignId,
+        fromEmail: ws.fromEmail,
+        label: ws.label,
+        liveSend: false,
+        sentToday: 0,
+        dailyCap: 0,
+        remaining: 0,
+        readyToSend: 0,
+        sends: [],
+      });
+      continue;
+    }
+
     const source: OutreachDomainSource = creds
       ? { domain: ws.domain, ...creds, campaignId: ws.campaignId }
       : { domain: ws.domain, url: '', token: '', campaignId: ws.campaignId };
 
     const sends = creds ? await listOutreachSentToday(source, now) : [];
     const sentToday = sends.length;
-    const cap = ws.campaignId === REPUK_CAMPAIGN_ID ? repukCap : psaCap;
 
     workspaces.push({
       domain: ws.domain,
       campaignId: ws.campaignId,
       fromEmail: ws.fromEmail,
       label: ws.label,
+      liveSend: true,
       sentToday,
-      dailyCap: cap,
-      remaining: Math.max(0, cap - sentToday),
+      dailyCap: repukCap,
+      remaining: Math.max(0, repukCap - sentToday),
       readyToSend: readyByCampaign[ws.campaignId] ?? 0,
       sends,
     });
   }
 
-  const combined = workspaces.reduce((sum, w) => sum + w.sentToday, 0);
+  const combined = workspaces.filter((w) => w.liveSend).reduce((sum, w) => sum + w.sentToday, 0);
 
   return {
     date,
@@ -308,7 +340,7 @@ export async function sendCrossWorkspaceOutreachDigest(opts: {
     console.info('[cross-workspace digest]', subject, {
       combined: data.combined,
       phase,
-      workspaces: data.workspaces.map((w) => ({ domain: w.domain, sent: w.sentToday })),
+      workspaces: data.workspaces.map((w) => ({ domain: w.domain, sent: w.sentToday, live: w.liveSend })),
     });
     return { sent: false, reason: 'no_resend', date, phase, combined: data.combined };
   }
