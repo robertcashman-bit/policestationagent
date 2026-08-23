@@ -7,13 +7,13 @@ export const metadata: Metadata = {
   title: "Ashford Police Station Solicitor | Robert Cashman | FREE Advice",
   description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Ashford custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
   alternates: {
-    canonical: "https://policestationagent.com/ashford-psa-station",
+    canonical: "https://www.policestationagent.com/ashford-psa-station",
   },
   openGraph: {
     title: "Ashford Police Station Solicitor | Robert Cashman | FREE Advice",
     description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Ashford custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
     type: "website",
-    url: "https://policestationagent.com/ashford-psa-station",
+    url: "https://www.policestationagent.com/ashford-psa-station",
   },
 };
 

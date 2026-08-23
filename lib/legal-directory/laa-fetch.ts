@@ -10,7 +10,7 @@ import { dedupeLaaProviderRecords } from './laa-dedupe';
 import { isCrimeRelatedLaaCategory, LAA_DIRECTORY_URL, type LaaProviderRecord } from './laa-seed';
 
 const LAA_FETCH_UA =
-  'PoliceStationAgent/1.0 (+https://policestationagent.com; laa-fetch)';
+  'PoliceStationAgent/1.0 (+https://www.policestationagent.com; laa-fetch)';
 
 export const DEFAULT_LAA_CRIME_JSON_PATH = resolve(
   process.cwd(),

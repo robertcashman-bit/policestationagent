@@ -8,13 +8,13 @@ export const metadata: Metadata = {
   description:
     "Arrested in Maidstone? Police station solicitor 25 min away. FREE legal aid representation at Maidstone Police Station (ME15). Available during extended hours - Get a solicitor.",
   alternates: {
-    canonical: "https://policestationagent.com/maidstone-solicitor",
+    canonical: "https://www.policestationagent.com/maidstone-solicitor",
   },
   openGraph: {
     title: "Maidstone Police Station Solicitor | ME15 | FREE Legal Aid | Independent Criminal Defence",
     description:
       "Arrested in Maidstone? Police station solicitor 25 min away. FREE legal aid representation at Maidstone Police Station (ME15). Available during extended hours - Get a solicitor.",
-    url: "https://policestationagent.com/maidstone-solicitor",
+    url: "https://www.policestationagent.com/maidstone-solicitor",
     siteName: "Police Station Agent",
     type: "website",
   },

@@ -100,7 +100,7 @@ const nextConfig = {
       },
       {
         source: "/psastations",
-        destination: "/police-stations",
+        destination: "/coverage",
         permanent: true,
       },
       {
@@ -131,6 +131,42 @@ const nextConfig = {
       {
         source: "/can-we-help",
         destination: "/canwehelp",
+        permanent: true,
+      },
+      // Overlapping location hubs → single primary hub (/coverage)
+      {
+        source: "/locations",
+        destination: "/coverage",
+        permanent: true,
+      },
+      {
+        source: "/police-stations",
+        destination: "/coverage",
+        permanent: true,
+      },
+      {
+        source: "/kent-police-stations",
+        destination: "/coverage",
+        permanent: true,
+      },
+      {
+        source: "/kent-police-station-reps",
+        destination: "/coverage",
+        permanent: true,
+      },
+      {
+        source: "/areas",
+        destination: "/coverage",
+        permanent: true,
+      },
+      {
+        source: "/coverage/police-stations",
+        destination: "/coverage",
+        permanent: true,
+      },
+      {
+        source: "/coverage/police-stations/:slug*",
+        destination: "/coverage",
         permanent: true,
       },
       {
@@ -183,7 +219,7 @@ const nextConfig = {
       // SEO growth programme — alias slugs to canonical pages
       {
         source: "/police-station-representative-kent",
-        destination: "/kent-police-station-reps",
+        destination: "/coverage",
         permanent: true,
       },
       {

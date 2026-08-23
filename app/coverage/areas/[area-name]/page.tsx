@@ -131,7 +131,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
     };
   }
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://policestationagent.com';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.policestationagent.com';
 
   return {
     title: `${area.displayName} Criminal Solicitor | Police Station Representation`,
@@ -158,7 +158,7 @@ export default async function AreaPage(props: PageProps) {
     notFound();
   }
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://policestationagent.com';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.policestationagent.com';
   const isMedway = params['area-name'] === 'medway';
   const medwayFaqs = isMedway
     ? [

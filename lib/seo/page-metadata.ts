@@ -11,6 +11,17 @@ export type PageMetadataInput = {
   noIndex?: boolean;
 };
 
+/** Default social share image — always pair with twitter:card=summary_large_image */
+export const DEFAULT_OG_IMAGE = {
+  url: `${SITE_URL}/og-image.jpg`,
+  width: 1200,
+  height: 630,
+  alt: "Police Station Agent — Kent criminal defence solicitors",
+} as const;
+
+export const DEFAULT_OG_IMAGES = [DEFAULT_OG_IMAGE];
+export const DEFAULT_TWITTER_IMAGES = [DEFAULT_OG_IMAGE.url];
+
 function townDescription(town: string): string {
   return `Police station representation in ${town}, Kent. FREE Legal Aid advice for custody and booked voluntary interviews. ${SEO_NOT_POLICE}`;
 }
@@ -21,6 +32,7 @@ function defaultDescription(title: string): string {
 
 /**
  * Build consistent metadata with canonical, Open Graph, and Twitter tags.
+ * Always includes og:image / twitter:image (summary_large_image requires an image).
  */
 export function buildPageMetadata(input: PageMetadataInput): Metadata {
   const canonical = `${SITE_URL}${input.path.startsWith("/") ? input.path : `/${input.path}`}`;
@@ -42,11 +54,13 @@ export function buildPageMetadata(input: PageMetadataInput): Metadata {
       url: canonical,
       siteName,
       type: "website",
+      images: [...DEFAULT_OG_IMAGES],
     },
     twitter: {
       card: "summary_large_image",
       title: input.title,
       description,
+      images: [...DEFAULT_TWITTER_IMAGES],
     },
   };
 

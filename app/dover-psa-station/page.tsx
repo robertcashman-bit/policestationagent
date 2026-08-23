@@ -7,13 +7,13 @@ export const metadata: Metadata = {
   title: "Dover Police Station Solicitor | Robert Cashman | FREE Advice",
   description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Dover custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
   alternates: {
-    canonical: "https://policestationagent.com/dover-psa-station",
+    canonical: "https://www.policestationagent.com/dover-psa-station",
   },
   openGraph: {
     title: "Dover Police Station Solicitor | Robert Cashman | FREE Advice",
     description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Dover custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
     type: "website",
-    url: "https://policestationagent.com/dover-psa-station",
+    url: "https://www.policestationagent.com/dover-psa-station",
   },
 };
 

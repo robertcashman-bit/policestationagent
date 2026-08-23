@@ -97,7 +97,7 @@ _101 published posts. Generated 2026-06-25T19:38:30.817Z._
 | `nofurtheractionafterpoliceinterview` | No Further Action After Police Interview |  |  |
 | `being-interviewed-by-the-police-why-you-need-a-criminal-solicitor-in-the-police-station` | Why you need a criminal solicitor in the police station |  |  |
 | `is-legal-advice-free-at-the-police-station` | Can You Get Free Legal Advice at the Police Station? |  |  |
-| `kent-police-stations-legal-representation-24-7` | Complete Guide to Legal Representation at Kent Police Stations |  |  |
+| `kent-police-stations-legal-representation-extended-hours` | Complete Guide to Legal Representation at Kent Police Stations |  |  |
 | `police-station-interview-rights-kent-legal-representation` | What to Expect During a Police Station Interview in Kent: Your Rights and Legal Representation |  |  |
 | `criminal-law-faq-kent-police-station-rights` | Criminal Law FAQ: Your Rights and Legal Representation in Kent |  |  |
 | `arrested-or-have-a-policewarrant-in-kent-here-s-what-you-need-to-know0` | Understanding Police Warrants and Interviews in Kent |  |  |

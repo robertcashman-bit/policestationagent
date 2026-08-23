@@ -36,7 +36,12 @@ function getSafeSiteUrl(): string {
 
   try {
     // Normalize and remove trailing slash for consistency across metadata/schema.
-    return new URL(withProtocol).toString().replaceAll(/\/$/g, "");
+    const url = new URL(withProtocol);
+    // Prefer www host — apex 308s to www; do not split the preferred host.
+    if (url.hostname === "policestationagent.com") {
+      url.hostname = SITE_DOMAIN;
+    }
+    return url.toString().replaceAll(/\/$/g, "");
   } catch {
     // Fallback to canonical config to avoid a hard crash in RootLayout/metadataBase.
     return SITE_URL || `https://${SITE_DOMAIN}`;

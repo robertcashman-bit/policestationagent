@@ -7,13 +7,13 @@ export const metadata: Metadata = {
   title: "Sittingbourne Police Station Solicitor | Robert Cashman | FREE",
   description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Sittingbourne custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
   alternates: {
-    canonical: "https://policestationagent.com/sittingbourne-psa-station",
+    canonical: "https://www.policestationagent.com/sittingbourne-psa-station",
   },
   openGraph: {
     title: "Sittingbourne Police Station Solicitor | Robert Cashman | FREE",
     description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Sittingbourne custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
     type: "website",
-    url: "https://policestationagent.com/sittingbourne-psa-station",
+    url: "https://www.policestationagent.com/sittingbourne-psa-station",
   },
 };
 

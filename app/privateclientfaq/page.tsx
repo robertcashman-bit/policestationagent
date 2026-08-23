@@ -9,13 +9,13 @@ export const metadata: Metadata = {
   description:
     "Common questions about private criminal defence representation, requesting Robert Cashman at police stations, and our fee structure.",
   alternates: {
-    canonical: "https://policestationagent.com/privateclientfaq",
+    canonical: "https://www.policestationagent.com/privateclientfaq",
   },
   openGraph: {
     title: "Private Client FAQ",
     description:
       "Common questions about private criminal defence representation, requesting Robert Cashman at police stations, and our fee structure.",
-    url: "https://policestationagent.com/privateclientfaq",
+    url: "https://www.policestationagent.com/privateclientfaq",
     siteName: "Police Station Agent",
     type: "website",
   },

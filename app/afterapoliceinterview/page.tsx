@@ -14,13 +14,13 @@ export const metadata: Metadata = {
   description: DESCRIPTION,
   robots: { index: false, follow: true },
   alternates: {
-    canonical: "https://policestationagent.com/after-a-police-interview",
+    canonical: "https://www.policestationagent.com/after-a-police-interview",
   },
   openGraph: {
     title: TITLE,
     description: DESCRIPTION,
     type: "website",
-    url: "https://policestationagent.com/after-a-police-interview",
+    url: "https://www.policestationagent.com/after-a-police-interview",
   },
 };
 

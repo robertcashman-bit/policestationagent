@@ -9,14 +9,14 @@ export const metadata: Metadata = {
   description:
     "Police Station Duty Solicitor Tonbridge - Expert police station representation by qualified solicitor. FREE legal advice under Legal Aid. Accredited Duty Solicitor & Higher Court Advocate.",
   alternates: {
-    canonical: "https://policestationagent.com/police-station-rep-tonbridge",
+    canonical: "https://www.policestationagent.com/police-station-rep-tonbridge",
   },
   openGraph: {
     title:
       "Police Station Duty Solicitor Tonbridge | Duty Solicitor Representation Kent | FREE Legal Advice",
     description:
       "Police Station Duty Solicitor Tonbridge - Expert police station representation by qualified solicitor. FREE legal advice under Legal Aid. Accredited Duty Solicitor & Higher Court Advocate.",
-    url: "https://policestationagent.com/police-station-agent-tonbridge",
+    url: "https://www.policestationagent.com/police-station-agent-tonbridge",
     siteName: "Police Station Agent",
     type: "website",
   },

@@ -43,4 +43,13 @@ describe("no firm phone digits in public pages/components", () => {
     }
     expect(offenders, offenders.join("\n")).toEqual([]);
   });
+
+  it("public downloadable vCard does not publish firm voice/SMS digits", () => {
+    const vcf = path.join(root, "public", "kent-police-station-cover-card.vcf");
+    expect(fs.existsSync(vcf)).toBe(true);
+    const src = fs.readFileSync(vcf, "utf8");
+    expect(src).not.toMatch(FIRM);
+    expect(src).not.toMatch(/TEL;/i);
+    expect(src).toMatch(/URL:https:\/\/www\.policestationagent\.com\/contact/);
+  });
 });

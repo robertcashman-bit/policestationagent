@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description:
     "Expert police station representation for harassment and stalking allegations across Kent. Free legal advice under Legal Aid. Early advice before interview is important.",
   alternates: {
-    canonical: "https://policestationagent.com/offences/harassment-stalking",
+    canonical: "https://www.policestationagent.com/offences/harassment-stalking",
   },
 };
 

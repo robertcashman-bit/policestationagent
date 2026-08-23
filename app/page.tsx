@@ -6,6 +6,7 @@ import type { Metadata } from "next";
 import { SITE_DOMAIN } from "@/config/site";
 import { FAQPage } from "@/components/StructuredData";
 import { getPostSummaries } from "@/lib/blog-reader";
+import { DEFAULT_OG_IMAGES, DEFAULT_TWITTER_IMAGES } from "@/lib/seo/page-metadata";
 
 import { HomeHeroCover } from "@/components/conversion/HomeHeroCover";
 import { HomePathwaySection } from "@/components/conversion/HomePathwaySection";
@@ -36,6 +37,14 @@ export const metadata: Metadata = {
     siteName: "Police Station Agent",
     type: "website",
     locale: "en_GB",
+    images: [...DEFAULT_OG_IMAGES],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Police Station Solicitor Kent | Voluntary Interviews & Agency Cover",
+    description:
+      "Independent criminal defence solicitor for current Kent police custody and forthcoming voluntary interviews, plus police station agency cover for defence firms. Not the police.",
+    images: [...DEFAULT_TWITTER_IMAGES],
   },
   robots: {
     index: true,

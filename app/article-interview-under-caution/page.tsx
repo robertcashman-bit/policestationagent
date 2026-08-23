@@ -9,14 +9,14 @@ export const metadata: Metadata = {
   description:
     "Expert guide to police interviews under caution in Kent. What to expect, your rights, how to prepare. FREE legal advice available.",
   alternates: {
-    canonical: "https://policestationagent.com/article-interview-under-caution",
+    canonical: "https://www.policestationagent.com/article-interview-under-caution",
   },
   openGraph: {
     title: "What Happens During Interview Under Caution? | Kent Police Station Guide",
     description:
       "Expert guide to police interviews under caution in Kent. What to expect, your rights, how to prepare. FREE legal advice available.",
     type: "website",
-    url: "https://policestationagent.com/article-interview-under-caution",
+    url: "https://www.policestationagent.com/article-interview-under-caution",
   },
 };
 

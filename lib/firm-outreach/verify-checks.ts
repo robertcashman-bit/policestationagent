@@ -322,7 +322,7 @@ export function checkOutreachTemplates(): RepoCheckResult[] {
     const html = buildOutreachEmailHtml({
       prospect,
       step,
-      unsubscribeUrl: 'https://policestationagent.com/outreach/unsubscribe/test-token',
+      unsubscribeUrl: 'https://www.policestationagent.com/outreach/unsubscribe/test-token',
     });
     const lower = html.toLowerCase();
     const maidstoneScoped =

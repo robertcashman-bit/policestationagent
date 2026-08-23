@@ -9,13 +9,13 @@ export const metadata: Metadata = {
   description:
     "Private client criminal defence in Kent with director-level representation by Robert Cashman. Enhanced service from police station through Crown Court. Fixed-fee packages available. SRA-regulated.",
   alternates: {
-    canonical: "https://policestationagent.com/privatecrime",
+    canonical: "https://www.policestationagent.com/privatecrime",
   },
   openGraph: {
     title: "Private Client Criminal Defence Kent | Director-Level Representation",
     description:
       "Enhanced private client criminal defence services in Kent. Director-level representation with direct access to Robert Cashman from police station through Crown Court.",
-    url: "https://policestationagent.com/privatecrime",
+    url: "https://www.policestationagent.com/privatecrime",
     siteName: "Police Station Agent",
     type: "website",
   },

@@ -7,14 +7,14 @@ export const metadata: Metadata = {
     "Free legal advice at Kent police stations — no means test. Legal Aid covers representation for interviews under caution in custody or booked voluntarily. Call for a Kent solicitor.",
   keywords: undefined,
   alternates: {
-    canonical: "https://policestationagent.com/freelegaladvice",
+    canonical: "https://www.policestationagent.com/freelegaladvice",
   },
   openGraph: {
     title: "Free Legal Advice at the Police Station in Kent | Legal Aid",
     description:
       "Free legal advice at Kent police stations — no means test. Legal Aid covers representation for interviews under caution in custody or booked voluntarily.",
     type: "website",
-    url: "https://policestationagent.com/freelegaladvice",
+    url: "https://www.policestationagent.com/freelegaladvice",
   },
 };
 

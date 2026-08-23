@@ -10,14 +10,14 @@ export const metadata: Metadata = {
   description:
     "Police interview? Voluntary attendance? Call Robert Cashman - Accredited Duty Solicitor, 30+ years experience & 21,000+ cases. FREE legal advice at Medway, Canterbury, Maidstone, Gravesend. Available during extended hours.",
   alternates: {
-    canonical: "https://policestationagent.com",
+    canonical: "https://www.policestationagent.com",
   },
   openGraph: {
     title: "Duty Solicitor Kent extended hours | FREE Police Station Advice",
     description:
       "Police interview? Voluntary attendance? Call Robert Cashman - Accredited Duty Solicitor, 30+ years experience & 21,000+ cases. FREE legal advice at Medway, Canterbury, Maidstone, Gravesend. Available during extended hours.",
     type: "website",
-    url: "https://policestationagent.com",
+    url: "https://www.policestationagent.com",
   },
 };
 

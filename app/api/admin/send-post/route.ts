@@ -55,7 +55,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Post not found" }, { status: 404 });
     }
 
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://policestationagent.com";
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.policestationagent.com";
     const postUrl = `${siteUrl}/blog/${post.slug}`;
 
     // Generate shareable content

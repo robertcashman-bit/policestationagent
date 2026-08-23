@@ -1,5 +1,5 @@
 import { MetadataRoute } from "next";
-import { SITE_DOMAIN } from "@/config/site";
+import { SITE_URL } from "@/config/site";
 import { getAllPosts } from "@/lib/blog-reader";
 import { REP_TOWN_PATHS } from "@/lib/seo/rep-town-paths";
 
@@ -46,7 +46,8 @@ const SOLICITOR_LOCATION_PATHS = [
 const POLICE_STATION_AGENT_PATHS: string[] = [];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || `https://${SITE_DOMAIN}`;
+  // Always prefer the configured www canonical — do not let apex env split the host.
+  const baseUrl = SITE_URL;
 
   // Static pages
   const staticPages: MetadataRoute.Sitemap = [
@@ -183,12 +184,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     {
-      url: `${baseUrl}/police-stations`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
       url: `${baseUrl}/services`,
       lastModified: new Date(),
       changeFrequency: "weekly",
@@ -217,18 +212,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/kent-police-station-reps`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/kent-police-stations`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
     },
     {
       url: `${baseUrl}/police-station-interviews-kent-rights`,
@@ -441,18 +424,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/areas`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/coverage/police-stations`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
       url: `${baseUrl}/coverage/areas`,
       lastModified: new Date(),
       changeFrequency: "weekly",
@@ -543,12 +514,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.9,
     },
-    {
-      url: `${baseUrl}/locations`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.85,
-    },
     // Town-level police station rep pages (from shared REP_TOWN_PATHS)
     ...REP_TOWN_PATHS.map((path) => ({
       url: `${baseUrl}${path}`,
@@ -580,30 +545,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     console.warn("Skipping dynamic police stations in sitemap (build time)");
   }
 
-  // Coverage police station pages (static)
-  const coverageStationSlugs = [
-    "medway",
-    "north-kent-gravesend",
-    "canterbury",
-    "folkestone",
-    "maidstone",
-    "tonbridge",
-    "ashford",
-    "dover",
-    "margate",
-    "sevenoaks",
-    "sittingbourne",
-    "swanley",
-    "tunbridge-wells",
-    "coldharbour",
-  ];
-
-  const coverageStationPages: MetadataRoute.Sitemap = coverageStationSlugs.map((slug) => ({
-    url: `${baseUrl}/coverage/police-stations/${slug}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.8,
-  }));
+  // Coverage police station pages redirected to /coverage — omit from sitemap
+  const coverageStationPages: MetadataRoute.Sitemap = [];
 
   // Coverage area pages (static)
   const coverageAreaSlugs = [

@@ -7,12 +7,12 @@ export const metadata: Metadata = {
   title: "Sevenoaks Police Station Solicitor | Robert Cashman | FREE",
   description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Sevenoaks custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
   alternates: {
-    canonical: "https://policestationagent.com/sevenoaks-police-station",
+    canonical: "https://www.policestationagent.com/sevenoaks-police-station",
   },
   openGraph: {
     title: "Sevenoaks Police Station Solicitor | Robert Cashman | FREE",
     description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Sevenoaks custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
-    url: "https://policestationagent.com/sevenoaks-police-station",
+    url: "https://www.policestationagent.com/sevenoaks-police-station",
     siteName: "Police Station Agent",
     type: "website",
   },

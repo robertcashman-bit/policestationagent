@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description:
     "Police station agent cover for solicitors — attendance within about 45 minutes of Maidstone. Custody and voluntary interview attendances. Competitive rates.",
   alternates: {
-    canonical: "https://policestationagent.com/start/solicitors-agent-cover",
+    canonical: "https://www.policestationagent.com/start/solicitors-agent-cover",
   },
 };
 

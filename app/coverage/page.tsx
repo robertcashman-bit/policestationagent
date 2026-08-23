@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { BreadcrumbList } from "@/components/StructuredData";
 import { SITE_URL } from "@/config/site";
 import KentPoliceStationMap from "@/components/KentPoliceStationMap";
+import { DEFAULT_OG_IMAGES, DEFAULT_TWITTER_IMAGES } from "@/lib/seo/page-metadata";
 
 export const metadata: Metadata = {
   title: "Kent Police Station Rep Coverage | All Towns | FREE extended hours",
@@ -20,6 +21,14 @@ export const metadata: Metadata = {
     url: `${SITE_URL}/coverage`,
     siteName: "Police Station Agent",
     type: "website",
+    images: [...DEFAULT_OG_IMAGES],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Kent Police Station Coverage | Duty Solicitor – Police Station Agent",
+    description:
+      "We cover all Kent custody suites and major voluntary interview stations with duty solicitor-led representation.",
+    images: [...DEFAULT_TWITTER_IMAGES],
   },
 };
 

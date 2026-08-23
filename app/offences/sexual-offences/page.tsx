@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description:
     "Expert police station representation for sexual offence allegations across Kent. Free legal advice under Legal Aid. Early advice before interview is essential.",
   alternates: {
-    canonical: "https://policestationagent.com/offences/sexual-offences",
+    canonical: "https://www.policestationagent.com/offences/sexual-offences",
   },
 };
 

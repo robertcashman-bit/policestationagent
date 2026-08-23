@@ -8,13 +8,13 @@ export const metadata: Metadata = {
   description:
     "Arrested in Gravesend or Dartford? Police station solicitor 12 minutes from North Kent custody suite (DA12). FREE extended hours legal representation - Get a solicitor.",
   alternates: {
-    canonical: "https://policestationagent.com/gravesend-solicitor",
+    canonical: "https://www.policestationagent.com/gravesend-solicitor",
   },
   openGraph: {
     title: "Gravesend Police Station Solicitor | DA12 | FREE Legal Aid | Independent Criminal Defence",
     description:
       "Arrested in Gravesend or Dartford? Police station solicitor 12 minutes from North Kent custody suite (DA12). FREE extended hours legal representation - Get a solicitor.",
-    url: "https://policestationagent.com/gravesend-solicitor",
+    url: "https://www.policestationagent.com/gravesend-solicitor",
     siteName: "Police Station Agent",
     type: "website",
   },

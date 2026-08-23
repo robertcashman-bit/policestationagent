@@ -7,14 +7,14 @@ export const metadata: Metadata = {
     "Official schedule of agency fees for police station attendance, including bell-backs and mileage.",
   keywords: undefined,
   alternates: {
-    canonical: "https://policestationagent.com/servicerates",
+    canonical: "https://www.policestationagent.com/servicerates",
   },
   openGraph: {
     title: "Agency Service Rates & Fees",
     description:
       "Official schedule of agency fees for police station attendance, including bell-backs and mileage.",
     type: "website",
-    url: "https://policestationagent.com/servicerates",
+    url: "https://www.policestationagent.com/servicerates",
   },
 };
 

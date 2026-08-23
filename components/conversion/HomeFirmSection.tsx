@@ -58,8 +58,8 @@ export function HomeFirmSection() {
               data-nosnippet
             >
               <p className="text-xs text-white/55">
-                Professional instruction routes — telephone details are on the agency and contact
-                pages for firms.
+                Professional instruction routes — solicitor telephone is not listed publicly;
+                use Contact pathways or the agency form.
               </p>
               <Link
                 href="/contact"

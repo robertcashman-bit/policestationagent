@@ -83,7 +83,8 @@ export function LocalCoverPage({ config }: Props) {
               <Link href="/contact" className="font-semibold underline text-primary">
                 {STATION_CONTACT_BUTTON}
               </Link>{" "}
-              — solicitor telephone is last on that page.
+              — solicitor telephone is not listed publicly; for current custody it appears after
+              qualification on Contact.
             </p>
           </div>
         </div>

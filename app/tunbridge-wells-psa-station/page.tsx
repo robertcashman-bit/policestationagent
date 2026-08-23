@@ -7,13 +7,13 @@ export const metadata: Metadata = {
   title: "Tunbridge Wells Police Station Solicitor | Robert Cashman | FREE",
   description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Tunbridge Wells custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
   alternates: {
-    canonical: "https://policestationagent.com/tunbridge-wells-psa-station",
+    canonical: "https://www.policestationagent.com/tunbridge-wells-psa-station",
   },
   openGraph: {
     title: "Tunbridge Wells Police Station Solicitor | Robert Cashman | FREE",
     description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Tunbridge Wells custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
     type: "website",
-    url: "https://policestationagent.com/tunbridge-wells-psa-station",
+    url: "https://www.policestationagent.com/tunbridge-wells-psa-station",
   },
 };
 

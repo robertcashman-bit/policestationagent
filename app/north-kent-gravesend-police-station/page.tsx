@@ -7,12 +7,12 @@ export const metadata: Metadata = {
   title: "Gravesend Police Station Solicitor | Robert Cashman | FREE extended hours",
   description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for North Kent Gravesend custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
   alternates: {
-    canonical: "https://policestationagent.com/north-kent-gravesend-police-station",
+    canonical: "https://www.policestationagent.com/north-kent-gravesend-police-station",
   },
   openGraph: {
     title: "Gravesend Police Station Solicitor | Robert Cashman | FREE extended hours",
     description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for North Kent Gravesend custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
-    url: "https://policestationagent.com/north-kent-gravesend-police-station",
+    url: "https://www.policestationagent.com/north-kent-gravesend-police-station",
     siteName: "Police Station Agent",
     type: "website",
   },

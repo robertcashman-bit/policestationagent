@@ -32,7 +32,8 @@ export default function SolicitorContactBlock({
       <h2 className="text-base font-bold text-slate-900 mb-2">{heading}</h2>
       <p className="text-xs text-slate-600 mb-3">
         {SOLICITOR_PHONE_LABEL} — legal representation enquiries only. Not a police number.
-        Telephone and SMS are on the Contact page pathways (not published as digits here).
+        Solicitor telephone is not listed publicly — Contact pathways only; for current custody
+        it appears after qualification.
       </p>
       <div className="flex flex-wrap gap-3">
         <Link

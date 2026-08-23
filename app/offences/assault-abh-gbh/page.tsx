@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description:
     "Expert police station representation for assault, ABH, and GBH allegations across Kent. Free legal advice under Legal Aid. Early advice before interview is important.",
   alternates: {
-    canonical: "https://policestationagent.com/offences/assault-abh-gbh",
+    canonical: "https://www.policestationagent.com/offences/assault-abh-gbh",
   },
 };
 

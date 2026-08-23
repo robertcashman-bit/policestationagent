@@ -79,7 +79,7 @@ export default async function PoliceStationPage(props: PageProps) {
     "@type": "LegalService",
     "@id": `${siteUrl}/police-stations/${params.slug}#legalservice`,
     name: "Police Station Agent — Independent Criminal Defence Solicitors",
-    description: `${SEO_NOT_POLICE} Independent criminal solicitor for ${townName} custody and booked voluntary interviews — not a police contact number. Telephone and scope (what we do / don't do) on the Contact page.`,
+    description: `${SEO_NOT_POLICE} Independent criminal solicitor for ${townName} custody and booked voluntary interviews — not a police contact number. Solicitor telephone is not listed publicly — Contact pathways only; for current custody it appears after qualification.`,
     url: `${siteUrl}/contact`,
     areaServed: [
       {

@@ -9,13 +9,13 @@ export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
   alternates: {
-    canonical: "https://policestationagent.com/policestationreps",
+    canonical: "https://www.policestationagent.com/policestationreps",
   },
   openGraph: {
     title: TITLE,
     description: DESCRIPTION,
     type: "website",
-    url: "https://policestationagent.com/policestationreps",
+    url: "https://www.policestationagent.com/policestationreps",
   },
 };
 

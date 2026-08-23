@@ -9,14 +9,14 @@ export const metadata: Metadata = {
   description:
     "Just been arrested in Kent? Know your PACE 1984 rights. Request a FREE solicitor immediately. Don't answer questions without legal advice. - Ask for Robert Cashman, Tuckers Duty Solicitor.",
   alternates: {
-    canonical: "https://policestationagent.com/arrested-what-to-do",
+    canonical: "https://www.policestationagent.com/arrested-what-to-do",
   },
   openGraph: {
     title: "Arrested in Kent? What to Do | FREE Immediate Legal Advice | PACE Rights",
     description:
       "Just been arrested in Kent? Know your PACE 1984 rights. Request a FREE solicitor immediately. Don't answer questions without legal advice. - Ask for Robert Cashman, Tuckers Duty Solicitor.",
     type: "website",
-    url: "https://policestationagent.com/arrested-what-to-do",
+    url: "https://www.policestationagent.com/arrested-what-to-do",
   },
 };
 

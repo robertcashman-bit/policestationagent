@@ -7,12 +7,12 @@ export const metadata: Metadata = {
   title: "Canterbury Police Station Solicitor | Robert Cashman | FREE extended hours",
   description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Canterbury custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
   alternates: {
-    canonical: "https://policestationagent.com/canterbury-police-station",
+    canonical: "https://www.policestationagent.com/canterbury-police-station",
   },
   openGraph: {
     title: "Canterbury Police Station Solicitor | Robert Cashman | FREE extended hours",
     description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Canterbury custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
-    url: "https://policestationagent.com/canterbury-police-station",
+    url: "https://www.policestationagent.com/canterbury-police-station",
     siteName: "Police Station Agent",
     type: "website",
   },

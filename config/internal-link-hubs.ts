@@ -59,12 +59,12 @@ export const STATIONS_HUB: HubDefinition = {
   title: "Kent police station information & local representation",
   links: [
     {
-      href: "/kent-police-station-reps",
+      href: "/coverage",
       text: "Police Station Reps in Kent",
       description: "All Kent custody suites",
     },
     {
-      href: "/locations",
+      href: "/coverage",
       text: "All Kent rep town pages",
       description: "Police station rep by town",
     },

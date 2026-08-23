@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description:
     "Expert police station representation for domestic abuse allegations across Kent. Free legal advice under Legal Aid. Early advice before interview is crucial.",
   alternates: {
-    canonical: "https://policestationagent.com/offences/domestic-abuse-allegations",
+    canonical: "https://www.policestationagent.com/offences/domestic-abuse-allegations",
   },
 };
 

@@ -42,7 +42,7 @@ const LEGACY_LOCAL_REDIRECTS = [
   { source: "/tunbridge-wells-psa-station", destination: REP("tunbridge-wells"), permanent: true },
 
   // Legacy police-station-agent-{town} alias scheme
-  { source: "/police-station-agent-kent", destination: "/kent-police-station-reps", permanent: true },
+  { source: "/police-station-agent-kent", destination: "/coverage", permanent: true },
   { source: "/police-station-agent-medway", destination: REP("medway"), permanent: true },
   { source: "/police-station-agent-canterbury", destination: REP("canterbury"), permanent: true },
   { source: "/police-station-agent-maidstone", destination: REP("maidstone"), permanent: true },

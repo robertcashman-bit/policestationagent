@@ -8,13 +8,13 @@ export const metadata: Metadata = {
   description:
     "Arrested in Canterbury? Police station solicitor 50 min away. FREE legal aid at Canterbury custody suite (CT1). extended hours emergency response - Get a solicitor.",
   alternates: {
-    canonical: "https://policestationagent.com/canterbury-solicitor",
+    canonical: "https://www.policestationagent.com/canterbury-solicitor",
   },
   openGraph: {
     title: "Canterbury Police Station Solicitor | CT1 | FREE Legal Aid | Independent Criminal Defence",
     description:
       "Arrested in Canterbury? Police station solicitor 50 min away. FREE legal aid at Canterbury custody suite (CT1). extended hours emergency response - Get a solicitor.",
-    url: "https://policestationagent.com/canterbury-solicitor",
+    url: "https://www.policestationagent.com/canterbury-solicitor",
     siteName: "Police Station Agent",
     type: "website",
   },

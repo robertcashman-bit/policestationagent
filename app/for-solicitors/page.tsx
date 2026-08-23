@@ -8,6 +8,7 @@ import { RegulatoryReferences } from "@/components/E-E-A-T/RegulatoryReferences"
 import { ServiceDisclaimer } from "@/components/E-E-A-T/ServiceDisclaimer";
 import { PersonSchema } from "@/components/schema/PersonSchema";
 import { KentCoverCard } from "@/components/conversion/KentCoverCard";
+import { DEFAULT_OG_IMAGES, DEFAULT_TWITTER_IMAGES } from "@/lib/seo/page-metadata";
 
 export const metadata: Metadata = {
   title: "Police Station Agency Cover for Solicitors | Kent",
@@ -23,6 +24,14 @@ export const metadata: Metadata = {
     type: "website",
     url: `https://${SITE_DOMAIN}/for-solicitors`,
     siteName: "Police Station Agent",
+    images: [...DEFAULT_OG_IMAGES],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Police Station Agency Cover for Solicitors | Kent",
+    description:
+      "Professional custody and voluntary interview attendance for criminal defence firms across Kent and the stated Maidstone service area, subject to availability.",
+    images: [...DEFAULT_TWITTER_IMAGES],
   },
 };
 

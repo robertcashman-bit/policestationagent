@@ -9,7 +9,7 @@ const ROWS_PER_PAGE = 50;
 const MAX_PAGES = 400; // safety cap (~20k rows)
 
 const FETCH_HEADERS = {
-  'User-Agent': 'PoliceStationAgent/1.0 (+https://policestationagent.com)',
+  'User-Agent': 'PoliceStationAgent/1.0 (+https://www.policestationagent.com)',
   Accept: 'text/html',
 } as const;
 

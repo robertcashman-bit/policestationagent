@@ -7,12 +7,12 @@ export const metadata: Metadata = {
   title: "Margate Police Station Solicitor | Robert Cashman | FREE extended hours",
   description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Margate custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
   alternates: {
-    canonical: "https://policestationagent.com/margate-police-station",
+    canonical: "https://www.policestationagent.com/margate-police-station",
   },
   openGraph: {
     title: "Margate Police Station Solicitor | Robert Cashman | FREE extended hours",
     description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Margate custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
-    url: "https://policestationagent.com/margate-police-station",
+    url: "https://www.policestationagent.com/margate-police-station",
     siteName: "Police Station Agent",
     type: "website",
   },

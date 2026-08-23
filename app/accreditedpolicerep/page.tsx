@@ -8,14 +8,14 @@ export const metadata: Metadata = {
   description:
     "Robert Cashman is a criminal defence solicitor with 30+ years experience, handling over 21,000 cases. Higher Court Advocate, Practice Director, and accredited duty solicitor providing expert police station representation across Kent.",
   alternates: {
-    canonical: "https://policestationagent.com/accreditedpolicerep",
+    canonical: "https://www.policestationagent.com/accreditedpolicerep",
   },
   openGraph: {
     title: "Who is Robert Cashman? | Criminal Defence Solicitor Kent",
     description:
       "Criminal defence solicitor with 30+ years experience, Higher Court Advocate, and accredited duty solicitor. Over 21,000 cases handled across Kent police stations.",
     type: "website",
-    url: "https://policestationagent.com/accreditedpolicerep",
+    url: "https://www.policestationagent.com/accreditedpolicerep",
   },
 };
 
