@@ -29,6 +29,8 @@ describe('cross-workspace digest module', () => {
     vi.clearAllMocks();
     process.env.RESEND_API_KEY = 're_test';
     process.env.FIRM_OUTREACH_DIGEST_EMAIL = 'robertdavidcashman@gmail.com';
+    delete process.env.FIRM_OUTREACH_FROM_EMAIL;
+    delete process.env.FIRM_OUTREACH_DIGEST_FROM_EMAIL;
     process.env.UPSTASH_REDIS_REST_URL = 'https://kv.example.com';
     process.env.UPSTASH_REDIS_REST_TOKEN = 'token_test';
     mockKvGet.mockResolvedValue(null);
@@ -85,7 +87,7 @@ describe('cross-workspace digest module', () => {
     );
   });
 
-  it('builds HTML with per-workspace counts and recipients', async () => {
+  it('builds HTML for RepUK live workspace only (PSA disabled, no PSA cap)', async () => {
     vi.resetModules();
     const { buildCrossWorkspaceDigestData, buildCrossWorkspaceDigestHtml } = await import(
       '@/lib/firm-outreach/cross-workspace-digest'
@@ -94,22 +96,26 @@ describe('cross-workspace digest module', () => {
       'morning',
       new Date('2026-06-28T12:00:00.000Z'),
     );
-    expect(data.combined).toBe(2);
+    expect(data.combined).toBe(1);
     expect(data.workspaces).toHaveLength(2);
+    expect(data.workspaces[0]?.liveSend).toBe(true);
     expect(data.workspaces[0]?.sentToday).toBe(1);
-    expect(data.workspaces[1]?.sentToday).toBe(1);
     expect(data.workspaces[0]?.readyToSend).toBe(41);
-    expect(data.workspaces[1]?.readyToSend).toBe(10);
+    expect(data.workspaces[1]?.liveSend).toBe(false);
+    expect(data.workspaces[1]?.readyToSend).toBe(0);
+    expect(data.workspaces[1]?.dailyCap).toBe(0);
 
     const html = buildCrossWorkspaceDigestHtml(data);
     expect(html).toContain('Morning status');
+    expect(html).toContain('PoliceStationRepUK firm outreach digest');
     expect(html).toContain('info@tuckers.com');
-    expect(html).toContain('office@fblaw.co.uk');
-    expect(html).toContain('policestationrepuk.org');
-    expect(html).toContain('policestationagent.com');
+    expect(html).not.toContain('office@fblaw.co.uk');
+    expect(html).toContain('permanently disabled');
+    expect(html).not.toContain('Daily caps:');
+    expect(html).not.toContain('5000');
   });
 
-  it('builds subject with combined count', async () => {
+  it('builds subject with RepUK branding', async () => {
     vi.resetModules();
     const { buildCrossWorkspaceDigestData, buildCrossWorkspaceDigestSubject } = await import(
       '@/lib/firm-outreach/cross-workspace-digest'
@@ -120,7 +126,9 @@ describe('cross-workspace digest module', () => {
     );
     const subject = buildCrossWorkspaceDigestSubject(data);
     expect(subject).toContain('End of day');
-    expect(subject).toContain('2 sent');
+    expect(subject).toContain('PoliceStationRepUK');
+    expect(subject).toContain('1 sent');
+    expect(subject).not.toContain('2 workspaces');
     expect(subject).toContain('2026-06-28');
   });
 
@@ -136,7 +144,8 @@ describe('cross-workspace digest module', () => {
     );
     expect(data.combined).toBe(0);
     const subject = buildCrossWorkspaceDigestSubject(data);
-    expect(subject).toContain('no sends yet');
+    expect(subject).toContain('PoliceStationRepUK');
+    expect(subject).toContain('41 ready');
   });
 
   it('skips when digest already sent for that phase', async () => {
@@ -154,7 +163,7 @@ describe('cross-workspace digest module', () => {
     expect(mockResendSend).not.toHaveBeenCalled();
   });
 
-  it('emails owner with cross-workspace summary', async () => {
+  it('emails owner with RepUK From-name (not Police Station Agent)', async () => {
     vi.resetModules();
     const { sendCrossWorkspaceOutreachDigest } = await import(
       '@/lib/firm-outreach/cross-workspace-digest'
@@ -164,12 +173,13 @@ describe('cross-workspace digest module', () => {
       now: new Date('2026-06-28T11:00:00.000Z'),
     });
     expect(result.sent).toBe(true);
-    expect(result.combined).toBe(2);
+    expect(result.combined).toBe(1);
     expect(mockResendSend).toHaveBeenCalledWith(
       expect.objectContaining({
+        from: 'PoliceStationRepUK <noreply@policestationrepuk.org>',
         to: 'robertdavidcashman@gmail.com',
-        subject: expect.stringContaining('Morning'),
-        html: expect.stringContaining('Combined sent today'),
+        subject: expect.stringContaining('PoliceStationRepUK'),
+        html: expect.stringContaining('RepUK sent today'),
       }),
     );
     expect(mockKvSet).toHaveBeenCalledWith(
