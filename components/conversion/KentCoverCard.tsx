@@ -22,11 +22,11 @@ export function KentCoverCard({ className = "" }: { className?: string }) {
           </h2>
           <p className="text-muted-foreground mt-1 text-sm md:text-base">
             Independent criminal defence solicitor for custody or a booked voluntary interview —
-            not Kent Police. Telephone and SMS are on the{" "}
+            not Kent Police. Solicitor telephone is not listed publicly — use{" "}
             <Link href="/contact" className="font-semibold underline text-primary">
               Contact
             </Link>{" "}
-            page.
+            pathways; for current custody it appears only after qualification.
           </p>
         </div>
         <a

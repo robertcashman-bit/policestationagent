@@ -212,7 +212,7 @@ export async function sendDailyOutreachDigest(opts?: {
       <table border="1" cellpadding="6" style="border-collapse:collapse;font-size:14px">
         ${countRows}
       </table>
-      <p style="margin-top:16px"><a href="https://policestationagent.com/admin/firm-outreach">Open admin dashboard</a></p>
+      <p style="margin-top:16px"><a href="https://www.policestationagent.com/admin/firm-outreach">Open admin dashboard</a></p>
     </div>
   `;
 

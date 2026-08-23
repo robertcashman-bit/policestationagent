@@ -9,13 +9,13 @@ export const metadata: Metadata = {
   description:
     "Police Station Duty Solicitor Medway - Expert police station representation by qualified solicitor at Medway Police Station. FREE legal advice under Legal Aid. Accredited Duty Solicitor & Higher Court Advocate. Gillingham, Chatham, Rochester.",
   alternates: {
-    canonical: "https://policestationagent.com/police-station-rep-medway",
+    canonical: "https://www.policestationagent.com/police-station-rep-medway",
   },
   openGraph: {
     title: "Police Station Duty Solicitor Medway | Duty Solicitor Representation Kent",
     description:
       "Police Station Duty Solicitor Medway - Expert representation by qualified solicitor at Medway Police Station. Accredited Duty Solicitor & Higher Court Advocate. FREE legal advice under Legal Aid.",
-    url: "https://policestationagent.com/police-station-rep-medway",
+    url: "https://www.policestationagent.com/police-station-rep-medway",
     siteName: "Police Station Agent",
     type: "website",
   },

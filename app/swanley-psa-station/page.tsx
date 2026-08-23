@@ -7,13 +7,13 @@ export const metadata: Metadata = {
   title: "Swanley Police Station Solicitor | Robert Cashman | FREE Advice",
   description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Swanley voluntary interviews and local cover (not a main Kent custody suite). FREE Legal Aid where eligible — not a police contact number.",
   alternates: {
-    canonical: "https://policestationagent.com/swanley-psa-station",
+    canonical: "https://www.policestationagent.com/swanley-psa-station",
   },
   openGraph: {
     title: "Swanley Police Station Solicitor | Robert Cashman | FREE Advice",
     description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Swanley voluntary interviews and local cover (not a main Kent custody suite). FREE Legal Aid where eligible — not a police contact number.",
     type: "website",
-    url: "https://policestationagent.com/swanley-psa-station",
+    url: "https://www.policestationagent.com/swanley-psa-station",
   },
 };
 

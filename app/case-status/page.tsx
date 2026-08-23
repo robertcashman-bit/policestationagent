@@ -6,13 +6,13 @@ export const metadata: Metadata = {
   description:
     "Check your case status online or contact us directly for updates on your police station representation.",
   alternates: {
-    canonical: "https://policestationagent.com/case-status",
+    canonical: "https://www.policestationagent.com/case-status",
   },
   openGraph: {
     title: "Check Case Status | Police Station Agent",
     description:
       "Check your case status online or contact us directly for updates on your police station representation.",
-    url: "https://policestationagent.com/case-status",
+    url: "https://www.policestationagent.com/case-status",
     siteName: "Police Station Agent",
     type: "website",
   },

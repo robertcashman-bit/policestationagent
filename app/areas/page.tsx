@@ -9,13 +9,13 @@ export const metadata: Metadata = {
   description:
     "Comprehensive police station representation across all Kent custody suites - Canterbury, Folkestone, Tonbridge, Medway, Gravesend. Extended hours duty solicitor coverage for police interviews.",
   alternates: {
-    canonical: "https://policestationagent.com/areas",
+    canonical: "https://www.policestationagent.com/areas",
   },
   openGraph: {
     title: "Police Station Coverage Kent & Medway | Robert Cashman",
     description:
       "Comprehensive police station representation across all Kent custody suites - Canterbury, Folkestone, Tonbridge, Medway, Gravesend. Extended hours duty solicitor coverage for police interviews.",
-    url: "https://policestationagent.com/areas",
+    url: "https://www.policestationagent.com/areas",
     siteName: "Police Station Agent",
     type: "website",
   },

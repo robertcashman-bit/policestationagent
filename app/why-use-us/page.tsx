@@ -8,13 +8,13 @@ export const metadata: Metadata = {
   description:
     "Police station help in Kent with 30+ years' experience, extended-hours cover, free Legal Aid when you qualify, and full Kent coverage. Legal services provided by Tuckers Solicitors LLP \(SRA ID: 127795\).",
   alternates: {
-    canonical: "https://policestationagent.com/why-use-us",
+    canonical: "https://www.policestationagent.com/why-use-us",
   },
   openGraph: {
     title: "Why instruct us for police station work in Kent?",
     description:
       "Police station help in Kent with 30+ years' experience, extended-hours cover, free Legal Aid when you qualify, and full Kent coverage. Legal services provided by Tuckers Solicitors LLP \(SRA ID: 127795\).",
-    url: "https://policestationagent.com/why-use-us",
+    url: "https://www.policestationagent.com/why-use-us",
     siteName: "Police Station Agent",
     type: "website",
   },

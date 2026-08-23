@@ -100,7 +100,7 @@ export default function NearestStationFinder() {
           {status === "locating" ? "Finding…" : "Find nearest station"}
         </button>
         <Link
-          href="/police-stations"
+          href="/coverage"
           className="inline-flex items-center justify-center rounded-md border border-slate-300 hover:bg-white text-slate-900 font-semibold px-5 py-3"
         >
           Browse all police stations

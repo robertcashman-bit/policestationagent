@@ -7,12 +7,12 @@ export const metadata: Metadata = {
   title: "Maidstone Police Station Solicitor | Robert Cashman | FREE Advice",
   description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Maidstone custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
   alternates: {
-    canonical: "https://policestationagent.com/maidstone-police-station",
+    canonical: "https://www.policestationagent.com/maidstone-police-station",
   },
   openGraph: {
     title: "Maidstone Police Station Solicitor | Robert Cashman | FREE Advice",
     description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Maidstone custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
-    url: "https://policestationagent.com/maidstone-police-station",
+    url: "https://www.policestationagent.com/maidstone-police-station",
     siteName: "Police Station Agent",
     type: "website",
   },

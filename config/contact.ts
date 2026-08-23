@@ -65,7 +65,7 @@ export const CTA_OUT_OF_SCOPE =
  * urgent-rep framing. No telephone digits — Contact holds the number last.
  */
 export const STATION_SOLICITOR_CTA =
-  "NOT THE POLICE. We are criminal solicitors serving this station. Do not use our telephone for police enquiries — we cannot help with those. If you need urgent police station representation for current custody or a forthcoming police interview, go to Contact — that page lists what we do and do not do, then the solicitor telephone. This page is not a police contact directory.";
+  "NOT THE POLICE. We are criminal solicitors serving this station. Do not use our telephone for police enquiries — we cannot help with those. If you need urgent police station representation for current custody or a forthcoming police interview, go to Contact — that page lists what we do and do not do. The solicitor telephone is not listed publicly; for current custody it appears only after a short qualification check. This page is not a police contact directory.";
 
 export const STATION_PHONE_LABEL = "NOT THE POLICE — We are criminal solicitors";
 
@@ -74,7 +74,7 @@ export const STATION_CONTACT_BUTTON =
 
 /** Station-page scope (no digits) */
 export const STATION_PHONE_SCOPE =
-  "Solicitor telephone is on the Contact page only (custody or forthcoming interview). Do not use it for police enquiries — we are NOT the police and we cannot help. Use 999 or 101 for police assistance.";
+  "Solicitor telephone is not listed publicly — for current custody it appears only after the Contact qualification check. Do not use it for police enquiries — we are NOT the police and we cannot help. Use 999 or 101 for police assistance.";
 /** Scope FAQ / can-we-help anchor */
 export const SCOPE_HELP_HREF = "/faq#immediate-custody-only";
 

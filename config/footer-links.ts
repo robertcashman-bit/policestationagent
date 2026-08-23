@@ -11,10 +11,9 @@ export const FOOTER_BLOG_LIMIT = 6;
 export const FOOTER_PRIORITY_LINKS: FooterLink[] = [
   { href: "/police-station-rep-gravesend", label: "Police station rep in Gravesend" },
   { href: "/police-station-rep-tonbridge", label: "Police station rep in Tonbridge" },
-  { href: "/kent-police-station-reps", label: "Police station reps in Kent" },
+  { href: "/coverage", label: "Kent coverage & stations" },
   { href: "/for-solicitors", label: "Cover for solicitors" },
   { href: "/contact", label: "Contact" },
-  { href: "/locations", label: "All locations" },
 ];
 
 /** Kent rep directory paths — do not link (competing listings) */
@@ -64,10 +63,8 @@ export const FOOTER_STATION_HUBS: FooterLink[] = [
   { href: "/police-station-rep-medway", label: "Police station solicitor Medway & Chatham" },
   { href: "/police-station-rep-maidstone", label: "Police station advice Maidstone" },
   { href: "/police-station-rep-canterbury", label: "Canterbury custody legal advice" },
-  { href: "/kent-police-station-reps", label: "Kent police station reps hub" },
+  { href: "/coverage", label: "Kent police station reps hub" },
   { href: "/free-police-station-advice-kent", label: "Free police station advice Kent" },
-  { href: "/locations", label: "All Kent rep town pages" },
-  { href: "/police-stations", label: "Kent police stations directory" },
   { href: "/kent-police-custody-resources", label: "Kent custody resources hub" },
   { href: "/coverage/areas/north-kent", label: "North Kent area hub" },
   { href: "/coverage/areas/west-kent", label: "West Kent area hub" },

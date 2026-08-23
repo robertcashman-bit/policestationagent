@@ -8,13 +8,13 @@ export const metadata: Metadata = {
   description:
     "Arrested in Gillingham, Chatham, Rochester or Strood? Police station solicitor 12 minutes from Medway custody suite (ME7). FREE extended hours representation.",
   alternates: {
-    canonical: "https://policestationagent.com/medway-solicitor",
+    canonical: "https://www.policestationagent.com/medway-solicitor",
   },
   openGraph: {
     title: "Medway Police Station Solicitor | Gillingham ME7 | FREE Legal Aid | Independent Criminal Defence",
     description:
       "Arrested in Gillingham, Chatham, Rochester or Strood? Police station solicitor 12 minutes from Medway custody suite (ME7). FREE extended hours representation.",
-    url: "https://policestationagent.com/medway-solicitor",
+    url: "https://www.policestationagent.com/medway-solicitor",
     siteName: "Police Station Agent",
     type: "website",
   },

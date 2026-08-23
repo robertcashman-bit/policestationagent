@@ -6,14 +6,14 @@ export const metadata: Metadata = {
   description:
     "Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795) at all major police stations and custody suites across Kent and Medway, including extended hours.",
   alternates: {
-    canonical: "https://policestationagent.com/psastations",
+    canonical: "https://www.policestationagent.com/psastations",
   },
   openGraph: {
     title: "Kent Police Station Coverage",
     description:
       "Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795) at all major police stations and custody suites across Kent and Medway, including extended hours.",
     type: "website",
-    url: "https://policestationagent.com/psastations",
+    url: "https://www.policestationagent.com/psastations",
   },
 };
 

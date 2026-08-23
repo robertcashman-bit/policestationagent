@@ -4,6 +4,7 @@ import { SITE_DOMAIN } from "@/config/site";
 import { SEO_NOT_POLICE } from "@/config/contact";
 import { CustodyQualificationFlow } from "@/components/conversion/CustodyQualificationFlow";
 import { PoliceSignposting } from "@/components/conversion/PoliceSignposting";
+import { DEFAULT_OG_IMAGES, DEFAULT_TWITTER_IMAGES } from "@/lib/seo/page-metadata";
 
 export const metadata: Metadata = {
   title: "Current Custody Representation | Kent Police Station | NOT the Police",
@@ -18,6 +19,14 @@ export const metadata: Metadata = {
     url: `https://${SITE_DOMAIN}/current-custody`,
     siteName: "Police Station Agent",
     type: "website",
+    images: [...DEFAULT_OG_IMAGES],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Current Custody Representation | Kent | NOT the Police",
+    description:
+      "Qualification pathway for current Kent police custody representation. Not Kent Police.",
+    images: [...DEFAULT_TWITTER_IMAGES],
   },
 };
 

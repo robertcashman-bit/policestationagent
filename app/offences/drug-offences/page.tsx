@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description:
     "Expert police station representation for drug offence allegations across Kent. Free legal advice under Legal Aid. Early advice before interview is important.",
   alternates: {
-    canonical: "https://policestationagent.com/offences/drug-offences",
+    canonical: "https://www.policestationagent.com/offences/drug-offences",
   },
 };
 

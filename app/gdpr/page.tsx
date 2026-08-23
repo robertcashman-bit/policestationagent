@@ -9,13 +9,13 @@ export const metadata: Metadata = {
   description:
     "How we comply with UK GDPR and protect your data rights. ICO Registration Number: ZA198500",
   alternates: {
-    canonical: "https://policestationagent.com/gdpr",
+    canonical: "https://www.policestationagent.com/gdpr",
   },
   openGraph: {
     title: "GDPR Compliance",
     description:
       "How we comply with UK GDPR and protect your data rights. ICO Registration Number: ZA198500",
-    url: "https://policestationagent.com/gdpr",
+    url: "https://www.policestationagent.com/gdpr",
     siteName: "Police Station Agent",
     type: "website",
   },

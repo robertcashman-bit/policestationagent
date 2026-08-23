@@ -7,12 +7,12 @@ export const metadata: Metadata = {
   title: "Bluewater Area Police Station Rep | Robert Cashman | FREE Advice",
   description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Bluewater-area local/VAI cover and nearest Kent custody suites (not a Bluewater custody suite). FREE Legal Aid where eligible — not a police contact number.",
   alternates: {
-    canonical: "https://policestationagent.com/bluewater-police-station",
+    canonical: "https://www.policestationagent.com/bluewater-police-station",
   },
   openGraph: {
     title: "Bluewater Area Police Station Rep | Robert Cashman | FREE Advice",
     description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Bluewater-area local/VAI cover and nearest Kent custody suites (not a Bluewater custody suite). FREE Legal Aid where eligible — not a police contact number.",
-    url: "https://policestationagent.com/bluewater-police-station",
+    url: "https://www.policestationagent.com/bluewater-police-station",
     siteName: "Police Station Agent",
     type: "website",
   },

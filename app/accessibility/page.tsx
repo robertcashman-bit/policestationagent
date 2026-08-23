@@ -9,13 +9,13 @@ export const metadata: Metadata = {
   description:
     "Our commitment to making Police Station Agent accessible to everyone, including those with disabilities.",
   alternates: {
-    canonical: "https://policestationagent.com/accessibility",
+    canonical: "https://www.policestationagent.com/accessibility",
   },
   openGraph: {
     title: "Accessibility Statement",
     description:
       "Our commitment to making Police Station Agent accessible to everyone, including those with disabilities.",
-    url: "https://policestationagent.com/accessibility",
+    url: "https://www.policestationagent.com/accessibility",
     siteName: "Police Station Agent",
     type: "website",
   },

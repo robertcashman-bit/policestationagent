@@ -329,10 +329,10 @@ export function HomePriorityCoverage() {
               </Link>
               {" · "}
               <Link
-                href="/kent-police-station-reps"
+                href="/coverage"
                 className="font-semibold text-primary underline-offset-2 hover:underline"
               >
-                All Kent police station reps
+                All Kent police station coverage
               </Link>
             </p>
 
@@ -341,19 +341,12 @@ export function HomePriorityCoverage() {
             </div>
 
             <p className="mt-4 text-sm text-muted-foreground">
-              All Kent stations:{" "}
+              Browse all Kent stations on the{" "}
               <Link
-                href="/locations"
+                href="/coverage"
                 className="font-semibold text-primary underline-offset-2 hover:underline"
               >
-                browse locations
-              </Link>{" "}
-              or{" "}
-              <Link
-                href="/police-stations"
-                className="font-semibold text-primary underline-offset-2 hover:underline"
-              >
-                police station directory
+                coverage hub
               </Link>
               .
             </p>

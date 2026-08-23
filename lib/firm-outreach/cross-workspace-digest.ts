@@ -215,7 +215,7 @@ export function buildCrossWorkspaceDigestHtml(data: CrossWorkspaceDigestData): s
       <h3 style="margin:0 0 12px">Recipients today</h3>
       ${workspaceSections}
       <p style="margin-top:16px;font-size:12px;color:#64748b">
-        <a href="https://policestationagent.com/admin/firm-outreach">PSA admin</a>
+        <a href="https://www.policestationagent.com/admin/firm-outreach">PSA admin</a>
         ·
         <a href="https://policestationrepuk.org/admin/firm-outreach">REPUK admin</a>
       </p>

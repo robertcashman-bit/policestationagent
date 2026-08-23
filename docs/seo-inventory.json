@@ -993,7 +993,7 @@
       "date": ""
     },
     {
-      "slug": "kent-police-stations-legal-representation-24-7",
+      "slug": "kent-police-stations-legal-representation-extended-hours",
       "title": "Complete Guide to Legal Representation at Kent Police Stations",
       "category": "",
       "primaryKeyword": "",
@@ -1054,6 +1054,13 @@
       "category": "",
       "primaryKeyword": "",
       "date": ""
+    },
+    {
+      "slug": "police-want-to-speak-to-me",
+      "title": "The Police Want to Speak to Me: What to Do Before You Reply",
+      "category": "Police Station Advice",
+      "primaryKeyword": "police want to speak to me",
+      "date": "2026-08-20"
     }
   ],
   "psrtrain": [

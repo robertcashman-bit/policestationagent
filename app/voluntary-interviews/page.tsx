@@ -7,6 +7,7 @@ import { SEO_NOT_POLICE } from "@/config/contact";
 import { VoluntaryInterviewForm } from "@/components/conversion/VoluntaryInterviewForm";
 import { PoliceSignposting } from "@/components/conversion/PoliceSignposting";
 import { PATH_VOLUNTARY } from "@/config/enquiry-paths";
+import { DEFAULT_OG_IMAGES, DEFAULT_TWITTER_IMAGES } from "@/lib/seo/page-metadata";
 
 export const metadata: Metadata = {
   title: "Voluntary Police Interview Solicitor in Kent",
@@ -21,6 +22,13 @@ export const metadata: Metadata = {
     url: `https://${SITE_DOMAIN}/voluntary-interviews`,
     siteName: "Police Station Agent",
     type: "website",
+    images: [...DEFAULT_OG_IMAGES],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Voluntary Police Interview Solicitor in Kent",
+    description: `${SEO_NOT_POLICE} Request representation before a voluntary interview under caution.`,
+    images: [...DEFAULT_TWITTER_IMAGES],
   },
 };
 

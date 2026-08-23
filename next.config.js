@@ -4,10 +4,10 @@ const { BLOG_REDIRECT_NEXT_RULES } = require("./config/blog-slug-redirects.js");
 
 const nextConfig = {
   reactStrictMode: true,
-  transpilePackages: ['@robertcashman/firm-outreach-core'],
+  transpilePackages: ["@robertcashman/firm-outreach-core"],
   turbopack: {
     resolveAlias: {
-      '@robertcashman/firm-outreach-core': './packages/firm-outreach-core',
+      "@robertcashman/firm-outreach-core": "./packages/firm-outreach-core",
     },
   },
   // Enable clean URLs
@@ -100,7 +100,7 @@ const nextConfig = {
       },
       {
         source: "/psastations",
-        destination: "/police-stations",
+        destination: "/coverage",
         permanent: true,
       },
       {
@@ -131,6 +131,37 @@ const nextConfig = {
       {
         source: "/can-we-help",
         destination: "/canwehelp",
+        permanent: true,
+      },
+      // Overlapping location hubs → single primary hub (/coverage)
+      {
+        source: "/locations",
+        destination: "/coverage",
+        permanent: true,
+      },
+      {
+        source: "/police-stations",
+        destination: "/coverage",
+        permanent: true,
+      },
+      {
+        source: "/kent-police-stations",
+        destination: "/coverage",
+        permanent: true,
+      },
+      {
+        source: "/kent-police-station-reps",
+        destination: "/coverage",
+        permanent: true,
+      },
+      {
+        source: "/areas",
+        destination: "/coverage",
+        permanent: true,
+      },
+      {
+        source: "/coverage/police-stations",
+        destination: "/coverage",
         permanent: true,
       },
       {
@@ -183,7 +214,7 @@ const nextConfig = {
       // SEO growth programme — alias slugs to canonical pages
       {
         source: "/police-station-representative-kent",
-        destination: "/kent-police-station-reps",
+        destination: "/coverage",
         permanent: true,
       },
       {
@@ -339,7 +370,8 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: "/blog/police-station-representative-directory-i-want-to-become-a-police-station-rep",
+        source:
+          "/blog/police-station-representative-directory-i-want-to-become-a-police-station-rep",
         destination: "/blog",
         permanent: true,
       },

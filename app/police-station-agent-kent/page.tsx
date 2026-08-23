@@ -10,14 +10,14 @@ export const metadata: Metadata = {
   description:
     "Police Station Duty Solicitor Kent - Expert police station representation by qualified solicitor. FREE legal advice under Legal Aid at all Kent custody suites. Accredited Duty Solicitor & Higher Court Advocate Robert Cashman - 30+ years experience, 21,000+ cases. Medway, Maidstone, Canterbury, Gravesend.",
   alternates: {
-    canonical: "https://policestationagent.com/police-station-agent-kent",
+    canonical: "https://www.policestationagent.com/police-station-agent-kent",
   },
   openGraph: {
     title: "Police Station Duty Solicitor Kent | Duty Solicitor Representation Kent | FREE Advice",
     description:
       "Police Station Duty Solicitor Kent - Expert representation by qualified solicitor Robert Cashman. Accredited Duty Solicitor & Higher Court Advocate. FREE legal advice under Legal Aid at Medway, Canterbury, Maidstone, Gravesend custody suites. 30+ years experience.",
     type: "website",
-    url: "https://policestationagent.com/police-station-agent-kent",
+    url: "https://www.policestationagent.com/police-station-agent-kent",
   },
 };
 

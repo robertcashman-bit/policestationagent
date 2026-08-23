@@ -12,12 +12,12 @@ export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
   alternates: {
-    canonical: "https://policestationagent.com/what-is-a-criminal-solicitor",
+    canonical: "https://www.policestationagent.com/what-is-a-criminal-solicitor",
   },
   openGraph: {
     title: TITLE,
     description: DESCRIPTION,
-    url: "https://policestationagent.com/what-is-a-criminal-solicitor",
+    url: "https://www.policestationagent.com/what-is-a-criminal-solicitor",
     siteName: "Police Station Agent",
     type: "website",
   },

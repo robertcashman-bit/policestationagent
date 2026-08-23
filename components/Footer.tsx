@@ -12,7 +12,7 @@ import {
 const PUBLIC_HELP = [
   { href: PATH_VOLUNTARY_LANDING, label: "Voluntary interviews" },
   { href: PATH_CUSTODY, label: "Current custody" },
-  { href: "/can-we-help", label: "Can we help?" },
+  { href: "/canwehelp", label: "Can we help?" },
   { href: "/faq", label: "FAQ" },
 ];
 

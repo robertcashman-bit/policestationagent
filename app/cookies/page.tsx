@@ -9,13 +9,13 @@ export const metadata: Metadata = {
   description:
     "Learn how Police Station Agent uses cookies to improve your experience and protect your privacy.",
   alternates: {
-    canonical: "https://policestationagent.com/cookies",
+    canonical: "https://www.policestationagent.com/cookies",
   },
   openGraph: {
     title: "Cookies Policy",
     description:
       "Learn how Police Station Agent uses cookies to improve your experience and protect your privacy.",
-    url: "https://policestationagent.com/cookies",
+    url: "https://www.policestationagent.com/cookies",
     siteName: "Police Station Agent",
     type: "website",
   },

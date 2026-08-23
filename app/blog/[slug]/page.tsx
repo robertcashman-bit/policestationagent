@@ -41,7 +41,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
     };
   }
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_URL;
+  const siteUrl = SITE_URL;
   const safeTitle = stripFirmPhonePlainText(post.metaTitle || post.title);
   const safeDescription = stripFirmPhonePlainText(
     post.metaDescription || generateExcerpt(post.contentHtml, 160),
@@ -109,7 +109,7 @@ export default async function BlogPostPage(props: Readonly<PageProps>) {
     notFound();
   }
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_URL;
+  const siteUrl = SITE_URL;
   // Never publish the firm answering-service number on any blog post.
   const sanitizedContentHtml = stripFirmPhonesToContact(
     sanitizeBlogHtml(post.contentHtml),

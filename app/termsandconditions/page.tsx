@@ -9,13 +9,13 @@ export const metadata: Metadata = {
   description:
     "Legally binding terms of use for the Police Station Agent website. Please read carefully.",
   alternates: {
-    canonical: "https://policestationagent.com/termsandconditions",
+    canonical: "https://www.policestationagent.com/termsandconditions",
   },
   openGraph: {
     title: "Website Terms of Use",
     description:
       "Legally binding terms of use for the Police Station Agent website. Please read carefully.",
-    url: "https://policestationagent.com/termsandconditions",
+    url: "https://www.policestationagent.com/termsandconditions",
     siteName: "Police Station Agent",
     type: "website",
   },

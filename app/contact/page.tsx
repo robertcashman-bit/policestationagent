@@ -21,6 +21,7 @@ import {
 } from "@/config/contact";
 import { AudiencePathSelector } from "@/components/conversion/AudiencePathSelector";
 import { PoliceSignposting } from "@/components/conversion/PoliceSignposting";
+import { DEFAULT_OG_IMAGES, DEFAULT_TWITTER_IMAGES } from "@/lib/seo/page-metadata";
 
 export const metadata: Metadata = {
   title: "Contact | Choose Why You Are Enquiring | NOT the Police",
@@ -34,6 +35,13 @@ export const metadata: Metadata = {
     url: `https://${SITE_DOMAIN}/contact`,
     siteName: "Police Station Agent",
     type: "website",
+    images: [...DEFAULT_OG_IMAGES],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Contact | NOT THE POLICE — Choose Your Pathway",
+    description: `${SEO_NOT_POLICE} Route to the right enquiry pathway. Not a police contact page.`,
+    images: [...DEFAULT_TWITTER_IMAGES],
   },
 };
 

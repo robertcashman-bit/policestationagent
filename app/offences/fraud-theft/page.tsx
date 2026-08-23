@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description:
     "Expert police station representation for fraud and theft allegations across Kent. Free legal advice under Legal Aid. Early advice before interview is important.",
   alternates: {
-    canonical: "https://policestationagent.com/offences/fraud-theft",
+    canonical: "https://www.policestationagent.com/offences/fraud-theft",
   },
 };
 

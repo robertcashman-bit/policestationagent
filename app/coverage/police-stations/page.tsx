@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description:
     "Independent guide to Kent and Medway police stations and custody facilities. Criminal defence solicitor information — not an official police directory.",
   alternates: {
-    canonical: "https://policestationagent.com/coverage/police-stations",
+    canonical: "https://www.policestationagent.com/coverage/police-stations",
   },
 };
 
@@ -31,7 +31,7 @@ const STATIONS = [
 ];
 
 export default function PoliceStationsPage() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://policestationagent.com';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.policestationagent.com';
   const breadcrumbItems = [
     { name: 'Home', url: siteUrl },
     { name: 'Coverage', url: `${siteUrl}/coverage` },
