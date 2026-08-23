@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { BreadcrumbList } from "@/components/StructuredData";
 import { SITE_URL } from "@/config/site";
 import KentPoliceStationMap from "@/components/KentPoliceStationMap";
+import NearestStationFinder from "@/components/NearestStationFinder";
 import { DEFAULT_OG_IMAGES, DEFAULT_TWITTER_IMAGES } from "@/lib/seo/page-metadata";
 
 export const metadata: Metadata = {
@@ -112,7 +113,7 @@ export default function Page() {
               </p>
               <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:flex-wrap sm:items-center">
                 <Link
-                  href="/coverage/police-stations"
+                  href="#custody-suites"
                   className="inline-flex items-center justify-center rounded-lg bg-white px-6 py-3 font-semibold text-primary transition hover:bg-accent-light"
                 >
                   View Police Stations
@@ -142,7 +143,12 @@ export default function Page() {
 
         <section className="py-14 md:py-16">
           <div className="mx-auto max-w-6xl px-4 md:px-6">
-            <div className="mb-12 rounded-xl border border-border bg-card p-6 shadow-[var(--shadow-card)] md:p-8">
+            <NearestStationFinder />
+
+            <div
+              id="custody-suites"
+              className="mb-12 scroll-mt-24 rounded-xl border border-border bg-card p-6 shadow-[var(--shadow-card)] md:p-8"
+            >
               <h2 className="flex items-center gap-3 font-display text-2xl font-bold text-primary">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -218,7 +224,7 @@ export default function Page() {
                 custody facilities and voluntary interview arrangements.
               </p>
               <Link
-                href="/psastations"
+                href="#custody-suites"
                 className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-white shadow transition hover:bg-primary/90"
               >
                 View All Police Stations
@@ -233,7 +239,7 @@ export default function Page() {
                 border.
               </p>
               <Link
-                href="/areas"
+                href="/outofarea"
                 className="inline-flex items-center justify-center rounded-md border border-border bg-white px-4 py-2 text-sm font-medium text-slate-800 shadow-sm transition hover:bg-slate-50"
               >
                 Learn More About London Coverage

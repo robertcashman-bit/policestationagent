@@ -26,8 +26,20 @@ describe("live leftovers — hub + chrome fixes", () => {
     }
     expect(cfg).toMatch(/source:\s*"\/locations"[\s\S]*?destination:\s*"\/coverage"/);
     expect(cfg).toMatch(
-      /source:\s*"\/kent-police-station-reps"[\s\S]*?destination:\s*"\/coverage"/,
+      /source:\s*"\/kent-police-station-reps"[\s\S]*?destination:\s*"\/coverage"/
     );
+    // Leaf station pages must remain reachable (area hubs link to them)
+    expect(cfg).not.toContain('source: "/coverage/police-stations/:slug*"');
+  });
+
+  it("coverage hub links avoid redirected paths and mounts nearest finder", () => {
+    const page = fs.readFileSync(path.join(root, "app/coverage/page.tsx"), "utf8");
+    expect(page).toContain("NearestStationFinder");
+    expect(page).toContain('href="#custody-suites"');
+    expect(page).toContain('href="/outofarea"');
+    expect(page).not.toContain('href="/coverage/police-stations"');
+    expect(page).not.toContain('href="/areas"');
+    expect(page).not.toContain('href="/psastations"');
   });
 
   it("sitemap keeps /coverage and omits redirected hub indexes", () => {
@@ -37,32 +49,32 @@ describe("live leftovers — hub + chrome fixes", () => {
     expect(sitemap).not.toContain("${baseUrl}/kent-police-station-reps");
     expect(sitemap).not.toContain("${baseUrl}/kent-police-stations");
     expect(sitemap).not.toContain("${baseUrl}/areas");
-    expect(sitemap).not.toContain("${baseUrl}/coverage/police-stations");
+    // Hub index omitted; leaf /coverage/police-stations/${slug} remain
+    expect(sitemap).not.toMatch(/\$\{baseUrl\}\/coverage\/police-stations`/);
+    expect(sitemap).toContain("${baseUrl}/coverage/police-stations/${slug}");
     // Exact hub path only — leaf /police-stations/${slug} from DB may remain
     expect(sitemap).not.toMatch(/\$\{baseUrl\}\/police-stations`/);
   });
 
   it("24-7 blog slug redirects to extended-hours owner", () => {
     const redirects = JSON.parse(
-      fs.readFileSync(path.join(root, "config/blog-slug-redirects.json"), "utf8"),
+      fs.readFileSync(path.join(root, "config/blog-slug-redirects.json"), "utf8")
     ) as Array<{ from: string; to: string }>;
-    const rule = redirects.find(
-      (r) => r.from === "kent-police-stations-legal-representation-24-7",
-    );
+    const rule = redirects.find((r) => r.from === "kent-police-stations-legal-representation-24-7");
     expect(rule?.to).toBe("kent-police-stations-legal-representation-extended-hours");
     const index = JSON.parse(
-      fs.readFileSync(path.join(root, "public/blog-posts.json"), "utf8"),
+      fs.readFileSync(path.join(root, "public/blog-posts.json"), "utf8")
     ) as Array<{ slug: string }>;
     expect(index.some((p) => p.slug.includes("24-7"))).toBe(false);
     expect(
-      index.some((p) => p.slug === "kent-police-stations-legal-representation-extended-hours"),
+      index.some((p) => p.slug === "kent-police-stations-legal-representation-extended-hours")
     ).toBe(true);
   });
 
   it("cover card copy no longer claims telephone is on Contact HTML", () => {
     const card = fs.readFileSync(
       path.join(root, "components/conversion/KentCoverCard.tsx"),
-      "utf8",
+      "utf8"
     );
     expect(card).toMatch(/not listed publicly/i);
     expect(card).not.toMatch(/Telephone and SMS are on the/);

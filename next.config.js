@@ -4,10 +4,10 @@ const { BLOG_REDIRECT_NEXT_RULES } = require("./config/blog-slug-redirects.js");
 
 const nextConfig = {
   reactStrictMode: true,
-  transpilePackages: ['@robertcashman/firm-outreach-core'],
+  transpilePackages: ["@robertcashman/firm-outreach-core"],
   turbopack: {
     resolveAlias: {
-      '@robertcashman/firm-outreach-core': './packages/firm-outreach-core',
+      "@robertcashman/firm-outreach-core": "./packages/firm-outreach-core",
     },
   },
   // Enable clean URLs
@@ -161,11 +161,6 @@ const nextConfig = {
       },
       {
         source: "/coverage/police-stations",
-        destination: "/coverage",
-        permanent: true,
-      },
-      {
-        source: "/coverage/police-stations/:slug*",
         destination: "/coverage",
         permanent: true,
       },
@@ -375,7 +370,8 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: "/blog/police-station-representative-directory-i-want-to-become-a-police-station-rep",
+        source:
+          "/blog/police-station-representative-directory-i-want-to-become-a-police-station-rep",
         destination: "/blog",
         permanent: true,
       },

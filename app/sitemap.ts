@@ -545,8 +545,30 @@ export default function sitemap(): MetadataRoute.Sitemap {
     console.warn("Skipping dynamic police stations in sitemap (build time)");
   }
 
-  // Coverage police station pages redirected to /coverage — omit from sitemap
-  const coverageStationPages: MetadataRoute.Sitemap = [];
+  // Coverage police station leaf pages (index hub redirects to /coverage)
+  const coverageStationSlugs = [
+    "medway",
+    "north-kent-gravesend",
+    "canterbury",
+    "folkestone",
+    "maidstone",
+    "tonbridge",
+    "ashford",
+    "dover",
+    "margate",
+    "sevenoaks",
+    "sittingbourne",
+    "swanley",
+    "tunbridge-wells",
+    "coldharbour",
+  ];
+
+  const coverageStationPages: MetadataRoute.Sitemap = coverageStationSlugs.map((slug) => ({
+    url: `${baseUrl}/coverage/police-stations/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+  }));
 
   // Coverage area pages (static)
   const coverageAreaSlugs = [
