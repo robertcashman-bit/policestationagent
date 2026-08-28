@@ -51,7 +51,7 @@ export default function PoliceStationRepresentationPage() {
     {
       question: "Which Kent custody suites do you cover as a duty solicitor?",
       answer:
-        "We cover all Kent custody suites including Medway (Gillingham), Maidstone, North Kent (Gravesend), Canterbury, Tonbridge, Folkestone, Ashford, Dartford, Sittingbourne, Sevenoaks, Tunbridge Wells, Margate, Dover, Swanley, and Bluewater. We also cover voluntary interview locations across Kent.",
+        "We cover Kent's operational custody suites including Medway (Gillingham), North Kent (Gravesend), Canterbury, Tonbridge, Folkestone and Margate. We also attend voluntary interview stations across Kent — including Maidstone (custody closed / VAI only), Ashford, Dover, Sevenoaks, Sittingbourne, Swanley, Tunbridge Wells and Bluewater.",
     },
     {
       question: "What's the difference between a qualified solicitor and a police station agent?",

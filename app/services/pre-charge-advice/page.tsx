@@ -51,7 +51,7 @@ export default function PreChargeAdvicePage() {
     {
       question: "Do you cover pre‑charge advice across Kent?",
       answer:
-        "Yes. We cover Kent custody suites and voluntary interview locations, including Medway, Maidstone, Canterbury, Gravesend and surrounding areas." },
+        "Yes. We cover Kent custody suites and voluntary interview locations across the county, including Medway, Canterbury, Gravesend and surrounding areas. Maidstone custody is closed — voluntary interviews only." },
   ];
 
   return (

@@ -132,7 +132,7 @@ Write a comprehensive, SEO-optimized blog article for PoliceStationAgent.com abo
 
 5. **Author Context:**
    - Robert Cashman, qualified Duty Solicitor with Higher Rights of Audience (Criminal)
-   - Covers all ${location} custody suites including Medway, Maidstone, Canterbury, and Gravesend
+   - Covers ${location} custody suites including Medway, Canterbury, and Gravesend (Maidstone is VAI only — custody closed)
    - Available 9am to late, including weekends and bank holidays
    - Phone: <a href="/contact" class="font-semibold underline text-blue-800" data-solicitor-contact="true" data-nosnippet>Contact pathways</a>
 

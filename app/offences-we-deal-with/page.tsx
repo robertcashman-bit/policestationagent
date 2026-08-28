@@ -93,7 +93,7 @@ export default function OffencesWeDealWithPage() {
                 </li>
               </ul>
               <p className="text-slate-700">
-                We cover all Kent custody suites, including Medway, Maidstone, Canterbury, Gravesend, and other police stations across the county.
+                We cover Kent custody suites including Medway, North Kent (Gravesend), Canterbury, Tonbridge, Folkestone and Margate, plus voluntary interview stations across the county. Maidstone custody is closed — voluntary interviews only.
               </p>
             </section>
 
@@ -362,7 +362,7 @@ export default function OffencesWeDealWithPage() {
                 <div>
                   <h3 className="font-bold text-slate-900 mb-2">Which police stations do you cover?</h3>
                   <p className="text-slate-700">
-                    We cover all Kent custody suites including Medway, Maidstone, Gravesend, Canterbury, Tonbridge, Folkestone, Ashford, Sittingbourne, Margate, Dover, and Sevenoaks.
+                    We cover Kent's operational custody suites including Medway, North Kent (Gravesend), Canterbury, Tonbridge, Folkestone and Margate, plus voluntary interview stations such as Maidstone (custody closed / VAI only), Ashford, Sittingbourne, Dover and Sevenoaks.
                   </p>
                 </div>
                 <div>
