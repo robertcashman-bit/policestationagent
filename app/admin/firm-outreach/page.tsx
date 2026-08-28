@@ -1,30 +1,9 @@
-import { AdminGate } from '@/components/admin/AdminGate';
-import { AdminShell } from '@/components/admin/AdminShell';
-import { FirmOutreachDashboard } from '@/components/admin/FirmOutreachDashboard';
-import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-export const metadata: Metadata = {
-  title: 'Firm outreach | Admin',
-  description: 'Police station agent cover outreach — discovery, enrichment, and email sends.',
-  robots: { index: false, follow: false },
-};
-
-export default function FirmOutreachAdminPage() {
-  return (
-    <AdminGate>
-      {({ email }) => (
-        <AdminShell
-          active="firm-outreach"
-          adminEmail={email}
-          title="Firm outreach"
-          description="Automated discovery, email enrichment, and Agent cover invitations (within ~45 mins of Maidstone) for criminal defence firms and solicitors."
-        >
-          <FirmOutreachDashboard />
-        </AdminShell>
-      )}
-    </AdminGate>
-  );
+/** Firm outreach email admin UI permanently removed. */
+export default function FirmOutreachAdminPageRemoved() {
+  notFound();
 }

@@ -1,31 +1,24 @@
 # Firm outreach — operations
 
-Automated agent-cover invitation emails to qualified criminal defence firms across England & Wales.
-
-> **2026-08-21:** Police Station Agent prospect sends and the Kent agent-cover owner digest are **permanently disabled** in this repo (`PSA_OUTREACH_EMAILS_DISABLED`). Firm outreach and digests continue from **Policestationrepuk**. Discovery/enrich/maintain crons may still run for admin visibility only.
+> **2026-08-28:** All Police Station Agent firm-outreach **email** is permanently disabled:
+> prospect/firm sends, operator digests (including cross-workspace morning/evening
+> `[Outreach digest] … PoliceStationRepUK`), approval/confirmation mail, and the admin UI.
+> Env cannot re-enable (`PSA_OUTREACH_EMAILS_DISABLED`). Discovery/enrich/maintain may still run for inventory.
 
 **Admin URL:** https://www.policestationagent.com/admin  
 **Sign in:** Enter `robertdavidcashman@gmail.com` → receive 6-digit code by email → verify.
 
-Requires **Upstash Redis** (sessions + prospect data) and **RESEND_API_KEY** (login codes + outreach emails) on Vercel.
+Requires **Upstash Redis** (sessions + prospect data) and **RESEND_API_KEY** (login codes) on Vercel.
 
 ## Cron schedule (UTC)
 
 | Time | Route | What runs |
 |------|-------|-----------|
-| `03:00` | `/api/cron/firm-outreach-pipeline/maintain` | LAA + DSCC + discovery + requalify (240s budget; website checks Sunday only); Sunday requeues `no_email` |
-| `05:00` | `/api/cron/firm-outreach-enrich` | Enrich only (~60 firms, ~270s max) |
-| `06:00` | `/api/cron/firm-outreach-enrich` | Enrich only (~60 firms, ~270s max) |
-| `07:00` | `/api/cron/firm-outreach-enrich` | Enrich only (~60 firms, ~270s max) |
-| `08:00` | `/api/cron/firm-outreach-enrich` | Enrich only (~60 firms, ~270s max) |
-| `10:00` | `/api/cron/firm-outreach-enrich` | Enrich only (~60 firms, ~270s max) |
-| `12:00` | `/api/cron/firm-outreach-enrich` | Enrich only (~60 firms, ~270s max) |
-| `14:00` | `/api/cron/firm-outreach-enrich` | Enrich only (~60 firms, ~270s max) |
-| `18:00` | `/api/cron/firm-outreach-enrich` | Enrich only (~60 firms, ~270s max) |
-| `09:30` | `/api/cron/firm-outreach-pipeline/full` | No-op while PSA kill-switch is on (was auto-send / approval) |
-| ~~`14:30` / `18:30`~~ | ~~`/api/cron/firm-outreach-send`~~ | **Removed from schedule** — PSA prospect sends permanently off |
-| ~~`*/15`~~ | ~~`/api/cron/firm-outreach-kent-corrections`~~ | **Removed from schedule** — Kent corrections permanently off |
-| ~~`17:00`~~ | ~~`/api/cron/firm-outreach-digest`~~ | **Removed from schedule** — Kent agent-cover owner digest permanently off (RepUK owns digests) |
+| `03:00` | `/api/cron/firm-outreach-pipeline/maintain` | LAA + DSCC + discovery + requalify (inventory only) |
+| `04:00`–`20:00` | `/api/cron/firm-outreach-enrich` | Enrich only (~60 firms, ~270s max) |
+| `09:30` | `/api/cron/firm-outreach-pipeline/full` | Inventory only — never sends or emails operators |
+| ~~`11:00` / `19:00`~~ | ~~`/api/cron/firm-outreach-cross-digest`~~ | **Removed** — morning/evening operator digest permanently off |
+| ~~send / digest / kent-corrections~~ | — | **Removed from schedule** — routes are no-ops |
 
 All cron routes require `Authorization: Bearer $CRON_SECRET` (Vercel adds this automatically).
 
@@ -91,7 +84,6 @@ FIRM_OUTREACH_BOOTSTRAP_SECRET=... npx tsx scripts/firm-outreach-audit-today.ts
 
 - Enrichment uses active-campaign record status and a sliding scan window — LAA firms without email are prioritised each tick.
 - Cron enrich uses batches of **60** (default) with a 270s wall-clock guard.
-- Enrich crons remain scheduled; PSA send/digest/kent-correction crons are **not** scheduled while the kill-switch is on.
-- Nightly maintain requalify downgrades `ready_to_send` rows with implausible emails or failed MX checks (batch-limited).
+- Enrich crons remain scheduled; send/digest/cross-digest/kent-correction crons are **not** scheduled.
 - Post-deploy kick and send approval flows remain gated by `PSA_OUTREACH_EMAILS_DISABLED`.
-- **Do not** set `FIRM_OUTREACH_FORCE_SEND=true` unless deliberately resuming PSA outreach.
+- Env cannot re-enable outreach email — there is no `FIRM_OUTREACH_FORCE_SEND` escape hatch.

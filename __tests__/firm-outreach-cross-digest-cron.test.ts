@@ -13,12 +13,6 @@ describe('firm-outreach-cross-digest cron', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     process.env = { ...ENV, CRON_SECRET: 'cron-test' };
-    mockSendCrossDigest.mockResolvedValue({
-      sent: true,
-      date: '2026-06-28',
-      phase: 'morning',
-      combined: 99,
-    });
   });
 
   afterEach(() => {
@@ -33,17 +27,7 @@ describe('firm-outreach-cross-digest cron', () => {
     expect(mockSendCrossDigest).not.toHaveBeenCalled();
   });
 
-  it('returns 400 when phase is missing or invalid', async () => {
-    const res = await crossDigestGet(
-      new Request('http://localhost/api/cron/firm-outreach-cross-digest', {
-        headers: { authorization: 'Bearer cron-test' },
-      }),
-    );
-    expect(res.status).toBe(400);
-    expect(mockSendCrossDigest).not.toHaveBeenCalled();
-  });
-
-  it('sends morning digest when authorized', async () => {
+  it('is a permanent no-op and never calls the digest sender', async () => {
     const res = await crossDigestGet(
       new Request('http://localhost/api/cron/firm-outreach-cross-digest?phase=morning', {
         headers: { authorization: 'Bearer cron-test' },
@@ -51,35 +35,21 @@ describe('firm-outreach-cross-digest cron', () => {
     );
     expect(res.status).toBe(200);
     const json = await res.json();
-    expect(json.mode).toBe('cross-workspace-digest');
-    expect(json.phase).toBe('morning');
-    expect(mockSendCrossDigest).toHaveBeenCalledWith({ phase: 'morning', force: false });
+    expect(json.mode).toBe('permanently_disabled');
+    expect(json.skipped).toBe(true);
+    expect(json.reason).toBe('psa_outreach_emails_disabled');
+    expect(mockSendCrossDigest).not.toHaveBeenCalled();
   });
 
-  it('sends evening digest when authorized', async () => {
-    mockSendCrossDigest.mockResolvedValue({
-      sent: true,
-      date: '2026-06-28',
-      phase: 'evening',
-      combined: 150,
-    });
+  it('no-ops for evening and force=1 as well', async () => {
     const res = await crossDigestGet(
-      new Request('http://localhost/api/cron/firm-outreach-cross-digest?phase=evening', {
+      new Request('http://localhost/api/cron/firm-outreach-cross-digest?phase=evening&force=1', {
         headers: { authorization: 'Bearer cron-test' },
       }),
     );
     expect(res.status).toBe(200);
     const json = await res.json();
-    expect(json.phase).toBe('evening');
-    expect(mockSendCrossDigest).toHaveBeenCalledWith({ phase: 'evening', force: false });
-  });
-
-  it('passes force=1 to digest sender', async () => {
-    await crossDigestGet(
-      new Request('http://localhost/api/cron/firm-outreach-cross-digest?phase=morning&force=1', {
-        headers: { authorization: 'Bearer cron-test' },
-      }),
-    );
-    expect(mockSendCrossDigest).toHaveBeenCalledWith({ phase: 'morning', force: true });
+    expect(json.skipped).toBe(true);
+    expect(mockSendCrossDigest).not.toHaveBeenCalled();
   });
 });

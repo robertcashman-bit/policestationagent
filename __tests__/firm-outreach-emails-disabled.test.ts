@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest';
 import {
   PSA_OUTREACH_EMAILS_DISABLED,
   arePsaOutreachEmailsDisabled,
+  arePsaOutreachOperatorMailDisabled,
 } from '@/lib/firm-outreach/outreach-emails-disabled';
 import { sendOutreachEmail } from '@/lib/firm-outreach/outreach/send';
 import { FIRM_OUTREACH_CAMPAIGN_ID } from '@/lib/firm-outreach/site-config';
@@ -15,10 +16,13 @@ import {
 } from '@/lib/firm-outreach/verify-checks';
 
 describe('PSA outreach email kill-switch', () => {
-  it('is permanently disabled by default', () => {
+  it('is permanently disabled and env cannot re-enable', () => {
     expect(PSA_OUTREACH_EMAILS_DISABLED).toBe(true);
-    delete process.env.FIRM_OUTREACH_FORCE_SEND;
     expect(arePsaOutreachEmailsDisabled()).toBe(true);
+    expect(arePsaOutreachOperatorMailDisabled()).toBe(true);
+    process.env.FIRM_OUTREACH_FORCE_SEND = 'true';
+    expect(arePsaOutreachEmailsDisabled()).toBe(true);
+    delete process.env.FIRM_OUTREACH_FORCE_SEND;
   });
 
   it('campaign id remains agent_cover_kent_v1 (Kent agent cover)', () => {
@@ -26,7 +30,6 @@ describe('PSA outreach email kill-switch', () => {
   });
 
   it('refuses live agent_cover_kent_v1 prospect sends', async () => {
-    delete process.env.FIRM_OUTREACH_FORCE_SEND;
     const prospect = {
       id: 'fop_kent_test',
       email: 'crime@kent-firm.example',
@@ -46,7 +49,6 @@ describe('PSA outreach email kill-switch', () => {
   });
 
   it('blocks live sendOutreachEmail calls without campaign id', async () => {
-    delete process.env.FIRM_OUTREACH_FORCE_SEND;
     const prospect = {
       id: 'fop_test',
       email: 'test@example-firm.co.uk',
@@ -63,14 +65,18 @@ describe('PSA outreach email kill-switch', () => {
     expect(result.error).toBe('psa_outreach_emails_disabled');
   });
 
-  it('does not schedule the Kent digest cron in vercel.json', () => {
+  it('does not schedule digest or cross-digest crons in vercel.json', () => {
     const vercelRaw = readFileSync(resolve('vercel.json'), 'utf8');
     const vercelJson = JSON.parse(vercelRaw.replace(/,\s*([}\]])/g, '$1'));
     const paths = (vercelJson.crons ?? []).map((c: { path: string }) => c.path as string);
     expect(cronRouteScheduled(paths, '/api/cron/firm-outreach-digest')).toBe(false);
+    expect(cronRouteScheduled(paths, '/api/cron/firm-outreach-cross-digest')).toBe(false);
     expect(paths.some((p) => p.includes('firm-outreach-digest'))).toBe(false);
+    expect(paths.some((p) => p.includes('firm-outreach-cross-digest'))).toBe(false);
     expect(EXPECTED_CRON_ROUTES).not.toContain('/api/cron/firm-outreach-digest');
+    expect(EXPECTED_CRON_ROUTES).not.toContain('/api/cron/firm-outreach-cross-digest');
     expect(LEGACY_CRON_ROUTES).toContain('/api/cron/firm-outreach-digest');
+    expect(LEGACY_CRON_ROUTES).toContain('/api/cron/firm-outreach-cross-digest');
   });
 
   it('does not schedule prospect send or kent-correction crons', () => {

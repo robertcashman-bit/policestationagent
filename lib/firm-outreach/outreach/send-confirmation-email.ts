@@ -1,5 +1,9 @@
 import { Resend } from 'resend';
 import { SITE_URL } from '@/config/site';
+import {
+  PSA_OUTREACH_EMAILS_DISABLED_REASON,
+  arePsaOutreachOperatorMailDisabled,
+} from '../outreach-emails-disabled';
 import type { OutreachActivityRow, OutreachRunStats } from '../types';
 import { buildOutreachActivityReport } from './activity-report';
 import { outreachNotifyEmail } from './notify-recipient';
@@ -114,6 +118,10 @@ export async function sendOutreachSendConfirmationEmail(opts: {
   date?: string;
   source?: OutreachSendConfirmationSource;
 }): Promise<boolean> {
+  if (arePsaOutreachOperatorMailDisabled()) {
+    console.info('[firm-outreach confirmation blocked]', PSA_OUTREACH_EMAILS_DISABLED_REASON);
+    return false;
+  }
   const to = outreachNotifyEmail();
   const date = opts.date ?? outreachApprovalDate();
   const source = opts.source ?? 'autosend';

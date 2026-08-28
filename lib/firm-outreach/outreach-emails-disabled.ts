@@ -1,24 +1,27 @@
 /**
  * Permanent stop for Police Station Agent firm-outreach emails.
  *
- * Covers prospect/firm sends AND owner digests / approval reminders for the
- * Kent agent-cover campaign (`agent_cover_kent_v1`). Robert wants RepUK
- * (Policestationrepuk) outreach only — this app must not email digests or
- * firms.
+ * Covers:
+ * - Prospect / firm sends (Kent agent-cover)
+ * - Operator digests (Kent daily + cross-workspace morning/evening)
+ * - Approval reminders, batch confirmation, Kent correction mail
  *
- * Policestationrepuk outreach is separate and must keep running.
- * Do not flip this to false without an explicit product decision.
+ * Env cannot re-enable. There is no FORCE_SEND escape hatch.
+ * Do not flip this to false without an explicit written product decision from Robert.
  *
- * Escape hatch (emergency only): FIRM_OUTREACH_FORCE_SEND=true
- * — still requires normal pause/send env gates.
+ * Pipeline / enrich / discovery may still run for inventory; they must not email.
  */
-export const PSA_OUTREACH_EMAILS_DISABLED = true;
+export const PSA_OUTREACH_EMAILS_DISABLED = true as const;
 
 export const PSA_OUTREACH_EMAILS_DISABLED_REASON =
-  'Police Station Agent firm outreach emails and Kent-agent digests are permanently disabled (2026-08-21). Use Policestationrepuk for firm outreach.';
+  'Police Station Agent firm outreach emails and operator digests are permanently disabled. Env cannot re-enable.';
 
-/** True when no PSA firm-outreach email (prospect send or owner digest) may leave this app. */
+/** True when no PSA firm-outreach email (prospect send or operator mail) may leave this app. */
 export function arePsaOutreachEmailsDisabled(): boolean {
-  if (process.env.FIRM_OUTREACH_FORCE_SEND === 'true') return false;
+  return PSA_OUTREACH_EMAILS_DISABLED;
+}
+
+/** Alias for operator-facing digests / alerts / confirmations. */
+export function arePsaOutreachOperatorMailDisabled(): boolean {
   return PSA_OUTREACH_EMAILS_DISABLED;
 }

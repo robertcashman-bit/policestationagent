@@ -62,13 +62,13 @@ export function checkApprovalCronSkipsSend(rootDir = process.cwd()): RepoCheckRe
   }
   const src = readFileSync(file, 'utf8');
   const ok =
-    src.includes('outreachRequireApproval') &&
     src.includes('skipSend: true') &&
-    src.includes('sendOutreachApprovalRequestEmail');
+    src.includes('skipDigest: true') &&
+    src.includes('inventory_only_send_disabled');
   return {
     name: 'approval_cron_skips_send',
     ok,
-    detail: ok ? 'approval-only morning cron' : 'full cron missing approval gate',
+    detail: ok ? 'full cron is inventory-only (send permanently off)' : 'full cron missing inventory-only gate',
   };
 }
 
@@ -179,29 +179,32 @@ export function checkAdminSummarySnapshotDeduped(rootDir = process.cwd()): RepoC
   }
   const src = readFileSync(file, 'utf8');
   const ok =
-    src.includes('getProspectStatusSnapshot()') &&
-    src.includes('buildOutreachDashboardSummary(snapshot)') &&
-    src.includes('getProspectIndexHealth(snapshot)');
+    src.includes("status: 410") &&
+    src.includes('psa_outreach_emails_disabled') &&
+    src.includes('permanently disabled');
   return {
     name: 'admin_summary_snapshot_deduped',
     ok,
-    detail: ok ? 'single snapshot shared across summary and index health' : 'duplicate prospect scans',
+    detail: ok
+      ? 'admin API permanently returns 410 (email product off)'
+      : 'admin API should permanently return 410',
   };
 }
 
 export function checkAdminSummaryTimeout(rootDir = process.cwd()): RepoCheckResult {
-  const file = resolve(rootDir, 'components/admin/FirmOutreachDashboard.tsx');
-  if (!existsSync(file)) {
-    return { name: 'admin_summary_timeout', ok: false, detail: 'FirmOutreachDashboard missing' };
+  const page = resolve(rootDir, 'app/admin/firm-outreach/page.tsx');
+  const dash = resolve(rootDir, 'components/admin/FirmOutreachDashboard.tsx');
+  if (!existsSync(page)) {
+    return { name: 'admin_summary_timeout', ok: false, detail: 'admin firm-outreach page missing' };
   }
-  const src = readFileSync(file, 'utf8');
-  const match = src.match(/SUMMARY_TIMEOUT_MS\s*=\s*([\d_]+)/);
-  const ms = match ? Number(match[1].replace(/_/g, '')) : 0;
-  const ok = ms >= 25_000;
+  const src = readFileSync(page, 'utf8');
+  const ok = src.includes('notFound()') && !existsSync(dash);
   return {
     name: 'admin_summary_timeout',
     ok,
-    detail: ok ? `${ms}ms client abort` : `timeout too low (${ms || 'missing'}ms)`,
+    detail: ok
+      ? 'admin firm-outreach UI removed (notFound + dashboard deleted)'
+      : 'admin UI should call notFound and delete FirmOutreachDashboard',
   };
 }
 
@@ -226,14 +229,14 @@ export const EXPECTED_CRON_ROUTES = [
   '/api/cron/firm-outreach-pipeline/maintain',
   '/api/cron/firm-outreach-enrich',
   '/api/cron/firm-outreach-pipeline/full',
-  '/api/cron/firm-outreach-cross-digest',
 ] as const;
 
 export const VERIFY_CRON_ROUTES = ['/api/cron/firm-outreach-status'] as const;
 
-/** Routes kept for manual/legacy use but not scheduled (PSA prospect sends + Kent digest are off). */
+/** Routes kept for manual/legacy use but not scheduled (all PSA email paths permanently off). */
 export const LEGACY_CRON_ROUTES = [
   '/api/cron/firm-outreach-digest',
+  '/api/cron/firm-outreach-cross-digest',
   '/api/cron/firm-outreach-send',
   '/api/cron/firm-outreach-kick',
   '/api/cron/firm-outreach-kent-corrections',
@@ -384,7 +387,7 @@ export function checkVercelCronConfig(vercelJson: {
   results.push({
     name: 'vercel_cron_kent_digest_disabled',
     ok: kentDigestCronCount === 0,
-    detail: `count=${kentDigestCronCount} (Kent agent-cover owner digest must stay off — RepUK owns digests)`,
+    detail: `count=${kentDigestCronCount} (Kent agent-cover owner digest must stay off)`,
   });
   const kentCorrectionCronCount = paths.filter(
     (p) => p === '/api/cron/firm-outreach-kent-corrections',
@@ -400,15 +403,14 @@ export function checkVercelCronConfig(vercelJson: {
     ok: kickCronCount === 0,
     detail: `count=${kickCronCount}`,
   });
+  const crossDigestCronCount = paths.filter((p) =>
+    p === '/api/cron/firm-outreach-cross-digest' ||
+    p.startsWith('/api/cron/firm-outreach-cross-digest?'),
+  ).length;
   results.push({
-    name: 'vercel_cron_cross_digest_morning',
-    ok: schedules['/api/cron/firm-outreach-cross-digest?phase=morning'] === '0 11 * * *',
-    detail: String(schedules['/api/cron/firm-outreach-cross-digest?phase=morning'] ?? 'missing'),
-  });
-  results.push({
-    name: 'vercel_cron_cross_digest_evening',
-    ok: schedules['/api/cron/firm-outreach-cross-digest?phase=evening'] === '0 19 * * *',
-    detail: String(schedules['/api/cron/firm-outreach-cross-digest?phase=evening'] ?? 'missing'),
+    name: 'vercel_cron_cross_digest_disabled',
+    ok: crossDigestCronCount === 0,
+    detail: `count=${crossDigestCronCount} (morning/evening operator digest must stay off)`,
   });
 
   return results;

@@ -148,8 +148,7 @@ describe('cross-workspace digest module', () => {
     expect(subject).toContain('41 ready');
   });
 
-  it('skips when digest already sent for that phase', async () => {
-    vi.resetModules();
+  it('never emails while kill-switch is on (already_sent path unreachable)', async () => {
     mockKvGet.mockResolvedValue('2026-06-28T11:00:00.000Z');
     const { sendCrossWorkspaceOutreachDigest } = await import(
       '@/lib/firm-outreach/cross-workspace-digest'
@@ -159,33 +158,23 @@ describe('cross-workspace digest module', () => {
       now: new Date('2026-06-28T11:00:00.000Z'),
     });
     expect(result.sent).toBe(false);
-    expect(result.reason).toBe('already_sent');
+    expect(result.reason).toBe('psa_outreach_emails_disabled');
     expect(mockResendSend).not.toHaveBeenCalled();
   });
 
-  it('emails owner with RepUK From-name (not Police Station Agent)', async () => {
-    vi.resetModules();
+  it('blocks Resend even with force=true (env cannot re-enable)', async () => {
+    process.env.FIRM_OUTREACH_FORCE_SEND = 'true';
     const { sendCrossWorkspaceOutreachDigest } = await import(
       '@/lib/firm-outreach/cross-workspace-digest'
     );
     const result = await sendCrossWorkspaceOutreachDigest({
       phase: 'morning',
+      force: true,
       now: new Date('2026-06-28T11:00:00.000Z'),
     });
-    expect(result.sent).toBe(true);
-    expect(result.combined).toBe(1);
-    expect(mockResendSend).toHaveBeenCalledWith(
-      expect.objectContaining({
-        from: 'PoliceStationRepUK <noreply@policestationrepuk.org>',
-        to: 'robertdavidcashman@gmail.com',
-        subject: expect.stringContaining('PoliceStationRepUK'),
-        html: expect.stringContaining('RepUK sent today'),
-      }),
-    );
-    expect(mockKvSet).toHaveBeenCalledWith(
-      'firmoutreach:cross-digest:sent:2026-06-28:morning',
-      expect.any(String),
-      expect.objectContaining({ ex: expect.any(Number) }),
-    );
+    expect(result.sent).toBe(false);
+    expect(result.reason).toBe('psa_outreach_emails_disabled');
+    expect(mockResendSend).not.toHaveBeenCalled();
+    delete process.env.FIRM_OUTREACH_FORCE_SEND;
   });
 });

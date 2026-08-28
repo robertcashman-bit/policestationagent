@@ -439,159 +439,34 @@ describe('GET /api/admin/firm-outreach', () => {
     vi.clearAllMocks();
   });
 
-  function mockIndexHealthModule() {
-    vi.doMock('@/lib/firm-outreach/index-health', () => ({
-      getProspectIndexHealth: vi.fn().mockResolvedValue({
-        masterIndexCount: 10,
-        indexedTotal: 12,
-        recordTotal: 12,
-        prospectCounts: { discovered: 10, ready_to_send: 2 },
-        drifted: false,
-      }),
-    }));
-  }
-
-  function mockStorageSnapshot() {
-    vi.doMock('@/lib/firm-outreach/storage', () => ({
-      getProspectStatusSnapshot: vi.fn().mockResolvedValue({
-        counts: { discovered: 10, ready_to_send: 2 },
-        masterIndexCount: 10,
-        computedAt: '2026-06-11T12:00:00Z',
-        fromCache: true,
-      }),
-    }));
-  }
-
-  it('returns ok payload with report and counts when admin authorised', async () => {
-    const mockBuildSummary = vi.fn().mockResolvedValue({
-      prospectCounts: { discovered: 10, ready_to_send: 2 },
-      report: {
-        generatedAt: '2026-06-11T12:00:00Z',
-        summary: {
-          totalSends: 1,
-          sentToday: 0,
-          sentLast7Days: 0,
-          uniqueRecipients: 1,
-          bySendStatus: { sent: 1 },
-          waClicks: 0,
-          joinedWhatsApp: 0,
-          bounced: 0,
-          complained: 0,
-          unsubscribed: 0,
-          pendingFollowUp1: 0,
-          pendingFollowUp2: 0,
-          readyToSend: 2,
-          discovered: 10,
-          noEmail: 0,
-          excluded: 0,
-        },
-        sends: [],
-        readyToSendProspects: [],
-        excludedProspects: [],
-        suppressions: [],
-      },
-    });
+  it('returns 410 when admin authorised (API permanently disabled)', async () => {
     vi.doMock('@/lib/admin-auth', () => ({
       requireAdminApi: vi.fn().mockResolvedValue({
         ok: true,
         session: { role: 'admin', email: 'admin@test.co.uk' },
       }),
     }));
-    vi.doMock('@/lib/kv', () => ({
-      getKV: vi.fn().mockReturnValue({}),
-    }));
-    vi.doMock('@/lib/firm-outreach/outreach/activity-report', () => ({
-      buildOutreachActivityReport: vi.fn(),
-      buildOutreachDashboardSummary: mockBuildSummary,
-      emptyOutreachActivityReport: vi.fn(),
-      activityReportToCsv: vi.fn(),
-    }));
-    vi.doMock('@/lib/firm-outreach/pause-state', () => ({
-      getOutreachPauseSummary: vi.fn().mockResolvedValue({ effectivePaused: false }),
-    }));
-    vi.doMock('@/lib/firm-outreach/config-status', () => ({
-      getOutreachConfigStatus: vi.fn().mockResolvedValue({ sendAllowed: true }),
-    }));
-    vi.doMock('@/lib/firm-outreach/constants', () => ({
-      dailySendCap: () => 30,
-      outreachEnabled: () => true,
-      countyAllowlist: () => ['kent'],
-      outreachPaused: () => false,
-      outreachSendEnabled: () => true,
-    }));
-    mockIndexHealthModule();
-    mockStorageSnapshot();
 
     const { GET } = await import('@/app/api/admin/firm-outreach/route');
-    const res = await GET(new Request('http://localhost/api/admin/firm-outreach'));
+    const res = await GET();
     const json = await res.json();
 
-    expect(res.status).toBe(200);
-    expect(json.ok).toBe(true);
-    expect(json.scope).toBe('summary');
-    expect(mockBuildSummary).toHaveBeenCalledTimes(1);
-    expect(mockBuildSummary).toHaveBeenCalledWith(
-      expect.objectContaining({
-        counts: { discovered: 10, ready_to_send: 2 },
-        fromCache: true,
-      }),
-    );
-    expect(json.counts.discovered).toBe(10);
-    expect(json.report.summary.totalSends).toBe(1);
-    expect(json.countsFromCache).toBe(true);
+    expect(res.status).toBe(410);
+    expect(json.disabled).toBe(true);
+    expect(json.reason).toBe('psa_outreach_emails_disabled');
   });
 
-  it('uses full report when scope=full', async () => {
-    const mockBuildFull = vi.fn().mockResolvedValue({
-      prospectCounts: { discovered: 10 },
-      report: {
-        generatedAt: '2026-06-11T12:00:00Z',
-        summary: { totalSends: 3 },
-        sends: [{ sendId: 'fos_1' }],
-        readyToSendProspects: [{ prospectId: 'fop_1' }],
-        excludedProspects: [],
-        suppressions: [],
-      },
-    });
+  it('returns 401 without admin session', async () => {
     vi.doMock('@/lib/admin-auth', () => ({
       requireAdminApi: vi.fn().mockResolvedValue({
-        ok: true,
-        session: { role: 'admin', email: 'admin@test.co.uk' },
+        ok: false,
+        status: 401,
+        error: 'Unauthorized',
       }),
     }));
-    vi.doMock('@/lib/kv', () => ({
-      getKV: vi.fn().mockReturnValue({}),
-    }));
-    vi.doMock('@/lib/firm-outreach/outreach/activity-report', () => ({
-      buildOutreachActivityReport: mockBuildFull,
-      buildOutreachDashboardSummary: vi.fn(),
-      emptyOutreachActivityReport: vi.fn(),
-      activityReportToCsv: vi.fn(),
-    }));
-    vi.doMock('@/lib/firm-outreach/pause-state', () => ({
-      getOutreachPauseSummary: vi.fn().mockResolvedValue({ effectivePaused: false }),
-    }));
-    vi.doMock('@/lib/firm-outreach/config-status', () => ({
-      getOutreachConfigStatus: vi.fn().mockResolvedValue({ sendAllowed: true }),
-    }));
-    vi.doMock('@/lib/firm-outreach/constants', () => ({
-      dailySendCap: () => 30,
-    }));
-    mockIndexHealthModule();
-    mockStorageSnapshot();
 
     const { GET } = await import('@/app/api/admin/firm-outreach/route');
-    const res = await GET(new Request('http://localhost/api/admin/firm-outreach?scope=full'));
-    const json = await res.json();
-
-    expect(res.status).toBe(200);
-    expect(json.scope).toBe('full');
-    expect(mockBuildFull).toHaveBeenCalledTimes(1);
-    expect(mockBuildFull).toHaveBeenCalledWith(
-      expect.objectContaining({
-        counts: { discovered: 10, ready_to_send: 2 },
-      }),
-    );
-    expect(json.report.sends).toHaveLength(1);
+    const res = await GET();
+    expect(res.status).toBe(401);
   });
 });

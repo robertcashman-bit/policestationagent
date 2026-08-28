@@ -307,61 +307,20 @@ describe('POST /api/admin/firm-outreach restore and send', () => {
     vi.clearAllMocks();
   });
 
-  it('restore_excluded returns prospect when authorised', async () => {
-    const prospect = excludedProspect({ status: 'ready_to_send', excludedReason: undefined });
+  it('returns 410 permanently disabled when authorised', async () => {
     vi.doMock('@/lib/admin-auth', () => ({
       requireAdminApi: vi.fn().mockResolvedValue({
         ok: true,
         session: { role: 'admin', email: 'admin@test.co.uk' },
       }),
     }));
-    vi.doMock('@/lib/firm-outreach/outreach/admin-actions', () => ({
-      restoreExcludedProspect: vi.fn().mockResolvedValue({ ok: true, prospect }),
-      manualSendProspect: vi.fn(),
-      excludeProspect: vi.fn(),
-      bulkSendProspects: vi.fn(),
-      bulkExcludeProspects: vi.fn(),
-    }));
 
     const { POST } = await import('@/app/api/admin/firm-outreach/route');
-    const res = await POST(
-      new Request('http://localhost/api/admin/firm-outreach', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'restore_excluded', prospectId: 'fop_ex1' }),
-      }),
-    );
+    const res = await POST();
     const json = await res.json();
 
-    expect(res.status).toBe(200);
-    expect(json.ok).toBe(true);
-    expect(json.prospect.status).toBe('ready_to_send');
-  });
-
-  it('manual_send returns 409 when suppressed', async () => {
-    vi.doMock('@/lib/admin-auth', () => ({
-      requireAdminApi: vi.fn().mockResolvedValue({
-        ok: true,
-        session: { role: 'admin', email: 'admin@test.co.uk' },
-      }),
-    }));
-    vi.doMock('@/lib/firm-outreach/outreach/admin-actions', () => ({
-      restoreExcludedProspect: vi.fn(),
-      manualSendProspect: vi.fn().mockResolvedValue({ ok: false, error: 'suppressed' }),
-      excludeProspect: vi.fn(),
-      bulkSendProspects: vi.fn(),
-      bulkExcludeProspects: vi.fn(),
-    }));
-
-    const { POST } = await import('@/app/api/admin/firm-outreach/route');
-    const res = await POST(
-      new Request('http://localhost/api/admin/firm-outreach', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'manual_send', prospectId: 'fop_ex1' }),
-      }),
-    );
-
-    expect(res.status).toBe(409);
+    expect(res.status).toBe(410);
+    expect(json.disabled).toBe(true);
+    expect(json.reason).toBe('psa_outreach_emails_disabled');
   });
 });

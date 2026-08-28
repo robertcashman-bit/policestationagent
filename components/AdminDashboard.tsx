@@ -544,12 +544,6 @@ export default function AdminDashboard({ embedded = false }: { embedded?: boolea
           <div className="flex justify-between items-center h-16">
             <h1 className="text-2xl font-bold text-[#2563eb]">Admin Dashboard</h1>
             <div className="flex items-center space-x-4">
-              <Link
-                href="/admin/firm-outreach"
-                className="text-[#2563eb] font-medium hover:underline"
-              >
-                Firm outreach
-              </Link>
               <Link href="/" className="text-gray-700 hover:text-[#2563eb]">
                 View Site
               </Link>

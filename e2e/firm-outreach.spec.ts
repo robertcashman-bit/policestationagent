@@ -35,11 +35,9 @@ test.describe('Firm outreach smoke tests', () => {
     expect(response.status()).toBe(401);
   });
 
-  test('firm-outreach admin page shows login when unauthenticated', async ({ request }) => {
+  test('firm-outreach admin page is removed (404)', async ({ request }) => {
     const response = await request.get('/admin/firm-outreach');
-    expect(response.status()).toBeLessThan(400);
-    const html = await response.text();
-    expect(html.toLowerCase()).toMatch(/sign in to admin/);
+    expect([404, 401]).toContain(response.status());
   });
 
   test('resend webhook rejects unsigned POST', async ({ request }) => {
@@ -57,11 +55,9 @@ test.describe('Firm outreach smoke tests', () => {
     expect(html.length).toBeGreaterThan(20);
   });
 
-  test('send-approve result page renders for unknown token', async ({ request }) => {
+  test('send-approve page is removed (404)', async ({ request }) => {
     const response = await request.get('/outreach/send-approve/not-a-valid-token');
-    expect(response.status()).toBeLessThan(500);
-    const html = await response.text();
-    expect(html.length).toBeGreaterThan(20);
+    expect(response.status()).toBe(404);
   });
 
   test('admin login page loads without JWT configuration error', async ({ request }) => {
@@ -72,18 +68,14 @@ test.describe('Firm outreach smoke tests', () => {
     expect(html.toLowerCase()).toMatch(/sign in to admin/);
   });
 
-
-  test('send-approve result page renders known error states', async ({ request }) => {
+  test('send-approve result page is removed (404)', async ({ request }) => {
     const response = await request.get('/outreach/send-approve/result?detail=missing-token');
-    expect(response.status()).toBeLessThan(500);
-    const html = await response.text();
-    expect(html.length).toBeGreaterThan(20);
-    expect(html.toLowerCase()).toMatch(/link|token|send|unavailable|error|missing/);
+    expect(response.status()).toBe(404);
   });
 
-  test('brochure GET on send-approved API returns 405', async ({ request }) => {
+  test('send-approved API returns 410', async ({ request }) => {
     const response = await request.get('/api/outreach/send-approved');
-    expect(response.status()).toBe(405);
+    expect(response.status()).toBe(410);
   });
 
   test('admin send-code endpoint responds when KV is configured', async ({ request }) => {

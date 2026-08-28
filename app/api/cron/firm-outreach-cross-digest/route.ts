@@ -1,36 +1,26 @@
 import { NextResponse } from 'next/server';
 import { isCronAuthorized } from '@/lib/cron-auth';
-import {
-  sendCrossWorkspaceOutreachDigest,
-  type CrossDigestPhase,
-} from '@/lib/firm-outreach/cross-workspace-digest';
+import { PSA_OUTREACH_EMAILS_DISABLED_REASON } from '@/lib/firm-outreach/outreach-emails-disabled';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
-export const maxDuration = 120;
+export const maxDuration = 30;
 
-function parsePhase(raw: string | null): CrossDigestPhase | null {
-  if (raw === 'morning' || raw === 'evening') return raw;
-  return null;
-}
-
-/** Twice-daily cross-workspace outreach summary to owner. */
+/**
+ * Cross-workspace morning/evening operator digest.
+ * Permanently no-op — never emails. Removed from vercel.json schedule.
+ * Route kept so accidental hits / stale Vercel cron configs return safely.
+ */
 export async function GET(request: Request) {
   if (!isCronAuthorized(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const url = new URL(request.url);
-  const phase = parsePhase(url.searchParams.get('phase'));
-  if (!phase) {
-    return NextResponse.json(
-      { error: 'Missing or invalid phase (use morning or evening)' },
-      { status: 400 },
-    );
-  }
-
-  const force = url.searchParams.get('force') === '1';
-  const result = await sendCrossWorkspaceOutreachDigest({ phase, force });
-
-  return NextResponse.json({ ok: true, mode: 'cross-workspace-digest', ...result });
+  return NextResponse.json({
+    ok: true,
+    mode: 'permanently_disabled',
+    skipped: true,
+    reason: 'psa_outreach_emails_disabled',
+    message: PSA_OUTREACH_EMAILS_DISABLED_REASON,
+  });
 }

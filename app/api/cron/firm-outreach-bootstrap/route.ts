@@ -64,7 +64,6 @@ export async function GET(request: Request) {
   const reindexReset = url.searchParams.get('reindexReset') === '1';
   const sendApproval = url.searchParams.get('sendApproval') === '1';
   const sendKentCorrection = url.searchParams.get('sendKentCorrection') === '1';
-  const forceApproval = url.searchParams.get('force') === '1';
   const batches = Number(url.searchParams.get('batches') || 2) || 2;
   const limit = Number(url.searchParams.get('limit') || 25) || 25;
 
@@ -80,32 +79,20 @@ export async function GET(request: Request) {
   }
 
   if (sendKentCorrection) {
-    const dryRun = url.searchParams.get('dryRun') === '1';
-    const limit = Number(url.searchParams.get('limit') || 0) || undefined;
-    const { runKentCorrectionEmails } = await import(
-      '@/lib/firm-outreach/outreach/run-kent-corrections'
-    );
-    const correction = await runKentCorrectionEmails({ dryRun, limit });
-    return NextResponse.json({ ok: true, mode: 'sendKentCorrection', dryRun, correction });
+    return NextResponse.json({
+      ok: true,
+      mode: 'sendKentCorrection',
+      skipped: true,
+      reason: 'psa_outreach_emails_disabled',
+    });
   }
 
   if (sendApproval) {
-    if (url.searchParams.get('unpause') === '1') {
-      await bootstrapOutreach({ unpauseOnly: true, batches: 0, limit: 0 });
-    }
-    const { sendOutreachApprovalRequestEmail } = await import(
-      '@/lib/firm-outreach/outreach/approval-request-email'
-    );
-    const approval = await sendOutreachApprovalRequestEmail({ force: forceApproval });
-    const { countProspectsByStatus } = await import('@/lib/firm-outreach/storage');
-    const counts = await countProspectsByStatus();
-    const { isOutreachSendAllowed } = await import('@/lib/firm-outreach/pause-state');
     return NextResponse.json({
       ok: true,
       mode: 'sendApproval',
-      approval,
-      sendAllowed: await isOutreachSendAllowed(),
-      counts,
+      skipped: true,
+      reason: 'psa_outreach_emails_disabled',
     });
   }
 

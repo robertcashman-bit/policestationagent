@@ -6,6 +6,10 @@ import {
   type OutreachSentRecord,
 } from './count-today';
 import { getCampaignQueueCounts } from './queue-health';
+import {
+  PSA_OUTREACH_EMAILS_DISABLED_REASON,
+  arePsaOutreachOperatorMailDisabled,
+} from './outreach-emails-disabled';
 import { outreachNotifyEmail } from './outreach/notify-recipient';
 import { FIRM_OUTREACH_CAMPAIGN_ID as PSA_CAMPAIGN_ID } from './site-config';
 
@@ -326,6 +330,19 @@ export async function sendCrossWorkspaceOutreachDigest(opts: {
   const now = opts.now ?? new Date();
   const date = now.toISOString().slice(0, 10);
   const phase = opts.phase;
+
+  // Permanent stop: morning/evening "[Outreach digest] … PoliceStationRepUK"
+  // must never leave this app. force= does not override.
+  if (arePsaOutreachOperatorMailDisabled()) {
+    console.info('[cross-workspace digest blocked]', PSA_OUTREACH_EMAILS_DISABLED_REASON);
+    return {
+      sent: false,
+      reason: 'psa_outreach_emails_disabled',
+      date,
+      phase,
+      combined: 0,
+    };
+  }
 
   if (!opts.force && (await wasCrossDigestSent(date, phase))) {
     return { sent: false, reason: 'already_sent', date, phase, combined: 0 };

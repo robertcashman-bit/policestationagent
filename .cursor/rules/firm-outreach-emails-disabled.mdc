@@ -1,10 +1,13 @@
 # Firm outreach emails — Police Station Agent
 
-**Do not send firm outreach emails or Kent-agent digests from `policestationagent`.**
+**Do not send firm outreach emails or any operator outreach digests from `policestationagent`.**
 
 - Permanent kill-switch: `lib/firm-outreach/outreach-emails-disabled.ts` (`PSA_OUTREACH_EMAILS_DISABLED = true`)
+- Env cannot re-enable (no `FIRM_OUTREACH_FORCE_SEND` escape hatch)
 - Prospect/firm sends (cron, admin manual/bulk, Kent corrections, approval links) must stay blocked
-- Owner digests / approval reminders for Kent agent cover (`agent_cover_kent_v1`) must stay blocked — including `/api/cron/firm-outreach-digest` (removed from `vercel.json` schedule; route is a no-op)
-- **Policestationrepuk** WhatsApp / firm invite outreach + its own digests remain active — do not disable that site
-- **Also:** RepUK historically sent `agent_cover_kent_v1` (Police Station Agent–branded) mail via its dual-campaign cron (`*/15`). That path is killed in Policestationrepuk (`AGENT_COVER_EMAILS_DISABLED` / `OUTREACH_SEND_CAMPAIGN_IDS`)
-- Do not set `FIRM_OUTREACH_FORCE_SEND=true` or flip the kill-switch to `false` unless the user explicitly asks to resume PSA outreach
+- Operator digests blocked: Kent daily + **cross-workspace morning/evening** (`/api/cron/firm-outreach-cross-digest` removed from `vercel.json`; route is a no-op)
+- Approval / confirmation / failure operator mail must stay blocked
+- Admin firm-outreach UI/nav and send-approve pages are removed (404/410)
+- Pipeline/enrich/discovery may still run for inventory only — never email
+- Buffer and non-outreach crons stay on
+- Do not flip the kill-switch to `false` unless Robert explicitly asks in writing to resume PSA outreach

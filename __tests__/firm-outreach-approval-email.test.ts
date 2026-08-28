@@ -71,52 +71,16 @@ describe('sendOutreachApprovalRequestEmail', () => {
     expect(mockIssueToken).not.toHaveBeenCalled();
   });
 
-  it('sends approval email with Ready to send button when FORCE_SEND escape is on', async () => {
+  it('FORCE_SEND env cannot re-enable approval emails', async () => {
     process.env.FIRM_OUTREACH_FORCE_SEND = 'true';
     vi.resetModules();
     const { sendOutreachApprovalRequestEmail } = await import(
       '@/lib/firm-outreach/outreach/approval-request-email'
     );
-    const result = await sendOutreachApprovalRequestEmail();
-    expect(result.sent).toBe(true);
-    expect(mockResendSend).toHaveBeenCalledWith(
-      expect.objectContaining({
-        to: 'robertdavidcashman@gmail.com',
-        subject: expect.stringContaining('ready to send'),
-        html: expect.stringMatching(/send-approve\/11111111-1111-4111-8111-111111111111/),
-      }),
-    );
-    expect(mockMarkSent).toHaveBeenCalledWith('2026-06-13');
-  });
-
-  it('skips when approval email already sent (FORCE_SEND escape)', async () => {
-    process.env.FIRM_OUTREACH_FORCE_SEND = 'true';
-    mockWasSent.mockResolvedValue(true);
-    vi.resetModules();
-    const { sendOutreachApprovalRequestEmail } = await import(
-      '@/lib/firm-outreach/outreach/approval-request-email'
-    );
-    const result = await sendOutreachApprovalRequestEmail();
+    const result = await sendOutreachApprovalRequestEmail({ force: true });
     expect(result.sent).toBe(false);
-    expect(result.reason).toBe('already_sent_today');
-  });
-
-  it('skips when readyCount is zero (FORCE_SEND escape)', async () => {
-    process.env.FIRM_OUTREACH_FORCE_SEND = 'true';
-    mockBuildReport.mockResolvedValue({
-      report: {
-        summary: { readyToSend: 0, sentToday: 0 },
-        readyToSendProspects: [],
-      },
-    });
-    vi.resetModules();
-    const { sendOutreachApprovalRequestEmail } = await import(
-      '@/lib/firm-outreach/outreach/approval-request-email'
-    );
-    const result = await sendOutreachApprovalRequestEmail();
-    expect(result.sent).toBe(false);
-    expect(result.reason).toBe('none_ready');
-    expect(mockIssueToken).not.toHaveBeenCalled();
+    expect(result.reason).toBe('psa_outreach_emails_disabled');
+    expect(mockResendSend).not.toHaveBeenCalled();
   });
 });
 
@@ -127,6 +91,7 @@ describe('sendOutreachSendConfirmationEmail', () => {
   });
 
   it('does not throw when RESEND_API_KEY is absent', async () => {
+    vi.resetModules();
     const { sendOutreachSendConfirmationEmail } = await import(
       '@/lib/firm-outreach/outreach/send-confirmation-email'
     );
@@ -135,10 +100,10 @@ describe('sendOutreachSendConfirmationEmail', () => {
       receipts: [],
       readyRemaining: 115,
     });
-    expect(typeof ok).toBe('boolean');
+    expect(ok).toBe(false);
   });
 
-  it('uses autosend copy when source is autosend', async () => {
+  it('never calls Resend while PSA operator mail is permanently disabled', async () => {
     process.env.RESEND_API_KEY = 're_test';
     process.env.FIRM_OUTREACH_DIGEST_EMAIL = 'robertdavidcashman@gmail.com';
     mockResendSend.mockResolvedValue({ data: { id: 'msg_2' } });
@@ -146,7 +111,7 @@ describe('sendOutreachSendConfirmationEmail', () => {
     const { sendOutreachSendConfirmationEmail } = await import(
       '@/lib/firm-outreach/outreach/send-confirmation-email'
     );
-    await sendOutreachSendConfirmationEmail({
+    const ok = await sendOutreachSendConfirmationEmail({
       stats: { queued: 2, sent: 2, skipped: 0, suppressed: 0, errors: 0, elapsedMs: 1 },
       receipts: [
         {
@@ -168,12 +133,7 @@ describe('sendOutreachSendConfirmationEmail', () => {
       source: 'autosend',
       date: '2026-06-18',
     });
-    expect(mockResendSend).toHaveBeenCalledWith(
-      expect.objectContaining({
-        to: 'robertdavidcashman@gmail.com',
-        subject: '[Firm outreach] 2 sent — 2026-06-18',
-        html: expect.stringContaining('automated daily send'),
-      }),
-    );
+    expect(ok).toBe(false);
+    expect(mockResendSend).not.toHaveBeenCalled();
   });
 });
