@@ -83,6 +83,42 @@ const nextConfig = {
         destination: "/",
         permanent: true,
       },
+      // Legacy short offence URLs (pre-kebab long slugs)
+      {
+        source: "/offences",
+        destination: "/offences-we-deal-with",
+        permanent: true,
+      },
+      {
+        source: "/offences/assault",
+        destination: "/offences/assault-abh-gbh",
+        permanent: true,
+      },
+      {
+        source: "/offences/drugs",
+        destination: "/offences/drug-offences",
+        permanent: true,
+      },
+      {
+        source: "/offences/fraud",
+        destination: "/offences/fraud-theft",
+        permanent: true,
+      },
+      {
+        source: "/offences/sexual",
+        destination: "/offences/sexual-offences",
+        permanent: true,
+      },
+      {
+        source: "/offences/domestic",
+        destination: "/offences/domestic-abuse-allegations",
+        permanent: true,
+      },
+      {
+        source: "/offences/harassment",
+        destination: "/offences/harassment-stalking",
+        permanent: true,
+      },
       {
         source: "/home/:path*",
         destination: "/",
