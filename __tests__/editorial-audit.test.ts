@@ -89,11 +89,17 @@ describe('editorial audit rules', () => {
     expect(flags.some((f) => f.code === 'claim-35-years')).toBe(true);
   });
 
-  it('flags Maidstone as public custody suite', () => {
-    const flags = scanText(
-      'Attend Maidstone custody suite for all Kent arrests and charging decisions.',
-    );
-    expect(flags.some((f) => f.code === 'maidstone-custody-suite')).toBe(true);
+  it('flags we-are-the-police claims but not brand "Who we are Police Station Agent"', () => {
+    expect(
+      scanText('We are the police and will take your statement.').some(
+        (f) => f.code === 'we-are-the-police',
+      ),
+    ).toBe(true);
+    expect(
+      scanText(
+        "Who we are Police Station Agent is Robert Cashman's practice for Kent cover.",
+      ).some((f) => f.code === 'we-are-the-police'),
+    ).toBe(false);
   });
 });
 

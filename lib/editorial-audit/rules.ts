@@ -115,7 +115,8 @@ export const RED_FLAG_RULES: Array<{
     code: 'we-are-the-police',
     severity: 'PROBLEM',
     re: /\bwe are (?:the )?police\b|\bpolice station agent is (?:a |the )?police\b|\bour officers\b/i,
-    skip: /not the police|we are not (?:the )?police|independent of (?:the )?police/i,
+    // Brand line "Who we are Police Station Agent …" is not a police-identity claim.
+    skip: /not the police|we are not (?:the )?police|independent of (?:the )?police|who we are police station agent/i,
     message: 'This practice is not the police — remove police-identity wording',
   },
   {
