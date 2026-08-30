@@ -11,7 +11,7 @@ import { DEFAULT_OG_IMAGES, DEFAULT_TWITTER_IMAGES } from "@/lib/seo/page-metada
 export const metadata: Metadata = {
   title: "Kent Police Station Rep Coverage | All Towns | FREE extended hours",
   description:
-    "Police station rep coverage across all Kent towns. FREE extended hours representation at all Kent custody suites. Serving Medway, Maidstone, Canterbury, Gravesend, Tonbridge, Folkestone, Ashford, Dartford, Sittingbourne, Sevenoaks, Tunbridge Wells, Margate, Dover, Swanley, Bluewater.",
+    "Police station rep coverage across all Kent towns. FREE extended hours representation at Kent operational custody suites (Medway, North Kent/Gravesend, Canterbury, Tonbridge, Folkestone, Margate) and voluntary interview stations including Maidstone (custody closed / VAI only).",
   alternates: {
     canonical: `${SITE_URL}/coverage`,
   },
@@ -59,13 +59,17 @@ const CUSTODY_SUITES = [
     title: "Folkestone Custody Suite",
     detail: "Expert police station reps available.",
   },
+  {
+    href: "/margate-psa-station",
+    title: "Margate Custody Suite",
+    detail: "Expert police station reps available.",
+  },
 ] as const;
 
 const VOLUNTARY_STATIONS = [
-  { href: "/maidstone-psa-station", title: "Maidstone Police Station" },
+  { href: "/maidstone-psa-station", title: "Maidstone (custody closed / VAI only)" },
   { href: "/ashford-psa-station", title: "Ashford Police Station" },
   { href: "/dover-psa-station", title: "Dover Police Station" },
-  { href: "/margate-psa-station", title: "Margate Police Station" },
   { href: "/sevenoaks-psa-station", title: "Sevenoaks Police Station" },
   { href: "/sittingbourne-psa-station", title: "Sittingbourne Police Station" },
   { href: "/swanley-psa-station", title: "Swanley (VAI / local cover)" },

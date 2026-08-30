@@ -73,7 +73,7 @@ const faqItems = [
   {
     question: "Which police stations do you cover in Kent?",
     answer:
-      "We cover Kent custody suites including Medway (Gillingham), North Kent (Gravesend), Canterbury, Tonbridge, Folkestone, Ashford, Sittingbourne, Margate, Dover, Sevenoaks, and Tunbridge Wells. Maidstone custody is closed — voluntary interviews only.",
+      "We cover Kent's operational custody suites including Medway (Gillingham), North Kent (Gravesend), Canterbury, Tonbridge, Folkestone and Margate. We also attend voluntary interview stations across Kent — including Maidstone (custody closed / VAI only), Ashford, Dover, Sevenoaks, Sittingbourne, Swanley and Tunbridge Wells.",
   },
   {
     question: "Are police station solicitors independent of the police?",

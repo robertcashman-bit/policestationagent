@@ -77,7 +77,7 @@ export default function DrugOffencesPage() {
                 The police may contact you by phone, letter, or in person. You may be asked to attend a voluntary interview or you may be arrested.
               </p>
               <p className="text-slate-700">
-                We provide police station representation and advice for drug offence allegations across Kent. We can attend police stations including Medway, Maidstone, Canterbury, Gravesend, and other custody suites across the county.
+                We provide police station representation and advice for drug offence allegations across Kent. We can attend Kent custody suites including Medway, North Kent (Gravesend), Canterbury and other operational suites, plus voluntary interview stations such as Maidstone (custody closed / VAI only).
               </p>
             </section>
 
@@ -315,7 +315,7 @@ export default function DrugOffencesPage() {
                 </div>
                 <div>
                   <h3 className="font-bold text-slate-900 mb-2">Which police stations do you cover?</h3>
-                  <p className="text-slate-700">We cover all Kent custody suites, including Medway, Maidstone, Canterbury, Gravesend, and other police stations across Kent.</p>
+                  <p className="text-slate-700">We cover Kent custody suites including Medway, North Kent (Gravesend), Canterbury, Tonbridge, Folkestone and Margate, plus voluntary interview stations across Kent. Maidstone custody is closed — voluntary interviews only.</p>
                 </div>
                 <div>
                   <h3 className="font-bold text-slate-900 mb-2">How quickly can a solicitor attend?</h3>

@@ -55,7 +55,7 @@ export default function SexualOffencesPage() {
                 Allegations of sexual offences are serious and are treated as such by the police and courts. The process requires careful handling, and early legal advice is important to protect your interests and ensure your rights are respected.
               </p>
               <p className="text-slate-700">
-                We provide police station representation and advice for sexual offence allegations across Kent. We can attend police stations including Medway, Maidstone, Canterbury, Gravesend, and other custody suites across the county.
+                We provide police station representation and advice for sexual offence allegations across Kent. We can attend Kent custody suites including Medway, North Kent (Gravesend), Canterbury and other operational suites, plus voluntary interview stations such as Maidstone (custody closed / VAI only).
               </p>
             </section>
 
@@ -285,7 +285,7 @@ export default function SexualOffencesPage() {
                 </div>
                 <div>
                   <h3 className="font-bold text-slate-900 mb-2">Which police stations do you cover?</h3>
-                  <p className="text-slate-700">We cover all Kent custody suites, including Medway, Maidstone, Canterbury, Gravesend, and other police stations across Kent.</p>
+                  <p className="text-slate-700">We cover Kent custody suites including Medway, North Kent (Gravesend), Canterbury, Tonbridge, Folkestone and Margate, plus voluntary interview stations across Kent. Maidstone custody is closed — voluntary interviews only.</p>
                 </div>
                 <div>
                   <h3 className="font-bold text-slate-900 mb-2">How quickly can a solicitor attend?</h3>

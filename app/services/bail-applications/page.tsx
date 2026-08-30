@@ -50,7 +50,7 @@ export default function BailApplicationsPage() {
     {
       question: "Do you cover bail work across Kent?",
       answer:
-        "Yes. We advise on bail and bail conditions connected to Kent custody suites and courts, including Medway, Maidstone, Canterbury, Gravesend and surrounding areas." },
+        "Yes. We advise on bail and bail conditions connected to Kent custody suites and courts, including Medway, Canterbury, Gravesend and surrounding areas. Maidstone custody is closed — voluntary interviews only." },
   ];
 
   return (
