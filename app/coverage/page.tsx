@@ -59,13 +59,17 @@ const CUSTODY_SUITES = [
     title: "Folkestone Custody Suite",
     detail: "Expert police station reps available.",
   },
+  {
+    href: "/margate-psa-station",
+    title: "Margate Custody Suite",
+    detail: "Expert police station reps available.",
+  },
 ] as const;
 
 const VOLUNTARY_STATIONS = [
   { href: "/maidstone-psa-station", title: "Maidstone (custody closed / VAI only)" },
   { href: "/ashford-psa-station", title: "Ashford Police Station" },
   { href: "/dover-psa-station", title: "Dover Police Station" },
-  { href: "/margate-psa-station", title: "Margate Police Station" },
   { href: "/sevenoaks-psa-station", title: "Sevenoaks Police Station" },
   { href: "/sittingbourne-psa-station", title: "Sittingbourne Police Station" },
   { href: "/swanley-psa-station", title: "Swanley (VAI / local cover)" },
