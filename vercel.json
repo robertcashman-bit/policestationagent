@@ -120,6 +120,10 @@
     {
       "path": "/api/cron/police-confusion-health",
       "schedule": "0 2 * * *"
+    },
+    {
+      "path": "/api/cron/editorial-audit",
+      "schedule": "0 6 * * 1-5"
     }
   ]
 }
