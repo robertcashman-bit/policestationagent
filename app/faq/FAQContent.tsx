@@ -106,7 +106,7 @@ export default function FAQContent() {
         {
           question: "Which police stations do you cover?",
           answer:
-            "We cover all police stations and custody suites across Kent, including: Medway, Gravesend, Canterbury, Tonbridge, Folkestone, Ashford, Sittingbourne, Margate, Dover, and other Kent custody facilities. Maidstone custody is closed — voluntary interviews only. Travel times vary by location - typically 15-30 minutes for nearby stations, up to 60-75 minutes for stations in East Kent.",
+            "We cover Kent's operational custody suites including Medway, Gravesend, Canterbury, Tonbridge, Folkestone and Margate. We also attend voluntary interview stations across Kent — including Maidstone (custody closed / VAI only), Ashford, Dover, Sevenoaks, Sittingbourne, Swanley, Tunbridge Wells and Bluewater. Travel times vary by location - typically 15-30 minutes for nearby stations, up to 60-75 minutes for stations in East Kent.",
         },
       ],
     },

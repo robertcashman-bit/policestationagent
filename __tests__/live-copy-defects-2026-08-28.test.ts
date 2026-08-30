@@ -151,6 +151,15 @@ describe("live copy defects — 28 Aug 2026", () => {
     expect(page).toContain("Maidstone (custody closed / VAI only)");
   });
 
+  it("site FAQ does not list Maidstone or other VAI stations as custody suites", () => {
+    const page = fs.readFileSync(path.join(root, "app/faq/FAQContent.tsx"), "utf8");
+    expect(page).toContain("Maidstone (custody closed / VAI only)");
+    expect(page).toContain("operational custody suites including Medway, Gravesend, Canterbury, Tonbridge, Folkestone and Margate");
+    expect(page).not.toMatch(
+      /custody suites across Kent, including: Medway, Gravesend, Canterbury, Tonbridge, Folkestone, Ashford, Sittingbourne, Margate, Dover/
+    );
+  });
+
   it("police-station-agent-maidstone no longer claims an open custody suite", () => {
     const page = fs.readFileSync(
       path.join(root, "app/police-station-agent-maidstone/page.tsx"),
