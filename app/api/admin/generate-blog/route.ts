@@ -328,7 +328,7 @@ function generateFallbackContent(formData: {
 <p>
   For matters involving ${topic.toLowerCase()}, having a qualified solicitor is crucial. 
   I have extensive experience handling cases involving ${primaryKeyword} throughout ${location}, 
-  including at Medway, Maidstone, Canterbury, and Gravesend police stations.
+  including at Medway, Canterbury, and Gravesend custody suites, and Maidstone voluntary interviews (custody closed / VAI only).
 </p>
 
 ${
@@ -411,7 +411,7 @@ function generateAdvertBlock(): string {
   
   <p class="text-slate-700 mb-4">
     As an Accredited Duty Solicitor, I ensure your rights are protected under PACE 1984. My service covers 
-    Medway, Maidstone, Canterbury, Gravesend, and all Kent police stations.
+    Medway, Canterbury, Gravesend and other Kent custody suites, plus Maidstone voluntary interviews (custody closed / VAI only).
   </p>
   
   <div class="flex flex-col sm:flex-row gap-4 mt-6">

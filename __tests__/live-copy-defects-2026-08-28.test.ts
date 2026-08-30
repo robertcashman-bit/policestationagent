@@ -104,4 +104,61 @@ describe("live copy defects — 28 Aug 2026", () => {
       );
     }
   });
+
+  it("arrested-what-to-do does not list Maidstone under Kent custody suites", () => {
+    const page = fs.readFileSync(
+      path.join(root, "app/arrested-what-to-do/page.tsx"),
+      "utf8"
+    );
+    expect(page).toContain("Kent Custody Suites We Cover");
+    expect(page).toContain("Medway (Gillingham)");
+    expect(page).toContain("Tonbridge");
+    expect(page).not.toContain("Maidstone (Voluntary)");
+    expect(page).not.toMatch(
+      /Kent Custody Suites We Cover[\s\S]{0,2500}Maidstone \(Voluntary\)/
+    );
+    expect(page).toContain(
+      "Maidstone Police Station no longer operates as a custody suite — voluntary interviews (VAI) only"
+    );
+  });
+
+  it("resource hub custody list excludes Maidstone; VAI list includes closed wording", () => {
+    const data = fs.readFileSync(
+      path.join(root, "lib/kent-custody-stations.ts"),
+      "utf8"
+    );
+    const operationalBlock = data.match(
+      /export const KENT_OPERATIONAL_CUSTODY_STATIONS = \[([\s\S]*?)\] as const;/
+    )?.[1];
+    expect(operationalBlock).toBeTruthy();
+    expect(operationalBlock!).not.toMatch(/Maidstone/i);
+    expect(data).toContain('name: "Maidstone (VAI only — custody closed)"');
+
+    const page = fs.readFileSync(
+      path.join(root, "app/kent-police-custody-resources/page.tsx"),
+      "utf8"
+    );
+    expect(page).toContain("KENT_OPERATIONAL_CUSTODY_STATIONS");
+    expect(page).toContain("KENT_VAI_STATIONS");
+    expect(page).toContain("Maidstone custody is closed — voluntary");
+  });
+
+  it("coverage meta does not list Maidstone among custody suites without VAI cue", () => {
+    const page = fs.readFileSync(path.join(root, "app/coverage/page.tsx"), "utf8");
+    expect(page).not.toMatch(
+      /at all Kent custody suites\. Serving Medway, Maidstone/
+    );
+    expect(page).toContain("Maidstone (custody closed / VAI only)");
+  });
+
+  it("police-station-agent-maidstone no longer claims an open custody suite", () => {
+    const page = fs.readFileSync(
+      path.join(root, "app/police-station-agent-maidstone/page.tsx"),
+      "utf8"
+    );
+    expect(page).not.toContain("24-hour custody suite");
+    expect(page).not.toContain("main custody facility");
+    expect(page).toContain("Closed — voluntary interviews (VAI) only");
+    expect(page).toContain("no longer operates as a custody suite");
+  });
 });

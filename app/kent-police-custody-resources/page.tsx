@@ -7,7 +7,8 @@ import { SITE_DOMAIN } from "@/config/site";
 import { RESOURCE_HUB_PATH, RESOURCE_HUB_URL } from "@/config/link-authority";
 import {
   AUTHORITY_RESOURCE_LINKS,
-  KENT_CUSTODY_STATIONS,
+  KENT_OPERATIONAL_CUSTODY_STATIONS,
+  KENT_VAI_STATIONS,
 } from "@/lib/kent-custody-stations";
 import LinkToUsPanel from "@/components/LinkToUsPanel";
 import { InternalLinkHub } from "@/components/InternalLinkHub";
@@ -119,10 +120,29 @@ export default function KentPoliceCustodyResourcesPage() {
           <section className="mb-10">
             <h2 className="text-2xl font-bold text-slate-900 mb-4">Kent custody suites</h2>
             <p className="text-slate-700 mb-4">
-              Station-specific pages on this site (general information only — not live custody status):
+              Operational public custody suites linked from this hub (general information only — not
+              live custody status):
             </p>
             <div className="grid sm:grid-cols-2 gap-2">
-              {KENT_CUSTODY_STATIONS.map((s) => (
+              {KENT_OPERATIONAL_CUSTODY_STATIONS.map((s) => (
+                <Link
+                  key={s.href}
+                  href={s.href}
+                  className="rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-800 hover:border-blue-300 hover:bg-blue-50"
+                >
+                  {s.name}
+                </Link>
+              ))}
+            </div>
+            <h3 className="text-lg font-semibold text-slate-900 mt-8 mb-2">
+              Voluntary interview stations
+            </h3>
+            <p className="text-slate-700 mb-4">
+              These stations are not public custody suites. Maidstone custody is closed — voluntary
+              interviews only.
+            </p>
+            <div className="grid sm:grid-cols-2 gap-2">
+              {KENT_VAI_STATIONS.map((s) => (
                 <Link
                   key={s.href}
                   href={s.href}
