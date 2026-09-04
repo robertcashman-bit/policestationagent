@@ -11,7 +11,7 @@ function trackPathway(id: (typeof PATHWAY_CARDS)[number]["id"]) {
 }
 
 const SHORT_LABELS: Record<(typeof PATHWAY_CARDS)[number]["id"], string> = {
-  voluntary: "Booked interview",
+  voluntary: "Letter / interview",
   custody: "Current custody",
   agency: "Solicitor cover",
 };
@@ -23,6 +23,8 @@ type Props = {
   headingId?: string;
   /** Centrepiece density for homepage; compact for contact; firstScreen for above-the-fold */
   variant?: "compact" | "centrepiece" | "firstScreen";
+  /** Emphasise voluntary interview as the primary search-visitor path */
+  highlightVoluntary?: boolean;
 };
 
 export function AudiencePathSelector({
@@ -31,12 +33,13 @@ export function AudiencePathSelector({
   subheading = "Three separate routes — pick the one that matches your situation.",
   headingId = "audience-path-heading",
   variant = "compact",
+  highlightVoluntary = false,
 }: Props) {
   const isCentrepiece = variant === "centrepiece";
   const isFirstScreen = variant === "firstScreen";
 
   return (
-    <section className={className} aria-labelledby={headingId}>
+    <section className={className} aria-labelledby={headingId} aria-label="Enquiry pathways">
       <div className={isCentrepiece || isFirstScreen ? "mx-auto max-w-6xl" : undefined}>
         {isFirstScreen ? (
           <div className="mb-2 flex items-end justify-between gap-3 sm:mb-3 md:mb-4">
@@ -67,7 +70,7 @@ export function AudiencePathSelector({
               className="mt-4 hidden text-right text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-primary/50 md:block"
               aria-hidden="true"
             >
-              Booked · Custody · Cover
+              Interview · Custody · Cover
             </p>
           </div>
         ) : (
@@ -96,6 +99,7 @@ export function AudiencePathSelector({
           {PATHWAY_CARDS.map((card) => {
             const isUrgent = card.accent === "red";
             const isFirm = card.accent === "amber";
+            const isPrimary = highlightVoluntary && card.id === "voluntary";
 
             if (isFirstScreen) {
               return (
@@ -105,24 +109,28 @@ export function AudiencePathSelector({
                   onClick={() => trackPathway(card.id)}
                   data-event={card.event}
                   className={`group flex min-h-[48px] items-center gap-2.5 rounded-lg border bg-white px-3 py-2.5 text-left shadow-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent md:min-h-0 md:flex-col md:items-stretch md:p-4 ${
-                    isUrgent
-                      ? "border-destructive/40 hover:border-destructive"
-                      : isFirm
-                        ? "border-accent/50 hover:border-accent"
-                        : "border-white/80 hover:border-primary/40"
+                    isPrimary
+                      ? "border-accent ring-2 ring-accent/50 md:row-span-1"
+                      : isUrgent
+                        ? "border-destructive/40 hover:border-destructive"
+                        : isFirm
+                          ? "border-accent/50 hover:border-accent"
+                          : "border-white/80 hover:border-primary/40"
                   }`}
                 >
                   <div className="min-w-0 flex-1">
                     <p
                       className={`text-[0.62rem] font-semibold uppercase tracking-[0.12em] ${
-                        isUrgent
-                          ? "text-destructive"
-                          : isFirm
-                            ? "text-accent-dark"
-                            : "text-primary/70"
+                        isPrimary
+                          ? "text-accent-dark"
+                          : isUrgent
+                            ? "text-destructive"
+                            : isFirm
+                              ? "text-accent-dark"
+                              : "text-primary/70"
                       }`}
                     >
-                      {SHORT_LABELS[card.id]}
+                      {isPrimary ? "Most common for search visitors" : SHORT_LABELS[card.id]}
                     </p>
                     <h3 className="mt-0.5 font-display text-[0.95rem] font-bold leading-snug text-primary md:text-base">
                       {card.title}
@@ -133,11 +141,13 @@ export function AudiencePathSelector({
                   </div>
                   <span
                     className={`inline-flex shrink-0 items-center justify-center rounded-md px-2.5 py-1.5 text-[0.7rem] font-bold md:mt-3 md:min-h-[40px] md:w-full md:px-3 md:text-sm ${
-                      isUrgent
-                        ? "bg-destructive text-white group-hover:bg-red-800"
-                        : isFirm
-                          ? "bg-accent text-accent-foreground group-hover:bg-accent-dark"
-                          : "bg-primary text-white group-hover:bg-primary-light"
+                      isPrimary
+                        ? "bg-accent text-accent-foreground group-hover:bg-accent-dark"
+                        : isUrgent
+                          ? "bg-destructive text-white group-hover:bg-red-800"
+                          : isFirm
+                            ? "bg-accent text-accent-foreground group-hover:bg-accent-dark"
+                            : "bg-primary text-white group-hover:bg-primary-light"
                     }`}
                   >
                     <span className="md:hidden" aria-hidden="true">
@@ -159,16 +169,18 @@ export function AudiencePathSelector({
                 className={`group relative flex flex-col overflow-hidden rounded-xl border bg-card lift-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
                   isCentrepiece ? "p-5 shadow-card md:p-6" : "p-4 shadow-sm"
                 } ${
-                  isUrgent
-                    ? "border-destructive/35 hover:border-destructive"
-                    : isFirm
-                      ? "border-accent/45 hover:border-accent"
-                      : "border-border hover:border-primary/40"
+                  isPrimary
+                    ? "border-accent/60 ring-1 ring-accent/30"
+                    : isUrgent
+                      ? "border-destructive/35 hover:border-destructive"
+                      : isFirm
+                        ? "border-accent/45 hover:border-accent"
+                        : "border-border hover:border-primary/40"
                 }`}
               >
                 <span
                   className={`absolute inset-x-0 top-0 h-1 origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100 ${
-                    isUrgent ? "bg-destructive" : isFirm ? "bg-accent" : "bg-primary"
+                    isUrgent ? "bg-destructive" : isFirm || isPrimary ? "bg-accent" : "bg-primary"
                   }`}
                   aria-hidden="true"
                 />
@@ -176,11 +188,13 @@ export function AudiencePathSelector({
                   className={`font-semibold uppercase tracking-[0.14em] ${
                     isCentrepiece ? "text-[0.7rem]" : "text-[0.65rem]"
                   } ${
-                    isUrgent
-                      ? "text-destructive"
-                      : isFirm
-                        ? "text-accent-dark"
-                        : "text-primary/70"
+                    isPrimary
+                      ? "text-accent-dark"
+                      : isUrgent
+                        ? "text-destructive"
+                        : isFirm
+                          ? "text-accent-dark"
+                          : "text-primary/70"
                   }`}
                 >
                   {SHORT_LABELS[card.id]}
@@ -189,7 +203,7 @@ export function AudiencePathSelector({
                   className={`mt-3 rounded-md px-3 py-2 transition-colors ${
                     isUrgent
                       ? "bg-red-50 group-hover:bg-red-100/80"
-                      : isFirm
+                      : isFirm || isPrimary
                         ? "bg-accent/10 group-hover:bg-accent/15"
                         : "bg-secondary group-hover:bg-primary/5"
                   }`}
@@ -213,7 +227,7 @@ export function AudiencePathSelector({
                   className={`mt-5 inline-flex min-h-[44px] items-center justify-center rounded-md px-4 text-sm font-bold transition-colors ${
                     isUrgent
                       ? "bg-destructive text-white group-hover:bg-red-800"
-                      : isFirm
+                      : isFirm || isPrimary
                         ? "bg-accent text-accent-foreground group-hover:bg-accent-dark"
                         : "bg-primary text-white group-hover:bg-primary-light"
                   }`}

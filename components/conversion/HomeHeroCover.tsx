@@ -3,7 +3,7 @@
 import { AudiencePathSelector } from "@/components/conversion/AudiencePathSelector";
 
 /**
- * First-screen job: short identity, one calm sentence, three pathways — no scroll.
+ * First-screen job: VA-first for search visitors, clear not-police, three pathways.
  * Brand lives in the header; do not repeat it as a giant hero wordmark.
  */
 export function HomeHeroCover() {
@@ -25,11 +25,11 @@ export function HomeHeroCover() {
           id="home-hero-heading"
           className="mt-1 max-w-measure font-display text-[1.25rem] font-bold leading-tight text-white sm:text-2xl md:text-[1.75rem]"
         >
-          Police station representation when it matters
+          Got a police interview letter? Get a free solicitor first
         </h1>
-        <p className="mt-1.5 max-w-2xl text-sm leading-snug text-white/85 sm:text-[0.95rem]">
-          Choose your route for current Kent custody, a booked voluntary interview, or solicitor
-          agency cover. Need the police? Use{" "}
+        <p className="mt-1.5 max-w-2xl text-sm leading-snug text-white/90 sm:text-[0.95rem]">
+          We are criminal defence solicitors — <strong className="text-white">not Kent Police</strong>.
+          For police use{" "}
           <a href="tel:999" className="font-bold text-accent-light underline underline-offset-2">
             999
           </a>{" "}
@@ -37,14 +37,16 @@ export function HomeHeroCover() {
           <a href="tel:101" className="font-bold text-accent-light underline underline-offset-2">
             101
           </a>
-          .
+          . If you have a letter, email or call about a voluntary interview under caution, start
+          with that route below.
         </p>
 
         <div id="pathways" className="mt-3 scroll-mt-2 sm:mt-4 md:mt-5">
           <AudiencePathSelector
             variant="firstScreen"
-            heading="Three routes. One clear next step."
+            heading="Three routes. Voluntary interview is the usual path for letters."
             subheading="Pick the route that matches your situation."
+            highlightVoluntary
           />
         </div>
       </div>

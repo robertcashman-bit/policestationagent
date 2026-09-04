@@ -9,16 +9,16 @@ import NearestStationFinder from "@/components/NearestStationFinder";
 import { DEFAULT_OG_IMAGES, DEFAULT_TWITTER_IMAGES } from "@/lib/seo/page-metadata";
 
 export const metadata: Metadata = {
-  title: "Kent Police Station Rep Coverage | All Towns | FREE extended hours",
+  title: "Kent Police Station Defence Cover | Custody & Voluntary Interviews",
   description:
-    "Police station rep coverage across all Kent towns. FREE extended hours representation at Kent operational custody suites (Medway, North Kent/Gravesend, Canterbury, Tonbridge, Folkestone, Margate) and voluntary interview stations including Maidstone (custody closed / VAI only).",
+    "Criminal defence solicitor cover across Kent — custody suites and voluntary interview stations including Maidstone (custody closed / VAI only). Not Kent Police. Request a free solicitor for booked interviews.",
   alternates: {
     canonical: `${SITE_URL}/coverage`,
   },
   openGraph: {
-    title: "Kent Police Station Coverage | Duty Solicitor – Police Station Agent",
+    title: "Kent Police Station Defence Cover | Custody & Voluntary Interviews",
     description:
-      "We cover all Kent custody suites and major voluntary interview stations with duty solicitor-led representation.",
+      "We cover Kent custody suites and voluntary interview stations with duty solicitor-led representation. Not Kent Police.",
     url: `${SITE_URL}/coverage`,
     siteName: "Police Station Agent",
     type: "website",
@@ -26,9 +26,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Kent Police Station Coverage | Duty Solicitor – Police Station Agent",
+    title: "Kent Police Station Defence Cover | Custody & Voluntary Interviews",
     description:
-      "We cover all Kent custody suites and major voluntary interview stations with duty solicitor-led representation.",
+      "We cover Kent custody suites and voluntary interview stations with duty solicitor-led representation. Not Kent Police.",
     images: [...DEFAULT_TWITTER_IMAGES],
   },
 };
@@ -109,13 +109,19 @@ export default function Page() {
                 <circle cx="12" cy="10" r="3" />
               </svg>
               <h1 className="font-display text-4xl font-bold tracking-tight text-white md:text-5xl">
-                Police Station Rep Coverage in Kent
+                Kent police station defence cover
               </h1>
               <p className="mt-4 text-lg text-white/90 md:text-xl">
-                Police Station Agent provides accredited representation at all Kent custody suites
-                and major voluntary interview police stations.
+                Independent criminal defence solicitors for Kent custody and voluntary interviews —
+                not Kent Police. For police use 999 or 101.
               </p>
               <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+                <Link
+                  href="/voluntary-interviews#request"
+                  className="inline-flex items-center justify-center rounded-lg bg-accent px-6 py-3 font-semibold text-accent-foreground transition hover:bg-accent-light"
+                >
+                  Voluntary interview — request solicitor
+                </Link>
                 <Link
                   href="#custody-suites"
                   className="inline-flex items-center justify-center rounded-lg bg-white px-6 py-3 font-semibold text-primary transition hover:bg-accent-light"
@@ -210,15 +216,24 @@ export default function Page() {
                 Need a Police Station Rep Anywhere in Kent?
               </h3>
               <p className="mx-auto mt-4 max-w-2xl text-lg text-white/90">
-                If you or a client need representation at any Kent police station during extended
-                hours, contact us for immediate expert advice.
+                Got a voluntary interview letter or booked interview under caution? Request a free
+                solicitor first. For current custody or firm agency cover, use Contact pathways. We
+                are not Kent Police — for police use 999 or 101.
               </p>
-              <Link
-                href="/contact"
-                className="mt-6 inline-flex items-center justify-center rounded-md bg-accent px-8 py-3 font-bold text-primary-dark transition hover:bg-accent-light"
-              >
-                Contact for representation
-              </Link>
+              <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
+                <Link
+                  href="/voluntary-interviews#request"
+                  className="inline-flex items-center justify-center rounded-md bg-accent px-8 py-3 font-bold text-primary-dark transition hover:bg-accent-light"
+                >
+                  Voluntary interview request
+                </Link>
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center justify-center rounded-md border border-white/40 bg-white/10 px-8 py-3 font-bold text-white transition hover:bg-white/20"
+                >
+                  All contact pathways
+                </Link>
+              </div>
             </div>
 
             <div className="mt-8 rounded-xl border border-slate-200 bg-slate-100 p-6 text-center">

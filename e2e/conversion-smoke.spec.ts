@@ -16,13 +16,26 @@ test.describe('Conversion smoke — desktop', () => {
     await page.goto('/');
     const pathways = page.getByLabel('Enquiry pathways');
     await expect(pathways).toBeVisible();
-    await expect(page.getByRole('heading', { name: /three routes\. one clear next step/i })).toBeVisible();
+    await expect(page.getByRole('heading', { name: /three routes\. voluntary interview is the usual path/i })).toBeVisible();
+    await expect(page.getByRole('heading', { name: /got a police interview letter/i })).toBeVisible();
     await expect(page.getByRole('link', { name: /someone is in custody now/i })).toBeVisible();
-    await expect(page.getByRole('link', { name: /voluntary interview booked/i })).toBeVisible();
+    await expect(page.getByRole('link', { name: /voluntary interview \/ letter/i })).toBeVisible();
     await expect(page.getByRole('link', { name: /solicitor needing agent cover/i })).toBeVisible();
     // Competing hero CTAs removed — pathways are the job
     await expect(page.getByRole('link', { name: /^find representation$/i })).toHaveCount(0);
     await expect(page.getByRole('link', { name: /^view coverage$/i })).toHaveCount(0);
+  });
+
+  test('contact situation picker deflects something-else without call-back', async ({ page }) => {
+    await page.goto('/contact');
+    await expect(page.getByTestId('situation-picker')).toBeVisible();
+    await page.getByRole('radio', { name: /something else/i }).click();
+    await expect(page.getByTestId('situation-other')).toBeVisible();
+    await expect(page.getByTestId('situation-other')).toContainText(/101/);
+    await expect(page.getByTestId('situation-other')).toContainText(/cannot help with police enquiries/i);
+    await expect(page.getByTestId('situation-other')).not.toContainText(/call-back number|we will call you/i);
+    await page.getByRole('radio', { name: /voluntary interview/i }).click();
+    await expect(page.getByTestId('short-va-form')).toBeVisible();
   });
 
   test('homepage proof bar and firm section present', async ({ page }) => {

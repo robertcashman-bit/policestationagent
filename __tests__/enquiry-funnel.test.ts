@@ -40,7 +40,7 @@ describe("enquiry funnel routes", () => {
     expect(header).not.toMatch(/tel:01732/);
     expect(sticky).not.toMatch(/tel:01732|PHONE_TEL/);
     expect(sticky).toContain("current-custody");
-    expect(sticky).toContain("voluntary-interview");
+    expect(sticky).toContain("voluntary-interviews");
     expect(sticky).toContain("for-solicitors");
     // Homepage suppresses sticky chrome so pathway CTAs are unobstructed
     expect(sticky).toContain('HIDE_STICKY_PATHS');
@@ -99,6 +99,29 @@ describe("enquiry funnel routes", () => {
   it("pathway cards cover three audiences", () => {
     expect(PATHWAY_CARDS).toHaveLength(3);
     expect(PATHWAY_CARDS.map((c) => c.id).sort()).toEqual(["agency", "custody", "voluntary"]);
+  });
+
+  it("situation picker includes something-else deflection with no call-back", () => {
+    const picker = fs.readFileSync(
+      path.join(root, "components/conversion/SituationPicker.tsx"),
+      "utf8",
+    );
+    expect(picker).toContain("Something else");
+    expect(picker).toContain("situation-other");
+    expect(picker).toMatch(/do not offer a call-back|do not offer a call-back for these|We do not offer a call-back/i);
+    expect(picker).toMatch(/101/);
+    expect(picker).toContain("kent.police.uk");
+    expect(picker).toContain("ShortVoluntaryRequestForm");
+    expect(picker).not.toMatch(/tel:01732/);
+  });
+
+  it("voluntary landing leads with Kent VA SEO and short form", () => {
+    const landing = fs.readFileSync(path.join(root, "app/voluntary-interviews/page.tsx"), "utf8");
+    expect(landing).toMatch(/Voluntary Interview Kent/i);
+    expect(landing).toContain("ShortVoluntaryRequestForm");
+    expect(landing).toContain("Maidstone");
+    expect(landing).toContain("Do not discuss the allegation");
+    expect(landing).toContain("PoliceSignposting");
   });
 });
 

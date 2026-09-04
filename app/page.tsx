@@ -23,16 +23,16 @@ import { KentCoverCard } from "@/components/conversion/KentCoverCard";
 import { StandardPaceSources } from "@/components/legal/StandardPaceSources";
 
 export const metadata: Metadata = {
-  title: "Police Station Solicitor Kent | Voluntary Interviews & Agency Cover",
+  title: "Voluntary Interview Solicitor Kent | Defence — Not the Police",
   description:
-    "Independent criminal defence solicitor for current Kent police custody and forthcoming voluntary interviews, plus police station agency cover for defence firms. Not the police.",
+    "Got a police interview letter in Kent? Free solicitor for voluntary interviews under caution, plus current custody and agency cover. We are criminal defence solicitors — not Kent Police. For police use 999/101.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/`,
   },
   openGraph: {
-    title: "Police Station Solicitor Kent | Voluntary Interviews & Agency Cover",
+    title: "Voluntary Interview Solicitor Kent | Defence — Not the Police",
     description:
-      "Independent criminal defence solicitor for current Kent police custody and forthcoming voluntary interviews, plus police station agency cover for defence firms. Not the police.",
+      "Got a police interview letter in Kent? Free solicitor for voluntary interviews under caution, plus current custody and agency cover. Not Kent Police.",
     url: `https://${SITE_DOMAIN}/`,
     siteName: "Police Station Agent",
     type: "website",
@@ -41,9 +41,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Police Station Solicitor Kent | Voluntary Interviews & Agency Cover",
+    title: "Voluntary Interview Solicitor Kent | Defence — Not the Police",
     description:
-      "Independent criminal defence solicitor for current Kent police custody and forthcoming voluntary interviews, plus police station agency cover for defence firms. Not the police.",
+      "Got a police interview letter in Kent? Free solicitor for voluntary interviews under caution. Not Kent Police.",
     images: [...DEFAULT_TWITTER_IMAGES],
   },
   robots: {
@@ -61,9 +61,14 @@ export const metadata: Metadata = {
 
 const faqItems = [
   {
+    question: "Are you the police? Can I report a crime here?",
+    answer:
+      "No. PoliceStationAgent.com is an independent criminal defence solicitor service — not Kent Police. We cannot take crime reports, deal with station opening times, lost property, or police complaints. For police assistance call 999 (emergency) or 101 (non-emergency), or use the official Kent Police website. If you have a voluntary interview letter or someone in custody now, use the pathways on this site.",
+  },
+  {
     question: "Is police station legal advice free in Kent?",
     answer:
-      "Yes. Everyone arrested or invited for a voluntary interview in Kent is entitled to free legal advice at the police station. This is a statutory right under PACE 1984 and is not means-tested. Legal Aid covers the cost of a duty solicitor attending the police station.",
+      "Yes. Everyone arrested or invited for a voluntary interview in Kent is entitled to free legal advice at the police station. This is a statutory right under PACE 1984 and is not means-tested. Legal Aid covers the cost of a duty solicitor attending the police station. Start with Request a free solicitor if you have a letter or booked interview.",
   },
   {
     question: "How quickly can a duty solicitor attend in Kent?",
@@ -73,7 +78,7 @@ const faqItems = [
   {
     question: "Which police stations do you cover in Kent?",
     answer:
-      "We cover Kent's operational custody suites including Medway (Gillingham), North Kent (Gravesend), Canterbury, Tonbridge, Folkestone and Margate. We also attend voluntary interview stations across Kent — including Maidstone (custody closed / VAI only), Ashford, Dover, Sevenoaks, Sittingbourne, Swanley and Tunbridge Wells.",
+      "We cover Kent's operational custody suites including Medway (Gillingham), North Kent (Gravesend), Canterbury, Tonbridge, Folkestone and Margate. We also attend voluntary interview stations across Kent — including Maidstone (custody closed / VAI only), Ashford, Dover, Sevenoaks, Sittingbourne, Swanley and Tunbridge Wells. See our voluntary interviews page for Kent VAI cover.",
   },
   {
     question: "Are police station solicitors independent of the police?",

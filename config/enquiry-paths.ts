@@ -22,11 +22,11 @@ export function isPhoneAllowlistPath(pathname: string | null | undefined): boole
 export const PATHWAY_CARDS = [
   {
     id: "voluntary" as const,
-    href: `${PATH_VOLUNTARY}#request`,
-    title: "Voluntary interview booked",
+    href: `${PATH_VOLUNTARY_LANDING}#request`,
+    title: "Voluntary interview / letter",
     description:
-      "I have received a police letter, email or call inviting me to an interview under caution.",
-    button: "Request representation",
+      "I have a police letter, email or call inviting me to an interview under caution in Kent.",
+    button: "Request a free solicitor",
     event: "pathway_voluntary_selected",
     accent: "blue" as const,
   },
@@ -51,3 +51,29 @@ export const PATHWAY_CARDS = [
     accent: "amber" as const,
   },
 ] as const;
+
+/** Contact-page situation options — includes deflection for wrong traffic */
+export const SITUATION_OPTIONS = [
+  {
+    id: "voluntary" as const,
+    title: "Voluntary interview / letter",
+    description: "Police letter, email or call about an interview under caution.",
+  },
+  {
+    id: "custody" as const,
+    title: "Someone in custody now",
+    description: "A person is currently detained at a Kent police station.",
+  },
+  {
+    id: "agency" as const,
+    title: "Solicitor agency cover",
+    description: "Defence firm needing police station agent attendance.",
+  },
+  {
+    id: "other" as const,
+    title: "Something else",
+    description: "Crime report, station opening times, lost property, police complaints, or 101.",
+  },
+] as const;
+
+export type SituationId = (typeof SITUATION_OPTIONS)[number]["id"];
