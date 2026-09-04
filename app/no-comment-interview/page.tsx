@@ -6,6 +6,7 @@ import { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
 import { LegalReferences, Ref, type LegalSource } from "@/components/LegalReferences";
 import { SITE_DOMAIN } from "@/config/site";
+import { PersistentKentVaCta } from "@/components/conversion/PersistentKentVaCta";
 
 export const metadata: Metadata = {
   title: "No Comment Interview: When to Stay Silent in Police Interview UK",
@@ -77,6 +78,11 @@ export default function NoCommentInterviewPage() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex flex-col">
       <JsonLd data={faqSchema} />
       <Header />
+
+          <div className="max-w-4xl mx-auto px-4 pt-6 md:pt-8">
+            <PersistentKentVaCta placement="gsc_no_comment" />
+          </div>
+
 
       <main className="flex-grow">
         {/* Hero */}

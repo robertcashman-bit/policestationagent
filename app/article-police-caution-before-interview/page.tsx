@@ -6,6 +6,7 @@ import { SITE_DOMAIN, SITE_URL } from "@/config/site";
 import Script from "next/script";
 import { FAQPage } from "@/components/StructuredData";
 import { StandardPaceSources } from "@/components/legal/StandardPaceSources";
+import { PersistentKentVaCta } from "@/components/conversion/PersistentKentVaCta";
 
 export const metadata: Metadata = {
   title: "The Police Caution Before Interview",
@@ -86,6 +87,11 @@ export default function ArticlePoliceCautionBeforeInterviewPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
       <Header />
+
+          <div className="max-w-4xl mx-auto px-4 pt-6 md:pt-8">
+            <PersistentKentVaCta placement="gsc_caution_article" />
+          </div>
+
       <main className="flex-grow relative" id="main-content" role="main" aria-live="polite">
         <div className="bg-slate-50 min-h-screen">
           <div

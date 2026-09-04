@@ -9,7 +9,9 @@ import { SITE_DOMAIN } from "@/config/site";
 import {
   CTA_OUT_OF_SCOPE,
   CTA_WHO_CAN_CALL,
-  SCOPE_HELP_HREF } from "@/config/contact";
+  SCOPE_HELP_HREF,
+} from "@/config/contact";
+import { PersistentKentVaCta } from "@/components/conversion/PersistentKentVaCta";
 
 export const metadata: Metadata = {
   title: "Released Under Investigation (RUI): What It Means & How Long It Lasts",
@@ -70,6 +72,11 @@ export default function ReleasedUnderInvestigationPage() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex flex-col">
       <JsonLd data={faqSchema} />
       <Header />
+
+          <div className="max-w-4xl mx-auto px-4 pt-6 md:pt-8">
+            <PersistentKentVaCta placement="gsc_rui" />
+          </div>
+
 
       <main className="flex-grow">
         {/* Hero */}

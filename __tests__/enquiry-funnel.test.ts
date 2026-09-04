@@ -165,6 +165,40 @@ describe("enquiry funnel routes", () => {
     expect(cfg).toMatch(/source:\s*"\/voluntary-police-interview"/);
     expect(cfg).toMatch(/destination:\s*"\/voluntary-interviews"/);
   });
+
+  it("top GSC guide pages include persistent Kent VA CTA to request form", () => {
+    const guides = [
+      "app/can-police-take-my-phone/page.tsx",
+      "app/pace-code-c/page.tsx",
+      "app/custody-time-limits/page.tsx",
+      "app/police-bail-explained/page.tsx",
+      "app/released-under-investigation/page.tsx",
+      "app/dna-fingerprints-police-station/page.tsx",
+      "app/article-police-caution-before-interview/page.tsx",
+      "app/prepared-statements/page.tsx",
+      "app/no-comment-interview/page.tsx",
+    ];
+    for (const rel of guides) {
+      const src = fs.readFileSync(path.join(root, rel), "utf8");
+      expect(src, rel).toContain("PersistentKentVaCta");
+    }
+    const cta = fs.readFileSync(
+      path.join(root, "components/conversion/PersistentKentVaCta.tsx"),
+      "utf8"
+    );
+    expect(cta).toContain("/start/voluntary-interview");
+    expect(cta).toContain("PATH_VOLUNTARY");
+    expect(cta).toContain("DefenceNotStationBanner");
+    expect(cta).toContain("data-kent-va-cta");
+    const blog = fs.readFileSync(path.join(root, "app/blog/[slug]/page.tsx"), "utf8");
+    expect(blog).toContain("property-returned");
+    expect(blog).toContain("PersistentKentVaCta");
+    const local = fs.readFileSync(
+      path.join(root, "components/local/LocalCoverPage.tsx"),
+      "utf8"
+    );
+    expect(local).toContain("DefenceNotStationBanner");
+  });
 });
 
 describe("phone allowlist", () => {

@@ -7,6 +7,7 @@ import { InternalLinkHub } from "@/components/InternalLinkHub";
 import { RIGHTS_HUB } from "@/config/internal-link-hubs";
 import { LegalReferences, Ref, type LegalSource } from "@/components/LegalReferences";
 import { SITE_DOMAIN } from "@/config/site";
+import { PersistentKentVaCta } from "@/components/conversion/PersistentKentVaCta";
 
 export const metadata: Metadata = {
   title: "How Long Can Police Hold You? UK Custody Time Limits Explained",
@@ -80,6 +81,11 @@ export default function CustodyTimeLimitsPage() {
       <FAQPage items={faqItems} />
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex flex-col">
       <Header />
+
+          <div className="max-w-4xl mx-auto px-4 pt-6 md:pt-8">
+            <PersistentKentVaCta placement="gsc_custody_time" />
+          </div>
+
 
       <main className="flex-grow">
         {/* Hero Section */}

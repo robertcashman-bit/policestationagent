@@ -4,6 +4,7 @@ import { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
 import { LegalReferences, Ref, type LegalSource } from "@/components/LegalReferences";
 import { SITE_DOMAIN } from "@/config/site";
+import { PersistentKentVaCta } from "@/components/conversion/PersistentKentVaCta";
 
 export const metadata: Metadata = {
   title: "PACE Code C: Your Rights in Police Detention Explained",
@@ -87,6 +88,11 @@ export default function PaceCodeCPage() {
 
   return (
     <PageShell forceHidePhone>
+
+          <div className="max-w-4xl mx-auto px-4 pt-6 md:pt-8">
+            <PersistentKentVaCta placement="gsc_pace" />
+          </div>
+
       <JsonLd data={faqSchema} />
 
       <section className="hero-navy py-14 md:py-16">

@@ -1,6 +1,10 @@
 import { JsonLd } from "@/components/JsonLd";
 import { GeneralLegalDisclaimer } from "@/components/conversion/GeneralLegalDisclaimer";
 import { ContextualCTA } from "@/components/conversion/ContextualCTA";
+import {
+  DefenceNotStationBanner,
+  PersistentKentVaCta,
+} from "@/components/conversion/PersistentKentVaCta";
 import { InternalLinkHub } from "@/components/InternalLinkHub";
 import type { LocalCoverConfig } from "@/lib/seo/local-cover-data";
 import Link from "next/link";
@@ -125,6 +129,9 @@ export function LocalCoverPage({ config }: Props) {
       </section>
 
       <div className="max-w-4xl mx-auto px-4 py-10 space-y-10">
+        <DefenceNotStationBanner stationLabel={config.town} />
+        <PersistentKentVaCta placement={`local_cover_${config.slug}`} />
+
         <section className="surface-card p-6">
           <h2 className="text-lg font-bold text-foreground mb-2">In brief</h2>
           <p className="text-muted-foreground">{config.answerFirst}</p>
