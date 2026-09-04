@@ -83,6 +83,17 @@ const nextConfig = {
         destination: "/",
         permanent: true,
       },
+      // Seasonal Christmas landing retired — keep URL working via hours page
+      {
+        source: "/christmashours",
+        destination: "/hours",
+        permanent: true,
+      },
+      {
+        source: "/ChristmasHours",
+        destination: "/hours",
+        permanent: true,
+      },
       // Legacy short offence URLs (pre-kebab long slugs)
       {
         source: "/offences",

@@ -1,8 +1,5 @@
 import Link from "next/link";
-import {
-  SOLICITOR_CONTACT_CTA,
-  SOLICITOR_PHONE_LABEL,
-} from "@/config/contact";
+import { SOLICITOR_PHONE_LABEL } from "@/config/contact";
 
 type Props = {
   /** Kept for API compatibility — digits are never published. */
@@ -14,7 +11,7 @@ type Props = {
 };
 
 /**
- * Labelled independent-solicitor CTAs — Contact pathways only (no indexable digits).
+ * Labelled independent-solicitor CTAs — pathway links only (no indexable digits).
  */
 export default function SolicitorContactBlock({
   hideDigits: _hideDigits = true,
@@ -32,23 +29,30 @@ export default function SolicitorContactBlock({
       <h2 className="text-base font-bold text-slate-900 mb-2">{heading}</h2>
       <p className="text-xs text-slate-600 mb-3">
         {SOLICITOR_PHONE_LABEL} — legal representation enquiries only. Not a police number.
-        Solicitor telephone is not listed publicly — Contact pathways only; for current custody
-        it appears after qualification.
+        Solicitor telephone is not listed publicly — use the pathways below; for current custody
+        it appears after qualification on Contact.
       </p>
       <div className="flex flex-wrap gap-3">
         <Link
-          href="/contact"
+          href="/voluntary-interviews#request"
           data-event="contact_click"
           className="inline-flex items-center justify-center rounded-lg bg-red-600 px-5 py-3 text-sm font-bold text-white hover:bg-red-700"
         >
-          {SOLICITOR_CONTACT_CTA}
+          Request representation
         </Link>
         <Link
-          href="/contact"
+          href="/current-custody"
+          data-event="contact_click"
+          className="inline-flex items-center justify-center rounded-lg border-2 border-red-700 bg-white px-5 py-3 text-sm font-bold text-red-800 hover:bg-red-50"
+        >
+          Current custody check
+        </Link>
+        <Link
+          href="/for-solicitors"
           data-event="contact_click"
           className="inline-flex items-center justify-center rounded-lg border-2 border-[#2563eb] bg-white px-5 py-3 text-sm font-bold text-[#2563eb] hover:bg-slate-50"
         >
-          Solicitor SMS (Contact)
+          Agency cover for solicitors
         </Link>
       </div>
     </div>

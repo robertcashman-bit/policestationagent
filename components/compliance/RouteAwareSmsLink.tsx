@@ -33,9 +33,9 @@ export default function RouteAwareSmsLink({
           className ||
           "flex flex-col items-center justify-center gap-0.5 py-2.5 text-[#2563eb]"
         }
-        aria-label="Solicitor SMS — see Contact pathways"
+        aria-label="Contact pathways — request representation"
       >
-        <span className="text-[11px] font-bold uppercase tracking-wide">SMS</span>
+        <span className="text-[11px] font-bold uppercase tracking-wide">Path</span>
         <span className="text-sm font-black leading-none">Contact</span>
       </Link>
     );
@@ -51,9 +51,9 @@ export default function RouteAwareSmsLink({
           ? "text-sky-300 hover:text-sky-200 font-medium"
           : "inline-flex items-center font-medium")
       }
-      aria-label="Solicitor SMS — see Contact pathways"
+      aria-label="Contact pathways — request representation"
     >
-      {children || "Solicitor SMS (Contact)"}
+      {children || "Contact pathways"}
     </Link>
   );
 }

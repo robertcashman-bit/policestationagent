@@ -9,6 +9,10 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.policestationagent.com/join",
   },
+  robots: {
+    index: false,
+    follow: true,
+  },
   openGraph: {
     title: "UK Criminal Defence Network – Join | Professional Network for Duty Solicitors",
     description:

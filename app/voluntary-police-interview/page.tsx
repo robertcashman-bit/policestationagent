@@ -52,7 +52,7 @@ export default function VoluntaryPoliceInterviewPage() {
     {
       question: "Can the police refuse me a solicitor at interview?",
       answer:
-        "In most cases, no. You have a right to legal advice and the police should not proceed with a PACE interview until you have had the opportunity to speak to a solicitor (subject to limited exceptions).",
+        "In most cases, no. Under PACE section 58 you have a right to consult a solicitor, and Code C paragraph 3.21A requires interviewers arranging a voluntary interview to explain your rights including free legal advice. The police should not normally proceed with the interview under caution until you have had that opportunity (subject to limited exceptions).",
     },
     {
       question: "What is the difference between a voluntary interview and arrest?",

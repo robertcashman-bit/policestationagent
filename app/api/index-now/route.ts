@@ -57,6 +57,10 @@ const PRIORITY_URLS = [
   "/resources/pace-rights-guide",
   "/link-to-us",
   "/press",
+  // One-shot reindex targets for stale Google phone snippets (HTML already clean)
+  "/blog/immediate-family-instruct-police-station-solicitor",
+  "/preparing-for-police-interview",
+  "/services/pre-charge-advice",
   ...REP_INDEXNOW_PATHS,
 ];
 
