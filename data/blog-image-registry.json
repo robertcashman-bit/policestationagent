@@ -232,5 +232,10 @@
   "police-want-to-speak-to-me": {
     "featured": "/blog-images/police-want-to-speak-to-me-featured.png",
     "alt": "Professional desk with UK legal branding — advice when the police want to speak to you"
+  },
+  "police-left-a-card-at-my-door": {
+    "featured": "/blog-images/police-left-a-card-at-my-door-featured.png",
+    "alt": "Police calling card left at a door — what to do before you call back",
+    "copyFrom": "/blog-images/police-want-to-speak-to-me-featured.png"
   }
 }
