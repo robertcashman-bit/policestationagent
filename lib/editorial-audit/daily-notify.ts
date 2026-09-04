@@ -1,10 +1,13 @@
-import { getKV } from '@/lib/kv';
-import type { AuditFinding } from './types';
+import { getKV } from "@/lib/kv";
+import type { AuditFinding } from "./types";
 
-const BUCKET_PREFIX = 'editorial-audit:daily:';
-const NOTIFY_TIMEZONE = process.env.EDITORIAL_AUDIT_NOTIFY_TIMEZONE?.trim() || 'Europe/London';
-/** Cron runs weekdays 07:00 Europe/London — allow digest from that hour (findings-only). */
-const SEND_AFTER_HOUR = Number(process.env.EDITORIAL_AUDIT_NOTIFY_SEND_HOUR ?? 7);
+const BUCKET_PREFIX = "editorial-audit:daily:";
+const NOTIFY_TIMEZONE = process.env.EDITORIAL_AUDIT_NOTIFY_TIMEZONE?.trim() || "Europe/London";
+/**
+ * Cron is `0 6 * * 1-5` UTC (06:00 GMT / 07:00 BST). Threshold must be 6 so the
+ * digest still sends in winter GMT — not only during BST when London is UTC+1.
+ */
+const SEND_AFTER_HOUR = Number(process.env.EDITORIAL_AUDIT_NOTIFY_SEND_HOUR ?? 6);
 
 export interface DailyAuditBucket {
   date: string;
@@ -14,15 +17,15 @@ export interface DailyAuditBucket {
 }
 
 function localDateInTimezone(date: Date, timeZone: string): string {
-  const parts = new Intl.DateTimeFormat('en-CA', {
+  const parts = new Intl.DateTimeFormat("en-CA", {
     timeZone,
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
   }).formatToParts(date);
-  const y = parts.find((p) => p.type === 'year')?.value ?? '1970';
-  const m = parts.find((p) => p.type === 'month')?.value ?? '01';
-  const d = parts.find((p) => p.type === 'day')?.value ?? '01';
+  const y = parts.find((p) => p.type === "year")?.value ?? "1970";
+  const m = parts.find((p) => p.type === "month")?.value ?? "01";
+  const d = parts.find((p) => p.type === "day")?.value ?? "01";
   return `${y}-${m}-${d}`;
 }
 
@@ -36,11 +39,11 @@ export function dailyAuditDate(now = new Date()): string {
 
 export function shouldSendDailyAudit(now = new Date()): boolean {
   const hour = Number(
-    new Intl.DateTimeFormat('en-GB', {
+    new Intl.DateTimeFormat("en-GB", {
       timeZone: NOTIFY_TIMEZONE,
-      hour: 'numeric',
+      hour: "numeric",
       hour12: false,
-    }).format(now),
+    }).format(now)
   );
   return hour >= SEND_AFTER_HOUR;
 }
@@ -61,7 +64,7 @@ function dedupeFindings(existing: AuditFinding[], incoming: AuditFinding[]): Aud
 export async function addToDailyAuditBucket(
   date: string,
   findings: AuditFinding[],
-  unitsScanned: number,
+  unitsScanned: number
 ): Promise<DailyAuditBucket> {
   const kv = getKV();
   const existing = kv ? await getDailyAuditBucket(date) : null;
@@ -86,6 +89,6 @@ export async function markDailyAuditSent(date: string): Promise<void> {
   await kv.set(
     bucketKey(date),
     { ...bucket, notifiedAt: new Date().toISOString() },
-    { ex: 60 * 60 * 24 * 14 },
+    { ex: 60 * 60 * 24 * 14 }
   );
 }

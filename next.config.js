@@ -32,6 +32,11 @@ const nextConfig = {
     // Optimize package imports
     optimizePackageImports: ["lucide-react"],
   },
+  // Editorial audit cron reads app/**/page.tsx at runtime via dynamic paths;
+  // NFT cannot see those, so pack them into the cron lambda explicitly.
+  outputFileTracingIncludes: {
+    "/api/cron/editorial-audit": ["./app/**/page.tsx"],
+  },
   // Performance: Optimize package imports for smaller bundles
   modularizeImports: {
     "lucide-react": {
