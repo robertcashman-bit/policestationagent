@@ -266,7 +266,11 @@ function StationList({
                   <span className="mt-1 inline-block text-[10px] font-semibold uppercase tracking-[0.08em] text-[#8B6914]">
                     Custody suite
                   </span>
-                ) : null}
+                ) : (
+                  <span className="mt-1 inline-block text-[10px] font-semibold uppercase tracking-[0.08em] text-[#1e40af]">
+                    VAI only — not a custody suite
+                  </span>
+                )}
               </span>
             </Link>
           </li>

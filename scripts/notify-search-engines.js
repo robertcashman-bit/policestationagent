@@ -65,6 +65,11 @@ const PRIORITY_URLS = [
   "/blog/north-kent-gravesend-custody-legal-advice",
   "/blog/dartford-voluntary-interview-legal-advice-kent",
   "/blog/swanley-police-station-interview-advice-kent",
+  // One-shot reindex targets for stale Google phone snippets (HTML already clean)
+  "/blog/immediate-family-instruct-police-station-solicitor",
+  "/north-kent-gravesend-police-station",
+  "/preparing-for-police-interview",
+  "/services/pre-charge-advice",
   "/tonbridge-police-station",
   ...REP_INDEXNOW_PATHS,
 ];

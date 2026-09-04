@@ -9,13 +9,17 @@ export const metadata: Metadata = {
   description:
     "We provide extended hours / on-call cover throughout Christmas, Boxing Day, and New Year for police station interviews in Kent.",
   alternates: {
-    canonical: "https://www.policestationagent.com/christmashours",
+    canonical: "https://www.policestationagent.com/hours",
+  },
+  robots: {
+    index: false,
+    follow: true,
   },
   openGraph: {
     title: "Christmas & Bank Holiday Opening Hours",
     description:
       "We provide extended hours / on-call cover throughout Christmas, Boxing Day, and New Year for police station interviews in Kent.",
-    url: "https://www.policestationagent.com/christmashours",
+    url: "https://www.policestationagent.com/hours",
     siteName: "Police Station Agent",
     type: "website",
   },

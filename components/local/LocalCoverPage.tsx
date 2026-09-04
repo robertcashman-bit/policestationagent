@@ -1,5 +1,4 @@
 import { JsonLd } from "@/components/JsonLd";
-import { ConversionContactOnlyCTA } from "@/components/conversion/ConversionContactOnlyCTA";
 import { GeneralLegalDisclaimer } from "@/components/conversion/GeneralLegalDisclaimer";
 import { InternalLinkHub } from "@/components/InternalLinkHub";
 import type { LocalCoverConfig } from "@/lib/seo/local-cover-data";
@@ -13,6 +12,35 @@ import {
 type Props = {
   config: LocalCoverConfig;
 };
+
+function pathwayCtas(config: LocalCoverConfig) {
+  const isVoluntary = config.primaryPathway === "voluntary";
+  const primaryHref = isVoluntary
+    ? "/voluntary-interviews#request"
+    : "/current-custody";
+  const primaryLabel = isVoluntary
+    ? "Request representation"
+    : "Current custody check";
+
+  return (
+    <div className="flex flex-wrap gap-3 flex-col sm:flex-row" data-nosnippet>
+      <Link
+        href={primaryHref}
+        data-event="contact_click"
+        className="btn-gold px-5 py-3 text-sm"
+      >
+        {primaryLabel}
+      </Link>
+      <Link
+        href="/for-solicitors"
+        data-event="contact_click"
+        className="inline-flex items-center justify-center rounded-md border-2 border-primary bg-card px-5 py-3 text-sm font-bold text-primary hover:bg-secondary"
+      >
+        Agency cover for solicitors
+      </Link>
+    </div>
+  );
+}
 
 export function LocalCoverPage({ config }: Props) {
   const pageUrl = `${SITE_URL}/${config.slug}`;
@@ -76,15 +104,15 @@ export function LocalCoverPage({ config }: Props) {
           <p className="text-white/90 text-lg mb-6">{config.intro}</p>
           <div className="surface-card p-4 shadow-elevated max-w-xl" data-nosnippet>
             <h2 className="text-base font-bold text-foreground mb-3">
-              Independent solicitor contact details
+              How to instruct or request representation
             </h2>
-            <ConversionContactOnlyCTA />
+            {pathwayCtas(config)}
             <p className="mt-3 text-xs text-muted-foreground">
               <Link href="/contact" className="font-semibold underline text-primary">
                 {STATION_CONTACT_BUTTON}
               </Link>{" "}
-              — solicitor telephone is not listed publicly; for current custody it appears after
-              qualification on Contact.
+              — choose a pathway on Contact; solicitor telephone is not listed in public page
+              HTML.
             </p>
           </div>
         </div>
@@ -155,14 +183,18 @@ export function LocalCoverPage({ config }: Props) {
             {
               href: "/for-solicitors",
               text: "Police station cover for solicitors",
-              description: "Firm instructions",
+              description: "Firm instructions / agency cover",
             },
             {
               href: "/free-police-station-advice-kent",
               text: "Police station legal advice",
               description: "Client information",
             },
-            { href: "/contact", text: "Contact", description: "Telephone and instructions" },
+            {
+              href: "/contact",
+              text: "Contact pathways",
+              description: "Choose voluntary interview, custody, or agency cover",
+            },
             ...config.nearbyLinks.map((l) => ({
               href: l.href,
               text: l.label,

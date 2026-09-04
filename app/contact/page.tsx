@@ -18,6 +18,7 @@ import {
   ADMIN_ENQUIRY_CAN,
   ADMIN_ENQUIRY_CANNOT,
   SCOPE_HELP_HREF,
+  WHY_PHONE_NOT_EVERYWHERE_FAQ,
 } from "@/config/contact";
 import { AudiencePathSelector } from "@/components/conversion/AudiencePathSelector";
 import { PoliceSignposting } from "@/components/conversion/PoliceSignposting";
@@ -58,21 +59,25 @@ export default function ContactPage() {
             <h1 className="font-display text-3xl md:text-4xl font-bold mb-3 text-white">
               Getting in touch
             </h1>
-            <p className="text-white max-w-2xl mb-4 leading-relaxed">{CONTACT_GETTING_IN_TOUCH}</p>
-            <p className="text-white/90 max-w-2xl text-sm md:text-base leading-relaxed">
-              {CONTACT_PATHWAY_PROMPT}
+            <p className="text-white max-w-2xl mb-3 leading-relaxed">
+              {SEO_NOT_POLICE} {CONTACT_PATHWAY_PROMPT}
             </p>
-            <p className="text-white/90 text-sm mt-4">
-              Why we do this: see the{" "}
+            <p className="text-white/90 text-sm">
+              Scope and FAQ:{" "}
               <Link
                 href={`${SCOPE_HELP_HREF}`}
                 className="underline font-semibold text-accent-light hover:text-white"
               >
-                FAQ
+                what we can and cannot help with
               </Link>
               .
             </p>
           </header>
+
+          <AudiencePathSelector
+            heading="Choose the reason for contacting us"
+            subheading="Booked interview → request representation. Someone detained now → current custody check. Solicitor/firm → agency cover."
+          />
 
           <section
             className="grid gap-4 md:grid-cols-2"
@@ -103,10 +108,23 @@ export default function ContactPage() {
             {CONTACT_RESPONSE_EXPECTATION}
           </p>
 
-          <AudiencePathSelector
-            heading="Choose the reason for contacting us"
-            subheading="Booked interview → request representation. Someone detained now → current custody check. Solicitor/firm → agency cover."
-          />
+          <section
+            className="rounded-xl border border-border bg-card p-5 md:p-6"
+            aria-labelledby="why-no-public-number"
+          >
+            <h2
+              id="why-no-public-number"
+              className="font-display text-lg font-bold text-primary mb-2"
+            >
+              {WHY_PHONE_NOT_EVERYWHERE_FAQ.question}
+            </h2>
+            <p className="text-sm leading-relaxed text-slate-700 mb-3">
+              {CONTACT_GETTING_IN_TOUCH}
+            </p>
+            <p className="text-sm leading-relaxed text-slate-700">
+              {WHY_PHONE_NOT_EVERYWHERE_FAQ.answer}
+            </p>
+          </section>
 
           <PoliceSignposting showWrittenEnquiryHint />
 

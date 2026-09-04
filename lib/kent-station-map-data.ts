@@ -103,8 +103,8 @@ export const KENT_MAP_STATIONS: KentMapStation[] = [
   {
     id: 5,
     name: "Maidstone Police Station",
-    shortName: "Maidstone",
-    address: "Palace Avenue, Maidstone, Kent",
+    shortName: "Maidstone (VAI only)",
+    address: "Palace Avenue, Maidstone, Kent — not a custody suite",
     miles: 14,
     driveMins: 25,
     custody: false,

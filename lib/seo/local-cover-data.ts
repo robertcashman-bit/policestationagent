@@ -1,5 +1,8 @@
 export type LocalFaq = { question: string; answer: string };
 
+/** Primary public CTA pathway for this town cover page. */
+export type LocalCoverPathway = "voluntary" | "custody";
+
 export type LocalCoverConfig = {
   slug: string;
   town: string;
@@ -13,6 +16,8 @@ export type LocalCoverConfig = {
   audience: string;
   faqs: LocalFaq[];
   nearbyLinks: { href: string; label: string }[];
+  /** VAI-only / local cover → voluntary interviews; custody suites → current custody. */
+  primaryPathway: LocalCoverPathway;
 };
 
 export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
@@ -85,6 +90,7 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
       { href: "/coverage/areas/west-kent", label: "West Kent area hub" },
       { href: "/for-solicitors", label: "Cover for solicitors" },
     ],
+    primaryPathway: "custody",
   },
   medway: {
     slug: "police-station-rep-medway",
@@ -130,6 +136,7 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
       { href: "/police-station-rep-maidstone", label: "Police station rep in Maidstone" },
       { href: "/coverage/areas/medway", label: "Medway area hub" },
     ],
+    primaryPathway: "custody",
   },
   sevenoaks: {
     slug: "police-station-rep-sevenoaks",
@@ -167,6 +174,7 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
       { href: "/police-station-rep-swanley", label: "Police station rep in Swanley" },
       { href: "/police-station-rep-tunbridge-wells", label: "Police station rep in Tunbridge Wells" },
     ],
+    primaryPathway: "voluntary",
   },
   swanley: {
     slug: "police-station-rep-swanley",
@@ -192,6 +200,7 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
       { href: "/police-station-rep-dartford", label: "Police station rep in Dartford" },
       { href: "/police-station-rep-sevenoaks", label: "Police station rep in Sevenoaks" },
     ],
+    primaryPathway: "voluntary",
   },
   dartford: {
     slug: "police-station-rep-dartford",
@@ -217,6 +226,7 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
       { href: "/police-station-rep-gravesend", label: "Police station rep in Gravesend" },
       { href: "/police-station-rep-swanley", label: "Police station rep in Swanley" },
     ],
+    primaryPathway: "voluntary",
   },
   gravesend: {
     slug: "police-station-rep-gravesend",
@@ -262,38 +272,40 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
       { href: "/coverage/areas/north-kent", label: "North Kent area hub" },
       { href: "/for-solicitors", label: "Cover for solicitors" },
     ],
+    primaryPathway: "custody",
   },
   maidstone: {
     slug: "police-station-rep-maidstone",
     town: "Maidstone",
-    title: "Police Station Rep Maidstone | Kent",
+    title: "Police Station Rep Maidstone | VAI Only — Not a Custody Suite",
     metaDescription:
-      "Police station rep in Maidstone, Kent for voluntary interviews and Kent custody. Solicitor agent cover. NOT Kent Police For police assistance call 101 or 999.",
-    h1: "Police Station Rep in Maidstone, Kent",
+      "Police station rep in Maidstone, Kent for voluntary interviews only (VAI) — Maidstone is not a public custody suite. Solicitor agent cover. NOT Kent Police For police assistance call 101 or 999.",
+    h1: "Police Station Rep in Maidstone, Kent — VAI Only",
     answerFirst:
-      "In brief: a police station rep in Maidstone covers voluntary interviews at Maidstone police station; custody matters may be at other Kent suites.",
+      "In brief: a police station rep in Maidstone covers voluntary interviews (VAI) at Maidstone police station only — it is not a custody suite. Custody matters may be at other Kent suites such as Medway or Canterbury.",
     intro:
-      "Maidstone is central to mid-Kent voluntary interviews. Criminal defence firms can instruct attendance; clients can request advice.",
+      "Maidstone police station is for voluntary interviews only (not a custody suite). Criminal defence firms can instruct attendance; clients can request advice for booked interviews.",
     areas: ["Maidstone", "Mid Kent", "Malling"],
     stations: [
       {
         name: "Maidstone police station",
         address: "Palace Avenue, Maidstone ME15 6NF",
-        note: "Voluntary interviews (custody closed)",
+        note: "VAI only — not a custody suite (custody closed)",
       },
     ],
-    audience: "Solicitors instructing cover and Maidstone interview clients.",
+    audience: "Solicitors instructing cover and Maidstone voluntary-interview clients.",
     faqs: [
       {
         question: "Is there custody at Maidstone?",
         answer:
-          "Maidstone custody has closed; detainees may be taken to Medway, Canterbury or other suites. We cover Kent custody attendance.",
+          "No. Maidstone is VAI only — not a public custody suite. Custody has closed; detainees may be taken to Medway, Canterbury or other suites. We cover Kent custody attendance at those suites.",
       },
     ],
     nearbyLinks: [
       { href: "/police-station-rep-tonbridge", label: "Police station rep in Tonbridge" },
       { href: "/police-station-rep-medway", label: "Police station rep in Medway" },
     ],
+    primaryPathway: "voluntary",
   },
   tonbridge: {
     slug: "police-station-rep-tonbridge",
@@ -339,6 +351,7 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
       { href: "/coverage/areas/west-kent", label: "West Kent area hub" },
       { href: "/for-solicitors", label: "Cover for solicitors" },
     ],
+    primaryPathway: "custody",
   },
   "tunbridge-wells": {
     slug: "police-station-rep-tunbridge-wells",
@@ -363,6 +376,7 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
       { href: "/police-station-rep-tonbridge", label: "Police station rep in Tonbridge" },
       { href: "/police-station-rep-sevenoaks", label: "Police station rep in Sevenoaks" },
     ],
+    primaryPathway: "voluntary",
   },
   canterbury: {
     slug: "police-station-rep-canterbury",
@@ -408,6 +422,7 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
       { href: "/police-station-rep-margate", label: "Police station rep in Margate" },
       { href: "/police-station-rep-dover", label: "Police station rep in Dover" },
     ],
+    primaryPathway: "custody",
   },
   ashford: {
     slug: "police-station-rep-ashford",
@@ -444,6 +459,7 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
       { href: "/police-station-rep-maidstone", label: "Police station rep in Maidstone" },
       { href: "/police-station-rep-canterbury", label: "Police station rep in Canterbury" },
     ],
+    primaryPathway: "voluntary",
   },
   folkestone: {
     slug: "police-station-rep-folkestone",
@@ -484,6 +500,7 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
       { href: "/police-station-rep-canterbury", label: "Police station rep in Canterbury" },
       { href: "/police-station-rep-margate", label: "Police station rep in Margate" },
     ],
+    primaryPathway: "custody",
   },
   dover: {
     slug: "police-station-rep-dover",
@@ -521,6 +538,7 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
       { href: "/police-station-rep-folkestone", label: "Police station rep in Folkestone" },
       { href: "/police-station-rep-canterbury", label: "Police station rep in Canterbury" },
     ],
+    primaryPathway: "voluntary",
   },
   margate: {
     slug: "police-station-rep-margate",
@@ -560,6 +578,7 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
       { href: "/police-station-rep-canterbury", label: "Police station rep in Canterbury" },
       { href: "/police-station-rep-folkestone", label: "Police station rep in Folkestone" },
     ],
+    primaryPathway: "custody",
   },
   sittingbourne: {
     slug: "police-station-rep-sittingbourne",
@@ -596,6 +615,7 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
       { href: "/police-station-rep-maidstone", label: "Police station rep in Maidstone" },
       { href: "/police-station-rep-medway", label: "Police station rep in Medway" },
     ],
+    primaryPathway: "voluntary",
   },
   bluewater: {
     slug: "police-station-rep-bluewater",
@@ -641,6 +661,7 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
       { href: "/police-station-rep-dartford", label: "Police station rep in Dartford" },
       { href: "/police-station-rep-gravesend", label: "Police station rep in Gravesend" },
     ],
+    primaryPathway: "voluntary",
   },
 };
 

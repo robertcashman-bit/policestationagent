@@ -254,6 +254,18 @@ body.has-mobile-sticky-bar {
     padding-bottom: 0;
   }
 }
+/* Cookie banner safe area — keep homepage/contact CTAs fully visible above the fixed bar */
+body.cookie-bar-visible {
+  padding-bottom: calc(4.25rem + env(safe-area-inset-bottom, 0px));
+}
+body.cookie-bar-visible.has-mobile-sticky-bar {
+  padding-bottom: calc(8.5rem + env(safe-area-inset-bottom, 0px));
+}
+@media (min-width: 1024px) {
+  body.cookie-bar-visible.has-mobile-sticky-bar {
+    padding-bottom: calc(4.25rem + env(safe-area-inset-bottom, 0px));
+  }
+}
 .b2b-panel {
   background:
     radial-gradient(ellipse 60% 50% at 90% 10%, rgb(201 162 39 / 0.12), transparent 55%),
