@@ -88,12 +88,7 @@ export default function PaceCodeCPage() {
 
   return (
     <PageShell forceHidePhone>
-
-          <div className="max-w-4xl mx-auto px-4 pt-6 md:pt-8">
-            <PersistentKentVaCta placement="gsc_pace" />
-          </div>
-
-      <JsonLd data={faqSchema} />
+<JsonLd data={faqSchema} />
 
       <section className="hero-navy py-14 md:py-16">
         <div className="max-w-4xl mx-auto px-4">
@@ -118,6 +113,10 @@ export default function PaceCodeCPage() {
       </section>
 
       <article className="max-w-4xl mx-auto px-4 py-12">
+            <div className="mb-8">
+              <PersistentKentVaCta placement="gsc_pace" />
+            </div>
+
           <div className="bg-secondary border-l-4 border-accent p-6 mb-8 rounded-r-lg">
             <p className="text-lg font-medium text-slate-800">
               <strong>Quick Answer:</strong> PACE Code C is a Code of Practice that sets out the

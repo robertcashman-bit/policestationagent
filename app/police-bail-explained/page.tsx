@@ -95,13 +95,7 @@ export default function PoliceBailExplainedPage() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex flex-col">
       <JsonLd data={faqSchema} />
       <Header />
-
-          <div className="max-w-4xl mx-auto px-4 pt-6 md:pt-8">
-            <PersistentKentVaCta placement="gsc_bail" />
-          </div>
-
-
-      <main className="flex-grow">
+<main className="flex-grow">
         <section className="bg-gradient-to-br from-slate-800 via-blue-900 to-slate-900 text-white py-16">
           <div className="max-w-4xl mx-auto px-4">
             <nav className="text-sm mb-6 text-blue-200">
@@ -125,6 +119,10 @@ export default function PoliceBailExplainedPage() {
         </section>
 
         <article className="max-w-4xl mx-auto px-4 py-12">
+            <div className="mb-8">
+              <PersistentKentVaCta placement="gsc_bail" />
+            </div>
+
           <AnswerFirstBlock>
             Police bail means you are released from custody with conditions (such as not contacting
             witnesses) and a return date to come back to the station. Pre-charge bail has statutory

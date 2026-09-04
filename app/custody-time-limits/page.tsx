@@ -81,13 +81,7 @@ export default function CustodyTimeLimitsPage() {
       <FAQPage items={faqItems} />
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex flex-col">
       <Header />
-
-          <div className="max-w-4xl mx-auto px-4 pt-6 md:pt-8">
-            <PersistentKentVaCta placement="gsc_custody_time" />
-          </div>
-
-
-      <main className="flex-grow">
+<main className="flex-grow">
         {/* Hero Section */}
         <section className="bg-gradient-to-br from-slate-800 via-blue-900 to-slate-900 text-white py-16">
           <div className="max-w-4xl mx-auto px-4">
@@ -113,6 +107,10 @@ export default function CustodyTimeLimitsPage() {
 
         {/* Main Content */}
         <article className="max-w-4xl mx-auto px-4 py-12">
+            <div className="mb-8">
+              <PersistentKentVaCta placement="gsc_custody_time" />
+            </div>
+
           {/* Direct Answer Box - Snippet Optimised */}
           <div className="bg-blue-50 border-l-4 border-blue-600 p-6 mb-8 rounded-r-lg">
             <p className="text-lg font-medium text-slate-800">

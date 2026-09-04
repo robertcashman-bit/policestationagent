@@ -93,13 +93,7 @@ export default function DNAFingerprintsPolicePage() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex flex-col">
       <JsonLd data={faqSchema} />
       <Header forceHidePhone />
-
-          <div className="max-w-4xl mx-auto px-4 pt-6 md:pt-8">
-            <PersistentKentVaCta placement="gsc_dna" />
-          </div>
-
-
-      <main className="flex-grow">
+<main className="flex-grow">
         <section className="bg-gradient-to-br from-slate-800 via-blue-900 to-slate-900 text-white py-16">
           <div className="max-w-4xl mx-auto px-4">
             <nav className="text-sm mb-6 text-blue-200">
@@ -124,6 +118,10 @@ export default function DNAFingerprintsPolicePage() {
         </section>
 
         <article className="max-w-4xl mx-auto px-4 py-12">
+            <div className="mb-8">
+              <PersistentKentVaCta placement="gsc_dna" />
+            </div>
+
           <div className="bg-red-50 border-l-4 border-red-600 p-5 mb-6 rounded-r-lg">
             <p className="text-sm font-bold text-red-950 mb-1">
               We are NOT the police and NOT a custody suite

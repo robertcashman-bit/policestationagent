@@ -78,13 +78,7 @@ export default function NoCommentInterviewPage() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex flex-col">
       <JsonLd data={faqSchema} />
       <Header />
-
-          <div className="max-w-4xl mx-auto px-4 pt-6 md:pt-8">
-            <PersistentKentVaCta placement="gsc_no_comment" />
-          </div>
-
-
-      <main className="flex-grow">
+<main className="flex-grow">
         {/* Hero */}
         <section className="bg-gradient-to-br from-slate-800 via-blue-900 to-slate-900 text-white py-16">
           <div className="max-w-4xl mx-auto px-4">
@@ -110,6 +104,10 @@ export default function NoCommentInterviewPage() {
 
         {/* Main Content */}
         <article className="max-w-4xl mx-auto px-4 py-12">
+            <div className="mb-8">
+              <PersistentKentVaCta placement="gsc_no_comment" />
+            </div>
+
           <AnswerFirstBlock>
             You have the right to answer &quot;no comment&quot; to any question in a police interview.
             However, if you later rely on a fact in your defence that you did not mention when questioned
