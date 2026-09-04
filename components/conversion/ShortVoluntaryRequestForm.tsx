@@ -18,6 +18,10 @@ export function ShortVoluntaryRequestForm() {
   const [note, setNote] = useState("");
   const [consent, setConsent] = useState(false);
   const [notPolice, setNotPolice] = useState(false);
+  const [accurate, setAccurate] = useState(false);
+  const [forthcoming, setForthcoming] = useState(false);
+  const [noRetainer, setNoRetainer] = useState(false);
+  const [custodyRoute, setCustodyRoute] = useState(false);
   const [company, setCompany] = useState("");
   const [errors, setErrors] = useState<string[]>([]);
   const [submitting, setSubmitting] = useState(false);
@@ -46,6 +50,18 @@ export function ShortVoluntaryRequestForm() {
     if (email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       e.push("Enter a valid email or leave it blank.");
     }
+    if (!accurate) e.push("Please confirm the information is accurate.");
+    if (!forthcoming) {
+      e.push("Please confirm this concerns a current or forthcoming interview under caution.");
+    }
+    if (!noRetainer) {
+      e.push(
+        "Please confirm you understand submitting does not create a solicitor-client retainer."
+      );
+    }
+    if (!custodyRoute) {
+      e.push("Please confirm you understand urgent custody matters must use the custody pathway.");
+    }
     if (!notPolice) e.push("Please confirm you understand we are not the police.");
     if (!consent) e.push("Please consent to us storing your details to contact you.");
     if (e.length) {
@@ -73,7 +89,7 @@ export function ShortVoluntaryRequestForm() {
       body.append(
         "allegation",
         note.trim() ||
-          "Voluntary interview / letter invitation — details to be confirmed on contact.",
+          "Voluntary interview / letter invitation — details to be confirmed on contact."
       );
       body.append("receivedLetter", "yes");
       body.append("fullName", fullName.trim());
@@ -243,7 +259,9 @@ export function ShortVoluntaryRequestForm() {
 
       <label className="block text-sm font-semibold text-slate-800">
         Anything else we should know?{" "}
-        <span className="text-slate-500 font-normal">(optional — do not discuss the allegation in detail)</span>
+        <span className="text-slate-500 font-normal">
+          (optional — do not discuss the allegation in detail)
+        </span>
         <textarea
           className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 text-sm"
           rows={2}
@@ -254,30 +272,59 @@ export function ShortVoluntaryRequestForm() {
         />
       </label>
 
-      <label className="flex items-start gap-2 text-sm text-slate-800">
-        <input
-          type="checkbox"
-          className="mt-1"
-          checked={notPolice}
-          onChange={(e) => setNotPolice(e.target.checked)}
-        />
-        <span>
-          I understand this is an independent criminal defence solicitor service — not Kent Police
-          — and I am requesting representation for a voluntary interview / letter under caution.
-        </span>
-      </label>
-
-      <label className="flex items-start gap-2 text-sm text-slate-800">
-        <input
-          type="checkbox"
-          className="mt-1"
-          checked={consent}
-          onChange={(e) => setConsent(e.target.checked)}
-        />
-        <span>
-          I consent to Police Station Agent storing these details to contact me about this request.
-        </span>
-      </label>
+      <fieldset className="space-y-3">
+        <legend className="text-sm font-bold text-slate-900">Declarations</legend>
+        {(
+          [
+            [
+              "accurate",
+              accurate,
+              setAccurate,
+              "The information I have supplied is accurate to the best of my knowledge.",
+            ],
+            [
+              "forthcoming",
+              forthcoming,
+              setForthcoming,
+              "This enquiry concerns a current or forthcoming police interview under caution.",
+            ],
+            [
+              "noRetainer",
+              noRetainer,
+              setNoRetainer,
+              "I understand that submitting this form does not itself create a solicitor-client retainer.",
+            ],
+            [
+              "custodyRoute",
+              custodyRoute,
+              setCustodyRoute,
+              "I understand that urgent current-custody matters must use the custody pathway, not this form.",
+            ],
+            [
+              "notPolice",
+              notPolice,
+              setNotPolice,
+              "I understand this is an independent criminal defence solicitor service — not Kent Police — and I am requesting representation for a voluntary interview / letter under caution.",
+            ],
+            [
+              "consent",
+              consent,
+              setConsent,
+              "I consent to Police Station Agent storing these details to contact me about this request.",
+            ],
+          ] as const
+        ).map(([key, checked, setChecked, label]) => (
+          <label key={key} className="flex items-start gap-2 text-sm text-slate-800">
+            <input
+              type="checkbox"
+              className="mt-1"
+              checked={checked}
+              onChange={(e) => setChecked(e.target.checked)}
+            />
+            <span>{label}</span>
+          </label>
+        ))}
+      </fieldset>
 
       <button
         type="submit"

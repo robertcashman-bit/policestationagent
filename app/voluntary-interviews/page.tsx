@@ -90,9 +90,10 @@ export default function VoluntaryInterviewsPage() {
               Voluntary interview solicitor in Kent
             </h1>
             <p className="text-white/90 text-base md:text-lg leading-relaxed max-w-2xl">
-              Got a police letter, email or call about a <strong className="text-white">voluntary
-              attendance</strong> or <strong className="text-white">interview under caution</strong>?
-              We are criminal defence solicitors — not Kent Police. For police use 999 or 101.
+              Got a police letter, email or call about a{" "}
+              <strong className="text-white">voluntary attendance</strong> or{" "}
+              <strong className="text-white">interview under caution</strong>? We are criminal
+              defence solicitors — not Kent Police. For police use 999 or 101.
             </p>
             <div className="flex flex-wrap gap-3">
               <a
@@ -143,16 +144,17 @@ export default function VoluntaryInterviewsPage() {
           </section>
 
           <section id="request" className="scroll-mt-24 space-y-4">
-            <h2 className="font-display text-2xl font-bold text-primary">
-              Request representation
-            </h2>
+            <h2 className="font-display text-2xl font-bold text-primary">Request representation</h2>
             <p className="text-sm text-slate-700 leading-relaxed">
               Start with the short form. Prefer officer details and letter upload? Use the{" "}
               <a href="#full-form" className="underline font-semibold text-primary">
                 full form below
               </a>{" "}
               or the{" "}
-              <Link href={`${PATH_VOLUNTARY}#request`} className="underline font-semibold text-primary">
+              <Link
+                href={`${PATH_VOLUNTARY}#request`}
+                className="underline font-semibold text-primary"
+              >
                 dedicated start page
               </Link>
               .
@@ -198,10 +200,8 @@ export default function VoluntaryInterviewsPage() {
           </section>
 
           <section id="full-form" className="scroll-mt-24">
-            <h2 className="font-display text-xl font-bold text-primary mb-3">
-              Full request form
-            </h2>
-            <VoluntaryInterviewForm />
+            <h2 className="font-display text-xl font-bold text-primary mb-3">Full request form</h2>
+            <VoluntaryInterviewForm reportFormStart={false} />
           </section>
 
           <PoliceSignposting />

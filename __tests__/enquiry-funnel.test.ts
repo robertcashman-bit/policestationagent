@@ -2,7 +2,11 @@ import { describe, it, expect } from "vitest";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { isPhoneAllowlistPath, PATHWAY_CARDS, PHONE_ALLOWLIST_PATHS } from "../config/enquiry-paths";
+import {
+  isPhoneAllowlistPath,
+  PATHWAY_CARDS,
+  PHONE_ALLOWLIST_PATHS,
+} from "../config/enquiry-paths";
 import { sanitizeAnalyticsParams } from "../lib/analytics";
 import { validateUploadFile } from "../lib/enquiry/uploads";
 import { createEnquiryReference } from "../lib/enquiry/reference";
@@ -16,11 +20,11 @@ describe("enquiry funnel routes", () => {
     const page = fs.readFileSync(path.join(root, "app/page.tsx"), "utf8");
     const hero = fs.readFileSync(
       path.join(root, "components/conversion/HomeHeroCover.tsx"),
-      "utf8",
+      "utf8"
     );
     const pathway = fs.readFileSync(
       path.join(root, "components/conversion/HomePathwaySection.tsx"),
-      "utf8",
+      "utf8"
     );
     expect(page).not.toMatch(/tel:\$\{PHONE_TEL\}|tel:01732/);
     expect(hero).not.toMatch(/tel:01732|PHONE_TEL/);
@@ -35,7 +39,7 @@ describe("enquiry funnel routes", () => {
     const header = fs.readFileSync(path.join(root, "components/Header.tsx"), "utf8");
     const sticky = fs.readFileSync(
       path.join(root, "components/conversion/MobileStickyContactBar.tsx"),
-      "utf8",
+      "utf8"
     );
     expect(header).not.toMatch(/tel:01732/);
     expect(sticky).not.toMatch(/tel:01732|PHONE_TEL/);
@@ -43,14 +47,14 @@ describe("enquiry funnel routes", () => {
     expect(sticky).toContain("voluntary-interviews");
     expect(sticky).toContain("for-solicitors");
     // Homepage suppresses sticky chrome so pathway CTAs are unobstructed
-    expect(sticky).toContain('HIDE_STICKY_PATHS');
+    expect(sticky).toContain("HIDE_STICKY_PATHS");
     expect(sticky).toMatch(/"\/"/);
   });
 
   it("home hero has no competing CTA row and hosts pathways", () => {
     const hero = fs.readFileSync(
       path.join(root, "components/conversion/HomeHeroCover.tsx"),
-      "utf8",
+      "utf8"
     );
     expect(hero).toMatch(/999/);
     expect(hero).toMatch(/101/);
@@ -89,7 +93,7 @@ describe("enquiry funnel routes", () => {
     const landing = fs.readFileSync(path.join(root, "app/voluntary-interviews/page.tsx"), "utf8");
     const start = fs.readFileSync(
       path.join(root, "app/start/voluntary-interview/page.tsx"),
-      "utf8",
+      "utf8"
     );
     expect(landing).toContain("VoluntaryInterviewForm");
     expect(landing).not.toMatch(/tel:01732/);
@@ -104,11 +108,13 @@ describe("enquiry funnel routes", () => {
   it("situation picker includes something-else deflection with no call-back", () => {
     const picker = fs.readFileSync(
       path.join(root, "components/conversion/SituationPicker.tsx"),
-      "utf8",
+      "utf8"
     );
     expect(picker).toContain("Something else");
     expect(picker).toContain("situation-other");
-    expect(picker).toMatch(/do not offer a call-back|do not offer a call-back for these|We do not offer a call-back/i);
+    expect(picker).toMatch(
+      /do not offer a call-back|do not offer a call-back for these|We do not offer a call-back/i
+    );
     expect(picker).toMatch(/101/);
     expect(picker).toContain("kent.police.uk");
     expect(picker).toContain("ShortVoluntaryRequestForm");
@@ -119,6 +125,7 @@ describe("enquiry funnel routes", () => {
     const landing = fs.readFileSync(path.join(root, "app/voluntary-interviews/page.tsx"), "utf8");
     expect(landing).toMatch(/Voluntary Interview Kent/i);
     expect(landing).toContain("ShortVoluntaryRequestForm");
+    expect(landing).toContain("reportFormStart={false}");
     expect(landing).toContain("Maidstone");
     expect(landing).toContain("Do not discuss the allegation");
     expect(landing).toContain("PoliceSignposting");
@@ -215,7 +222,7 @@ describe("custody qualification component", () => {
   it("does not reveal phone until qualified logic in source", () => {
     const src = fs.readFileSync(
       path.join(root, "components/conversion/CustodyQualificationFlow.tsx"),
-      "utf8",
+      "utf8"
     );
     expect(src).toContain("QualifiedPhoneReveal");
     expect(src).toContain('relationship === "friend"');
