@@ -6,6 +6,7 @@ import { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
 import { LegalReferences, Ref, type LegalSource } from "@/components/LegalReferences";
 import { SITE_DOMAIN } from "@/config/site";
+import { PersistentKentVaCta } from "@/components/conversion/PersistentKentVaCta";
 
 export const metadata: Metadata = {
   title: "No Comment Interview: When to Stay Silent in Police Interview UK",
@@ -77,8 +78,7 @@ export default function NoCommentInterviewPage() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex flex-col">
       <JsonLd data={faqSchema} />
       <Header />
-
-      <main className="flex-grow">
+<main className="flex-grow">
         {/* Hero */}
         <section className="bg-gradient-to-br from-slate-800 via-blue-900 to-slate-900 text-white py-16">
           <div className="max-w-4xl mx-auto px-4">
@@ -104,6 +104,10 @@ export default function NoCommentInterviewPage() {
 
         {/* Main Content */}
         <article className="max-w-4xl mx-auto px-4 py-12">
+            <div className="mb-8">
+              <PersistentKentVaCta placement="gsc_no_comment" />
+            </div>
+
           <AnswerFirstBlock>
             You have the right to answer &quot;no comment&quot; to any question in a police interview.
             However, if you later rely on a fact in your defence that you did not mention when questioned

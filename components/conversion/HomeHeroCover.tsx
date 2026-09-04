@@ -3,8 +3,8 @@
 import { AudiencePathSelector } from "@/components/conversion/AudiencePathSelector";
 
 /**
- * First-screen job: short identity, one calm sentence, three pathways — no scroll.
- * Brand lives in the header; do not repeat it as a giant hero wordmark.
+ * First-screen job: VA-first for search visitors, clear not-police, three pathways.
+ * Soften 101 so it does not compete with the solicitor CTAs in the first viewport.
  */
 export function HomeHeroCover() {
   return (
@@ -25,28 +25,27 @@ export function HomeHeroCover() {
           id="home-hero-heading"
           className="mt-1 max-w-measure font-display text-[1.25rem] font-bold leading-tight text-white sm:text-2xl md:text-[1.75rem]"
         >
-          Police station representation when it matters
+          Got a police interview letter? Get a free solicitor first
         </h1>
-        <p className="mt-1.5 max-w-2xl text-sm leading-snug text-white/85 sm:text-[0.95rem]">
-          Choose your route for current Kent custody, a booked voluntary interview, or solicitor
-          agency cover. Need the police? Use{" "}
-          <a href="tel:999" className="font-bold text-accent-light underline underline-offset-2">
-            999
-          </a>{" "}
-          or{" "}
-          <a href="tel:101" className="font-bold text-accent-light underline underline-offset-2">
-            101
-          </a>
-          .
+        <p className="mt-1.5 max-w-2xl text-sm leading-snug text-white/90 sm:text-[0.95rem]">
+          We are criminal defence solicitors — <strong className="text-white">not Kent Police</strong>.
+          If you have a letter, email or call about a voluntary interview under caution, use the
+          route below.
         </p>
 
         <div id="pathways" className="mt-3 scroll-mt-2 sm:mt-4 md:mt-5">
           <AudiencePathSelector
             variant="firstScreen"
-            heading="Three routes. One clear next step."
+            heading="Three routes. Voluntary interview is the usual path for letters."
             subheading="Pick the route that matches your situation."
+            highlightVoluntary
           />
         </div>
+
+        <p className="mt-3 text-[0.7rem] leading-snug text-white/55 sm:text-xs">
+          Need the police instead? Emergency 999 · non-emergency 101 — we cannot take crime reports
+          or police enquiries.
+        </p>
       </div>
     </section>
   );

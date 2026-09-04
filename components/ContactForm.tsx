@@ -24,6 +24,8 @@ import {
   policeConfusionPublicMessage,
 } from "@/lib/enquiry/police-confusion";
 import { AnalyticsEvents } from "@/lib/analytics";
+import { PoliceEnquiryFirstGate } from "@/components/conversion/PoliceEnquiryFirstGate";
+import { PoliceSignposting } from "@/components/conversion/PoliceSignposting";
 
 interface FormData {
   name: string;
@@ -84,6 +86,10 @@ export default function ContactForm({
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
   /** Admin form gate: police/OIC must self-identify before the form is shown. */
   const [audienceGate, setAudienceGate] = useState<"unset" | "police" | "defence">("unset");
+  /** Shared first-question: crime report / police number → hard stop before OIC gate. */
+  const [policeNeedGate, setPoliceNeedGate] = useState<"unset" | "police_need" | "defence">(
+    "unset",
+  );
   const [blockMessage, setBlockMessage] = useState<string | null>(null);
 
   const validate = (): boolean => {
@@ -149,7 +155,7 @@ export default function ContactForm({
     e.preventDefault();
     setBlockMessage(null);
 
-    if (isAdmin && audienceGate !== "defence") {
+    if (isAdmin && (policeNeedGate !== "defence" || audienceGate !== "defence")) {
       setBlockMessage(POLICE_OIC_BLOCK_BODY);
       return;
     }
@@ -310,7 +316,27 @@ export default function ContactForm({
           </p>
         </div>
 
-        {isAdmin && audienceGate === "unset" ? (
+        {isAdmin && policeNeedGate === "unset" ? (
+          <div className="mb-8">
+            <PoliceEnquiryFirstGate
+              active={false}
+              onActivate={() => setPoliceNeedGate("police_need")}
+              onClear={() => setPoliceNeedGate("defence")}
+            />
+          </div>
+        ) : null}
+
+        {isAdmin && policeNeedGate === "police_need" ? (
+          <div className="mb-8">
+            <PoliceEnquiryFirstGate
+              active
+              onActivate={() => setPoliceNeedGate("police_need")}
+              onClear={() => setPoliceNeedGate("unset")}
+            />
+          </div>
+        ) : null}
+
+        {isAdmin && policeNeedGate === "defence" && audienceGate === "unset" ? (
           <div
             className="mb-8 rounded-lg border border-amber-300 bg-amber-50 p-5"
             data-testid="admin-audience-gate"
@@ -339,6 +365,16 @@ export default function ContactForm({
           </div>
         ) : null}
 
+        {isAdmin && audienceGate === "police" ? (
+          <div className="mb-8 space-y-4">
+            <div className="rounded-lg border border-red-300 bg-red-50 p-4" role="alert">
+              <p className="text-sm font-semibold text-red-950 mb-1">{POLICE_OIC_BLOCK_HEADING}</p>
+              <p className="text-sm text-red-950 leading-relaxed">{POLICE_OIC_BLOCK_BODY}</p>
+            </div>
+            <PoliceSignposting compact />
+          </div>
+        ) : null}
+
         {blockMessage ? (
           <div className="mb-6 rounded-lg border border-red-300 bg-red-50 p-4" role="alert">
             <p className="text-sm font-semibold text-red-950 mb-1">{POLICE_OIC_BLOCK_HEADING}</p>
@@ -346,11 +382,11 @@ export default function ContactForm({
           </div>
         ) : null}
 
-        {isAdmin && audienceGate !== "defence" ? null : (
+        {isAdmin && (policeNeedGate !== "defence" || audienceGate !== "defence") ? null : (
           <h2 className="text-2xl font-bold text-slate-900 mb-6">{heading}</h2>
         )}
 
-        {isAdmin && audienceGate !== "defence" ? null : (
+        {isAdmin && (policeNeedGate !== "defence" || audienceGate !== "defence") ? null : (
           <>
 
         {/* Requestor Information */}

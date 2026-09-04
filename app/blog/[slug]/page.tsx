@@ -16,6 +16,7 @@ import { SITE_URL } from "@/config/site";
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
 import { ContextualCTA } from "@/components/conversion/ContextualCTA";
+import { PersistentKentVaCta } from "@/components/conversion/PersistentKentVaCta";
 
 // Use ISR for blog posts - revalidate every hour
 export const revalidate = 3600; // 1 hour
@@ -237,6 +238,19 @@ export default async function BlogPostPage(props: Readonly<PageProps>) {
               {safeHeadline}
             </h1>
 
+            {/voluntary|interview|police-left|police-want|letter|caution|card-at|property-returned|bail|rui|pace|dna|fingerprint|no-comment|prepared-statement/i.test(
+              post.slug,
+            ) ? (
+              <div className="mb-6 max-w-2xl">
+                <Link
+                  href="/start/voluntary-interview#request"
+                  className="inline-flex min-h-[44px] items-center justify-center rounded-md bg-accent px-5 py-2.5 text-sm font-bold text-accent-foreground hover:bg-accent-light"
+                >
+                  Request VA solicitor
+                </Link>
+              </div>
+            ) : null}
+
             {post.featuredImage && (
               <div className="mt-6 mb-4 relative w-full max-w-3xl mx-auto aspect-video rounded-[var(--radius-lg)] shadow-elevated overflow-hidden">
                 <Image
@@ -304,6 +318,14 @@ export default async function BlogPostPage(props: Readonly<PageProps>) {
 
       <section className="py-12 md:py-16 bg-background">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/property-returned|voluntary|interview|caution|bail|rui|pace|dna|fingerprint|no-comment|prepared-statement|police-left|police-want|letter|card-at/i.test(
+            post.slug,
+          ) ? (
+            <div className="mb-10">
+              <PersistentKentVaCta placement={`blog_${post.slug}`} />
+            </div>
+          ) : null}
+
           <article className="prose prose-lg prose-navy max-w-none">
             <div
               dangerouslySetInnerHTML={{ __html: normalizeScrapedHtml(sanitizedContentHtml) }}

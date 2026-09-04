@@ -7,6 +7,7 @@ import { PATH_CUSTODY } from "@/config/enquiry-paths";
 import { FormProgress } from "@/components/conversion/FormProgress";
 import { SecureFileUpload } from "@/components/conversion/SecureFileUpload";
 import { PoliceSignposting } from "@/components/conversion/PoliceSignposting";
+import { PoliceEnquiryFirstGate } from "@/components/conversion/PoliceEnquiryFirstGate";
 
 const STEPS = ["Enquiry type", "Location", "Interview", "Your details", "Declarations"];
 
@@ -82,22 +83,31 @@ function fieldClass(invalid?: boolean) {
   } focus:outline-none focus:ring-2 focus:ring-blue-600`;
 }
 
-export function VoluntaryInterviewForm() {
+type VoluntaryInterviewFormProps = {
+  /** When false, skip mount start event (e.g. landing page already hosts ShortVoluntaryRequestForm). */
+  reportFormStart?: boolean;
+};
+
+export function VoluntaryInterviewForm({ reportFormStart = true }: VoluntaryInterviewFormProps) {
   const [step, setStep] = useState(1);
   const [form, setForm] = useState<FormState>(INITIAL);
   const [files, setFiles] = useState<File[]>([]);
   const [errors, setErrors] = useState<string[]>([]);
   const [submitting, setSubmitting] = useState(false);
   const [reference, setReference] = useState<string | null>(null);
+  const [policeNeedGate, setPoliceNeedGate] = useState<"unset" | "police_need" | "defence">(
+    "unset",
+  );
   const started = useRef(false);
   const errorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!reportFormStart) return;
     if (!started.current) {
       started.current = true;
       FunnelEvents.voluntaryFormStart();
     }
-  }, []);
+  }, [reportFormStart]);
 
   useEffect(() => {
     if (errors.length) errorRef.current?.focus();
@@ -109,7 +119,8 @@ export function VoluntaryInterviewForm() {
 
   function validateStep(s: number): string[] {
     const e: string[] = [];
-    if (s === 1 && !form.enquiryType) e.push("Please select whether the police have contacted you.");
+    if (s === 1 && !form.enquiryType)
+      e.push("Please select whether the police have contacted you.");
     if (s === 2) {
       if (!form.policeStation.trim()) e.push("Police station or interview location is required.");
       if (!form.inKent) e.push("Please confirm whether the interview is in Kent.");
@@ -227,7 +238,9 @@ export function VoluntaryInterviewForm() {
     return (
       <div id="request" className="space-y-4">
         <div className="rounded-xl border border-slate-300 bg-white p-5 space-y-3">
-          <h2 className="text-lg font-bold text-slate-900">This is not a general legal advice line</h2>
+          <h2 className="text-lg font-bold text-slate-900">
+            This is not a general legal advice line
+          </h2>
           <p className="text-sm text-slate-700">
             This form is for people who have been contacted by the police about an interview under
             caution. If that does not apply, please use the FAQ or official police contacts instead.
@@ -245,6 +258,28 @@ export function VoluntaryInterviewForm() {
     );
   }
 
+  if (policeNeedGate !== "defence") {
+    return (
+      <div id="request" className="space-y-4 scroll-mt-24">
+        <div>
+          <h2 className="text-xl font-black text-slate-900">
+            Request voluntary interview representation
+          </h2>
+          <p className="text-sm text-slate-600 mt-1">
+            Structured enquiry for a forthcoming interview under caution.
+          </p>
+        </div>
+        <PoliceEnquiryFirstGate
+          active={policeNeedGate === "police_need"}
+          onActivate={() => setPoliceNeedGate("police_need")}
+          onClear={() =>
+            setPoliceNeedGate(policeNeedGate === "police_need" ? "unset" : "defence")
+          }
+        />
+      </div>
+    );
+  }
+
   return (
     <form
       id="request"
@@ -253,7 +288,9 @@ export function VoluntaryInterviewForm() {
       noValidate
     >
       <div>
-        <h2 className="text-xl font-black text-slate-900">Request voluntary interview representation</h2>
+        <h2 className="text-xl font-black text-slate-900">
+          Request voluntary interview representation
+        </h2>
         <p className="text-sm text-slate-600 mt-1">
           Structured enquiry for a forthcoming interview under caution. Urgent current custody:{" "}
           <Link href={PATH_CUSTODY} className="underline font-semibold text-slate-800">
@@ -465,7 +502,11 @@ export function VoluntaryInterviewForm() {
             </div>
           </fieldset>
           <div className="sm:col-span-2">
-            <SecureFileUpload files={files} onChange={setFiles} label="Police invitation (optional)" />
+            <SecureFileUpload
+              files={files}
+              onChange={setFiles}
+              label="Police invitation (optional)"
+            />
           </div>
         </div>
       ) : null}
@@ -577,7 +618,10 @@ export function VoluntaryInterviewForm() {
           <legend className="text-sm font-bold text-slate-900">Declarations</legend>
           {(
             [
-              ["accurate", "The information I have supplied is accurate to the best of my knowledge."],
+              [
+                "accurate",
+                "The information I have supplied is accurate to the best of my knowledge.",
+              ],
               [
                 "forthcoming",
                 "This enquiry concerns a current or forthcoming police interview under caution.",
@@ -631,11 +675,7 @@ export function VoluntaryInterviewForm() {
           </button>
         ) : null}
         {step < 5 ? (
-          <button
-            type="button"
-            onClick={next}
-            className="btn-navy text-sm px-5 py-2"
-          >
+          <button type="button" onClick={next} className="btn-navy text-sm px-5 py-2">
             Continue
           </button>
         ) : (

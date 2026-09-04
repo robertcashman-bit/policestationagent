@@ -7,7 +7,8 @@ import { BreadcrumbList } from "@/components/StructuredData";
 import {
   CTA_OUT_OF_SCOPE,
   CTA_WHO_CAN_CALL,
-  SCOPE_HELP_HREF } from "@/config/contact";
+  SCOPE_HELP_HREF,
+} from "@/config/contact";
 
 export const metadata: Metadata = {
   title: "Offences We Deal With | Police Station Representation in Kent",

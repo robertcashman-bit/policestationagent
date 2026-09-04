@@ -70,6 +70,7 @@ export const FunnelEvents = {
   pathwayVoluntary: () => trackEvent("pathway_voluntary_selected"),
   pathwayCustody: () => trackEvent("pathway_custody_selected"),
   pathwayAgency: () => trackEvent("pathway_agency_selected"),
+  situationOther: () => trackEvent("situation_other_selected"),
   voluntaryFormStart: () => trackEvent("voluntary_form_start"),
   voluntaryFormSubmit: () => trackEvent("voluntary_form_submit"),
   custodyScreenStart: () => trackEvent("custody_screen_start"),

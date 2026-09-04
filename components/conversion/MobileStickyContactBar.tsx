@@ -29,7 +29,7 @@ export function MobileStickyContactBar() {
     >
       <div className="grid grid-cols-3 divide-x divide-white/15">
         <Link
-          href="/start/voluntary-interview#request"
+          href="/voluntary-interviews#request"
           className="flex flex-col items-center justify-center gap-0.5 py-2 px-1 min-h-[48px] hover:bg-white/5"
         >
           <span className="text-[10px] font-bold uppercase tracking-wide text-accent-light">

@@ -33,7 +33,7 @@ export default function BlogAdvertBlock(_props: Props = {}) {
           href="/start/voluntary-interview#request"
           className="inline-flex items-center justify-center px-6 py-3 bg-blue-800 text-white rounded-md hover:bg-blue-900 font-semibold transition-colors min-h-[44px]"
         >
-          Have the police invited you to an interview? Request representation
+          Request VA solicitor
         </Link>
         <Link
           href="/current-custody"

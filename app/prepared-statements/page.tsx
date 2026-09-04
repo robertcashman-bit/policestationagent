@@ -8,7 +8,9 @@ import { SITE_DOMAIN } from "@/config/site";
 import {
   CTA_OUT_OF_SCOPE,
   CTA_WHO_CAN_CALL,
-  SCOPE_HELP_HREF } from "@/config/contact";
+  SCOPE_HELP_HREF,
+} from "@/config/contact";
+import { PersistentKentVaCta } from "@/components/conversion/PersistentKentVaCta";
 
 export const metadata: Metadata = {
   title: "Prepared Statements in Police Interviews: A Complete Guide",
@@ -66,8 +68,7 @@ export default function PreparedStatementsPage() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex flex-col">
       <JsonLd data={faqSchema} />
       <Header />
-
-      <main className="flex-grow">
+<main className="flex-grow">
         {/* Hero */}
         <section className="bg-gradient-to-br from-slate-800 via-blue-900 to-slate-900 text-white py-16">
           <div className="max-w-4xl mx-auto px-4">
@@ -93,6 +94,10 @@ export default function PreparedStatementsPage() {
 
         {/* Main Content */}
         <article className="max-w-4xl mx-auto px-4 py-12">
+            <div className="mb-8">
+              <PersistentKentVaCta placement="gsc_prepared" />
+            </div>
+
           {/* Direct Answer */}
           <div className="bg-blue-50 border-l-4 border-blue-600 p-6 mb-8 rounded-r-lg">
             <p className="text-lg font-medium text-slate-800">

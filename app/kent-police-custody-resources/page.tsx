@@ -17,16 +17,16 @@ import { RIGHTS_HUB, INTERVIEW_HUB } from "@/config/internal-link-hubs";
 const LAST_UPDATED = "2026-05-30";
 
 export const metadata: Metadata = {
-  title: "Kent Custody Rights Resource Hub | Defence Solicitor Guide (NOT the Police)",
+  title: "Kent Custody Rights Hub | Defence Solicitor Guides (NOT Police)",
   description:
-    "Independent criminal defence resource hub — NOT Kent Police. Free, sourced guides on PACE rights, custody time limits, RUI and voluntary interviews in Kent. Not a custody suite contact directory.",
+    "Independent criminal defence resource hub for Kent custody rights, PACE, RUI and voluntary interviews — NOT Kent Police and not a custody suite contact directory.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}${RESOURCE_HUB_PATH}`,
   },
   openGraph: {
-    title: "Kent Custody Rights Resource Hub | NOT the Police",
+    title: "Kent Custody Rights Hub | Defence Solicitor Guides (NOT Police)",
     description:
-      "Defence solicitor explainer hub for Kent custody rights — PACE, time limits, RUI, and family guidance. Not a police contact page.",
+      "Defence solicitor explainer hub for Kent custody rights — PACE, time limits, RUI, and voluntary interviews. Not a police contact page.",
     url: RESOURCE_HUB_URL,
     type: "website",
   },
@@ -53,7 +53,7 @@ export default function KentPoliceCustodyResourcesPage() {
         <div className="max-w-4xl mx-auto px-4 py-16">
           <p className="text-sm text-slate-500 mb-2">Last updated: {LAST_UPDATED}</p>
           <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-4">
-            Kent Custody Rights Resource Hub
+            Kent custody rights — defence solicitor guides
           </h1>
           <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6">
             <p className="text-sm font-bold text-red-950 mb-1">

@@ -13,7 +13,8 @@ import { LLMContentBlock } from "@/components/LLMContentBlock";
 import {
   CTA_OUT_OF_SCOPE,
   CTA_WHO_CAN_CALL,
-  SCOPE_HELP_HREF } from "@/config/contact";
+  SCOPE_HELP_HREF,
+} from "@/config/contact";
 
 export const metadata: Metadata = {
   title: "Duty Solicitor Police Station Kent | Bail Applications | FREE Legal Aid",

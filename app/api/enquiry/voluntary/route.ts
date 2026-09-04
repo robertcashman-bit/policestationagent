@@ -15,9 +15,10 @@ function str(max = MAX_LEN) {
 }
 
 const VoluntarySchema = z.object({
+  formMode: z.enum(["full", "short"]).optional().default("full"),
   enquiryType: z.enum(["booked", "no_date", "message", "no", "unsure"]),
   policeForce: str(200),
-  policeStation: str(300).min(1),
+  policeStation: str(300),
   town: str(200),
   inKent: z.enum(["yes", "no", "unsure", ""]),
   interviewDate: str(40),
@@ -27,10 +28,10 @@ const VoluntarySchema = z.object({
   officerPhone: str(80),
   officerEmail: str(200),
   crimeReference: str(120),
-  allegation: str(2000).min(1),
+  allegation: str(2000),
   receivedLetter: str(20),
   fullName: str(200).min(1),
-  dateOfBirth: str(40).min(1),
+  dateOfBirth: str(40),
   telephone: str(80).min(1),
   email: str(200),
   postcode: str(20),
@@ -87,6 +88,7 @@ export async function POST(request: NextRequest) {
     }
 
     const parsed = VoluntarySchema.safeParse({
+      formMode: formString(formData, "formMode") || "full",
       enquiryType: formString(formData, "enquiryType"),
       policeForce: formString(formData, "policeForce"),
       policeStation: formString(formData, "policeStation"),
@@ -139,6 +141,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const isShort = data.formMode === "short";
+    if (!isShort) {
+      if (!data.policeStation.trim() || !data.allegation.trim() || !data.dateOfBirth.trim()) {
+        return NextResponse.json(
+          { error: "Please check the form fields and try again." },
+          { status: 400 },
+        );
+      }
+    } else if (!data.telephone.trim()) {
+      return NextResponse.json(
+        { error: "Please check the form fields and try again." },
+        { status: 400 },
+      );
+    }
+
     const uploads = await parseMultipartUploads(formData, "files");
     if (uploads.error) {
       return NextResponse.json({ error: uploads.error }, { status: 400 });
@@ -150,9 +167,10 @@ export async function POST(request: NextRequest) {
     const businessBody = [
       `Voluntary interview enquiry ${reference}`,
       "",
+      `Form mode: ${data.formMode || "full"}`,
       `Enquiry type: ${data.enquiryType}`,
       `Force: ${data.policeForce}`,
-      `Station: ${data.policeStation}`,
+      `Station: ${data.policeStation || "Not yet known"}`,
       `Town: ${data.town}`,
       `In Kent: ${data.inKent}`,
       `Interview date: ${data.interviewDate}`,
@@ -183,7 +201,7 @@ export async function POST(request: NextRequest) {
       reference,
       businessBody,
       ackEmail,
-      stationLabel: data.policeStation,
+      stationLabel: data.policeStation || "Not yet known",
       attachments: uploads.attachments,
     });
 

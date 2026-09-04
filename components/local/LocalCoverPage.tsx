@@ -1,5 +1,10 @@
 import { JsonLd } from "@/components/JsonLd";
 import { GeneralLegalDisclaimer } from "@/components/conversion/GeneralLegalDisclaimer";
+import { ContextualCTA } from "@/components/conversion/ContextualCTA";
+import {
+  DefenceNotStationBanner,
+  PersistentKentVaCta,
+} from "@/components/conversion/PersistentKentVaCta";
 import { InternalLinkHub } from "@/components/InternalLinkHub";
 import type { LocalCoverConfig } from "@/lib/seo/local-cover-data";
 import Link from "next/link";
@@ -96,12 +101,17 @@ export function LocalCoverPage({ config }: Props) {
       <section className="hero-navy py-14 md:py-16">
         <div className="max-w-4xl mx-auto px-4">
           <p className="text-xs uppercase tracking-wide text-accent-light mb-2 font-semibold">
-            Kent police station rep
+            Kent police station defence · not the police
           </p>
           <h1 className="font-display text-3xl md:text-4xl font-bold mb-4 text-white">
             {config.h1}
           </h1>
-          <p className="text-white/90 text-lg mb-6">{config.intro}</p>
+          <p className="text-white/90 text-lg mb-4">{config.intro}</p>
+          <p className="rounded-lg border border-white/20 bg-white/10 px-4 py-3 text-sm text-white/90 mb-6">
+            Independent criminal defence solicitors — not Kent Police. Addresses below are for
+            orientation only. We do not publish custody suite telephone numbers. For police use 999
+            or 101.
+          </p>
           <div className="surface-card p-4 shadow-elevated max-w-xl" data-nosnippet>
             <h2 className="text-base font-bold text-foreground mb-3">
               How to instruct or request representation
@@ -119,6 +129,9 @@ export function LocalCoverPage({ config }: Props) {
       </section>
 
       <div className="max-w-4xl mx-auto px-4 py-10 space-y-10">
+        <DefenceNotStationBanner stationLabel={config.town} />
+        <PersistentKentVaCta placement={`local_cover_${config.slug}`} />
+
         <section className="surface-card p-6">
           <h2 className="text-lg font-bold text-foreground mb-2">In brief</h2>
           <p className="text-muted-foreground">{config.answerFirst}</p>
@@ -176,10 +189,17 @@ export function LocalCoverPage({ config }: Props) {
           </dl>
         </section>
 
+        <ContextualCTA variant="voluntary" />
+
         <InternalLinkHub
           title="Related pages"
           links={[
             { href: "/", text: "Homepage", description: "Police Station Agent" },
+            {
+              href: "/voluntary-interviews#request",
+              text: "Request VA solicitor",
+              description: "Voluntary interview under caution",
+            },
             {
               href: "/for-solicitors",
               text: "Police station cover for solicitors",

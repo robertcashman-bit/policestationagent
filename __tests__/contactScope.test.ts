@@ -50,10 +50,10 @@ describe("contact config", () => {
     expect(SERVICE_SCOPE_SHORT).toMatch(/post-release/i);
   });
 
-  it("contact page routes into three pathways without generic call CTA", () => {
+  it("contact page routes into situation picker without generic call CTA", () => {
     const contact = fs.readFileSync(path.join(root, "app/contact/page.tsx"), "utf8");
-    expect(contact).toMatch(/Choose the reason for contacting us/);
-    expect(contact).toContain("AudiencePathSelector");
+    expect(contact).toContain("SituationPicker");
+    expect(contact).toMatch(/What is your situation|situation picker/i);
     expect(contact).toContain("PoliceSignposting");
     expect(contact).toContain("CONTACT_GETTING_IN_TOUCH");
     expect(contact).toContain("CONTACT_PUBLIC_ROUTE");
@@ -214,14 +214,19 @@ describe("contact config", () => {
     expect(banner).not.toMatch(/text-red-800/);
   });
 
-  it("home hero is compact and help-first without brand wordmark", () => {
+  it("home hero is VA-first with early not-police and no brand wordmark", () => {
     const hero = fs.readFileSync(
       path.join(root, "components/conversion/HomeHeroCover.tsx"),
       "utf8",
     );
-    expect(hero).toMatch(/Police station representation when it matters/);
+    expect(hero).toMatch(/Got a police interview letter|voluntary interview/i);
+    expect(hero).toMatch(/not Kent Police/i);
     expect(hero).toContain("AudiencePathSelector");
-    expect(hero).not.toMatch(/Kent criminal defence solicitor — not the police/);
+    expect(hero).toContain("highlightVoluntary");
+    expect(hero).toMatch(/999/);
+    expect(hero).toMatch(/101/);
+    // Softened: 101 must not be a competing bold tel CTA in the first viewport lead
+    expect(hero).not.toMatch(/href="tel:101"/);
     expect(hero).not.toMatch(/>\s*Police Station Agent\s*</);
   });
 });

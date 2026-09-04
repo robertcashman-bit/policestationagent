@@ -8,6 +8,10 @@ import { SEO_NOT_POLICE } from '@/config/contact';
 import StationNotPoliceIntro from '@/components/compliance/StationNotPoliceIntro';
 import PoliceAssistanceBlock from '@/components/compliance/PoliceAssistanceBlock';
 import SolicitorHelpCTA from '@/components/compliance/SolicitorHelpCTA';
+import {
+  DefenceNotStationBanner,
+  PersistentKentVaCta,
+} from '@/components/conversion/PersistentKentVaCta';
 
 // Station data - factual information only
 const STATIONS: Record<string, {
@@ -262,6 +266,12 @@ export default async function PoliceStationPage(props: PageProps) {
         <section className="py-16 bg-gradient-to-br from-slate-50 via-blue-50 to-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <StationNotPoliceIntro stationLabel={`${station.name} Police Station`} />
+            <div className="mb-6">
+              <DefenceNotStationBanner stationLabel={station.name} />
+            </div>
+            <div className="mb-8">
+              <PersistentKentVaCta placement={`coverage_station_${params['station-name']}`} />
+            </div>
             <PoliceAssistanceBlock />
             <div className="bg-white p-8 rounded-xl mb-8 border-l-4 border-blue-600 shadow-sm">
               <h2 className="text-2xl font-bold mb-4 text-slate-800">About {station.name} Police Station</h2>

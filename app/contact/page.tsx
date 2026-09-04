@@ -9,7 +9,6 @@ import {
   SEO_NOT_POLICE,
   SERVICE_SCOPE,
   CONTACT_GETTING_IN_TOUCH,
-  CONTACT_PATHWAY_PROMPT,
   CONTACT_PUBLIC_ROUTE,
   CONTACT_SOLICITOR_ROUTE,
   CONTACT_RESPONSE_EXPECTATION,
@@ -20,13 +19,13 @@ import {
   SCOPE_HELP_HREF,
   WHY_PHONE_NOT_EVERYWHERE_FAQ,
 } from "@/config/contact";
-import { AudiencePathSelector } from "@/components/conversion/AudiencePathSelector";
+import { SituationPicker } from "@/components/conversion/SituationPicker";
 import { PoliceSignposting } from "@/components/conversion/PoliceSignposting";
 import { DEFAULT_OG_IMAGES, DEFAULT_TWITTER_IMAGES } from "@/lib/seo/page-metadata";
 
 export const metadata: Metadata = {
   title: "Contact | Choose Why You Are Enquiring | NOT the Police",
-  description: `${SEO_NOT_POLICE} Choose voluntary interview, current custody or agency cover. Non-urgent written enquiry for administrative messages only. ${SERVICE_SCOPE}`,
+  description: `${SEO_NOT_POLICE} Choose voluntary interview, current custody or agency cover. Wrong police enquiries are filtered — use 101. ${SERVICE_SCOPE}`,
   alternates: {
     canonical: `https://${SITE_DOMAIN}/contact`,
   },
@@ -60,7 +59,15 @@ export default function ContactPage() {
               Getting in touch
             </h1>
             <p className="text-white max-w-2xl mb-3 leading-relaxed">
-              {SEO_NOT_POLICE} {CONTACT_PATHWAY_PROMPT}
+              {SEO_NOT_POLICE} We are criminal defence solicitors — not Kent Police. For police use{" "}
+              <a href="tel:999" className="font-bold text-accent-light underline">
+                999
+              </a>{" "}
+              or{" "}
+              <a href="tel:101" className="font-bold text-accent-light underline">
+                101
+              </a>
+              . Choose your situation below before any form or call-back path.
             </p>
             <p className="text-white/90 text-sm">
               Scope and FAQ:{" "}
@@ -74,10 +81,7 @@ export default function ContactPage() {
             </p>
           </header>
 
-          <AudiencePathSelector
-            heading="Choose the reason for contacting us"
-            subheading="Booked interview → request representation. Someone detained now → current custody check. Solicitor/firm → agency cover."
-          />
+          <SituationPicker />
 
           <section
             className="grid gap-4 md:grid-cols-2"
@@ -140,6 +144,11 @@ export default function ContactPage() {
               {ADMIN_ENQUIRY_HEADING}
             </h2>
             <p className="text-sm text-muted-foreground mb-5">{ADMIN_ENQUIRY_INTRO}</p>
+            <p className="text-sm text-slate-700 mb-5 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3">
+              Use the situation picker above first. This written form is only for defence clients
+              and instructing solicitors with a non-urgent administrative message — not for crime
+              reports or police switchboard enquiries.
+            </p>
 
             <div className="grid md:grid-cols-2 gap-4 mb-6">
               <div className="rounded-lg border border-emerald-200 bg-emerald-50/80 p-4">

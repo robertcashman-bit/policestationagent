@@ -2,7 +2,11 @@ import { describe, it, expect } from "vitest";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { isPhoneAllowlistPath, PATHWAY_CARDS, PHONE_ALLOWLIST_PATHS } from "../config/enquiry-paths";
+import {
+  isPhoneAllowlistPath,
+  PATHWAY_CARDS,
+  PHONE_ALLOWLIST_PATHS,
+} from "../config/enquiry-paths";
 import { sanitizeAnalyticsParams } from "../lib/analytics";
 import { validateUploadFile } from "../lib/enquiry/uploads";
 import { createEnquiryReference } from "../lib/enquiry/reference";
@@ -16,11 +20,11 @@ describe("enquiry funnel routes", () => {
     const page = fs.readFileSync(path.join(root, "app/page.tsx"), "utf8");
     const hero = fs.readFileSync(
       path.join(root, "components/conversion/HomeHeroCover.tsx"),
-      "utf8",
+      "utf8"
     );
     const pathway = fs.readFileSync(
       path.join(root, "components/conversion/HomePathwaySection.tsx"),
-      "utf8",
+      "utf8"
     );
     expect(page).not.toMatch(/tel:\$\{PHONE_TEL\}|tel:01732/);
     expect(hero).not.toMatch(/tel:01732|PHONE_TEL/);
@@ -35,25 +39,26 @@ describe("enquiry funnel routes", () => {
     const header = fs.readFileSync(path.join(root, "components/Header.tsx"), "utf8");
     const sticky = fs.readFileSync(
       path.join(root, "components/conversion/MobileStickyContactBar.tsx"),
-      "utf8",
+      "utf8"
     );
     expect(header).not.toMatch(/tel:01732/);
     expect(sticky).not.toMatch(/tel:01732|PHONE_TEL/);
     expect(sticky).toContain("current-custody");
-    expect(sticky).toContain("voluntary-interview");
+    expect(sticky).toContain("voluntary-interviews");
     expect(sticky).toContain("for-solicitors");
     // Homepage suppresses sticky chrome so pathway CTAs are unobstructed
-    expect(sticky).toContain('HIDE_STICKY_PATHS');
+    expect(sticky).toContain("HIDE_STICKY_PATHS");
     expect(sticky).toMatch(/"\/"/);
   });
 
   it("home hero has no competing CTA row and hosts pathways", () => {
     const hero = fs.readFileSync(
       path.join(root, "components/conversion/HomeHeroCover.tsx"),
-      "utf8",
+      "utf8"
     );
     expect(hero).toMatch(/999/);
     expect(hero).toMatch(/101/);
+    expect(hero).not.toMatch(/href="tel:101"/);
     expect(hero).toContain("AudiencePathSelector");
     expect(hero).toContain("firstScreen");
     expect(hero).not.toMatch(/Find representation/);
@@ -89,7 +94,7 @@ describe("enquiry funnel routes", () => {
     const landing = fs.readFileSync(path.join(root, "app/voluntary-interviews/page.tsx"), "utf8");
     const start = fs.readFileSync(
       path.join(root, "app/start/voluntary-interview/page.tsx"),
-      "utf8",
+      "utf8"
     );
     expect(landing).toContain("VoluntaryInterviewForm");
     expect(landing).not.toMatch(/tel:01732/);
@@ -99,6 +104,100 @@ describe("enquiry funnel routes", () => {
   it("pathway cards cover three audiences", () => {
     expect(PATHWAY_CARDS).toHaveLength(3);
     expect(PATHWAY_CARDS.map((c) => c.id).sort()).toEqual(["agency", "custody", "voluntary"]);
+  });
+
+  it("situation picker includes something-else deflection with no call-back", () => {
+    const picker = fs.readFileSync(
+      path.join(root, "components/conversion/SituationPicker.tsx"),
+      "utf8"
+    );
+    expect(picker).toContain("Something else");
+    expect(picker).toContain("situation-other");
+    expect(picker).toMatch(
+      /do not offer a call-back|do not offer a call-back for these|We do not offer a call-back/i
+    );
+    expect(picker).toMatch(/101/);
+    expect(picker).toContain("kent.police.uk");
+    expect(picker).toContain("ShortVoluntaryRequestForm");
+    expect(picker).not.toMatch(/tel:01732/);
+  });
+
+  it("voluntary landing leads with Kent VA SEO and short form", () => {
+    const landing = fs.readFileSync(path.join(root, "app/voluntary-interviews/page.tsx"), "utf8");
+    expect(landing).toMatch(/Voluntary Interview Kent/i);
+    expect(landing).toContain("ShortVoluntaryRequestForm");
+    expect(landing).toContain("reportFormStart={false}");
+    expect(landing).toContain("Maidstone");
+    expect(landing).toContain("Do not discuss the allegation");
+    expect(landing).toContain("PoliceSignposting");
+  });
+
+  it("hours page is solicitor availability not police station opening times", () => {
+    const hours = fs.readFileSync(path.join(root, "app/hours/page.tsx"), "utf8");
+    expect(hours).toMatch(/Solicitor Availability|defence team is available/i);
+    expect(hours).toMatch(
+      /not Kent Police station opening times|Looking for police station opening times/i
+    );
+    expect(hours).not.toMatch(/Opening Hours \| Police Station/);
+    expect(hours).toContain("PATH_VOLUNTARY_LANDING");
+  });
+
+  it("shared police enquiry first gate exists for VA and contact forms", () => {
+    const gate = fs.readFileSync(
+      path.join(root, "components/conversion/PoliceEnquiryFirstGate.tsx"),
+      "utf8"
+    );
+    expect(gate).toMatch(/reporting a crime or looking for a police number/i);
+    expect(gate).toMatch(/101/);
+    expect(gate).toContain("police-enquiry-hard-stop");
+    const contact = fs.readFileSync(path.join(root, "components/ContactForm.tsx"), "utf8");
+    expect(contact).toContain("PoliceEnquiryFirstGate");
+    const vai = fs.readFileSync(
+      path.join(root, "components/conversion/VoluntaryInterviewForm.tsx"),
+      "utf8"
+    );
+    expect(vai).toContain("PoliceEnquiryFirstGate");
+  });
+
+  it("VA aliases redirect to voluntary-interviews", () => {
+    const cfg = fs.readFileSync(path.join(root, "next.config.js"), "utf8");
+    expect(cfg).toMatch(/source:\s*"\/servicesvoluntaryinterviews"/);
+    expect(cfg).toMatch(/source:\s*"\/voluntary-police-interview"/);
+    expect(cfg).toMatch(/destination:\s*"\/voluntary-interviews"/);
+  });
+
+  it("top GSC guide pages include persistent Kent VA CTA to request form", () => {
+    const guides = [
+      "app/can-police-take-my-phone/page.tsx",
+      "app/pace-code-c/page.tsx",
+      "app/custody-time-limits/page.tsx",
+      "app/police-bail-explained/page.tsx",
+      "app/released-under-investigation/page.tsx",
+      "app/dna-fingerprints-police-station/page.tsx",
+      "app/article-police-caution-before-interview/page.tsx",
+      "app/prepared-statements/page.tsx",
+      "app/no-comment-interview/page.tsx",
+    ];
+    for (const rel of guides) {
+      const src = fs.readFileSync(path.join(root, rel), "utf8");
+      expect(src, rel).toContain("PersistentKentVaCta");
+    }
+    const cta = fs.readFileSync(
+      path.join(root, "components/conversion/PersistentKentVaCta.tsx"),
+      "utf8"
+    );
+    expect(cta).toContain("/start/voluntary-interview");
+    expect(cta).toContain("PATH_VOLUNTARY");
+    expect(cta).toContain("DefenceNotStationBanner");
+    expect(cta).toContain("data-kent-va-cta");
+    const blog = fs.readFileSync(path.join(root, "app/blog/[slug]/page.tsx"), "utf8");
+    expect(blog).toContain("property-returned");
+    expect(blog).toContain("PersistentKentVaCta");
+    const local = fs.readFileSync(
+      path.join(root, "components/local/LocalCoverPage.tsx"),
+      "utf8"
+    );
+    expect(local).toContain("DefenceNotStationBanner");
   });
 });
 
@@ -192,7 +291,7 @@ describe("custody qualification component", () => {
   it("does not reveal phone until qualified logic in source", () => {
     const src = fs.readFileSync(
       path.join(root, "components/conversion/CustodyQualificationFlow.tsx"),
-      "utf8",
+      "utf8"
     );
     expect(src).toContain("QualifiedPhoneReveal");
     expect(src).toContain('relationship === "friend"');

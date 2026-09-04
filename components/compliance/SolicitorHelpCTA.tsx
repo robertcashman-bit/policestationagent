@@ -38,6 +38,12 @@ export default function SolicitorHelpCTA({
         </p>
         <div className="flex flex-wrap gap-4">
           <Link
+            href="/voluntary-interviews#request"
+            className="bg-amber-400 text-slate-900 px-6 py-3 rounded-lg font-semibold hover:bg-amber-300 transition inline-flex items-center gap-2"
+          >
+            Request VA solicitor
+          </Link>
+          <Link
             href={contactHref}
             className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition inline-flex items-center gap-2"
           >
