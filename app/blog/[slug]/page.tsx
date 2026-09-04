@@ -237,6 +237,19 @@ export default async function BlogPostPage(props: Readonly<PageProps>) {
               {safeHeadline}
             </h1>
 
+            {/voluntary|interview|police-left|police-want|letter|caution|card-at/i.test(
+              post.slug,
+            ) ? (
+              <div className="mb-6 max-w-2xl">
+                <Link
+                  href="/start/voluntary-interview#request"
+                  className="inline-flex min-h-[44px] items-center justify-center rounded-md bg-accent px-5 py-2.5 text-sm font-bold text-accent-foreground hover:bg-accent-light"
+                >
+                  Request VA solicitor
+                </Link>
+              </div>
+            ) : null}
+
             {post.featuredImage && (
               <div className="mt-6 mb-4 relative w-full max-w-3xl mx-auto aspect-video rounded-[var(--radius-lg)] shadow-elevated overflow-hidden">
                 <Image

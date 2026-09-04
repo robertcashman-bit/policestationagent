@@ -58,6 +58,7 @@ describe("enquiry funnel routes", () => {
     );
     expect(hero).toMatch(/999/);
     expect(hero).toMatch(/101/);
+    expect(hero).not.toMatch(/href="tel:101"/);
     expect(hero).toContain("AudiencePathSelector");
     expect(hero).toContain("firstScreen");
     expect(hero).not.toMatch(/Find representation/);
@@ -129,6 +130,40 @@ describe("enquiry funnel routes", () => {
     expect(landing).toContain("Maidstone");
     expect(landing).toContain("Do not discuss the allegation");
     expect(landing).toContain("PoliceSignposting");
+  });
+
+  it("hours page is solicitor availability not police station opening times", () => {
+    const hours = fs.readFileSync(path.join(root, "app/hours/page.tsx"), "utf8");
+    expect(hours).toMatch(/Solicitor Availability|defence team is available/i);
+    expect(hours).toMatch(
+      /not Kent Police station opening times|Looking for police station opening times/i
+    );
+    expect(hours).not.toMatch(/Opening Hours \| Police Station/);
+    expect(hours).toContain("PATH_VOLUNTARY_LANDING");
+  });
+
+  it("shared police enquiry first gate exists for VA and contact forms", () => {
+    const gate = fs.readFileSync(
+      path.join(root, "components/conversion/PoliceEnquiryFirstGate.tsx"),
+      "utf8"
+    );
+    expect(gate).toMatch(/reporting a crime or looking for a police number/i);
+    expect(gate).toMatch(/101/);
+    expect(gate).toContain("police-enquiry-hard-stop");
+    const contact = fs.readFileSync(path.join(root, "components/ContactForm.tsx"), "utf8");
+    expect(contact).toContain("PoliceEnquiryFirstGate");
+    const vai = fs.readFileSync(
+      path.join(root, "components/conversion/VoluntaryInterviewForm.tsx"),
+      "utf8"
+    );
+    expect(vai).toContain("PoliceEnquiryFirstGate");
+  });
+
+  it("VA aliases redirect to voluntary-interviews", () => {
+    const cfg = fs.readFileSync(path.join(root, "next.config.js"), "utf8");
+    expect(cfg).toMatch(/source:\s*"\/servicesvoluntaryinterviews"/);
+    expect(cfg).toMatch(/source:\s*"\/voluntary-police-interview"/);
+    expect(cfg).toMatch(/destination:\s*"\/voluntary-interviews"/);
   });
 });
 

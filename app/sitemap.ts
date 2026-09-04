@@ -605,14 +605,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }
 
   // Blog posts from the same build-safe reader used by /blog and /blog/[slug].
-  const blogPages: MetadataRoute.Sitemap = getAllPosts().map((post) => ({
-    url: `${baseUrl}/blog/${post.slug}`,
-    lastModified: post.date ? new Date(post.date) : new Date(),
-    changeFrequency: "weekly" as const,
-    priority: 0.75,
-  }));
+  let blogPages: MetadataRoute.Sitemap = [];
+  try {
+    blogPages = getAllPosts().map((post) => {
+      const rawDate = post.date ? new Date(post.date) : new Date();
+      const lastModified = Number.isNaN(rawDate.getTime()) ? new Date() : rawDate;
+      return {
+        url: `${baseUrl}/blog/${post.slug}`,
+        lastModified,
+        changeFrequency: "weekly" as const,
+        priority: 0.75,
+      };
+    });
+  } catch (error) {
+    console.warn("Skipping blog posts in sitemap:", error);
+    blogPages = [];
+  }
 
-  return [
+  const merged = [
     ...staticPages,
     ...locationSitemapEntries(baseUrl, SOLICITOR_LOCATION_PATHS, 0.85),
     ...locationSitemapEntries(baseUrl, POLICE_STATION_AGENT_PATHS, 0.88),
@@ -622,4 +632,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...coverageStationPages,
     ...coverageAreaPages,
   ];
+
+  // Dedupe by URL — static list historically duplicated /start/voluntary-interview.
+  const seen = new Set<string>();
+  return merged.filter((entry) => {
+    if (seen.has(entry.url)) return false;
+    seen.add(entry.url);
+    return true;
+  });
 }

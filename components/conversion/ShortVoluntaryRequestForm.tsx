@@ -4,6 +4,7 @@ import { FormEvent, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { FunnelEvents } from "@/lib/analytics";
 import { PATH_VOLUNTARY } from "@/config/enquiry-paths";
+import { PoliceEnquiryFirstGate } from "@/components/conversion/PoliceEnquiryFirstGate";
 
 /**
  * Short VA request for Contact / landing conversion — station & date optional.
@@ -26,6 +27,9 @@ export function ShortVoluntaryRequestForm() {
   const [errors, setErrors] = useState<string[]>([]);
   const [submitting, setSubmitting] = useState(false);
   const [reference, setReference] = useState<string | null>(null);
+  const [policeNeedGate, setPoliceNeedGate] = useState<"unset" | "police_need" | "defence">(
+    "unset",
+  );
   const started = useRef(false);
   const errorRef = useRef<HTMLDivElement>(null);
 
@@ -155,6 +159,24 @@ export function ShortVoluntaryRequestForm() {
           </Link>
           .
         </p>
+      </div>
+    );
+  }
+
+  if (policeNeedGate !== "defence") {
+    return (
+      <div className="space-y-3" data-testid="short-va-gate">
+        <h3 className="font-display text-base font-bold text-primary">
+          Short request — voluntary interview
+        </h3>
+        <PoliceEnquiryFirstGate
+          active={policeNeedGate === "police_need"}
+          onActivate={() => setPoliceNeedGate("police_need")}
+          onClear={() =>
+            setPoliceNeedGate(policeNeedGate === "police_need" ? "unset" : "defence")
+          }
+          compact
+        />
       </div>
     );
   }

@@ -7,6 +7,7 @@ import { PATH_CUSTODY } from "@/config/enquiry-paths";
 import { FormProgress } from "@/components/conversion/FormProgress";
 import { SecureFileUpload } from "@/components/conversion/SecureFileUpload";
 import { PoliceSignposting } from "@/components/conversion/PoliceSignposting";
+import { PoliceEnquiryFirstGate } from "@/components/conversion/PoliceEnquiryFirstGate";
 
 const STEPS = ["Enquiry type", "Location", "Interview", "Your details", "Declarations"];
 
@@ -94,6 +95,9 @@ export function VoluntaryInterviewForm({ reportFormStart = true }: VoluntaryInte
   const [errors, setErrors] = useState<string[]>([]);
   const [submitting, setSubmitting] = useState(false);
   const [reference, setReference] = useState<string | null>(null);
+  const [policeNeedGate, setPoliceNeedGate] = useState<"unset" | "police_need" | "defence">(
+    "unset",
+  );
   const started = useRef(false);
   const errorRef = useRef<HTMLDivElement>(null);
 
@@ -250,6 +254,28 @@ export function VoluntaryInterviewForm({ reportFormStart = true }: VoluntaryInte
           </button>
         </div>
         <PoliceSignposting />
+      </div>
+    );
+  }
+
+  if (policeNeedGate !== "defence") {
+    return (
+      <div id="request" className="space-y-4 scroll-mt-24">
+        <div>
+          <h2 className="text-xl font-black text-slate-900">
+            Request voluntary interview representation
+          </h2>
+          <p className="text-sm text-slate-600 mt-1">
+            Structured enquiry for a forthcoming interview under caution.
+          </p>
+        </div>
+        <PoliceEnquiryFirstGate
+          active={policeNeedGate === "police_need"}
+          onActivate={() => setPoliceNeedGate("police_need")}
+          onClear={() =>
+            setPoliceNeedGate(policeNeedGate === "police_need" ? "unset" : "defence")
+          }
+        />
       </div>
     );
   }

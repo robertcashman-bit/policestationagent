@@ -20,9 +20,9 @@ const COPY: Record<
 > = {
   voluntary: {
     title: "Booked for a voluntary interview?",
-    body: "Request representation before you attend an interview under caution. Do not use this as a general legal advice line.",
+    body: "Request a free solicitor before you attend an interview under caution. Do not use this as a general legal advice line.",
     href: `${PATH_VOLUNTARY}#request`,
-    button: "Request representation",
+    button: "Request VA solicitor",
     tone: "border-border bg-secondary/70",
   },
   custody: {

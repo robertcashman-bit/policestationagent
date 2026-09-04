@@ -231,6 +231,16 @@ const nextConfig = {
         destination: "/voluntary-interviews",
         permanent: true,
       },
+      {
+        source: "/servicesvoluntaryinterviews",
+        destination: "/voluntary-interviews",
+        permanent: true,
+      },
+      {
+        source: "/voluntary-police-interview",
+        destination: "/voluntary-interviews",
+        permanent: true,
+      },
       // NOTE: Do NOT add case-only redirects like /FAQ→/faq or /Privacy→/privacy
       // here. On macOS APFS (case-insensitive) Next matches them against the
       // lowercase route and creates a 308 self-redirect loop. Case folding is
@@ -366,7 +376,7 @@ const nextConfig = {
       },
       {
         source: "/voluntary-police-interview-solicitor",
-        destination: "/voluntary-police-interview",
+        destination: "/voluntary-interviews",
         permanent: true,
       },
       {

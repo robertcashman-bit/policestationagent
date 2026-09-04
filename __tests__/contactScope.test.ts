@@ -225,6 +225,8 @@ describe("contact config", () => {
     expect(hero).toContain("highlightVoluntary");
     expect(hero).toMatch(/999/);
     expect(hero).toMatch(/101/);
+    // Softened: 101 must not be a competing bold tel CTA in the first viewport lead
+    expect(hero).not.toMatch(/href="tel:101"/);
     expect(hero).not.toMatch(/>\s*Police Station Agent\s*</);
   });
 });

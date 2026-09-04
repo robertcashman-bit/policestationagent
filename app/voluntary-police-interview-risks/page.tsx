@@ -4,18 +4,18 @@ import Footer from "@/components/Footer";
 import Link from "next/link";
 import { LegalReferences, Ref, type LegalSource } from "@/components/LegalReferences";
 import { SITE_DOMAIN } from "@/config/site";
+import { ContextualCTA } from "@/components/conversion/ContextualCTA";
+import { SEO_NOT_POLICE } from "@/config/contact";
 
 export const metadata: Metadata = {
-  title: "Voluntary Police Interview Risks (England & Wales) | Know Your Rights",
-  description:
-    "A voluntary interview is still a formal interview. What to do before you attend, your right to legal advice, and silence/adverse inference basics. Sources included.",
+  title: "Voluntary Police Interview Risks | Free Solicitor Before You Attend",
+  description: `${SEO_NOT_POLICE} A voluntary interview is still formal. Get free legal advice before you attend under caution. Sources included.`,
   alternates: {
     canonical: `https://${SITE_DOMAIN}/voluntary-police-interview-risks`,
   },
   openGraph: {
-    title: "Voluntary Police Interview Risks (England & Wales) | Know Your Rights",
-    description:
-      "A voluntary interview is still a formal interview. What to do before you attend, your right to legal advice, and silence/adverse inference basics. Sources included.",
+    title: "Voluntary Police Interview Risks | Free Solicitor Before You Attend",
+    description: `${SEO_NOT_POLICE} Get free legal advice before a voluntary interview under caution.`,
     url: `https://${SITE_DOMAIN}/voluntary-police-interview-risks`,
     siteName: "Police Station Agent",
     type: "website",
@@ -51,10 +51,14 @@ export default function Page() {
           <h1 className="text-4xl font-bold text-slate-900 mb-4">
             The risks of a “voluntary” police interview
           </h1>
-          <p className="text-lg text-slate-700 mb-8">
+          <p className="text-lg text-slate-700 mb-6">
             A voluntary interview is still a formal interview process. Get advice on your specific
-            case before attending.
+            case before attending. We are criminal defence solicitors — not Kent Police.
           </p>
+
+          <div className="mb-8">
+            <ContextualCTA variant="voluntary" />
+          </div>
 
           <div className="bg-amber-50 border-l-4 border-amber-500 p-6 mb-10 rounded-r-lg">
             <p className="text-slate-900">

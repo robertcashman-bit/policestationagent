@@ -4,7 +4,7 @@ import { AudiencePathSelector } from "@/components/conversion/AudiencePathSelect
 
 /**
  * First-screen job: VA-first for search visitors, clear not-police, three pathways.
- * Brand lives in the header; do not repeat it as a giant hero wordmark.
+ * Soften 101 so it does not compete with the solicitor CTAs in the first viewport.
  */
 export function HomeHeroCover() {
   return (
@@ -29,16 +29,8 @@ export function HomeHeroCover() {
         </h1>
         <p className="mt-1.5 max-w-2xl text-sm leading-snug text-white/90 sm:text-[0.95rem]">
           We are criminal defence solicitors — <strong className="text-white">not Kent Police</strong>.
-          For police use{" "}
-          <a href="tel:999" className="font-bold text-accent-light underline underline-offset-2">
-            999
-          </a>{" "}
-          or{" "}
-          <a href="tel:101" className="font-bold text-accent-light underline underline-offset-2">
-            101
-          </a>
-          . If you have a letter, email or call about a voluntary interview under caution, start
-          with that route below.
+          If you have a letter, email or call about a voluntary interview under caution, use the
+          route below.
         </p>
 
         <div id="pathways" className="mt-3 scroll-mt-2 sm:mt-4 md:mt-5">
@@ -49,6 +41,11 @@ export function HomeHeroCover() {
             highlightVoluntary
           />
         </div>
+
+        <p className="mt-3 text-[0.7rem] leading-snug text-white/55 sm:text-xs">
+          Need the police instead? Emergency 999 · non-emergency 101 — we cannot take crime reports
+          or police enquiries.
+        </p>
       </div>
     </section>
   );
