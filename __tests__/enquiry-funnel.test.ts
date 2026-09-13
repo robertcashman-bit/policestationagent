@@ -29,10 +29,28 @@ describe("enquiry funnel routes", () => {
     expect(page).not.toMatch(/tel:\$\{PHONE_TEL\}|tel:01732/);
     expect(hero).not.toMatch(/tel:01732|PHONE_TEL/);
     expect(page).toContain("HomePathwaySection");
+    expect(page).toContain("HomePathwaySocialProof");
+    expect(page).toContain("HomeCallProcess");
     expect(hero).toContain("AudiencePathSelector");
     expect(hero).toContain('id="pathways"');
     // Pathways render in the hero first screen; section export kept for compatibility.
     expect(pathway).toMatch(/return null|HomeHeroCover/);
+  });
+
+  it("homepage FAQ uses Tuckers court handover wording", () => {
+    const page = fs.readFileSync(path.join(root, "app/page.tsx"), "utf8");
+    expect(page).toMatch(/handover to Tuckers Solicitors LLP/);
+    expect(page).not.toMatch(/represent you from the police station through to Crown Court if needed/);
+  });
+
+  it("homepage process section is pathways-based not public-call", () => {
+    const process = fs.readFileSync(
+      path.join(root, "components/conversion/HomeCallProcess.tsx"),
+      "utf8",
+    );
+    expect(process).toMatch(/What happens after you request help/);
+    expect(process).not.toMatch(/What happens when you call/);
+    expect(process).toMatch(/do not publish a public switchboard number/i);
   });
 
   it("header and sticky bar hide generic telephone", () => {
@@ -97,8 +115,12 @@ describe("enquiry funnel routes", () => {
       "utf8"
     );
     expect(landing).toContain("VoluntaryInterviewForm");
+    expect(landing).toContain("ShortVoluntaryRequestForm");
     expect(landing).not.toMatch(/tel:01732/);
     expect(start).toContain("VoluntaryInterviewForm");
+    expect(start).toContain("ShortVoluntaryRequestForm");
+    expect(start).toMatch(/Free solicitor for a voluntary interview under caution/);
+    expect(start).toMatch(/not Kent Police|not the police/i);
   });
 
   it("pathway cards cover three audiences", () => {
@@ -120,6 +142,8 @@ describe("enquiry funnel routes", () => {
     expect(picker).toContain("kent.police.uk");
     expect(picker).toContain("ShortVoluntaryRequestForm");
     expect(picker).not.toMatch(/tel:01732/);
+    // Compact police box removed — Contact hero + page-level box cover it
+    expect(picker).not.toMatch(/<PoliceSignposting|from.*PoliceSignposting/);
   });
 
   it("voluntary landing leads with Kent VA SEO and short form", () => {
@@ -130,6 +154,14 @@ describe("enquiry funnel routes", () => {
     expect(landing).toContain("Maidstone");
     expect(landing).toContain("Do not discuss the allegation");
     expect(landing).toContain("PoliceSignposting");
+    expect(landing).toMatch(/Free solicitor for a voluntary interview under caution/);
+    expect(landing).toMatch(/not Kent Police/);
+    expect(landing).toContain("va-landing-first-screen");
+    // Short form sits early for AI/search arrivals (before long steps)
+    const requestIdx = landing.indexOf('id="request"');
+    const stepsIdx = landing.indexOf('id="steps"');
+    expect(requestIdx).toBeGreaterThan(-1);
+    expect(stepsIdx).toBeGreaterThan(requestIdx);
   });
 
   it("hours page is solicitor availability not police station opening times", () => {

@@ -5,7 +5,6 @@ import Link from "next/link";
 import { SITUATION_OPTIONS, type SituationId, PATH_CUSTODY, PATH_AGENCY } from "@/config/enquiry-paths";
 import { FunnelEvents } from "@/lib/analytics";
 import { ShortVoluntaryRequestForm } from "@/components/conversion/ShortVoluntaryRequestForm";
-import { PoliceSignposting } from "@/components/conversion/PoliceSignposting";
 
 type Props = {
   className?: string;
@@ -175,11 +174,8 @@ export function SituationPicker({ className = "" }: Props) {
         </div>
       ) : null}
 
-      {!situation ? (
-        <div className="mt-6">
-          <PoliceSignposting compact />
-        </div>
-      ) : null}
+      {/* Official 999/101 gate: Contact hero + one page-level police box below.
+          Avoid a third compact repeat when no situation is selected yet. */}
     </section>
   );
 }

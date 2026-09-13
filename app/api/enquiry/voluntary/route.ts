@@ -5,6 +5,8 @@ import { isAllowedEnquiryOrigin } from "@/lib/enquiry/origin";
 import { createEnquiryReference } from "@/lib/enquiry/reference";
 import { parseMultipartUploads } from "@/lib/enquiry/uploads";
 import { sendVoluntaryEnquiryEmails } from "@/lib/enquiry/email";
+import { isUsefulShortVaAllegation } from "@/lib/enquiry/allegation-types";
+import { persistVoluntaryEnquiry } from "@/lib/enquiry/voluntary-store";
 
 export const runtime = "nodejs";
 
@@ -149,9 +151,12 @@ export async function POST(request: NextRequest) {
           { status: 400 },
         );
       }
-    } else if (!data.telephone.trim()) {
+    } else if (!data.telephone.trim() || !isUsefulShortVaAllegation(data.allegation)) {
       return NextResponse.json(
-        { error: "Please check the form fields and try again." },
+        {
+          error:
+            "Please choose an allegation type (or add a short note) so we know what the interview concerns.",
+        },
         { status: 400 },
       );
     }
@@ -205,10 +210,53 @@ export async function POST(request: NextRequest) {
       attachments: uploads.attachments,
     });
 
+    // Email remains primary — storage failure must not break the response.
+    const persistResult = await persistVoluntaryEnquiry({
+      reference,
+      storedAt: new Date().toISOString(),
+      formMode: data.formMode || "full",
+      enquiryType: data.enquiryType,
+      policeForce: data.policeForce,
+      policeStation: data.policeStation,
+      town: data.town,
+      inKent: data.inKent,
+      interviewDate: data.interviewDate,
+      interviewTime: data.interviewTime,
+      officerName: data.officerName,
+      officerRank: data.officerRank,
+      officerPhone: data.officerPhone,
+      officerEmail: data.officerEmail,
+      crimeReference: data.crimeReference,
+      allegation: data.allegation,
+      receivedLetter: data.receivedLetter,
+      fullName: data.fullName,
+      dateOfBirth: data.dateOfBirth,
+      telephone: data.telephone,
+      email: data.email,
+      postcode: data.postcode,
+      preferredContact: data.preferredContact,
+      enquirerRole: data.enquirerRole,
+      otherSolicitor: data.otherSolicitor,
+      otherSolicitorDetails: data.otherSolicitorDetails,
+      landingPage: data.landingPage || "",
+      referrer: data.referrer || "",
+      utm_source: data.utm_source || "",
+      utm_medium: data.utm_medium || "",
+      utm_campaign: data.utm_campaign || "",
+      attachmentCount: uploads.attachments.length,
+      attachmentNames: uploads.attachments.map((a) => a.filename),
+      emailNotified: emailResult.businessOk,
+      businessBody,
+    });
+    if (!persistResult.ok) {
+      console.warn("[voluntary enquiry] persist skipped/failed", reference, persistResult.reason);
+    }
+
     return NextResponse.json({
       success: true,
       reference,
       emailNotified: emailResult.businessOk,
+      stored: persistResult.ok,
     });
   } catch (err) {
     console.error("[voluntary enquiry]", err);
