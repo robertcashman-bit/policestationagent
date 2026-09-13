@@ -36,7 +36,7 @@ export function ShortVoluntaryRequestForm() {
   const [submitting, setSubmitting] = useState(false);
   const [reference, setReference] = useState<string | null>(null);
   const [policeNeedGate, setPoliceNeedGate] = useState<"unset" | "police_need" | "defence">(
-    "unset",
+    "unset"
   );
   const started = useRef(false);
   const errorRef = useRef<HTMLDivElement>(null);
@@ -84,10 +84,7 @@ export function ShortVoluntaryRequestForm() {
       return;
     }
 
-    const allegation = composeShortVaAllegation(
-      allegationType as ShortVaAllegationTypeId,
-      note,
-    );
+    const allegation = composeShortVaAllegation(allegationType as ShortVaAllegationTypeId, note);
 
     setSubmitting(true);
     setErrors([]);
@@ -167,7 +164,7 @@ export function ShortVoluntaryRequestForm() {
         <p className="text-sm font-semibold text-slate-900">Reference: {reference}</p>
         <p className="text-xs text-slate-600">
           Need the fuller form with officer details and letter upload?{" "}
-          <Link href={`${PATH_VOLUNTARY}#request`} className="underline font-semibold">
+          <Link href={`${PATH_VOLUNTARY}#full-form`} className="underline font-semibold">
             Open the full request form
           </Link>
           .
@@ -185,9 +182,7 @@ export function ShortVoluntaryRequestForm() {
         <PoliceEnquiryFirstGate
           active={policeNeedGate === "police_need"}
           onActivate={() => setPoliceNeedGate("police_need")}
-          onClear={() =>
-            setPoliceNeedGate(policeNeedGate === "police_need" ? "unset" : "defence")
-          }
+          onClear={() => setPoliceNeedGate(policeNeedGate === "police_need" ? "unset" : "defence")}
           compact
         />
       </div>
@@ -405,7 +400,7 @@ export function ShortVoluntaryRequestForm() {
 
       <p className="text-xs text-slate-600">
         Prefer more detail (officer, crime reference, letter upload)?{" "}
-        <Link href={`${PATH_VOLUNTARY}#request`} className="underline font-semibold text-primary">
+        <Link href={`${PATH_VOLUNTARY}#full-form`} className="underline font-semibold text-primary">
           Use the full form
         </Link>
         .
