@@ -65,6 +65,24 @@ describe("contact config", () => {
     expect(contact).not.toMatch(/tel:01732/);
     expect(contact).not.toContain("PHONE_DISPLAY");
     expect(contact).toMatch(/ADMIN_ENQUIRY_HEADING|Non-urgent written/);
+    // One strong hero gate + one page-level police box after the picker
+    expect(contact.match(/<PoliceSignposting/g)?.length).toBe(1);
+    const heroIdx = contact.indexOf("Getting in touch");
+    const pickerIdx = contact.indexOf("<SituationPicker");
+    const policeIdx = contact.indexOf("<PoliceSignposting");
+    expect(heroIdx).toBeGreaterThan(-1);
+    expect(pickerIdx).toBeGreaterThan(heroIdx);
+    expect(policeIdx).toBeGreaterThan(pickerIdx);
+  });
+
+  it("situation picker does not repeat compact PoliceSignposting before selection", () => {
+    const picker = fs.readFileSync(
+      path.join(root, "components/conversion/SituationPicker.tsx"),
+      "utf8",
+    );
+    expect(picker).not.toMatch(/<PoliceSignposting|from.*PoliceSignposting/);
+    expect(picker).toContain("situation-other");
+    expect(picker).toMatch(/101/);
   });
 
   it("FAQ explains why phone is not on every page and offers written enquiry", () => {

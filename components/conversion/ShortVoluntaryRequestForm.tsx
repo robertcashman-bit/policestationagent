@@ -5,10 +5,17 @@ import Link from "next/link";
 import { FunnelEvents } from "@/lib/analytics";
 import { PATH_VOLUNTARY } from "@/config/enquiry-paths";
 import { PoliceEnquiryFirstGate } from "@/components/conversion/PoliceEnquiryFirstGate";
+import {
+  SHORT_VA_ALLEGATION_TYPES,
+  composeShortVaAllegation,
+  isShortVaAllegationTypeId,
+  type ShortVaAllegationTypeId,
+} from "@/lib/enquiry/allegation-types";
 
 /**
  * Short VA request for Contact / landing conversion — station & date optional.
  * Posts formMode=short to /api/enquiry/voluntary.
+ * Allegation type is required so leads keep a useful signal (not a blank default).
  */
 export function ShortVoluntaryRequestForm() {
   const [fullName, setFullName] = useState("");
@@ -16,6 +23,7 @@ export function ShortVoluntaryRequestForm() {
   const [email, setEmail] = useState("");
   const [policeStation, setPoliceStation] = useState("");
   const [interviewDate, setInterviewDate] = useState("");
+  const [allegationType, setAllegationType] = useState<ShortVaAllegationTypeId | "">("");
   const [note, setNote] = useState("");
   const [consent, setConsent] = useState(false);
   const [notPolice, setNotPolice] = useState(false);
@@ -28,7 +36,7 @@ export function ShortVoluntaryRequestForm() {
   const [submitting, setSubmitting] = useState(false);
   const [reference, setReference] = useState<string | null>(null);
   const [policeNeedGate, setPoliceNeedGate] = useState<"unset" | "police_need" | "defence">(
-    "unset",
+    "unset"
   );
   const started = useRef(false);
   const errorRef = useRef<HTMLDivElement>(null);
@@ -54,6 +62,9 @@ export function ShortVoluntaryRequestForm() {
     if (email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       e.push("Enter a valid email or leave it blank.");
     }
+    if (!allegationType || !isShortVaAllegationTypeId(allegationType)) {
+      e.push("Please choose the type of allegation (or Other if unsure).");
+    }
     if (!accurate) e.push("Please confirm the information is accurate.");
     if (!forthcoming) {
       e.push("Please confirm this concerns a current or forthcoming interview under caution.");
@@ -73,6 +84,8 @@ export function ShortVoluntaryRequestForm() {
       return;
     }
 
+    const allegation = composeShortVaAllegation(allegationType as ShortVaAllegationTypeId, note);
+
     setSubmitting(true);
     setErrors([]);
     try {
@@ -90,11 +103,8 @@ export function ShortVoluntaryRequestForm() {
       body.append("officerPhone", "");
       body.append("officerEmail", "");
       body.append("crimeReference", "");
-      body.append(
-        "allegation",
-        note.trim() ||
-          "Voluntary interview / letter invitation — details to be confirmed on contact."
-      );
+      body.append("allegation", allegation);
+      body.append("allegationType", allegationType);
       body.append("receivedLetter", "yes");
       body.append("fullName", fullName.trim());
       body.append("dateOfBirth", "To confirm on contact");
@@ -154,7 +164,7 @@ export function ShortVoluntaryRequestForm() {
         <p className="text-sm font-semibold text-slate-900">Reference: {reference}</p>
         <p className="text-xs text-slate-600">
           Need the fuller form with officer details and letter upload?{" "}
-          <Link href={`${PATH_VOLUNTARY}#request`} className="underline font-semibold">
+          <Link href={`${PATH_VOLUNTARY}#full-form`} className="underline font-semibold">
             Open the full request form
           </Link>
           .
@@ -172,9 +182,7 @@ export function ShortVoluntaryRequestForm() {
         <PoliceEnquiryFirstGate
           active={policeNeedGate === "police_need"}
           onActivate={() => setPoliceNeedGate("police_need")}
-          onClear={() =>
-            setPoliceNeedGate(policeNeedGate === "police_need" ? "unset" : "defence")
-          }
+          onClear={() => setPoliceNeedGate(policeNeedGate === "police_need" ? "unset" : "defence")}
           compact
         />
       </div>
@@ -279,6 +287,40 @@ export function ShortVoluntaryRequestForm() {
         </label>
       </div>
 
+      <fieldset className="space-y-2">
+        <legend className="text-sm font-semibold text-slate-800">
+          What is the allegation about? <span className="text-red-600">*</span>
+        </legend>
+        <p className="text-xs text-muted-foreground">
+          Choose the closest type — do not discuss the allegation in detail here.
+        </p>
+        <div className="grid gap-2 sm:grid-cols-2" role="radiogroup" aria-label="Allegation type">
+          {SHORT_VA_ALLEGATION_TYPES.map((opt) => {
+            const selected = allegationType === opt.id;
+            return (
+              <label
+                key={opt.id}
+                className={`flex cursor-pointer items-start gap-2 rounded-md border px-3 py-2 text-sm transition-colors ${
+                  selected
+                    ? "border-accent bg-accent/10 ring-1 ring-accent/40"
+                    : "border-slate-300 bg-white hover:border-primary/40"
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="allegationType"
+                  className="mt-0.5"
+                  checked={selected}
+                  onChange={() => setAllegationType(opt.id)}
+                  value={opt.id}
+                />
+                <span className="font-medium text-slate-800">{opt.label}</span>
+              </label>
+            );
+          })}
+        </div>
+      </fieldset>
+
       <label className="block text-sm font-semibold text-slate-800">
         Anything else we should know?{" "}
         <span className="text-slate-500 font-normal">
@@ -290,7 +332,7 @@ export function ShortVoluntaryRequestForm() {
           maxLength={500}
           value={note}
           onChange={(e) => setNote(e.target.value)}
-          placeholder="e.g. letter received yesterday, no date set yet"
+          placeholder="e.g. letter received yesterday, enhanced clearance role, no date set yet"
         />
       </label>
 
@@ -358,7 +400,7 @@ export function ShortVoluntaryRequestForm() {
 
       <p className="text-xs text-slate-600">
         Prefer more detail (officer, crime reference, letter upload)?{" "}
-        <Link href={`${PATH_VOLUNTARY}#request`} className="underline font-semibold text-primary">
+        <Link href={`${PATH_VOLUNTARY}#full-form`} className="underline font-semibold text-primary">
           Use the full form
         </Link>
         .

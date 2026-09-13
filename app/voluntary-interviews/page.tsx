@@ -82,25 +82,31 @@ export default function VoluntaryInterviewsPage() {
       <Header />
       <main className="flex-grow" id="main-content" role="main">
         <div className="max-w-3xl mx-auto px-4 py-12 md:py-16 space-y-10">
-          <header className="hero-navy rounded-xl text-white p-6 md:p-8 shadow-elevated space-y-4">
+          {/* First screen for AI/search arrivals: defence not police, free VAI solicitor, short form CTA */}
+          <header
+            className="hero-navy rounded-xl text-white p-6 md:p-8 shadow-elevated space-y-4"
+            data-testid="va-landing-first-screen"
+          >
             <p className="text-accent-light text-xs font-bold uppercase tracking-[0.14em]">
-              Voluntary interview · Kent · not the police
+              Defence solicitors · Kent · not the police
             </p>
             <h1 className="font-display text-3xl md:text-4xl font-bold text-white">
-              Voluntary interview solicitor in Kent
+              Free solicitor for a voluntary interview under caution
             </h1>
             <p className="text-white/90 text-base md:text-lg leading-relaxed max-w-2xl">
               Got a police letter, email or call about a{" "}
               <strong className="text-white">voluntary attendance</strong> or{" "}
-              <strong className="text-white">interview under caution</strong>? We are criminal
-              defence solicitors — not Kent Police. For police use 999 or 101.
+              <strong className="text-white">interview under caution</strong> in Kent? We are
+              independent criminal defence solicitors — <strong className="text-white">not Kent Police</strong>.
+              Free solicitor advice for VAI under caution where Legal Aid applies. For police use
+              999 or 101.
             </p>
             <div className="flex flex-wrap gap-3">
               <a
                 href="#request"
                 className="inline-flex items-center justify-center min-h-[48px] rounded-md bg-accent px-6 py-3 font-bold text-accent-foreground hover:bg-accent-light"
               >
-                Request a free solicitor
+                Request a free solicitor — short form
               </a>
               <a
                 href="#steps"
@@ -110,6 +116,26 @@ export default function VoluntaryInterviewsPage() {
               </a>
             </div>
           </header>
+
+          <section id="request" className="scroll-mt-24 space-y-4">
+            <h2 className="font-display text-2xl font-bold text-primary">Request representation</h2>
+            <p className="text-sm text-slate-700 leading-relaxed">
+              Start with the short form — allegation type, name and phone. Prefer officer details and
+              letter upload? Use the{" "}
+              <a href="#full-form" className="underline font-semibold text-primary">
+                full form below
+              </a>{" "}
+              or the{" "}
+              <Link
+                href={`${PATH_VOLUNTARY}#request`}
+                className="underline font-semibold text-primary"
+              >
+                dedicated start page
+              </Link>
+              .
+            </p>
+            <ShortVoluntaryRequestForm />
+          </section>
 
           <section className="rounded-xl border border-red-200 bg-red-50 p-5">
             <h2 className="text-lg font-bold text-red-950 mb-2">Do not attend unrepresented</h2>
@@ -141,25 +167,6 @@ export default function VoluntaryInterviewsPage() {
                 </li>
               ))}
             </ol>
-          </section>
-
-          <section id="request" className="scroll-mt-24 space-y-4">
-            <h2 className="font-display text-2xl font-bold text-primary">Request representation</h2>
-            <p className="text-sm text-slate-700 leading-relaxed">
-              Start with the short form. Prefer officer details and letter upload? Use the{" "}
-              <a href="#full-form" className="underline font-semibold text-primary">
-                full form below
-              </a>{" "}
-              or the{" "}
-              <Link
-                href={`${PATH_VOLUNTARY}#request`}
-                className="underline font-semibold text-primary"
-              >
-                dedicated start page
-              </Link>
-              .
-            </p>
-            <ShortVoluntaryRequestForm />
           </section>
 
           <section
@@ -199,8 +206,11 @@ export default function VoluntaryInterviewsPage() {
             </p>
           </section>
 
-          <section id="full-form" className="scroll-mt-24">
-            <h2 className="font-display text-xl font-bold text-primary mb-3">Full request form</h2>
+          <section id="full-form" className="scroll-mt-24 space-y-4">
+            <h2 className="font-display text-2xl font-bold text-primary">Full request form</h2>
+            <p className="text-sm text-slate-700 leading-relaxed">
+              Officer details, crime reference and letter upload when you have them.
+            </p>
             <VoluntaryInterviewForm reportFormStart={false} />
           </section>
 

@@ -15,6 +15,7 @@ import { HomeFirmSection } from "@/components/conversion/HomeFirmSection";
 import { HomePriorityCoverage } from "@/components/conversion/HomePriorityCoverage";
 import { HomeServicesSection } from "@/components/conversion/HomeServicesSection";
 import { HomeCallProcess } from "@/components/conversion/HomeCallProcess";
+import { HomePathwaySocialProof } from "@/components/conversion/HomePathwaySocialProof";
 import { HomeGuidesBrowser } from "@/components/conversion/HomeGuidesBrowser";
 import { HomeCourtJourney } from "@/components/conversion/HomeCourtJourney";
 import { HomeAuthorityBio } from "@/components/conversion/HomeAuthorityBio";
@@ -94,7 +95,7 @@ const faqItems = [
     question:
       "What is the difference between an accredited rep, a criminal solicitor, a duty solicitor, and a higher court advocate?",
     answer:
-      "Understanding the different legal roles helps you know what qualifications your representative has:\n\nAccredited Rep (Accredited Police Station Representative): A non-solicitor who has passed the Police Station Qualification (PSQ) to attend police stations on behalf of a solicitor's firm. They can provide legal advice and representation at police stations but are not qualified solicitors.\n\nCriminal Solicitor: A fully qualified solicitor who has completed the Legal Practice Course and training contract, admitted to practice criminal law. They can represent clients at police stations, magistrates' courts, and provide legal advice throughout the criminal process.\n\nDuty Solicitor: A qualified solicitor who is accredited by the Law Society and on the Legal Aid duty rota. They can provide free legal advice at both police stations and magistrates' courts under Legal Aid. A duty solicitor must be a qualified solicitor (not just an accredited rep).\n\nHigher Court Advocate: A solicitor who has obtained additional qualifications to appear in the Crown Court, representing clients in serious criminal matters including jury trials, sentencing hearings, and complex legal arguments. This is an advanced qualification beyond standard solicitor status.\n\nRobert Cashman is all four: He is an accredited police station representative, a qualified criminal solicitor, an accredited duty solicitor (for both police stations and courts), and a Higher Court Advocate with 5 years' experience appearing in Crown Court. This comprehensive qualification means he can represent you from the police station through to Crown Court if needed.",
+      "Understanding the different legal roles helps you know what qualifications your representative has:\n\nAccredited Rep (Accredited Police Station Representative): A non-solicitor who has passed the Police Station Qualification (PSQ) to attend police stations on behalf of a solicitor's firm. They can provide legal advice and representation at police stations but are not qualified solicitors.\n\nCriminal Solicitor: A fully qualified solicitor who has completed the Legal Practice Course and training contract, admitted to practice criminal law. They can represent clients at police stations, magistrates' courts, and provide legal advice throughout the criminal process.\n\nDuty Solicitor: A qualified solicitor who is accredited by the Law Society and on the Legal Aid duty rota. They can provide free legal advice at both police stations and magistrates' courts under Legal Aid. A duty solicitor must be a qualified solicitor (not just an accredited rep).\n\nHigher Court Advocate: A solicitor who has obtained additional qualifications to appear in the Crown Court, representing clients in serious criminal matters including jury trials, sentencing hearings, and complex legal arguments. This is an advanced qualification beyond standard solicitor status.\n\nRobert Cashman is all four: he is an accredited police station representative, a qualified criminal solicitor, an accredited duty solicitor (for both police stations and courts), and a Higher Court Advocate with experience appearing in the Crown Court. This practice is police-station first. If your case goes to court, representation continues via a handover to Tuckers Solicitors LLP — not continuous solo advocacy by Robert alone from station through trial.",
   },
 ];
 
@@ -108,6 +109,7 @@ export default function Page() {
       <main className="flex-grow relative overflow-x-clip" id="main-content" role="main" aria-live="polite">
         <HomeHeroCover />
         <HomePathwaySection />
+        <HomePathwaySocialProof />
         <HomeProofBar />
         <div id="testimonials">
           <TestimonialCarousel />

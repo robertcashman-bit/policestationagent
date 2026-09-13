@@ -96,7 +96,7 @@ export function VoluntaryInterviewForm({ reportFormStart = true }: VoluntaryInte
   const [submitting, setSubmitting] = useState(false);
   const [reference, setReference] = useState<string | null>(null);
   const [policeNeedGate, setPoliceNeedGate] = useState<"unset" | "police_need" | "defence">(
-    "unset",
+    "unset"
   );
   const started = useRef(false);
   const errorRef = useRef<HTMLDivElement>(null);
@@ -209,7 +209,6 @@ export function VoluntaryInterviewForm({ reportFormStart = true }: VoluntaryInte
         className="relative rounded-xl border border-green-300 bg-green-50 p-6 space-y-4"
         role="status"
         aria-live="polite"
-        id="request"
       >
         <h2 className="text-xl font-black text-slate-900">Request received</h2>
         <p className="text-sm text-slate-800">
@@ -236,7 +235,7 @@ export function VoluntaryInterviewForm({ reportFormStart = true }: VoluntaryInte
 
   if (form.enquiryType === "no" && step === 1) {
     return (
-      <div id="request" className="space-y-4">
+      <div className="space-y-4">
         <div className="rounded-xl border border-slate-300 bg-white p-5 space-y-3">
           <h2 className="text-lg font-bold text-slate-900">
             This is not a general legal advice line
@@ -260,7 +259,7 @@ export function VoluntaryInterviewForm({ reportFormStart = true }: VoluntaryInte
 
   if (policeNeedGate !== "defence") {
     return (
-      <div id="request" className="space-y-4 scroll-mt-24">
+      <div className="space-y-4 scroll-mt-24">
         <div>
           <h2 className="text-xl font-black text-slate-900">
             Request voluntary interview representation
@@ -272,9 +271,7 @@ export function VoluntaryInterviewForm({ reportFormStart = true }: VoluntaryInte
         <PoliceEnquiryFirstGate
           active={policeNeedGate === "police_need"}
           onActivate={() => setPoliceNeedGate("police_need")}
-          onClear={() =>
-            setPoliceNeedGate(policeNeedGate === "police_need" ? "unset" : "defence")
-          }
+          onClear={() => setPoliceNeedGate(policeNeedGate === "police_need" ? "unset" : "defence")}
         />
       </div>
     );
@@ -282,7 +279,6 @@ export function VoluntaryInterviewForm({ reportFormStart = true }: VoluntaryInte
 
   return (
     <form
-      id="request"
       onSubmit={onSubmit}
       className="rounded-xl border border-slate-200 bg-white p-5 md:p-6 space-y-5 scroll-mt-24"
       noValidate

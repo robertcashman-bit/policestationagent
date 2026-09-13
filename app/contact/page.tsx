@@ -51,6 +51,7 @@ export default function ContactPage() {
       <Header />
       <main className="flex-grow" id="main-content" role="main">
         <div className="max-w-4xl mx-auto px-4 py-12 md:py-16 space-y-10">
+          {/* One strong not-police / 999 / 101 gate for the page */}
           <header className="hero-navy rounded-xl text-white p-6 md:p-8 shadow-elevated">
             <p className="text-accent-light text-xs font-bold tracking-[0.14em] uppercase mb-2">
               Contact pathways
@@ -112,6 +113,9 @@ export default function ContactPage() {
             {CONTACT_RESPONSE_EXPECTATION}
           </p>
 
+          {/* One official police box — not repeated above the pathway picker */}
+          <PoliceSignposting showWrittenEnquiryHint />
+
           <section
             className="rounded-xl border border-border bg-card p-5 md:p-6"
             aria-labelledby="why-no-public-number"
@@ -129,8 +133,6 @@ export default function ContactPage() {
               {WHY_PHONE_NOT_EVERYWHERE_FAQ.answer}
             </p>
           </section>
-
-          <PoliceSignposting showWrittenEnquiryHint />
 
           <section
             id="admin-enquiry"
