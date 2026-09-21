@@ -8,6 +8,7 @@ import { RegulatoryReferences } from "@/components/E-E-A-T/RegulatoryReferences"
 import { ServiceDisclaimer } from "@/components/E-E-A-T/ServiceDisclaimer";
 import { PersonSchema } from "@/components/schema/PersonSchema";
 import { KentCoverCard } from "@/components/conversion/KentCoverCard";
+import { CustodyNoteStorePromo } from "@/components/CustodyNoteStorePromo";
 import { DEFAULT_OG_IMAGES, DEFAULT_TWITTER_IMAGES } from "@/lib/seo/page-metadata";
 
 export const metadata: Metadata = {
@@ -92,6 +93,8 @@ export default function ForSolicitorsPage() {
           </p>
         </div>
       </section>
+
+      <CustodyNoteStorePromo variant="panel" />
 
       <div className="max-w-5xl mx-auto px-4 py-12 md:py-16 space-y-12">
         <section aria-labelledby="agency-services-heading">

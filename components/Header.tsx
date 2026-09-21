@@ -9,6 +9,11 @@ import {
   PATH_VOLUNTARY_LANDING,
 } from "@/config/enquiry-paths";
 import { CHROME_BRAND_TAGLINE } from "@/config/contact";
+import { CustodyNoteStorePromo } from "@/components/CustodyNoteStorePromo";
+import {
+  CUSTODYNOTE_MICROSOFT_STORE_CTA,
+  CUSTODYNOTE_MICROSOFT_STORE_HREF,
+} from "@/lib/custodynote-promo";
 
 const NAV = [
   { href: "/", label: "Home" },
@@ -59,15 +64,22 @@ export default function Header({
                 {item.label}
               </Link>
             ))}
+            {/* Secondary to defence CTA — Store for Windows tooling */}
+            <CustodyNoteStorePromo variant="chrome" className="ml-1.5" />
             <Link href={PATH_CONTACT} className="btn-gold ml-2 !min-h-9 !px-3 !text-sm">
               Get a solicitor
             </Link>
           </nav>
 
           <div className="flex items-center gap-2 lg:hidden">
-            <Link href={PATH_CONTACT} className="btn-gold hidden !min-h-9 !px-3 !text-sm sm:inline-flex">
+            {/* Defence CTA first at every compact width; Store stays secondary */}
+            <Link
+              href={PATH_CONTACT}
+              className="btn-gold hidden !min-h-9 !px-3 !text-sm sm:inline-flex"
+            >
               Get a solicitor
             </Link>
+            <CustodyNoteStorePromo variant="chrome" className="hidden sm:inline-flex" />
             <button
               className="flex h-10 w-10 items-center justify-center rounded-md bg-primary text-white shadow-md hover:bg-primary-light"
               onClick={() => setMobileMenuOpen((o) => !o)}
@@ -116,6 +128,16 @@ export default function Header({
             >
               Get a solicitor
             </Link>
+            <a
+              href={CUSTODYNOTE_MICROSOFT_STORE_HREF}
+              className="mx-3 mt-1 flex min-h-[44px] items-center justify-center rounded-md border border-accent/40 bg-accent/10 px-3 py-2.5 text-sm font-bold text-primary"
+              rel="noopener noreferrer"
+              target="_blank"
+              data-cn-store-cta="mobile-nav"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {CUSTODYNOTE_MICROSOFT_STORE_CTA}
+            </a>
           </nav>
         </div>
       ) : null}
