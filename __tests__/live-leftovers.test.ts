@@ -63,6 +63,8 @@ describe("live leftovers — hub + chrome fixes", () => {
     expect(home).not.toContain("CustodyNoteStorePromo");
     expect(home).not.toContain('campaign="homepage"');
     expect(home).toContain("HomeAuthorityStrip");
+    expect(home).toContain("HomeAuthorityBio");
+    expect(home.indexOf("HomeAuthorityStrip")).toBeLessThan(home.indexOf("HomeAuthorityBio"));
     expect(home).toContain("HomeHeroCover");
 
     const header = fs.readFileSync(path.join(root, "components/Header.tsx"), "utf8");

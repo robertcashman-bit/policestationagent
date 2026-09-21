@@ -97,6 +97,8 @@ describe("enquiry funnel routes", () => {
 
     const page = fs.readFileSync(path.join(root, "app/page.tsx"), "utf8");
     expect(page).toContain("HomeAuthorityStrip");
+    expect(page).toContain("HomeAuthorityBio");
+    expect(page.indexOf("HomeAuthorityStrip")).toBeLessThan(page.indexOf("HomeAuthorityBio"));
     expect(page).not.toContain("CustodyNoteStorePromo");
   });
 
