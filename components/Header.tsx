@@ -72,13 +72,14 @@ export default function Header({
           </nav>
 
           <div className="flex items-center gap-2 lg:hidden">
-            <CustodyNoteStorePromo variant="chrome" className="hidden sm:inline-flex" />
+            {/* Defence CTA first at every compact width; Store stays secondary */}
             <Link
               href={PATH_CONTACT}
               className="btn-gold hidden !min-h-9 !px-3 !text-sm sm:inline-flex"
             >
               Get a solicitor
             </Link>
+            <CustodyNoteStorePromo variant="chrome" className="hidden sm:inline-flex" />
             <button
               className="flex h-10 w-10 items-center justify-center rounded-md bg-primary text-white shadow-md hover:bg-primary-light"
               onClick={() => setMobileMenuOpen((o) => !o)}
