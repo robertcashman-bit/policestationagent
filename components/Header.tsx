@@ -7,6 +7,7 @@ import {
   useId,
   useRef,
   useState,
+  type FocusEvent as ReactFocusEvent,
   type KeyboardEvent as ReactKeyboardEvent,
 } from "react";
 import { CHROME_BRAND_TAGLINE } from "@/config/contact";
@@ -78,10 +79,7 @@ function DesktopDropdown({
 
     const onPointerDown = (e: MouseEvent) => {
       const target = e.target as Node;
-      if (
-        menuRef.current?.contains(target) ||
-        buttonRef.current?.contains(target)
-      ) {
+      if (menuRef.current?.contains(target) || buttonRef.current?.contains(target)) {
         return;
       }
       onCloseImmediate();
@@ -117,7 +115,11 @@ function DesktopDropdown({
     } else if (e.key === "End") {
       e.preventDefault();
       focusItem(items.length - 1);
-    } else if (e.key === "Tab") {
+    }
+  };
+
+  const onGroupBlur = (e: ReactFocusEvent<HTMLDivElement>) => {
+    if (!e.currentTarget.contains(e.relatedTarget as Node)) {
       onCloseImmediate();
     }
   };
@@ -138,6 +140,7 @@ function DesktopDropdown({
         onOpen();
       }}
       onMouseLeave={scheduleClose}
+      onBlur={onGroupBlur}
     >
       <button
         ref={buttonRef}
@@ -241,6 +244,7 @@ export default function Header({
   const [openDesktopId, setOpenDesktopId] = useState<string | null>(null);
   const [openMobileSection, setOpenMobileSection] = useState<string | null>("get-help");
   const mobilePanelRef = useRef<HTMLDivElement>(null);
+  const mobileToggleRef = useRef<HTMLButtonElement>(null);
 
   const closeDesktop = useCallback(() => setOpenDesktopId(null), []);
   const closeMobile = useCallback(() => setMobileMenuOpen(false), []);
@@ -252,6 +256,7 @@ export default function Header({
       if (e.key === "Escape") {
         e.preventDefault();
         closeMobile();
+        mobileToggleRef.current?.focus();
       }
     };
 
@@ -300,10 +305,7 @@ export default function Header({
                 onCloseImmediate={closeDesktop}
               />
             ))}
-            <Link
-              href={NAV_PRIMARY_CTA.href}
-              className="btn-gold ml-2 !min-h-9 !px-3.5 !text-sm"
-            >
+            <Link href={NAV_PRIMARY_CTA.href} className="btn-gold ml-2 !min-h-9 !px-3.5 !text-sm">
               {NAV_PRIMARY_CTA.label}
             </Link>
           </nav>
@@ -316,6 +318,7 @@ export default function Header({
               {NAV_PRIMARY_CTA.label}
             </Link>
             <button
+              ref={mobileToggleRef}
               type="button"
               className="flex h-10 w-10 items-center justify-center rounded-md bg-primary text-white shadow-md transition-colors hover:bg-primary-light"
               onClick={() => setMobileMenuOpen((o) => !o)}
@@ -351,19 +354,14 @@ export default function Header({
           ref={mobilePanelRef}
           className="border-t border-border bg-card shadow-elevated lg:hidden"
         >
-          <nav
-            className="mx-auto max-w-7xl px-3 py-2"
-            aria-label="Mobile navigation"
-          >
+          <nav className="mx-auto max-w-7xl px-3 py-2" aria-label="Mobile navigation">
             {NAV_GROUPS.map((group) => (
               <MobileAccordionSection
                 key={group.id}
                 group={group}
                 open={openMobileSection === group.id}
                 onToggle={() =>
-                  setOpenMobileSection((current) =>
-                    current === group.id ? null : group.id
-                  )
+                  setOpenMobileSection((current) => (current === group.id ? null : group.id))
                 }
                 onNavigate={closeMobile}
               />
