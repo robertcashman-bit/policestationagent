@@ -48,7 +48,11 @@ export function HomeAuthorityBio() {
             About Robert Cashman
           </Link>
         </div>
-        <div className="relative min-h-[280px] bg-black md:min-h-full">
+        {/*
+          Mobile: square frame so the tight headshot is not landscape-cropped
+          through the face. Desktop: fill the tall column; keep face toward top.
+        */}
+        <div className="relative aspect-square w-full bg-black md:aspect-auto md:min-h-full">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={ROBERT_CASHMAN_PHOTO_PATH}
@@ -57,7 +61,7 @@ export function HomeAuthorityBio() {
             height={800}
             loading="lazy"
             decoding="async"
-            className="absolute inset-0 h-full w-full object-cover object-top"
+            className="absolute inset-0 h-full w-full object-cover object-[center_18%] md:object-[center_12%]"
           />
           <div
             className="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary-dark/50 via-transparent to-transparent md:bg-gradient-to-l"

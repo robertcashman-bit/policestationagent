@@ -1834,3 +1834,31 @@ a.text-blue-800,
   ) {
   color: var(--primary) !important;
 }
+
+/*
+  Portrait avatars (Robert headshot): win over prose/article img rules that
+  force height:auto + 1.5rem margins and shift the face out of circular frames.
+*/
+.prose img.portrait-avatar,
+.prose div img.portrait-avatar,
+.prose img.portrait-avatar[src],
+.prose div img.portrait-avatar[src],
+article img.portrait-avatar,
+article img.portrait-avatar[src],
+main article img.portrait-avatar {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  object-fit: cover !important;
+  object-position: center 18% !important;
+  display: block !important;
+  position: relative !important;
+  float: none !important;
+  clear: none !important;
+  contain: none !important;
+}
