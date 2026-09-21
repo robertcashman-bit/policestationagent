@@ -12,9 +12,9 @@ import { CHROME_BRAND_TAGLINE } from "@/config/contact";
 import { CustodyNoteStorePromo } from "@/components/CustodyNoteStorePromo";
 import {
   CUSTODYNOTE_MAC_DOWNLOAD_CTA,
-  CUSTODYNOTE_MAC_DOWNLOAD_HREF,
   CUSTODYNOTE_MICROSOFT_STORE_CTA,
   CUSTODYNOTE_MICROSOFT_STORE_HREF,
+  cnDownloadHref,
 } from "@/lib/custodynote-promo";
 
 const NAV = [
@@ -81,7 +81,11 @@ export default function Header({
             >
               Get a solicitor
             </Link>
-            <CustodyNoteStorePromo variant="chrome" campaign="header" className="hidden sm:inline-flex" />
+            <CustodyNoteStorePromo
+              variant="chrome"
+              campaign="header"
+              className="hidden sm:inline-flex"
+            />
             <button
               className="flex h-10 w-10 items-center justify-center rounded-md bg-primary text-white shadow-md hover:bg-primary-light"
               onClick={() => setMobileMenuOpen((o) => !o)}
@@ -142,7 +146,7 @@ export default function Header({
                 {CUSTODYNOTE_MICROSOFT_STORE_CTA}
               </a>
               <a
-                href={CUSTODYNOTE_MAC_DOWNLOAD_HREF}
+                href={cnDownloadHref("header")}
                 className="flex min-h-[44px] items-center justify-center rounded-md border border-accent/40 bg-accent/10 px-3 py-2.5 text-sm font-bold text-primary"
                 rel="noopener noreferrer"
                 target="_blank"

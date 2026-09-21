@@ -62,7 +62,7 @@ describe("live leftovers — hub + chrome fixes", () => {
     expect(header).toContain("CustodyNoteStorePromo");
     expect(header).toContain("CUSTODYNOTE_MICROSOFT_STORE_HREF");
     expect(header).toContain("CUSTODYNOTE_MICROSOFT_STORE_CTA");
-    expect(header).toContain("CUSTODYNOTE_MAC_DOWNLOAD_HREF");
+    expect(header).toContain('cnDownloadHref("header")');
     expect(header).toContain("CUSTODYNOTE_MAC_DOWNLOAD_CTA");
     expect(header).toContain('data-cn-mac-cta="mobile-nav"');
     expect(header).not.toMatch(/01732|07535/);
