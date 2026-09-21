@@ -37,21 +37,25 @@ export function AudiencePathSelector({
 }: Props) {
   const isCentrepiece = variant === "centrepiece";
   const isFirstScreen = variant === "firstScreen";
+  /** Homepage first screen: public pathways only (VA + custody). Agency stays in nav / firm section. */
+  const cards = isFirstScreen
+    ? PATHWAY_CARDS.filter((c) => c.id === "voluntary" || c.id === "custody")
+    : PATHWAY_CARDS;
 
   return (
     <section className={className} aria-labelledby={headingId} aria-label="Enquiry pathways">
       <div className={isCentrepiece || isFirstScreen ? "mx-auto max-w-6xl" : undefined}>
         {isFirstScreen ? (
-          <div className="mb-2 flex items-end justify-between gap-3 sm:mb-3 md:mb-4">
+          <div className="mb-4 flex items-end justify-between gap-3 sm:mb-5 md:mb-6">
             <div>
               <h2
                 id={headingId}
-                className="font-display text-sm font-bold text-white sm:text-base md:text-lg"
+                className="font-display text-base font-bold text-white sm:text-lg md:text-xl"
               >
                 {heading}
               </h2>
               {subheading ? (
-                <p className="mt-0.5 hidden text-xs text-white/70 sm:block sm:text-sm">
+                <p className="mt-1 text-sm text-white/70 sm:text-[0.95rem]">
                   {subheading}
                 </p>
               ) : null}
@@ -90,13 +94,13 @@ export function AudiencePathSelector({
         <div
           className={
             isFirstScreen
-              ? "grid gap-1.5 sm:gap-2 md:grid-cols-3 md:gap-3 md:items-stretch"
+              ? "grid gap-4 sm:gap-5 md:grid-cols-2 md:gap-6 md:items-stretch"
               : isCentrepiece
                 ? "grid gap-4 md:grid-cols-3 md:gap-5 md:items-stretch"
                 : "grid gap-3 md:grid-cols-3"
           }
         >
-          {PATHWAY_CARDS.map((card) => {
+          {cards.map((card) => {
             const isUrgent = card.accent === "red";
             const isFirm = card.accent === "amber";
             const isPrimary = highlightVoluntary && card.id === "voluntary";
@@ -108,53 +112,43 @@ export function AudiencePathSelector({
                   href={card.href}
                   onClick={() => trackPathway(card.id)}
                   data-event={card.event}
-                  className={`group flex min-h-[48px] items-center gap-2.5 rounded-lg border bg-white px-3 py-2.5 text-left shadow-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent md:min-h-0 md:flex-col md:items-stretch md:p-4 ${
+                  className={`group flex flex-col items-stretch rounded-xl border bg-white px-5 py-5 text-left shadow-card transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:px-6 sm:py-6 md:min-h-[11.5rem] md:px-7 md:py-7 ${
                     isPrimary
-                      ? "border-accent ring-2 ring-accent/50 md:row-span-1"
+                      ? "border-accent ring-2 ring-accent/45"
                       : isUrgent
-                        ? "border-destructive/40 hover:border-destructive"
-                        : isFirm
-                          ? "border-accent/50 hover:border-accent"
-                          : "border-white/80 hover:border-primary/40"
+                        ? "border-destructive/35 hover:border-destructive"
+                        : "border-white/80 hover:border-primary/40"
                   }`}
                 >
                   <div className="min-w-0 flex-1">
                     <p
-                      className={`text-[0.62rem] font-semibold uppercase tracking-[0.12em] ${
+                      className={`text-[0.7rem] font-semibold uppercase tracking-[0.14em] ${
                         isPrimary
                           ? "text-accent-dark"
                           : isUrgent
                             ? "text-destructive"
-                            : isFirm
-                              ? "text-accent-dark"
-                              : "text-primary/70"
+                            : "text-primary/70"
                       }`}
                     >
                       {isPrimary ? "Most common for search visitors" : SHORT_LABELS[card.id]}
                     </p>
-                    <h3 className="mt-0.5 font-display text-[0.95rem] font-bold leading-snug text-primary md:text-base">
+                    <h3 className="mt-2 font-display text-lg font-bold leading-snug text-primary sm:text-xl md:text-[1.35rem]">
                       {card.title}
                     </h3>
-                    <p className="mt-1 hidden text-xs leading-snug text-muted-foreground md:block">
+                    <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground sm:text-[0.95rem]">
                       {card.description}
                     </p>
                   </div>
                   <span
-                    className={`inline-flex shrink-0 items-center justify-center rounded-md px-2.5 py-1.5 text-[0.7rem] font-bold md:mt-3 md:min-h-[40px] md:w-full md:px-3 md:text-sm ${
+                    className={`mt-5 inline-flex min-h-[48px] w-full items-center justify-center rounded-md px-4 text-sm font-bold sm:text-[0.95rem] ${
                       isPrimary
                         ? "bg-accent text-accent-foreground group-hover:bg-accent-dark"
                         : isUrgent
                           ? "bg-destructive text-white group-hover:bg-red-800"
-                          : isFirm
-                            ? "bg-accent text-accent-foreground group-hover:bg-accent-dark"
-                            : "bg-primary text-white group-hover:bg-primary-light"
+                          : "bg-primary text-white group-hover:bg-primary-light"
                     }`}
                   >
-                    <span className="md:hidden" aria-hidden="true">
-                      →
-                    </span>
-                    <span className="hidden md:inline">{card.button}</span>
-                    <span className="sr-only md:hidden">{card.button}</span>
+                    {card.button}
                   </span>
                 </Link>
               );

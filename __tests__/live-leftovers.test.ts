@@ -58,12 +58,12 @@ describe("live leftovers — hub + chrome fixes", () => {
     expect(owned).not.toMatch(/OWNED_NETWORK_SITES[\s\S]*CUSTODYNOTE_SITE/);
   });
 
-  it("homepage keeps Store/Mac CN panels; header has no CN promos and fuller nav", () => {
+  it("homepage has no CN body promos; header has no CN; footer keeps Store/Mac; fuller nav", () => {
     const home = fs.readFileSync(path.join(root, "app/page.tsx"), "utf8");
-    expect(home).toContain("CustodyNoteStorePromo");
-    expect(home).toContain('variant="strip"');
-    expect(home).toContain('variant="panel"');
-    expect(home).toContain('campaign="homepage"');
+    expect(home).not.toContain("CustodyNoteStorePromo");
+    expect(home).not.toContain('campaign="homepage"');
+    expect(home).toContain("HomeAuthorityStrip");
+    expect(home).toContain("HomeHeroCover");
 
     const header = fs.readFileSync(path.join(root, "components/Header.tsx"), "utf8");
     expect(header).not.toContain("CustodyNoteStorePromo");
@@ -109,6 +109,17 @@ describe("live leftovers — hub + chrome fixes", () => {
     const solicitors = fs.readFileSync(path.join(root, "app/for-solicitors/page.tsx"), "utf8");
     expect(solicitors).toContain("CustodyNoteStorePromo");
     expect(solicitors).toContain('campaign="for-solicitors"');
+
+    const authority = fs.readFileSync(
+      path.join(root, "components/conversion/HomeAuthorityStrip.tsx"),
+      "utf8"
+    );
+    expect(authority).toMatch(/30 years plus/i);
+    expect(authority).toContain("Tuckers Solicitors LLP");
+    expect(authority).toContain("SRA 127795");
+    expect(authority).toMatch(/Extended hours/i);
+    expect(authority).toMatch(/not the police/i);
+    expect(authority).not.toMatch(/tel:|01732|07535|href=|button|Request|Call /i);
   });
 
   it("next.config consolidates overlapping hubs to /coverage", () => {

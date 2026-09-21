@@ -84,6 +84,20 @@ describe("enquiry funnel routes", () => {
     expect(hero).not.toMatch(/PATH_CONTACT/);
     // Brand lives in the header — no giant hero wordmark repeat.
     expect(hero).not.toMatch(/>\s*Police Station Agent\s*</);
+    expect(hero).toMatch(/Two clear routes/i);
+  });
+
+  it("homepage first-screen pathways are VA + custody only with authority strip", () => {
+    const selector = fs.readFileSync(
+      path.join(root, "components/conversion/AudiencePathSelector.tsx"),
+      "utf8"
+    );
+    expect(selector).toMatch(/filter\(\(c\) => c\.id === "voluntary" \|\| c\.id === "custody"\)/);
+    expect(selector).toMatch(/md:grid-cols-2/);
+
+    const page = fs.readFileSync(path.join(root, "app/page.tsx"), "utf8");
+    expect(page).toContain("HomeAuthorityStrip");
+    expect(page).not.toContain("CustodyNoteStorePromo");
   });
 
   it("agency page uses form and Contact pathways without publishing telephone digits", () => {

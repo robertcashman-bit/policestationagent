@@ -10,6 +10,7 @@ import { DEFAULT_OG_IMAGES, DEFAULT_TWITTER_IMAGES } from "@/lib/seo/page-metada
 
 import { HomeHeroCover } from "@/components/conversion/HomeHeroCover";
 import { HomePathwaySection } from "@/components/conversion/HomePathwaySection";
+import { HomeAuthorityStrip } from "@/components/conversion/HomeAuthorityStrip";
 import { HomeProofBar } from "@/components/conversion/HomeProofBar";
 import { HomeFirmSection } from "@/components/conversion/HomeFirmSection";
 import { HomePriorityCoverage } from "@/components/conversion/HomePriorityCoverage";
@@ -22,7 +23,6 @@ import { HomeAuthorityBio } from "@/components/conversion/HomeAuthorityBio";
 import { HomeFaqSection } from "@/components/conversion/HomeFaqSection";
 import { KentCoverCard } from "@/components/conversion/KentCoverCard";
 import { StandardPaceSources } from "@/components/legal/StandardPaceSources";
-import { CustodyNoteStorePromo } from "@/components/CustodyNoteStorePromo";
 
 export const metadata: Metadata = {
   title: "Voluntary Interview Solicitor Kent | Defence — Not the Police",
@@ -109,8 +109,7 @@ export default function Page() {
       <Header />
       <main className="flex-grow relative overflow-x-clip" id="main-content" role="main" aria-live="polite">
         <HomeHeroCover />
-        {/* Secondary to defence pathways — Store-primary CN promo, above the fold on tall screens */}
-        <CustodyNoteStorePromo variant="strip" campaign="homepage" />
+        <HomeAuthorityStrip />
         <HomePathwaySection />
         <HomePathwaySocialProof />
         <HomeProofBar />
@@ -122,7 +121,6 @@ export default function Page() {
         <BlogCarousel initialPosts={latestPosts} maxPosts={12} />
         <KentCoverCard className="py-10" />
         <HomeFirmSection />
-        <CustodyNoteStorePromo variant="panel" campaign="homepage" />
         <HomePriorityCoverage />
         <HomeServicesSection />
         <HomeCourtJourney />

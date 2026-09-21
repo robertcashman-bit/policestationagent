@@ -18,7 +18,7 @@ type NavItem = {
 
 /**
  * Fuller site navigation — no Custody Note product promos in header chrome.
- * CN Store / Mac CTAs live in the footer Network/tools strip and homepage panels only.
+ * CN Store / Mac CTAs live in the footer Network/tools strip only (not homepage body).
  */
 const NAV: NavItem[] = [
   { href: PATH_VOLUNTARY_LANDING, label: "Voluntary interviews", group: "pathways" },

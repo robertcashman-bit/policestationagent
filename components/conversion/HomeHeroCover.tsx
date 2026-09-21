@@ -3,13 +3,13 @@
 import { AudiencePathSelector } from "@/components/conversion/AudiencePathSelector";
 
 /**
- * First-screen job: VA-first for search visitors, clear not-police, three pathways.
- * Soften 101 so it does not compete with the solicitor CTAs in the first viewport.
+ * First-screen job: two public pathways (VA + custody) + one short trust line.
+ * No hero photo. Agency cover stays in nav / firm section / footer — not above the fold.
  */
 export function HomeHeroCover() {
   return (
     <section
-      className="relative overflow-hidden hero-navy text-white pt-3 pb-4 sm:pt-4 sm:pb-5 md:pt-6 md:pb-8"
+      className="relative overflow-hidden hero-navy text-white pt-4 pb-5 sm:pt-5 sm:pb-6 md:pt-8 md:pb-10"
       aria-labelledby="home-hero-heading"
     >
       <div
@@ -23,26 +23,30 @@ export function HomeHeroCover() {
         </p>
         <h1
           id="home-hero-heading"
-          className="mt-1 max-w-measure font-display text-[1.25rem] font-bold leading-tight text-white sm:text-2xl md:text-[1.75rem]"
+          className="mt-1.5 max-w-measure font-display text-[1.35rem] font-bold leading-tight text-white sm:text-2xl md:text-[1.85rem]"
         >
           Got a police interview letter? Get a free solicitor first
         </h1>
-        <p className="mt-1.5 max-w-2xl text-sm leading-snug text-white/90 sm:text-[0.95rem]">
+        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-white/90 sm:text-base">
           We are criminal defence solicitors — <strong className="text-white">not Kent Police</strong>.
           If you have a letter, email or call about a voluntary interview under caution, use the
           route below.
         </p>
 
-        <div id="pathways" className="mt-3 scroll-mt-2 sm:mt-4 md:mt-5">
+        <div id="pathways" className="mt-5 scroll-mt-2 sm:mt-6 md:mt-7">
           <AudiencePathSelector
             variant="firstScreen"
-            heading="Three routes. Voluntary interview is the usual path for letters."
+            heading="Two clear routes. Voluntary interview is the usual path for letters."
             subheading="Pick the route that matches your situation."
             highlightVoluntary
           />
         </div>
 
-        <p className="mt-3 text-[0.7rem] leading-snug text-white/55 sm:text-xs">
+        <p className="mt-5 text-sm leading-snug text-white/70 sm:mt-6 sm:text-[0.95rem]">
+          Independent criminal defence · Legal Aid where eligible · Extended hours — not 24/7
+        </p>
+
+        <p className="mt-2 text-[0.7rem] leading-snug text-white/45 sm:text-xs">
           Need the police instead? Emergency 999 · non-emergency 101 — we cannot take crime reports
           or police enquiries.
         </p>
