@@ -11,6 +11,8 @@ import {
 import {
   CUSTODYNOTE_DOWNLOAD_CTA,
   CUSTODYNOTE_DOWNLOAD_HREF,
+  CUSTODYNOTE_MAC_DOWNLOAD_CTA,
+  CUSTODYNOTE_MAC_DOWNLOAD_HREF,
   CUSTODYNOTE_MICROSOFT_STORE_CTA,
   CUSTODYNOTE_MICROSOFT_STORE_HREF,
   CUSTODYNOTE_STORE_WINDOWS_NOTE,
@@ -116,7 +118,7 @@ export default function Footer({
           <h2 className="text-xs uppercase tracking-[0.12em] text-accent-light mb-3 font-semibold">
             Network / tools
           </h2>
-          <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-3 sm:gap-x-5 sm:gap-y-2 text-sm">
+          <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-3 sm:gap-x-3 sm:gap-y-2 text-sm">
             <a
               href={CUSTODYNOTE_MICROSOFT_STORE_HREF}
               className="inline-flex min-h-10 w-fit items-center justify-center rounded-md bg-accent px-4 py-2 text-sm font-bold text-accent-foreground shadow-md transition-colors hover:bg-accent-light"
@@ -127,10 +129,20 @@ export default function Footer({
               {CUSTODYNOTE_MICROSOFT_STORE_CTA}
             </a>
             <a
+              href={CUSTODYNOTE_MAC_DOWNLOAD_HREF}
+              className="inline-flex min-h-10 w-fit items-center justify-center rounded-md bg-accent px-4 py-2 text-sm font-bold text-accent-foreground shadow-md transition-colors hover:bg-accent-light"
+              rel="noopener noreferrer"
+              target="_blank"
+              data-cn-mac-cta="footer"
+            >
+              {CUSTODYNOTE_MAC_DOWNLOAD_CTA}
+            </a>
+            <a
               href={CUSTODYNOTE_DOWNLOAD_HREF}
               className="text-white/60 hover:text-accent-light transition-colors text-sm"
               rel="noopener noreferrer"
               target="_blank"
+              data-cn-backup-cta="footer"
             >
               {CUSTODYNOTE_DOWNLOAD_CTA}
             </a>

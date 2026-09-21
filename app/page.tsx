@@ -110,7 +110,7 @@ export default function Page() {
       <main className="flex-grow relative overflow-x-clip" id="main-content" role="main" aria-live="polite">
         <HomeHeroCover />
         {/* Secondary to defence pathways — Store-primary CN promo, above the fold on tall screens */}
-        <CustodyNoteStorePromo variant="strip" />
+        <CustodyNoteStorePromo variant="strip" campaign="homepage" />
         <HomePathwaySection />
         <HomePathwaySocialProof />
         <HomeProofBar />
@@ -122,7 +122,7 @@ export default function Page() {
         <BlogCarousel initialPosts={latestPosts} maxPosts={12} />
         <KentCoverCard className="py-10" />
         <HomeFirmSection />
-        <CustodyNoteStorePromo variant="panel" />
+        <CustodyNoteStorePromo variant="panel" campaign="homepage" />
         <HomePriorityCoverage />
         <HomeServicesSection />
         <HomeCourtJourney />

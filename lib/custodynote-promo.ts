@@ -9,7 +9,12 @@ export function cnHref(campaign: string, path = ''): string {
   return partnerHref(base, campaign, 'policestationagent');
 }
 
-export const CUSTODYNOTE_DOWNLOAD_HREF = cnHref('footer', '/download');
+/** Campaign-scoped link to custodynote.com/download (notarised Mac .dmg + Windows Setup). */
+export function cnDownloadHref(campaign: string): string {
+  return cnHref(campaign, '/download');
+}
+
+export const CUSTODYNOTE_DOWNLOAD_HREF = cnDownloadHref('footer');
 export const CUSTODYNOTE_TRIAL_HREF = CUSTODYNOTE_DOWNLOAD_HREF;
 
 /**
@@ -22,18 +27,26 @@ export const CUSTODYNOTE_MICROSOFT_STORE_HREF =
 /** Primary Windows CTA — Store first; Mac is never claimed here. */
 export const CUSTODYNOTE_MICROSOFT_STORE_CTA = 'Get it on Microsoft Store';
 
+/**
+ * Mac CTA — notarised .dmg via custodynote.com/download.
+ * Never claim Mac is available on any app store.
+ */
+export const CUSTODYNOTE_MAC_DOWNLOAD_CTA = 'Download for Mac';
+export const CUSTODYNOTE_MAC_DOWNLOAD_HREF = cnDownloadHref('footer');
+
 export const CUSTODYNOTE_PRICE_GBP = '9.99';
 export const CUSTODYNOTE_FREE_LABEL = 'Free during beta';
 /**
  * Cross-promo line for FOOTER_NETWORK_LINKS / OWNED_NETWORK_SITES.
- * Primary path: Microsoft Store (Windows UK, live). Download is backup (Windows & Mac).
- * Do not imply Mac is on the Store.
+ * Paired paths: Microsoft Store (Windows UK) + Mac direct download.
+ * Backup download remains optional for Windows Setup.exe.
+ * Do not imply Mac is on any store.
  */
 export const CUSTODYNOTE_PROMO_PRICE_LINE =
-  'Windows via Microsoft Store (UK) · backup download for Windows & Mac · free during beta';
-/** Backup only — direct Setup.exe / custodynote.com/download for Windows & Mac. */
+  'Windows via Microsoft Store (UK) · Mac via direct download · free during beta';
+/** Optional backup — direct Setup.exe / generic Windows & Mac download page. */
 export const CUSTODYNOTE_DOWNLOAD_CTA = 'Backup download (Windows & Mac)';
 export const CUSTODYNOTE_BETA_REASON =
   "Custody Note is in beta — that's why it's free while we test with real police station work.";
 export const CUSTODYNOTE_STORE_WINDOWS_NOTE =
-  'Microsoft Store is Windows only (UK). Mac uses the backup download.';
+  'Microsoft Store is Windows only (UK). Mac uses the direct download — not on any store.';
