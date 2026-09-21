@@ -36,7 +36,7 @@ export function HomePathwaySocialProof() {
           {QUOTES.map((item) => (
             <blockquote
               key={`${item.author}-${item.location}`}
-              className="border-l-2 border-accent pl-4"
+              className="rounded-xl border border-border border-l-4 border-l-accent bg-card px-4 py-3 shadow-sm"
             >
               <p className="text-sm leading-relaxed text-foreground/85 md:text-base">
                 “{item.quote}”

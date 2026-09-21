@@ -20,11 +20,11 @@ export function HomeCallProcess() {
               page. Once we have your request, this is the usual sequence.
             </p>
           </div>
-          <ol className="mt-8 space-y-4 md:mt-0">
+          <ol className="mt-8 space-y-3 md:mt-0">
             {STEPS.map((step, index) => (
-              <li key={step} className="flex gap-4">
+              <li key={step} className="flex gap-4 rounded-xl border border-border bg-card px-4 py-3.5 shadow-card">
                 <span
-                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-accent/50 bg-card font-display text-sm font-bold text-primary shadow-sm"
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-accent/50 bg-secondary font-display text-sm font-bold text-primary shadow-sm"
                   aria-hidden="true"
                 >
                   {index + 1}
