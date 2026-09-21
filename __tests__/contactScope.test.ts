@@ -210,7 +210,9 @@ describe("contact config", () => {
 
   it("header uses pathway CTAs not generic legal advice call", () => {
     const header = fs.readFileSync(path.join(root, "components/Header.tsx"), "utf8");
-    expect(header).toMatch(/Get a solicitor/);
+    const nav = fs.readFileSync(path.join(root, "config/nav.ts"), "utf8");
+    expect(header).toContain("NAV_PRIMARY_CTA");
+    expect(nav).toMatch(/Get a solicitor/);
     expect(header).toContain("CHROME_BRAND_TAGLINE");
     // Help strip removed so first screen keeps pathway room; not-police is the slim trust bar.
     expect(header).not.toContain("CHROME_HELP_STRIP");

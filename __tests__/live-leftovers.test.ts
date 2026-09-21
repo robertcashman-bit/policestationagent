@@ -75,14 +75,27 @@ describe("live leftovers — hub + chrome fixes", () => {
     expect(header).not.toContain("CUSTODYNOTE_MAC_DOWNLOAD_CTA");
     expect(header).not.toContain('data-cn-mac-cta="mobile-nav"');
     expect(header).not.toContain('data-cn-store-cta');
-    expect(header).toContain("/police-custody-rights");
-    expect(header).toContain("/canwehelp");
-    expect(header).toContain("/coverage");
-    expect(header).toContain("PATH_AGENCY");
-    expect(header).toContain("PATH_VOLUNTARY_LANDING");
-    expect(header).toContain("PATH_CUSTODY");
+    expect(header).toContain("NAV_GROUPS");
+    expect(header).toContain("NAV_PRIMARY_CTA");
     expect(header).not.toMatch(/01732|07535/);
     expect(header).not.toMatch(/Mac App Store/i);
+    expect(header).not.toMatch(/tel:/i);
+
+    const nav = fs.readFileSync(path.join(root, "config/nav.ts"), "utf8");
+    expect(nav).toContain("PATH_AGENCY");
+    expect(nav).toContain("PATH_VOLUNTARY_LANDING");
+    expect(nav).toContain("PATH_CUSTODY");
+    expect(nav).toContain("PATH_CONTACT");
+    expect(nav).toContain("/police-custody-rights");
+    expect(nav).toContain("/canwehelp");
+    expect(nav).toContain("/coverage");
+    expect(nav).toContain("FOOTER_STATION_HUBS");
+    expect(nav).toContain("FOOTER_RIGHTS_GUIDES");
+    expect(nav).toContain("FOOTER_ADVICE_PAGES");
+    expect(nav).not.toContain("CUSTODYNOTE");
+    expect(nav).not.toContain("PSRTRAIN");
+    expect(nav).not.toContain("REPUK");
+    expect(nav).not.toMatch(/01732|07535|tel:/i);
 
     const promoUi = fs.readFileSync(
       path.join(root, "components/CustodyNoteStorePromo.tsx"),
