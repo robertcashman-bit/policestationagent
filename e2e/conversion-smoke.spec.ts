@@ -16,11 +16,18 @@ test.describe('Conversion smoke — desktop', () => {
     await page.goto('/');
     const pathways = page.getByLabel('Enquiry pathways');
     await expect(pathways).toBeVisible();
-    await expect(page.getByRole('heading', { name: /three routes\. voluntary interview is the usual path/i })).toBeVisible();
+    await expect(page.getByRole('heading', { name: /two clear routes\. voluntary interview is the usual path/i })).toBeVisible();
     await expect(page.getByRole('heading', { name: /got a police interview letter/i })).toBeVisible();
     await expect(page.getByRole('link', { name: /someone is in custody now/i })).toBeVisible();
     await expect(page.getByRole('link', { name: /voluntary interview \/ letter/i })).toBeVisible();
-    await expect(page.getByRole('link', { name: /solicitor needing agent cover/i })).toBeVisible();
+    // Agency cover is not on the first-screen pathway grid (nav / firm section only)
+    await expect(pathways.getByRole('link', { name: /solicitor needing agent cover/i })).toHaveCount(0);
+    await expect(page.getByTestId('home-authority-strip')).toBeVisible();
+    await expect(page.getByTestId('home-authority-strip')).toContainText(/30 years plus/i);
+    await expect(page.getByTestId('home-authority-strip')).toContainText(/Tuckers/i);
+    // No Custody Note body promos on homepage
+    await expect(page.locator('[data-cn-store-promo="strip"]')).toHaveCount(0);
+    await expect(page.locator('[data-cn-store-promo="panel"]')).toHaveCount(0);
     // Competing hero CTAs removed — pathways are the job
     await expect(page.getByRole('link', { name: /^find representation$/i })).toHaveCount(0);
     await expect(page.getByRole('link', { name: /^view coverage$/i })).toHaveCount(0);
@@ -233,7 +240,8 @@ test.describe('Conversion smoke — mobile viewport', () => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/');
     await expect(
-      page.getByRole('heading', { name: /three routes\. one clear next step/i }),
+      page.getByRole('heading', { name: /two clear routes\. voluntary interview is the usual path/i }),
     ).toBeVisible();
+    await expect(page.getByTestId('home-authority-strip')).toBeVisible();
   });
 });
