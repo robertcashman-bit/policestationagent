@@ -121,6 +121,13 @@ export default function Header({
                 {item.label}
               </Link>
             ))}
+            <Link
+              href={PATH_CONTACT}
+              className="btn-gold mx-3 mt-1 w-[calc(100%-1.5rem)]"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Get a solicitor
+            </Link>
             <a
               href={CUSTODYNOTE_MICROSOFT_STORE_HREF}
               className="mx-3 mt-1 flex min-h-[44px] items-center justify-center rounded-md border border-accent/40 bg-accent/10 px-3 py-2.5 text-sm font-bold text-primary"
@@ -131,13 +138,6 @@ export default function Header({
             >
               {CUSTODYNOTE_MICROSOFT_STORE_CTA}
             </a>
-            <Link
-              href={PATH_CONTACT}
-              className="btn-gold mx-3 mt-1 w-[calc(100%-1.5rem)]"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Get a solicitor
-            </Link>
           </nav>
         </div>
       ) : null}
