@@ -132,6 +132,7 @@ const PAGE_PATH: Record<string, ContentSource[]> = {
   '/attendanceterms': [SCC_2025, LAA_MANUAL],
   '/what-is-a-police-station-rep': [PACE, PSRAS, SRA_PSRAS],
   '/whatisapolicestationrep': [PACE, PSRAS, SRA_PSRAS],
+  '/why-get-police-station-accredited': [SRA_PSRAS, SCC_2025, PSRAS],
   '/what-we-do': [PACE, PSRAS, SCC_2025],
   '/why-use-us': [PACE, PSRAS, FIND_LEGAL],
   '/about': [PSRAS, SRA_PSRAS],
