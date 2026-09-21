@@ -12,15 +12,14 @@ import { DEFAULT_OG_IMAGES, DEFAULT_TWITTER_IMAGES } from "@/lib/seo/page-metada
 import { StandardPaceSources } from "@/components/legal/StandardPaceSources";
 
 export const metadata: Metadata = {
-  title: "Voluntary Interview Kent | Free Solicitor Under Caution",
-  description:
-    "Voluntary attendance / voluntary interview solicitor in Kent. Police interview letter, interview under caution, Maidstone VAI. Request a free solicitor before you attend. Not Kent Police.",
+  title: "Voluntary Interview Letter Kent | Police Interview Under Caution Solicitor",
+  description: `${SEO_NOT_POLICE} Got a voluntary interview letter in Kent? Free solicitor for a police interview under caution — including Maidstone VAI. Request representation before you attend.`,
   alternates: {
     canonical: `https://${SITE_DOMAIN}/voluntary-interviews`,
   },
   openGraph: {
-    title: "Voluntary Interview Kent | Free Solicitor Under Caution",
-    description: `${SEO_NOT_POLICE} Request representation before a voluntary interview under caution in Kent.`,
+    title: "Voluntary Interview Letter Kent | Police Interview Under Caution Solicitor",
+    description: `${SEO_NOT_POLICE} Got a voluntary interview letter? Request representation before a police interview under caution in Kent.`,
     url: `https://${SITE_DOMAIN}/voluntary-interviews`,
     siteName: "Police Station Agent",
     type: "website",
@@ -28,8 +27,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Voluntary Interview Kent | Free Solicitor Under Caution",
-    description: `${SEO_NOT_POLICE} Request representation before a voluntary interview under caution in Kent.`,
+    title: "Voluntary Interview Letter Kent | Police Interview Under Caution Solicitor",
+    description: `${SEO_NOT_POLICE} Got a voluntary interview letter? Request representation before a police interview under caution in Kent.`,
     images: [...DEFAULT_TWITTER_IMAGES],
   },
 };
@@ -40,7 +39,7 @@ const STEPS = [
     body: "If officers call or leave a letter, take names and the station. Do not give your account on the phone. Say you will instruct a solicitor.",
   },
   {
-    title: "Request a free solicitor",
+    title: "Request representation",
     body: "Police station advice for a voluntary interview under caution is free under Legal Aid where you qualify — it is not means-tested at the station stage.",
   },
   {
@@ -106,7 +105,7 @@ export default function VoluntaryInterviewsPage() {
                 href="#request"
                 className="inline-flex items-center justify-center min-h-[48px] rounded-md bg-accent px-6 py-3 font-bold text-accent-foreground hover:bg-accent-light"
               >
-                Request a free solicitor — short form
+                Request representation — short form
               </a>
               <a
                 href="#steps"

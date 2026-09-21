@@ -9,7 +9,7 @@ import { PoliceSignposting } from "@/components/conversion/PoliceSignposting";
 import { PATH_VOLUNTARY_LANDING } from "@/config/enquiry-paths";
 
 export const metadata: Metadata = {
-  title: "Request Voluntary Interview Representation | Kent | NOT the Police",
+  title: "Request Representation | Voluntary Interview Letter Kent | Not the Police",
   description: `${SEO_NOT_POLICE} Free solicitor for a forthcoming voluntary police interview under caution in Kent. Short form — defence solicitors, not the police.`,
   alternates: {
     canonical: `https://${SITE_DOMAIN}/start/voluntary-interview`,

@@ -93,9 +93,9 @@ export function SituationPicker({ className = "" }: Props) {
           </p>
           <Link
             href={PATH_CUSTODY}
-            className="inline-flex min-h-[44px] items-center justify-center rounded-md bg-destructive px-5 py-2.5 text-sm font-bold text-white hover:bg-red-800"
+            className="inline-flex min-h-[48px] items-center justify-center rounded-md bg-destructive px-5 py-2.5 text-sm font-bold text-white hover:bg-red-800"
           >
-            Check whether we can help
+            Check custody now
           </Link>
         </div>
       ) : null}

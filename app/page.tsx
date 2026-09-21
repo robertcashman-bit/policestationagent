@@ -25,16 +25,16 @@ import { KentCoverCard } from "@/components/conversion/KentCoverCard";
 import { StandardPaceSources } from "@/components/legal/StandardPaceSources";
 
 export const metadata: Metadata = {
-  title: "Voluntary Interview Solicitor Kent | Defence — Not the Police",
+  title: "Voluntary Interview Letter Kent | Free Solicitor — Not the Police",
   description:
-    "Got a police interview letter in Kent? Free solicitor for voluntary interviews under caution, plus current custody and agency cover. We are criminal defence solicitors — not Kent Police. For police use 999/101.",
+    "Got a voluntary interview letter in Kent? Free solicitor for a police interview under caution, plus help if someone is in custody now. Criminal defence — not Kent Police. For police use 999/101.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/`,
   },
   openGraph: {
-    title: "Voluntary Interview Solicitor Kent | Defence — Not the Police",
+    title: "Voluntary Interview Letter Kent | Free Solicitor — Not the Police",
     description:
-      "Got a police interview letter in Kent? Free solicitor for voluntary interviews under caution, plus current custody and agency cover. Not Kent Police.",
+      "Got a voluntary interview letter in Kent? Free solicitor for a police interview under caution, plus help if someone is in custody. Not Kent Police.",
     url: `https://${SITE_DOMAIN}/`,
     siteName: "Police Station Agent",
     type: "website",
@@ -43,9 +43,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Voluntary Interview Solicitor Kent | Defence — Not the Police",
+    title: "Voluntary Interview Letter Kent | Free Solicitor — Not the Police",
     description:
-      "Got a police interview letter in Kent? Free solicitor for voluntary interviews under caution. Not Kent Police.",
+      "Got a voluntary interview letter in Kent? Free solicitor for a police interview under caution. Not Kent Police.",
     images: [...DEFAULT_TWITTER_IMAGES],
   },
   robots: {
@@ -70,7 +70,7 @@ const faqItems = [
   {
     question: "Is police station legal advice free in Kent?",
     answer:
-      "Yes. Everyone arrested or invited for a voluntary interview in Kent is entitled to free legal advice at the police station. This is a statutory right under PACE 1984 and is not means-tested. Legal Aid covers the cost of a duty solicitor attending the police station. Start with Request a free solicitor if you have a letter or booked interview.",
+      "Yes. Everyone arrested or invited for a voluntary interview in Kent is entitled to free legal advice at the police station. This is a statutory right under PACE 1984 and is not means-tested. Legal Aid covers the cost of a duty solicitor attending the police station. Start with Request representation if you have a letter or booked interview.",
   },
   {
     question: "How quickly can a duty solicitor attend in Kent?",

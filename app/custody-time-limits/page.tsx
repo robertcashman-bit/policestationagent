@@ -10,9 +10,9 @@ import { SITE_DOMAIN } from "@/config/site";
 import { PersistentKentVaCta } from "@/components/conversion/PersistentKentVaCta";
 
 export const metadata: Metadata = {
-  title: "How Long Can Police Hold You? UK Custody Time Limits Explained",
+  title: "How Long Can Police Hold You? Custody Time Limits + Free Solicitor Help",
   description:
-    "Under PACE 1984, police detention without charge is generally limited to 24 hours, extendable to 36 hours by a superintendent and (in some cases) up to 96 hours with a magistrates’ court warrant. Learn how “relevant time” is calculated and how reviews work.",
+    "PACE custody time limits: usually 24 hours without charge, up to 36 with a superintendent, and up to 96 with a magistrates’ warrant. Independent criminal defence — not the police. Request representation or check custody now.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/custody-time-limits`,
   },
@@ -99,9 +99,28 @@ export default function CustodyTimeLimitsPage() {
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
               How Long Can Police Hold You in Custody?
             </h1>
-            <p className="text-xl text-blue-100">
+            <p className="text-xl text-blue-100 mb-4">
               UK custody time limits explained: 24, 36, and 96-hour rules under PACE 1984
             </p>
+            <p className="text-sm text-blue-100/90 mb-6 max-w-2xl">
+              Independent criminal defence solicitors — not Kent Police. If someone is detained now,
+              or you have a voluntary interview letter, use a solicitor pathway below. For police
+              use 999 or 101.
+            </p>
+            <div className="flex flex-col sm:flex-row flex-wrap gap-3">
+              <Link
+                href="/start/voluntary-interview#request"
+                className="inline-flex min-h-[48px] items-center justify-center rounded-md bg-accent px-5 py-3 text-sm font-bold text-accent-foreground hover:bg-accent-light"
+              >
+                Request representation
+              </Link>
+              <Link
+                href="/current-custody"
+                className="inline-flex min-h-[48px] items-center justify-center rounded-md bg-red-700 px-5 py-3 text-sm font-bold text-white hover:bg-red-800"
+              >
+                Check custody now
+              </Link>
+            </div>
           </div>
         </section>
 

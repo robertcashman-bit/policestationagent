@@ -26,7 +26,7 @@ export const PATHWAY_CARDS = [
     title: "Voluntary interview / letter",
     description:
       "I have a police letter, email or call inviting me to an interview under caution in Kent.",
-    button: "Request a free solicitor",
+    button: "Request representation",
     event: "pathway_voluntary_selected",
     accent: "blue" as const,
   },
@@ -36,7 +36,7 @@ export const PATHWAY_CARDS = [
     title: "Someone is in custody now",
     description:
       "A person is currently detained inside a Kent police station and requires legal representation.",
-    button: "Check whether we can help",
+    button: "Check custody now",
     event: "pathway_custody_selected",
     accent: "red" as const,
   },

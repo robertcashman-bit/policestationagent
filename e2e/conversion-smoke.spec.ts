@@ -20,6 +20,8 @@ test.describe('Conversion smoke — desktop', () => {
     await expect(page.getByRole('heading', { name: /got a police interview letter/i })).toBeVisible();
     await expect(page.getByRole('link', { name: /someone is in custody now/i })).toBeVisible();
     await expect(page.getByRole('link', { name: /voluntary interview \/ letter/i })).toBeVisible();
+    await expect(pathways.getByText(/request representation/i)).toBeVisible();
+    await expect(pathways.getByText(/check custody now/i)).toBeVisible();
     // Agency cover is not on the first-screen pathway grid (nav / firm section only)
     await expect(pathways.getByRole('link', { name: /solicitor needing agent cover/i })).toHaveCount(0);
     await expect(page.getByTestId('home-authority-strip')).toBeVisible();

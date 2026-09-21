@@ -20,16 +20,16 @@ const COPY: Record<
 > = {
   voluntary: {
     title: "Booked for a voluntary interview?",
-    body: "Request a free solicitor before you attend an interview under caution. Do not use this as a general legal advice line.",
+    body: "Request representation before you attend an interview under caution. Do not use this as a general legal advice line.",
     href: `${PATH_VOLUNTARY}#request`,
-    button: "Request VA solicitor",
+    button: "Request representation",
     tone: "border-border bg-secondary/70",
   },
   custody: {
     title: "Someone in custody now?",
-    body: "Check whether we can help with current Kent police station detention. The solicitor telephone is only shown after qualification.",
+    body: "Check custody now for current Kent police station detention. The solicitor telephone is only shown after qualification.",
     href: PATH_CUSTODY,
-    button: "Check whether we can help",
+    button: "Check custody now",
     tone: "border-red-200 bg-red-50",
   },
   agency: {

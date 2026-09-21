@@ -4,14 +4,14 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Coldharbour Area (VAI / Local Cover) | Robert Cashman | FREE",
-  description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Coldharbour custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
+  title: "Coldharbour Area Solicitor (VAI) | Not Kent Police — Use 101 for Police",
+  description: "Independent criminal defence for Coldharbour-area voluntary interviews — not a police station phone number or custody suite. For police use 101 or 999. Request representation.",
   alternates: {
     canonical: "https://www.policestationagent.com/coldharbour-police-station",
   },
   openGraph: {
-    title: "Coldharbour Area (VAI / Local Cover) | Robert Cashman | FREE",
-    description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Coldharbour custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
+    title: "Coldharbour Area Solicitor (VAI) | Not Kent Police — Use 101 for Police",
+    description: "Independent criminal defence for Coldharbour-area voluntary interviews — not a police station phone number or custody suite. For police use 101 or 999. Request representation.",
     url: "https://www.policestationagent.com/coldharbour-police-station",
     siteName: "Police Station Agent",
     type: "website",

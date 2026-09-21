@@ -116,6 +116,8 @@ describe("disambiguateStationHtml", () => {
     expect(out).toContain("Need the police? (official)");
     expect(out).toContain("NOT THE POLICE");
     expect(out).toContain("criminal solicitors");
+    expect(out).toContain("Request representation");
+    expect(out).toContain("Check custody now");
     expect(out).toContain('href="/contact"');
     expect(out).toContain("data-solicitor-contact");
     expect(out).not.toMatch(/href="tel:01732247427"/);

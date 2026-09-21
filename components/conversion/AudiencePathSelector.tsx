@@ -218,7 +218,7 @@ export function AudiencePathSelector({
                   {card.description}
                 </p>
                 <span
-                  className={`mt-5 inline-flex min-h-[44px] items-center justify-center rounded-md px-4 text-sm font-bold transition-colors ${
+                  className={`mt-5 inline-flex min-h-[48px] items-center justify-center rounded-md px-4 text-sm font-bold transition-colors ${
                     isUrgent
                       ? "bg-destructive text-white group-hover:bg-red-800"
                       : isFirm || isPrimary

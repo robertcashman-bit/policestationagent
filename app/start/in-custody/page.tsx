@@ -7,8 +7,8 @@ import { CustodyQualificationFlow } from "@/components/conversion/CustodyQualifi
 import { PoliceSignposting } from "@/components/conversion/PoliceSignposting";
 
 export const metadata: Metadata = {
-  title: "Someone in Custody? | NOT the Police | Arrange Representation Kent",
-  description: `${SEO_NOT_POLICE} Check whether we can help with someone currently detained at a Kent police station. Immediate family may instruct subject to detainee confirmation.`,
+  title: "Someone in Custody Kent | Arrange Representation — Not the Police",
+  description: `${SEO_NOT_POLICE} Someone in custody at a Kent police station? Check whether we can help now. Immediate family may instruct subject to detainee confirmation.`,
   alternates: {
     canonical: `https://${SITE_DOMAIN}/current-custody`,
   },

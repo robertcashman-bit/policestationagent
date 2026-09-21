@@ -4,14 +4,14 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Canterbury Police Station Solicitor | Robert Cashman | FREE extended hours",
-  description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Canterbury custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
+  title: "Canterbury Police Station Solicitor | Not Kent Police — Use 101 for Police",
+  description: "Independent criminal defence for Canterbury custody and voluntary interviews — not the police station phone number or custody suite switchboard. For police use 101 or 999. Request representation or check custody now.",
   alternates: {
     canonical: "https://www.policestationagent.com/canterbury-police-station",
   },
   openGraph: {
-    title: "Canterbury Police Station Solicitor | Robert Cashman | FREE extended hours",
-    description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Canterbury custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
+    title: "Canterbury Police Station Solicitor | Not Kent Police — Use 101 for Police",
+    description: "Independent criminal defence for Canterbury custody and voluntary interviews — not the police station phone number or custody suite switchboard. For police use 101 or 999. Request representation or check custody now.",
     url: "https://www.policestationagent.com/canterbury-police-station",
     siteName: "Police Station Agent",
     type: "website",
