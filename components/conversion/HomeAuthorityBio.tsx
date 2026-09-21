@@ -22,11 +22,12 @@ export function HomeAuthorityBio() {
     >
       <div className="mx-auto flex max-w-6xl flex-col overflow-hidden rounded-2xl border border-border bg-primary-dark text-white shadow-elevated md:grid md:grid-cols-2">
         {/*
-          Photo first on mobile so the face is early and shown at intrinsic
-          square ratio (object-contain / h-auto — never a short cover crop).
+          Photo first on mobile. Source headshot is edge-tight; a 4:5 frame with
+          object-contain adds black letterboxing so the crown is not clipped by
+          the card's rounded overflow. Never use a short absolute cover crop.
           On md+: second column, cover-fill the tall text column.
         */}
-        <div className="relative order-1 bg-black md:order-2 md:min-h-full">
+        <div className="relative order-1 aspect-[4/5] w-full bg-black md:order-2 md:aspect-auto md:min-h-full">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={ROBERT_CASHMAN_PHOTO_PATH}
@@ -35,7 +36,7 @@ export function HomeAuthorityBio() {
             height={800}
             loading="eager"
             decoding="async"
-            className="block h-auto w-full object-contain object-center md:absolute md:inset-0 md:h-full md:object-cover md:object-[center_15%]"
+            className="absolute inset-0 h-full w-full object-contain object-center md:object-cover md:object-[center_12%]"
           />
           <div
             className="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary-dark/40 via-transparent to-transparent md:bg-gradient-to-l"
