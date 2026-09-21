@@ -12,6 +12,31 @@ describe("live leftovers — hub + chrome fixes", () => {
     expect(footer).not.toContain('href: "/can-we-help"');
   });
 
+  it("footer Network/tools promotes Microsoft Store first for Custody Note", () => {
+    const footer = fs.readFileSync(path.join(root, "components/Footer.tsx"), "utf8");
+    expect(footer).toContain("CUSTODYNOTE_MICROSOFT_STORE_HREF");
+    expect(footer).toContain("CUSTODYNOTE_MICROSOFT_STORE_CTA");
+    expect(footer).toContain("CUSTODYNOTE_DOWNLOAD_HREF");
+    expect(footer).toContain("CUSTODYNOTE_DOWNLOAD_CTA");
+    expect(footer).toMatch(/Microsoft Store is Windows only/i);
+    // Firm phones must stay out of always-on chrome HTML
+    expect(footer).not.toMatch(/01732|07535|tel:/i);
+
+    const promo = fs.readFileSync(path.join(root, "lib/custodynote-promo.ts"), "utf8");
+    expect(promo).toContain("apps.microsoft.com/detail/9NFSRVT3T45V");
+
+    const network = fs.readFileSync(path.join(root, "config/footer-links.ts"), "utf8");
+    const networkBlock = network.slice(network.indexOf("FOOTER_NETWORK_LINKS"));
+    const storeIdx = networkBlock.indexOf("href: CUSTODYNOTE_MICROSOFT_STORE_HREF");
+    const downloadIdx = networkBlock.indexOf("href: CUSTODYNOTE_DOWNLOAD_HREF");
+    expect(storeIdx).toBeGreaterThan(-1);
+    expect(downloadIdx).toBeGreaterThan(storeIdx);
+
+    const owned = fs.readFileSync(path.join(root, "config/link-authority.ts"), "utf8");
+    expect(owned).toContain("url: CUSTODYNOTE_MICROSOFT_STORE_HREF");
+    expect(owned).not.toMatch(/OWNED_NETWORK_SITES[\s\S]*CUSTODYNOTE_SITE/);
+  });
+
   it("next.config consolidates overlapping hubs to /coverage", () => {
     const cfg = fs.readFileSync(path.join(root, "next.config.js"), "utf8");
     for (const source of [

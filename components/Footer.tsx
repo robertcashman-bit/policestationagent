@@ -8,6 +8,12 @@ import {
   PATH_CUSTODY,
   PATH_VOLUNTARY_LANDING,
 } from "@/config/enquiry-paths";
+import {
+  CUSTODYNOTE_DOWNLOAD_CTA,
+  CUSTODYNOTE_DOWNLOAD_HREF,
+  CUSTODYNOTE_MICROSOFT_STORE_CTA,
+  CUSTODYNOTE_MICROSOFT_STORE_HREF,
+} from "@/lib/custodynote-promo";
 
 const PUBLIC_HELP = [
   { href: PATH_VOLUNTARY_LANDING, label: "Voluntary interviews" },
@@ -103,6 +109,33 @@ export default function Footer({
               ))}
             </ul>
           </div>
+        </div>
+
+        <div className="py-5 border-b border-white/10">
+          <h2 className="text-xs uppercase tracking-[0.12em] text-accent-light mb-3 font-semibold">
+            Network / tools
+          </h2>
+          <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-baseline gap-2 sm:gap-x-5 sm:gap-y-2 text-sm">
+            <a
+              href={CUSTODYNOTE_MICROSOFT_STORE_HREF}
+              className="font-semibold text-accent-light hover:text-white transition-colors"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              {CUSTODYNOTE_MICROSOFT_STORE_CTA}
+            </a>
+            <a
+              href={CUSTODYNOTE_DOWNLOAD_HREF}
+              className="text-white/70 hover:text-accent-light transition-colors"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              {CUSTODYNOTE_DOWNLOAD_CTA}
+            </a>
+          </div>
+          <p className="text-xs text-white/55 mt-2 max-w-2xl">
+            Microsoft Store is Windows only. Mac uses the direct download.
+          </p>
         </div>
 
         <div className="py-5 border-b border-white/10">
