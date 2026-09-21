@@ -65,13 +65,7 @@ function safeLinks(links: FooterLink[]): FooterLink[] {
   return links.filter((link) => !isBlockedRepUkUrl(link.href));
 }
 
-function FooterLinkList({
-  links,
-  dense = false,
-}: {
-  links: FooterLink[];
-  dense?: boolean;
-}) {
+function FooterLinkList({ links, dense = false }: { links: FooterLink[]; dense?: boolean }) {
   const items = safeLinks(links);
   return (
     <ul className={dense ? "space-y-1.5 text-[13px] leading-snug" : "space-y-2 text-sm"}>
@@ -122,10 +116,14 @@ function DesktopColumn({
 function NetworkTools() {
   const network = safeLinks(FOOTER_NETWORK_LINKS);
   const store = network.find((l) => l.href === CUSTODYNOTE_MICROSOFT_STORE_HREF);
-  const mac = network.find((l) => l.href === CUSTODYNOTE_MAC_DOWNLOAD_HREF);
+  // Mac and backup share the same download href; distinguish by label.
+  const mac = network.find(
+    (l) => l.href === CUSTODYNOTE_MAC_DOWNLOAD_HREF && l.label === CUSTODYNOTE_MAC_DOWNLOAD_CTA
+  );
   const textLinks = network.filter(
     (l) =>
-      l.href !== CUSTODYNOTE_MICROSOFT_STORE_HREF && l.href !== CUSTODYNOTE_MAC_DOWNLOAD_HREF
+      l.href !== CUSTODYNOTE_MICROSOFT_STORE_HREF &&
+      !(l.href === CUSTODYNOTE_MAC_DOWNLOAD_HREF && l.label === CUSTODYNOTE_MAC_DOWNLOAD_CTA)
   );
 
   return (
@@ -173,9 +171,7 @@ function NetworkTools() {
                   ? { "data-cn-backup-cta": "footer" }
                   : {})}
               >
-                {link.href === CUSTODYNOTE_DOWNLOAD_HREF
-                  ? CUSTODYNOTE_DOWNLOAD_CTA
-                  : link.label}
+                {link.href === CUSTODYNOTE_DOWNLOAD_HREF ? CUSTODYNOTE_DOWNLOAD_CTA : link.label}
               </a>
             ) : (
               <Link
