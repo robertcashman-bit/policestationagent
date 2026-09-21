@@ -11,8 +11,10 @@ import {
 import { CHROME_BRAND_TAGLINE } from "@/config/contact";
 import { CustodyNoteStorePromo } from "@/components/CustodyNoteStorePromo";
 import {
+  CUSTODYNOTE_MAC_DOWNLOAD_CTA,
   CUSTODYNOTE_MICROSOFT_STORE_CTA,
   CUSTODYNOTE_MICROSOFT_STORE_HREF,
+  cnDownloadHref,
 } from "@/lib/custodynote-promo";
 
 const NAV = [
@@ -65,7 +67,7 @@ export default function Header({
               </Link>
             ))}
             {/* Secondary to defence CTA — Store for Windows tooling */}
-            <CustodyNoteStorePromo variant="chrome" className="ml-1.5" />
+            <CustodyNoteStorePromo variant="chrome" campaign="header" className="ml-1.5" />
             <Link href={PATH_CONTACT} className="btn-gold ml-2 !min-h-9 !px-3 !text-sm">
               Get a solicitor
             </Link>
@@ -79,7 +81,11 @@ export default function Header({
             >
               Get a solicitor
             </Link>
-            <CustodyNoteStorePromo variant="chrome" className="hidden sm:inline-flex" />
+            <CustodyNoteStorePromo
+              variant="chrome"
+              campaign="header"
+              className="hidden sm:inline-flex"
+            />
             <button
               className="flex h-10 w-10 items-center justify-center rounded-md bg-primary text-white shadow-md hover:bg-primary-light"
               onClick={() => setMobileMenuOpen((o) => !o)}
@@ -128,16 +134,28 @@ export default function Header({
             >
               Get a solicitor
             </Link>
-            <a
-              href={CUSTODYNOTE_MICROSOFT_STORE_HREF}
-              className="mx-3 mt-1 flex min-h-[44px] items-center justify-center rounded-md border border-accent/40 bg-accent/10 px-3 py-2.5 text-sm font-bold text-primary"
-              rel="noopener noreferrer"
-              target="_blank"
-              data-cn-store-cta="mobile-nav"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              {CUSTODYNOTE_MICROSOFT_STORE_CTA}
-            </a>
+            <div className="mx-3 mt-1 grid grid-cols-1 gap-2 sm:grid-cols-2">
+              <a
+                href={CUSTODYNOTE_MICROSOFT_STORE_HREF}
+                className="flex min-h-[44px] items-center justify-center rounded-md border border-accent/40 bg-accent/10 px-3 py-2.5 text-sm font-bold text-primary"
+                rel="noopener noreferrer"
+                target="_blank"
+                data-cn-store-cta="mobile-nav"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {CUSTODYNOTE_MICROSOFT_STORE_CTA}
+              </a>
+              <a
+                href={cnDownloadHref("header")}
+                className="flex min-h-[44px] items-center justify-center rounded-md border border-accent/40 bg-accent/10 px-3 py-2.5 text-sm font-bold text-primary"
+                rel="noopener noreferrer"
+                target="_blank"
+                data-cn-mac-cta="mobile-nav"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {CUSTODYNOTE_MAC_DOWNLOAD_CTA}
+              </a>
+            </div>
           </nav>
         </div>
       ) : null}

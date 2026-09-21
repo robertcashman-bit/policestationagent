@@ -2,6 +2,8 @@ import { REPUK_DIRECTORY_HREF } from "@/lib/policestationrepuk-promo";
 import {
   CUSTODYNOTE_DOWNLOAD_CTA,
   CUSTODYNOTE_DOWNLOAD_HREF,
+  CUSTODYNOTE_MAC_DOWNLOAD_CTA,
+  CUSTODYNOTE_MAC_DOWNLOAD_HREF,
   CUSTODYNOTE_MICROSOFT_STORE_CTA,
   CUSTODYNOTE_MICROSOFT_STORE_HREF,
 } from "@/lib/custodynote-promo";
@@ -105,6 +107,11 @@ export const FOOTER_NETWORK_LINKS: FooterLink[] = [
   {
     href: CUSTODYNOTE_MICROSOFT_STORE_HREF,
     label: CUSTODYNOTE_MICROSOFT_STORE_CTA,
+    external: true,
+  },
+  {
+    href: CUSTODYNOTE_MAC_DOWNLOAD_HREF,
+    label: CUSTODYNOTE_MAC_DOWNLOAD_CTA,
     external: true,
   },
   {

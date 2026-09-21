@@ -94,7 +94,7 @@ export default function ForSolicitorsPage() {
         </div>
       </section>
 
-      <CustodyNoteStorePromo variant="panel" />
+      <CustodyNoteStorePromo variant="panel" campaign="for-solicitors" />
 
       <div className="max-w-5xl mx-auto px-4 py-12 md:py-16 space-y-12">
         <section aria-labelledby="agency-services-heading">

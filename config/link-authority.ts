@@ -1,5 +1,7 @@
 import { SITE_URL } from "@/config/site";
 import {
+  CUSTODYNOTE_MAC_DOWNLOAD_CTA,
+  CUSTODYNOTE_MAC_DOWNLOAD_HREF,
   CUSTODYNOTE_MICROSOFT_STORE_CTA,
   CUSTODYNOTE_MICROSOFT_STORE_HREF,
 } from "@/lib/custodynote-promo";
@@ -17,11 +19,15 @@ export const AUTHORITY_NAP = {
 
 export const REPUK_PROFILE_URL = "https://policestationrepuk.org/rep/robert-cashman";
 
-/** Owned sibling sites — safe for footer cross-links (CN primary = Microsoft Store) */
+/** Owned sibling sites — safe for footer cross-links (CN = Store + Mac download) */
 export const OWNED_NETWORK_SITES = [
   {
     url: CUSTODYNOTE_MICROSOFT_STORE_HREF,
     label: CUSTODYNOTE_MICROSOFT_STORE_CTA,
+  },
+  {
+    url: CUSTODYNOTE_MAC_DOWNLOAD_HREF,
+    label: CUSTODYNOTE_MAC_DOWNLOAD_CTA,
   },
   { url: "https://psrtrain.com", label: "PSR Train — police station rep training" },
 ] as const;
