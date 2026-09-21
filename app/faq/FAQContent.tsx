@@ -91,7 +91,7 @@ export default function FAQContent() {
         {
           question: "What is the difference between a police station agent and a duty solicitor?",
           answer:
-            "A duty solicitor is a qualified solicitor accredited by the Law Society to provide legal advice at police stations. A police station agent (or accredited representative) is a non-solicitor who has passed the Police Station Qualification to attend on behalf of a solicitor's firm. Robert Cashman is a qualified solicitor and Accredited Duty Solicitor with Higher Court Advocate status, not just an agent.",
+            "A duty solicitor is a qualified solicitor with Law Society Criminal Litigation Accreditation, required for local duty solicitor rota membership. An accredited police station representative is typically a non-solicitor accredited under the SRA Police Station Representative Accreditation Scheme (PSRAS) and registered with the Legal Aid Agency, attending on behalf of a contracted firm under supervision. Practising solicitors may use PSRAS or the Police Station Qualification (PSQ) for Legal Aid-claimable police-station advice — that is not the same as duty-rota accreditation. Robert Cashman is a qualified solicitor and accredited duty solicitor with Higher Court Advocate status. See <a href='/why-get-police-station-accredited' class='text-blue-600 hover:underline font-semibold'>why get police station accredited</a>.",
         },
         {
           question: "Are you available for extended hours?",
@@ -200,12 +200,12 @@ export default function FAQContent() {
         {
           question: "How do I become a Police Station Representative?",
           answer:
-            "To become a police station representative, you need to complete the Police Station Qualification (PSQ) through the Solicitors Regulation Authority (SRA) or equivalent body. This involves completing a training course and passing assessments. Once qualified, you can work as an accredited representative for a solicitor's firm.",
+            "Non-solicitor representatives become accredited under the SRA Police Station Representative Accreditation Scheme (PSRAS) — written examination (unless exempt), portfolio and Critical Incidents Test — then register on the Legal Aid Agency Police Station Register under a supervising solicitor. Practising solicitors may complete PSRAS or the Police Station Qualification (PSQ) to claim Legal Aid payment for police-station advice. See our guide: <a href='/why-get-police-station-accredited' class='text-blue-600 hover:underline font-semibold'>why get police station accredited</a>.",
         },
         {
           question: "What qualifications do I need?",
           answer:
-            "You need to complete the Police Station Qualification (PSQ), which is a professional qualification specifically for police station representation. This is separate from becoming a qualified solicitor. The PSQ covers police station procedures, PACE codes, interview techniques, and legal rights. Some firms may also require a law degree or equivalent, but the PSQ is the essential qualification.",
+            "For non-solicitors advising under Legal Aid frameworks, PSRAS accreditation and Police Station Register status are the core requirements, with ongoing supervision by a suitable solicitor. Duty solicitor rota membership is a separate Law Society Criminal Litigation Accreditation for solicitors (and eligible barristers/CILEX members). Full comparison: <a href='/why-get-police-station-accredited' class='text-blue-600 hover:underline font-semibold'>why get police station accredited</a>.",
         },
         {
           question: "What does the role involve?",
@@ -225,7 +225,7 @@ export default function FAQContent() {
         {
           question: "Where can I get more information about becoming a Police Station Rep?",
           answer:
-            "You can find information about the Police Station Qualification (PSQ) through the Solicitors Regulation Authority (SRA) website, or contact training providers who offer PSQ courses. You may also wish to contact criminal law firms directly to discuss opportunities. We are always interested in hearing from qualified and experienced police station representatives.",
+            "Start with the SRA PSRAS pages and the Legal Aid Agency Police Station Register Arrangements, summarised in our guide <a href='/why-get-police-station-accredited' class='text-blue-600 hover:underline font-semibold'>why get police station accredited</a>. For exam and CIT preparation (not a substitute for official rules), see <a href='https://www.psrtrain.com' class='text-blue-600 hover:underline font-semibold' rel='noopener noreferrer' target='_blank'>PSR Train</a>. Criminal defence firms handle supervision and instructions; solicitors needing Kent agent cover can use <a href='/for-solicitors' class='text-blue-600 hover:underline font-semibold'>agency cover</a>.",
         },
       ],
     },

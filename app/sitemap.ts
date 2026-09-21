@@ -136,6 +136,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${baseUrl}/why-get-police-station-accredited`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
       url: `${baseUrl}/what-we-do`,
       lastModified: new Date(),
       changeFrequency: "monthly",
