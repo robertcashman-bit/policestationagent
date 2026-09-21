@@ -73,7 +73,10 @@ export default function Header({
 
           <div className="flex items-center gap-2 lg:hidden">
             <CustodyNoteStorePromo variant="chrome" className="hidden sm:inline-flex" />
-            <Link href={PATH_CONTACT} className="btn-gold hidden !min-h-9 !px-3 !text-sm md:inline-flex">
+            <Link
+              href={PATH_CONTACT}
+              className="btn-gold hidden !min-h-9 !px-3 !text-sm sm:inline-flex"
+            >
               Get a solicitor
             </Link>
             <button
