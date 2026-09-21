@@ -137,6 +137,18 @@ describe("enquiry funnel routes", () => {
     expect(start).toMatch(/not Kent Police|not the police/i);
   });
 
+  it("pathway cards use clear conversion CTA labels", () => {
+    const voluntary = PATHWAY_CARDS.find((c) => c.id === "voluntary");
+    const custody = PATHWAY_CARDS.find((c) => c.id === "custody");
+    expect(voluntary?.button).toBe("Request representation");
+    expect(custody?.button).toBe("Check custody now");
+    const selector = fs.readFileSync(
+      path.join(root, "components/conversion/AudiencePathSelector.tsx"),
+      "utf8",
+    );
+    expect(selector).toMatch(/min-h-\[48px\]/);
+  });
+
   it("pathway cards cover three audiences", () => {
     expect(PATHWAY_CARDS).toHaveLength(3);
     expect(PATHWAY_CARDS.map((c) => c.id).sort()).toEqual(["agency", "custody", "voluntary"]);
@@ -162,7 +174,7 @@ describe("enquiry funnel routes", () => {
 
   it("voluntary landing leads with Kent VA SEO and short form", () => {
     const landing = fs.readFileSync(path.join(root, "app/voluntary-interviews/page.tsx"), "utf8");
-    expect(landing).toMatch(/Voluntary Interview Kent/i);
+    expect(landing).toMatch(/Voluntary Interview Letter Kent/i);
     expect(landing).toContain("ShortVoluntaryRequestForm");
     expect(landing).toContain("reportFormStart={false}");
     expect(landing).toContain("Maidstone");
@@ -176,6 +188,62 @@ describe("enquiry funnel routes", () => {
     const stepsIdx = landing.indexOf('id="steps"');
     expect(requestIdx).toBeGreaterThan(-1);
     expect(stepsIdx).toBeGreaterThan(requestIdx);
+  });
+
+  it("key landing pages use intent-focused titles/meta without firm phones", () => {
+    const pages = [
+      "app/page.tsx",
+      "app/voluntary-interviews/page.tsx",
+      "app/start/voluntary-interview/page.tsx",
+      "app/current-custody/page.tsx",
+      "app/start/in-custody/page.tsx",
+    ];
+    for (const rel of pages) {
+      const src = fs.readFileSync(path.join(root, rel), "utf8");
+      expect(src, rel).not.toMatch(/01732|07535|tel:/i);
+      expect(src, rel).toMatch(/title:\s*["`]/);
+    }
+    const home = fs.readFileSync(path.join(root, "app/page.tsx"), "utf8");
+    expect(home).toMatch(/Voluntary Interview Letter Kent/);
+    expect(home).toMatch(/Not the Police|not Kent Police/i);
+
+    const va = fs.readFileSync(path.join(root, "app/voluntary-interviews/page.tsx"), "utf8");
+    expect(va).toMatch(/Police Interview Under Caution Solicitor/);
+
+    const custody = fs.readFileSync(path.join(root, "app/current-custody/page.tsx"), "utf8");
+    expect(custody).toMatch(/Someone in Custody Kent/);
+
+    const inCustody = fs.readFileSync(path.join(root, "app/start/in-custody/page.tsx"), "utf8");
+    expect(inCustody).toMatch(/Someone in Custody Kent/);
+  });
+
+  it("VA short form and custody flow emit funnel start/submit events", () => {
+    const shortVa = fs.readFileSync(
+      path.join(root, "components/conversion/ShortVoluntaryRequestForm.tsx"),
+      "utf8",
+    );
+    expect(shortVa).toContain("FunnelEvents.voluntaryFormStart");
+    expect(shortVa).toContain("FunnelEvents.voluntaryFormSubmit");
+
+    const fullVa = fs.readFileSync(
+      path.join(root, "components/conversion/VoluntaryInterviewForm.tsx"),
+      "utf8",
+    );
+    expect(fullVa).toContain("FunnelEvents.voluntaryFormStart");
+    expect(fullVa).toContain("FunnelEvents.voluntaryFormSubmit");
+
+    const custody = fs.readFileSync(
+      path.join(root, "components/conversion/CustodyQualificationFlow.tsx"),
+      "utf8",
+    );
+    expect(custody).toContain("FunnelEvents.custodyScreenStart");
+    expect(custody).toContain("FunnelEvents.custodyScreenQualified");
+
+    const analytics = fs.readFileSync(path.join(root, "lib/analytics.ts"), "utf8");
+    expect(analytics).toContain('voluntary_form_start');
+    expect(analytics).toContain('voluntary_form_submit');
+    expect(analytics).toContain('custody_screen_start');
+    expect(analytics).toContain("sanitizeAnalyticsParams");
   });
 
   it("hours page is solicitor availability not police station opening times", () => {

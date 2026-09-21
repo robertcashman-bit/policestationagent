@@ -7,15 +7,15 @@ import { PoliceSignposting } from "@/components/conversion/PoliceSignposting";
 import { DEFAULT_OG_IMAGES, DEFAULT_TWITTER_IMAGES } from "@/lib/seo/page-metadata";
 
 export const metadata: Metadata = {
-  title: "Current Custody Representation | Kent Police Station | NOT the Police",
-  description: `${SEO_NOT_POLICE} Check whether we can help with someone currently detained at a Kent police station. Immediate family may instruct subject to detainee confirmation.`,
+  title: "Someone in Custody Kent | Check Representation Now — Not the Police",
+  description: `${SEO_NOT_POLICE} Someone in custody at a Kent police station? Check whether we can help now. Immediate family may instruct subject to detainee confirmation.`,
   alternates: {
     canonical: `https://${SITE_DOMAIN}/current-custody`,
   },
   openGraph: {
-    title: "Current Custody Representation | Kent | NOT the Police",
+    title: "Someone in Custody Kent | Check Representation Now — Not the Police",
     description:
-      "Qualification pathway for current Kent police custody representation. Not Kent Police.",
+      "Someone in custody Kent? Qualification pathway for current police station representation. Not Kent Police.",
     url: `https://${SITE_DOMAIN}/current-custody`,
     siteName: "Police Station Agent",
     type: "website",
@@ -23,9 +23,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Current Custody Representation | Kent | NOT the Police",
+    title: "Someone in Custody Kent | Check Representation Now — Not the Police",
     description:
-      "Qualification pathway for current Kent police custody representation. Not Kent Police.",
+      "Someone in custody Kent? Qualification pathway for current police station representation. Not Kent Police.",
     images: [...DEFAULT_TWITTER_IMAGES],
   },
 };
