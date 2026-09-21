@@ -5,13 +5,13 @@ import type { Metadata } from "next";
 import { SITE_DOMAIN } from "@/config/site";
 
 export const metadata: Metadata = {
-  title: "Gravesend Police Station Solicitor | DA11/DA12 | FREE Legal Aid | Independent Criminal Defence",
-  description: "Private defence solicitor website — NOT Kent Police or any police force. Independent criminal defence solicitors for Gravesend custody and booked voluntary interviews. FREE Legal Aid where eligible — not a police contact number.",
+  title: "Gravesend / North Kent Police Station Solicitor | Not Kent Police — Use 101",
+  description: "Independent criminal defence for North Kent (Gravesend) custody — not the police station phone number. For police use 101 or 999. Request representation or check custody now.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/gravesend-police-station`,
   },
   openGraph: {
-    title: "Gravesend Police Station Solicitor | DA11/DA12 | FREE Legal Aid | Independent Criminal Defence",
+    title: "Gravesend / North Kent Police Station Solicitor | Not Kent Police — Use 101",
     description:
       "Arrested in Gravesend? Police station solicitor 25 min away. FREE legal aid representation. Available during extended hours.",
     url: `https://${SITE_DOMAIN}/gravesend-police-station`,

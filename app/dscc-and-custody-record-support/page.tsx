@@ -1,35 +1,42 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { ConversionCTAGroup } from "@/components/conversion/ConversionCTAGroup";
+import Link from "next/link";
 import { GeneralLegalDisclaimer } from "@/components/conversion/GeneralLegalDisclaimer";
+import { PoliceSignposting } from "@/components/conversion/PoliceSignposting";
 import { SolicitorInstructionChecklist } from "@/components/conversion/SolicitorInstructionChecklist";
 import { JsonLd } from "@/components/JsonLd";
 import { InternalLinkHub } from "@/components/InternalLinkHub";
 import { buildPageMetadata } from "@/lib/seo/page-metadata";
 import { SITE_URL } from "@/config/site";
+import { SEO_NOT_POLICE } from "@/config/contact";
+import { PATH_AGENCY, PATH_CUSTODY, PATH_VOLUNTARY } from "@/config/enquiry-paths";
 
 export const metadata = buildPageMetadata({
-  title: "DSCC and Custody Record Support | Solicitors",
+  title: "DSCC Reference & Custody Record Support for Defence Solicitors | Not the Police",
   path: "/dscc-and-custody-record-support",
-  description:
-    "Practical guide to DSCC references and custody record numbers when instructing police station cover in Kent. For criminal defence firms. NOT the police.",
+  description: `${SEO_NOT_POLICE} This is solicitor guidance on DSCC references and custody record numbers when instructing police station cover — not the police DSCC phone book. For police use 101 or 999.`,
 });
 
 const faqs = [
   {
     question: "What is a DSCC reference?",
     answer:
-      "The Defence Solicitor Call Centre (DSCC) allocates a reference when a firm or client requests duty solicitor contact. It helps match the instruction to the attendance.",
+      "The Defence Solicitor Call Centre (DSCC) allocates a reference when a firm or client requests duty solicitor contact. It helps match the instruction to the attendance. This page explains how defence solicitors use that reference — it is not a police contact directory.",
   },
   {
     question: "What is a custody record number?",
     answer:
-      "When someone is booked into custody, the custody officer creates a custody record with a unique reference. This identifies the detention on the custody suite system.",
+      "When someone is booked into custody, the custody officer creates a custody record with a unique reference. This identifies the detention on the custody suite system. We do not publish custody suite telephone numbers.",
   },
   {
     question: "What should firms send when instructing cover?",
     answer:
       "Client name, station, custody record number, DSCC reference if available, interview time, allegation summary, and firm contact details.",
+  },
+  {
+    question: "Is this the police DSCC number?",
+    answer:
+      "No. PoliceStationAgent.com is an independent criminal defence solicitor service — not Kent Police and not the DSCC switchboard. For police assistance use 999 (emergency) or 101 (non-emergency).",
   },
 ];
 
@@ -47,7 +54,7 @@ export default function Page() {
   const serviceSchema = {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: "DSCC and custody record instruction support",
+    name: "DSCC and custody record instruction support for defence solicitors",
     url: `${SITE_URL}/dscc-and-custody-record-support`,
     provider: { "@type": "LegalService", name: "Police Station Agent", url: SITE_URL },
     areaServed: "Kent, UK",
@@ -61,17 +68,52 @@ export default function Page() {
       <main id="main-content" role="main" className="flex-grow">
         <section className="bg-[#2563eb] text-white py-14">
           <div className="max-w-3xl mx-auto px-4">
-            <h1 className="text-3xl md:text-4xl font-bold mb-4">
-              DSCC and Custody Record Support for Solicitors
-            </h1>
-            <p className="text-blue-100 mb-6">
-              In brief: when instructing police station cover, providing the DSCC reference and custody
-              record number helps attendance be arranged promptly and linked to the correct detention.
+            <p className="text-xs font-bold uppercase tracking-[0.14em] text-accent-light mb-3">
+              Defence solicitors · not the police · not the DSCC phone book
             </p>
-            <ConversionCTAGroup />
+            <h1 className="text-3xl md:text-4xl font-bold mb-4">
+              DSCC reference &amp; custody record support for defence solicitors
+            </h1>
+            <p className="text-blue-100 mb-4">
+              Looking for the police DSCC number or a custody suite phone book? This is not that.
+              We are independent criminal defence solicitors. This guide helps defence firms instruct
+              police station cover with the right DSCC reference and custody record number.
+            </p>
+            <p className="text-sm text-white/80 mb-6">
+              For police assistance use{" "}
+              <a href="tel:999" className="font-bold underline text-white">
+                999
+              </a>{" "}
+              (emergency) or{" "}
+              <a href="tel:101" className="font-bold underline text-white">
+                101
+              </a>{" "}
+              (non-emergency). We do not publish firm or custody suite telephone digits on this page.
+            </p>
+            <div className="flex flex-wrap gap-3 text-sm">
+              <Link
+                href={PATH_AGENCY}
+                className="inline-flex min-h-[48px] items-center justify-center rounded-md bg-accent px-5 py-2.5 font-bold text-accent-foreground hover:bg-accent-light"
+              >
+                Agency cover for solicitors
+              </Link>
+              <Link
+                href={`${PATH_VOLUNTARY}#request`}
+                className="inline-flex min-h-[48px] items-center justify-center rounded-md border border-white/40 bg-white/10 px-5 py-2.5 font-semibold text-white hover:bg-white/20"
+              >
+                Request representation
+              </Link>
+              <Link
+                href={PATH_CUSTODY}
+                className="inline-flex min-h-[48px] items-center justify-center rounded-md bg-red-700 px-5 py-2.5 font-bold text-white hover:bg-red-800"
+              >
+                Check custody now
+              </Link>
+            </div>
           </div>
         </section>
         <div className="max-w-3xl mx-auto px-4 py-10 space-y-8">
+          <PoliceSignposting />
           <section className="prose prose-slate max-w-none">
             <h2>Why these references matter</h2>
             <p>
@@ -89,7 +131,10 @@ export default function Page() {
             </ol>
             <p>
               Read our guide:{" "}
-              <a href="/blog/custody-record-number-dscc-reference">custody record numbers and DSCC references explained</a>.
+              <a href="/blog/custody-record-number-dscc-reference">
+                custody record numbers and DSCC references explained
+              </a>
+              .
             </p>
           </section>
           <SolicitorInstructionChecklist />
@@ -107,9 +152,26 @@ export default function Page() {
           <InternalLinkHub
             title="Related"
             links={[
-              { href: "/for-solicitors", text: "Police station cover for solicitors", description: "Firm instructions" },
-              { href: "/start/solicitors-agent-cover", text: "Send instructions", description: "Cover request flow" },
-              { href: "/contact", text: "Contact", description: "Telephone for urgent custody" },
+              {
+                href: "/for-solicitors",
+                text: "Police station cover for solicitors",
+                description: "Firm instructions",
+              },
+              {
+                href: "/start/solicitors-agent-cover",
+                text: "Send instructions",
+                description: "Cover request flow",
+              },
+              {
+                href: "/current-custody",
+                text: "Someone in custody now",
+                description: "Public custody pathway",
+              },
+              {
+                href: "/contact",
+                text: "Contact pathways",
+                description: "Choose how we can help",
+              },
             ]}
           />
           <GeneralLegalDisclaimer />

@@ -9,16 +9,16 @@ import NearestStationFinder from "@/components/NearestStationFinder";
 import { DEFAULT_OG_IMAGES, DEFAULT_TWITTER_IMAGES } from "@/lib/seo/page-metadata";
 
 export const metadata: Metadata = {
-  title: "Kent Police Station Defence Cover | Custody & Voluntary Interviews",
+  title: "Kent Police Station Defence Cover | Not Kent Police — Use 101 for Police",
   description:
-    "Criminal defence solicitor cover across Kent — custody suites and voluntary interview stations including Maidstone (custody closed / VAI only). Not Kent Police. Request a free solicitor for booked interviews.",
+    "Criminal defence solicitor cover across Kent custody suites and voluntary interview stations including Maidstone (VAI only). Not the police station phone book. For police use 101 or 999. Request representation or check custody now.",
   alternates: {
     canonical: `${SITE_URL}/coverage`,
   },
   openGraph: {
-    title: "Kent Police Station Defence Cover | Custody & Voluntary Interviews",
+    title: "Kent Police Station Defence Cover | Not Kent Police — Use 101 for Police",
     description:
-      "We cover Kent custody suites and voluntary interview stations with duty solicitor-led representation. Not Kent Police.",
+      "We cover Kent custody suites and voluntary interview stations — independent defence solicitors, not Kent Police. For police use 101 or 999.",
     url: `${SITE_URL}/coverage`,
     siteName: "Police Station Agent",
     type: "website",
@@ -26,9 +26,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Kent Police Station Defence Cover | Custody & Voluntary Interviews",
+    title: "Kent Police Station Defence Cover | Not Kent Police — Use 101 for Police",
     description:
-      "We cover Kent custody suites and voluntary interview stations with duty solicitor-led representation. Not Kent Police.",
+      "We cover Kent custody suites and voluntary interview stations — independent defence solicitors, not Kent Police. For police use 101 or 999.",
     images: [...DEFAULT_TWITTER_IMAGES],
   },
 };
@@ -117,26 +117,32 @@ export default function Page() {
               </p>
               <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:flex-wrap sm:items-center">
                 <Link
-                  href="/voluntary-interviews#request"
-                  className="inline-flex items-center justify-center rounded-lg bg-accent px-6 py-3 font-semibold text-accent-foreground transition hover:bg-accent-light"
+                  href="/start/voluntary-interview#request"
+                  className="inline-flex min-h-[48px] items-center justify-center rounded-lg bg-accent px-6 py-3 font-semibold text-accent-foreground transition hover:bg-accent-light"
                 >
-                  Voluntary interview — request solicitor
+                  Request representation
+                </Link>
+                <Link
+                  href="/current-custody"
+                  className="inline-flex min-h-[48px] items-center justify-center rounded-lg bg-red-700 px-6 py-3 font-semibold text-white transition hover:bg-red-800"
+                >
+                  Check custody now
                 </Link>
                 <Link
                   href="#custody-suites"
-                  className="inline-flex items-center justify-center rounded-lg bg-white px-6 py-3 font-semibold text-primary transition hover:bg-accent-light"
+                  className="inline-flex min-h-[48px] items-center justify-center rounded-lg bg-white px-6 py-3 font-semibold text-primary transition hover:bg-accent-light"
                 >
                   View Police Stations
                 </Link>
                 <Link
                   href="/coverage/areas"
-                  className="inline-flex items-center justify-center rounded-lg border border-white/40 bg-white/10 px-6 py-3 font-semibold text-white backdrop-blur-sm transition hover:bg-white/20"
+                  className="inline-flex min-h-[48px] items-center justify-center rounded-lg border border-white/40 bg-white/10 px-6 py-3 font-semibold text-white backdrop-blur-sm transition hover:bg-white/20"
                 >
                   View Areas
                 </Link>
                 <Link
                   href="/resources/kent-police-station-map"
-                  className="inline-flex items-center justify-center rounded-lg border border-accent/50 bg-accent/15 px-6 py-3 font-semibold text-accent-light transition hover:bg-accent/25"
+                  className="inline-flex min-h-[48px] items-center justify-center rounded-lg border border-accent/50 bg-accent/15 px-6 py-3 font-semibold text-accent-light transition hover:bg-accent/25"
                 >
                   Station map
                 </Link>

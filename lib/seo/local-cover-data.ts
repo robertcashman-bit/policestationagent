@@ -231,9 +231,9 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
   gravesend: {
     slug: "police-station-rep-gravesend",
     town: "Gravesend",
-    title: "Police Station Rep Gravesend & North Kent | Kent",
+    title: "Gravesend / North Kent Custody Solicitor | Not Kent Police Phone Number",
     metaDescription:
-      "Police station rep at North Kent (Gravesend) 24-hour custody suite — Gravesend, Northfleet and north Kent. Solicitor instructions and client advice. NOT Kent Police For police assistance call 101 or 999.",
+      "Independent solicitor at North Kent (Gravesend) custody — not Kent Police and not the police station phone number or custody switchboard. For police use 101 or 999. Check custody now or request representation.",
     h1: "Police Station Rep in Gravesend & North Kent",
     answerFirst:
       "In brief: a police station rep in Gravesend means attendance at the North Kent 24-hour custody suite (Thames Way, Northfleet) and voluntary interview representation across Gravesend, Dartford and north Kent.",
@@ -310,9 +310,9 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
   tonbridge: {
     slug: "police-station-rep-tonbridge",
     town: "Tonbridge",
-    title: "Tonbridge Police Station Solicitor | Independent Legal Advice",
+    title: "Tonbridge Custody Solicitor | Not Kent Police Phone Number",
     metaDescription:
-      "Independent criminal defence solicitor for suspects in custody or attending a voluntary interview in Tonbridge. This website is not Kent Police. For police assistance call 101 or, in an emergency, 999.",
+      "Independent criminal defence solicitor for Tonbridge custody or a voluntary interview — not Kent Police and not the police station phone number. For police use 101 or 999. Request representation or check custody now.",
     h1: "Independent Solicitor for Tonbridge Police Interviews",
     answerFirst:
       "In brief: an independent criminal defence solicitor can attend Tonbridge's 24-hour custody suite and voluntary interviews for instructing firms and for clients needing legal advice across Tonbridge, Sevenoaks and Tunbridge Wells. This website is not Kent Police.",
@@ -381,9 +381,9 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
   canterbury: {
     slug: "police-station-rep-canterbury",
     town: "Canterbury",
-    title: "Police Station Rep Canterbury | Kent",
+    title: "Canterbury Custody Solicitor | Not Kent Police Phone Number",
     metaDescription:
-      "Police station rep in Canterbury, Kent at Canterbury custody suite. Extended-hours representation across east Kent. NOT Kent Police For police assistance call 101 or 999.",
+      "Independent solicitor for Canterbury custody and east Kent interviews — not Kent Police and not the police station phone number. Extended hours. For police use 101 or 999. Request representation or check custody now.",
     h1: "Police Station Rep in Canterbury, Kent",
     answerFirst:
       "In brief: a police station rep in Canterbury provides representation at Canterbury custody suite and voluntary interviews across east Kent including Herne Bay, Whitstable and Faversham.",
@@ -505,9 +505,9 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
   dover: {
     slug: "police-station-rep-dover",
     town: "Dover",
-    title: "Police Station Rep Dover | Kent",
+    title: "Dover Police Station Solicitor | Not Kent Police Phone Number",
     metaDescription:
-      "Police station rep in Dover, Kent for voluntary interviews and Kent custody attendance. Solicitor instructions welcome. NOT Kent Police For police assistance call 101 or 999.",
+      "Independent solicitor for Dover voluntary interviews and Kent custody — not Kent Police and not the police station phone number. For police use 101 or 999. Request representation or check custody now.",
     h1: "Police Station Rep in Dover, Kent",
     answerFirst:
       "In brief: a police station rep in Dover covers voluntary interviews at Dover police station and attendance at Kent custody suites including Folkestone when Dover-area arrests require detention.",

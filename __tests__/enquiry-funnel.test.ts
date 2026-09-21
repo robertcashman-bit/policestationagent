@@ -217,6 +217,46 @@ describe("enquiry funnel routes", () => {
     expect(inCustody).toMatch(/Someone in Custody Kent/);
   });
 
+  it("GSC high-priority pages deflect police intent and push solicitor pathways", () => {
+    const dscc = fs.readFileSync(
+      path.join(root, "app/dscc-and-custody-record-support/page.tsx"),
+      "utf8",
+    );
+    expect(dscc).toMatch(/Not the Police|not the police/i);
+    expect(dscc).toMatch(/not the police DSCC phone book|not a police contact directory|DSCC phone book/i);
+    expect(dscc).toContain("PoliceSignposting");
+    expect(dscc).toContain("Request representation");
+    expect(dscc).toContain("Check custody now");
+    expect(dscc).toMatch(/tel:101/);
+    expect(dscc).not.toMatch(/01732|07535/);
+
+    const ctl = fs.readFileSync(path.join(root, "app/custody-time-limits/page.tsx"), "utf8");
+    expect(ctl).toMatch(/Free Solicitor Help|Request representation/);
+    expect(ctl).toContain("Check custody now");
+    expect(ctl).toContain("PersistentKentVaCta");
+    expect(ctl).not.toMatch(/01732|07535/);
+
+    const intro = fs.readFileSync(
+      path.join(root, "lib/seo/disambiguate-station-html.ts"),
+      "utf8",
+    );
+    expect(intro).toMatch(/custody suite phone book|not a police contact directory/i);
+    expect(intro).toContain("Request representation");
+    expect(intro).toContain("Check custody now");
+    expect(intro).toContain("min-h-[48px]");
+
+    for (const rel of [
+      "app/canterbury-police-station/page.tsx",
+      "app/dover-police-station/page.tsx",
+      "app/tonbridge-police-station/page.tsx",
+      "app/coldharbour-police-station/page.tsx",
+    ]) {
+      const src = fs.readFileSync(path.join(root, rel), "utf8");
+      expect(src, rel).toMatch(/Not Kent Police|Use 101/i);
+      expect(src, rel).not.toMatch(/01732|07535/);
+    }
+  });
+
   it("VA short form and custody flow emit funnel start/submit events", () => {
     const shortVa = fs.readFileSync(
       path.join(root, "components/conversion/ShortVoluntaryRequestForm.tsx"),

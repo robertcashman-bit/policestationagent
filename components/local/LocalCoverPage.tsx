@@ -25,7 +25,7 @@ function pathwayCtas(config: LocalCoverConfig) {
     : "/current-custody";
   const primaryLabel = isVoluntary
     ? "Request representation"
-    : "Current custody check";
+    : "Check custody now";
 
   return (
     <div className="flex flex-wrap gap-3 flex-col sm:flex-row" data-nosnippet>

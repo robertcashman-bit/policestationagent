@@ -36,7 +36,7 @@ export function PersistentKentVaCta({ className = "", placement = "guide" }: Pro
           data-event="gsc_guide_va_cta"
           className="inline-flex min-h-[48px] items-center justify-center rounded-md bg-accent px-5 py-3 text-sm font-bold text-accent-foreground hover:bg-accent-light"
         >
-          Request VA solicitor
+          Request representation
         </Link>
         <Link
           href={PATH_VOLUNTARY_LANDING}
@@ -48,7 +48,7 @@ export function PersistentKentVaCta({ className = "", placement = "guide" }: Pro
           href={PATH_CUSTODY}
           className="inline-flex min-h-[48px] items-center justify-center rounded-md border border-red-300/50 bg-red-700/80 px-5 py-3 text-sm font-semibold text-white hover:bg-red-700"
         >
-          Someone in custody now
+          Check custody now
         </Link>
       </div>
     </aside>
@@ -78,15 +78,23 @@ export function DefenceNotStationBanner({
       </p>
       <p className="text-sm text-red-900 leading-relaxed mb-3">
         This page is for legal representation at police stations, not station opening times,
-        custody suite numbers, lost property, or crime reports. For police assistance use 999 or
-        101.
+        custody suite phone numbers, lost property, or crime reports. For police assistance use 999
+        or 101.
       </p>
-      <Link
-        href={`${PATH_VOLUNTARY}#request`}
-        className="inline-flex min-h-[44px] items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-bold text-white hover:bg-primary-light"
-      >
-        Request VA solicitor
-      </Link>
+      <div className="flex flex-col sm:flex-row flex-wrap gap-2">
+        <Link
+          href={`${PATH_VOLUNTARY}#request`}
+          className="inline-flex min-h-[48px] items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-bold text-white hover:bg-primary-light"
+        >
+          Request representation
+        </Link>
+        <Link
+          href={PATH_CUSTODY}
+          className="inline-flex min-h-[48px] items-center justify-center rounded-md bg-destructive px-4 py-2 text-sm font-bold text-white hover:bg-red-800"
+        >
+          Check custody now
+        </Link>
+      </div>
     </aside>
   );
 }
