@@ -8,14 +8,42 @@ const CREDENTIALS = [
   { title: "30+ years", detail: "Criminal defence experience" },
 ] as const;
 
+/**
+ * Authority bio with Robert's portrait.
+ * Mobile: photo stacks above copy at natural aspect (no short absolute cover crop).
+ * Desktop: two-column fill; cover crop biased toward the face.
+ */
 export function HomeAuthorityBio() {
   return (
     <section
       className="section-pad bg-background"
       aria-labelledby="authority-bio-heading"
+      data-testid="home-authority-bio"
     >
-      <div className="mx-auto max-w-6xl overflow-hidden rounded-2xl border border-border bg-primary-dark text-white shadow-elevated md:grid md:grid-cols-2">
-        <div className="p-8 md:p-12 lg:p-14">
+      <div className="mx-auto flex max-w-6xl flex-col overflow-hidden rounded-2xl border border-border bg-primary-dark text-white shadow-elevated md:grid md:grid-cols-2">
+        {/*
+          Photo first on mobile so the face is early and shown at intrinsic
+          square ratio (object-contain / h-auto — never a short cover crop).
+          On md+: second column, cover-fill the tall text column.
+        */}
+        <div className="relative order-1 bg-black md:order-2 md:min-h-full">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={ROBERT_CASHMAN_PHOTO_PATH}
+            alt="Robert Cashman, criminal defence solicitor"
+            width={800}
+            height={800}
+            loading="eager"
+            decoding="async"
+            className="block h-auto w-full object-contain object-center md:absolute md:inset-0 md:h-full md:object-cover md:object-[center_15%]"
+          />
+          <div
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary-dark/40 via-transparent to-transparent md:bg-gradient-to-l"
+            aria-hidden="true"
+          />
+        </div>
+
+        <div className="order-2 p-8 md:order-1 md:p-12 lg:p-14">
           <p className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-accent-light">
             Robert Cashman
           </p>
@@ -47,22 +75,6 @@ export function HomeAuthorityBio() {
           >
             About Robert Cashman
           </Link>
-        </div>
-        <div className="relative min-h-[280px] bg-black md:min-h-full">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={ROBERT_CASHMAN_PHOTO_PATH}
-            alt="Robert Cashman, criminal defence solicitor"
-            width={800}
-            height={800}
-            loading="lazy"
-            decoding="async"
-            className="absolute inset-0 h-full w-full object-cover object-top"
-          />
-          <div
-            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary-dark/50 via-transparent to-transparent md:bg-gradient-to-l"
-            aria-hidden="true"
-          />
         </div>
       </div>
     </section>

@@ -110,6 +110,7 @@ export default function Page() {
       <main className="flex-grow relative overflow-x-clip" id="main-content" role="main" aria-live="polite">
         <HomeHeroCover />
         <HomeAuthorityStrip />
+        <HomeAuthorityBio />
         <HomePathwaySection />
         <HomePathwaySocialProof />
         <HomeProofBar />
@@ -124,7 +125,6 @@ export default function Page() {
         <HomePriorityCoverage />
         <HomeServicesSection />
         <HomeCourtJourney />
-        <HomeAuthorityBio />
         <HomeFaqSection items={faqItems} />
         <div className="max-w-4xl mx-auto px-4 pb-12">
           <StandardPaceSources />
