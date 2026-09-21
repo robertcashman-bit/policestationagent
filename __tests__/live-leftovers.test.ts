@@ -26,13 +26,14 @@ describe("live leftovers — hub + chrome fixes", () => {
     expect(promo).toContain("apps.microsoft.com/detail/9NFSRVT3T45V");
 
     const network = fs.readFileSync(path.join(root, "config/footer-links.ts"), "utf8");
-    const storeIdx = network.indexOf("CUSTODYNOTE_MICROSOFT_STORE_HREF");
-    const downloadIdx = network.indexOf("CUSTODYNOTE_DOWNLOAD_HREF");
+    const networkBlock = network.slice(network.indexOf("FOOTER_NETWORK_LINKS"));
+    const storeIdx = networkBlock.indexOf("href: CUSTODYNOTE_MICROSOFT_STORE_HREF");
+    const downloadIdx = networkBlock.indexOf("href: CUSTODYNOTE_DOWNLOAD_HREF");
     expect(storeIdx).toBeGreaterThan(-1);
     expect(downloadIdx).toBeGreaterThan(storeIdx);
 
     const owned = fs.readFileSync(path.join(root, "config/link-authority.ts"), "utf8");
-    expect(owned).toContain("CUSTODYNOTE_MICROSOFT_STORE_HREF");
+    expect(owned).toContain("url: CUSTODYNOTE_MICROSOFT_STORE_HREF");
     expect(owned).not.toMatch(/OWNED_NETWORK_SITES[\s\S]*CUSTODYNOTE_SITE/);
   });
 
