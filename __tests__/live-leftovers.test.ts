@@ -18,12 +18,16 @@ describe("live leftovers — hub + chrome fixes", () => {
     expect(footer).toContain("CUSTODYNOTE_MICROSOFT_STORE_CTA");
     expect(footer).toContain("CUSTODYNOTE_DOWNLOAD_HREF");
     expect(footer).toContain("CUSTODYNOTE_DOWNLOAD_CTA");
-    expect(footer).toMatch(/Microsoft Store is Windows only/i);
+    expect(footer).toContain("CUSTODYNOTE_STORE_WINDOWS_NOTE");
+    expect(footer).toContain('data-cn-store-cta="footer"');
     // Firm phones must stay out of always-on chrome HTML
     expect(footer).not.toMatch(/01732|07535|tel:/i);
 
     const promo = fs.readFileSync(path.join(root, "lib/custodynote-promo.ts"), "utf8");
-    expect(promo).toContain("apps.microsoft.com/detail/9NFSRVT3T45V");
+    expect(promo).toContain("apps.microsoft.com/detail/9nfsrvt3t45v?hl=en-GB&gl=GB");
+    expect(promo).toContain("Get it on Microsoft Store");
+    expect(promo).not.toMatch(/coming.?soon/i);
+    expect(promo).not.toMatch(/certif/i);
 
     const network = fs.readFileSync(path.join(root, "config/footer-links.ts"), "utf8");
     const networkBlock = network.slice(network.indexOf("FOOTER_NETWORK_LINKS"));
@@ -35,6 +39,39 @@ describe("live leftovers — hub + chrome fixes", () => {
     const owned = fs.readFileSync(path.join(root, "config/link-authority.ts"), "utf8");
     expect(owned).toContain("url: CUSTODYNOTE_MICROSOFT_STORE_HREF");
     expect(owned).not.toMatch(/OWNED_NETWORK_SITES[\s\S]*CUSTODYNOTE_SITE/);
+  });
+
+  it("homepage and header elevate Custody Note Microsoft Store CTA", () => {
+    const home = fs.readFileSync(path.join(root, "app/page.tsx"), "utf8");
+    expect(home).toContain("CustodyNoteStorePromo");
+    expect(home).toContain('variant="strip"');
+    expect(home).toContain('variant="panel"');
+
+    const header = fs.readFileSync(path.join(root, "components/Header.tsx"), "utf8");
+    expect(header).toContain("CustodyNoteStorePromo");
+    expect(header).toContain("CUSTODYNOTE_MICROSOFT_STORE_HREF");
+    expect(header).toContain("CUSTODYNOTE_MICROSOFT_STORE_CTA");
+    expect(header).not.toMatch(/01732|07535/);
+
+    const promoUi = fs.readFileSync(
+      path.join(root, "components/CustodyNoteStorePromo.tsx"),
+      "utf8"
+    );
+    expect(promoUi).toContain("CUSTODYNOTE_MICROSOFT_STORE_HREF");
+    expect(promoUi).toContain("CUSTODYNOTE_MICROSOFT_STORE_CTA");
+    expect(promoUi).toContain("CUSTODYNOTE_DOWNLOAD_HREF");
+    expect(promoUi).toContain("CUSTODYNOTE_STORE_WINDOWS_NOTE");
+    expect(promoUi).toMatch(/Mac uses the backup download/i);
+    expect(promoUi).not.toMatch(/coming.?soon/i);
+    // In the panel CTA block, Store button precedes backup download
+    const panelBlock = promoUi.slice(promoUi.indexOf('data-cn-store-cta="panel"'));
+    const panelStore = panelBlock.indexOf("CUSTODYNOTE_MICROSOFT_STORE_CTA");
+    const panelDownload = panelBlock.indexOf("CUSTODYNOTE_DOWNLOAD_CTA");
+    expect(panelStore).toBeGreaterThan(-1);
+    expect(panelDownload).toBeGreaterThan(panelStore);
+
+    const solicitors = fs.readFileSync(path.join(root, "app/for-solicitors/page.tsx"), "utf8");
+    expect(solicitors).toContain("CustodyNoteStorePromo");
   });
 
   it("next.config consolidates overlapping hubs to /coverage", () => {

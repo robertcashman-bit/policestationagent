@@ -22,6 +22,7 @@ import { HomeAuthorityBio } from "@/components/conversion/HomeAuthorityBio";
 import { HomeFaqSection } from "@/components/conversion/HomeFaqSection";
 import { KentCoverCard } from "@/components/conversion/KentCoverCard";
 import { StandardPaceSources } from "@/components/legal/StandardPaceSources";
+import { CustodyNoteStorePromo } from "@/components/CustodyNoteStorePromo";
 
 export const metadata: Metadata = {
   title: "Voluntary Interview Solicitor Kent | Defence — Not the Police",
@@ -108,6 +109,8 @@ export default function Page() {
       <Header />
       <main className="flex-grow relative overflow-x-clip" id="main-content" role="main" aria-live="polite">
         <HomeHeroCover />
+        {/* Secondary to defence pathways — Store-primary CN promo, above the fold on tall screens */}
+        <CustodyNoteStorePromo variant="strip" />
         <HomePathwaySection />
         <HomePathwaySocialProof />
         <HomeProofBar />
@@ -119,6 +122,7 @@ export default function Page() {
         <BlogCarousel initialPosts={latestPosts} maxPosts={12} />
         <KentCoverCard className="py-10" />
         <HomeFirmSection />
+        <CustodyNoteStorePromo variant="panel" />
         <HomePriorityCoverage />
         <HomeServicesSection />
         <HomeCourtJourney />

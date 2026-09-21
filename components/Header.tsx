@@ -9,6 +9,11 @@ import {
   PATH_VOLUNTARY_LANDING,
 } from "@/config/enquiry-paths";
 import { CHROME_BRAND_TAGLINE } from "@/config/contact";
+import { CustodyNoteStorePromo } from "@/components/CustodyNoteStorePromo";
+import {
+  CUSTODYNOTE_MICROSOFT_STORE_CTA,
+  CUSTODYNOTE_MICROSOFT_STORE_HREF,
+} from "@/lib/custodynote-promo";
 
 const NAV = [
   { href: "/", label: "Home" },
@@ -59,13 +64,16 @@ export default function Header({
                 {item.label}
               </Link>
             ))}
+            {/* Secondary to defence CTA — Store for Windows tooling */}
+            <CustodyNoteStorePromo variant="chrome" className="ml-1.5" />
             <Link href={PATH_CONTACT} className="btn-gold ml-2 !min-h-9 !px-3 !text-sm">
               Get a solicitor
             </Link>
           </nav>
 
           <div className="flex items-center gap-2 lg:hidden">
-            <Link href={PATH_CONTACT} className="btn-gold hidden !min-h-9 !px-3 !text-sm sm:inline-flex">
+            <CustodyNoteStorePromo variant="chrome" className="hidden sm:inline-flex" />
+            <Link href={PATH_CONTACT} className="btn-gold hidden !min-h-9 !px-3 !text-sm md:inline-flex">
               Get a solicitor
             </Link>
             <button
@@ -109,6 +117,16 @@ export default function Header({
                 {item.label}
               </Link>
             ))}
+            <a
+              href={CUSTODYNOTE_MICROSOFT_STORE_HREF}
+              className="mx-3 mt-1 flex min-h-[44px] items-center justify-center rounded-md border border-accent/40 bg-accent/10 px-3 py-2.5 text-sm font-bold text-primary"
+              rel="noopener noreferrer"
+              target="_blank"
+              data-cn-store-cta="mobile-nav"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {CUSTODYNOTE_MICROSOFT_STORE_CTA}
+            </a>
             <Link
               href={PATH_CONTACT}
               className="btn-gold mx-3 mt-1 w-[calc(100%-1.5rem)]"
