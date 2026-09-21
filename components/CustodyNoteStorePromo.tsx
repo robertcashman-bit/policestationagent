@@ -36,12 +36,12 @@ export function CustodyNoteStorePromo({
   if (variant === "chrome") {
     return (
       <div
-        className={`inline-flex flex-wrap items-center gap-1.5 ${className}`}
+        className={`inline-flex flex-row flex-nowrap items-center gap-1.5 ${className}`}
         data-cn-store-promo="chrome"
       >
         <a
           href={CUSTODYNOTE_MICROSOFT_STORE_HREF}
-          className="inline-flex items-center gap-1.5 rounded-md border border-accent/40 bg-accent/10 px-2.5 py-1.5 text-[11px] font-bold leading-tight text-primary transition-colors hover:bg-accent/20 hover:text-primary-light sm:text-xs"
+          className="inline-flex items-center gap-1.5 rounded-md border border-accent/40 bg-accent/10 px-2 py-1.5 sm:px-2.5 text-[10px] sm:text-[11px] font-bold leading-tight text-primary transition-colors hover:bg-accent/20 hover:text-primary-light lg:text-xs"
           rel="noopener noreferrer"
           target="_blank"
           data-cn-store-cta="chrome"
@@ -52,7 +52,7 @@ export function CustodyNoteStorePromo({
         </a>
         <a
           href={macHref}
-          className="inline-flex items-center gap-1.5 rounded-md border border-accent/40 bg-accent/10 px-2.5 py-1.5 text-[11px] font-bold leading-tight text-primary transition-colors hover:bg-accent/20 hover:text-primary-light sm:text-xs"
+          className="inline-flex items-center gap-1.5 rounded-md border border-accent/40 bg-accent/10 px-2 py-1.5 sm:px-2.5 text-[10px] sm:text-[11px] font-bold leading-tight text-primary transition-colors hover:bg-accent/20 hover:text-primary-light lg:text-xs"
           rel="noopener noreferrer"
           target="_blank"
           data-cn-mac-cta="chrome"
