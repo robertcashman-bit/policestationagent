@@ -8,10 +8,10 @@ export default function HeaderTopStrip({
   forceHideDigits?: boolean;
 } = {}) {
   return (
-    <div className="bg-blue-900 text-white text-xs sm:text-sm py-2">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-2">
-          <div className="text-center sm:text-left">{HEADER_STRAPLINE}</div>
+    <div className="border-b border-primary-mid/40 bg-primary-dark text-white text-xs sm:text-sm py-2">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col items-center justify-between gap-2 sm:flex-row">
+          <div className="text-center text-white/90 sm:text-left">{HEADER_STRAPLINE}</div>
           <RouteAwarePhoneLink variant="header-strip" forceHideDigits={forceHideDigits} />
         </div>
       </div>

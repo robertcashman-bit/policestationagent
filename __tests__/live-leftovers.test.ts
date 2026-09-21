@@ -23,6 +23,13 @@ describe("live leftovers — hub + chrome fixes", () => {
     expect(footer).toContain("CUSTODYNOTE_STORE_WINDOWS_NOTE");
     expect(footer).toContain('data-cn-store-cta="footer"');
     expect(footer).toContain('data-cn-mac-cta="footer"');
+    expect(footer).toContain("FOOTER_RIGHTS_GUIDES");
+    expect(footer).toContain("FOOTER_STATION_HUBS");
+    expect(footer).toContain("FOOTER_ADVICE_PAGES");
+    expect(footer).toContain("FOOTER_NETWORK_LINKS");
+    expect(footer).toContain("isBlockedRepUkUrl");
+    expect(footer).toContain("FooterCollapsibleSection");
+
     // Firm phones must stay out of always-on chrome HTML
     expect(footer).not.toMatch(/01732|07535|tel:/i);
     expect(footer).not.toMatch(/Mac App Store|Mac Store/i);
@@ -51,7 +58,7 @@ describe("live leftovers — hub + chrome fixes", () => {
     expect(owned).not.toMatch(/OWNED_NETWORK_SITES[\s\S]*CUSTODYNOTE_SITE/);
   });
 
-  it("homepage and header pair Store and Mac Custody Note CTAs equally", () => {
+  it("homepage keeps Store/Mac CN panels; header has no CN promos and fuller nav", () => {
     const home = fs.readFileSync(path.join(root, "app/page.tsx"), "utf8");
     expect(home).toContain("CustodyNoteStorePromo");
     expect(home).toContain('variant="strip"');
@@ -59,12 +66,19 @@ describe("live leftovers — hub + chrome fixes", () => {
     expect(home).toContain('campaign="homepage"');
 
     const header = fs.readFileSync(path.join(root, "components/Header.tsx"), "utf8");
-    expect(header).toContain("CustodyNoteStorePromo");
-    expect(header).toContain("CUSTODYNOTE_MICROSOFT_STORE_HREF");
-    expect(header).toContain("CUSTODYNOTE_MICROSOFT_STORE_CTA");
-    expect(header).toContain('cnDownloadHref("header")');
-    expect(header).toContain("CUSTODYNOTE_MAC_DOWNLOAD_CTA");
-    expect(header).toContain('data-cn-mac-cta="mobile-nav"');
+    expect(header).not.toContain("CustodyNoteStorePromo");
+    expect(header).not.toContain("CUSTODYNOTE_MICROSOFT_STORE_HREF");
+    expect(header).not.toContain("CUSTODYNOTE_MICROSOFT_STORE_CTA");
+    expect(header).not.toContain('cnDownloadHref("header")');
+    expect(header).not.toContain("CUSTODYNOTE_MAC_DOWNLOAD_CTA");
+    expect(header).not.toContain('data-cn-mac-cta="mobile-nav"');
+    expect(header).not.toContain('data-cn-store-cta');
+    expect(header).toContain("/police-custody-rights");
+    expect(header).toContain("/canwehelp");
+    expect(header).toContain("/coverage");
+    expect(header).toContain("PATH_AGENCY");
+    expect(header).toContain("PATH_VOLUNTARY_LANDING");
+    expect(header).toContain("PATH_CUSTODY");
     expect(header).not.toMatch(/01732|07535/);
     expect(header).not.toMatch(/Mac App Store/i);
 

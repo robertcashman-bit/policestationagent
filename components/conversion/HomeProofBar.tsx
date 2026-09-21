@@ -13,7 +13,7 @@ export function HomeProofBar() {
       className="relative z-10 border-b border-border-subtle bg-[var(--paper)]"
       aria-label="Experience and credentials"
     >
-      <div className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
+      <div className="mx-auto max-w-6xl px-4 py-8 md:px-6 md:py-12">
         <div className="md:grid md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.4fr)] md:items-end md:gap-10">
           <div>
             <p className="section-eyebrow">Established credentials</p>
@@ -42,7 +42,7 @@ export function HomeProofBar() {
           {PROOF_ITEMS.map((item) => (
             <div
               key={item.label}
-              className="bg-card px-4 py-6 text-center md:px-5 md:py-8"
+              className="bg-card px-4 py-5 text-center md:px-5 md:py-7"
             >
               <div className="font-display text-2xl font-bold tracking-tight text-primary md:text-3xl lg:text-4xl">
                 {item.value}

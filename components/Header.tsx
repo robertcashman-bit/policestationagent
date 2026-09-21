@@ -9,24 +9,31 @@ import {
   PATH_VOLUNTARY_LANDING,
 } from "@/config/enquiry-paths";
 import { CHROME_BRAND_TAGLINE } from "@/config/contact";
-import { CustodyNoteStorePromo } from "@/components/CustodyNoteStorePromo";
-import {
-  CUSTODYNOTE_MAC_DOWNLOAD_CTA,
-  CUSTODYNOTE_MICROSOFT_STORE_CTA,
-  CUSTODYNOTE_MICROSOFT_STORE_HREF,
-  cnDownloadHref,
-} from "@/lib/custodynote-promo";
 
-const NAV = [
-  { href: "/", label: "Home" },
-  { href: PATH_VOLUNTARY_LANDING, label: "Voluntary interviews" },
-  { href: PATH_CUSTODY, label: "Current custody" },
-  { href: PATH_AGENCY, label: "For solicitors" },
-  { href: "/coverage", label: "Areas Covered" },
-  { href: "/about", label: "About" },
-  { href: "/faq", label: "FAQ" },
-  { href: PATH_CONTACT, label: "Contact" },
-] as const;
+type NavItem = {
+  href: string;
+  label: string;
+  group: "pathways" | "explore";
+};
+
+/**
+ * Fuller site navigation — no Custody Note product promos in header chrome.
+ * CN Store / Mac CTAs live in the footer Network/tools strip and homepage panels only.
+ */
+const NAV: NavItem[] = [
+  { href: PATH_VOLUNTARY_LANDING, label: "Voluntary interviews", group: "pathways" },
+  { href: PATH_CUSTODY, label: "Current custody", group: "pathways" },
+  { href: PATH_AGENCY, label: "For solicitors", group: "pathways" },
+  { href: "/coverage", label: "Coverage", group: "explore" },
+  { href: "/police-custody-rights", label: "Your rights", group: "explore" },
+  { href: "/faq", label: "FAQ", group: "explore" },
+  { href: "/about", label: "About", group: "explore" },
+  { href: "/canwehelp", label: "Can we help?", group: "explore" },
+  { href: PATH_CONTACT, label: "Contact", group: "explore" },
+];
+
+const PATHWAY_NAV = NAV.filter((i) => i.group === "pathways");
+const EXPLORE_NAV = NAV.filter((i) => i.group === "explore");
 
 export default function Header({
   forceHidePhone: _forceHidePhone = false,
@@ -38,10 +45,10 @@ export default function Header({
   return (
     <header className="relative z-50 border-b border-border bg-card shadow-card">
       <div className="mx-auto max-w-7xl px-3 sm:px-4 lg:px-6">
-        <div className="flex items-center justify-between gap-3 py-2 lg:py-2.5">
+        <div className="flex items-center justify-between gap-4 py-2.5 lg:py-3">
           <Link
             href="/"
-            className="block min-w-0 group"
+            className="group block min-w-0"
             aria-label="Police Station Agent home page"
           >
             <div className="font-display text-base font-bold leading-tight text-primary transition-colors group-hover:text-primary-light sm:text-lg">
@@ -53,7 +60,7 @@ export default function Header({
           </Link>
 
           <nav
-            className="hidden items-center gap-0.5 lg:flex"
+            className="hidden items-center gap-0.5 xl:flex"
             role="navigation"
             aria-label="Main navigation"
           >
@@ -61,33 +68,68 @@ export default function Header({
               <Link
                 key={item.href}
                 href={item.href}
-                className="whitespace-nowrap rounded-md px-2.5 py-1.5 text-[13px] font-medium text-slate-700 transition-colors hover:bg-secondary hover:text-primary"
+                className="whitespace-nowrap rounded-md px-2 py-1.5 text-[13px] font-medium text-slate-700 transition-colors hover:bg-secondary hover:text-primary"
               >
                 {item.label}
               </Link>
             ))}
-            {/* Secondary to defence CTA — Store for Windows tooling */}
-            <CustodyNoteStorePromo variant="chrome" campaign="header" className="ml-1.5" />
-            <Link href={PATH_CONTACT} className="btn-gold ml-2 !min-h-9 !px-3 !text-sm">
+            <Link href={PATH_CONTACT} className="btn-gold ml-2 !min-h-9 !px-3.5 !text-sm">
               Get a solicitor
             </Link>
           </nav>
 
+          <nav
+            className="hidden items-center gap-0.5 lg:flex xl:hidden"
+            role="navigation"
+            aria-label="Primary navigation"
+          >
+            {PATHWAY_NAV.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="whitespace-nowrap rounded-md px-2 py-1.5 text-[12px] font-medium text-slate-700 transition-colors hover:bg-secondary hover:text-primary"
+              >
+                {item.label}
+              </Link>
+            ))}
+            <Link href={PATH_CONTACT} className="btn-gold ml-1.5 !min-h-9 !px-3 !text-sm">
+              Get a solicitor
+            </Link>
+            <button
+              className="ml-1 flex h-10 w-10 items-center justify-center rounded-md border border-border bg-secondary text-primary transition-colors hover:bg-secondary/80"
+              onClick={() => setMobileMenuOpen((o) => !o)}
+              aria-label={mobileMenuOpen ? "Close more menu" : "Open more menu"}
+              aria-expanded={mobileMenuOpen}
+            >
+              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                {mobileMenuOpen ? (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2.5}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                ) : (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2.5}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                )}
+              </svg>
+            </button>
+          </nav>
+
           <div className="flex items-center gap-2 lg:hidden">
-            {/* Defence CTA first at every compact width; Store stays secondary */}
             <Link
               href={PATH_CONTACT}
               className="btn-gold hidden !min-h-9 !px-3 !text-sm sm:inline-flex"
             >
               Get a solicitor
             </Link>
-            <CustodyNoteStorePromo
-              variant="chrome"
-              campaign="header"
-              className="hidden sm:inline-flex"
-            />
             <button
-              className="flex h-10 w-10 items-center justify-center rounded-md bg-primary text-white shadow-md hover:bg-primary-light"
+              className="flex h-10 w-10 items-center justify-center rounded-md bg-primary text-white shadow-md transition-colors hover:bg-primary-light"
               onClick={() => setMobileMenuOpen((o) => !o)}
               aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileMenuOpen}
@@ -115,47 +157,49 @@ export default function Header({
       </div>
 
       {mobileMenuOpen ? (
-        <div className="border-t border-border bg-card shadow-elevated lg:hidden">
-          <nav className="mx-auto max-w-7xl space-y-1 px-3 py-2" aria-label="Mobile navigation">
-            {NAV.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="block rounded-md px-3 py-2.5 font-medium text-foreground hover:bg-secondary hover:text-primary"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {item.label}
-              </Link>
-            ))}
+        <div className="border-t border-border bg-card shadow-elevated xl:hidden">
+          <nav className="mx-auto max-w-7xl space-y-4 px-3 py-3" aria-label="Mobile navigation">
+            <div className="lg:hidden">
+              <p className="px-3 pb-1 text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-accent-dark">
+                Pathways
+              </p>
+              <div className="space-y-0.5">
+                {PATHWAY_NAV.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="block rounded-md px-3 py-2.5 font-medium text-foreground transition-colors hover:bg-secondary hover:text-primary"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+            <div className="border-t border-border-subtle pt-3 lg:border-0 lg:pt-0">
+              <p className="px-3 pb-1 text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-accent-dark">
+                Explore
+              </p>
+              <div className="space-y-0.5">
+                {EXPLORE_NAV.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="block rounded-md px-3 py-2.5 font-medium text-foreground transition-colors hover:bg-secondary hover:text-primary"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
             <Link
               href={PATH_CONTACT}
-              className="btn-gold mx-3 mt-1 w-[calc(100%-1.5rem)]"
+              className="btn-gold mx-3 mt-1 w-[calc(100%-1.5rem)] lg:hidden"
               onClick={() => setMobileMenuOpen(false)}
             >
               Get a solicitor
             </Link>
-            <div className="mx-3 mt-1 grid grid-cols-1 gap-2 sm:grid-cols-2">
-              <a
-                href={CUSTODYNOTE_MICROSOFT_STORE_HREF}
-                className="flex min-h-[44px] items-center justify-center rounded-md border border-accent/40 bg-accent/10 px-3 py-2.5 text-sm font-bold text-primary"
-                rel="noopener noreferrer"
-                target="_blank"
-                data-cn-store-cta="mobile-nav"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {CUSTODYNOTE_MICROSOFT_STORE_CTA}
-              </a>
-              <a
-                href={cnDownloadHref("header")}
-                className="flex min-h-[44px] items-center justify-center rounded-md border border-accent/40 bg-accent/10 px-3 py-2.5 text-sm font-bold text-primary"
-                rel="noopener noreferrer"
-                target="_blank"
-                data-cn-mac-cta="mobile-nav"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {CUSTODYNOTE_MAC_DOWNLOAD_CTA}
-              </a>
-            </div>
           </nav>
         </div>
       ) : null}

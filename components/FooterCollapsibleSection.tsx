@@ -8,12 +8,19 @@ type Props = {
   defaultOpen?: boolean;
 };
 
+/** Mobile-first footer accordion; desktop columns render separately. */
 export function FooterCollapsibleSection({ title, children, defaultOpen = false }: Props) {
   return (
-    <details className="group border-b border-slate-800 py-3" open={defaultOpen}>
-      <summary className="cursor-pointer list-none flex items-center justify-between text-sm font-semibold text-white [&::-webkit-details-marker]:hidden">
+    <details
+      className="group border-b border-white/10 py-3 open:pb-4"
+      open={defaultOpen || undefined}
+    >
+      <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-xs font-semibold uppercase tracking-[0.12em] text-accent-light [&::-webkit-details-marker]:hidden">
         <span>{title}</span>
-        <span className="text-sky-400 group-open:rotate-180 transition-transform" aria-hidden="true">
+        <span
+          className="text-accent-light/80 transition-transform duration-200 group-open:rotate-180"
+          aria-hidden="true"
+        >
           ▾
         </span>
       </summary>
