@@ -3,17 +3,22 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 
-const ANCHOR_RE =
-  /<a\s+[^>]*href=(["'])([^"']+)\1[^>]*>([\s\S]*?)<\/a>/gi;
+const ANCHOR_RE = /<a\s+[^>]*href=(["'])([^"']+)\1[^>]*>([\s\S]*?)<\/a>/gi;
 
 function isSafeInternalHref(href: string): boolean {
   const trimmed = href.trim();
   return trimmed.startsWith("/") && !trimmed.startsWith("//");
 }
 
+function isSafeExternalHref(href: string): boolean {
+  const trimmed = href.trim().toLowerCase();
+  return trimmed.startsWith("https://");
+}
+
 /**
- * Render FAQ answer text that may contain trusted static <a href="/..."> labels.
- * Escapes everything else as plain text — never uses dangerouslySetInnerHTML.
+ * Render FAQ answer text that may contain trusted static <a href="/..."> or
+ * https:// labels. Escapes everything else as plain text — never uses
+ * dangerouslySetInnerHTML.
  */
 export function FaqAnswerBody({ answer }: { answer: string }) {
   const nodes: ReactNode[] = [];
@@ -35,7 +40,19 @@ export function FaqAnswerBody({ answer }: { answer: string }) {
           className="text-blue-600 hover:underline font-semibold"
         >
           {label}
-        </Link>,
+        </Link>
+      );
+    } else if (isSafeExternalHref(href)) {
+      nodes.push(
+        <a
+          key={`${match.index}-${href}`}
+          href={href.trim()}
+          className="text-blue-600 hover:underline font-semibold"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          {label}
+        </a>
       );
     } else {
       nodes.push(label);
