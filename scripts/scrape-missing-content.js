@@ -118,7 +118,7 @@ async function updatePage(filePath, data, route) {
       .replace(/href=["']\/blog\//gi, 'href="/criminaldefencekent/blog/')
       .replace(/href=["']\/post\?slug=/gi, 'href="/criminaldefencekent/blog/')
       .replace(/01732\s*247\s*427/gi, "0333 049 7036")
-      .replace(/01732247427/gi, "03330497036");
+      .replace(/07535494446/gi, "03330497036");
 
     const pageContent = `import Header from '@/components/Header';
 import Footer from '@/components/Footer';

@@ -4,9 +4,11 @@ const PATHWAY_CTA_HTML = `<div class="flex flex-col sm:flex-row gap-2 justify-ce
 
 const CONTACT_CTA_HTML = `<a href="/contact" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-bold shadow h-10 px-8 bg-white text-red-600 hover:bg-red-50" data-solicitor-contact="true" data-nosnippet>${STATION_CONTACT_BUTTON}</a>`;
 
-const FIRM_TEL_HREF = /href=["']tel:(?:\+44)?0?1732[\s\-]?247[\s\-]?427["']/gi;
+const FIRM_TEL_HREF =
+  /href=["']tel:(?:\+44)?0?(?:1732[\s\-]?247[\s\-]?427|7535[\s\-]?494[\s\-]?446)["']/gi;
 const FIRM_SMS_HREF = /href=["']sms:(?:\+44)?0?7535[\s\-]?494[\s\-]?446[^"']*["']/gi;
-const FIRM_TEL_ANCHOR = /<a\b[^>]*href=["']tel:(?:\+44)?0?1732\s*247427["'][^>]*>[\s\S]*?<\/a>/gi;
+const FIRM_TEL_ANCHOR =
+  /<a\b[^>]*href=["']tel:(?:\+44)?0?(?:1732\s*247427|7535\s*494446)["'][^>]*>[\s\S]*?<\/a>/gi;
 const FIRM_SMS_ANCHOR =
   /<a\b[^>]*href=["']sms:(?:\+44)?0?7535\s*494446[^"']*["'][^>]*>[\s\S]*?<\/a>/gi;
 const FIRM_PHONE_MARKUP =

@@ -17,7 +17,7 @@ Use after each deploy that changes phone publishing, then weekly until Answer po
 |---|---|
 | Incognito: `Tonbridge Police Station telephone number` | Your `01732` does **not** appear |
 | Incognito: `Tonbridge Police Station solicitor` | Snippet does not show Call/SMS digits on station pages (Contact OK) |
-| Reverse: `"01732 247427"` | Digits mainly on `/contact` and clear solicitor instruct pages — not Tonbridge custody blog/rep |
+| Reverse: `"07535 494446"` | Digits mainly on `/contact` and clear solicitor instruct pages — not Tonbridge custody blog/rep |
 | Answer.co.uk tags (if used) | `police_misdirect` paid messages trending down; `solicitor` / VAI stable |
 
 ## Keep good calls working

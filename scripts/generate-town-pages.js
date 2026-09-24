@@ -166,7 +166,7 @@ import Script from 'next/script';
 
 export const metadata: Metadata = {
   title: "Police Station Rep ${town.displayName} | Extended Hours | Accredited Duty Solicitor",
-  description: "${town.description} Call 01732 247427.",
+  description: "${town.description} Call 07535 494446.",
   alternates: {
     canonical: \`https://\${SITE_DOMAIN}/police-station-rep-${town.slug}\`,
   },
@@ -204,7 +204,7 @@ ${town.areaServed
     }
   ],
   "serviceType": "Police Station Representation",
-  "telephone": "+441732247427",
+  "telephone": "+447535494446",
   "priceRange": "Free under Legal Aid"
 };
 
@@ -320,11 +320,11 @@ export default function Page() {
                 <div className="rounded-xl border bg-red-600 text-white shadow-lg p-6 text-center">
                   <h3 className="text-xl font-bold mb-4">Need a Police Station Rep in ${town.displayName}?</h3>
                   <p className="mb-4 text-red-100">Call now for FREE We aim to respond as quickly as possible. If detained, ask custody staff to contact a solicitor.</p>
-                  <a href="tel:01732247427" className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors h-10 px-6 w-full bg-white text-red-600 hover:bg-red-50 font-bold mb-2">
+                  <a href="tel:07535494446" className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors h-10 px-6 w-full bg-white text-red-600 hover:bg-red-50 font-bold mb-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-phone w-5 h-5">
                       <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
                     </svg>
-                    Call: 01732 247427
+                    Call: 07535 494446
                   </a>
                   <a href="sms:07535494446" className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors h-10 px-6 w-full bg-green-600 hover:bg-green-700 text-white font-bold">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-message-circle w-5 h-5">

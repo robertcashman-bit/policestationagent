@@ -1,5 +1,6 @@
 /** Block unsafe station/blog metadata before publish. */
-const FIRM_PHONE = /01732\s*247427|07535\s*494446|01732247427|07535494446/i;
+const FIRM_PHONE =
+  /01732\s*247427|07535\s*494446|07535494446|07535494446|\+447535494446|\+447535494446/i;
 
 /**
  * @param {{ title?: string, metaTitle?: string, metaDescription?: string, slug?: string }} post

@@ -30,7 +30,7 @@ This schema combines multiple Schema.org types to maximize local search visibili
       "url": "https://policestationagent.com",
       "logo": "https://policestationagent.com/logo.png",
       "description": "Qualified Police Station Duty Solicitor and Higher Court Advocate serving Kent since 2001. Accredited duty solicitor providing expert police station representation, pre-charge advice, and bail representation at all Kent custody suites. FREE legal advice under Legal Aid.",
-      "telephone": "+441732247427",
+      "telephone": "+447535494446",
       "email": "robertcashman@defencelegalservices.co.uk",
       "address": {
         "@type": "PostalAddress",
@@ -228,7 +228,7 @@ This schema combines multiple Schema.org types to maximize local search visibili
       "@id": "https://policestationagent.com/#localbusiness",
       "name": "Robert Cashman – Police Station Duty Solicitor (Kent)",
       "image": "https://policestationagent.com/logo.png",
-      "telephone": "+441732247427",
+      "telephone": "+447535494446",
       "email": "robertcashman@defencelegalservices.co.uk",
       "address": {
         "@type": "PostalAddress",

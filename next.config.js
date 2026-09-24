@@ -48,22 +48,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "static.wixstatic.com",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "wixstatic.com",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
         hostname: "base44.app",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "**.wixstatic.com",
         pathname: "/**",
       },
       {

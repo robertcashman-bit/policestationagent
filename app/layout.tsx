@@ -505,12 +505,8 @@ footer.bg-primary-dark{background-color:#1d4ed8!important;color:#fff!important}
           }}
         />
         {/* DNS prefetch for external resources - early connection establishment */}
-        <link rel="dns-prefetch" href="https://static.wixstatic.com" />
-        <link rel="dns-prefetch" href="https://wixstatic.com" />
         <link rel="dns-prefetch" href="https://base44.app" />
         <link rel="dns-prefetch" href="https://images.unsplash.com" />
-        {/* Preconnect for critical external resources - establish early connections */}
-        <link rel="preconnect" href="https://static.wixstatic.com" crossOrigin="anonymous" />
         {/* Organization structured data - defer to afterInteractive for better LCP */}
         <Script
           id="organization-schema"

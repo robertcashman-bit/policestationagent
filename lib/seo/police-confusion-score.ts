@@ -61,7 +61,8 @@ const LEGAL_INTENT = [
   "voluntary interview",
 ];
 
-export const FIRM_PHONE_RE = /01732\s*247427|\+441732247427|tel:01732247427/i;
+export const FIRM_PHONE_RE =
+  /01732\s*247427|\+441732247427|tel:01732247427|07535\s*494446|\+447535494446|tel:07535494446/i;
 export const FIRM_SMS_RE = /07535\s*494446|\+447535494446|sms:07535494446/i;
 
 export function scorePageConfusion(signals: PageSignals): ConfusionResult {

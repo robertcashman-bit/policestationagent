@@ -6,7 +6,7 @@
 
 ## Executive summary
 
-Search snippets were associating Robert Cashman’s private solicitor numbers (`01732 247427`, `07535 494446`) with Tonbridge / Kent Police contact intent. Root causes: station-adjacent CTAs and SMS digits on high-risk routes, blog/meta titles pairing station names with “Call 01732…”, duplicate thin station scrapes (`*-psa-station`), and sitemap listings of redirected URLs.
+Search snippets were associating Robert Cashman’s private solicitor numbers (`07535 494446`, `07535 494446`) with Tonbridge / Kent Police contact intent. Root causes: station-adjacent CTAs and SMS digits on high-risk routes, blog/meta titles pairing station names with “Call 01732…”, duplicate thin station scrapes (`*-psa-station`), and sitemap listings of redirected URLs.
 
 Remediation keeps legitimate solicitor SEO while preventing police-contact confusion: solicitor-intent metadata, server-rendered not-police notices, digits only on Contact (and clear solicitor-intent pages), 308 consolidation to `/police-station-rep-*`, schema clarifying independent LegalService, automated CI audit.
 

@@ -41,7 +41,7 @@ describe('Kent-only outreach templates', () => {
     expect(html).toContain('45 minutes of Maidstone');
     expect(html).not.toContain('England &amp; Wales when your roster');
     expect(html).toContain('07535 494446');
-    expect(html).toContain('01732 247427');
+    expect(html).not.toContain('01732 247427');
   });
 
   it('mentions Maidstone radius in follow-up steps', () => {
