@@ -36,6 +36,8 @@ describe("live leftovers — hub + chrome fixes", () => {
 
     const promo = fs.readFileSync(path.join(root, "lib/custodynote-promo.ts"), "utf8");
     expect(promo).toContain("apps.microsoft.com/detail/9nfsrvt3t45v?hl=en-GB&gl=GB");
+    expect(promo).toContain("custodyNoteStoreUrl");
+    expect(promo).toContain("psa-footer");
     expect(promo).toContain("Get it on Microsoft Store");
     expect(promo).toContain("Download for Mac");
     expect(promo).toContain("cnDownloadHref");
@@ -101,7 +103,8 @@ describe("live leftovers — hub + chrome fixes", () => {
       path.join(root, "components/CustodyNoteStorePromo.tsx"),
       "utf8"
     );
-    expect(promoUi).toContain("CUSTODYNOTE_MICROSOFT_STORE_HREF");
+    expect(promoUi).toContain("custodyNoteStoreUrl");
+    expect(promoUi).toContain('psa-for-solicitors');
     expect(promoUi).toContain("CUSTODYNOTE_MICROSOFT_STORE_CTA");
     expect(promoUi).toContain("CUSTODYNOTE_MAC_DOWNLOAD_CTA");
     expect(promoUi).toContain("cnDownloadHref");
