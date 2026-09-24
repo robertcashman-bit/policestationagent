@@ -25,7 +25,7 @@ function takeaways(items) {
 function cta() {
   return `<div class="advert-cta" style="background-color: #fef2f2; border: 2px solid #dc2626; border-radius: 12px; padding: 1.5rem; margin: 2rem 0;">
   <h2 style="margin-top: 0; color: #991b1b; font-size: 1.25rem;">Need legal advice at a Kent police station?</h2>
-  <p style="margin: 0.75rem 0;">Call <strong>01732 247427</strong> for current custody or a booked voluntary interview. If you cannot call, text <strong>07535 494446</strong>.</p>
+  <p style="margin: 0.75rem 0;">Call <strong>07535 494446</strong> for current custody or a booked voluntary interview. If you cannot call, text <strong>07535 494446</strong>.</p>
   <p style="margin: 0.75rem 0;">Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong> — the DSCC have our details. Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795).</p>
   <p style="margin: 0.75rem 0 0;"><a href="/contact">Contact Police Station Agent</a> · <a href="/start/in-custody">Someone in custody now</a> · <a href="/free-police-station-advice-kent">Free police station advice in Kent</a></p>
 </div>`;
@@ -97,7 +97,7 @@ const FIRM_EXPAND = CUSTODY_EXPAND;
 
 const CUSTODY_EXPAND = `<h2>Further information for detainees and family</h2>
 <p>If you or someone you know faces police station attendance in Kent, remember that legal advice at the police station is free for most people being interviewed. You do not have to answer police questions without advice. A solicitor is independent of the police and bound by confidentiality.</p>
-<p>Immediate family may help arrange a solicitor when someone is in current custody, subject to the detainee confirming they want legal advice. Call <strong>01732 247427</strong> or text <strong>07535 494446</strong>. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. Attendance is subject to availability.</p>
+<p>Immediate family may help arrange a solicitor when someone is in current custody, subject to the detainee confirming they want legal advice. Call <strong>07535 494446</strong> or text <strong>07535 494446</strong>. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. Attendance is subject to availability.</p>
 <p>See <a href="/your-rights-in-custody">your rights in custody</a>, <a href="/start/in-custody">someone in custody now</a>, and <a href="/free-police-station-advice-kent">free police station advice in Kent</a>.</p>`;
 
 function wordCount(html) {
@@ -161,8 +161,8 @@ ${KENT_WIDE}
 <p>Browse <a href="/locations">all locations</a> or the <a href="/police-stations">police station directory</a> for station-specific information.</p>
 
 <h2>9) How to contact Robert Cashman</h2>
-<p>Call <strong>01732 247427</strong> for current custody or a booked voluntary interview. If you cannot call, text <strong>07535 494446</strong> with the detainee's name, date of birth, and station. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong> — the DSCC have our details. Attendance is subject to availability and should not be assumed until confirmed.</p>`,
-      `<p>If someone you know is at North Kent custody, ask custody staff to contact a solicitor and request <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. Call <strong>01732 247427</strong> or text <strong>07535 494446</strong> if you cannot call. Early legal advice at the police station can help protect rights before interview. Attendance is subject to availability.</p>`,
+<p>Call <strong>07535 494446</strong> for current custody or a booked voluntary interview. If you cannot call, text <strong>07535 494446</strong> with the detainee's name, date of birth, and station. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong> — the DSCC have our details. Attendance is subject to availability and should not be assumed until confirmed.</p>`,
+      `<p>If someone you know is at North Kent custody, ask custody staff to contact a solicitor and request <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. Call <strong>07535 494446</strong> or text <strong>07535 494446</strong> if you cannot call. Early legal advice at the police station can help protect rights before interview. Attendance is subject to availability.</p>`,
       BASE_EXTERNAL,
       [
         { url: "/police-station-rep-gravesend", label: "Gravesend & North Kent cover" },
@@ -235,16 +235,16 @@ ${NOT_KENT_POLICE}`,
 <p>Common outcomes include charge and bail, release under investigation, police bail with conditions, or no further action. Each carries different implications. A solicitor can explain what an outcome means and what steps may follow. See <a href="/released-under-investigation">RUI explained</a> and <a href="/police-bail-explained">police bail explained</a>.</p>
 
 <h2>7) Family and urgent contact</h2>
-<p>Immediate family may help arrange a solicitor when someone is in current custody at Tonbridge. Friends cannot instruct on another person's behalf. Call <strong>01732 247427</strong> or text <strong>07535 494446</strong>. See <a href="/start/in-custody">someone in custody now</a> and <a href="/what-to-do-if-a-loved-one-is-arrested">what to do if a loved one is arrested</a>.</p>
+<p>Immediate family may help arrange a solicitor when someone is in current custody at Tonbridge. Friends cannot instruct on another person's behalf. Call <strong>07535 494446</strong> or text <strong>07535 494446</strong>. See <a href="/start/in-custody">someone in custody now</a> and <a href="/what-to-do-if-a-loved-one-is-arrested">what to do if a loved one is arrested</a>.</p>
 
 <h2>8) Kent-wide attendance</h2>
 ${KENT_WIDE}
 <p>Voluntary interviews are also held at Sevenoaks, Tunbridge Wells, Maidstone and other Kent stations. Browse <a href="/locations">all locations</a> and <a href="/police-stations">police station directory</a>.</p>
 
 <h2>9) Contacting Robert Cashman for Tonbridge matters</h2>
-<p>Call <strong>01732 247427</strong> for Tonbridge custody or a booked voluntary interview. Text <strong>07535 494446</strong> if you cannot call. Ask custody staff or the DSCC for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. Attendance is subject to availability — contact early where possible.</p>
+<p>Call <strong>07535 494446</strong> for Tonbridge custody or a booked voluntary interview. Text <strong>07535 494446</strong> if you cannot call. Ask custody staff or the DSCC for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. Attendance is subject to availability — contact early where possible.</p>
 ${CUSTODY_EXPAND}`,
-      `<p>Whether facing Tonbridge custody or a voluntary interview, request legal advice before answering police questions. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. Call <strong>01732 247427</strong> or text <strong>07535 494446</strong>. Attendance is subject to availability.</p>`,
+      `<p>Whether facing Tonbridge custody or a voluntary interview, request legal advice before answering police questions. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. Call <strong>07535 494446</strong> or text <strong>07535 494446</strong>. Attendance is subject to availability.</p>`,
       BASE_EXTERNAL,
       [
         { url: "/police-station-rep-tonbridge", label: "Tonbridge cover" },
@@ -340,7 +340,7 @@ ${KENT_WIDE}
 <h2>10) North Kent routing and operational variation</h2>
 <p>Operational factors may affect which custody suite receives a north Kent arrest. A client arrested in Dartford may be processed at North Kent (Gravesend) custody, but routing is a police operational decision. When instructing, confirm the actual suite with your client, the custody suite, or the DSCC — do not assume from the arrest location alone.</p>
 ${FIRM_EXPAND}`,
-      `<p>For urgent North Kent custody cover, telephone <strong>01732 247427</strong> with complete instructions. Text <strong>07535 494446</strong> only if you cannot call. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. Attendance is subject to availability.</p>`,
+      `<p>For urgent North Kent custody cover, telephone <strong>07535 494446</strong> with complete instructions. Text <strong>07535 494446</strong> only if you cannot call. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. Attendance is subject to availability.</p>`,
       BASE_EXTERNAL,
       [
         { url: "/police-station-rep-gravesend", label: "North Kent cover" },
@@ -428,7 +428,7 @@ ${KENT_WIDE}
 
 <h2>9) Establishing ongoing west Kent cover</h2>
 <p>Firms with regular west Kent instructions benefit from an ongoing cover arrangement. Agree note format, billing method, communication channels, and escalation contacts in advance. This streamlines future instructions — a single telephone call with client details may be all that is needed for each new matter.</p>
-<p>Contact <strong>01732 247427</strong> to discuss ongoing cover for your firm's west Kent practice.</p>
+<p>Contact <strong>07535 494446</strong> to discuss ongoing cover for your firm's west Kent practice.</p>
 
 <h2>10) Sevenoaks, Tunbridge Wells and local stations</h2>
 <p>West Kent voluntary interviews are not limited to Tonbridge. Sevenoaks, Tunbridge Wells, Maidstone and Swanley regularly host scheduled interviews under caution. When instructing cover, confirm the precise station — a client told to attend "Tonbridge police station" may mean the custody suite or the front office for a voluntary interview. Include the interview room or officer details if known.</p>
@@ -437,9 +437,9 @@ ${KENT_WIDE}
 <p>Motoring allegations — excess speed, careless driving, failing to provide driver details — are commonly dealt with by voluntary interview at west Kent stations. These interviews carry the same caution and recording as any other interview. Firms should instruct cover so the client receives advice before attending.</p>
 
 <h2>12) Contact for west Kent firm cover</h2>
-<p>Telephone <strong>01732 247427</strong> for urgent Tonbridge custody. Text <strong>07535 494446</strong> if you cannot call. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. Provide complete instructions including custody record number and DSCC reference where available.</p>
+<p>Telephone <strong>07535 494446</strong> for urgent Tonbridge custody. Text <strong>07535 494446</strong> if you cannot call. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. Provide complete instructions including custody record number and DSCC reference where available.</p>
 ${FIRM_EXPAND}`,
-      `<p>For Tonbridge custody or west Kent voluntary interview cover, telephone <strong>01732 247427</strong> with full instructions. Text <strong>07535 494446</strong> if you cannot call. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. Attendance is subject to availability.</p>`,
+      `<p>For Tonbridge custody or west Kent voluntary interview cover, telephone <strong>07535 494446</strong> with full instructions. Text <strong>07535 494446</strong> if you cannot call. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. Attendance is subject to availability.</p>`,
       BASE_EXTERNAL,
       [
         { url: "/police-station-rep-tonbridge", label: "Tonbridge cover" },
@@ -538,7 +538,7 @@ ${KENT_WIDE}
 <h2>11) Multiple simultaneous instructions</h2>
 <p>When instructing for more than one client at the same time, provide separate complete instructions for each matter. Do not combine multiple clients in a single instruction — each attendance requires its own client details, station, and references.</p>
 ${FIRM_EXPAND}`,
-      `<p>Complete instructions help attendance be arranged efficiently. Telephone <strong>01732 247427</strong> for urgent custody. Text <strong>07535 494446</strong> if you cannot call. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. Attendance is subject to availability.</p>`,
+      `<p>Complete instructions help attendance be arranged efficiently. Telephone <strong>07535 494446</strong> for urgent custody. Text <strong>07535 494446</strong> if you cannot call. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. Attendance is subject to availability.</p>`,
       BASE_EXTERNAL,
       [
         { url: "/for-solicitors", label: "Cover for solicitors" },
@@ -624,7 +624,7 @@ ${NOT_KENT_POLICE}`,
 <h2>10) Keeping a record of references</h2>
 <p>Detainees and family members should write down both references as soon as they are obtained. It is easy to forget or confuse numbers during a stressful detention. A note on a phone or piece of paper passed to the attending solicitor speeds up confirmation with custody staff on arrival.</p>
 ${CUSTODY_EXPAND}`,
-      `<p>Keep custody record numbers and DSCC references to hand when contacting a solicitor. Call <strong>01732 247427</strong> or text <strong>07535 494446</strong>. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. Attendance is subject to availability.</p>`,
+      `<p>Keep custody record numbers and DSCC references to hand when contacting a solicitor. Call <strong>07535 494446</strong> or text <strong>07535 494446</strong>. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. Attendance is subject to availability.</p>`,
       BASE_EXTERNAL,
       [
         { url: "/dscc-and-custody-record-support", label: "DSCC and custody record support" },
@@ -701,7 +701,7 @@ ${NOT_KENT_POLICE}`,
 <p>If a qualified in-house representative is available and knows the client, in-house attendance may be preferable for continuity. Agents are most valuable when capacity, geography, or hours create a gap the firm cannot fill internally. Single instructions and ongoing cover arrangements are both available.</p>
 
 <h2>9) How to instruct</h2>
-<p>Telephone <strong>01732 247427</strong> for urgent custody. Include client details, station, custody record, and DSCC reference. See <a href="/for-solicitors">police station cover for solicitors</a> and <a href="/start/solicitors-agent-cover">send instructions</a>.</p>
+<p>Telephone <strong>07535 494446</strong> for urgent custody. Include client details, station, custody record, and DSCC reference. See <a href="/for-solicitors">police station cover for solicitors</a> and <a href="/start/solicitors-agent-cover">send instructions</a>.</p>
 
 <h2>10) Building a cover relationship</h2>
 <p>Firms that instruct agents regularly benefit from establishing a relationship before the first urgent call. Discuss qualification level, geographic coverage, note format, billing, and communication preferences in a quiet moment — not during a 2am custody instruction. This preparation makes future instructions smoother and faster.</p>
@@ -716,7 +716,7 @@ ${NOT_KENT_POLICE}`,
 <h2>13) First instruction checklist</h2>
 <p>Before your first instruction to an external agent, confirm: qualification level, geographic coverage, note format, billing basis, and out-of-hours availability. A brief introductory call prevents misunderstandings during the first urgent custody attendance.</p>
 ${FIRM_EXPAND}`,
-      `<p>Instruct a police station agent when your firm needs Kent attendance and in-house cover is unavailable. Call <strong>01732 247427</strong> or text <strong>07535 494446</strong>. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. Attendance is subject to availability.</p>`,
+      `<p>Instruct a police station agent when your firm needs Kent attendance and in-house cover is unavailable. Call <strong>07535 494446</strong> or text <strong>07535 494446</strong>. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. Attendance is subject to availability.</p>`,
       BASE_EXTERNAL,
       [
         { url: "/for-solicitors", label: "Cover for solicitors" },
@@ -816,7 +816,7 @@ ${KENT_WIDE}
 <h2>12) Notes and case progression</h2>
 <p>Attendance notes are the foundation for everything that follows — bail variation applications, charging decision representations, and trial preparation. A note that accurately records disclosure and interview content allows the firm fee earner to make informed decisions without re-interviewing the client about what happened at the station.</p>
 ${FIRM_EXPAND}`,
-      `<p>When instructing cover, confirm your note requirements at the outset. Call <strong>01732 247427</strong> or text <strong>07535 494446</strong>. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. Attendance is subject to availability.</p>`,
+      `<p>When instructing cover, confirm your note requirements at the outset. Call <strong>07535 494446</strong> or text <strong>07535 494446</strong>. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. Attendance is subject to availability.</p>`,
       BASE_EXTERNAL,
       [
         { url: "/for-solicitors", label: "Cover for solicitors" },
@@ -897,7 +897,7 @@ ${NOT_KENT_POLICE}`,
 
 <h2>10) Getting started with freelance cover</h2>
 <p>If your firm has not used freelance agents before, start with a non-urgent voluntary interview instruction to test communication, note quality, and billing. Once satisfied, add the agent to your out-of-hours escalation list for custody matters. See <a href="/for-solicitors">police station cover for solicitors</a> and <a href="/contact">contact</a>.</p>
-<p>Call <strong>01732 247427</strong> to discuss your firm's cover requirements. Text <strong>07535 494446</strong> if you cannot call.</p>
+<p>Call <strong>07535 494446</strong> to discuss your firm's cover requirements. Text <strong>07535 494446</strong> if you cannot call.</p>
 
 <h2>11) Freelance agents and firm reputation</h2>
 <p>The agent attends on your firm's instruction. The client experiences the agent as an extension of your firm. Choosing a reliable, professional agent protects your firm's reputation at a critical stage of the criminal process. Detailed notes, punctual attendance, and clear communication with the client all reflect on the instructing firm.</p>
@@ -908,7 +908,7 @@ ${NOT_KENT_POLICE}`,
 <h2>13) Cost comparison with in-house rotas</h2>
 <p>Maintaining an in-house overnight duty rota involves salary, training, and standby costs regardless of call volume. Freelance agents are instructed only when needed. For firms with moderate overnight demand, external cover is often more cost-effective than permanent staffing.</p>
 ${FIRM_EXPAND}`,
-      `<p>If your firm needs freelance police station cover in Kent, telephone <strong>01732 247427</strong> or text <strong>07535 494446</strong>. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. Attendance is subject to availability.</p>`,
+      `<p>If your firm needs freelance police station cover in Kent, telephone <strong>07535 494446</strong> or text <strong>07535 494446</strong>. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. Attendance is subject to availability.</p>`,
       BASE_EXTERNAL,
       [
         { url: "/for-solicitors", label: "Cover for solicitors" },
@@ -973,7 +973,7 @@ ${NOT_KENT_POLICE}`,
 <p>Voluntary interviews under caution are scheduled at stations throughout Kent and Medway — often with days or weeks of notice. Firms instruct agents when no in-house representative is available at the interview time. Early instruction allows disclosure review. See <a href="/voluntary-police-interview">voluntary interview advice</a>.</p>
 
 <h2>7) How to instruct cover</h2>
-<p>Telephone <strong>01732 247427</strong> for urgent custody. Include client details, station, custody record number, and DSCC reference. For scheduled voluntary interviews, telephone or email with date, time, and allegation summary. See <a href="/blog/instructing-a-police-station-representative">instruction checklist</a>, <a href="/start/solicitors-agent-cover">send instructions</a>, and <a href="/for-solicitors">firm cover page</a>.</p>
+<p>Telephone <strong>07535 494446</strong> for urgent custody. Include client details, station, custody record number, and DSCC reference. For scheduled voluntary interviews, telephone or email with date, time, and allegation summary. See <a href="/blog/instructing-a-police-station-representative">instruction checklist</a>, <a href="/start/solicitors-agent-cover">send instructions</a>, and <a href="/for-solicitors">firm cover page</a>.</p>
 
 <h2>8) Attendance notes and billing</h2>
 <p>After each attendance, the firm receives notes covering disclosure, advice, interview, and outcome. Agree note format and billing expectations when establishing a cover relationship. See <a href="/blog/police-station-attendance-notes">attendance notes guide</a>.</p>
@@ -996,12 +996,12 @@ ${KENT_WIDE}
 <p>Maidstone and mid-Kent stations regularly host voluntary interviews for clients across the county town and surrounding villages. Firms in Maidstone, Sevenoaks and Tunbridge Wells can instruct a single agent for the whole county rather than maintaining separate contacts for each area. Include station, interview time, and client details in every instruction.</p>
 
 <h2>14) Getting started with Kent-wide cover</h2>
-<p>Contact <strong>01732 247427</strong> to discuss your firm's Kent and Medway cover requirements. Whether you need ad hoc instructions or an ongoing arrangement, agree billing, note format, and communication preferences before the first urgent custody call.</p>
+<p>Contact <strong>07535 494446</strong> to discuss your firm's Kent and Medway cover requirements. Whether you need ad hoc instructions or an ongoing arrangement, agree billing, note format, and communication preferences before the first urgent custody call.</p>
 
 <h2>15) Summary for Kent and Medway firms</h2>
 <p>Kent and Medway criminal defence firms instruct police station agents when in-house cover is unavailable. Telephone for urgent custody with client name, date of birth, station, custody record number, and DSCC reference. Robert Cashman attends across the county through Tuckers Solicitors LLP, with regular attendance at Medway, North Kent (Gravesend), and Tonbridge among other stations. Attendance is subject to availability.</p>
 ${FIRM_EXPAND}`,
-      `<p>For Kent and Medway police station cover, telephone <strong>01732 247427</strong> with complete instructions. Text <strong>07535 494446</strong> if you cannot call. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. Attendance is subject to availability.</p>`,
+      `<p>For Kent and Medway police station cover, telephone <strong>07535 494446</strong> with complete instructions. Text <strong>07535 494446</strong> if you cannot call. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. Attendance is subject to availability.</p>`,
       BASE_EXTERNAL,
       [
         { url: "/for-solicitors", label: "Cover for solicitors" },

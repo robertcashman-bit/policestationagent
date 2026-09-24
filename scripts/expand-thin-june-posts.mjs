@@ -37,7 +37,7 @@ const EXPANSIONS = {
 <li>Any vulnerability, language, or medical notes</li>
 <li>Fee earner contact and billing reference</li>
 </ul>
-<p>Telephone <strong>01732 247427</strong> for urgent custody. For booked voluntary interviews, email or call with date, time, station, and allegation summary.</p>
+<p>Telephone <strong>07535 494446</strong> for urgent custody. For booked voluntary interviews, email or call with date, time, station, and allegation summary.</p>
 
 <h2>Who can instruct on behalf of a firm</h2>
 <p>Instructions must come from the criminal defence firm with conduct of the matter — a fee earner, accredited representative, or properly authorised admin under firm procedures. Immediate family cannot instruct on someone else's behalf unless the detainee confirms they want legal advice; friends cannot instruct at all. See our <a href="/faq#immediate-custody-only">scope FAQ</a>.</p>
@@ -79,7 +79,7 @@ const EXPANSIONS = {
   "2026-06-12-when-to-instruct-police-station-agent.json": `
 <h2>Public clients — when to ask for a solicitor</h2>
 <p>If you are detained or invited to a voluntary interview, ask for a solicitor <strong>before</strong> any interview under caution. Early advice helps you understand the allegation, your right to silence, and whether a prepared statement is appropriate. Legal advice at the police station is free for most people being interviewed — it is not means-tested in the way court Legal Aid is.</p>
-<p>Call <strong>01732 247427</strong> or text <strong>07535 494446</strong>. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. Attendance is subject to availability.</p>
+<p>Call <strong>07535 494446</strong> or text <strong>07535 494446</strong>. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. Attendance is subject to availability.</p>
 
 <h2>Firms — trigger points for instructing cover</h2>
 <ul>

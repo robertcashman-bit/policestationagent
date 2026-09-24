@@ -11,7 +11,7 @@ const API_URL = "/api/contact";
 
 const validAttendancePayload = {
   name: "E2E Test User",
-  contactNumber: "01732 247427",
+  contactNumber: "07535 494446",
   email: "",
   role: "family",
   enquiryKind: "attendance",

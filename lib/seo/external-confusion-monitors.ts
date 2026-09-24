@@ -3,7 +3,8 @@
  * Activate only when API keys are present — never scrape Google HTML at scale.
  */
 
-const FIRM_PHONE = /01732\s*247427|\+44\s*1732\s*247427/i;
+const FIRM_PHONE =
+  /01732\s*247427|\+44\s*1732\s*247427|07535\s*494446|\+44\s*7535\s*494446/i;
 
 const SAMPLE_QUERIES = [
   "What is the telephone number for Maidstone Police Station?",

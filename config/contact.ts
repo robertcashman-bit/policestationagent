@@ -1,12 +1,12 @@
 /** Authoritative contact details and scope copy for policestationagent.com */
 
-export const PHONE_TEL = "01732247427";
-export const PHONE_DISPLAY = "01732 247427";
+export const PHONE_TEL = "07535494446";
+export const PHONE_DISPLAY = "07535 494446";
 export const SMS_TEL = "07535494446";
 export const SMS_DISPLAY = "07535 494446";
 
 /** B2B / solicitor cover WhatsApp — text messages only */
-export const WHATSAPP_E164 = "447490126251";
+export const WHATSAPP_E164 = "447535494446";
 export const WHATSAPP_TEXT_ONLY_NOTE =
   "WhatsApp text message only — please do not attempt voice or video calls via WhatsApp.";
 
@@ -148,4 +148,4 @@ export const SOLICITOR_SMS_ARIA = "Text Robert Cashman, independent criminal def
 export const SOLICITOR_CONTACT_CTA = "Request legal representation";
 export const LEGAL_SERVICE_SCHEMA_DESCRIPTION =
   "Independent criminal defence solicitor providing police station legal representation. Not affiliated with Kent Police or any police force. Legal services delivered through Tuckers Solicitors LLP (SRA ID: 127795).";
-export const PHONE_E164 = "+441732247427";
+export const PHONE_E164 = "+447535494446";
