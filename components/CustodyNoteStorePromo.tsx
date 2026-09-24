@@ -3,9 +3,9 @@ import {
   CUSTODYNOTE_FREE_LABEL,
   CUSTODYNOTE_MAC_DOWNLOAD_CTA,
   CUSTODYNOTE_MICROSOFT_STORE_CTA,
-  CUSTODYNOTE_MICROSOFT_STORE_HREF,
   CUSTODYNOTE_STORE_WINDOWS_NOTE,
   cnDownloadHref,
+  custodyNoteStoreUrl,
 } from "@/lib/custodynote-promo";
 
 type Variant = "chrome" | "strip" | "panel";
@@ -32,6 +32,14 @@ export function CustodyNoteStorePromo({
 }: Props) {
   const macHref = cnDownloadHref(campaign);
   const backupHref = cnDownloadHref(campaign);
+  const storeHref =
+    variant === "chrome"
+      ? custodyNoteStoreUrl("psa-nav")
+      : variant === "strip"
+        ? custodyNoteStoreUrl("psa-home")
+        : campaign === "for-solicitors"
+          ? custodyNoteStoreUrl("psa-for-solicitors")
+          : custodyNoteStoreUrl("psa-custody-note-panel");
 
   if (variant === "chrome") {
     return (
@@ -40,7 +48,7 @@ export function CustodyNoteStorePromo({
         data-cn-store-promo="chrome"
       >
         <a
-          href={CUSTODYNOTE_MICROSOFT_STORE_HREF}
+          href={storeHref}
           className="inline-flex items-center gap-1.5 rounded-md border border-accent/40 bg-accent/10 px-2 py-1.5 sm:px-2.5 text-[10px] sm:text-[11px] font-bold leading-tight text-primary transition-colors hover:bg-accent/20 hover:text-primary-light lg:text-xs"
           rel="noopener noreferrer"
           target="_blank"
@@ -81,7 +89,7 @@ export function CustodyNoteStorePromo({
           </p>
           <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5">
             <a
-              href={CUSTODYNOTE_MICROSOFT_STORE_HREF}
+              href={storeHref}
               className="inline-flex min-h-9 items-center gap-1.5 rounded-md bg-primary px-3 py-1.5 text-xs font-bold text-white shadow-sm transition-colors hover:bg-primary-light"
               rel="noopener noreferrer"
               target="_blank"
@@ -146,7 +154,7 @@ export function CustodyNoteStorePromo({
             </div>
             <div className="mt-6 flex flex-col gap-3 md:mt-0" data-nosnippet>
               <a
-                href={CUSTODYNOTE_MICROSOFT_STORE_HREF}
+                href={storeHref}
                 className="btn-gold inline-flex items-center justify-center gap-2"
                 rel="noopener noreferrer"
                 target="_blank"

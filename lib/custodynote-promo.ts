@@ -22,8 +22,18 @@ export const CUSTODYNOTE_TRIAL_HREF = CUSTODYNOTE_DOWNLOAD_HREF;
  * Prefer en-GB / gl=GB so the Store never routes to the US listing.
  */
 export const CUSTODYNOTE_MICROSOFT_STORE_ID = '9NFSRVT3T45V';
-export const CUSTODYNOTE_MICROSOFT_STORE_HREF =
+
+const CUSTODYNOTE_MICROSOFT_STORE_DETAIL_BASE =
   'https://apps.microsoft.com/detail/9nfsrvt3t45v?hl=en-GB&gl=GB';
+
+/** Microsoft Store listing with UK locale and campaign id (cid=psa-…). */
+export function custodyNoteStoreUrl(placement: string): string {
+  const cid = placement.startsWith('psa-') ? placement : `psa-${placement}`;
+  return `${CUSTODYNOTE_MICROSOFT_STORE_DETAIL_BASE}&cid=${encodeURIComponent(cid)}`;
+}
+
+/** Footer / network config default — Windows Microsoft Store (UK). */
+export const CUSTODYNOTE_MICROSOFT_STORE_HREF = custodyNoteStoreUrl('psa-footer');
 /** Primary Windows CTA — Store first; Mac is never claimed here. */
 export const CUSTODYNOTE_MICROSOFT_STORE_CTA = 'Get it on Microsoft Store';
 
