@@ -386,7 +386,7 @@ Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795). Robert C
 3. **For Solicitors** (`/for-solicitors`) ✅ UPDATED
    - **Title:** "Police Station Rep for Solicitors | Agent Cover Kent | Tuckers Solicitors LLP"
    - **Status:** ✅ Optimized
-   - **Meta Description:** "Police station rep for solicitors: Professional agent cover services for criminal solicitor firms in Kent. Expert police station representation with detailed notes. Legal Aid and private client work. SRA-regulated. Call 07535 494446."
+   - **Meta Description:** "Police station rep for solicitors: Professional agent cover services for criminal solicitor firms in Kent. Expert police station representation with detailed notes. Legal Aid and private client work. SRA-regulated. Call 01732 247427."
 
 4. **Police Station Interviews** (`/police-station-interviews-kent-rights`)
    - **Current Title:** "Police Station Interviews in Kent: Your Rights and What to Expect | Police Station Agent"

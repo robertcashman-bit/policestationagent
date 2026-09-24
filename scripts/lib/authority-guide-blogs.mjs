@@ -6,7 +6,7 @@ export const NOT_KENT =
 
 export const CTA = `<div class="advert-cta" style="background-color: #fef2f2; border: 2px solid #dc2626; border-radius: 12px; padding: 1.5rem; margin: 2rem 0;">
 <h2 style="margin-top: 0; color: #991b1b; font-size: 1.25rem;">Need legal advice at a Kent police station?</h2>
-<p style="margin: 0.75rem 0;">Call <strong>07535 494446</strong> for custody or a booked voluntary interview. If you cannot call, text <strong>07535 494446</strong>.</p>
+<p style="margin: 0.75rem 0;">Call <strong>01732 247427</strong> for custody or a booked voluntary interview. If you cannot call, text <strong>07535 494446</strong>.</p>
 <p style="margin: 0.75rem 0;">Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795).</p>
 <p style="margin: 0.75rem 0 0;"><a href="/contact">Contact Police Station Agent</a> · <a href="/start/in-custody">Someone in custody now</a></p>
 </div>`;

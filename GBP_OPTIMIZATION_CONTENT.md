@@ -115,7 +115,7 @@ All police station representation is FREE under Legal Aid. This statutory right 
 
 **Contact**
 
-For immediate police station representation in Kent, call 07535 494446 or text 07535 494446. Available 9am to late, including evenings, weekends, and bank holidays.
+For immediate police station representation in Kent, call 01732 247427 or text 07535 494446. Available 9am to late, including evenings, weekends, and bank holidays.
 
 ---
 
@@ -153,7 +153,7 @@ Robert Cashman is a qualified solicitor and accredited duty solicitor, not just 
 
 Covering all Kent custody suites including Medway, Maidstone, Canterbury, Gravesend, Dartford, Sevenoaks, Ashford, and Tonbridge.
 
-**Call Now:** 07535 494446
+**Call Now:** 01732 247427
 Available 9am to late, including evenings, weekends, and bank holidays.
 
 #PoliceStationSolicitor #Kent #LegalAid #DutySolicitor
@@ -194,7 +194,7 @@ As both a qualified solicitor and accredited duty solicitor, Robert Cashman prov
 
 Available at all Kent custody suites. FREE under Legal Aid.
 
-**Call:** 07535 494446
+**Call:** 01732 247427
 Available 9am to late, including evenings, weekends, and bank holidays.
 
 #QualifiedSolicitor #Kent #DutySolicitor #LegalAdvice
@@ -242,7 +242,7 @@ Expert Police Station Duty Solicitor representation available across all Kent cu
 
 Aim to attend any Kent custody suite within 30-45 minutes. Available 9am to late, including evenings, weekends, and bank holidays.
 
-**Call Now:** 07535 494446
+**Call Now:** 01732 247427
 Text: 07535 494446
 
 #KentPoliceStations #DutySolicitor #LegalAid #PoliceStationRepresentation

@@ -25,7 +25,7 @@ const posts = [
     metaDescription:
       "How immediate family and detainees can arrange a police station solicitor in Kent — custody record numbers, DSCC references, and urgent contact.",
     primaryKeyword: "arrange solicitor someone in custody Kent",
-    content: `<div class="blog-content"><h2>Introduction</h2><p>When someone is detained at a Kent police station, arranging a solicitor quickly can help protect their rights before interview.</p>${NOT_KENT}<h2>Asking from inside custody</h2><p>A detainee can tell the custody officer they want legal advice at any time. They may request <strong>Robert Cashman, Tuckers Duty Solicitor</strong>.</p><h2>Help from immediate family</h2><p>Parents, spouses, civil partners, children, and siblings may contact us when someone is in <strong>current</strong> custody. See <a href="/start/in-custody">someone in custody now</a>.</p><h2>Information that helps</h2><ul><li>Full name and date of birth</li><li>Police station and custody suite</li><li>Custody record number</li><li>DSCC reference if available</li></ul><p>Call <strong>07535 494446</strong> for urgent custody.</p><p><em>General information only.</em></p></div>`,
+    content: `<div class="blog-content"><h2>Introduction</h2><p>When someone is detained at a Kent police station, arranging a solicitor quickly can help protect their rights before interview.</p>${NOT_KENT}<h2>Asking from inside custody</h2><p>A detainee can tell the custody officer they want legal advice at any time. They may request <strong>Robert Cashman, Tuckers Duty Solicitor</strong>.</p><h2>Help from immediate family</h2><p>Parents, spouses, civil partners, children, and siblings may contact us when someone is in <strong>current</strong> custody. See <a href="/start/in-custody">someone in custody now</a>.</p><h2>Information that helps</h2><ul><li>Full name and date of birth</li><li>Police station and custody suite</li><li>Custody record number</li><li>DSCC reference if available</li></ul><p>Call <strong>01732 247427</strong> for urgent custody.</p><p><em>General information only.</em></p></div>`,
     faq: [
       {
         q: "Can friends arrange a solicitor for someone in custody?",
@@ -105,7 +105,7 @@ const posts = [
     metaDescription:
       "Free legal advice at Medway custody suite for arrests in Gillingham, Chatham and Rochester.",
     primaryKeyword: "legal advice Medway custody Kent",
-    content: `<div class="blog-content"><h2>Introduction</h2><p>If you are detained at Medway custody suite, you are entitled to free legal advice at the police station.</p>${NOT_KENT}<h2>Medway custody</h2><p>Medway custody serves Gillingham, Chatham, Rochester and surrounding areas. See <a href="/police-station-rep-medway">Medway cover</a>.</p><p>Call <strong>07535 494446</strong> for urgent custody.</p><p><em>General information only.</em></p></div>`,
+    content: `<div class="blog-content"><h2>Introduction</h2><p>If you are detained at Medway custody suite, you are entitled to free legal advice at the police station.</p>${NOT_KENT}<h2>Medway custody</h2><p>Medway custody serves Gillingham, Chatham, Rochester and surrounding areas. See <a href="/police-station-rep-medway">Medway cover</a>.</p><p>Call <strong>01732 247427</strong> for urgent custody.</p><p><em>General information only.</em></p></div>`,
     faq: [
       {
         q: "Is legal advice free at Medway custody?",

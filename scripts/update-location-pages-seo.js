@@ -41,7 +41,7 @@ function updateLocationPage(location) {
 
   content = content.replace(
     /description: "Expert police station representation in [^"]+\. FREE legal advice at [^"]+\. 24\/7 availability[^"]*"/g,
-    `description: "Police Station Duty Solicitor ${locData.name} - Expert police station representation by qualified solicitor. FREE legal advice under Legal Aid. Accredited Duty Solicitor & Higher Court Advocate. Call 07535 494446."`
+    `description: "Police Station Duty Solicitor ${locData.name} - Expert police station representation by qualified solicitor. FREE legal advice under Legal Aid. Accredited Duty Solicitor & Higher Court Advocate. Call 01732 247427."`
   );
 
   content = content.replace(

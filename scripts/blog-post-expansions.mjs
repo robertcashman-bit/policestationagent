@@ -48,7 +48,7 @@ export const EXPANSIONS = {
 <p>You can decline legal advice, but the police must ensure any waiver is knowing and voluntary. Even if you initially decline, you can change your mind and request a solicitor before or during interview. Many people who waive advice later regret it when the interview becomes challenging or disclosure reveals unexpected evidence.</p>
 
 <h2>13) Robert Cashman — free advice through Tuckers Solicitors LLP</h2>
-<p>Robert Cashman is a qualified duty solicitor practising through Tuckers Solicitors LLP (SRA ID 127795). When you ask for legal advice at any Kent police station, you can request him by name. Call <strong>07535 494446</strong> before a voluntary interview or ask custody staff to contact the DSCC and request <strong>Robert Cashman, Tuckers Duty Solicitor</strong>.</p>
+<p>Robert Cashman is a qualified duty solicitor practising through Tuckers Solicitors LLP (SRA ID 127795). When you ask for legal advice at any Kent police station, you can request him by name. Call <strong>01732 247427</strong> before a voluntary interview or ask custody staff to contact the DSCC and request <strong>Robert Cashman, Tuckers Duty Solicitor</strong>.</p>
 <p>See <a href="/blog/qualified-duty-solicitor-vs-police-station-rep-kent">qualified duty solicitor vs police station rep</a> and <a href="/blog/police-station-rep-near-me-kent">police station rep near me in Kent</a>.</p>`,
 
   "police-station-rep-near-me-kent": `
@@ -57,7 +57,7 @@ export const EXPANSIONS = {
 <p>Provide the detainee's full name, date of birth, station or custody suite, custody record number if known, and offence type if known. This helps us attend promptly and prepared.</p>
 
 <h2>8) Response times — custody vs voluntary</h2>
-<p><strong>Current custody</strong> is urgent. Call immediately on <strong>07535 494446</strong>. We prioritise live custody matters. <strong>Voluntary interviews</strong> should be booked as soon as you receive the date — same-day instruction is possible but early instruction allows disclosure requests and proper preparation.</p>
+<p><strong>Current custody</strong> is urgent. Call immediately on <strong>01732 247427</strong>. We prioritise live custody matters. <strong>Voluntary interviews</strong> should be booked as soon as you receive the date — same-day instruction is possible but early instruction allows disclosure requests and proper preparation.</p>
 
 <h2>9) Dartford, Swanley and north Kent voluntary stations</h2>
 <p>North Kent arrests often route to the Gravesend custody suite at Thames Way, Northfleet. Voluntary interviews may take place at Dartford, Gravesend, or other local stations. West Kent voluntary interviews may be at Sevenoaks or Tonbridge. East Kent may use Canterbury or Folkestone for either custody or voluntary attendances.</p>
@@ -131,7 +131,7 @@ export const EXPANSIONS = {
 <p>Not every east Kent police contact involves overnight custody. Voluntary interviews may be scheduled at Canterbury or other local stations. The same right to free legal advice applies. See <a href="/blog/voluntary-interview-letter-kent-what-to-do">voluntary interview letter advice</a> and <a href="/blog/folkestone-custody-legal-advice-kent">Folkestone custody guide</a> for wider east Kent cover.</p>
 
 <h2>14) Contacting Robert Cashman for Canterbury custody</h2>
-<p>Call <strong>07535 494446</strong> for current custody or a booked voluntary interview. Text <strong>07535 494446</strong> if you cannot call. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. Provide full name, date of birth, and Canterbury custody suite details where possible.</p>
+<p>Call <strong>01732 247427</strong> for current custody or a booked voluntary interview. Text <strong>07535 494446</strong> if you cannot call. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. Provide full name, date of birth, and Canterbury custody suite details where possible.</p>
 
 <h2>15) Canterbury and east Kent police station network</h2>
 <p>Canterbury is one of several east Kent facilities alongside Folkestone. Operational routing between suites can change with demand. Voluntary interviews may be scheduled at Canterbury, Folkestone, or local stations in Herne Bay and Whitstable. Regardless of location, free legal advice applies to most interviews under caution.</p>
@@ -153,7 +153,7 @@ export const EXPANSIONS = {
 <p>After a Sevenoaks voluntary interview, outcomes may include no further action, release under investigation, police bail, or charge. Your solicitor's attendance notes should record the outcome clearly. See <a href="/blog/no-further-action-after-police-interview-kent">no further action</a> and <a href="/blog/released-under-investigation-kent-plain-english">RUI explained</a>.</p>
 
 <h2>10) Why early instruction matters</h2>
-<p>Early instruction allows your solicitor to request disclosure, review the allegation, and advise on interview strategy before the day of attendance. Last-minute instruction is possible but reduces preparation time. Call <strong>07535 494446</strong> as soon as you receive the letter.</p>
+<p>Early instruction allows your solicitor to request disclosure, review the allegation, and advise on interview strategy before the day of attendance. Last-minute instruction is possible but reduces preparation time. Call <strong>01732 247427</strong> as soon as you receive the letter.</p>
 
 <h2>11) Digital evidence and west Kent voluntary interviews</h2>
 <p>Many voluntary interviews involve phone records, social media, CCTV, or messaging apps. Police may have downloaded material before inviting you. Your solicitor can help you understand what disclosure means in your case. See <a href="/blog/how-digital-evidence-voluntary-police-interview">digital evidence in voluntary interviews</a>.</p>
@@ -185,7 +185,7 @@ export const EXPANSIONS = {
 <p>Folkestone custody handles a range of allegations — from public order and assault to theft, drugs, and motoring matters. The right to free legal advice applies to most detainees being interviewed regardless of offence type. See <a href="/offences-we-deal-with">offences at police station stage</a>.</p>
 
 <h2>11) Practical help for families in coastal east Kent</h2>
-<p>If a loved one is at Folkestone custody, immediate family may contact us on <strong>07535 494446</strong>. Provide full name, date of birth, and custody suite details. The detainee must confirm they want legal advice. See <a href="/blog/immediate-family-instruct-police-station-solicitor">immediate family instruction</a>.</p>
+<p>If a loved one is at Folkestone custody, immediate family may contact us on <strong>01732 247427</strong>. Provide full name, date of birth, and custody suite details. The detainee must confirm they want legal advice. See <a href="/blog/immediate-family-instruct-police-station-solicitor">immediate family instruction</a>.</p>
 
 <h2>12) Voluntary interviews in the Folkestone area</h2>
 <p>Not every police contact leads to custody. Voluntary interviews may be scheduled at Folkestone or nearby stations. The same right to free legal advice applies. Arrange a solicitor before attending — do not treat a voluntary interview as informal. See <a href="/blog/voluntary-interview-letter-kent-what-to-do">voluntary interview letter advice</a>.</p>
@@ -197,7 +197,7 @@ export const EXPANSIONS = {
 <p>After interview, outcomes may include charge and bail to court, release under investigation, release on police bail with conditions, or no further action. Each outcome has different implications for your daily life and any future proceedings. Your solicitor should explain the outcome clearly before you leave. See <a href="/blog/no-further-action-after-police-interview-kent">no further action explained</a>.</p>
 
 <h2>15) Contact for Folkestone custody and coastal east Kent</h2>
-<p>Call <strong>07535 494446</strong> for current custody. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. For voluntary interviews in the Folkestone area, contact us before the interview date with the time, date, and station details.</p>
+<p>Call <strong>01732 247427</strong> for current custody. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. For voluntary interviews in the Folkestone area, contact us before the interview date with the time, date, and station details.</p>
 
 <h2>16) Booking in and custody records at Folkestone</h2>
 <p>When someone is brought to Folkestone custody after arrest, the custody officer creates a custody record on the custody suite system. Personal details, property, and the reason for arrest are recorded. PACE rights must be explained including the right to free legal advice. Family calling to locate a detainee should ask custody staff which suite is holding them.</p>
@@ -227,7 +227,7 @@ export const EXPANSIONS = {
 
 <h2>11) Robert Cashman — qualified solicitor attendance in Kent</h2>
 <p>Robert Cashman is a qualified solicitor, accredited duty solicitor, and Higher Court Advocate with 35+ years of criminal defence experience. He attends police stations across Kent through Tuckers Solicitors LLP. When you request legal advice, you can ask for him by name at custody or when calling before a voluntary interview.</p>
-<p>Call <strong>07535 494446</strong> · Text <strong>07535 494446</strong> · <a href="/contact">Contact</a></p>
+<p>Call <strong>01732 247427</strong> · Text <strong>07535 494446</strong> · <a href="/contact">Contact</a></p>
 
 <h2>12) Firm responsibility and client care</h2>
 <p>When a solicitor's firm sends an accredited representative, the firm remains responsible for the advice given. When Robert Cashman attends personally, you have a qualified solicitor with decades of experience advising you directly. In either model, knowing the firm's identity matters — check the SRA register and ask who will attend.</p>
@@ -292,7 +292,7 @@ export const EXPANSIONS = {
 
 <h2>15) Emotional impact and practical next steps</h2>
 <p>NFA can bring relief, but you may still feel anxious about what was recorded or whether police will contact you again. Keep your solicitor's attendance notes in a safe place. Do not discuss the allegation publicly. If you need clarity about what NFA meant in your specific case, speak to the solicitor who attended — this article is general information only.</p>
-<p>Call <strong>07535 494446</strong> if police contact you again or invite you for a further interview.</p>
+<p>Call <strong>01732 247427</strong> if police contact you again or invite you for a further interview.</p>
 
 <h2>16) NFA after custody vs voluntary interview</h2>
 <p>Whether you were interviewed in custody at a main Kent suite or attended a voluntary interview at Maidstone, Sevenoaks, or Dartford, NFA principles are the same — the police are not taking further action at this stage. The custody record or your solicitor's attendance notes should reflect the outcome. Keep both safe.</p>`,

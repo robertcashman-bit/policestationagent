@@ -105,7 +105,7 @@ test.describe('Conversion smoke — desktop', () => {
 
     const form = page.locator('#firm-enquiry form');
     await form.locator('#name').fill('Test Solicitor');
-    await form.locator('#contactNumber').fill('07535 494446');
+    await form.locator('#contactNumber').fill('01732 247427');
     // Solicitor role is the default on this page, so client fields are shown.
     await form.locator('#clientName').fill('Test Client');
     await form.locator('#clientDOB').fill('1990-01-01');
