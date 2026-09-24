@@ -3,7 +3,7 @@ const path = require("path");
 
 // Update phone numbers from Base44 export format to current format
 const OLD_PHONE = "01732 247 427";
-const OLD_PHONE_TEL = "07535494446";
+const OLD_PHONE_TEL = "01732247427";
 const NEW_PHONE = "0333 049 7036";
 const NEW_PHONE_TEL = "03330497036";
 

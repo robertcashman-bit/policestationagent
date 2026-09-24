@@ -147,7 +147,7 @@ function main() {
       structuredDataType: /LegalService|LocalBusiness|PoliceStation|FAQPage/.test(src)
         ? "embedded"
         : "layout-default",
-      structuredDataTelephone: FIRM_PHONE_RE.test(src) ? ["+447535494446"] : [],
+      structuredDataTelephone: FIRM_PHONE_RE.test(src) ? ["+441732247427"] : [],
       visibleTextSurrounding: src.match(/.{0,80}01732\s*247427.{0,80}/)?.[0]?.replace(/\s+/g, " ") || "",
       linkTextSurrounding: src.match(/<a[^>]*tel:01732[^>]*>[\s\S]{0,80}/)?.[0]?.replace(/\s+/g, " ") || "",
       nearStationNameOrAddress: nearStation,

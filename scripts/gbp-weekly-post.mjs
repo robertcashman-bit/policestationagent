@@ -6,7 +6,7 @@
 const WEEKS = [
   {
     title: "Free police station advice in Kent",
-    body: "Arrested or invited for a voluntary interview in Kent? Legal advice at the police station is free under Legal Aid for most interviews under caution. Ask for Robert Cashman, Tuckers Duty Solicitor. Call 07535 494446.",
+    body: "Arrested or invited for a voluntary interview in Kent? Legal advice at the police station is free under Legal Aid for most interviews under caution. Ask for Robert Cashman, Tuckers Duty Solicitor. Call 01732 247427.",
     link: "https://www.policestationagent.com/free-police-station-advice-kent?utm_source=gbp&utm_medium=organic&utm_campaign=weekly_post",
     button: "Learn more",
   },

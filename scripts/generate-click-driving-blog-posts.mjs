@@ -68,7 +68,7 @@ function takeaways(items) {
 function cta() {
   return `<div class="advert-cta" style="background-color: #fef2f2; border: 2px solid #dc2626; border-radius: 12px; padding: 1.5rem; margin: 2rem 0;">
   <h2 style="margin-top: 0; color: #991b1b; font-size: 1.25rem;">Need legal advice at a Kent police station?</h2>
-  <p style="margin: 0.75rem 0;">Call <strong>07535 494446</strong> for current custody or a booked voluntary interview. If you cannot call, text <strong>07535 494446</strong>.</p>
+  <p style="margin: 0.75rem 0;">Call <strong>01732 247427</strong> for current custody or a booked voluntary interview. If you cannot call, text <strong>07535 494446</strong>.</p>
   <p style="margin: 0.75rem 0;">Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong> — the DSCC have our details. Legal services are provided by Tuckers Solicitors LLP (SRA ID: 127795).</p>
   <p style="margin: 0.75rem 0 0;"><a href="/contact">Contact Police Station Agent</a> · <a href="/start/in-custody">Someone in custody now</a> · <a href="/free-police-station-advice-kent">Free police station advice in Kent</a></p>
 </div>`;
@@ -160,7 +160,7 @@ const posts = [
     title: "Received a Voluntary Police Interview Letter in Kent? What to Do Before You Attend",
     metaTitle: "Voluntary Police Interview Letter Kent — What to Do",
     metaDescription:
-      "Received a voluntary police interview letter in Kent? Steps before you attend, free legal advice, and why not to discuss the allegation before speaking to a solicitor. Call 07535 494446.",
+      "Received a voluntary police interview letter in Kent? Steps before you attend, free legal advice, and why not to discuss the allegation before speaking to a solicitor. Call 01732 247427.",
     primaryKeyword: "voluntary police interview letter kent",
     secondaryKeywords: ["police interview letter", "voluntary attendance", "PACE caution"],
     image: "/blog-images/blog-listing-1.png",
@@ -185,7 +185,7 @@ const posts = [
 <li><strong>Gather basic documents</strong> the solicitor may need: the letter itself, any paperwork from police, and your own account of events (for the solicitor only).</li>
 <li><strong>Do not delay</strong> — solicitors need time to review disclosure and advise you properly before the interview.</li>
 </ol>
-<p>Call <strong>07535 494446</strong> or see <a href="/blog/when-to-ask-for-solicitor-kent-police-station">when to ask for a solicitor at a Kent police station</a>.</p>
+<p>Call <strong>01732 247427</strong> or see <a href="/blog/when-to-ask-for-solicitor-kent-police-station">when to ask for a solicitor at a Kent police station</a>.</p>
 
 <h2>3) Is a voluntary interview less serious than arrest?</h2>
 <p>No. The interview is recorded and carries the same legal weight as an interview in custody. You can be charged on the basis of what you say. Many people assume that because they are not in handcuffs the process is informal — that is a dangerous misconception.</p>
@@ -205,7 +205,7 @@ const posts = [
 
 <h2>7) After the interview</h2>
 <p>Common outcomes include no further action, release under investigation, police bail with conditions, or charge. Each has different implications. See <a href="/blog/no-further-action-after-police-interview-kent">no further action after a police interview</a> and <a href="/blog/released-under-investigation-kent-plain-english">RUI explained in plain English</a>.</p>`,
-    conclusion: `<p>If you have received a voluntary interview letter in Kent, arrange legal advice before you attend. Call <strong>07535 494446</strong> or text <strong>07535 494446</strong>. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. Do not discuss the allegation until you have spoken to a solicitor.</p>`,
+    conclusion: `<p>If you have received a voluntary interview letter in Kent, arrange legal advice before you attend. Call <strong>01732 247427</strong> or text <strong>07535 494446</strong>. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. Do not discuss the allegation until you have spoken to a solicitor.</p>`,
     internal: [
       { url: "/voluntary-police-interview", label: "Voluntary police interview advice" },
       { url: "/voluntary-police-interview-risks", label: "Risks of attending alone" },
@@ -223,7 +223,7 @@ const posts = [
     title: "Is Police Station Legal Advice Really Free in Kent?",
     metaTitle: "Is Police Station Legal Advice Free in Kent?",
     metaDescription:
-      "Is police station legal advice really free in Kent? PACE rights, Legal Aid at custody, common myths, and qualified duty solicitor representation. Call 07535 494446.",
+      "Is police station legal advice really free in Kent? PACE rights, Legal Aid at custody, common myths, and qualified duty solicitor representation. Call 01732 247427.",
     primaryKeyword: "free police station advice kent",
     secondaryKeywords: ["duty solicitor free", "legal aid police station", "PACE section 58"],
     image: "/blog-images/blog-listing-0.jpg",
@@ -257,12 +257,12 @@ const posts = [
 
 <h2>5) How to request free advice in Kent</h2>
 <p>Tell the custody officer you want legal advice, or contact us before a voluntary interview. The Defence Solicitor Call Centre (DSCC) can allocate a duty solicitor. You may request <strong>Robert Cashman, Tuckers Duty Solicitor</strong>.</p>
-<p>Call <strong>07535 494446</strong> or text <strong>07535 494446</strong>. See <a href="/blog/police-station-rep-near-me-kent">police station rep near me in Kent</a> and <a href="/start/in-custody">someone in custody now</a>.</p>
+<p>Call <strong>01732 247427</strong> or text <strong>07535 494446</strong>. See <a href="/blog/police-station-rep-near-me-kent">police station rep near me in Kent</a> and <a href="/start/in-custody">someone in custody now</a>.</p>
 
 <h2>6) What free advice includes</h2>
 <p>Your solicitor will usually review disclosure, advise you in private consultation, attend the interview with you, and take notes of the outcome. This applies at custody suites including Medway, North Kent (Gravesend), Tonbridge, Canterbury, Folkestone and voluntary interview stations across the county.</p>
 <p>See <a href="/blog/kent-custody-after-arrest-process">Kent custody after arrest</a> and <a href="/kent-police-station-reps">Kent police station reps hub</a>.</p>`,
-    conclusion: `<p>Police station legal advice is free for most people being interviewed in Kent. Call <strong>07535 494446</strong> before your interview. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>.</p>`,
+    conclusion: `<p>Police station legal advice is free for most people being interviewed in Kent. Call <strong>01732 247427</strong> before your interview. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>.</p>`,
     internal: [
       { url: "/free-police-station-advice-kent", label: "Free police station advice in Kent" },
       { url: "/fees", label: "Fees and Legal Aid" },
@@ -280,7 +280,7 @@ const posts = [
     title: "Police Station Rep Near Me in Kent: How to Get Free Legal Advice Fast",
     metaTitle: "Police Station Rep Near Me Kent | Free Legal Advice",
     metaDescription:
-      "Need a police station rep near you in Kent? How the duty solicitor scheme works, all Kent custody suites, and how to get free legal advice fast. Call 07535 494446.",
+      "Need a police station rep near you in Kent? How the duty solicitor scheme works, all Kent custody suites, and how to get free legal advice fast. Call 01732 247427.",
     primaryKeyword: "police station rep near me kent",
     secondaryKeywords: ["duty solicitor near me", "kent custody suites", "police station solicitor kent"],
     image: "/blog-images/types-of-offences-police-station-featured.jpg",
@@ -295,7 +295,7 @@ const posts = [
     body: `<h2>1) How to get a police station rep in Kent quickly</h2>
 <p>If you are in <strong>current custody</strong>, tell the custody officer you want legal advice and ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. Immediate family may also contact us on your behalf — see <a href="/blog/immediate-family-instruct-police-station-solicitor">immediate family instruction</a>.</p>
 <p>For a <strong>booked voluntary interview</strong>, call us as soon as you receive the date. Do not wait until the day of the interview.</p>
-<p>Telephone <strong>07535 494446</strong> · Text <strong>07535 494446</strong> · <a href="/start/in-custody">Someone in custody now</a></p>
+<p>Telephone <strong>01732 247427</strong> · Text <strong>07535 494446</strong> · <a href="/start/in-custody">Someone in custody now</a></p>
 
 <h2>2) Kent 24-hour custody suites</h2>
 <p>Main Kent custody facilities include:</p>
@@ -327,14 +327,14 @@ const posts = [
 
 <h2>6) What information helps us attend</h2>
 <p>Full name, date of birth, which station or custody suite, custody record number if known, and interview date/time for voluntary attendances. See <a href="/blog/custody-record-number-dscc-reference">custody record and DSCC references</a>.</p>`,
-    conclusion: `<p>For a police station rep near you in Kent, call <strong>07535 494446</strong> now. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. Free legal advice is available for most police station interviews.</p>`,
+    conclusion: `<p>For a police station rep near you in Kent, call <strong>01732 247427</strong> now. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. Free legal advice is available for most police station interviews.</p>`,
     internal: [
       { url: "/kent-police-station-reps", label: "Kent police station reps" },
       { url: "/locations", label: "All locations" },
       { url: "/start/in-custody", label: "Someone in custody now" },
     ],
     faq: [
-      { q: "How do I find a police station rep near me in Kent?", a: "Call 07535 494446 for current custody or a booked voluntary interview. Ask for Robert Cashman, Tuckers Duty Solicitor. Legal advice is free for most interviews." },
+      { q: "How do I find a police station rep near me in Kent?", a: "Call 01732 247427 for current custody or a booked voluntary interview. Ask for Robert Cashman, Tuckers Duty Solicitor. Legal advice is free for most interviews." },
       { q: "Which Kent towns do you cover?", a: "We attend custody suites and voluntary interviews across Kent including Medway, Gravesend, Tonbridge, Canterbury, Folkestone, Maidstone, Sevenoaks, and Dartford, subject to availability." },
       { q: "Is a police station rep the same as a duty solicitor?", a: "A duty solicitor is a qualified solicitor. Some attendances are by accredited representatives. Robert Cashman is a qualified solicitor and duty solicitor." },
       { q: "Can family find a rep for someone in custody?", a: "Immediate family may contact us to help arrange a solicitor when someone is in current custody, subject to the detainee confirming they want advice." },
@@ -345,7 +345,7 @@ const posts = [
     title: "Maidstone Police Station Voluntary Interviews: Mid-Kent Legal Advice (Custody Closed)",
     metaTitle: "Maidstone Voluntary Interview Legal Advice | Mid-Kent",
     metaDescription:
-      "Maidstone police station hosts voluntary interviews — custody suite closed. Mid-Kent arrest routing, free legal advice, and how to arrange a solicitor. Call 07535 494446.",
+      "Maidstone police station hosts voluntary interviews — custody suite closed. Mid-Kent arrest routing, free legal advice, and how to arrange a solicitor. Call 01732 247427.",
     primaryKeyword: "maidstone police station voluntary interview",
     secondaryKeywords: ["mid kent police station", "maidstone solicitor", "custody closed maidstone"],
     image: "/blog-images/blog-listing-5.png",
@@ -368,7 +368,7 @@ const posts = [
 <h2>3) Arranging a solicitor for mid-Kent</h2>
 <p><strong>Voluntary interview at Maidstone:</strong> contact us before the interview date with the date, time, and offence summary if known.</p>
 <p><strong>Arrest in mid-Kent:</strong> the detainee should ask custody staff for legal advice at whichever suite they are taken to. Immediate family may help arrange a solicitor — see <a href="/blog/arrange-solicitor-someone-in-custody">arrange a solicitor in custody</a>.</p>
-<p>Call <strong>07535 494446</strong> · Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong></p>
+<p>Call <strong>01732 247427</strong> · Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong></p>
 
 <h2>4) What to expect at a Maidstone voluntary interview</h2>
 <p>The process mirrors any voluntary interview in Kent: caution, disclosure (which may be limited), private consultation with your solicitor, and a recorded interview. Your solicitor can advise on whether to answer questions, make no comment, or read a prepared statement.</p>
@@ -376,7 +376,7 @@ const posts = [
 
 <h2>5) Mid-Kent areas covered</h2>
 <p>We attend Maidstone voluntary interviews and custody suites used by mid-Kent arrests — including Medway, Canterbury, and Tonbridge — subject to availability. See <a href="/blog/police-station-rep-near-me-kent">police station rep near me in Kent</a>.</p>`,
-    conclusion: `<p>Maidstone hosts voluntary interviews but not custody. For either a Maidstone interview or custody elsewhere after a mid-Kent arrest, call <strong>07535 494446</strong>. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>.</p>`,
+    conclusion: `<p>Maidstone hosts voluntary interviews but not custody. For either a Maidstone interview or custody elsewhere after a mid-Kent arrest, call <strong>01732 247427</strong>. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>.</p>`,
     internal: [
       { url: "/police-station-rep-maidstone", label: "Maidstone cover" },
       { url: "/police-station-rep-medway", label: "Medway cover" },
@@ -386,7 +386,7 @@ const posts = [
       { q: "Is there custody at Maidstone police station?", a: "No. Maidstone custody has closed. Voluntary interviews still take place at Maidstone police station on Palace Avenue." },
       { q: "Where do Maidstone arrests go?", a: "Detainees are usually taken to another Kent custody suite such as Medway, Canterbury, or Tonbridge, depending on operational routing." },
       { q: "Is legal advice free at a Maidstone voluntary interview?", a: "Yes — legal advice under the duty solicitor scheme is free for most voluntary interviews under caution." },
-      { q: "How do I arrange a solicitor for Maidstone?", a: "Call 07535 494446 before your interview date with the time, date, and station details. Ask for Robert Cashman, Tuckers Duty Solicitor." },
+      { q: "How do I arrange a solicitor for Maidstone?", a: "Call 01732 247427 before your interview date with the time, date, and station details. Ask for Robert Cashman, Tuckers Duty Solicitor." },
     ],
   },
   {
@@ -394,7 +394,7 @@ const posts = [
     title: "Legal Advice at Canterbury Custody Suite: What Families Should Know",
     metaTitle: "Canterbury Custody Legal Advice | East Kent",
     metaDescription:
-      "Free legal advice at Canterbury custody suite for East Kent arrests. What families should know, voluntary interviews, and how to arrange a solicitor. Call 07535 494446.",
+      "Free legal advice at Canterbury custody suite for East Kent arrests. What families should know, voluntary interviews, and how to arrange a solicitor. Call 01732 247427.",
     primaryKeyword: "canterbury police station custody solicitor",
     secondaryKeywords: ["east kent custody", "canterbury police station rep", "free legal advice canterbury"],
     image: "/blog-images/domestic-allegations-police-stage-featured.jpg",
@@ -419,7 +419,7 @@ const posts = [
 <p>See <a href="/blog/is-police-station-legal-advice-free-kent">is police station advice really free?</a> and <a href="/pace-code-c">PACE Code C</a>.</p>
 
 <h2>4) How family can help</h2>
-<p>Immediate family (parent, spouse, civil partner, child, or sibling) may contact us when someone is in <strong>current</strong> custody. The detainee must confirm they want legal advice. Call <strong>07535 494446</strong> or see <a href="/blog/immediate-family-instruct-police-station-solicitor">immediate family instruction</a>.</p>
+<p>Immediate family (parent, spouse, civil partner, child, or sibling) may contact us when someone is in <strong>current</strong> custody. The detainee must confirm they want legal advice. Call <strong>01732 247427</strong> or see <a href="/blog/immediate-family-instruct-police-station-solicitor">immediate family instruction</a>.</p>
 
 <h2>5) Voluntary interviews in east Kent</h2>
 <p>Not every police contact involves custody. Voluntary interviews may be scheduled at Canterbury or other east Kent stations. The same right to free legal advice applies. See <a href="/blog/voluntary-interview-letter-kent-what-to-do">voluntary interview letter — what to do</a>.</p>
@@ -429,7 +429,7 @@ const posts = [
 
 <h2>7) East Kent — wider cover</h2>
 <p>We also attend <a href="/blog/folkestone-custody-legal-advice-kent">Folkestone custody</a> and voluntary interviews across east Kent. See <a href="/blog/police-station-rep-near-me-kent">police station rep near me in Kent</a>.</p>`,
-    conclusion: `<p>For Canterbury custody or an east Kent voluntary interview, call <strong>07535 494446</strong>. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. Attendance is subject to availability.</p>`,
+    conclusion: `<p>For Canterbury custody or an east Kent voluntary interview, call <strong>01732 247427</strong>. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>. Attendance is subject to availability.</p>`,
     internal: [
       { url: "/police-station-rep-canterbury", label: "Canterbury cover" },
       { url: "/start/in-custody", label: "Someone in custody now" },
@@ -447,7 +447,7 @@ const posts = [
     title: "Voluntary Police Interviews at Sevenoaks: West Kent Legal Advice",
     metaTitle: "Sevenoaks Voluntary Interview Legal Advice | West Kent",
     metaDescription:
-      "Voluntary police interviews at Sevenoaks police station — free legal advice, west Kent custody routing, and how to arrange a solicitor. Call 07535 494446.",
+      "Voluntary police interviews at Sevenoaks police station — free legal advice, west Kent custody routing, and how to arrange a solicitor. Call 01732 247427.",
     primaryKeyword: "sevenoaks voluntary police interview solicitor",
     secondaryKeywords: ["west kent police station", "sevenoaks police station rep", "tonbridge custody"],
     image: "/blog-images/blog-listing-4.png",
@@ -475,8 +475,8 @@ const posts = [
 <p>Sevenoaks, Tunbridge Wells, Edenbridge, and west Kent villages may use Sevenoaks for voluntary interviews and Tonbridge for custody. See <a href="/police-station-rep-tunbridge-wells">Tunbridge Wells cover</a> and <a href="/coverage/areas/west-kent">west Kent area hub</a>.</p>
 
 <h2>5) How to contact us</h2>
-<p>Call <strong>07535 494446</strong> with the interview date, time, and Sevenoaks station details. For current custody, see <a href="/start/in-custody">someone in custody now</a>.</p>`,
-    conclusion: `<p>For a Sevenoaks voluntary interview or west Kent custody, call <strong>07535 494446</strong>. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>.</p>`,
+<p>Call <strong>01732 247427</strong> with the interview date, time, and Sevenoaks station details. For current custody, see <a href="/start/in-custody">someone in custody now</a>.</p>`,
+    conclusion: `<p>For a Sevenoaks voluntary interview or west Kent custody, call <strong>01732 247427</strong>. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>.</p>`,
     internal: [
       { url: "/police-station-rep-sevenoaks", label: "Sevenoaks cover" },
       { url: "/police-station-rep-tonbridge", label: "Tonbridge cover" },
@@ -494,7 +494,7 @@ const posts = [
     title: "Legal Advice at Folkestone Custody Suite: East Kent Guide",
     metaTitle: "Folkestone Custody Legal Advice | East Kent",
     metaDescription:
-      "Free legal advice at Folkestone custody suite for coastal east Kent arrests. Custody process, family help, and voluntary interviews. Call 07535 494446.",
+      "Free legal advice at Folkestone custody suite for coastal east Kent arrests. Custody process, family help, and voluntary interviews. Call 01732 247427.",
     primaryKeyword: "folkestone police station custody solicitor",
     secondaryKeywords: ["east kent custody", "folkestone police station rep", "dover folkestone legal advice"],
     image: "/blog-images/drug-allegations-police-stage-featured.jpg",
@@ -518,14 +518,14 @@ const posts = [
 <p>PACE section 58 — free legal advice for most interviews. Your solicitor is independent of the police. See <a href="/blog/qualified-duty-solicitor-vs-police-station-rep-kent">qualified duty solicitor vs rep</a>.</p>
 
 <h2>4) Family assistance</h2>
-<p>Immediate family may contact us for someone in current custody. Call <strong>07535 494446</strong>. See <a href="/blog/arrange-solicitor-someone-in-custody">arrange a solicitor in custody</a>.</p>
+<p>Immediate family may contact us for someone in current custody. Call <strong>01732 247427</strong>. See <a href="/blog/arrange-solicitor-someone-in-custody">arrange a solicitor in custody</a>.</p>
 
 <h2>5) Voluntary interviews at Folkestone</h2>
 <p>Voluntary interviews under caution may be scheduled at Folkestone. Arrange advice before attending. See <a href="/voluntary-police-interview">voluntary interview guide</a>.</p>
 
 <h2>6) Outcomes after interview</h2>
 <p>Charge, RUI, bail, or no further action — see <a href="/blog/no-further-action-after-police-interview-kent">no further action</a> and <a href="/released-under-investigation">RUI guide</a>.</p>`,
-    conclusion: `<p>For Folkestone custody or a coastal east Kent interview, call <strong>07535 494446</strong>. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>.</p>`,
+    conclusion: `<p>For Folkestone custody or a coastal east Kent interview, call <strong>01732 247427</strong>. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>.</p>`,
     internal: [
       { url: "/police-station-rep-folkestone", label: "Folkestone cover" },
       { url: "/police-station-rep-dover", label: "Dover cover" },
@@ -543,7 +543,7 @@ const posts = [
     title: "Qualified Duty Solicitor vs Police Station Rep in Kent: What Is the Difference?",
     metaTitle: "Duty Solicitor vs Police Station Rep Kent",
     metaDescription:
-      "Qualified duty solicitor vs accredited police station rep in Kent — qualifications, regulation, and why it matters when you need police station advice. Call 07535 494446.",
+      "Qualified duty solicitor vs accredited police station rep in Kent — qualifications, regulation, and why it matters when you need police station advice. Call 01732 247427.",
     primaryKeyword: "duty solicitor vs police station rep kent",
     secondaryKeywords: ["qualified solicitor police station", "accredited representative", "duty solicitor kent"],
     image: "/blog-images/blog-listing-7.png",
@@ -575,9 +575,9 @@ const posts = [
 <p>See <a href="/no-comment-interview">no comment interview</a> and <a href="/blog/kent-custody-after-arrest-process">Kent custody process</a>.</p>
 
 <h2>6) How to request Robert Cashman in Kent</h2>
-<p>Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong> when speaking to custody staff or when calling us before a voluntary interview. Call <strong>07535 494446</strong>.</p>
+<p>Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong> when speaking to custody staff or when calling us before a voluntary interview. Call <strong>01732 247427</strong>.</p>
 <p>See <a href="/blog/police-station-rep-near-me-kent">police station rep near me in Kent</a>.</p>`,
-    conclusion: `<p>For a qualified duty solicitor at a Kent police station, call <strong>07535 494446</strong>. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong> through Tuckers Solicitors LLP.</p>`,
+    conclusion: `<p>For a qualified duty solicitor at a Kent police station, call <strong>01732 247427</strong>. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong> through Tuckers Solicitors LLP.</p>`,
     internal: [
       { url: "/services/police-station-representation", label: "Police station representation" },
       { url: "/about", label: "About Robert Cashman" },
@@ -595,7 +595,7 @@ const posts = [
     title: "Police Warrant or Arrest in Kent: What to Do First",
     metaTitle: "Police Warrant or Arrest in Kent — What to Do",
     metaDescription:
-      "Police warrant or arrest in Kent — what to do first. PACE rights, free legal advice, failure to attend court, and arranging a solicitor. Call 07535 494446.",
+      "Police warrant or arrest in Kent — what to do first. PACE rights, free legal advice, failure to attend court, and arranging a solicitor. Call 01732 247427.",
     primaryKeyword: "police warrant arrest kent what to do",
     secondaryKeywords: ["arrest warrant kent", "failure to attend court", "police station warrant"],
     image: "/blog-images/violence-public-order-featured.jpg",
@@ -621,11 +621,11 @@ const posts = [
 <p>Kent detainees may be held at Medway, North Kent (Gravesend), Tonbridge, Canterbury, Folkestone, or other suites. Confirm location with custody staff. See <a href="/blog/police-station-rep-near-me-kent">police station rep near me</a>.</p>
 
 <h2>5) Free legal advice</h2>
-<p>PACE section 58 — free advice for most custody interviews. Call <strong>07535 494446</strong> if a family member is in custody. See <a href="/blog/is-police-station-legal-advice-free-kent">is advice really free?</a></p>
+<p>PACE section 58 — free advice for most custody interviews. Call <strong>01732 247427</strong> if a family member is in custody. See <a href="/blog/is-police-station-legal-advice-free-kent">is advice really free?</a></p>
 
 <h2>6) Family members</h2>
 <p>Immediate family may help arrange a solicitor for someone in current custody. See <a href="/blog/immediate-family-instruct-police-station-solicitor">immediate family instruction</a> and <a href="/what-to-do-if-a-loved-one-is-arrested">loved one arrested</a>.</p>`,
-    conclusion: `<p>If you face a warrant or arrest in Kent, ask for a solicitor immediately. Call <strong>07535 494446</strong> or text <strong>07535 494446</strong>. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>.</p>`,
+    conclusion: `<p>If you face a warrant or arrest in Kent, ask for a solicitor immediately. Call <strong>01732 247427</strong> or text <strong>07535 494446</strong>. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>.</p>`,
     internal: [
       { url: "/arrested-what-to-do", label: "Arrested in Kent — what to do" },
       { url: "/start/in-custody", label: "Someone in custody now" },
@@ -643,7 +643,7 @@ const posts = [
     title: "No Further Action After a Kent Police Interview: What It Means",
     metaTitle: "No Further Action After Police Interview Kent",
     metaDescription:
-      "No further action (NFA) after a Kent police interview — what it means, how it differs from RUI, and whether the case can reopen. General information. Call 07535 494446.",
+      "No further action (NFA) after a Kent police interview — what it means, how it differs from RUI, and whether the case can reopen. General information. Call 01732 247427.",
     primaryKeyword: "no further action police interview kent",
     secondaryKeywords: ["NFA police interview", "no further action meaning", "after police interview kent"],
     image: "/blog-images/blog-listing-2.png",
@@ -681,7 +681,7 @@ const posts = [
 
 <h2>7) Kent police station outcomes</h2>
 <p>Outcomes after interview at Medway, Gravesend, Tonbridge, Canterbury, Folkestone, or voluntary interview stations follow the same broad principles. See <a href="/blog/police-station-rep-near-me-kent">Kent police station rep guide</a>.</p>`,
-    conclusion: `<p>If you are facing a police interview or waiting for an outcome in Kent, call <strong>07535 494446</strong> for advice before or after attendance. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>.</p>`,
+    conclusion: `<p>If you are facing a police interview or waiting for an outcome in Kent, call <strong>01732 247427</strong> for advice before or after attendance. Ask for <strong>Robert Cashman, Tuckers Duty Solicitor</strong>.</p>`,
     internal: [
       { url: "/released-under-investigation", label: "Released under investigation" },
       { url: "/police-bail-explained", label: "Police bail explained" },

@@ -134,7 +134,7 @@ function auditPost(post) {
     hasSources: /<h2[^>]*>sources<\/h2>/i.test(html),
     sourcesAtBottom: sourcesAtBottom(html),
     sourcesLinkQuality: sourcesExternalLinkQuality(html).ok,
-    hasPublicCta: /01732\s*247427|07535\s*494446/i.test(html),
+    hasPublicCta: /01732\s*247427/i.test(html),
     hasFirmPrimaryCta: /need police station cover in kent/i.test(html),
     hasRepKentLink: /policestationrepkent/i.test(html),
     hasWixImage: /wixstatic\.com/i.test(html),

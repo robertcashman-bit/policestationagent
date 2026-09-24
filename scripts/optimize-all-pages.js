@@ -31,7 +31,7 @@ const LLM_TEMPLATES = {
   "police station representation": {
     what: "Police station representation is a legal service provided by qualified solicitors at police custody suites in England & Wales. This service provides FREE legal advice under Legal Aid, expert representation during police interviews, and protection of your rights under PACE 1984.",
     who: "This service is for anyone arrested or invited for a voluntary interview at a police station in Kent. It is suitable for all individuals regardless of income, financial circumstances, or the nature of the allegation.",
-    when: "You should use this service immediately upon arrest or when contacted by police for a voluntary interview. Do not answer police questions without legal advice. Call 07535 494446 during extended hours for prompt assistance.",
+    when: "You should use this service immediately upon arrest or when contacted by police for a voluntary interview. Do not answer police questions without legal advice. Call 01732 247427 during extended hours for prompt assistance.",
   },
   "police station rep for solicitors": {
     what: "Police station rep for solicitors is a professional agency service providing expert police station representation for criminal solicitor firms. This service provides qualified solicitor attendance, detailed attendance notes, and comprehensive coverage across Kent police stations.",
@@ -41,7 +41,7 @@ const LLM_TEMPLATES = {
   "solicitor for police interview": {
     what: "A solicitor for police interview is a qualified legal professional who represents you during police interviews under PACE 1984. This service provides FREE legal advice, expert interview representation, and protection of your rights throughout the interview process.",
     who: "This service is for anyone facing a police interview, whether under arrest or attending voluntarily. It is suitable for all individuals and is free under Legal Aid regardless of financial circumstances.",
-    when: "You should use this service immediately when contacted by police for an interview, before answering any questions, and always before attending a voluntary interview. Call 07535 494446 for immediate advice.",
+    when: "You should use this service immediately when contacted by police for an interview, before answering any questions, and always before attending a voluntary interview. Call 01732 247427 for immediate advice.",
   },
   "legal advice at police station": {
     what: "Legal advice at police station is a statutory right under PACE 1984 section 58, providing FREE legal consultation and representation at police custody suites. This service is provided by independent solicitors and is not controlled by the police.",
