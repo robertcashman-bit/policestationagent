@@ -47,7 +47,9 @@ describe("station cover pathway CTAs", () => {
     const m = LOCAL_COVER_PAGES.maidstone;
     expect(m.title).toMatch(/VAI only/i);
     expect(m.h1).toMatch(/VAI only/i);
-    expect(m.metaDescription).toMatch(/not a (public )?custody suite/i);
+    expect(m.metaDescription).toMatch(
+      /(not a (public )?custody suite|no longer has a public custody suite)/i,
+    );
     expect(m.primaryPathway).toBe("voluntary");
   });
 
