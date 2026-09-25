@@ -277,9 +277,9 @@ export const LOCAL_COVER_PAGES: Record<string, LocalCoverConfig> = {
   maidstone: {
     slug: "police-station-rep-maidstone",
     town: "Maidstone",
-    title: "Police Station Rep Maidstone | VAI Only — Not a Custody Suite",
+    title: "Maidstone Police Station | VAI Only — Not a Custody Suite | Not Kent Police",
     metaDescription:
-      "Police station rep in Maidstone, Kent for voluntary interviews only (VAI) — Maidstone is not a public custody suite. Solicitor agent cover. NOT Kent Police For police assistance call 101 or 999.",
+      "Maidstone no longer has a public custody suite — voluntary interviews (VAI) only. NOT Kent Police; for police use 101. Independent duty solicitor representation via Tuckers LLP where eligible.",
     h1: "Police Station Rep in Maidstone, Kent — VAI Only",
     answerFirst:
       "In brief: a police station rep in Maidstone covers voluntary interviews (VAI) at Maidstone police station only — it is not a custody suite. Custody matters may be at other Kent suites such as Medway or Canterbury.",

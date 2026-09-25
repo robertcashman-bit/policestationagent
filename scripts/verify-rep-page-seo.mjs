@@ -12,6 +12,9 @@ const ROOT = process.cwd();
 const DATA_FILE = path.join(ROOT, "lib/seo/local-cover-data.ts");
 
 const SOLICITOR_INTENT = /rep|representative|solicitor|legal advice|legal representation|independent/i;
+/** Maidstone live URL SERP: station name + VAI-only + Not Kent Police (see LOCAL_COVER_PAGES.maidstone). */
+const STATION_VAI_TITLE_INTENT =
+  /police station.*vai.*not kent police|not a custody suite.*not kent police/i;
 const KENT_PATTERN = /kent/i;
 const FIRM_PHONE = /01732|07535/;
 const NOT_POLICE = /not kent police|not the police|101/i;
@@ -38,7 +41,7 @@ const entries = extractEntries(source);
 const failures = [];
 
 for (const entry of entries) {
-  if (!SOLICITOR_INTENT.test(entry.title)) {
+  if (!SOLICITOR_INTENT.test(entry.title) && !STATION_VAI_TITLE_INTENT.test(entry.title)) {
     failures.push(`${entry.key}: title missing solicitor/rep intent — "${entry.title}"`);
   }
   if (!SOLICITOR_INTENT.test(entry.h1)) {
