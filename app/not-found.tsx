@@ -2,6 +2,19 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BlogCarousel from "@/components/BlogCarousel";
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: {
+    absolute: "Page not found | Police Station Agent",
+  },
+  description:
+    "This page is not available. Browse our police station guides or use contact pathways — independent criminal defence solicitors, not the police.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default function NotFound() {
   return (

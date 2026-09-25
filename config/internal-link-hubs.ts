@@ -146,6 +146,24 @@ export const STATIONS_HUB: HubDefinition = {
   ],
 };
 
+/** Compact related-help block for rights guides (SEO win — VAI + custody time limits). */
+export const CUSTODY_PATHWAYS_HUB: HubDefinition = {
+  id: "custody-pathways",
+  title: "Related help",
+  links: [
+    {
+      href: "/voluntary-interviews",
+      text: "Voluntary police interviews",
+      description: "Rights and representation for scheduled VAIs in Kent",
+    },
+    {
+      href: "/custody-time-limits",
+      text: "Custody time limits",
+      description: "How long police can detain you without charge",
+    },
+  ],
+};
+
 export const INTERVIEW_HUB: HubDefinition = {
   id: "interview",
   title: "Police Interview Guides",
@@ -183,7 +201,7 @@ export const INTERVIEW_HUB: HubDefinition = {
   ],
 };
 
-export const ALL_HUBS = [RIGHTS_HUB, STATIONS_HUB, INTERVIEW_HUB] as const;
+export const ALL_HUBS = [RIGHTS_HUB, STATIONS_HUB, INTERVIEW_HUB, CUSTODY_PATHWAYS_HUB] as const;
 
 export function getHub(id: string): HubDefinition | undefined {
   return ALL_HUBS.find((h) => h.id === id);

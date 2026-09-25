@@ -5,6 +5,7 @@ import { SITE_URL, SITE_DOMAIN } from "@/config/site";
 import Script from "next/script";
 import { Suspense } from "react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react";
 import LazyChatbot from "@/components/LazyChatbot";
 import CookieBanner from "@/components/CookieBanner";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
@@ -547,6 +548,7 @@ footer.bg-primary-dark{background-color:#1d4ed8!important;color:#fff!important}
         <MobileStickyContactBar />
         <ConversionEventListener />
         <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );

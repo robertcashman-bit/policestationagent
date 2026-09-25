@@ -12,9 +12,9 @@ import { SEO_NOT_POLICE } from "@/config/contact";
 import { PATH_AGENCY, PATH_CUSTODY, PATH_VOLUNTARY } from "@/config/enquiry-paths";
 
 export const metadata = buildPageMetadata({
-  title: "DSCC Reference & Custody Record Support for Defence Solicitors | Not the Police",
+  title: "DSCC & Custody Record Numbers | Not the Police | Firm Instruction Guide",
   path: "/dscc-and-custody-record-support",
-  description: `${SEO_NOT_POLICE} This is solicitor guidance on DSCC references and custody record numbers when instructing police station cover — not the police DSCC phone book. For police use 101 or 999.`,
+  description: `${SEO_NOT_POLICE} DSCC references and custody record numbers explained for defence firms instructing Kent police station cover — not the police switchboard. For police matters use 101 or 999.`,
 });
 
 const faqs = [
