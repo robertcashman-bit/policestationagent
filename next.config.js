@@ -364,6 +364,32 @@ const nextConfig = {
         destination: "/voluntary-interviews",
         permanent: true,
       },
+      // DSCC shorthand and legacy soft-404 slugs → canonical DSCC / custody record guide
+      {
+        source: "/dscc",
+        destination: "/dscc-and-custody-record-support",
+        permanent: true,
+      },
+      {
+        source: "/what-is-dscc",
+        destination: "/dscc-and-custody-record-support",
+        permanent: true,
+      },
+      {
+        source: "/dscc-kent",
+        destination: "/dscc-and-custody-record-support",
+        permanent: true,
+      },
+      {
+        source: "/defence-solicitor-call-centre",
+        destination: "/dscc-and-custody-record-support",
+        permanent: true,
+      },
+      {
+        source: "/not-the-police",
+        destination: "/dscc-and-custody-record-support",
+        permanent: true,
+      },
       {
         source: "/no-comment-police-interview-advice",
         destination: "/no-comment-interview",
