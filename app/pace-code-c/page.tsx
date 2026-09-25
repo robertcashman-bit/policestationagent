@@ -5,11 +5,13 @@ import { JsonLd } from "@/components/JsonLd";
 import { LegalReferences, Ref, type LegalSource } from "@/components/LegalReferences";
 import { SITE_DOMAIN } from "@/config/site";
 import { PersistentKentVaCta } from "@/components/conversion/PersistentKentVaCta";
+import { InternalLinkHub } from "@/components/InternalLinkHub";
+import { CUSTODY_PATHWAYS_HUB } from "@/config/internal-link-hubs";
 
 export const metadata: Metadata = {
-  title: "PACE Code C: Your Rights in Police Detention Explained",
+  title: "PACE Code C (2023): Your Rights in Police Custody — UK Guide",
   description:
-    "PACE Code C sets out your rights in police custody including legal advice, rest periods, meals and interviews. Understand what police must do and your protections.",
+    "PACE Code C explained in plain English: legal advice, rest, meals, interviews and what police must do in custody. Independent Kent duty solicitor guide — not the police.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/pace-code-c`,
   },
@@ -404,6 +406,12 @@ export default function PaceCodeCPage() {
           </div>
 
           <LegalReferences sources={sources} />
+
+          <InternalLinkHub
+            title={CUSTODY_PATHWAYS_HUB.title}
+            links={CUSTODY_PATHWAYS_HUB.links}
+            className="mt-8"
+          />
 
           <div className="border-t border-border pt-8 mt-8">
             <h3 className="text-lg font-bold text-primary mb-4">Related Topics</h3>

@@ -9,9 +9,9 @@ import { NOT_POLICE_FAQ_ITEMS } from "@/config/scope-faqs";
 import StationNotPoliceIntro from "@/components/compliance/StationNotPoliceIntro";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Independent Guide to Kent Police Stations | Criminal Defence Solicitors",
+  title: "Kent Police Stations Guide | Not Kent Police — Use 101 | Defence Solicitors",
   path: "/kent-police-stations",
-  description: `${SEO_NOT_POLICE} Independent guide to Kent police custody suites with addresses and your rights. Legal representation for custody and booked interviews — not a police switchboard.`,
+  description: `${SEO_NOT_POLICE} Independent guide to Kent custody suites, addresses and your rights. We are defence solicitors — not Kent Police. For police matters call 101 (non-emergency) or 999.`,
 });
 
 const KENT_STATIONS_FAQ = [

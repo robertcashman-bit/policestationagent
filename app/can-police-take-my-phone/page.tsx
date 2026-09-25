@@ -6,11 +6,13 @@ import { JsonLd } from "@/components/JsonLd";
 import { LegalReferences, Ref, type LegalSource } from "@/components/LegalReferences";
 import { SITE_DOMAIN } from "@/config/site";
 import { PersistentKentVaCta } from "@/components/conversion/PersistentKentVaCta";
+import { InternalLinkHub } from "@/components/InternalLinkHub";
+import { CUSTODY_PATHWAYS_HUB } from "@/config/internal-link-hubs";
 
 export const metadata: Metadata = {
-  title: "Can Police Take My Phone? Your Rights When Police Seize Devices UK",
+  title: "Can Police Take My Phone? Seizure, PIN Codes & Your Rights (UK)",
   description:
-    "Comprehensive guide: when police can seize your phone on arrest or during a search, PIN/password rules under RIPA, how long they can keep it, forensic examination, and getting it back (England & Wales). Sources included.",
+    "When police can seize your phone on arrest or search, RIPA PIN notices, retention and getting devices back. Independent defence guide — not the police. Sources for England & Wales.",
   alternates: {
     canonical: `https://${SITE_DOMAIN}/can-police-take-my-phone`,
   },
@@ -570,6 +572,12 @@ export default function CanPoliceTakeMyPhonePage() {
               </Link>
             </div>
           </div>
+
+          <InternalLinkHub
+            title={CUSTODY_PATHWAYS_HUB.title}
+            links={CUSTODY_PATHWAYS_HUB.links}
+            className="mt-8"
+          />
 
           <div className="border-t pt-8 mt-8">
             <h3 className="text-lg font-bold text-slate-900 mb-4">Related Topics</h3>
